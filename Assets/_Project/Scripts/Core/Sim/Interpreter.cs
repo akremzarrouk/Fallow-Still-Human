@@ -189,7 +189,7 @@ namespace Fallow.Core.Sim
                         continue;
                 }
 
-                terms.Add(new ScalerTerm(s.Describe(), level, s.Factor));
+                terms.Add(new ScalerTerm(s.Describe(ctx.Resolve), level, s.Factor));
             }
 
             return terms;

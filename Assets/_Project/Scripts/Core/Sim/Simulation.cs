@@ -21,9 +21,16 @@ namespace Fallow.Core.Sim
         public Experience Experience { get; }
         public int InterpretationTraceId { get; }
 
+        /// <summary>How heavily the winning reading beat the alternatives.</summary>
+        public double InterpretationWeight { get; }
+
+        /// <summary>The reading that nearly won instead. Null when nothing else fitted.</summary>
+        public string RunnerUpMeaning { get; }
+
         public PerceptionOutcome(
             string characterId, Access access, string meaning, bool fromOwnIntent,
-            IReadOnlyList<EmotionContribution> emotions, Experience experience, int interpretationTraceId)
+            IReadOnlyList<EmotionContribution> emotions, Experience experience, int interpretationTraceId,
+            double interpretationWeight = 0.0, string runnerUpMeaning = null)
         {
             CharacterId = characterId;
             Access = access;
@@ -32,6 +39,8 @@ namespace Fallow.Core.Sim
             Emotions = emotions ?? new List<EmotionContribution>();
             Experience = experience;
             InterpretationTraceId = interpretationTraceId;
+            InterpretationWeight = interpretationWeight;
+            RunnerUpMeaning = runnerUpMeaning;
         }
 
         /// <summary>
@@ -156,7 +165,11 @@ namespace Fallow.Core.Sim
             var attention = mind.Profile.Attention(interpretation.Meaning);
             var emotions = _appraiser.Appraise(mind, ctx, reach * attention, Trace, interpretation.TraceId);
 
-            var stirred = emotions.Sum(c => c.Intensity);
+            // Several feelings at once make a moment stick harder, but not
+            // without limit: a saturating fold keeps salience able to tell one
+            // memory from another instead of pinning them all at the ceiling.
+            var stirred = 0.0;
+            foreach (var c in emotions) stirred = Accumulate.Toward(stirred, c.Intensity);
             var salience = Accumulate.Clamp01(
                 (_rules.Dynamics.SalienceBase + _rules.Dynamics.SalienceEmotionWeight * stirred) * attention);
             var confidence = access == Access.Overheard ? _rules.Dynamics.OverheardConfidence : 1.0;
@@ -190,7 +203,8 @@ namespace Fallow.Core.Sim
 
             return new PerceptionOutcome(
                 mind.Id, access, interpretation.Meaning, interpretation.FromOwnIntent,
-                emotions, experience, interpretation.TraceId);
+                emotions, experience, interpretation.TraceId,
+                interpretation.Weight, interpretation.RunnerUpMeaning);
         }
 
         void ApplyBeliefNudges(Mind mind, MatchContext ctx, WorldEvent e, int experienceTrace)

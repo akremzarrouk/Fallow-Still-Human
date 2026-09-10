@@ -41,6 +41,11 @@
         { "holder": "daniel", "about": "leo", "entry": "proved_right", "weight": 0.6 },
         { "holder": "elena",  "about": "leo", "entry": "proved_right", "weight": 0.5 },
         { "holder": "mara",   "about": "leo", "entry": "proved_right", "weight": 0.4 }
+      ],
+      "belief_effects": [
+        { "holder": "daniel", "predicate": "more_knowledgeable", "args": ["leo", "survival"], "delta": 0.30 },
+        { "holder": "elena",  "predicate": "more_knowledgeable", "args": ["leo", "survival"], "delta": 0.25 },
+        { "holder": "mara",   "predicate": "more_knowledgeable", "args": ["leo", "survival"], "delta": 0.20 }
       ]
     },
     {

@@ -1,0 +1,1292 @@
+# Scenario 001, slice S0: the full trace
+
+Every step, in the order it happened, with the record it came from.
+
+#0 [Event] (b01)
+      Daniel boards the front windows on his own while the others watch.
+#1 [Access] daniel (b01) <- #0
+      was there and saw it
+#2 [Interpretation] daniel (b01) <- #1
+      knew their own intention: take_responsibility
+        meaning: take_responsibility
+        source: own intention
+#3 [Experience] daniel (b01) <- #2
+      kept it as take_responsibility
+        meaning: take_responsibility
+        source: own intention
+        confidence: 1.00
+        salience: 0.15
+#4 [Access] elena (b01) <- #0
+      was there and saw it
+#5 [Interpretation] elena (b01) <- #4
+      read it as support (0.60)
+        meaning: support
+        weight: 0.60
+        rules: a_good_turn_reads_as_support -> support 0.60
+#6 [Appraisal] elena (b01) <- #5
+      support touched closeness: gratitude 0.91 toward daniel (closeness)
+        emotion: gratitude
+        concern: closeness
+        intensity: 0.91
+        rules: help_at_all_is_felt_as_gratitude 0.91 (base 0.10; trait empathetic 0.90 x 0.30 = +0.27; value closeness 0.75 x 0.25 = +0.19; value family_safety 1.00 x 0.35 = +0.35)
+        toward: daniel
+#7 [Appraisal] elena (b01) <- #5
+      support touched family_safety: relief 0.63 (family_safety)
+        emotion: relief
+        concern: family_safety
+        intensity: 0.63
+        rules: help_is_felt_as_relief_by_the_frightened 0.63 (base 0.10; trait anxious 0.75 x 0.70 = +0.53)
+#8 [Experience] elena (b01) <- #5
+      kept it as support, felt as gratitude
+        meaning: support
+        source: witnessed
+        confidence: 1.00
+        salience: 0.97
+#9 [BeliefChange] elena (b01) <- #8
+      tendency(daniel,does_not_respect_me): 0.00 -> pending
+#10 [BeliefChange] elena (b01) <- #9
+      tendency(daniel,does_not_respect_me) moved 0.00 -> 0.00
+        rule: kindness_wears_it_down
+        delta: -0.10
+#11 [LedgerEntry] elena (b01) <- #8
+      will not forget: protected_family (daniel)
+        weight: 0.60
+#12 [Access] leo (b01) <- #0
+      was there and saw it
+#13 [Interpretation] leo (b01) <- #12
+      read it as support (0.60)
+        meaning: support
+        weight: 0.60
+        rules: a_good_turn_reads_as_support -> support 0.60
+#14 [Appraisal] leo (b01) <- #13
+      support touched closeness: gratitude 0.72 toward daniel (closeness)
+        emotion: gratitude
+        concern: closeness
+        intensity: 0.72
+        rules: help_at_all_is_felt_as_gratitude 0.72 (base 0.10; trait empathetic 0.70 x 0.30 = +0.21; value closeness 0.25 x 0.25 = +0.06; value family_safety 1.00 x 0.35 = +0.35)
+        toward: daniel
+#15 [Appraisal] leo (b01) <- #13
+      support touched family_safety: relief 0.28 (family_safety)
+        emotion: relief
+        concern: family_safety
+        intensity: 0.28
+        rules: help_is_felt_as_relief_by_the_frightened 0.28 (base 0.10; trait anxious 0.25 x 0.70 = +0.18)
+#16 [Experience] leo (b01) <- #13
+      kept it as support, felt as gratitude
+        meaning: support
+        source: witnessed
+        confidence: 1.00
+        salience: 0.83
+#17 [BeliefChange] leo (b01) <- #16
+      tendency(daniel,does_not_respect_me): 0.00 -> pending
+#18 [BeliefChange] leo (b01) <- #17
+      tendency(daniel,does_not_respect_me) moved 0.00 -> 0.00
+        rule: kindness_wears_it_down
+        delta: -0.10
+#19 [LedgerEntry] leo (b01) <- #16
+      will not forget: protected_family (daniel)
+        weight: 0.50
+#20 [Access] mara (b01) <- #0
+      was there and saw it
+#21 [Interpretation] mara (b01) <- #20
+      read it as support (0.60)
+        meaning: support
+        weight: 0.60
+        rules: a_good_turn_reads_as_support -> support 0.60
+#22 [Appraisal] mara (b01) <- #21
+      support touched family_safety: relief 0.66 (family_safety)
+        emotion: relief
+        concern: family_safety
+        intensity: 0.66
+        rules: help_is_felt_as_relief_by_the_frightened 0.66 (base 0.10; trait anxious 0.80 x 0.70 = +0.56)
+#23 [Appraisal] mara (b01) <- #21
+      support touched closeness: gratitude 0.58 toward daniel (closeness)
+        emotion: gratitude
+        concern: closeness
+        intensity: 0.58
+        rules: help_at_all_is_felt_as_gratitude 0.58 (base 0.10; trait empathetic 0.75 x 0.30 = +0.23; value closeness 1.00 x 0.25 = +0.25; value family_safety 0.00 x 0.35 = 0.00)
+        toward: daniel
+#24 [Experience] mara (b01) <- #21
+      kept it as support, felt as relief
+        meaning: support
+        source: witnessed
+        confidence: 1.00
+        salience: 0.88
+#25 [BeliefChange] mara (b01) <- #24
+      tendency(daniel,does_not_respect_me): 0.00 -> pending
+#26 [BeliefChange] mara (b01) <- #25
+      tendency(daniel,does_not_respect_me) moved 0.00 -> 0.00
+        rule: kindness_wears_it_down
+        delta: -0.10
+#27 [LedgerEntry] mara (b01) <- #24
+      will not forget: protected_family (daniel)
+        weight: 0.60
+#28 [Event] (b02)
+      Leo says the water will stop running within a day and they should fill everything they have.
+#29 [Access] daniel (b02) <- #28
+      was there and saw it
+#30 [Interpretation] daniel (b02) <- #29
+      read it as concern (0.60)
+        meaning: concern
+        weight: 0.60
+        rules: bad_news_reads_as_a_problem -> concern 0.60
+#31 [Appraisal] daniel (b02) <- #30
+      concern touched family_safety: anxiety 0.71 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 0.71
+        rules: a_problem_is_felt_as_anxiety 0.71 (base 0.10; value family_safety 0.50 x 0.50 = +0.25; trait anxious 0.65 x 0.40 = +0.26; trait empathetic 0.50 x 0.20 = +0.10)
+#32 [Appraisal] daniel (b02) <- #30
+      concern touched family_safety: fear 0.57 (family_safety)
+        emotion: fear
+        concern: family_safety
+        intensity: 0.57
+        rules: a_problem_is_felt_as_fear_by_the_fearful 0.57 (base 0.05; trait anxious 0.65 x 0.80 = +0.52)
+#33 [Experience] daniel (b02) <- #30
+      kept it as concern, felt as anxiety
+        meaning: concern
+        source: witnessed
+        confidence: 1.00
+        salience: 0.89
+#34 [Access] elena (b02) <- #28
+      was there and saw it
+#35 [Interpretation] elena (b02) <- #34
+      read it as concern (0.60)
+        meaning: concern
+        weight: 0.60
+        rules: bad_news_reads_as_a_problem -> concern 0.60
+#36 [Appraisal] elena (b02) <- #35
+      concern touched family_safety: anxiety 1.08 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 1.08
+        rules: a_problem_is_felt_as_anxiety 1.08 (base 0.10; value family_safety 1.00 x 0.50 = +0.50; trait anxious 0.75 x 0.40 = +0.30; trait empathetic 0.90 x 0.20 = +0.18)
+#37 [Appraisal] elena (b02) <- #35
+      concern touched family_safety: fear 0.65 (family_safety)
+        emotion: fear
+        concern: family_safety
+        intensity: 0.65
+        rules: a_problem_is_felt_as_fear_by_the_fearful 0.65 (base 0.05; trait anxious 0.75 x 0.80 = +0.60)
+#38 [Experience] elena (b02) <- #35
+      kept it as concern, felt as anxiety
+        meaning: concern
+        source: witnessed
+        confidence: 1.00
+        salience: 1.00
+#39 [Access] leo (b02) <- #28
+      was there and saw it
+#40 [Interpretation] leo (b02) <- #39
+      knew their own intention: share_information
+        meaning: share_information
+        source: own intention
+#41 [Experience] leo (b02) <- #40
+      kept it as share_information
+        meaning: share_information
+        source: own intention
+        confidence: 1.00
+        salience: 0.15
+#42 [Access] mara (b02) <- #28
+      was there and saw it
+#43 [Interpretation] mara (b02) <- #42
+      read it as concern (0.60)
+        meaning: concern
+        weight: 0.60
+        rules: bad_news_reads_as_a_problem -> concern 0.60
+#44 [Appraisal] mara (b02) <- #43
+      concern touched family_safety: fear 0.69 (family_safety)
+        emotion: fear
+        concern: family_safety
+        intensity: 0.69
+        rules: a_problem_is_felt_as_fear_by_the_fearful 0.69 (base 0.05; trait anxious 0.80 x 0.80 = +0.64)
+#45 [Appraisal] mara (b02) <- #43
+      concern touched family_safety: anxiety 0.57 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 0.57
+        rules: a_problem_is_felt_as_anxiety 0.57 (base 0.10; value family_safety 0.00 x 0.50 = 0.00; trait anxious 0.80 x 0.40 = +0.32; trait empathetic 0.75 x 0.20 = +0.15)
+#46 [Experience] mara (b02) <- #43
+      kept it as concern, felt as fear
+        meaning: concern
+        source: witnessed
+        confidence: 1.00
+        salience: 0.89
+#47 [Event] (b03)
+      The taps run dry, exactly as Leo said they would.
+#48 [Access] daniel (b03) <- #47
+      was there and saw it
+#49 [Interpretation] daniel (b03) <- #48
+      read it as concern (0.60)
+        meaning: concern
+        weight: 0.60
+        rules: bad_news_reads_as_a_problem -> concern 0.60
+#50 [Appraisal] daniel (b03) <- #49
+      concern touched family_safety: anxiety 0.71 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 0.71
+        rules: a_problem_is_felt_as_anxiety 0.71 (base 0.10; value family_safety 0.50 x 0.50 = +0.25; trait anxious 0.65 x 0.40 = +0.26; trait empathetic 0.50 x 0.20 = +0.10)
+#51 [Appraisal] daniel (b03) <- #49
+      concern touched family_safety: fear 0.57 (family_safety)
+        emotion: fear
+        concern: family_safety
+        intensity: 0.57
+        rules: a_problem_is_felt_as_fear_by_the_fearful 0.57 (base 0.05; trait anxious 0.65 x 0.80 = +0.52)
+#52 [Experience] daniel (b03) <- #49
+      kept it as concern, felt as anxiety
+        meaning: concern
+        source: witnessed
+        confidence: 1.00
+        salience: 0.89
+#53 [LedgerEntry] daniel (b03) <- #52
+      will not forget: proved_right (leo)
+        weight: 0.60
+#54 [BeliefChange] daniel (b03) <- #52
+      more_knowledgeable(leo,survival): 0.40 -> pending
+#55 [BeliefChange] daniel (b03) <- #54
+      more_knowledgeable(leo,survival) moved 0.40 -> 0.58
+        delta: +0.30
+#56 [Access] elena (b03) <- #47
+      was there and saw it
+#57 [Interpretation] elena (b03) <- #56
+      read it as concern (0.60)
+        meaning: concern
+        weight: 0.60
+        rules: bad_news_reads_as_a_problem -> concern 0.60
+#58 [Appraisal] elena (b03) <- #57
+      concern touched family_safety: anxiety 1.08 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 1.08
+        rules: a_problem_is_felt_as_anxiety 1.08 (base 0.10; value family_safety 1.00 x 0.50 = +0.50; trait anxious 0.75 x 0.40 = +0.30; trait empathetic 0.90 x 0.20 = +0.18)
+#59 [Appraisal] elena (b03) <- #57
+      concern touched family_safety: fear 0.65 (family_safety)
+        emotion: fear
+        concern: family_safety
+        intensity: 0.65
+        rules: a_problem_is_felt_as_fear_by_the_fearful 0.65 (base 0.05; trait anxious 0.75 x 0.80 = +0.60)
+#60 [Experience] elena (b03) <- #57
+      kept it as concern, felt as anxiety
+        meaning: concern
+        source: witnessed
+        confidence: 1.00
+        salience: 1.00
+#61 [LedgerEntry] elena (b03) <- #60
+      will not forget: proved_right (leo)
+        weight: 0.50
+#62 [BeliefChange] elena (b03) <- #60
+      more_knowledgeable(leo,survival): 0.65 -> pending
+#63 [BeliefChange] elena (b03) <- #62
+      more_knowledgeable(leo,survival) moved 0.65 -> 0.74
+        delta: +0.25
+#64 [Access] leo (b03) <- #47
+      was there and saw it
+#65 [Interpretation] leo (b03) <- #64
+      read it as concern (0.60)
+        meaning: concern
+        weight: 0.60
+        rules: bad_news_reads_as_a_problem -> concern 0.60
+#66 [Appraisal] leo (b03) <- #65
+      concern touched family_safety: anxiety 0.92 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 0.92
+        rules: a_problem_is_felt_as_anxiety 0.84 (base 0.10; value family_safety 1.00 x 0.50 = +0.50; trait anxious 0.25 x 0.40 = +0.10; trait empathetic 0.70 x 0.20 = +0.14)
+        scaled_by_reach: 1.10
+#67 [Appraisal] leo (b03) <- #65
+      concern touched family_safety: fear 0.28 (family_safety)
+        emotion: fear
+        concern: family_safety
+        intensity: 0.28
+        rules: a_problem_is_felt_as_fear_by_the_fearful 0.25 (base 0.05; trait anxious 0.25 x 0.80 = +0.20)
+        scaled_by_reach: 1.10
+#68 [Experience] leo (b03) <- #65
+      kept it as concern, felt as anxiety
+        meaning: concern
+        source: witnessed
+        confidence: 1.00
+        salience: 1.00
+#69 [Access] mara (b03) <- #47
+      was there and saw it
+#70 [Interpretation] mara (b03) <- #69
+      read it as concern (0.60)
+        meaning: concern
+        weight: 0.60
+        rules: bad_news_reads_as_a_problem -> concern 0.60
+#71 [Appraisal] mara (b03) <- #70
+      concern touched family_safety: fear 0.69 (family_safety)
+        emotion: fear
+        concern: family_safety
+        intensity: 0.69
+        rules: a_problem_is_felt_as_fear_by_the_fearful 0.69 (base 0.05; trait anxious 0.80 x 0.80 = +0.64)
+#72 [Appraisal] mara (b03) <- #70
+      concern touched family_safety: anxiety 0.57 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 0.57
+        rules: a_problem_is_felt_as_anxiety 0.57 (base 0.10; value family_safety 0.00 x 0.50 = 0.00; trait anxious 0.80 x 0.40 = +0.32; trait empathetic 0.75 x 0.20 = +0.15)
+#73 [Experience] mara (b03) <- #70
+      kept it as concern, felt as fear
+        meaning: concern
+        source: witnessed
+        confidence: 1.00
+        salience: 0.89
+#74 [LedgerEntry] mara (b03) <- #73
+      will not forget: proved_right (leo)
+        weight: 0.40
+#75 [BeliefChange] mara (b03) <- #73
+      more_knowledgeable(leo,survival): 0.00 -> pending
+#76 [BeliefChange] mara (b03) <- #75
+      more_knowledgeable(leo,survival) moved 0.00 -> 0.20
+        delta: +0.20
+#77 [Event] (b04)
+      Daniel says they should cross to the neighbour's house tonight and see what is left there.
+#78 [Access] daniel (b04) <- #77
+      was there and saw it
+#79 [Interpretation] daniel (b04) <- #78
+      knew their own intention: take_responsibility
+        meaning: take_responsibility
+        source: own intention
+#80 [Experience] daniel (b04) <- #79
+      kept it as take_responsibility
+        meaning: take_responsibility
+        source: own intention
+        confidence: 1.00
+        salience: 0.15
+#81 [Access] elena (b04) <- #77
+      was there and saw it
+#82 [Interpretation] elena (b04) <- #81
+      read it as concern (0.84)
+        meaning: concern
+        weight: 0.84
+        runner_up: threat 0.65
+        rules: a_dangerous_plan_is_a_problem_to_solve -> concern 0.84 (base 0.40; value family_safety 1.00 x 0.30 = +0.30; trait cautious 0.70 x 0.20 = +0.14) | a_dangerous_plan_frightens_the_frightened -> threat 0.65 (base 0.20; trait anxious 0.75 x 0.60 = +0.45) | corrected_by_a_junior_with_people_watching -> disrespect 0.53 (base 0.35; trait proud 0.35 x 0.50 = +0.18; value respect 0.00 x 0.40 = 0.00; belief tendency(daniel,does_not_respect_me) 0.00 x 0.40 = 0.00; remembers overruled_me of daniel 0.00 x 0.30 = 0.00)
+#83 [Appraisal] elena (b04) <- #82
+      concern touched family_safety: anxiety 1.08 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 1.08
+        rules: a_problem_is_felt_as_anxiety 1.08 (base 0.10; value family_safety 1.00 x 0.50 = +0.50; trait anxious 0.75 x 0.40 = +0.30; trait empathetic 0.90 x 0.20 = +0.18)
+#84 [Appraisal] elena (b04) <- #82
+      concern touched family_safety: fear 0.65 (family_safety)
+        emotion: fear
+        concern: family_safety
+        intensity: 0.65
+        rules: a_problem_is_felt_as_fear_by_the_fearful 0.65 (base 0.05; trait anxious 0.75 x 0.80 = +0.60)
+#85 [Experience] elena (b04) <- #82
+      kept it as concern, felt as anxiety
+        meaning: concern
+        source: witnessed
+        confidence: 1.00
+        salience: 1.00
+#86 [Access] leo (b04) <- #77
+      was there and saw it
+#87 [Interpretation] leo (b04) <- #86
+      read it as concern (0.84)
+        meaning: concern
+        weight: 0.84
+        runner_up: threat 0.35
+        rules: a_dangerous_plan_is_a_problem_to_solve -> concern 0.84 (base 0.40; value family_safety 1.00 x 0.30 = +0.30; trait cautious 0.70 x 0.20 = +0.14) | a_dangerous_plan_frightens_the_frightened -> threat 0.35 (base 0.20; trait anxious 0.25 x 0.60 = +0.15)
+#88 [Appraisal] leo (b04) <- #87
+      concern touched family_safety: anxiety 0.92 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 0.92
+        rules: a_problem_is_felt_as_anxiety 0.84 (base 0.10; value family_safety 1.00 x 0.50 = +0.50; trait anxious 0.25 x 0.40 = +0.10; trait empathetic 0.70 x 0.20 = +0.14)
+        scaled_by_reach: 1.10
+#89 [Appraisal] leo (b04) <- #87
+      concern touched family_safety: fear 0.28 (family_safety)
+        emotion: fear
+        concern: family_safety
+        intensity: 0.28
+        rules: a_problem_is_felt_as_fear_by_the_fearful 0.25 (base 0.05; trait anxious 0.25 x 0.80 = +0.20)
+        scaled_by_reach: 1.10
+#90 [Experience] leo (b04) <- #87
+      kept it as concern, felt as anxiety
+        meaning: concern
+        source: witnessed
+        confidence: 1.00
+        salience: 1.00
+#91 [Access] mara (b04) <- #77
+      was there and saw it
+#92 [Interpretation] mara (b04) <- #91
+      read it as threat (0.68)
+        meaning: threat
+        weight: 0.68
+        runner_up: concern 0.50
+        rules: a_dangerous_plan_is_a_problem_to_solve -> concern 0.50 (base 0.40; value family_safety 0.00 x 0.30 = 0.00; trait cautious 0.50 x 0.20 = +0.10) | a_dangerous_plan_frightens_the_frightened -> threat 0.68 (base 0.20; trait anxious 0.80 x 0.60 = +0.48)
+#93 [Appraisal] mara (b04) <- #92
+      threat touched family_safety: fear 0.99 (family_safety)
+        emotion: fear
+        concern: family_safety
+        intensity: 0.99
+        rules: a_threat_is_felt_as_fear 0.71 (base 0.15; trait anxious 0.80 x 0.70 = +0.56)
+        scaled_by_reach: 1.40
+#94 [Appraisal] mara (b04) <- #92
+      threat touched family_safety: anxiety 0.46 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 0.46
+        rules: a_threat_to_the_family_is_felt_as_anxiety 0.33 (base 0.10; value family_safety 0.00 x 0.60 = 0.00; trait empathetic 0.75 x 0.30 = +0.23)
+        scaled_by_reach: 1.40
+#95 [Experience] mara (b04) <- #92
+      kept it as threat, felt as fear
+        meaning: threat
+        source: witnessed
+        confidence: 1.00
+        salience: 1.00
+#96 [Event] (b05)
+      Leo lays out, evenly and in front of everyone, why crossing at night gets someone killed. Daniel drops it.
+#97 [Access] daniel (b05) <- #96
+      was there and saw it
+#98 [Interpretation] daniel (b05) <- #97
+      read it as disrespect (1.18)
+        meaning: disrespect
+        weight: 1.18
+        runner_up: support 1.03
+        rules: a_dangerous_plan_frightens_the_frightened -> threat 0.59 (base 0.20; trait anxious 0.65 x 0.60 = +0.39) | corrected_by_a_junior_with_people_watching -> disrespect 1.18 (base 0.35; trait proud 0.85 x 0.50 = +0.43; value respect 0.75 x 0.40 = +0.30; belief tendency(leo,does_not_respect_me) 0.25 x 0.40 = +0.10; remembers overruled_me of leo 0.00 x 0.30 = 0.00) | someone_stopping_something_dangerous -> support 1.03 (base 0.35; value family_safety 0.50 x 0.50 = +0.25; trait cautious 0.35 x 0.30 = +0.11; trait anxious 0.65 x 0.50 = +0.33)
+#99 [Appraisal] daniel (b05) <- #98
+      disrespect touched respect: shame 1.90 (respect)
+        emotion: shame
+        concern: respect
+        intensity: 1.90
+        rules: a_slight_is_felt_as_shame 0.80 (base 0.00; trait proud 0.85 x 0.50 = +0.43; value respect 0.75 x 0.50 = +0.38) | a_slight_in_front_of_others_is_worse 0.66 (base 0.10; trait proud 0.85 x 0.35 = +0.30; value respect 0.75 x 0.35 = +0.26)
+        scaled_by_reach: 1.30
+#100 [Appraisal] daniel (b05) <- #98
+      disrespect touched respect: anger 1.10 toward leo (respect)
+        emotion: anger
+        concern: respect
+        intensity: 1.10
+        rules: a_slight_is_felt_as_anger 0.85 (base 0.10; trait dominant 0.85 x 0.40 = +0.34; trait impulsive 0.60 x 0.30 = +0.18; value respect 0.75 x 0.30 = +0.23)
+        toward: leo
+        scaled_by_reach: 1.30
+#101 [Appraisal] daniel (b05) <- #98
+      disrespect touched autonomy: frustration 0.45 toward leo (autonomy)
+        emotion: frustration
+        concern: autonomy
+        intensity: 0.45
+        rules: a_slight_is_felt_as_being_tired_of_this 0.35 (base 0.15; value autonomy 0.00 x 0.50 = 0.00; trait empathetic 0.50 x 0.25 = +0.13; trait cautious 0.35 x 0.20 = +0.07)
+        toward: leo
+        scaled_by_reach: 1.30
+#102 [Appraisal] daniel (b05) <- #98
+      disrespect touched closeness: hurt 0.23 toward leo (closeness)
+        emotion: hurt
+        concern: closeness
+        intensity: 0.23
+        rules: a_slight_from_someone_close_is_felt_as_hurt 0.18 (base 0.15; value closeness 0.00 x 0.55 = 0.00; trait empathetic 0.50 x 0.30 = +0.15; trait anxious 0.65 x 0.20 = +0.13; trait dominant 0.85 x -0.30 = -0.26)
+        toward: leo
+        scaled_by_reach: 1.30
+#103 [Experience] daniel (b05) <- #98
+      kept it as disrespect, felt as shame
+        meaning: disrespect
+        source: witnessed
+        confidence: 1.00
+        salience: 1.00
+#104 [BeliefChange] daniel (b05) <- #103
+      tendency(leo,does_not_respect_me): 0.25 -> pending
+#105 [BeliefChange] daniel (b05) <- #104
+      tendency(leo,does_not_respect_me) moved 0.25 -> 0.43
+        rule: slights_add_up
+        delta: +0.24
+#106 [BeliefChange] daniel (b05) <- #103
+      tendency(leo,treats_me_like_a_child): 0.00 -> pending
+#107 [BeliefChange] daniel (b05) <- #106
+      tendency(leo,treats_me_like_a_child) moved 0.00 -> 0.12
+        rule: being_handled_confirms_being_handled
+        delta: +0.12
+#108 [LedgerEntry] daniel (b05) <- #103
+      will not forget: overruled_me (leo)
+        weight: 0.70
+#109 [Access] elena (b05) <- #96
+      was there and saw it
+#110 [Interpretation] elena (b05) <- #109
+      read it as support (1.44)
+        meaning: support
+        weight: 1.44
+        runner_up: threat 0.65
+        rules: a_dangerous_plan_frightens_the_frightened -> threat 0.65 (base 0.20; trait anxious 0.75 x 0.60 = +0.45) | someone_stopping_something_dangerous -> support 1.44 (base 0.35; value family_safety 1.00 x 0.50 = +0.50; trait cautious 0.70 x 0.30 = +0.21; trait anxious 0.75 x 0.50 = +0.38)
+#111 [Appraisal] elena (b05) <- #110
+      support touched closeness: gratitude 0.91 toward leo (closeness)
+        emotion: gratitude
+        concern: closeness
+        intensity: 0.91
+        rules: help_at_all_is_felt_as_gratitude 0.91 (base 0.10; trait empathetic 0.90 x 0.30 = +0.27; value closeness 0.75 x 0.25 = +0.19; value family_safety 1.00 x 0.35 = +0.35)
+        toward: leo
+#112 [Appraisal] elena (b05) <- #110
+      support touched family_safety: relief 0.63 (family_safety)
+        emotion: relief
+        concern: family_safety
+        intensity: 0.63
+        rules: help_is_felt_as_relief_by_the_frightened 0.63 (base 0.10; trait anxious 0.75 x 0.70 = +0.53)
+#113 [Experience] elena (b05) <- #110
+      kept it as support, felt as gratitude
+        meaning: support
+        source: witnessed
+        confidence: 1.00
+        salience: 0.97
+#114 [BeliefChange] elena (b05) <- #113
+      tendency(leo,does_not_respect_me): 0.00 -> pending
+#115 [BeliefChange] elena (b05) <- #114
+      tendency(leo,does_not_respect_me) moved 0.00 -> 0.00
+        rule: kindness_wears_it_down
+        delta: -0.10
+#116 [LedgerEntry] elena (b05) <- #113
+      will not forget: protected_family (leo)
+        weight: 0.50
+#117 [Access] leo (b05) <- #96
+      was there and saw it
+#118 [Interpretation] leo (b05) <- #117
+      knew their own intention: protect
+        meaning: protect
+        source: own intention
+#119 [Appraisal] leo (b05) <- #118
+      protect touched family_safety: anxiety 0.36 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 0.36
+        rules: looking_after_someone_does_not_stop_the_worry 0.36 (base 0.00; trait anxious 0.25 x 0.75 = +0.19; trait empathetic 0.70 x 0.25 = +0.18)
+#120 [Experience] leo (b05) <- #118
+      kept it as protect, felt as anxiety
+        meaning: protect
+        source: own intention
+        confidence: 1.00
+        salience: 0.46
+#121 [Access] mara (b05) <- #96
+      was there and saw it
+#122 [Interpretation] mara (b05) <- #121
+      read it as support (0.90)
+        meaning: support
+        weight: 0.90
+        runner_up: threat 0.68
+        rules: a_dangerous_plan_frightens_the_frightened -> threat 0.68 (base 0.20; trait anxious 0.80 x 0.60 = +0.48) | someone_stopping_something_dangerous -> support 0.90 (base 0.35; value family_safety 0.00 x 0.50 = 0.00; trait cautious 0.50 x 0.30 = +0.15; trait anxious 0.80 x 0.50 = +0.40)
+#123 [Appraisal] mara (b05) <- #122
+      support touched family_safety: relief 0.66 (family_safety)
+        emotion: relief
+        concern: family_safety
+        intensity: 0.66
+        rules: help_is_felt_as_relief_by_the_frightened 0.66 (base 0.10; trait anxious 0.80 x 0.70 = +0.56)
+#124 [Appraisal] mara (b05) <- #122
+      support touched closeness: gratitude 0.58 toward leo (closeness)
+        emotion: gratitude
+        concern: closeness
+        intensity: 0.58
+        rules: help_at_all_is_felt_as_gratitude 0.58 (base 0.10; trait empathetic 0.75 x 0.30 = +0.23; value closeness 1.00 x 0.25 = +0.25; value family_safety 0.00 x 0.35 = 0.00)
+        toward: leo
+#125 [Experience] mara (b05) <- #122
+      kept it as support, felt as relief
+        meaning: support
+        source: witnessed
+        confidence: 1.00
+        salience: 0.88
+#126 [BeliefChange] mara (b05) <- #125
+      tendency(leo,does_not_respect_me): 0.00 -> pending
+#127 [BeliefChange] mara (b05) <- #126
+      tendency(leo,does_not_respect_me) moved 0.00 -> 0.00
+        rule: kindness_wears_it_down
+        delta: -0.10
+#128 [Event] (b06)
+      Later, louder than he meant to be, Daniel tells Leo that he is the oldest and the decisions are his.
+#129 [Access] daniel (b06) <- #128
+      was there and saw it
+#130 [Interpretation] daniel (b06) <- #129
+      knew their own intention: assert_authority
+        meaning: assert_authority
+        source: own intention
+#131 [Appraisal] daniel (b06) <- #130
+      assert_authority touched respect: anger 0.95 toward leo (respect)
+        emotion: anger
+        concern: respect
+        intensity: 0.95
+        rules: asserting_yourself_is_done_angry 0.95 (base 0.20; trait dominant 0.85 x 0.40 = +0.34; trait impulsive 0.60 x 0.30 = +0.18; value respect 0.75 x 0.30 = +0.23)
+        toward: leo
+#132 [Experience] daniel (b06) <- #130
+      kept it as assert_authority, felt as anger
+        meaning: assert_authority
+        source: own intention
+        confidence: 1.00
+        salience: 0.95
+#133 [Access] elena (b06) <- #128
+      was there and saw it
+#134 [Interpretation] elena (b06) <- #133
+      read it as threat (1.40)
+        meaning: threat
+        weight: 1.40
+        runner_up: concern 1.14
+        rules: a_raised_voice_is_frightening -> threat 0.73 (base 0.35; trait anxious 0.75 x 0.50 = +0.38) | an_argument_about_to_start -> concern 1.14 (base 0.30; value family_safety 1.00 x 0.40 = +0.40; perceptiveness 0.85 x 0.30 = +0.26; trait empathetic 0.90 x 0.20 = +0.18) | the_family_pulling_apart -> threat 0.68 (base 0.15; trait anxious 0.75 x 0.70 = +0.53) | authority_taken_without_asking -> challenge 0.86 (base 0.40; value control 0.00 x 0.40 = 0.00; trait dominant 0.50 x 0.40 = +0.20; perceptiveness 0.85 x 0.30 = +0.26)
+#135 [Appraisal] elena (b06) <- #134
+      threat touched family_safety: anxiety 1.16 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 1.16
+        rules: a_threat_to_the_family_is_felt_as_anxiety 0.97 (base 0.10; value family_safety 1.00 x 0.60 = +0.60; trait empathetic 0.90 x 0.30 = +0.27)
+        scaled_by_reach: 1.20
+#136 [Appraisal] elena (b06) <- #134
+      threat touched family_safety: fear 0.81 (family_safety)
+        emotion: fear
+        concern: family_safety
+        intensity: 0.81
+        rules: a_threat_is_felt_as_fear 0.68 (base 0.15; trait anxious 0.75 x 0.70 = +0.53)
+        scaled_by_reach: 1.20
+#137 [Experience] elena (b06) <- #134
+      kept it as threat, felt as anxiety
+        meaning: threat
+        source: witnessed
+        confidence: 1.00
+        salience: 1.00
+#138 [Access] leo (b06) <- #128
+      was there and saw it
+#139 [Interpretation] leo (b06) <- #138
+      read it as disrespect (1.07)
+        meaning: disrespect
+        weight: 1.07
+        runner_up: threat 0.80
+        rules: a_raised_voice_is_frightening -> threat 0.48 (base 0.35; trait anxious 0.25 x 0.50 = +0.13) | being_ordered_about -> disrespect 1.07 (base 0.50; trait proud 0.50 x 0.40 = +0.20; value autonomy 0.50 x 0.30 = +0.15; value respect 0.00 x 0.30 = 0.00; belief tendency(daniel,needs_to_be_in_charge) 0.55 x 0.40 = +0.22) | the_family_pulling_apart -> threat 0.33 (base 0.15; trait anxious 0.25 x 0.70 = +0.18)
+#140 [Appraisal] leo (b06) <- #139
+      disrespect touched autonomy: frustration 0.72 toward daniel (autonomy)
+        emotion: frustration
+        concern: autonomy
+        intensity: 0.72
+        rules: a_slight_is_felt_as_being_tired_of_this 0.72 (base 0.15; value autonomy 0.50 x 0.50 = +0.25; trait empathetic 0.70 x 0.25 = +0.18; trait cautious 0.70 x 0.20 = +0.14)
+        toward: daniel
+#141 [Appraisal] leo (b06) <- #139
+      disrespect touched respect: shame 0.53 (respect)
+        emotion: shame
+        concern: respect
+        intensity: 0.53
+        rules: a_slight_is_felt_as_shame 0.25 (base 0.00; trait proud 0.50 x 0.50 = +0.25; value respect 0.00 x 0.50 = 0.00) | a_slight_in_front_of_others_is_worse 0.28 (base 0.10; trait proud 0.50 x 0.35 = +0.18; value respect 0.00 x 0.35 = 0.00)
+#142 [Appraisal] leo (b06) <- #139
+      disrespect touched closeness: hurt 0.44 toward daniel (closeness)
+        emotion: hurt
+        concern: closeness
+        intensity: 0.44
+        rules: a_slight_from_someone_close_is_felt_as_hurt 0.44 (base 0.15; value closeness 0.25 x 0.55 = +0.14; trait empathetic 0.70 x 0.30 = +0.21; trait anxious 0.25 x 0.20 = +0.05; trait dominant 0.35 x -0.30 = -0.11)
+        toward: daniel
+#143 [Appraisal] leo (b06) <- #139
+      disrespect touched respect: anger 0.30 toward daniel (respect)
+        emotion: anger
+        concern: respect
+        intensity: 0.30
+        rules: a_slight_is_felt_as_anger 0.30 (base 0.10; trait dominant 0.35 x 0.40 = +0.14; trait impulsive 0.20 x 0.30 = +0.06; value respect 0.00 x 0.30 = 0.00)
+        toward: daniel
+#144 [Experience] leo (b06) <- #139
+      kept it as disrespect, felt as frustration
+        meaning: disrespect
+        source: witnessed
+        confidence: 1.00
+        salience: 0.96
+#145 [BeliefChange] leo (b06) <- #144
+      tendency(daniel,does_not_respect_me): 0.00 -> pending
+#146 [BeliefChange] leo (b06) <- #145
+      tendency(daniel,does_not_respect_me) moved 0.00 -> 0.20
+        rule: slights_add_up
+        delta: +0.20
+#147 [BeliefChange] leo (b06) <- #144
+      tendency(daniel,treats_me_like_a_child): 0.00 -> pending
+#148 [BeliefChange] leo (b06) <- #147
+      tendency(daniel,treats_me_like_a_child) moved 0.00 -> 0.12
+        rule: being_handled_confirms_being_handled
+        delta: +0.12
+#149 [LedgerEntry] leo (b06) <- #144
+      will not forget: raised_voice_at_me (daniel)
+        weight: 0.60
+#150 [Access] mara (b06) <- #128
+      was there and saw it
+#151 [Interpretation] mara (b06) <- #150
+      read it as threat (1.46)
+        meaning: threat
+        weight: 1.46
+        runner_up: concern 0.63
+        rules: a_raised_voice_is_frightening -> threat 0.75 (base 0.35; trait anxious 0.80 x 0.50 = +0.40) | an_argument_about_to_start -> concern 0.63 (base 0.30; value family_safety 0.00 x 0.40 = 0.00; perceptiveness 0.60 x 0.30 = +0.18; trait empathetic 0.75 x 0.20 = +0.15) | the_family_pulling_apart -> threat 0.71 (base 0.15; trait anxious 0.80 x 0.70 = +0.56)
+#152 [Appraisal] mara (b06) <- #151
+      threat touched family_safety: fear 0.99 (family_safety)
+        emotion: fear
+        concern: family_safety
+        intensity: 0.99
+        rules: a_threat_is_felt_as_fear 0.71 (base 0.15; trait anxious 0.80 x 0.70 = +0.56)
+        scaled_by_reach: 1.40
+#153 [Appraisal] mara (b06) <- #151
+      threat touched family_safety: anxiety 0.46 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 0.46
+        rules: a_threat_to_the_family_is_felt_as_anxiety 0.33 (base 0.10; value family_safety 0.00 x 0.60 = 0.00; trait empathetic 0.75 x 0.30 = +0.23)
+        scaled_by_reach: 1.40
+#154 [Experience] mara (b06) <- #151
+      kept it as threat, felt as fear
+        meaning: threat
+        source: witnessed
+        confidence: 1.00
+        salience: 1.00
+#155 [LedgerEntry] mara (b06) <- #154
+      will not forget: raised_voice (daniel)
+        weight: 0.50
+#156 [Event] (b07)
+      Elena counts what is left in the pantry with Mara beside her.
+#157 [Access] daniel (b07) <- #156
+      was not there, and learns nothing
+#158 [Access] elena (b07) <- #156
+      was there and saw it
+#159 [Interpretation] elena (b07) <- #158
+      knew their own intention: take_responsibility
+        meaning: take_responsibility
+        source: own intention
+#160 [Experience] elena (b07) <- #159
+      kept it as take_responsibility
+        meaning: take_responsibility
+        source: own intention
+        confidence: 1.00
+        salience: 0.15
+#161 [Access] leo (b07) <- #156
+      was not there, and learns nothing
+#162 [Access] mara (b07) <- #156
+      was there and saw it
+#163 [Interpretation] mara (b07) <- #162
+      read it as neutral (0.00)
+        meaning: neutral
+        weight: 0.00
+#164 [Experience] mara (b07) <- #163
+      kept it as neutral
+        meaning: neutral
+        source: witnessed
+        confidence: 1.00
+        salience: 0.15
+#165 [Event] (b08)
+      Mara cries in the night. Elena sits with her until it stops.
+#166 [Access] daniel (b08) <- #165
+      was not there, and learns nothing
+#167 [Access] elena (b08) <- #165
+      was there and saw it
+#168 [Interpretation] elena (b08) <- #167
+      knew their own intention: protect
+        meaning: protect
+        source: own intention
+#169 [Appraisal] elena (b08) <- #168
+      protect touched family_safety: anxiety 0.79 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 0.79
+        rules: looking_after_someone_does_not_stop_the_worry 0.79 (base 0.00; trait anxious 0.75 x 0.75 = +0.56; trait empathetic 0.90 x 0.25 = +0.23)
+#170 [Experience] elena (b08) <- #168
+      kept it as protect, felt as anxiety
+        meaning: protect
+        source: own intention
+        confidence: 1.00
+        salience: 0.82
+#171 [Access] leo (b08) <- #165
+      heard it without seeing it
+#172 [Interpretation] leo (b08) <- #171
+      read it as concern (0.50)
+        meaning: concern
+        weight: 0.50
+        rules: what_you_only_hear_worries_you -> concern 0.50
+#173 [Appraisal] leo (b08) <- #172
+      concern touched family_safety: anxiety 0.69 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 0.69
+        rules: a_problem_is_felt_as_anxiety 0.84 (base 0.10; value family_safety 1.00 x 0.50 = +0.50; trait anxious 0.25 x 0.40 = +0.10; trait empathetic 0.70 x 0.20 = +0.14)
+        scaled_by_reach: 0.83
+#174 [Appraisal] leo (b08) <- #172
+      concern touched family_safety: fear 0.21 (family_safety)
+        emotion: fear
+        concern: family_safety
+        intensity: 0.21
+        rules: a_problem_is_felt_as_fear_by_the_fearful 0.25 (base 0.05; trait anxious 0.25 x 0.80 = +0.20)
+        scaled_by_reach: 0.83
+#175 [Experience] leo (b08) <- #172
+      kept it as concern, felt as anxiety
+        meaning: concern
+        source: overheard
+        confidence: 0.60
+        salience: 0.87
+#176 [Access] mara (b08) <- #165
+      was there and saw it
+#177 [Interpretation] mara (b08) <- #176
+      read it as support (0.60)
+        meaning: support
+        weight: 0.60
+        rules: a_good_turn_reads_as_support -> support 0.60
+#178 [Appraisal] mara (b08) <- #177
+      support touched closeness: gratitude 1.68 toward elena (closeness)
+        emotion: gratitude
+        concern: closeness
+        intensity: 1.68
+        rules: help_aimed_at_you_is_felt_as_gratitude 1.10 (base 0.50; trait empathetic 0.75 x 0.40 = +0.30; value closeness 1.00 x 0.30 = +0.30) | help_at_all_is_felt_as_gratitude 0.58 (base 0.10; trait empathetic 0.75 x 0.30 = +0.23; value closeness 1.00 x 0.25 = +0.25; value family_safety 0.00 x 0.35 = 0.00)
+        toward: elena
+#179 [Appraisal] mara (b08) <- #177
+      support touched family_safety: relief 0.66 (family_safety)
+        emotion: relief
+        concern: family_safety
+        intensity: 0.66
+        rules: help_is_felt_as_relief_by_the_frightened 0.66 (base 0.10; trait anxious 0.80 x 0.70 = +0.56)
+#180 [Experience] mara (b08) <- #177
+      kept it as support, felt as gratitude
+        meaning: support
+        source: witnessed
+        confidence: 1.00
+        salience: 1.00
+#181 [BeliefChange] mara (b08) <- #180
+      tendency(elena,does_not_respect_me): 0.00 -> pending
+#182 [BeliefChange] mara (b08) <- #181
+      tendency(elena,does_not_respect_me) moved 0.00 -> 0.00
+        rule: kindness_wears_it_down
+        delta: -0.10
+#183 [LedgerEntry] mara (b08) <- #180
+      will not forget: comforted_me (elena)
+        weight: 0.70
+#184 [Event] (b09)
+      Mara freezes in the doorway with something moving in the street. Daniel picks her up and carries her inside.
+#185 [Access] daniel (b09) <- #184
+      was there and saw it
+#186 [Interpretation] daniel (b09) <- #185
+      knew their own intention: protect
+        meaning: protect
+        source: own intention
+#187 [Appraisal] daniel (b09) <- #186
+      protect touched family_safety: anxiety 0.61 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 0.61
+        rules: looking_after_someone_does_not_stop_the_worry 0.61 (base 0.00; trait anxious 0.65 x 0.75 = +0.49; trait empathetic 0.50 x 0.25 = +0.13)
+#188 [Experience] daniel (b09) <- #186
+      kept it as protect, felt as anxiety
+        meaning: protect
+        source: own intention
+        confidence: 1.00
+        salience: 0.67
+#189 [Access] elena (b09) <- #184
+      was there and saw it
+#190 [Interpretation] elena (b09) <- #189
+      read it as support (0.60)
+        meaning: support
+        weight: 0.60
+        rules: a_good_turn_reads_as_support -> support 0.60
+#191 [Appraisal] elena (b09) <- #190
+      support touched closeness: gratitude 0.91 toward daniel (closeness)
+        emotion: gratitude
+        concern: closeness
+        intensity: 0.91
+        rules: help_at_all_is_felt_as_gratitude 0.91 (base 0.10; trait empathetic 0.90 x 0.30 = +0.27; value closeness 0.75 x 0.25 = +0.19; value family_safety 1.00 x 0.35 = +0.35)
+        toward: daniel
+#192 [Appraisal] elena (b09) <- #190
+      support touched family_safety: relief 0.63 (family_safety)
+        emotion: relief
+        concern: family_safety
+        intensity: 0.63
+        rules: help_is_felt_as_relief_by_the_frightened 0.63 (base 0.10; trait anxious 0.75 x 0.70 = +0.53)
+#193 [Experience] elena (b09) <- #190
+      kept it as support, felt as gratitude
+        meaning: support
+        source: witnessed
+        confidence: 1.00
+        salience: 0.97
+#194 [BeliefChange] elena (b09) <- #193
+      tendency(daniel,does_not_respect_me): 0.00 -> pending
+#195 [BeliefChange] elena (b09) <- #194
+      tendency(daniel,does_not_respect_me) moved 0.00 -> 0.00
+        rule: kindness_wears_it_down
+        delta: -0.10
+#196 [LedgerEntry] elena (b09) <- #193
+      will not forget: protected_family (daniel)
+        weight: 0.70
+#197 [Access] leo (b09) <- #184
+      was there and saw it
+#198 [Interpretation] leo (b09) <- #197
+      read it as support (0.60)
+        meaning: support
+        weight: 0.60
+        rules: a_good_turn_reads_as_support -> support 0.60
+#199 [Appraisal] leo (b09) <- #198
+      support touched closeness: gratitude 0.72 toward daniel (closeness)
+        emotion: gratitude
+        concern: closeness
+        intensity: 0.72
+        rules: help_at_all_is_felt_as_gratitude 0.72 (base 0.10; trait empathetic 0.70 x 0.30 = +0.21; value closeness 0.25 x 0.25 = +0.06; value family_safety 1.00 x 0.35 = +0.35)
+        toward: daniel
+#200 [Appraisal] leo (b09) <- #198
+      support touched family_safety: relief 0.28 (family_safety)
+        emotion: relief
+        concern: family_safety
+        intensity: 0.28
+        rules: help_is_felt_as_relief_by_the_frightened 0.28 (base 0.10; trait anxious 0.25 x 0.70 = +0.18)
+#201 [Experience] leo (b09) <- #198
+      kept it as support, felt as gratitude
+        meaning: support
+        source: witnessed
+        confidence: 1.00
+        salience: 0.83
+#202 [BeliefChange] leo (b09) <- #201
+      tendency(daniel,does_not_respect_me): 0.20 -> pending
+#203 [BeliefChange] leo (b09) <- #202
+      tendency(daniel,does_not_respect_me) moved 0.20 -> 0.18
+        rule: kindness_wears_it_down
+        delta: -0.10
+#204 [LedgerEntry] leo (b09) <- #201
+      will not forget: protected_family (daniel)
+        weight: 0.60
+#205 [Access] mara (b09) <- #184
+      was there and saw it
+#206 [Interpretation] mara (b09) <- #205
+      read it as support (0.60)
+        meaning: support
+        weight: 0.60
+        rules: a_good_turn_reads_as_support -> support 0.60
+#207 [Appraisal] mara (b09) <- #206
+      support touched closeness: gratitude 1.68 toward daniel (closeness)
+        emotion: gratitude
+        concern: closeness
+        intensity: 1.68
+        rules: help_aimed_at_you_is_felt_as_gratitude 1.10 (base 0.50; trait empathetic 0.75 x 0.40 = +0.30; value closeness 1.00 x 0.30 = +0.30) | help_at_all_is_felt_as_gratitude 0.58 (base 0.10; trait empathetic 0.75 x 0.30 = +0.23; value closeness 1.00 x 0.25 = +0.25; value family_safety 0.00 x 0.35 = 0.00)
+        toward: daniel
+#208 [Appraisal] mara (b09) <- #206
+      support touched family_safety: relief 0.66 (family_safety)
+        emotion: relief
+        concern: family_safety
+        intensity: 0.66
+        rules: help_is_felt_as_relief_by_the_frightened 0.66 (base 0.10; trait anxious 0.80 x 0.70 = +0.56)
+#209 [Experience] mara (b09) <- #206
+      kept it as support, felt as gratitude
+        meaning: support
+        source: witnessed
+        confidence: 1.00
+        salience: 1.00
+#210 [BeliefChange] mara (b09) <- #209
+      tendency(daniel,does_not_respect_me): 0.00 -> pending
+#211 [BeliefChange] mara (b09) <- #210
+      tendency(daniel,does_not_respect_me) moved 0.00 -> 0.00
+        rule: kindness_wears_it_down
+        delta: -0.10
+#212 [LedgerEntry] mara (b09) <- #209
+      will not forget: protected_me (daniel)
+        weight: 0.80
+#213 [Event] (p01)
+      Leo says maybe they should let someone else handle this one.
+#214 [Access] daniel (p01) <- #213
+      was there and saw it
+#215 [Interpretation] daniel (p01) <- #214
+      read it as disrespect (1.46)
+        meaning: disrespect
+        weight: 1.46
+        runner_up: concern 0.71
+        rules: corrected_by_a_junior_with_people_watching -> disrespect 1.46 (base 0.35; trait proud 0.85 x 0.50 = +0.43; value respect 0.75 x 0.40 = +0.30; belief tendency(leo,does_not_respect_me) 0.43 x 0.40 = +0.17; remembers overruled_me of leo 0.70 x 0.30 = +0.21) | an_argument_about_to_start -> concern 0.71 (base 0.30; value family_safety 0.50 x 0.40 = +0.20; perceptiveness 0.35 x 0.30 = +0.11; trait empathetic 0.50 x 0.20 = +0.10) | the_family_pulling_apart -> threat 0.61 (base 0.15; trait anxious 0.65 x 0.70 = +0.46)
+#216 [Appraisal] daniel (p01) <- #215
+      disrespect touched respect: shame 1.90 (respect)
+        emotion: shame
+        concern: respect
+        intensity: 1.90
+        rules: a_slight_is_felt_as_shame 0.80 (base 0.00; trait proud 0.85 x 0.50 = +0.43; value respect 0.75 x 0.50 = +0.38) | a_slight_in_front_of_others_is_worse 0.66 (base 0.10; trait proud 0.85 x 0.35 = +0.30; value respect 0.75 x 0.35 = +0.26)
+        scaled_by_reach: 1.30
+#217 [Appraisal] daniel (p01) <- #215
+      disrespect touched respect: anger 1.10 toward leo (respect)
+        emotion: anger
+        concern: respect
+        intensity: 1.10
+        rules: a_slight_is_felt_as_anger 0.85 (base 0.10; trait dominant 0.85 x 0.40 = +0.34; trait impulsive 0.60 x 0.30 = +0.18; value respect 0.75 x 0.30 = +0.23)
+        toward: leo
+        scaled_by_reach: 1.30
+#218 [Appraisal] daniel (p01) <- #215
+      disrespect touched autonomy: frustration 0.45 toward leo (autonomy)
+        emotion: frustration
+        concern: autonomy
+        intensity: 0.45
+        rules: a_slight_is_felt_as_being_tired_of_this 0.35 (base 0.15; value autonomy 0.00 x 0.50 = 0.00; trait empathetic 0.50 x 0.25 = +0.13; trait cautious 0.35 x 0.20 = +0.07)
+        toward: leo
+        scaled_by_reach: 1.30
+#219 [Appraisal] daniel (p01) <- #215
+      disrespect touched closeness: hurt 0.23 toward leo (closeness)
+        emotion: hurt
+        concern: closeness
+        intensity: 0.23
+        rules: a_slight_from_someone_close_is_felt_as_hurt 0.18 (base 0.15; value closeness 0.00 x 0.55 = 0.00; trait empathetic 0.50 x 0.30 = +0.15; trait anxious 0.65 x 0.20 = +0.13; trait dominant 0.85 x -0.30 = -0.26)
+        toward: leo
+        scaled_by_reach: 1.30
+#220 [Experience] daniel (p01) <- #215
+      kept it as disrespect, felt as shame
+        meaning: disrespect
+        source: witnessed
+        confidence: 1.00
+        salience: 1.00
+#221 [BeliefChange] daniel (p01) <- #220
+      tendency(leo,does_not_respect_me): 0.43 -> pending
+#222 [BeliefChange] daniel (p01) <- #221
+      tendency(leo,does_not_respect_me) moved 0.43 -> 0.56
+        rule: slights_add_up
+        delta: +0.24
+#223 [Access] elena (p01) <- #213
+      was there and saw it
+#224 [Interpretation] elena (p01) <- #223
+      read it as concern (1.14)
+        meaning: concern
+        weight: 1.14
+        runner_up: challenge 0.86
+        rules: corrected_by_a_junior_with_people_watching -> disrespect 0.53 (base 0.35; trait proud 0.35 x 0.50 = +0.18; value respect 0.00 x 0.40 = 0.00; belief tendency(leo,does_not_respect_me) 0.00 x 0.40 = 0.00; remembers overruled_me of leo 0.00 x 0.30 = 0.00) | an_argument_about_to_start -> concern 1.14 (base 0.30; value family_safety 1.00 x 0.40 = +0.40; perceptiveness 0.85 x 0.30 = +0.26; trait empathetic 0.90 x 0.20 = +0.18) | the_family_pulling_apart -> threat 0.68 (base 0.15; trait anxious 0.75 x 0.70 = +0.53) | authority_taken_without_asking -> challenge 0.86 (base 0.40; value control 0.00 x 0.40 = 0.00; trait dominant 0.50 x 0.40 = +0.20; perceptiveness 0.85 x 0.30 = +0.26)
+#225 [Appraisal] elena (p01) <- #224
+      concern touched family_safety: anxiety 1.08 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 1.08
+        rules: a_problem_is_felt_as_anxiety 1.08 (base 0.10; value family_safety 1.00 x 0.50 = +0.50; trait anxious 0.75 x 0.40 = +0.30; trait empathetic 0.90 x 0.20 = +0.18)
+#226 [Appraisal] elena (p01) <- #224
+      concern touched family_safety: fear 0.65 (family_safety)
+        emotion: fear
+        concern: family_safety
+        intensity: 0.65
+        rules: a_problem_is_felt_as_fear_by_the_fearful 0.65 (base 0.05; trait anxious 0.75 x 0.80 = +0.60)
+#227 [Experience] elena (p01) <- #224
+      kept it as concern, felt as anxiety
+        meaning: concern
+        source: witnessed
+        confidence: 1.00
+        salience: 1.00
+#228 [Access] leo (p01) <- #213
+      was there and saw it
+#229 [Interpretation] leo (p01) <- #228
+      knew their own intention: prevent_argument
+        meaning: prevent_argument
+        source: own intention
+#230 [Experience] leo (p01) <- #229
+      kept it as prevent_argument
+        meaning: prevent_argument
+        source: own intention
+        confidence: 1.00
+        salience: 0.15
+#231 [Access] mara (p01) <- #213
+      was there and saw it
+#232 [Interpretation] mara (p01) <- #231
+      read it as threat (0.71)
+        meaning: threat
+        weight: 0.71
+        runner_up: concern 0.63
+        rules: an_argument_about_to_start -> concern 0.63 (base 0.30; value family_safety 0.00 x 0.40 = 0.00; perceptiveness 0.60 x 0.30 = +0.18; trait empathetic 0.75 x 0.20 = +0.15) | the_family_pulling_apart -> threat 0.71 (base 0.15; trait anxious 0.80 x 0.70 = +0.56)
+#233 [Appraisal] mara (p01) <- #232
+      threat touched family_safety: fear 0.99 (family_safety)
+        emotion: fear
+        concern: family_safety
+        intensity: 0.99
+        rules: a_threat_is_felt_as_fear 0.71 (base 0.15; trait anxious 0.80 x 0.70 = +0.56)
+        scaled_by_reach: 1.40
+#234 [Appraisal] mara (p01) <- #232
+      threat touched family_safety: anxiety 0.46 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 0.46
+        rules: a_threat_to_the_family_is_felt_as_anxiety 0.33 (base 0.10; value family_safety 0.00 x 0.60 = 0.00; trait empathetic 0.75 x 0.30 = +0.23)
+        scaled_by_reach: 1.40
+#235 [Experience] mara (p01) <- #232
+      kept it as threat, felt as fear
+        meaning: threat
+        source: witnessed
+        confidence: 1.00
+        salience: 1.00
+#236 [Event] (p02)
+      Daniel empties Mara's bag onto the bed while she is standing there.
+#237 [Access] daniel (p02) <- #236
+      was there and saw it
+#238 [Interpretation] daniel (p02) <- #237
+      knew their own intention: take_responsibility
+        meaning: take_responsibility
+        source: own intention
+#239 [Experience] daniel (p02) <- #238
+      kept it as take_responsibility
+        meaning: take_responsibility
+        source: own intention
+        confidence: 1.00
+        salience: 0.15
+#240 [Access] elena (p02) <- #236
+      was there and saw it
+#241 [Interpretation] elena (p02) <- #240
+      read it as challenge (0.86)
+        meaning: challenge
+        weight: 0.86
+        rules: authority_taken_without_asking -> challenge 0.86 (base 0.40; value control 0.00 x 0.40 = 0.00; trait dominant 0.50 x 0.40 = +0.20; perceptiveness 0.85 x 0.30 = +0.26)
+#242 [Appraisal] elena (p02) <- #241
+      challenge touched family_safety: anxiety 1.39 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 1.39
+        rules: being_overruled_in_your_own_house_is_felt_as_anxiety 1.07 (base 0.10; value family_safety 1.00 x 0.50 = +0.50; trait anxious 0.75 x 0.40 = +0.30; perceptiveness 0.85 x 0.20 = +0.17)
+        scaled_by_reach: 1.30
+#243 [Appraisal] elena (p02) <- #241
+      challenge touched control: frustration 0.39 toward daniel (control)
+        emotion: frustration
+        concern: control
+        intensity: 0.39
+        rules: being_blocked_is_felt_as_frustration 0.30 (base 0.10; value control 0.00 x 0.60 = 0.00; trait dominant 0.50 x 0.40 = +0.20)
+        toward: daniel
+        scaled_by_reach: 1.30
+#244 [Experience] elena (p02) <- #241
+      kept it as challenge, felt as anxiety
+        meaning: challenge
+        source: witnessed
+        confidence: 1.00
+        salience: 1.00
+#245 [Access] leo (p02) <- #236
+      was not there, and learns nothing
+#246 [Access] mara (p02) <- #236
+      was there and saw it
+#247 [Interpretation] mara (p02) <- #246
+      read it as disrespect (1.26)
+        meaning: disrespect
+        weight: 1.26
+        rules: your_things_gone_through -> disrespect 1.26 (base 0.50; value autonomy 0.75 x 0.50 = +0.38; trait proud 0.55 x 0.30 = +0.17; belief tendency(daniel,treats_me_like_a_child) 0.55 x 0.40 = +0.22)
+#248 [Appraisal] mara (p02) <- #247
+      disrespect touched closeness: hurt 1.21 toward daniel (closeness)
+        emotion: hurt
+        concern: closeness
+        intensity: 1.21
+        rules: a_slight_from_someone_close_is_felt_as_hurt 1.01 (base 0.15; value closeness 1.00 x 0.55 = +0.55; trait empathetic 0.75 x 0.30 = +0.23; trait anxious 0.80 x 0.20 = +0.16; trait dominant 0.25 x -0.30 = -0.08)
+        toward: daniel
+        scaled_by_reach: 1.20
+#249 [Appraisal] mara (p02) <- #247
+      disrespect touched autonomy: frustration 0.98 toward daniel (autonomy)
+        emotion: frustration
+        concern: autonomy
+        intensity: 0.98
+        rules: a_slight_is_felt_as_being_tired_of_this 0.81 (base 0.15; value autonomy 0.75 x 0.50 = +0.38; trait empathetic 0.75 x 0.25 = +0.19; trait cautious 0.50 x 0.20 = +0.10)
+        toward: daniel
+        scaled_by_reach: 1.20
+#250 [Appraisal] mara (p02) <- #247
+      disrespect touched respect: shame 0.68 (respect)
+        emotion: shame
+        concern: respect
+        intensity: 0.68
+        rules: a_slight_is_felt_as_shame 0.28 (base 0.00; trait proud 0.55 x 0.50 = +0.28; value respect 0.00 x 0.50 = 0.00) | a_slight_in_front_of_others_is_worse 0.29 (base 0.10; trait proud 0.55 x 0.35 = +0.19; value respect 0.00 x 0.35 = 0.00)
+        scaled_by_reach: 1.20
+#251 [Appraisal] mara (p02) <- #247
+      disrespect touched respect: anger 0.49 toward daniel (respect)
+        emotion: anger
+        concern: respect
+        intensity: 0.49
+        rules: a_slight_is_felt_as_anger 0.41 (base 0.10; trait dominant 0.25 x 0.40 = +0.10; trait impulsive 0.70 x 0.30 = +0.21; value respect 0.00 x 0.30 = 0.00)
+        toward: daniel
+        scaled_by_reach: 1.20
+#252 [Experience] mara (p02) <- #247
+      kept it as disrespect, felt as hurt
+        meaning: disrespect
+        source: witnessed
+        confidence: 1.00
+        salience: 1.00
+#253 [BeliefChange] mara (p02) <- #252
+      tendency(daniel,does_not_respect_me): 0.00 -> pending
+#254 [BeliefChange] mara (p02) <- #253
+      tendency(daniel,does_not_respect_me) moved 0.00 -> 0.21
+        rule: slights_add_up
+        delta: +0.21
+#255 [BeliefChange] mara (p02) <- #252
+      tendency(daniel,treats_me_like_a_child): 0.55 -> pending
+#256 [BeliefChange] mara (p02) <- #255
+      tendency(daniel,treats_me_like_a_child) moved 0.55 -> 0.60
+        rule: being_handled_confirms_being_handled
+        delta: +0.12
+#257 [LedgerEntry] mara (p02) <- #252
+      will not forget: searched_my_things (daniel)
+        weight: 0.80
+#258 [Event] (p03)
+      Elena says she is quite sure nobody in this house would take food from the others.
+#259 [Access] daniel (p03) <- #258
+      was there and saw it
+#260 [Interpretation] daniel (p03) <- #259
+      read it as challenge (1.38)
+        meaning: challenge
+        weight: 1.38
+        runner_up: support 0.63
+        rules: being_told_to_let_it_go -> challenge 1.38 (base 0.30; value control 1.00 x 0.50 = +0.50; trait dominant 0.85 x 0.40 = +0.34; belief role_claim(daniel,leads_family) 0.80 x 0.30 = +0.24) | noticing_a_subject_being_closed -> concern 0.52 (base 0.20; perceptiveness 0.35 x 0.60 = +0.21; trait cautious 0.35 x 0.30 = +0.11) | being_spoken_up_for -> support 0.63 (base 0.30; trait anxious 0.65 x 0.50 = +0.33; value closeness 0.00 x 0.40 = 0.00)
+#261 [Appraisal] daniel (p03) <- #260
+      challenge touched control: frustration 1.25 toward elena (control)
+        emotion: frustration
+        concern: control
+        intensity: 1.25
+        rules: being_blocked_is_felt_as_frustration 1.04 (base 0.10; value control 1.00 x 0.60 = +0.60; trait dominant 0.85 x 0.40 = +0.34)
+        toward: elena
+        scaled_by_reach: 1.20
+#262 [Appraisal] daniel (p03) <- #260
+      challenge touched family_safety: anxiety 0.82 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 0.82
+        rules: being_overruled_in_your_own_house_is_felt_as_anxiety 0.68 (base 0.10; value family_safety 0.50 x 0.50 = +0.25; trait anxious 0.65 x 0.40 = +0.26; perceptiveness 0.35 x 0.20 = +0.07)
+        scaled_by_reach: 1.20
+#263 [Experience] daniel (p03) <- #260
+      kept it as challenge, felt as frustration
+        meaning: challenge
+        source: witnessed
+        confidence: 1.00
+        salience: 1.00
+#264 [Access] elena (p03) <- #258
+      was there and saw it
+#265 [Interpretation] elena (p03) <- #264
+      knew their own intention: protect
+        meaning: protect
+        source: own intention
+#266 [Appraisal] elena (p03) <- #265
+      protect touched family_safety: anxiety 0.79 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 0.79
+        rules: looking_after_someone_does_not_stop_the_worry 0.79 (base 0.00; trait anxious 0.75 x 0.75 = +0.56; trait empathetic 0.90 x 0.25 = +0.23)
+#267 [Experience] elena (p03) <- #265
+      kept it as protect, felt as anxiety
+        meaning: protect
+        source: own intention
+        confidence: 1.00
+        salience: 0.82
+#268 [Access] leo (p03) <- #258
+      was there and saw it
+#269 [Interpretation] leo (p03) <- #268
+      read it as concern (0.86)
+        meaning: concern
+        weight: 0.86
+        runner_up: support 0.53
+        rules: being_told_to_let_it_go -> challenge 0.44 (base 0.30; value control 0.00 x 0.50 = 0.00; trait dominant 0.35 x 0.40 = +0.14; belief role_claim(leo,leads_family) 0.00 x 0.30 = 0.00) | noticing_a_subject_being_closed -> concern 0.86 (base 0.20; perceptiveness 0.75 x 0.60 = +0.45; trait cautious 0.70 x 0.30 = +0.21) | being_spoken_up_for -> support 0.53 (base 0.30; trait anxious 0.25 x 0.50 = +0.13; value closeness 0.25 x 0.40 = +0.10)
+#270 [Appraisal] leo (p03) <- #269
+      concern touched family_safety: anxiety 0.92 (family_safety)
+        emotion: anxiety
+        concern: family_safety
+        intensity: 0.92
+        rules: a_problem_is_felt_as_anxiety 0.84 (base 0.10; value family_safety 1.00 x 0.50 = +0.50; trait anxious 0.25 x 0.40 = +0.10; trait empathetic 0.70 x 0.20 = +0.14)
+        scaled_by_reach: 1.10
+#271 [Appraisal] leo (p03) <- #269
+      concern touched family_safety: fear 0.28 (family_safety)
+        emotion: fear
+        concern: family_safety
+        intensity: 0.28
+        rules: a_problem_is_felt_as_fear_by_the_fearful 0.25 (base 0.05; trait anxious 0.25 x 0.80 = +0.20)
+        scaled_by_reach: 1.10
+#272 [Experience] leo (p03) <- #269
+      kept it as concern, felt as anxiety
+        meaning: concern
+        source: witnessed
+        confidence: 1.00
+        salience: 1.00
+#273 [Access] mara (p03) <- #258
+      was there and saw it
+#274 [Interpretation] mara (p03) <- #273
+      read it as support (1.10)
+        meaning: support
+        weight: 1.10
+        runner_up: concern 0.71
+        rules: being_told_to_let_it_go -> challenge 0.40 (base 0.30; value control 0.00 x 0.50 = 0.00; trait dominant 0.25 x 0.40 = +0.10; belief role_claim(mara,leads_family) 0.00 x 0.30 = 0.00) | noticing_a_subject_being_closed -> concern 0.71 (base 0.20; perceptiveness 0.60 x 0.60 = +0.36; trait cautious 0.50 x 0.30 = +0.15) | being_spoken_up_for -> support 1.10 (base 0.30; trait anxious 0.80 x 0.50 = +0.40; value closeness 1.00 x 0.40 = +0.40)
+#275 [Appraisal] mara (p03) <- #274
+      support touched family_safety: relief 0.66 (family_safety)
+        emotion: relief
+        concern: family_safety
+        intensity: 0.66
+        rules: help_is_felt_as_relief_by_the_frightened 0.66 (base 0.10; trait anxious 0.80 x 0.70 = +0.56)
+#276 [Appraisal] mara (p03) <- #274
+      support touched closeness: gratitude 0.58 toward elena (closeness)
+        emotion: gratitude
+        concern: closeness
+        intensity: 0.58
+        rules: help_at_all_is_felt_as_gratitude 0.58 (base 0.10; trait empathetic 0.75 x 0.30 = +0.23; value closeness 1.00 x 0.25 = +0.25; value family_safety 0.00 x 0.35 = 0.00)
+        toward: elena
+#277 [Experience] mara (p03) <- #274
+      kept it as support, felt as relief
+        meaning: support
+        source: witnessed
+        confidence: 1.00
+        salience: 0.88
+#278 [BeliefChange] mara (p03) <- #277
+      tendency(elena,does_not_respect_me): 0.00 -> pending
+#279 [BeliefChange] mara (p03) <- #278
+      tendency(elena,does_not_respect_me) moved 0.00 -> 0.00
+        rule: kindness_wears_it_down
+        delta: -0.10

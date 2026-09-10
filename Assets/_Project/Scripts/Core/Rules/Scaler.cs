@@ -40,15 +40,26 @@ namespace Fallow.Core.Rules
 
         public double Factor { get; set; }
 
-        public string Describe()
+        /// <summary>
+        /// Names this scaler for the trace. Pass a resolver and the tokens are
+        /// replaced by the people they stood for, so the chain reads as a
+        /// sentence about a family rather than about placeholders.
+        /// </summary>
+        public string Describe(System.Func<string, string> resolve = null)
         {
+            string R(string token) => resolve == null ? token : resolve(token) ?? token;
+
             switch (Kind)
             {
                 case ScalerKind.Trait: return $"trait {Name}";
                 case ScalerKind.Value: return $"value {Name}";
-                case ScalerKind.Belief: return $"belief {Model.BeliefKey.Of(Predicate, Args)}";
-                case ScalerKind.Ledger: return $"remembers {Entry} of {About}";
-                case ScalerKind.Emotion: return $"feeling {Name}" + (Target == null ? "" : $" toward {Target}");
+                case ScalerKind.Belief:
+                    var args = Args == null
+                        ? null
+                        : System.Linq.Enumerable.ToList(System.Linq.Enumerable.Select(Args, R));
+                    return $"belief {Model.BeliefKey.Of(Predicate, args)}";
+                case ScalerKind.Ledger: return $"remembers {Entry} of {R(About)}";
+                case ScalerKind.Emotion: return $"feeling {Name}" + (Target == null ? "" : $" toward {R(Target)}");
                 case ScalerKind.Perceptiveness: return "perceptiveness";
                 default: return Kind ?? "unknown";
             }
