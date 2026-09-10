@@ -1,0 +1,427 @@
+{
+  "note": "How events come to mean things and how meanings come to be felt. No rule may name a member of the cast; rules describe kinds of people and kinds of moment, and the characters differ only in the weights they bring. Conditions may ask about circumstances only. Anything about the person belongs in scaled_by, where it moves a weight instead of flipping a switch.",
+
+  "interpretation": [
+    {
+      "id": "a_good_turn_reads_as_support",
+      "note": "Someone doing something that helps, where you can see them do it.",
+      "when": { "valences": ["good"], "access": ["witnessed"] },
+      "label": "support",
+      "base_weight": 0.60
+    },
+    {
+      "id": "bad_news_reads_as_a_problem",
+      "note": "Something going wrong is first of all a thing to be dealt with.",
+      "when": { "valences": ["bad"] },
+      "label": "concern",
+      "base_weight": 0.60
+    },
+    {
+      "id": "what_you_only_hear_worries_you",
+      "note": "Through a wall you get the fact and not the reassurance.",
+      "when": { "access": ["overheard"] },
+      "label": "concern",
+      "base_weight": 0.50
+    },
+    {
+      "id": "a_dangerous_plan_is_a_problem_to_solve",
+      "note": "People who hold safety dear, and cautious people, hear a proposal and start counting the risks.",
+      "when": { "topics": ["going_outside"], "acts": ["suggest", "demand"] },
+      "label": "concern",
+      "base_weight": 0.40,
+      "scaled_by": [
+        { "kind": "value", "name": "family_safety", "factor": 0.30 },
+        { "kind": "trait", "name": "cautious", "factor": 0.20 }
+      ]
+    },
+    {
+      "id": "a_dangerous_plan_frightens_the_frightened",
+      "note": "The same proposal, heard by someone who is already afraid, is the door opening.",
+      "when": { "topics": ["going_outside"] },
+      "label": "threat",
+      "base_weight": 0.20,
+      "scaled_by": [
+        { "kind": "trait", "name": "anxious", "factor": 0.60 }
+      ]
+    },
+    {
+      "id": "a_raised_voice_is_frightening",
+      "note": "Volume in a small house.",
+      "when": { "tones": ["raised"] },
+      "label": "threat",
+      "base_weight": 0.35,
+      "scaled_by": [
+        { "kind": "trait", "name": "anxious", "factor": 0.50 }
+      ]
+    },
+    {
+      "id": "being_ordered_about",
+      "note": "An instruction aimed at you, weighed by how much you mind being instructed.",
+      "when": { "acts": ["demand"], "addressed": ["me"] },
+      "label": "disrespect",
+      "base_weight": 0.50,
+      "scaled_by": [
+        { "kind": "trait", "name": "proud", "factor": 0.40 },
+        { "kind": "value", "name": "autonomy", "factor": 0.30 },
+        { "kind": "value", "name": "respect", "factor": 0.30 },
+        { "kind": "belief", "predicate": "tendency", "args": ["$actor", "needs_to_be_in_charge"], "factor": 0.40 }
+      ]
+    },
+    {
+      "id": "corrected_by_a_junior_with_people_watching",
+      "note": "The correction may be right. That is not what is being weighed.",
+      "when": {
+        "acts": ["refuse", "suggest", "demand"],
+        "actor_relations": ["junior"],
+        "addressed": ["me", "group"],
+        "audience_min": 1
+      },
+      "label": "disrespect",
+      "base_weight": 0.35,
+      "scaled_by": [
+        { "kind": "trait", "name": "proud", "factor": 0.50 },
+        { "kind": "value", "name": "respect", "factor": 0.40 },
+        { "kind": "belief", "predicate": "tendency", "args": ["$actor", "does_not_respect_me"], "factor": 0.40 },
+        { "kind": "ledger", "entry": "overruled_me", "about": "$actor", "factor": 0.30 }
+      ]
+    },
+    {
+      "id": "an_argument_about_to_start",
+      "note": "Read by the people watching it, not by the person in it.",
+      "when": { "topics": ["who_decides"], "addressed": ["group", "other", "nobody"] },
+      "label": "concern",
+      "base_weight": 0.30,
+      "scaled_by": [
+        { "kind": "value", "name": "family_safety", "factor": 0.40 },
+        { "kind": "perceptiveness", "factor": 0.30 },
+        { "kind": "trait", "name": "empathetic", "factor": 0.20 }
+      ]
+    },
+    {
+      "id": "the_family_pulling_apart",
+      "note": "To an anxious person a question of who decides is not a question, it is a warning.",
+      "when": { "topics": ["who_decides"] },
+      "label": "threat",
+      "base_weight": 0.15,
+      "scaled_by": [
+        { "kind": "trait", "name": "anxious", "factor": 0.70 }
+      ]
+    },
+    {
+      "id": "your_things_gone_through",
+      "note": "Being searched by someone who has decided you are a child.",
+      "when": { "actions": ["search_belongings"], "addressed": ["me"] },
+      "label": "disrespect",
+      "base_weight": 0.50,
+      "scaled_by": [
+        { "kind": "value", "name": "autonomy", "factor": 0.50 },
+        { "kind": "trait", "name": "proud", "factor": 0.30 },
+        { "kind": "belief", "predicate": "tendency", "args": ["$actor", "treats_me_like_a_child"], "factor": 0.40 }
+      ]
+    },
+    {
+      "id": "authority_taken_without_asking",
+      "note": "A junior settling a household matter, seen by whoever thought that was theirs to settle.",
+      "when": {
+        "self_roles": ["parent"],
+        "actor_relations": ["junior"],
+        "addressed": ["other", "group", "nobody"],
+        "topics": ["missing_can", "who_decides"]
+      },
+      "label": "challenge",
+      "base_weight": 0.40,
+      "scaled_by": [
+        { "kind": "value", "name": "control", "factor": 0.40 },
+        { "kind": "trait", "name": "dominant", "factor": 0.40 },
+        { "kind": "perceptiveness", "factor": 0.30 }
+      ]
+    },
+    {
+      "id": "being_told_to_let_it_go",
+      "note": "A soft word that closes a subject, heard by whoever was not finished with it.",
+      "when": { "acts": ["tell"], "tones": ["gentle"] },
+      "label": "challenge",
+      "base_weight": 0.30,
+      "scaled_by": [
+        { "kind": "value", "name": "control", "factor": 0.50 },
+        { "kind": "trait", "name": "dominant", "factor": 0.40 },
+        { "kind": "belief", "predicate": "role_claim", "args": ["$self", "leads_family"], "factor": 0.30 }
+      ]
+    },
+    {
+      "id": "noticing_a_subject_being_closed",
+      "note": "The same soft word, heard by someone who reads people well: an answer that is not one.",
+      "when": { "acts": ["tell"], "tones": ["gentle"] },
+      "label": "concern",
+      "base_weight": 0.20,
+      "scaled_by": [
+        { "kind": "perceptiveness", "factor": 0.60 },
+        { "kind": "trait", "name": "cautious", "factor": 0.30 }
+      ]
+    },
+    {
+      "id": "being_spoken_up_for",
+      "note": "The same soft word again, heard by the person it was covering for.",
+      "when": { "acts": ["tell"], "tones": ["gentle"], "addressed": ["group"] },
+      "label": "support",
+      "base_weight": 0.30,
+      "scaled_by": [
+        { "kind": "trait", "name": "anxious", "factor": 0.50 },
+        { "kind": "value", "name": "closeness", "factor": 0.40 }
+      ]
+    },
+    {
+      "id": "someone_stopping_something_dangerous",
+      "note": "Refusing a risky plan is help, and it is most welcome to whoever was most afraid of it.",
+      "when": { "acts": ["refuse"], "topics": ["going_outside"] },
+      "label": "support",
+      "base_weight": 0.35,
+      "scaled_by": [
+        { "kind": "value", "name": "family_safety", "factor": 0.50 },
+        { "kind": "trait", "name": "cautious", "factor": 0.30 },
+        { "kind": "trait", "name": "anxious", "factor": 0.50 }
+      ]
+    }
+  ],
+
+  "belief_nudges": [
+    {
+      "id": "slights_add_up",
+      "note": "Reading something as disrespect makes the next thing likelier to read that way too.",
+      "when": { "meanings": ["disrespect"] },
+      "predicate": "tendency",
+      "args": ["$actor", "does_not_respect_me"],
+      "delta": 0.15,
+      "scaled_by": [
+        { "kind": "trait", "name": "proud", "factor": 0.10 }
+      ]
+    },
+    {
+      "id": "kindness_wears_it_down",
+      "note": "And being helped by the same person wears it back down, more slowly.",
+      "when": { "meanings": ["support"] },
+      "predicate": "tendency",
+      "args": ["$actor", "does_not_respect_me"],
+      "delta": -0.10
+    },
+    {
+      "id": "being_handled_confirms_being_handled",
+      "note": "Every time you are managed, you are surer that is how they see you.",
+      "when": { "meanings": ["disrespect"], "addressed": ["me"] },
+      "predicate": "tendency",
+      "args": ["$actor", "treats_me_like_a_child"],
+      "delta": 0.12
+    }
+  ],
+
+  "appraisal": [
+    {
+      "id": "help_aimed_at_you_is_felt_as_gratitude",
+      "note": "Someone stepping in for you personally.",
+      "when": { "meanings": ["support"], "addressed": ["me"] },
+      "emotion": "gratitude",
+      "target": "$actor",
+      "concern": "closeness",
+      "base_intensity": 0.50,
+      "scaled_by": [
+        { "kind": "trait", "name": "empathetic", "factor": 0.40 },
+        { "kind": "value", "name": "closeness", "factor": 0.30 }
+      ]
+    },
+    {
+      "id": "help_at_all_is_felt_as_gratitude",
+      "note": "Credit given for a good turn, weighed by how much you care about the people it was for.",
+      "when": { "meanings": ["support"] },
+      "emotion": "gratitude",
+      "target": "$actor",
+      "concern": "closeness",
+      "base_intensity": 0.10,
+      "scaled_by": [
+        { "kind": "trait", "name": "empathetic", "factor": 0.30 },
+        { "kind": "value", "name": "closeness", "factor": 0.25 },
+        { "kind": "value", "name": "family_safety", "factor": 0.35 }
+      ]
+    },
+    {
+      "id": "help_is_felt_as_relief_by_the_frightened",
+      "note": "If you were afraid, the first thing help does is stop the fear.",
+      "when": { "meanings": ["support"] },
+      "emotion": "relief",
+      "concern": "family_safety",
+      "base_intensity": 0.10,
+      "scaled_by": [
+        { "kind": "trait", "name": "anxious", "factor": 0.70 }
+      ]
+    },
+    {
+      "id": "a_problem_is_felt_as_anxiety",
+      "note": "Weighed by how much of your safety is tied up in the people around you.",
+      "when": { "meanings": ["concern"] },
+      "emotion": "anxiety",
+      "concern": "family_safety",
+      "base_intensity": 0.10,
+      "scaled_by": [
+        { "kind": "value", "name": "family_safety", "factor": 0.50 },
+        { "kind": "trait", "name": "anxious", "factor": 0.40 },
+        { "kind": "trait", "name": "empathetic", "factor": 0.20 }
+      ]
+    },
+    {
+      "id": "a_problem_is_felt_as_fear_by_the_fearful",
+      "note": "The same problem, in a temperament that turns everything into fear.",
+      "when": { "meanings": ["concern"] },
+      "emotion": "fear",
+      "concern": "family_safety",
+      "base_intensity": 0.05,
+      "scaled_by": [
+        { "kind": "trait", "name": "anxious", "factor": 0.80 }
+      ]
+    },
+    {
+      "id": "a_threat_is_felt_as_fear",
+      "when": { "meanings": ["threat"] },
+      "emotion": "fear",
+      "concern": "family_safety",
+      "base_intensity": 0.15,
+      "scaled_by": [
+        { "kind": "trait", "name": "anxious", "factor": 0.70 }
+      ]
+    },
+    {
+      "id": "a_threat_to_the_family_is_felt_as_anxiety",
+      "note": "Someone whose whole concern is holding the household together worries rather than panics.",
+      "when": { "meanings": ["threat"] },
+      "emotion": "anxiety",
+      "concern": "family_safety",
+      "base_intensity": 0.10,
+      "scaled_by": [
+        { "kind": "value", "name": "family_safety", "factor": 0.60 },
+        { "kind": "trait", "name": "empathetic", "factor": 0.30 }
+      ]
+    },
+    {
+      "id": "a_slight_is_felt_as_shame",
+      "note": "Only by someone with pride invested in where they stand.",
+      "when": { "meanings": ["disrespect"] },
+      "emotion": "shame",
+      "concern": "respect",
+      "base_intensity": 0.0,
+      "scaled_by": [
+        { "kind": "trait", "name": "proud", "factor": 0.50 },
+        { "kind": "value", "name": "respect", "factor": 0.50 }
+      ]
+    },
+    {
+      "id": "a_slight_in_front_of_others_is_worse",
+      "when": { "meanings": ["disrespect"], "audience_min": 1 },
+      "emotion": "shame",
+      "concern": "respect",
+      "base_intensity": 0.10,
+      "scaled_by": [
+        { "kind": "trait", "name": "proud", "factor": 0.35 },
+        { "kind": "value", "name": "respect", "factor": 0.35 }
+      ]
+    },
+    {
+      "id": "a_slight_is_felt_as_anger",
+      "when": { "meanings": ["disrespect"] },
+      "emotion": "anger",
+      "target": "$actor",
+      "concern": "respect",
+      "base_intensity": 0.10,
+      "scaled_by": [
+        { "kind": "trait", "name": "dominant", "factor": 0.40 },
+        { "kind": "trait", "name": "impulsive", "factor": 0.30 },
+        { "kind": "value", "name": "respect", "factor": 0.30 }
+      ]
+    },
+    {
+      "id": "a_slight_is_felt_as_being_tired_of_this",
+      "note": "Someone who will not fight about it gets exasperation instead.",
+      "when": { "meanings": ["disrespect"] },
+      "emotion": "frustration",
+      "target": "$actor",
+      "concern": "autonomy",
+      "base_intensity": 0.15,
+      "scaled_by": [
+        { "kind": "value", "name": "autonomy", "factor": 0.50 },
+        { "kind": "trait", "name": "empathetic", "factor": 0.25 },
+        { "kind": "trait", "name": "cautious", "factor": 0.20 }
+      ]
+    },
+    {
+      "id": "a_slight_from_someone_close_is_felt_as_hurt",
+      "note": "Hurt is what a slight becomes when you have no intention of confronting anyone about it.",
+      "when": { "meanings": ["disrespect"] },
+      "emotion": "hurt",
+      "target": "$actor",
+      "concern": "closeness",
+      "base_intensity": 0.15,
+      "scaled_by": [
+        { "kind": "value", "name": "closeness", "factor": 0.55 },
+        { "kind": "trait", "name": "empathetic", "factor": 0.30 },
+        { "kind": "trait", "name": "anxious", "factor": 0.20 },
+        { "kind": "trait", "name": "dominant", "factor": -0.30 }
+      ]
+    },
+    {
+      "id": "being_overruled_in_your_own_house_is_felt_as_anxiety",
+      "when": { "meanings": ["challenge"] },
+      "emotion": "anxiety",
+      "concern": "family_safety",
+      "base_intensity": 0.10,
+      "scaled_by": [
+        { "kind": "value", "name": "family_safety", "factor": 0.50 },
+        { "kind": "trait", "name": "anxious", "factor": 0.40 },
+        { "kind": "perceptiveness", "factor": 0.20 }
+      ]
+    },
+    {
+      "id": "being_blocked_is_felt_as_frustration",
+      "when": { "meanings": ["challenge"] },
+      "emotion": "frustration",
+      "target": "$actor",
+      "concern": "control",
+      "base_intensity": 0.10,
+      "scaled_by": [
+        { "kind": "value", "name": "control", "factor": 0.60 },
+        { "kind": "trait", "name": "dominant", "factor": 0.40 }
+      ]
+    },
+    {
+      "id": "asserting_yourself_is_done_angry",
+      "note": "Nobody pulls rank on their own family while feeling calm about it.",
+      "when": { "meanings": ["assert_authority"] },
+      "emotion": "anger",
+      "target": "$target",
+      "concern": "respect",
+      "base_intensity": 0.20,
+      "scaled_by": [
+        { "kind": "trait", "name": "dominant", "factor": 0.40 },
+        { "kind": "trait", "name": "impulsive", "factor": 0.30 },
+        { "kind": "value", "name": "respect", "factor": 0.30 }
+      ]
+    },
+    {
+      "id": "looking_after_someone_does_not_stop_the_worry",
+      "when": { "meanings": ["protect"] },
+      "emotion": "anxiety",
+      "concern": "family_safety",
+      "base_intensity": 0.0,
+      "scaled_by": [
+        { "kind": "trait", "name": "anxious", "factor": 0.75 },
+        { "kind": "trait", "name": "empathetic", "factor": 0.25 }
+      ]
+    }
+  ],
+
+  "dynamics": {
+    "emotion_decay_base": 0.60,
+    "emotion_decay_anxiety_resistance": 0.25,
+    "emotion_floor": 0.05,
+    "overheard_confidence": 0.60,
+    "overheard_intensity_scale": 0.75,
+    "salience_base": 0.15,
+    "salience_emotion_weight": 0.85
+  }
+}
