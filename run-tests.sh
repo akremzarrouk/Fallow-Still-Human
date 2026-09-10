@@ -18,9 +18,7 @@ if [ ! -f "$R" ]; then
   echo "This is almost always a C# compile error. CLI output:"
   tail -40 "$LOG"
   echo "---- compile errors from the editor log ----"
-  find "$PROJ/Logs" -name '*.log' -newermt '-10 minutes' -print0 2>/dev/null |
-    xargs -0 grep -hE "error CS[0-9]+|Assembly.*error|Scripts have compiler errors" 2>/dev/null |
-    sort -u | head -30
+  grep -haE "error CS[0-9]+" "$LOCALAPPDATA/Unity/Editor/Editor.log" 2>/dev/null | sort -u | head -30
   exit 2
 fi
 

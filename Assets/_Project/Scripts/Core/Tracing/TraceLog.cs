@@ -1,0 +1,140 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Fallow.Core.Tracing
+{
+    /// <summary>Which step of the pipeline a trace record belongs to.</summary>
+    public enum TraceKind
+    {
+        Event,
+        Access,
+        Interpretation,
+        Experience,
+        BeliefChange,
+        LedgerEntry,
+        Appraisal,
+        Emotion
+    }
+
+    public sealed class TraceRecord
+    {
+        public int Id { get; }
+        public TraceKind Kind { get; }
+
+        /// <summary>Whose step this was. Null for the world event itself.</summary>
+        public string CharacterId { get; }
+
+        public string EventId { get; }
+        public string Summary { get; }
+        public IReadOnlyList<int> ParentIds { get; }
+        public IReadOnlyDictionary<string, string> Data { get; }
+
+        public TraceRecord(
+            int id, TraceKind kind, string characterId, string eventId, string summary,
+            IReadOnlyList<int> parentIds, IReadOnlyDictionary<string, string> data)
+        {
+            Id = id;
+            Kind = kind;
+            CharacterId = characterId;
+            EventId = eventId;
+            Summary = summary;
+            ParentIds = parentIds ?? new List<int>();
+            Data = data ?? new Dictionary<string, string>();
+        }
+
+        public override string ToString()
+            => $"#{Id} {Kind}{(CharacterId == null ? "" : " " + CharacterId)}: {Summary}";
+    }
+
+    /// <summary>
+    /// The record of why. Every step of the pipeline appends here with a link to
+    /// the step it came from, so any feeling or belief can be walked back to the
+    /// thing that happened.
+    ///
+    /// This is a development instrument, not a game system. Nothing a player sees
+    /// is ever drawn from it.
+    /// </summary>
+    public sealed class TraceLog
+    {
+        readonly List<TraceRecord> _records = new List<TraceRecord>();
+
+        public IReadOnlyList<TraceRecord> All => _records;
+        public int Count => _records.Count;
+
+        public int Add(
+            TraceKind kind,
+            string characterId,
+            string eventId,
+            string summary,
+            IEnumerable<int> parents = null,
+            IReadOnlyDictionary<string, string> data = null)
+        {
+            var id = _records.Count;
+            _records.Add(new TraceRecord(
+                id, kind, characterId, eventId, summary,
+                parents?.ToList() ?? new List<int>(),
+                data));
+            return id;
+        }
+
+        public TraceRecord Get(int id)
+            => id >= 0 && id < _records.Count ? _records[id] : null;
+
+        public IReadOnlyList<TraceRecord> For(string characterId)
+            => _records.Where(r => string.Equals(r.CharacterId, characterId, StringComparison.Ordinal)).ToList();
+
+        public IReadOnlyList<TraceRecord> For(string characterId, string eventId)
+            => _records.Where(r =>
+                string.Equals(r.CharacterId, characterId, StringComparison.Ordinal) &&
+                string.Equals(r.EventId, eventId, StringComparison.Ordinal)).ToList();
+
+        public IReadOnlyList<TraceRecord> ForEvent(string eventId)
+            => _records.Where(r => string.Equals(r.EventId, eventId, StringComparison.Ordinal)).ToList();
+
+        /// <summary>
+        /// The record and everything it rests on, nearest reason first, each
+        /// listed once however many paths lead to it.
+        /// </summary>
+        public IReadOnlyList<TraceRecord> Chain(int id)
+        {
+            var seen = new HashSet<int>();
+            var chain = new List<TraceRecord>();
+            Walk(id, seen, chain);
+            return chain;
+        }
+
+        void Walk(int id, HashSet<int> seen, List<TraceRecord> chain)
+        {
+            if (!seen.Add(id)) return;
+            var record = Get(id);
+            if (record == null) return;
+            chain.Add(record);
+            foreach (var parent in record.ParentIds) Walk(parent, seen, chain);
+        }
+
+        /// <summary>The chain in words, one indented step per line.</summary>
+        public string Why(int id)
+        {
+            var sb = new StringBuilder();
+            var chain = Chain(id);
+            for (var i = 0; i < chain.Count; i++)
+            {
+                var r = chain[i];
+                sb.Append(i == 0 ? "" : new string(' ', i * 2) + "because ");
+                sb.Append(r.Kind);
+                if (r.CharacterId != null) sb.Append(" [").Append(r.CharacterId).Append(']');
+                sb.Append(": ").Append(r.Summary);
+                if (r.Data.Count > 0)
+                {
+                    sb.Append("  {");
+                    sb.Append(string.Join(", ", r.Data.Select(kv => kv.Key + "=" + kv.Value)));
+                    sb.Append('}');
+                }
+                sb.AppendLine();
+            }
+            return sb.ToString();
+        }
+    }
+}
