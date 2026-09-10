@@ -135,6 +135,28 @@ until you stop crying and being carried in from the doorway are both help aimed
 at you, and the rules cannot currently tell "the danger is gone" from "someone
 was kind to me". That is a real gap, not a tuning error.
 
+## Against the plan's own worked example
+
+The plan predicted, by hand and before implementation, what p01 should produce.
+Checked line by line:
+
+| Plan predicted | Produced | |
+|---|---|---|
+| Daniel reads disrespect | disrespect, weight 1.46 | matches |
+| Daniel's secondary reading is challenge | runner-up is concern, 0.71 | **differs** |
+| Daniel feels shame, and anger toward Leo | shame 1.90, anger 1.10 toward Leo | matches |
+| Daniel holds both beliefs, unresolved, around 0.5 and 0.6 | 0.56 and 0.58 | matches |
+| Elena reads concern, feels anxiety | concern, anxiety 1.08 | matches |
+| Mara reads threat, feels fear | threat, fear 0.99 | matches |
+| Mara's ledger holds a raised voice from day two | `raised_voice 0.50` about Daniel | matches |
+| Leo records his own intention, prevent_argument | prevent_argument, from own intention | matches |
+
+The one difference is the runner-up. The plan expected Daniel's second reading to
+be a challenge to his authority; what he nearly read instead was an argument
+starting, which is the same thing Elena did read. I prefer what happened: the
+alternative he almost took is the one his mother actually took, and that is a
+better shape for a family than two flavours of the same grievance.
+
 ## Weaknesses found, none of which S0 needed to solve
 
 1. **Emotion intensity is not bounded above one.** Two appraisal rules for the
