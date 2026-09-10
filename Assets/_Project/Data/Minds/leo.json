@@ -1,0 +1,34 @@
+{
+  "id": "leo",
+  "display_name": "Leo",
+  "age": 21,
+  "family_role": "sibling",
+  "note": "Player character. Calm, rational, reads people well, knows survival. Annoyance shows as withdrawal and dry correction, not volume.",
+
+  "traits": {
+    "cautious": 0.70,
+    "dominant": 0.35,
+    "empathetic": 0.70,
+    "impulsive": 0.20,
+    "proud": 0.50,
+    "anxious": 0.25,
+    "honest": 0.80
+  },
+
+  "values": ["family_safety", "fairness", "autonomy", "closeness"],
+
+  "perception": {
+    "perceptiveness": 0.75,
+    "attention": { "deception": 1.25, "concern": 1.10 }
+  },
+
+  "expression": { "expressiveness": 0.30 },
+
+  "competence_self_belief": { "survival": 0.85, "physical": 0.50, "social": 0.55 },
+
+  "initial_beliefs": [
+    { "predicate": "tendency", "args": ["daniel", "makes_risky_calls"], "confidence": 0.45 },
+    { "predicate": "tendency", "args": ["daniel", "needs_to_be_in_charge"], "confidence": 0.55 },
+    { "predicate": "more_knowledgeable", "args": ["leo", "survival"], "confidence": 0.85 }
+  ]
+}

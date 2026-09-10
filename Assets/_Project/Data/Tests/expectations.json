@@ -1,0 +1,67 @@
+{
+  "note": "Designer expectations for slice S0, written BEFORE any interpretation or appraisal rule existed. Each cell says what one event should mean to one character and which emotion that meaning should produce. dominant_emotion is the strongest emotion contributed by THIS event, not the character overall state. A meaning of none means the character had no access to the event.",
+
+  "gates": { "meaning_match": 0.80, "emotion_match": 0.70 },
+
+  "cells": [
+    { "event": "b01", "character": "daniel", "meaning": "take_responsibility", "dominant_emotion": "none",      "rationale": "He knows his own intention. Boarding windows is a chore he took on; nothing lands on him." },
+    { "event": "b01", "character": "leo",    "meaning": "support",             "dominant_emotion": "gratitude", "rationale": "His brother is making the house safer. Leo values family safety and gives credit where it is due." },
+    { "event": "b01", "character": "elena",  "meaning": "support",             "dominant_emotion": "gratitude", "rationale": "Her son is protecting the family. This is exactly what she wants from him." },
+    { "event": "b01", "character": "mara",   "meaning": "support",             "dominant_emotion": "relief",    "rationale": "She is frightened. Someone sealing the house registers as the fear easing before it registers as kindness." },
+
+    { "event": "b02", "character": "leo",    "meaning": "share_information",   "dominant_emotion": "none",      "rationale": "He knows his own intention. He is passing on a fact, not making a move." },
+    { "event": "b02", "character": "daniel", "meaning": "concern",             "dominant_emotion": "anxiety",   "rationale": "Bad news about supplies. He hears the threat before he hears who said it." },
+    { "event": "b02", "character": "elena",  "meaning": "concern",             "dominant_emotion": "anxiety",   "rationale": "Anything that endangers the household lands on her first." },
+    { "event": "b02", "character": "mara",   "meaning": "concern",             "dominant_emotion": "fear",      "rationale": "Same information, but she is the most anxious person in the room and it arrives as fear." },
+
+    { "event": "b03", "character": "leo",    "meaning": "concern",             "dominant_emotion": "none",      "rationale": "He predicted it, so it carries no surprise. It is a problem, not a shock." },
+    { "event": "b03", "character": "daniel", "meaning": "concern",             "dominant_emotion": "anxiety",   "rationale": "The water going matters more to him in the moment than his brother having been right. The sting is recorded, not felt." },
+    { "event": "b03", "character": "elena",  "meaning": "concern",             "dominant_emotion": "anxiety",   "rationale": "A resource the family depends on is gone." },
+    { "event": "b03", "character": "mara",   "meaning": "concern",             "dominant_emotion": "fear",      "rationale": "The abstract became real." },
+
+    { "event": "b04", "character": "daniel", "meaning": "take_responsibility", "dominant_emotion": "none",      "rationale": "He knows his own intention. In his head this is leadership, not recklessness." },
+    { "event": "b04", "character": "leo",    "meaning": "concern",             "dominant_emotion": "none",      "rationale": "He immediately sees why it is a bad idea, but he is not frightened by a proposal." },
+    { "event": "b04", "character": "elena",  "meaning": "concern",             "dominant_emotion": "anxiety",   "rationale": "Her son is proposing to walk outside at night." },
+    { "event": "b04", "character": "mara",   "meaning": "threat",              "dominant_emotion": "fear",      "rationale": "Outside is where the danger is. She does not hear a plan, she hears the door opening." },
+
+    { "event": "b05", "character": "leo",    "meaning": "protect",             "dominant_emotion": "none",      "rationale": "He knows his own intention. He is stopping something dangerous, not scoring a point." },
+    { "event": "b05", "character": "daniel", "meaning": "disrespect",          "dominant_emotion": "shame",     "rationale": "Being corrected by his younger brother in front of his mother and sister. Pride and the value of respect make this the cell that matters." },
+    { "event": "b05", "character": "elena",  "meaning": "support",             "dominant_emotion": "relief",    "rationale": "Someone stopped it without it becoming a fight." },
+    { "event": "b05", "character": "mara",   "meaning": "support",             "dominant_emotion": "relief",    "rationale": "Nobody is going outside. That is all she took from it." },
+
+    { "event": "b06", "character": "daniel", "meaning": "assert_authority",    "dominant_emotion": "anger",      "rationale": "He knows his own intention, and he is angry while carrying it out." },
+    { "event": "b06", "character": "leo",    "meaning": "disrespect",          "dominant_emotion": "frustration","rationale": "Being shouted at is disrespect, but Leo is not a man who flares. It comes out as being tired of this." },
+    { "event": "b06", "character": "elena",  "meaning": "threat",              "dominant_emotion": "anxiety",   "rationale": "Her two sons turning on each other is the thing she fears most." },
+    { "event": "b06", "character": "mara",   "meaning": "threat",              "dominant_emotion": "fear",      "rationale": "Raised voices in a small house." },
+
+    { "event": "b07", "character": "elena",  "meaning": "take_responsibility", "dominant_emotion": "none",      "rationale": "She knows her own intention. Counting the pantry is housekeeping." },
+    { "event": "b07", "character": "mara",   "meaning": "neutral",             "dominant_emotion": "none",      "rationale": "She is standing there while her mother counts tins. Nothing about it means anything yet." },
+    { "event": "b07", "character": "leo",    "meaning": "none",                "dominant_emotion": "none",      "rationale": "He was not in the room. He must not know this happened." },
+    { "event": "b07", "character": "daniel", "meaning": "none",                "dominant_emotion": "none",      "rationale": "He was not in the room. He must not know this happened." },
+
+    { "event": "b08", "character": "elena",  "meaning": "protect",             "dominant_emotion": "anxiety",   "rationale": "She knows her own intention, and comforting a crying daughter does not make her feel better about anything." },
+    { "event": "b08", "character": "mara",   "meaning": "support",             "dominant_emotion": "relief",    "rationale": "Being sat with until it stops." },
+    { "event": "b08", "character": "leo",    "meaning": "concern",             "dominant_emotion": "anxiety",   "rationale": "He hears his sister crying through a wall and cannot do anything about it. He heard it; he did not see it." },
+    { "event": "b08", "character": "daniel", "meaning": "none",                "dominant_emotion": "none",      "rationale": "Asleep. He does not know his sister cried." },
+
+    { "event": "b09", "character": "daniel", "meaning": "protect",             "dominant_emotion": "none",      "rationale": "He knows his own intention. He did not think about it, he just moved." },
+    { "event": "b09", "character": "mara",   "meaning": "support",             "dominant_emotion": "gratitude", "rationale": "He carried her in. Whatever else he is, this is the thing she will remember about him." },
+    { "event": "b09", "character": "leo",    "meaning": "support",             "dominant_emotion": "gratitude", "rationale": "Daniel is not wrong about everything, and Leo can see it." },
+    { "event": "b09", "character": "elena",  "meaning": "support",             "dominant_emotion": "gratitude", "rationale": "Her son protecting her daughter." },
+
+    { "event": "p01", "character": "leo",    "meaning": "prevent_argument",    "dominant_emotion": "none",      "rationale": "He knows his own intention. He is trying to defuse, not to take over." },
+    { "event": "p01", "character": "daniel", "meaning": "disrespect",          "dominant_emotion": "shame",     "rationale": "The same sentence. He hears his brother saying he cannot handle it, in front of everyone." },
+    { "event": "p01", "character": "elena",  "meaning": "concern",             "dominant_emotion": "anxiety",   "rationale": "She hears the argument that is about to start, not the sentence that was said." },
+    { "event": "p01", "character": "mara",   "meaning": "threat",              "dominant_emotion": "fear",      "rationale": "She hears them fighting again." },
+
+    { "event": "p02", "character": "daniel", "meaning": "take_responsibility", "dominant_emotion": "none",      "rationale": "He knows his own intention. Searching the house is what someone in charge does." },
+    { "event": "p02", "character": "mara",   "meaning": "disrespect",          "dominant_emotion": "hurt",      "rationale": "Seventeen and having her bag emptied out in front of her mother. She values autonomy and she will not fight him about it, so it settles as hurt." },
+    { "event": "p02", "character": "elena",  "meaning": "challenge",           "dominant_emotion": "anxiety",   "rationale": "Her son going through her daughter things without asking her. He is stepping over her." },
+    { "event": "p02", "character": "leo",    "meaning": "none",                "dominant_emotion": "none",      "rationale": "Not in the room. If he ever learns about this it must be because somebody tells him." },
+
+    { "event": "p03", "character": "elena",  "meaning": "protect",             "dominant_emotion": "none",      "rationale": "She knows her own intention. She is closing the subject on purpose." },
+    { "event": "p03", "character": "daniel", "meaning": "challenge",           "dominant_emotion": "frustration","rationale": "She is shutting down the only thing he is doing about the problem." },
+    { "event": "p03", "character": "leo",    "meaning": "concern",             "dominant_emotion": "none",      "rationale": "He notices that she is closing the subject rather than answering it. He files it away." },
+    { "event": "p03", "character": "mara",   "meaning": "support",             "dominant_emotion": "relief",    "rationale": "Her mother said out loud that nobody here is a thief." }
+  ]
+}

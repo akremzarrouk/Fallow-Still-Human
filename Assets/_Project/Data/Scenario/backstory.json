@@ -1,0 +1,152 @@
+{
+  "id": "scenario001_s0_probe",
+  "description": "Days 1-3 of the crisis plus three day-4 probe events. S0 feeds this script through four minds and inspects the traces. No variants, no hidden truth, no decisions.",
+
+  "characters": ["leo", "daniel", "mara", "elena"],
+
+  "events": [
+    {
+      "id": "b01", "day": 1, "order": 1,
+      "type": "action", "actor": "daniel", "target": null,
+      "action": "board_windows", "topic": "shelter",
+      "tone": "neutral", "directness": "direct", "valence": "good",
+      "intent": "take_responsibility",
+      "witnesses": ["leo", "mara", "elena"], "overhearers": [],
+      "summary": "Daniel boards the front windows on his own while the others watch.",
+      "ledger_effects": [
+        { "holder": "leo",   "about": "daniel", "entry": "protected_family", "weight": 0.5 },
+        { "holder": "elena", "about": "daniel", "entry": "protected_family", "weight": 0.6 },
+        { "holder": "mara",  "about": "daniel", "entry": "protected_family", "weight": 0.6 }
+      ]
+    },
+    {
+      "id": "b02", "day": 1, "order": 2,
+      "type": "speech", "actor": "leo", "target": "all",
+      "act": "tell", "topic": "supplies",
+      "tone": "calm", "directness": "direct", "valence": "bad",
+      "intent": "share_information",
+      "witnesses": ["daniel", "mara", "elena"], "overhearers": [],
+      "summary": "Leo says the water will stop running within a day and they should fill everything they have.",
+      "ledger_effects": []
+    },
+    {
+      "id": "b03", "day": 2, "order": 3,
+      "type": "action", "actor": null, "target": null,
+      "action": "water_stops", "topic": "supplies",
+      "tone": "neutral", "directness": "direct", "valence": "bad",
+      "intent": null,
+      "witnesses": ["leo", "daniel", "mara", "elena"], "overhearers": [],
+      "summary": "The taps run dry, exactly as Leo said they would.",
+      "ledger_effects": [
+        { "holder": "daniel", "about": "leo", "entry": "proved_right", "weight": 0.6 },
+        { "holder": "elena",  "about": "leo", "entry": "proved_right", "weight": 0.5 },
+        { "holder": "mara",   "about": "leo", "entry": "proved_right", "weight": 0.4 }
+      ]
+    },
+    {
+      "id": "b04", "day": 2, "order": 4,
+      "type": "speech", "actor": "daniel", "target": "all",
+      "act": "suggest", "topic": "going_outside",
+      "tone": "firm", "directness": "direct", "valence": "neutral",
+      "intent": "take_responsibility",
+      "witnesses": ["leo", "mara", "elena"], "overhearers": [],
+      "summary": "Daniel says they should cross to the neighbour's house tonight and see what is left there.",
+      "ledger_effects": []
+    },
+    {
+      "id": "b05", "day": 2, "order": 5,
+      "type": "speech", "actor": "leo", "target": "daniel",
+      "act": "refuse", "topic": "going_outside",
+      "tone": "calm", "directness": "direct", "valence": "neutral",
+      "intent": "protect",
+      "witnesses": ["daniel", "mara", "elena"], "overhearers": [],
+      "summary": "Leo lays out, evenly and in front of everyone, why crossing at night gets someone killed. Daniel drops it.",
+      "ledger_effects": [
+        { "holder": "daniel", "about": "leo", "entry": "overruled_me",   "weight": 0.7 },
+        { "holder": "elena",  "about": "leo", "entry": "protected_family", "weight": 0.5 }
+      ]
+    },
+    {
+      "id": "b06", "day": 2, "order": 6,
+      "type": "speech", "actor": "daniel", "target": "leo",
+      "act": "demand", "topic": "who_decides",
+      "tone": "raised", "directness": "direct", "valence": "neutral",
+      "intent": "assert_authority",
+      "witnesses": ["leo", "mara", "elena"], "overhearers": [],
+      "summary": "Later, louder than he meant to be, Daniel tells Leo that he is the oldest and the decisions are his.",
+      "ledger_effects": [
+        { "holder": "leo",  "about": "daniel", "entry": "raised_voice_at_me", "weight": 0.6 },
+        { "holder": "mara", "about": "daniel", "entry": "raised_voice",       "weight": 0.5 }
+      ]
+    },
+    {
+      "id": "b07", "day": 2, "order": 7,
+      "type": "action", "actor": "elena", "target": null,
+      "action": "count_supplies", "topic": "supplies",
+      "tone": "neutral", "directness": "direct", "valence": "neutral",
+      "intent": "take_responsibility",
+      "witnesses": ["mara"], "overhearers": [],
+      "summary": "Elena counts what is left in the pantry with Mara beside her.",
+      "ledger_effects": []
+    },
+    {
+      "id": "b08", "day": 3, "order": 8,
+      "type": "action", "actor": "elena", "target": "mara",
+      "action": "comfort", "topic": "sister",
+      "tone": "gentle", "directness": "direct", "valence": "good",
+      "intent": "protect",
+      "witnesses": ["mara"], "overhearers": ["leo"],
+      "summary": "Mara cries in the night. Elena sits with her until it stops.",
+      "ledger_effects": [
+        { "holder": "mara", "about": "elena", "entry": "comforted_me", "weight": 0.7 }
+      ]
+    },
+    {
+      "id": "b09", "day": 3, "order": 9,
+      "type": "action", "actor": "daniel", "target": "mara",
+      "action": "carry_to_safety", "topic": "sister",
+      "tone": "neutral", "directness": "direct", "valence": "good",
+      "intent": "protect",
+      "witnesses": ["leo", "mara", "elena"], "overhearers": [],
+      "summary": "Mara freezes in the doorway with something moving in the street. Daniel picks her up and carries her inside.",
+      "ledger_effects": [
+        { "holder": "mara",  "about": "daniel", "entry": "protected_me",     "weight": 0.8 },
+        { "holder": "elena", "about": "daniel", "entry": "protected_family", "weight": 0.7 },
+        { "holder": "leo",   "about": "daniel", "entry": "protected_family", "weight": 0.6 }
+      ]
+    },
+
+    {
+      "id": "p01", "day": 4, "order": 10,
+      "type": "speech", "actor": "leo", "target": "all",
+      "act": "suggest", "topic": "who_decides",
+      "tone": "calm", "directness": "indirect", "valence": "neutral",
+      "intent": "prevent_argument",
+      "witnesses": ["daniel", "mara", "elena"], "overhearers": [],
+      "summary": "Leo says maybe they should let someone else handle this one.",
+      "ledger_effects": []
+    },
+    {
+      "id": "p02", "day": 4, "order": 11,
+      "type": "action", "actor": "daniel", "target": "mara",
+      "action": "search_belongings", "topic": "missing_can",
+      "tone": "firm", "directness": "direct", "valence": "neutral",
+      "intent": "take_responsibility",
+      "witnesses": ["mara", "elena"], "overhearers": [],
+      "summary": "Daniel empties Mara's bag onto the bed while she is standing there.",
+      "ledger_effects": [
+        { "holder": "mara", "about": "daniel", "entry": "searched_my_things", "weight": 0.8 }
+      ]
+    },
+    {
+      "id": "p03", "day": 4, "order": 12,
+      "type": "speech", "actor": "elena", "target": "all",
+      "act": "tell", "topic": "missing_can",
+      "tone": "gentle", "directness": "direct", "valence": "neutral",
+      "intent": "protect",
+      "witnesses": ["leo", "daniel", "mara"], "overhearers": [],
+      "summary": "Elena says she is quite sure nobody in this house would take food from the others.",
+      "ledger_effects": []
+    }
+  ]
+}
