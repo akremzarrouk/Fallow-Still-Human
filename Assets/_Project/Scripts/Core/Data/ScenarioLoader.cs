@@ -46,6 +46,15 @@ namespace Fallow.Core.Data
                         f["entry"]?.Value<string>(),
                         f["weight"]?.Value<double>() ?? 0.0));
 
+            var beliefEffects = new List<BeliefEffect>();
+            if (o["belief_effects"] is JArray beliefNode)
+                foreach (var f in beliefNode)
+                    beliefEffects.Add(new BeliefEffect(
+                        f["holder"]?.Value<string>(),
+                        f["predicate"]?.Value<string>(),
+                        ReadStrings(f["args"]),
+                        f["delta"]?.Value<double>() ?? 0.0));
+
             return new WorldEvent(
                 o["id"]?.Value<string>(),
                 o["day"]?.Value<int>() ?? 0,
@@ -63,7 +72,8 @@ namespace Fallow.Core.Data
                 o["summary"]?.Value<string>(),
                 ReadStrings(o["witnesses"]),
                 ReadStrings(o["overhearers"]),
-                effects);
+                effects,
+                beliefEffects);
         }
 
         static List<string> ReadStrings(JToken node)

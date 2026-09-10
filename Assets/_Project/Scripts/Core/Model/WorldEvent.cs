@@ -43,6 +43,7 @@ namespace Fallow.Core.Model
 
         public string Summary { get; }
         public IReadOnlyList<LedgerEffect> LedgerEffects { get; }
+        public IReadOnlyList<BeliefEffect> BeliefEffects { get; }
 
         public WorldEvent(
             string id, int day, int order, EventKind kind,
@@ -51,7 +52,8 @@ namespace Fallow.Core.Model
             string intent, string summary,
             IReadOnlyCollection<string> witnesses,
             IReadOnlyCollection<string> overhearers,
-            IReadOnlyList<LedgerEffect> ledgerEffects)
+            IReadOnlyList<LedgerEffect> ledgerEffects,
+            IReadOnlyList<BeliefEffect> beliefEffects = null)
         {
             Id = id;
             Day = day;
@@ -70,6 +72,7 @@ namespace Fallow.Core.Model
             _witnesses = new HashSet<string>(witnesses ?? Array.Empty<string>(), StringComparer.Ordinal);
             _overhearers = new HashSet<string>(overhearers ?? Array.Empty<string>(), StringComparer.Ordinal);
             LedgerEffects = ledgerEffects ?? new List<LedgerEffect>();
+            BeliefEffects = beliefEffects ?? new List<BeliefEffect>();
         }
 
         public IReadOnlyCollection<string> Witnesses => _witnesses;

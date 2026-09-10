@@ -95,6 +95,40 @@ namespace Fallow.Core.Data
                     if (e.AccessFor(f.HolderId) == Access.None)
                         problems.Add($"{where}: would give '{f.HolderId}' a memory of an event they had no access to");
                 }
+
+                foreach (var f in e.BeliefEffects)
+                {
+                    if (!cast.ContainsKey(f.HolderId))
+                        problems.Add($"{where}: belief effect holder '{f.HolderId}' is not in the cast");
+                    if (f.Predicate == null || !vocab.BeliefPredicates.TryGetValue(f.Predicate, out var spec))
+                    {
+                        problems.Add($"{where}: unknown belief predicate '{f.Predicate}'");
+                    }
+                    else if (f.Args.Count != spec.Arity)
+                    {
+                        problems.Add($"{where}: belief '{f.Predicate}' takes {spec.Arity} arguments, got {f.Args.Count}");
+                    }
+                    else
+                    {
+                        for (var i = 0; i < spec.Arity; i++)
+                        {
+                            var domain = spec.ArgDomains[i];
+                            if (domain == Vocabulary.CharacterDomain)
+                            {
+                                if (!cast.ContainsKey(f.Args[i]))
+                                    problems.Add($"{where}: belief '{f.Key}' names '{f.Args[i]}', who is not in the cast");
+                            }
+                            else if (!vocab.Contains(domain, f.Args[i]))
+                            {
+                                problems.Add($"{where}: belief '{f.Key}' argument {i + 1} '{f.Args[i]}' is not in '{domain}'");
+                            }
+                        }
+                    }
+                    if (f.Delta == 0.0)
+                        problems.Add($"{where}: belief effect on '{f.Key}' moves it by nothing");
+                    if (e.AccessFor(f.HolderId) == Access.None)
+                        problems.Add($"{where}: would give '{f.HolderId}' a belief from an event they had no access to");
+                }
             }
 
             return problems;
