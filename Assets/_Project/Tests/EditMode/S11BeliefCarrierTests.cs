@@ -89,6 +89,33 @@ namespace Fallow.Tests.Core
         }
 
         [Test]
+        public void AReadingColouredByABeliefCanBeWalkedBackToWhatFormedTheBelief()
+        {
+            // Found by the S1.1 experiment. A reading used to rest only on having
+            // been in the room, so a change in what somebody wanted could say in
+            // words that a belief had coloured it, and could not be walked back
+            // to the night the belief came from. Readings and feelings now rest on
+            // the records their weights drew on, as wants already did.
+            var run = Scenario001.Prepare(_content, "mara_ate_it", 1);
+
+            var search = new WorldEvent(
+                "probe-walk", _content.Morning.Day, 5002, EventKind.Action, "leo", null,
+                null, "search_belongings", "missing_can", "neutral", "direct", "neutral", null,
+                "Leo goes through the kitchen cupboards.",
+                new[] { "mara" }, new string[0], new List<LedgerEffect>(), null, 10);
+
+            var outcome = run.Simulation.Apply(search).ByCharacter["mara"];
+            Assert.AreEqual("threat", outcome.Meaning);
+
+            Assert.IsTrue(run.Trace.Chain(outcome.InterpretationTraceId).Any(r => r.EventId == "n01"),
+                "the threat reading does not lead back to the night that made it a threat");
+
+            var fear = outcome.Emotions.First(e => e.Type == "fear");
+            Assert.IsTrue(run.Trace.Chain(fear.TraceId).Any(r => r.EventId == "n01"),
+                "and neither does the fear it stirred");
+        }
+
+        [Test]
         public void NobodyIsThreatenedByTheirOwnSearch()
         {
             var run = Scenario001.Prepare(_content, "daniel_ate_it", 1);

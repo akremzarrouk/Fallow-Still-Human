@@ -126,27 +126,45 @@ namespace Fallow.Core.Tracing
             foreach (var parent in record.ParentIds) Walk(parent, seen, chain);
         }
 
-        /// <summary>The chain in words, one indented step per line.</summary>
+        /// <summary>
+        /// The chain in words, as a tree: each record indented one step under
+        /// the record it is a reason for. A record reached twice is written out
+        /// the first time and referred to after that, so a shared cause is never
+        /// repeated and two separate reasons are never shown as one causing the
+        /// other.
+        /// </summary>
         public string Why(int id)
         {
             var sb = new StringBuilder();
-            var chain = Chain(id);
-            for (var i = 0; i < chain.Count; i++)
-            {
-                var r = chain[i];
-                sb.Append(i == 0 ? "" : new string(' ', i * 2) + "because ");
-                sb.Append(r.Kind);
-                if (r.CharacterId != null) sb.Append(" [").Append(r.CharacterId).Append(']');
-                sb.Append(": ").Append(r.Summary);
-                if (r.Data.Count > 0)
-                {
-                    sb.Append("  {");
-                    sb.Append(string.Join(", ", r.Data.Select(kv => kv.Key + "=" + kv.Value)));
-                    sb.Append('}');
-                }
-                sb.AppendLine();
-            }
+            Print(id, 0, new HashSet<int>(), sb);
             return sb.ToString();
+        }
+
+        void Print(int id, int depth, HashSet<int> shown, StringBuilder sb)
+        {
+            var r = Get(id);
+            if (r == null) return;
+
+            if (depth > 0) sb.Append(' ', depth * 2).Append("because ");
+
+            if (!shown.Add(id))
+            {
+                sb.Append('#').Append(id).Append(' ').Append(r.Kind).AppendLine(", shown above");
+                return;
+            }
+
+            sb.Append(r.Kind);
+            if (r.CharacterId != null) sb.Append(" [").Append(r.CharacterId).Append(']');
+            sb.Append(": ").Append(r.Summary);
+            if (r.Data.Count > 0)
+            {
+                sb.Append("  {");
+                sb.Append(string.Join(", ", r.Data.Select(kv => kv.Key + "=" + kv.Value)));
+                sb.Append('}');
+            }
+            sb.AppendLine();
+
+            foreach (var parent in r.ParentIds) Print(parent, depth + 1, shown, sb);
         }
     }
 }

@@ -74,6 +74,7 @@ namespace Fallow.Core.Sim
             var merged = new Dictionary<string, EmotionContribution>(StringComparer.Ordinal);
             var detail = new Dictionary<string, List<string>>(StringComparer.Ordinal);
             var best = new Dictionary<string, double>(StringComparer.Ordinal);
+            var drew = new Dictionary<string, List<int>>(StringComparer.Ordinal);
 
             foreach (var rule in _rules.Appraisal)
             {
@@ -92,7 +93,12 @@ namespace Fallow.Core.Sim
                     merged[key] = contribution;
                     detail[key] = new List<string>();
                     best[key] = 0.0;
+                    drew[key] = new List<int>();
                 }
+
+                foreach (var t in terms)
+                foreach (var id in t.Drew)
+                    if (t.Amount != 0.0 && !drew[key].Contains(id)) drew[key].Add(id);
 
                 // Kept as a raw total for now and squashed onto the scale once
                 // every rule has spoken, so that two strong feelings stay
@@ -130,10 +136,13 @@ namespace Fallow.Core.Sim
                 if (Math.Abs(intensityScale - 1.0) > 1e-9)
                     data["scaled_by_reach"] = intensityScale.ToString("0.00");
 
+                var restsOn = new List<int> { parentTraceId };
+                restsOn.AddRange(drew[key].Where(id => id != parentTraceId));
+
                 c.TraceId = trace.Add(
                     TraceKind.Appraisal, perceiver.Id, ctx.Event.Id,
                     $"{ctx.Meaning} touched {c.Concern}: {c}",
-                    new[] { parentTraceId },
+                    restsOn,
                     data);
             }
 

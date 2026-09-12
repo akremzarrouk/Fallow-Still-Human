@@ -140,10 +140,20 @@ namespace Fallow.Core.Sim
             if (contributions.Count > 0)
                 data["rules"] = string.Join(" | ", contributions.Select(c => c.ToString()));
 
+            // The reading rests on being there, and on every belief, memory,
+            // grudge and feeling that pushed it towards what it became. Without
+            // those links a reading can name in words the belief that coloured it
+            // and cannot be walked back to where that belief came from.
+            var restsOn = new List<int> { parentTraceId };
+            foreach (var c in contributions.Where(c => c.Label == meaning))
+            foreach (var t in c.Terms)
+            foreach (var id in t.Drew)
+                if (t.Amount != 0.0 && !restsOn.Contains(id)) restsOn.Add(id);
+
             result.TraceId = trace.Add(
                 TraceKind.Interpretation, perceiver.Id, e.Id,
                 $"read it as {meaning} ({weight:0.00})",
-                new[] { parentTraceId },
+                restsOn,
                 data);
 
             return result;

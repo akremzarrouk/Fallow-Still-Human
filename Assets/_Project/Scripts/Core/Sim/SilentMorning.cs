@@ -327,6 +327,14 @@ namespace Fallow.Core.Sim
         /// Being sat with settles you. The feelings it settles are named in the
         /// rule data rather than here, because which ones they are is a claim
         /// about people and belongs where it can be argued with.
+        ///
+        /// TECHNICAL DEBT, recorded in S1.1 and deliberately left in place. This
+        /// is the only place in the simulation where one person changes another
+        /// person's feelings without that person perceiving and appraising
+        /// anything. It is not evidence that the social pipeline works, it must
+        /// not be copied for any other interpersonal act, and it should be
+        /// replaced by perception and appraisal of being comforted when
+        /// interpersonal acts get that machinery.
         /// </summary>
         void Soothe(string targetId, string byWhom)
         {

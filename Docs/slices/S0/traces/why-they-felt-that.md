@@ -7,6 +7,13 @@ Appraisal [daniel]: disrespect touched respect: shame 0.85 (respect)  {emotion=s
   because Interpretation [daniel]: read it as disrespect (1.46)  {meaning=disrespect, weight=1.46, runner_up=concern 0.71, rules=corrected_by_a_junior_with_people_watching -> disrespect 1.46 (base 0.35; trait proud 0.85 x 0.50 = +0.43; value respect 0.75 x 0.40 = +0.30; belief tendency(leo,does_not_respect_me) 0.43 x 0.40 = +0.17; remembers overruled_me of leo 0.70 x 0.30 = +0.21) | an_argument_about_to_start -> concern 0.71 (base 0.30; value family_safety 0.50 x 0.40 = +0.20; perceptiveness 0.35 x 0.30 = +0.11; trait empathetic 0.50 x 0.20 = +0.10) | the_family_pulling_apart -> threat 0.61 (base 0.15; trait anxious 0.65 x 0.70 = +0.46)}
     because Access [daniel]: was there and saw it
       because Event: Leo says maybe they should let someone else handle this one.
+    because BeliefChange [daniel]: tendency(leo,does_not_respect_me): 0.25 -> pending
+      because Experience [daniel]: kept it as disrespect, felt as shame  {meaning=disrespect, source=witnessed, confidence=1.00, salience=0.98}
+        because Interpretation [daniel]: read it as disrespect (1.18)  {meaning=disrespect, weight=1.18, runner_up=support 1.03, rules=a_dangerous_plan_frightens_the_frightened -> threat 0.59 (base 0.20; trait anxious 0.65 x 0.60 = +0.39) | corrected_by_a_junior_with_people_watching -> disrespect 1.18 (base 0.35; trait proud 0.85 x 0.50 = +0.43; value respect 0.75 x 0.40 = +0.30; belief tendency(leo,does_not_respect_me) 0.25 x 0.40 = +0.10; remembers overruled_me of leo 0.00 x 0.30 = 0.00) | someone_stopping_something_dangerous -> support 1.03 (base 0.35; value family_safety 0.50 x 0.50 = +0.25; trait cautious 0.35 x 0.30 = +0.11; trait anxious 0.65 x 0.50 = +0.33)}
+          because Access [daniel]: was there and saw it
+            because Event: Leo lays out, evenly and in front of everyone, why crossing at night gets someone killed. Daniel drops it.
+    because LedgerEntry [daniel]: will not forget: overruled_me (leo)  {weight=0.70}
+      because #103 Experience, shown above
 
 ```
 

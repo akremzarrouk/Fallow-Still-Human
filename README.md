@@ -3,14 +3,17 @@
 A human-life simulation under changing circumstances. The apocalypse is the
 pressure placed on people; the game is the people.
 
-This repository contains **slices S0 and S1**: the causal spine of the social
-simulation, and a morning in a house where four people decide for themselves what
-to do. No dialogue, no player, no 3D.
+This repository contains **slices S0, S1 and S1.1**: the causal spine of the social
+simulation, a morning in a house where four people decide for themselves what to
+do, and a counterfactual experiment on whether something that happens to a person
+changes what that person wants and does. No dialogue, no player, no 3D.
 
 - `Docs/slices/S0/review.md` — one event, four people, four different experiences.
 - `Docs/slices/S1/review.md` — what they do about it, and where that fails.
+- `Docs/slices/S1.1/report.md` — whether a night can change the same person, measured
+  against a control that differs only in that night.
 
-Where those two disagree with the code, the code is right and the reviews say when
+Where those documents disagree with the code, the code is right and the reviews say when
 they were written.
 
 ## What it does so far
@@ -69,6 +72,11 @@ All five are enforced by tests, not by discipline.
 
 ## Known defects
 
-Recorded in `Docs/slices/S1/review.md` section 5, and pinned by characterisation
-tests that say in their names that they should be turned round when fixed. The
-largest: what happened in the night barely reaches what anybody does about it.
+Recorded in `Docs/slices/S1/review.md` section 5 and `Docs/slices/S1.1/report.md`
+section G, and pinned by characterisation tests that say in their names that they
+should be turned round when fixed. The largest now: a changed want reaches behaviour
+only when it survives a deliberation layer that has no memory of intent and settles
+about 40% of choices between different actions by the seed.
+
+`Comfort` writes directly into another person's feelings. It is marked in code as
+technical debt and is not evidence that the social pipeline works.

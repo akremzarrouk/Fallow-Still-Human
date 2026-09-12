@@ -99,6 +99,30 @@ namespace Fallow.Core.Testing
             return (double)traced / changed.Count;
         }
 
+        /// <summary>
+        /// The same across every minute of the morning: of all the wants that
+        /// differed from the control by more than the threshold, the share whose
+        /// reasons lead back to the cause. A person who never perceived the cause
+        /// but is changed by what others did about it scores zero here, which is
+        /// the point: that change is real, and it is not direct.
+        /// </summary>
+        public double? AttributionOverMorning(IReadOnlyList<string> motives, double threshold)
+        {
+            var changed = 0;
+            var traced = 0;
+            var n = Math.Min(ControlTimeline.Count, TreatmentTimeline.Count);
+
+            for (var i = 0; i < n; i++)
+            foreach (var m in motives)
+            {
+                if (Math.Abs(TreatmentTimeline[i].Of(m) - ControlTimeline[i].Of(m)) <= threshold) continue;
+                changed++;
+                if (TreatmentTimeline[i].RestsOnCause.TryGetValue(m, out var yes) && yes) traced++;
+            }
+
+            return changed == 0 ? (double?)null : (double)traced / changed;
+        }
+
         public double BehaviourDifference => BatchRunner.HowDifferent(ControlProfile, TreatmentProfile);
     }
 
@@ -131,22 +155,33 @@ namespace Fallow.Core.Testing
         public static Pair Run(
             Scenario001Content content, string label,
             IReadOnlyList<WorldEvent> controlNight, IReadOnlyList<WorldEvent> treatmentNight,
-            IReadOnlyList<string> causeEventIds, ulong seed, int? minutes = null)
+            IReadOnlyList<string> causeEventIds, ulong seed, int? minutes = null,
+            Action<Simulation> treatmentAfterNight = null)
         {
             var pair = new Pair { Label = label, Seed = seed, CauseEventIds = causeEventIds };
+            var controlMemo = new Dictionary<int, bool>();
+            var treatmentMemo = new Dictionary<int, bool>();
 
             foreach (var id in content.Cast.Keys.OrderBy(k => k, StringComparer.Ordinal))
                 pair.People[id] = new PersonComparison { CharacterId = id };
 
             pair.Control = Scenario001.PrepareWith(content, label + "/control", controlNight, seed,
                 (stage, sim) => Snapshot(stage, sim, pair, control: true));
+            // An intervention is an experiment reaching into a mind on purpose,
+            // after the night and before the morning, to test what a stage of
+            // the pipeline was carrying. It is never used outside that test and
+            // it is recorded in the trace as what it is.
             pair.Treatment = Scenario001.PrepareWith(content, label + "/treatment", treatmentNight, seed,
-                (stage, sim) => Snapshot(stage, sim, pair, control: false));
+                (stage, sim) =>
+                {
+                    if (stage == Scenario001.Stages.AfterNight) treatmentAfterNight?.Invoke(sim);
+                    Snapshot(stage, sim, pair, control: false);
+                });
 
             foreach (var p in pair.People.Values)
             {
-                p.ControlAtStart = Probe(content, pair.Control, p.CharacterId, causeEventIds);
-                p.TreatmentAtStart = Probe(content, pair.Treatment, p.CharacterId, causeEventIds);
+                p.ControlAtStart = Probe(content, pair.Control, p.CharacterId, causeEventIds, controlMemo);
+                p.TreatmentAtStart = Probe(content, pair.Treatment, p.CharacterId, causeEventIds, treatmentMemo);
             }
 
             var length = minutes ?? content.Morning.Minutes;
@@ -157,8 +192,8 @@ namespace Fallow.Core.Testing
 
                 foreach (var p in pair.People.Values)
                 {
-                    p.ControlTimeline.Add(Probe(content, pair.Control, p.CharacterId, causeEventIds));
-                    p.TreatmentTimeline.Add(Probe(content, pair.Treatment, p.CharacterId, causeEventIds));
+                    p.ControlTimeline.Add(Probe(content, pair.Control, p.CharacterId, causeEventIds, controlMemo));
+                    p.TreatmentTimeline.Add(Probe(content, pair.Treatment, p.CharacterId, causeEventIds, treatmentMemo));
                     p.ControlFeelTimeline.Add(Feelings(pair.Control.Minds[p.CharacterId]));
                     p.TreatmentFeelTimeline.Add(Feelings(pair.Treatment.Minds[p.CharacterId]));
                 }
@@ -201,8 +236,10 @@ namespace Fallow.Core.Testing
         /// whether any reason behind it leads back to the cause.
         /// </summary>
         public static Landscape Probe(
-            Scenario001Content content, Scenario001Run run, string characterId, IReadOnlyList<string> causeEventIds)
+            Scenario001Content content, Scenario001Run run, string characterId, IReadOnlyList<string> causeEventIds,
+            Dictionary<int, bool> memo = null)
         {
+            memo = memo ?? new Dictionary<int, bool>();
             var landscape = new Landscape();
             var motives = new Motivator(content.Rules).Raise(
                 run.Minds[characterId], run.Morning.See(characterId), content.Morning.Day, new TraceLog(), 0);
@@ -212,7 +249,7 @@ namespace Fallow.Core.Testing
                 if (!landscape.Urgency.TryGetValue(m.Name, out var existing) || m.Urgency > existing)
                 {
                     landscape.Urgency[m.Name] = m.Urgency;
-                    landscape.RestsOnCause[m.Name] = ReachesCause(run.Trace, m, causeEventIds);
+                    landscape.RestsOnCause[m.Name] = ReachesCause(run.Trace, m, causeEventIds, memo);
                 }
             }
 
@@ -220,20 +257,62 @@ namespace Fallow.Core.Testing
         }
 
         /// <summary>Whether any term that actually moved a want draws on a record descended from the cause.</summary>
-        public static bool ReachesCause(TraceLog trace, Motive motive, IReadOnlyList<string> causeEventIds)
+        public static bool ReachesCause(
+            TraceLog trace, Motive motive, IReadOnlyList<string> causeEventIds, Dictionary<int, bool> memo = null)
         {
             if (causeEventIds == null || causeEventIds.Count == 0) return false;
+            memo = memo ?? new Dictionary<int, bool>();
 
             foreach (var term in motive.Terms)
             {
                 if (term.Amount == 0.0) continue;
                 foreach (var id in term.Drew)
-                    if (trace.Chain(id).Any(r => r.EventId != null && causeEventIds.Contains(r.EventId)))
+                    if (Reaches(trace, id, causeEventIds, memo, new HashSet<int>()))
                         return true;
             }
 
             return false;
         }
+
+        /// <summary>
+        /// Walks a record's parents looking for the cause, remembering the answer
+        /// for every record it visits. The trace only ever grows by appending, so
+        /// an answer once found stays true for the rest of the run.
+        /// </summary>
+        static bool Reaches(
+            TraceLog trace, int id, IReadOnlyList<string> causes, Dictionary<int, bool> memo, HashSet<int> visiting)
+        {
+            if (memo.TryGetValue(id, out var known)) return known;
+            if (!visiting.Add(id)) return false;
+
+            var record = trace.Get(id);
+            var found = false;
+
+            if (record != null)
+            {
+                if (record.EventId != null && causes.Contains(record.EventId)) found = true;
+                else
+                    foreach (var parent in record.ParentIds)
+                        if (Reaches(trace, parent, causes, memo, visiting)) { found = true; break; }
+            }
+
+            memo[id] = found;
+            return found;
+        }
+
+        /// <summary>A night with some of its events left out, for removing a cause.</summary>
+        public static IReadOnlyList<WorldEvent> Without(IReadOnlyList<WorldEvent> night, params string[] eventIds)
+            => night.Where(e => !eventIds.Contains(e.Id)).ToList();
+
+        /// <summary>The same night with one person taken out of the room it happened in.</summary>
+        public static IReadOnlyList<WorldEvent> WithoutWitness(IReadOnlyList<WorldEvent> night, string characterId)
+            => night.Select(e => new WorldEvent(
+                    e.Id, e.Day, e.Order, e.Kind, e.ActorId, e.TargetId, e.Act, e.Action, e.Topic, e.Tone,
+                    e.Directness, e.Valence, e.Intent, e.Summary,
+                    e.Witnesses.Where(w => w != characterId).ToList(),
+                    e.Overhearers.Where(w => w != characterId).ToList(),
+                    e.LedgerEffects, e.BeliefEffects, e.Minute))
+                .ToList();
 
         static IReadOnlyDictionary<string, double> Profile(Scenario001Run run, string characterId)
         {

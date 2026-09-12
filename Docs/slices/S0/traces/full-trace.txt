@@ -962,7 +962,7 @@ Every step, in the order it happened, with the record it came from.
       Leo says maybe they should let someone else handle this one.
 #214 [Access] daniel (p01) <- #213
       was there and saw it
-#215 [Interpretation] daniel (p01) <- #214
+#215 [Interpretation] daniel (p01) <- #214,#104,#108
       read it as disrespect (1.46)
         meaning: disrespect
         weight: 1.46

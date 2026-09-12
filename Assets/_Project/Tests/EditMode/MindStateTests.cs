@@ -232,6 +232,27 @@ namespace Fallow.Tests.Core
         }
 
         [Test]
+        public void WhyIndentsByRealDepthSoTwoReasonsAreNeverShownAsOneCausingTheOther()
+        {
+            // Added in S1.1. Once a record could rest on several reasons, printing
+            // the flattened chain with one more indent per line made the second
+            // reason look like a cause of the first. The printout is a tree now.
+            var t = new TraceLog();
+            var nightEvent = t.Add(TraceKind.Event, null, "n01", "She eats the can.");
+            var belief = t.Add(TraceKind.BeliefChange, "mara", "n01", "Believes she is answerable.", new[] { nightEvent });
+            var countEvent = t.Add(TraceKind.Event, null, "m000", "The count comes up short.");
+            var reading = t.Add(TraceKind.Interpretation, "mara", "m000", "Reads it as a threat.", new[] { countEvent, belief });
+
+            var lines = t.Why(reading).Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries).ToList();
+            int Indent(string text) => lines.First(l => l.Contains(text)).TakeWhile(c => c == ' ').Count();
+
+            Assert.AreEqual(Indent("The count comes up short."), Indent("Believes she is answerable."),
+                "the count and the belief are both reasons for the reading, at the same depth");
+            Assert.Greater(Indent("She eats the can."), Indent("Believes she is answerable."),
+                "the night is a reason for the belief, one level further down");
+        }
+
+        [Test]
         public void WhyPrintsTheChainInWordsEndingAtTheEvent()
         {
             var t = new TraceLog();
