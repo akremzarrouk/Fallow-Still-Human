@@ -235,5 +235,31 @@
       "note": "Nobody took anything. There were only ever two. This one can never be solved, and is here to see what the house does with a question that has no answer.",
       "night_events": []
     }
+  ],
+  "held_out_variants": [
+    {
+      "id": "leo_ate_it",
+      "note": "Held out for S1.1. Defined before any S1.1 rule change and never run while those rules were designed. Predictions are committed before it is run for the first time.",
+      "night_events": [
+        {
+          "id": "n01",
+          "day": 3,
+          "order": 900,
+          "type": "action",
+          "actor": "leo",
+          "target": null,
+          "action": "eat_portion",
+          "topic": "missing_can",
+          "tone": "neutral",
+          "directness": "direct",
+          "valence": "bad",
+          "intent": "took_what_was_not_mine",
+          "witnesses": [],
+          "overhearers": [],
+          "summary": "In the night Leo eats a can by the light of the open fridge, the one person nobody would suspect.",
+          "ledger_effects": []
+        }
+      ]
+    }
   ]
 }

@@ -50,12 +50,21 @@ namespace Fallow.Core.Model
         public WorldEvent Opening { get; }
         public IReadOnlyList<MorningVariant> Variants { get; }
 
+        /// <summary>
+        /// Conditions kept out of every batch and every design pass, so that a
+        /// prediction about them can be written before anybody has seen them run.
+        /// Reachable by name, never by iterating the ordinary list.
+        /// </summary>
+        public IReadOnlyList<MorningVariant> HeldOutVariants { get; }
+
         public MorningScenario(
             string id, string description, int day, int minutes, RoomGraph house, int portions,
             IReadOnlyDictionary<string, string> startRooms,
             IReadOnlyDictionary<string, double> startHunger,
-            WorldEvent opening, IReadOnlyList<MorningVariant> variants)
+            WorldEvent opening, IReadOnlyList<MorningVariant> variants,
+            IReadOnlyList<MorningVariant> heldOutVariants = null)
         {
+            HeldOutVariants = heldOutVariants ?? new List<MorningVariant>();
             Id = id;
             Description = description;
             Day = day;
@@ -71,6 +80,8 @@ namespace Fallow.Core.Model
         public MorningVariant Variant(string id)
         {
             foreach (var v in Variants)
+                if (v.Id == id) return v;
+            foreach (var v in HeldOutVariants)
                 if (v.Id == id) return v;
             return null;
         }

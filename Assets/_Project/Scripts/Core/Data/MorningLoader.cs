@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Fallow.Core.Model;
 using Newtonsoft.Json.Linq;
 
@@ -27,20 +28,8 @@ namespace Fallow.Core.Data
                 foreach (var p in hungerNode)
                     hunger[p.Key] = p.Value?.Value<double>() ?? 0.0;
 
-            var variants = new List<MorningVariant>();
-            if (root["variants"] is JArray variantsNode)
-                foreach (var v in variantsNode)
-                {
-                    var nights = new List<WorldEvent>();
-                    if (v["night_events"] is JArray nightNode)
-                        foreach (var e in nightNode)
-                            nights.Add(ScenarioLoader.ReadEvent((JObject)e));
-
-                    variants.Add(new MorningVariant(
-                        v["id"]?.Value<string>(),
-                        v["note"]?.Value<string>(),
-                        nights));
-                }
+            var variants = ReadVariants(root["variants"] as JArray);
+            var heldOut = ReadVariants(root["held_out_variants"] as JArray);
 
             return new MorningScenario(
                 root["id"]?.Value<string>(),
@@ -52,7 +41,26 @@ namespace Fallow.Core.Data
                 rooms,
                 hunger,
                 root["opening"] is JObject opening ? ScenarioLoader.ReadEvent(opening) : null,
-                variants);
+                variants,
+                heldOut);
+        }
+
+        static List<MorningVariant> ReadVariants(JArray node)
+        {
+            var variants = new List<MorningVariant>();
+            if (node == null) return variants;
+
+            foreach (var v in node)
+            {
+                var nights = new List<WorldEvent>();
+                if (v["night_events"] is JArray nightNode)
+                    foreach (var e in nightNode)
+                        nights.Add(ScenarioLoader.ReadEvent((JObject)e));
+
+                variants.Add(new MorningVariant(v["id"]?.Value<string>(), v["note"]?.Value<string>(), nights));
+            }
+
+            return variants;
         }
 
         public static RoomGraph ReadHouse(JObject o)
@@ -125,7 +133,7 @@ namespace Fallow.Core.Data
             if (morning.Opening == null) problems.Add("the morning has no opening event");
 
             var ids = new HashSet<string>(StringComparer.Ordinal);
-            foreach (var v in morning.Variants)
+            foreach (var v in morning.Variants.Concat(morning.HeldOutVariants))
             {
                 if (string.IsNullOrEmpty(v.Id)) problems.Add("a variant has no id");
                 else if (!ids.Add(v.Id)) problems.Add("two variants share the id '" + v.Id + "'");

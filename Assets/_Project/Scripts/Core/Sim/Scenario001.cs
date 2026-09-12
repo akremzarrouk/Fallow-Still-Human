@@ -97,13 +97,32 @@ namespace Fallow.Core.Sim
             if (variant == null)
                 throw new ArgumentException("no such variant: " + variantId);
 
+            return PrepareWith(content, variantId, variant.NightEvents, seed);
+        }
+
+        /// <summary>
+        /// The same preparation with the night given explicitly rather than by
+        /// name, so an experiment can hold everything fixed and change one thing:
+        /// leave an event out, or take one person out of the room it happened in.
+        ///
+        /// The stage callback sees the simulation after the backstory, after the
+        /// night and after the opening, which is where a counterfactual needs to
+        /// look to find out where a difference appears or disappears. It is read
+        /// only in spirit; nothing in the slice passes one that writes.
+        /// </summary>
+        public static Scenario001Run PrepareWith(
+            Scenario001Content content, string label, IReadOnlyList<WorldEvent> nightEvents, ulong seed,
+            Action<string, Simulation> atStage = null)
+        {
             var sim = new Simulation(content.Cast, content.Rules);
 
             // Three days of living, felt as it happened.
             sim.Run(content.Backstory);
+            atStage?.Invoke(Stages.AfterBackstory, sim);
 
             // What actually happened in the night, known only to whoever was there.
-            foreach (var e in variant.NightEvents) sim.Apply(e);
+            foreach (var e in nightEvents ?? new List<WorldEvent>()) sim.Apply(e);
+            atStage?.Invoke(Stages.AfterNight, sim);
 
             var world = new WorldState(content.Morning.House, content.Morning.Portions);
             foreach (var pair in content.Morning.StartRooms) world.Place(pair.Key, pair.Value);
@@ -113,8 +132,17 @@ namespace Fallow.Core.Sim
 
             // The one scripted moment of the morning, and the last one.
             if (content.Morning.Opening != null) sim.Apply(content.Morning.Opening);
+            atStage?.Invoke(Stages.AfterOpening, sim);
 
-            return new Scenario001Run(variantId, seed, sim, morning, world);
+            return new Scenario001Run(label, seed, sim, morning, world);
+        }
+
+        /// <summary>The points in preparation a counterfactual can look at.</summary>
+        public static class Stages
+        {
+            public const string AfterBackstory = "after_backstory";
+            public const string AfterNight = "after_night";
+            public const string AfterOpening = "after_opening";
         }
 
         public static Scenario001Run Run(Scenario001Content content, string variantId, ulong seed, int? minutes = null)
