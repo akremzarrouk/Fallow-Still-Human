@@ -121,8 +121,13 @@ namespace Fallow.Core.Sim
             atStage?.Invoke(Stages.AfterBackstory, sim);
 
             // What actually happened in the night, known only to whoever was there.
+            // From here on nothing that happens fades anybody it did not reach;
+            // the rest of the night passes once, for everybody, whatever happened
+            // in it, which is what makes two nights comparable.
+            sim.FadeOnEachEvent = false;
             foreach (var e in nightEvents ?? new List<WorldEvent>()) sim.Apply(e);
             atStage?.Invoke(Stages.AfterNight, sim);
+            sim.PassTime(1.0);
 
             var world = new WorldState(content.Morning.House, content.Morning.Portions);
             foreach (var pair in content.Morning.StartRooms) world.Place(pair.Key, pair.Value);

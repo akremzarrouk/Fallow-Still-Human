@@ -72,6 +72,15 @@ namespace Fallow.Core.Rules
 
         /// <summary>How much less an overheard event stirs than a witnessed one.</summary>
         public double OverheardIntensityScale { get; set; } = 0.75;
+
+        /// <summary>
+        /// Minutes of clock time equal to one fade. Chosen, not tuned: S1 faded
+        /// feelings once per event, and a morning had 30.11 events in 90 minutes
+        /// on average across 200 mornings, one every 2.99 minutes. Three keeps the
+        /// average rate S1 had, so moving fading onto the clock removes the leak
+        /// without also changing how fast people get over things.
+        /// </summary>
+        public double MinutesPerFade { get; set; } = 3.0;
     }
 
     public sealed class RuleSet

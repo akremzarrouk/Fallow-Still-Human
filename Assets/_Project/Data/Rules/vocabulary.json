@@ -161,6 +161,12 @@
     },
     "supplies_short": {
       "arg_domains": []
+    },
+    "answerable_for": {
+      "arg_domains": [
+        "character",
+        "topics"
+      ]
     }
   }
 }

@@ -104,6 +104,15 @@ namespace Fallow.Core.Rules
         /// <summary>How much of those is left afterwards.</summary>
         public double ComfortSettling { get; set; } = 0.5;
 
+        /// <summary>
+        /// Where urgency stops being linear. Chosen from data, not tuned: across
+        /// 32,123 wants raised in 50 mornings, measured after the fading fix, 90% of the wants that were not
+        /// pinned at the ceiling sat at or below 0.85. Below the knee nothing
+        /// changes. The default switches it off, so a rule set that does not ask
+        /// for it behaves as before.
+        /// </summary>
+        public double UrgencyKnee { get; set; } = 1.0;
+
         /// <summary>Minutes after which a memory presses half as hard as it did.</summary>
         public double RecallHalfLife { get; set; } = 20.0;
 

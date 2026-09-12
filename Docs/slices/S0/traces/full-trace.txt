@@ -1097,7 +1097,7 @@ Every step, in the order it happened, with the record it came from.
       read it as challenge (0.86)
         meaning: challenge
         weight: 0.86
-        rules: authority_taken_without_asking -> challenge 0.86 (base 0.40; value control 0.00 x 0.40 = 0.00; trait dominant 0.50 x 0.40 = +0.20; perceptiveness 0.85 x 0.30 = +0.26)
+        rules: authority_taken_without_asking -> challenge 0.86 (base 0.40; value control 0.00 x 0.40 = 0.00; trait dominant 0.50 x 0.40 = +0.20; perceptiveness 0.85 x 0.30 = +0.26) | the_search_is_for_what_you_did -> threat 0.00 (base 0.00; belief answerable_for(elena,missing_can) 0.00 x 1.00 = 0.00)
 #242 [Appraisal] elena (p02) <- #241
       challenge touched family_safety: anxiety 0.75 (family_safety)
         emotion: anxiety
@@ -1127,7 +1127,7 @@ Every step, in the order it happened, with the record it came from.
       read it as disrespect (1.26)
         meaning: disrespect
         weight: 1.26
-        rules: your_things_gone_through -> disrespect 1.26 (base 0.50; value autonomy 0.75 x 0.50 = +0.38; trait proud 0.55 x 0.30 = +0.17; belief tendency(daniel,treats_me_like_a_child) 0.55 x 0.40 = +0.22)
+        rules: your_things_gone_through -> disrespect 1.26 (base 0.50; value autonomy 0.75 x 0.50 = +0.38; trait proud 0.55 x 0.30 = +0.17; belief tendency(daniel,treats_me_like_a_child) 0.55 x 0.40 = +0.22) | the_search_is_for_what_you_did -> threat 0.00 (base 0.00; belief answerable_for(mara,missing_can) 0.00 x 1.00 = 0.00)
 #248 [Appraisal] mara (p02) <- #247
       disrespect touched closeness: hurt 0.70 toward daniel (closeness)
         emotion: hurt
@@ -1189,7 +1189,7 @@ Every step, in the order it happened, with the record it came from.
         meaning: challenge
         weight: 1.38
         runner_up: support 0.63
-        rules: being_told_to_let_it_go -> challenge 1.38 (base 0.30; value control 1.00 x 0.50 = +0.50; trait dominant 0.85 x 0.40 = +0.34; belief role_claim(daniel,leads_family) 0.80 x 0.30 = +0.24) | noticing_a_subject_being_closed -> concern 0.52 (base 0.20; perceptiveness 0.35 x 0.60 = +0.21; trait cautious 0.35 x 0.30 = +0.11) | being_spoken_up_for -> support 0.63 (base 0.30; trait anxious 0.65 x 0.50 = +0.33; value closeness 0.00 x 0.40 = 0.00)
+        rules: being_told_to_let_it_go -> challenge 1.38 (base 0.30; value control 1.00 x 0.50 = +0.50; trait dominant 0.85 x 0.40 = +0.34; belief role_claim(daniel,leads_family) 0.80 x 0.30 = +0.24) | noticing_a_subject_being_closed -> concern 0.52 (base 0.20; perceptiveness 0.35 x 0.60 = +0.21; trait cautious 0.35 x 0.30 = +0.11) | being_spoken_up_for -> support 0.63 (base 0.30; trait anxious 0.65 x 0.50 = +0.33; value closeness 0.00 x 0.40 = 0.00) | the_search_is_for_what_you_did -> threat 0.00 (base 0.00; belief answerable_for(daniel,missing_can) 0.00 x 1.00 = 0.00)
 #261 [Appraisal] daniel (p03) <- #260
       challenge touched control: frustration 0.71 toward elena (control)
         emotion: frustration
@@ -1236,7 +1236,7 @@ Every step, in the order it happened, with the record it came from.
         meaning: concern
         weight: 0.86
         runner_up: support 0.53
-        rules: being_told_to_let_it_go -> challenge 0.44 (base 0.30; value control 0.00 x 0.50 = 0.00; trait dominant 0.35 x 0.40 = +0.14; belief role_claim(leo,leads_family) 0.00 x 0.30 = 0.00) | noticing_a_subject_being_closed -> concern 0.86 (base 0.20; perceptiveness 0.75 x 0.60 = +0.45; trait cautious 0.70 x 0.30 = +0.21) | being_spoken_up_for -> support 0.53 (base 0.30; trait anxious 0.25 x 0.50 = +0.13; value closeness 0.25 x 0.40 = +0.10)
+        rules: being_told_to_let_it_go -> challenge 0.44 (base 0.30; value control 0.00 x 0.50 = 0.00; trait dominant 0.35 x 0.40 = +0.14; belief role_claim(leo,leads_family) 0.00 x 0.30 = 0.00) | noticing_a_subject_being_closed -> concern 0.86 (base 0.20; perceptiveness 0.75 x 0.60 = +0.45; trait cautious 0.70 x 0.30 = +0.21) | being_spoken_up_for -> support 0.53 (base 0.30; trait anxious 0.25 x 0.50 = +0.13; value closeness 0.25 x 0.40 = +0.10) | the_search_is_for_what_you_did -> threat 0.00 (base 0.00; belief answerable_for(leo,missing_can) 0.00 x 1.00 = 0.00)
 #270 [Appraisal] leo (p03) <- #269
       concern touched family_safety: anxiety 0.60 (family_safety)
         emotion: anxiety
@@ -1264,7 +1264,7 @@ Every step, in the order it happened, with the record it came from.
         meaning: support
         weight: 1.10
         runner_up: concern 0.71
-        rules: being_told_to_let_it_go -> challenge 0.40 (base 0.30; value control 0.00 x 0.50 = 0.00; trait dominant 0.25 x 0.40 = +0.10; belief role_claim(mara,leads_family) 0.00 x 0.30 = 0.00) | noticing_a_subject_being_closed -> concern 0.71 (base 0.20; perceptiveness 0.60 x 0.60 = +0.36; trait cautious 0.50 x 0.30 = +0.15) | being_spoken_up_for -> support 1.10 (base 0.30; trait anxious 0.80 x 0.50 = +0.40; value closeness 1.00 x 0.40 = +0.40)
+        rules: being_told_to_let_it_go -> challenge 0.40 (base 0.30; value control 0.00 x 0.50 = 0.00; trait dominant 0.25 x 0.40 = +0.10; belief role_claim(mara,leads_family) 0.00 x 0.30 = 0.00) | noticing_a_subject_being_closed -> concern 0.71 (base 0.20; perceptiveness 0.60 x 0.60 = +0.36; trait cautious 0.50 x 0.30 = +0.15) | being_spoken_up_for -> support 1.10 (base 0.30; trait anxious 0.80 x 0.50 = +0.40; value closeness 1.00 x 0.40 = +0.40) | the_search_is_for_what_you_did -> threat 0.00 (base 0.00; belief answerable_for(mara,missing_can) 0.00 x 1.00 = 0.00)
 #275 [Appraisal] mara (p03) <- #274
       support touched family_safety: relief 0.48 (family_safety)
         emotion: relief

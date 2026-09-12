@@ -104,6 +104,10 @@ namespace Fallow.Core.Sim
                     var urgency = rule.BaseUrgency + scaled.Sum(t => t.Amount);
                     if (urgency <= 0.0) continue;
 
+                    // Above the knee, more reasons still make a want stronger,
+                    // just by less, so a strong want can still be moved.
+                    urgency = Accumulate.Knee(urgency, _rules.Deciding.UrgencyKnee);
+
                     var key = about == null ? rule.Motive : rule.Motive + ":" + about;
                     if (!merged.TryGetValue(key, out var motive))
                     {
@@ -116,7 +120,7 @@ namespace Fallow.Core.Sim
                     // Two reasons to want the same thing make it more pressing,
                     // each adding less than the last, so urgency stays on one
                     // scale however many rules happen to speak to it.
-                    motive.Urgency = Accumulate.Toward(motive.Urgency, urgency);
+                    motive.Urgency = Accumulate.Combine(motive.Urgency, urgency);
                     terms[key].AddRange(scaled);
                     rules[key].Add(rule.Id);
                 }

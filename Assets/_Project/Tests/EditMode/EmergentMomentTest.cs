@@ -47,17 +47,39 @@ namespace Fallow.Tests.Core
 
             // And it is that shame, not anything from the night, that makes her
             // want to be elsewhere. H1 establishes she came out of the night with none.
+            //
+            // Changed in S1.1. This used to take her single strongest wish to be
+            // elsewhere and require shame in it. Once fading stopped leaking, that
+            // single peak on seed 1 became a fear-driven moment at 0.28, beside the
+            // watched-shame moment at 0.27. Which moment is highest was never the
+            // claim. The claim is the chain, so the chain is what is asserted: a
+            // wish to be elsewhere whose shame leads back to her son watching her.
             var wanting = run.Result.Decisions
                 .Where(d => d.CharacterId == "elena")
                 .SelectMany(d => d.Motives)
                 .Where(m => m.Name == "avoid_exposure")
+                .Where(m => m.Terms.Any(t => t.Description.Contains("shame") && t.Amount > 0))
+                .Where(m => m.Terms.Where(t => t.Description.Contains("shame")).SelectMany(t => t.Drew)
+                    .Any(id => run.Trace.Chain(id).Any(r => r.Summary.Contains("watches Elena"))))
                 .OrderByDescending(m => m.Urgency)
                 .FirstOrDefault();
 
-            Assert.IsNotNull(wanting, "she never wanted to be anywhere else");
+            Assert.IsNotNull(wanting, "no wish to be elsewhere leads back to being watched by her son");
             StringAssert.Contains("shame", wanting.Because);
             Assert.Greater(wanting.Urgency, 0.2,
                 "it has to be strong enough to be worth calling a want");
+
+            // And every piece of shame in any wish of hers to be elsewhere comes
+            // from being watched, since she brought none out of the night.
+            var anyShame = run.Result.Decisions
+                .Where(d => d.CharacterId == "elena")
+                .SelectMany(d => d.Motives)
+                .Where(m => m.Name == "avoid_exposure")
+                .SelectMany(m => m.Terms.Where(t => t.Description.Contains("shame") && t.Amount > 0))
+                .ToList();
+            Assert.IsTrue(anyShame.All(t => t.Drew.Any(id =>
+                    run.Trace.Chain(id).Any(r => r.Summary.Contains("watches Elena")))),
+                "some of her shame came from somewhere other than being watched");
 
             // And it is a passing thing, not a state she is left in. By the end
             // of the morning it has almost gone.

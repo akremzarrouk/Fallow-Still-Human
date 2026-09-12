@@ -95,6 +95,16 @@ namespace Fallow.Core.Sim
         int _eventsProcessed;
 
         /// <summary>
+        /// Whether each event counts as time passing for everybody. True for the
+        /// backstory, where events are episodes days apart and their order is the
+        /// only clock there is. False as soon as something is keeping real time,
+        /// because then an event is a moment, and a moment somebody never
+        /// perceived must not change them. S1.1 found that it did: one extra event
+        /// in the night faded the feelings of people asleep in another room.
+        /// </summary>
+        public bool FadeOnEachEvent { get; set; } = true;
+
+        /// <summary>
         /// How a bodily need stands for a given person, supplied by whatever is
         /// running the world. Null while nothing has a body, in which case every
         /// need reads as zero.
@@ -127,10 +137,11 @@ namespace Fallow.Core.Sim
         {
             var eventTrace = Trace.Add(TraceKind.Event, null, e.Id, e.Summary);
 
-            // Time passes between events, so feelings fade before the next one
-            // arrives. Memories and grudges do not.
-            if (_eventsProcessed > 0)
-                foreach (var id in _order) Fade(_minds[id]);
+            // Between episodes of the backstory, time passes, so feelings fade
+            // before the next one arrives. Memories and grudges do not. Once a
+            // clock is running this is the clock's job instead, see PassTime.
+            if (FadeOnEachEvent && _eventsProcessed > 0)
+                foreach (var id in _order) Fade(_minds[id], 1.0);
             _eventsProcessed++;
 
             var byCharacter = new Dictionary<string, PerceptionOutcome>(StringComparer.Ordinal);
@@ -139,13 +150,24 @@ namespace Fallow.Core.Sim
             return new EventOutcome(e, byCharacter, eventTrace);
         }
 
-        void Fade(Mind mind)
+        /// <summary>
+        /// Time passing for everybody equally, whatever is or is not happening to
+        /// them. Measured in fades: one fade is the amount feelings soften between
+        /// two episodes of the backstory, and a clock turns minutes into fades.
+        /// </summary>
+        public void PassTime(double fades)
+        {
+            if (fades <= 0.0) return;
+            foreach (var id in _order) Fade(_minds[id], fades);
+        }
+
+        void Fade(Mind mind, double fades)
         {
             var factor = _rules.Dynamics.EmotionDecayBase
                        + _rules.Dynamics.EmotionDecayAnxietyResistance * mind.Profile.Trait("anxious");
             if (factor > 0.95) factor = 0.95;
             if (factor < 0.0) factor = 0.0;
-            mind.Emotions.Decay(factor, _rules.Dynamics.EmotionFloor);
+            mind.Emotions.Decay(Math.Pow(factor, fades), _rules.Dynamics.EmotionFloor);
         }
 
         PerceptionOutcome Perceive(Mind mind, WorldEvent e, int eventTrace)

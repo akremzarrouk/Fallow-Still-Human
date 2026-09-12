@@ -46,7 +46,7 @@ namespace Fallow.Tests.Core
 
             var dir = Path.Combine(TestPaths.ProjectRoot, "Docs", "slices", "S1.1");
             Directory.CreateDirectory(dir);
-            File.WriteAllText(Path.Combine(dir, "fading-rate.md"),
+            File.WriteAllText(Path.Combine(dir, "fading-rate-current.md"),
                 "# Fading rate" + Environment.NewLine + Environment.NewLine +
                 "Measured by `S11DiagnosisTests.HowOftenFeelingsFadeInAMorning`." +
                 Environment.NewLine + Environment.NewLine + line + Environment.NewLine);
@@ -148,7 +148,7 @@ namespace Fallow.Tests.Core
 
             var dir = Path.Combine(TestPaths.ProjectRoot, "Docs", "slices", "S1.1");
             Directory.CreateDirectory(dir);
-            File.WriteAllText(Path.Combine(dir, "diagnosis-before.md"), sb.ToString());
+            File.WriteAllText(Path.Combine(dir, "diagnosis-current.md"), sb.ToString());
             TestContext.WriteLine(sb.ToString());
         }
     }

@@ -529,6 +529,33 @@
           "factor": 0.35
         }
       ]
+    },
+    {
+      "id": "the_search_is_for_what_you_did",
+      "note": "Added in S1.1. Somebody else looking into what went missing, heard by a person who believes they are the reason it went. They hear it closing in. Nobody without the belief reads it this way, and nobody reads their own search this way. How frightening it is, and whether it frightens at all, is left to appraisal and so to temperament.",
+      "when": {
+        "topics": [
+          "missing_can"
+        ],
+        "actor_relations": [
+          "junior",
+          "peer",
+          "senior"
+        ]
+      },
+      "label": "threat",
+      "base_weight": 0.0,
+      "scaled_by": [
+        {
+          "kind": "belief",
+          "predicate": "answerable_for",
+          "args": [
+            "$self",
+            "missing_can"
+          ],
+          "factor": 1.0
+        }
+      ]
     }
   ],
   "belief_nudges": [
@@ -616,6 +643,29 @@
       "predicate": "supplies_short",
       "args": [],
       "delta": 0.25
+    },
+    {
+      "id": "seeing_where_the_food_went",
+      "note": "Added in S1.1. Watching somebody eat, hide or hand out the food that is missing is how anybody comes to believe that person is the reason it is gone. That includes the person who did it, who watched themselves do it. It does not reach anybody who was not there. The weight is first-hand sight of the act itself, the strongest evidence this house has, and was set before any condition was measured with it.",
+      "when": {
+        "actions": [
+          "eat_portion",
+          "hide_portion",
+          "give_portion"
+        ],
+        "topics": [
+          "missing_can"
+        ],
+        "access": [
+          "witnessed"
+        ]
+      },
+      "predicate": "answerable_for",
+      "args": [
+        "$actor",
+        "missing_can"
+      ],
+      "delta": 0.9
     }
   ],
   "appraisal": [
@@ -1091,6 +1141,7 @@
     "emotion_floor": 0.05,
     "overheard_confidence": 0.6,
     "overheard_intensity_scale": 0.75,
-    "salience_base": 0.15
+    "salience_base": 0.15,
+    "minutes_per_fade": 3.0
   }
 }

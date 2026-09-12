@@ -119,6 +119,10 @@ namespace Fallow.Core.Sim
 
             foreach (var id in world.Inhabitants) _searchedBy[id] = new HashSet<string>(StringComparer.Ordinal);
 
+            // The morning has a clock, so time is measured by it and not by how
+            // much is going on somewhere else in the house.
+            _sim.FadeOnEachEvent = false;
+
             // Everything the rules read about a body goes through here, so the
             // world stays the single source of it.
             _sim.Needs = (characterId, need) =>
@@ -147,6 +151,7 @@ namespace Fallow.Core.Sim
                 id => _rules.Deciding.HungerPerMinute * _sim.Minds[id].Profile.HungerRate,
                 StringComparer.Ordinal);
             _world.Tick(rates);
+            _sim.PassTime(1.0 / _rules.Dynamics.MinutesPerFade);
 
             foreach (var id in _world.Inhabitants)
             {

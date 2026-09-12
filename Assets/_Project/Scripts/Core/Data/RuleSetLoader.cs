@@ -139,6 +139,7 @@ namespace Fallow.Core.Data
             if (o["low_portions"] != null) d.LowPortions = o["low_portions"].Value<int>();
             if (o["comfort_settling"] != null) d.ComfortSettling = o["comfort_settling"].Value<double>();
             if (o["recall_half_life"] != null) d.RecallHalfLife = o["recall_half_life"].Value<double>();
+            if (o["urgency_knee"] != null) d.UrgencyKnee = o["urgency_knee"].Value<double>();
             if (o["watching_goes_stale_after"] != null)
                 d.WatchingGoesStaleAfter = o["watching_goes_stale_after"].Value<int>();
             d.DistressShows = ReadStrings(o["distress_shows"]);
@@ -213,6 +214,7 @@ namespace Fallow.Core.Data
             if (o["overheard_confidence"] != null) d.OverheardConfidence = o["overheard_confidence"].Value<double>();
             if (o["salience_base"] != null) d.SalienceBase = o["salience_base"].Value<double>();
             if (o["overheard_intensity_scale"] != null) d.OverheardIntensityScale = o["overheard_intensity_scale"].Value<double>();
+            if (o["minutes_per_fade"] != null) d.MinutesPerFade = o["minutes_per_fade"].Value<double>();
 
             return d;
         }

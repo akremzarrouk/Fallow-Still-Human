@@ -565,6 +565,7 @@
       "eat": 4
     },
     "recall_half_life": 20,
-    "watching_goes_stale_after": 15
+    "watching_goes_stale_after": 15,
+    "urgency_knee": 0.85
   }
 }

@@ -1,8 +1,8 @@
 Daniel watches Elena. She reads it as a slight, and wants to be out of the room.
 Variant elena_fed_mara, seed 1. Nobody authored this.
 
-Motive [elena]: wants avoid_exposure 0.30  {motive=avoid_exposure, urgency=0.30, rules=not_wanting_to_be_looked_at, because=feeling fear 0.48 x 0.35 = +0.17; feeling shame 0.16 x 0.80 = +0.13}
-  because Access [elena]: at minute 69, elena in kitchen at minute 69, with daniel, leo, mara  {room=kitchen, present=daniel, leo, mara, hunger=0.83}
+Motive [elena]: wants avoid_exposure 0.36  {motive=avoid_exposure, urgency=0.36, rules=not_wanting_to_be_looked_at, because=feeling shame 0.24 x 0.80 = +0.19; feeling fear 0.48 x 0.35 = +0.17}
+  because Access [elena]: at minute 75, elena in kitchen at minute 75, with daniel, leo, mara  {room=kitchen, present=daniel, leo, mara, hunger=0.85}
     because Appraisal [elena]: disrespect touched respect: shame 0.33 (respect)  {emotion=shame, concern=respect, intensity=0.33, rules=a_slight_is_felt_as_shame 0.18 (base 0.00; trait proud 0.35 x 0.50 = +0.18; value respect 0.00 x 0.50 = 0.00) | a_slight_in_front_of_others_is_worse 0.22 (base 0.10; trait proud 0.35 x 0.35 = +0.12; value respect 0.00 x 0.35 = 0.00)}
       because Interpretation [elena]: read it as disrespect (0.42)  {meaning=disrespect, weight=0.42, rules=being_watched -> disrespect 0.42 (base 0.30; trait proud 0.35 x 0.35 = +0.12; value autonomy 0.00 x 0.40 = 0.00; belief tendency(daniel,treats_me_like_a_child) 0.00 x 0.40 = 0.00; belief tendency(daniel,does_not_respect_me) 0.00 x 0.30 = 0.00)}
         because Access [elena]: was there and saw it
