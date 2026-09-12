@@ -131,10 +131,18 @@ namespace Fallow.Core.Sim
             foreach (var m in result)
             {
                 var withReasons = new Motive(m.Name, m.TargetId, m.Urgency, rules[m.Key], terms[m.Key]);
+                // The want rests on the feelings, memories and beliefs that
+                // raised it, so that asking why somebody wants something walks
+                // back through them to what actually happened.
+                var restsOn = new List<int> { parentTraceId };
+                foreach (var t in withReasons.Terms)
+                foreach (var id in t.Drew)
+                    if (t.Amount != 0.0 && !restsOn.Contains(id)) restsOn.Add(id);
+
                 withReasons.TraceId = trace.Add(
                     TraceKind.Motive, mind.Id, null,
                     "wants " + withReasons,
-                    new[] { parentTraceId },
+                    restsOn,
                     new Dictionary<string, string>
                     {
                         { "motive", m.Name },

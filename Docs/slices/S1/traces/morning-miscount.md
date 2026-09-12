@@ -1,0 +1,94 @@
+# The morning, minute by minute
+
+Variant: **miscount**, seed 1.
+
+Nothing below was scripted. The only thing anyone was told to do is the
+count that opens it.
+
+- **01** Daniel, in the kitchen: opens the pantry and counts because needing to know what happened (1.00)
+- **01** Elena, in the kitchen: sits with Daniel because wanting the house to hold (1.00) *(nothing in it either way)*
+- **01** Leo, in the kitchen: opens the pantry and counts because it has to last (0.85)
+- **01** Mara, in the kitchen: opens the pantry and counts because needing to know what happened (0.59) *(nothing in it either way)*
+- **02** Daniel, in the kitchen: opens the pantry and counts because needing to know what happened (1.00). Found 2 portions left
+- **02** Leo, in the kitchen: opens the pantry and counts because it has to last (0.85)
+- **02** Mara, in the kitchen: sits with Elena because somebody is not all right (elena) (0.95) *(nothing in it either way)*
+- **05** Daniel, in the kitchen: goes through the room because needing to know what happened (1.00)
+- **05** Elena, in the kitchen: sits with Mara because wanting the house to hold (1.00) *(nothing in it either way)*. Sat with mara
+- **05** Leo, in the kitchen: opens the pantry and counts because it has to last (0.85). Found 2 portions left
+- **05** Mara, in the kitchen: sits with Elena because somebody is not all right (elena) (0.88) *(nothing in it either way)*
+- **08** Daniel, in the kitchen: goes through the room because needing to know what happened (1.00). Went through the room
+- **08** Leo, in the kitchen: stays where they are because wanting the house to hold (0.89)
+- **08** Mara, in the kitchen: opens the pantry and counts because needing to know what happened (0.59). Found 2 portions left
+- **11** Mara, in the kitchen: sits with Elena because somebody is not all right (elena) (0.78) *(nothing in it either way)*
+- **13** Elena, in the kitchen: opens the pantry and counts because it has to last (0.85)
+- **13** Leo, in the kitchen: stays where they are because it has to last (0.85) *(nothing in it either way)*. Stayed where they were
+- **13** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.76) *(nothing in it either way)*
+- **16** Daniel, in the kitchen: goes to the back room because needing to know what happened (1.00). Went to back_room
+- **16** Elena, in the kitchen: opens the pantry and counts because it has to last (0.85). Found 2 portions left
+- **16** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.74) *(nothing in it either way)*
+- **18** Leo, in the kitchen: goes through the room because needing to know what happened (0.70) *(nothing in it either way)*. Went through the room
+- **19** Elena, in the kitchen: stays where they are because wanting the house to hold (1.00) *(nothing in it either way)*
+- **19** Mara, in the kitchen: sits with Elena because somebody is not all right (elena) (0.70) *(nothing in it either way)*. Sat with elena
+- **20** Daniel, in the back room: goes through the room because needing to know what happened (1.00) *(nothing in it either way)*. Went through the room
+- **20** Elena, in the kitchen: sits with Mara because wanting the house to hold (1.00) *(nothing in it either way)*
+- **26** Elena, in the kitchen: sits with Mara because wanting the house to hold (1.00) *(nothing in it either way)*
+- **26** Leo, in the kitchen: stays where they are because it has to last (0.85)
+- **27** Elena, in the kitchen: stays where they are because wanting the house to hold (0.95) *(nothing in it either way)*. Stayed where they were
+- **27** Leo, in the kitchen: stays where they are because it has to last (0.85). Stayed where they were
+- **27** Mara, in the kitchen: sits with Elena because somebody is not all right (elena) (0.65) *(nothing in it either way)*. Sat with elena
+- **28** Daniel, in the back room: goes to the bathroom because needing to know what happened (1.00) *(nothing in it either way)*. Went to bathroom
+- **32** Daniel, in the bathroom: goes through the room because needing to know what happened (1.00). Went through the room
+- **32** Elena, in the kitchen: stays where they are because wanting the house to hold (0.93)
+- **32** Leo, in the kitchen: stays where they are because it has to last (0.85)
+- **35** Elena, in the kitchen: stays where they are because wanting the house to hold (0.87). Stayed where they were
+- **35** Leo, in the kitchen: stays where they are because it has to last (0.85). Stayed where they were
+- **35** Mara, in the kitchen: goes through the room because needing to know what happened (0.59) *(nothing in it either way)*. Went through the room
+- **40** Daniel, in the bathroom: goes to the brothers room because needing to know what happened (1.00) *(nothing in it either way)*. Went to brothers_room
+- **40** Elena, in the kitchen: stays where they are because wanting the house to hold (0.86)
+- **40** Leo, in the kitchen: stays where they are because it has to last (0.85). Stayed where they were
+- **43** Elena, in the kitchen: stays where they are because wanting the house to hold (1.00). Stayed where they were
+- **43** Mara, in the kitchen: sits with Elena because somebody is not all right (elena) (0.59). Sat with elena
+- **44** Daniel, in the brothers room: goes through the room because needing to know what happened (1.00). Went through the room
+- **45** Leo, in the kitchen: stays where they are because it has to last (0.85). Stayed where they were
+- **48** Elena, in the kitchen: stays where they are because wanting the house to hold (1.00)
+- **50** Leo, in the kitchen: stays where they are because it has to last (0.85)
+- **51** Elena, in the kitchen: stays where they are because wanting the house to hold (0.94)
+- **51** Leo, in the kitchen: stays where they are because it has to last (0.85). Stayed where they were
+- **51** Mara, in the kitchen: sits with Elena because somebody is not all right (elena) (0.57). Sat with elena
+- **52** Daniel, in the brothers room: goes to the kitchen because hunger (0.79). Went to kitchen
+- **56** Daniel, in the kitchen: watches Mara because needing to know what happened (1.00) *(nothing in it either way)*. Watched mara
+- **56** Elena, in the kitchen: stays where they are because wanting the house to hold (0.90)
+- **56** Leo, in the kitchen: stays where they are because it has to last (0.85)
+- **59** Elena, in the kitchen: stays where they are because wanting the house to hold (0.86)
+- **59** Leo, in the kitchen: stays where they are because it has to last (0.85)
+- **59** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.57) *(nothing in it either way)*
+- **60** Daniel, in the kitchen: stays where they are because wanting the house to hold (0.61) *(nothing in it either way)*. Stayed where they were
+- **60** Elena, in the kitchen: sits with Mara because wanting the house to hold (1.00). Sat with mara
+- **60** Leo, in the kitchen: stays where they are because wanting the house to hold (0.98) *(nothing in it either way)*. Stayed where they were
+- **60** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.57) *(nothing in it either way)*
+- **65** Daniel, in the kitchen: stays where they are because wanting the house to hold (0.61) *(nothing in it either way)*
+- **65** Leo, in the kitchen: stays where they are because wanting the house to hold (0.98)
+- **68** Daniel, in the kitchen: stays where they are because wanting the house to hold (0.56) *(nothing in it either way)*. Stayed where they were
+- **68** Elena, in the kitchen: sits with Mara because wanting the house to hold (1.00) *(nothing in it either way)*. Sat with mara
+- **68** Leo, in the kitchen: stays where they are because wanting the house to hold (0.90). Stayed where they were
+- **68** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.55) *(nothing in it either way)*
+- **73** Daniel, in the kitchen: stays where they are because wanting the house to hold (0.56) *(nothing in it either way)*
+- **73** Leo, in the kitchen: stays where they are because wanting the house to hold (0.90)
+- **76** Daniel, in the kitchen: watches Elena because needing to know what happened (1.00) *(nothing in it either way)*. Watched elena
+- **76** Elena, in the kitchen: sits with Mara because wanting the house to hold (0.97) *(nothing in it either way)*
+- **76** Leo, in the kitchen: stays where they are because wanting the house to hold (0.86)
+- **76** Mara, in the kitchen: sits with Elena because somebody is not all right (elena) (0.53) *(nothing in it either way)*
+- **80** Daniel, in the kitchen: watches Mara because needing to know what happened (1.00) *(nothing in it either way)*. Watched mara
+- **80** Elena, in the kitchen: stays where they are because wanting the house to hold (0.94) *(nothing in it either way)*
+- **80** Leo, in the kitchen: stays where they are because it has to last (0.85)
+- **80** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.54) *(nothing in it either way)*
+- **84** Daniel, in the kitchen: stays where they are because wanting the house to hold (0.63). Stayed where they were
+- **84** Elena, in the kitchen: sits with Mara because wanting the house to hold (1.00)
+- **84** Leo, in the kitchen: stays where they are because wanting the house to hold (0.99) *(nothing in it either way)*. Stayed where they were
+- **84** Mara, in the kitchen: goes to the back room because needing to know what happened (0.59) *(nothing in it either way)*. Went to back_room
+- **88** Elena, in the kitchen: stays where they are because wanting the house to hold (1.00)
+- **88** Mara, in the back room: goes through the room because needing to know what happened (0.59)
+- **89** Daniel, in the kitchen: stays where they are because wanting the house to hold (0.58) *(nothing in it either way)*
+- **89** Leo, in the kitchen: stays where they are because wanting the house to hold (0.91)
+
+At the end: 2 portions left, and Daniel in the kitchen, Elena in the kitchen, Leo in the kitchen, Mara in the back room.

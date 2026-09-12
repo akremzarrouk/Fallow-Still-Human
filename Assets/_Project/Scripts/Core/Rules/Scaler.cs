@@ -100,12 +100,23 @@ namespace Fallow.Core.Rules
         public double Factor { get; }
         public double Amount { get; }
 
-        public ScalerTerm(string description, double level, double factor)
+        /// <summary>
+        /// The records this term read: the feeling it weighed, the memory it
+        /// recalled, the evidence behind the belief. Without these a want can
+        /// say in words what raised it but cannot be walked back to the thing
+        /// that happened, which is most of the point of keeping a trace.
+        /// </summary>
+        public System.Collections.Generic.IReadOnlyList<int> Drew { get; }
+
+        public ScalerTerm(
+            string description, double level, double factor,
+            System.Collections.Generic.IReadOnlyList<int> drew = null)
         {
             Description = description;
             Level = level;
             Factor = factor;
             Amount = level * factor;
+            Drew = drew ?? new System.Collections.Generic.List<int>();
         }
 
         public override string ToString() => $"{Description} {Level:0.00} x {Factor:0.00} = {Amount:+0.00;-0.00;0.00}";

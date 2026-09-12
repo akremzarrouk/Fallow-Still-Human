@@ -26,7 +26,11 @@ namespace Fallow.Core.Model
         public double Urgency { get; internal set; }
         public IReadOnlyList<string> RuleIds { get; }
         public IReadOnlyList<ScalerTerm> Terms { get; }
-        public int TraceId { get; internal set; }
+        /// <summary>
+        /// Where the record of this want sits. Settable so that a test can hand
+        /// one in, and so that the motivator can stamp it after the fact.
+        /// </summary>
+        public int TraceId { get; set; }
 
         public Motive(
             string name, string targetId, double urgency,

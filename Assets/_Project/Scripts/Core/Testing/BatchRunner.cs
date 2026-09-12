@@ -34,6 +34,14 @@ namespace Fallow.Core.Testing
         /// <summary>How often the choice was too close to call and the seed settled it.</summary>
         public double AmbiguousShare;
 
+        /// <summary>
+        /// Of those, how often the options that tied were the same act aimed
+        /// somewhere else, such as which way to walk out of a room. A tie like
+        /// that is a real absence of preference rather than a flat weighing, and
+        /// reading the two together would hide which problem we have.
+        /// </summary>
+        public double InterchangeableShare;
+
         /// <summary>Action counts, keyed variant then character then action.</summary>
         public Dictionary<string, int> ActionCounts = new Dictionary<string, int>(StringComparer.Ordinal);
 
@@ -87,6 +95,7 @@ namespace Fallow.Core.Testing
             var variants = options.Variants ?? content.Morning.Variants.Select(v => v.Id).ToList();
 
             var ambiguous = 0;
+            var interchangeable = 0;
             var decisions = 0;
 
             foreach (var variant in variants)
@@ -95,6 +104,13 @@ namespace Fallow.Core.Testing
                 var seed = options.FirstSeed + (ulong)i;
                 var run = Scenario001.Run(content, variant, seed, options.Minutes);
                 batch.Summary.Runs++;
+
+                foreach (var d in run.Result.Decisions)
+                {
+                    if (d.Resolution != Resolution.Ambiguous) continue;
+                    if (d.Tied.Select(t => t.KindName).Distinct(StringComparer.Ordinal).Count() == 1)
+                        interchangeable++;
+                }
 
                 foreach (var a in run.Result.Actions)
                 {
@@ -136,6 +152,7 @@ namespace Fallow.Core.Testing
 
             batch.Summary.Decisions = decisions;
             batch.Summary.AmbiguousShare = decisions == 0 ? 0.0 : (double)ambiguous / decisions;
+            batch.Summary.InterchangeableShare = ambiguous == 0 ? 0.0 : (double)interchangeable / ambiguous;
             return batch;
         }
 

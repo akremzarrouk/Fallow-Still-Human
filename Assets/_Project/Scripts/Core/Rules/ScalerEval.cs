@@ -50,6 +50,8 @@ namespace Fallow.Core.Rules
             foreach (var s in scalers)
             {
                 double level;
+                var drew = new List<int>();
+
                 switch (s.Kind)
                 {
                     case ScalerKind.Trait:
@@ -62,22 +64,19 @@ namespace Fallow.Core.Rules
                         level = mind.Profile.Perceptiveness;
                         break;
                     case ScalerKind.Emotion:
-                        level = string.Equals(s.Target, Scaler.Anybody, StringComparison.Ordinal)
-                            ? mind.Emotions.IntensityAny(s.Name)
-                            : mind.Emotions.Intensity(s.Name, ctx.Resolve(s.Target));
+                        level = Feeling(mind, s, ctx, drew);
                         break;
                     case ScalerKind.Ledger:
-                        level = mind.Ledger.Strength(ctx.Resolve(s.About), s.Entry);
+                        level = Remembered(mind, s, ctx, drew);
                         break;
                     case ScalerKind.Belief:
-                        level = mind.Beliefs.Confidence(
-                            s.Predicate, s.Args == null ? new List<string>() : s.Args.Select(ctx.Resolve).ToList());
+                        level = Held(mind, s, ctx, drew);
                         break;
                     case ScalerKind.Need:
                         level = ctx.Need(s.Name);
                         break;
                     case ScalerKind.Memory:
-                        level = Recall(mind, s, ctx);
+                        level = Recall(mind, s, ctx, drew);
                         break;
                     case ScalerKind.Constant:
                         level = 1.0;
@@ -86,7 +85,7 @@ namespace Fallow.Core.Rules
                         continue;
                 }
 
-                terms.Add(new ScalerTerm(s.Describe(ctx.Resolve), level, s.Factor));
+                terms.Add(new ScalerTerm(s.Describe(ctx.Resolve), level, s.Factor, drew));
             }
 
             return terms;
@@ -109,11 +108,12 @@ namespace Fallow.Core.Rules
         /// Only the day being lived counts. Yesterday works through beliefs and
         /// grudges instead, as it should.
         /// </summary>
-        static double Recall(Mind mind, Scaler s, IScalerContext ctx)
+        static double Recall(Mind mind, Scaler s, IScalerContext ctx, List<int> drew)
         {
             var about = ctx.Resolve(s.About);
             var by = ctx.Resolve(s.By);
             var best = 0.0;
+            Experience strongest = null;
 
             foreach (var x in mind.Experiences)
             {
@@ -124,10 +124,52 @@ namespace Fallow.Core.Rules
                 if (by != null && !string.Equals(x.ActorId, by, StringComparison.Ordinal)) continue;
 
                 var pressing = x.Salience * Freshness(x.Minute, ctx);
-                if (pressing > best) best = pressing;
+                if (pressing <= best) continue;
+
+                best = pressing;
+                strongest = x;
             }
 
+            if (strongest != null) drew.Add(strongest.TraceId);
             return best;
+        }
+
+        /// <summary>The feeling a rule weighed, and what caused it.</summary>
+        static double Feeling(Mind mind, Scaler s, IScalerContext ctx, List<int> drew)
+        {
+            var anybody = string.Equals(s.Target, Scaler.Anybody, StringComparison.Ordinal);
+            var target = anybody ? null : ctx.Resolve(s.Target);
+
+            var instance = mind.Emotions.Live.FirstOrDefault(e =>
+                string.Equals(e.Type, s.Name, StringComparison.Ordinal)
+                && (anybody || string.Equals(e.TargetId, target, StringComparison.Ordinal)));
+
+            if (instance == null) return 0.0;
+
+            drew.AddRange(instance.Causes);
+            return instance.Intensity;
+        }
+
+        /// <summary>What this person holds against somebody, and the moments it came from.</summary>
+        static double Remembered(Mind mind, Scaler s, IScalerContext ctx, List<int> drew)
+        {
+            var about = ctx.Resolve(s.About);
+
+            foreach (var r in mind.Ledger.About(about))
+                if (string.Equals(r.Entry, s.Entry, StringComparison.Ordinal))
+                    drew.Add(r.TraceId);
+
+            return mind.Ledger.Strength(about, s.Entry);
+        }
+
+        /// <summary>A belief, and the evidence that moved it.</summary>
+        static double Held(Mind mind, Scaler s, IScalerContext ctx, List<int> drew)
+        {
+            var args = s.Args == null ? new List<string>() : s.Args.Select(ctx.Resolve).ToList();
+            var belief = mind.Beliefs.Get(s.Predicate, args);
+
+            drew.AddRange(belief.Justifications);
+            return belief.Confidence;
         }
 
         /// <summary>

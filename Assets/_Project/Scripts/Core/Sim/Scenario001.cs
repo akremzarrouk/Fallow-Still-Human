@@ -59,7 +59,11 @@ namespace Fallow.Core.Sim
         public Simulation Simulation { get; }
         public SilentMorning Morning { get; }
         public WorldState World { get; }
-        public MorningResult Result { get; internal set; }
+        /// <summary>
+        /// Everything that has happened so far. Always current, so a test can
+        /// step the morning by hand and still ask what came of it.
+        /// </summary>
+        public MorningResult Result => Morning.Snapshot();
 
         public Scenario001Run(
             string variantId, ulong seed, Simulation simulation, SilentMorning morning, WorldState world)
@@ -116,7 +120,7 @@ namespace Fallow.Core.Sim
         public static Scenario001Run Run(Scenario001Content content, string variantId, ulong seed, int? minutes = null)
         {
             var run = Prepare(content, variantId, seed);
-            run.Result = run.Morning.Run(minutes ?? content.Morning.Minutes);
+            run.Morning.Run(minutes ?? content.Morning.Minutes);
             return run;
         }
     }

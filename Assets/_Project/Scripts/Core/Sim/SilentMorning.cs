@@ -130,8 +130,11 @@ namespace Fallow.Core.Sim
         public MorningResult Run(int minutes)
         {
             for (var minute = 0; minute < minutes; minute++) Step();
-            return new MorningResult(_actions, _decisions, _events, _world);
+            return Snapshot();
         }
+
+        /// <summary>Everything that has happened so far, without advancing anything.</summary>
+        public MorningResult Snapshot() => new MorningResult(_actions, _decisions, _events, _world);
 
         /// <summary>
         /// One minute. Whatever finished resolves first, so that the people who
