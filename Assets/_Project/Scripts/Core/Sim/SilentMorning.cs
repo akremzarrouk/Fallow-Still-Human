@@ -42,6 +42,39 @@ namespace Fallow.Core.Sim
                " in " + RoomId + " because " + LeadingMotive;
     }
 
+    /// <summary>
+    /// The moment somebody decided, with everything the decision was made from,
+    /// for an instrument to look at. Read-only in spirit: whatever looks at it
+    /// must not change the mind or the percept.
+    /// </summary>
+    public sealed class DecisionMoment
+    {
+        public int Minute;
+        public string CharacterId;
+        public Mind Mind;
+        public Percept Percept;
+        public IReadOnlyList<Motive> Motives;
+        public Decision Decision;
+
+        /// <summary>Why they were deciding at all: the start, having finished, or having been stopped.</summary>
+        public string Why;
+    }
+
+    /// <summary>Somebody stopped part way through something, and what stopped them.</summary>
+    public sealed class InterruptionRecord
+    {
+        public int Minute;
+        public string CharacterId;
+        public string Was;
+        public string EventId;
+
+        /// <summary>The strongest feeling the interrupting event itself stirred in them.</summary>
+        public double EventIntensity;
+
+        /// <summary>The strongest feeling they were carrying at the time, from anything.</summary>
+        public double StandingIntensity;
+    }
+
     /// <summary>Everything one silent morning produced.</summary>
     public sealed class MorningResult
     {
@@ -104,8 +137,15 @@ namespace Fallow.Core.Sim
         readonly List<ActionRecord> _actions = new List<ActionRecord>();
         readonly List<Decision> _decisions = new List<Decision>();
         readonly List<WorldEvent> _events = new List<WorldEvent>();
+        readonly List<InterruptionRecord> _interruptions = new List<InterruptionRecord>();
+        readonly Dictionary<string, string> _why = new Dictionary<string, string>(StringComparer.Ordinal);
 
         int _order;
+
+        /// <summary>Called after every decision, for instruments. Nothing in the simulation reads it.</summary>
+        public Action<DecisionMoment> Decided { get; set; }
+
+        public IReadOnlyList<InterruptionRecord> Interruptions => _interruptions;
 
         public SilentMorning(Simulation sim, RuleSet rules, WorldState world, Rng rng, int day)
         {
@@ -160,6 +200,7 @@ namespace Fallow.Core.Sim
                 if (busy.MinutesLeft > 0) continue;
 
                 _busy.Remove(id);
+                _why[id] = "finished";
                 Complete(id, busy);
             }
 
@@ -194,6 +235,17 @@ namespace Fallow.Core.Sim
                 _sim.Trace, opening);
 
             _decisions.Add(decision);
+
+            Decided?.Invoke(new DecisionMoment
+            {
+                Minute = _world.Minute,
+                CharacterId = characterId,
+                Mind = mind,
+                Percept = percept,
+                Motives = motives,
+                Decision = decision,
+                Why = _why.TryGetValue(characterId, out var why) ? why : "start"
+            });
 
             var leading = decision.Leading;
             var record = new ActionRecord(
@@ -429,8 +481,8 @@ namespace Fallow.Core.Sim
                 _world.Minute);
 
             _events.Add(e);
-            _sim.Apply(e);
-            Interrupt(e);
+            var outcome = _sim.Apply(e);
+            Interrupt(e, outcome);
         }
 
         /// <summary>
@@ -438,7 +490,7 @@ namespace Fallow.Core.Sim
         /// Anything less and people finish what they started, which is what keeps
         /// them from turning round every time somebody walks past.
         /// </summary>
-        void Interrupt(WorldEvent e)
+        void Interrupt(WorldEvent e, EventOutcome outcome)
         {
             foreach (var id in _world.Inhabitants.ToList())
             {
@@ -452,6 +504,16 @@ namespace Fallow.Core.Sim
                 var dominant = mind.Emotions.Dominant;
                 if (dominant == null || dominant.Intensity < _rules.Deciding.InterruptIntensity) continue;
 
+                _interruptions.Add(new InterruptionRecord
+                {
+                    Minute = _world.Minute,
+                    CharacterId = id,
+                    Was = busy.Action.Key,
+                    EventId = e.Id,
+                    EventIntensity = outcome != null && outcome.ByCharacter.TryGetValue(id, out var o) ? o.DominantIntensity : 0.0,
+                    StandingIntensity = dominant.Intensity
+                });
+                _why[id] = "interrupted";
                 _busy.Remove(id);
                 _sim.Trace.Add(
                     TraceKind.Consequence, id, e.Id, "stopped what they were doing",

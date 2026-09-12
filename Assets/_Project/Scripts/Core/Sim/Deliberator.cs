@@ -7,6 +7,33 @@ using Fallow.Core.Tracing;
 
 namespace Fallow.Core.Sim
 {
+    /// <summary>What one want added to one option, as it was actually calculated.</summary>
+    public sealed class Contribution
+    {
+        public string MotiveKey { get; }
+        public string MotiveName { get; }
+        public double Urgency { get; }
+        public double Fit { get; }
+        public string ProposalId { get; }
+        public int MotiveTraceId { get; }
+
+        public double Amount => Urgency * Fit;
+
+        public Contribution(string motiveKey, string motiveName, double urgency, double fit, string proposalId, int motiveTraceId)
+        {
+            MotiveKey = motiveKey;
+            MotiveName = motiveName;
+            Urgency = urgency;
+            Fit = fit;
+            ProposalId = proposalId;
+            MotiveTraceId = motiveTraceId;
+        }
+
+        public override string ToString()
+            => MotiveKey + " " + Amount.ToString("0.00") +
+               " (urgency " + Urgency.ToString("0.00") + " x fit " + Fit.ToString("0.00") + ", " + ProposalId + ")";
+    }
+
     /// <summary>One thing a person could do, everything for it, and everything against.</summary>
     public sealed class ScoredOption
     {
@@ -14,6 +41,9 @@ namespace Fallow.Core.Sim
 
         /// <summary>Which wants this would serve, and by how much each.</summary>
         public IReadOnlyList<string> Serves { get; }
+
+        /// <summary>The same, as numbers rather than words.</summary>
+        public IReadOnlyList<Contribution> Contributions { get; }
 
         public double Appeal { get; }
 
@@ -24,12 +54,16 @@ namespace Fallow.Core.Sim
 
         public double Score => Appeal - Cost;
 
+        /// <summary>The largest single thing any one want added.</summary>
+        public double StrongestReason => Contributions.Count == 0 ? 0.0 : Contributions.Max(c => c.Amount);
+
         public ScoredOption(
             ActionOption option, IReadOnlyList<string> serves, double appeal,
-            IReadOnlyList<string> prices, double cost)
+            IReadOnlyList<string> prices, double cost, IReadOnlyList<Contribution> contributions = null)
         {
             Option = option;
             Serves = serves ?? new List<string>();
+            Contributions = contributions ?? new List<Contribution>();
             Appeal = appeal;
             Prices = prices ?? new List<string>();
             Cost = cost;
@@ -127,6 +161,7 @@ namespace Fallow.Core.Sim
 
             var appeal = new Dictionary<string, double>(StringComparer.Ordinal);
             var serves = new Dictionary<string, List<string>>(StringComparer.Ordinal);
+            var parts = new Dictionary<string, List<Contribution>>(StringComparer.Ordinal);
             var byKey = new Dictionary<string, ActionOption>(StringComparer.Ordinal);
 
             foreach (var option in available)
@@ -134,6 +169,7 @@ namespace Fallow.Core.Sim
                 byKey[option.Key] = option;
                 appeal[option.Key] = 0.0;
                 serves[option.Key] = new List<string>();
+                parts[option.Key] = new List<Contribution>();
             }
 
             foreach (var motive in motives)
@@ -148,6 +184,8 @@ namespace Fallow.Core.Sim
                     if (contribution == 0.0) continue;
 
                     appeal[option.Key] += contribution;
+                    parts[option.Key].Add(new Contribution(
+                        motive.Key, motive.Name, motive.Urgency, proposal.Fit, proposal.Id, motive.TraceId));
                     serves[option.Key].Add(
                         motive.Key + " " + contribution.ToString("0.00") +
                         " (urgency " + motive.Urgency.ToString("0.00") +
@@ -160,7 +198,7 @@ namespace Fallow.Core.Sim
             {
                 var prices = new List<string>();
                 var cost = PriceOf(option, mind, percept, today, prices);
-                scored.Add(new ScoredOption(option, serves[option.Key], appeal[option.Key], prices, cost));
+                scored.Add(new ScoredOption(option, serves[option.Key], appeal[option.Key], prices, cost, parts[option.Key]));
             }
 
             var ranked = scored
