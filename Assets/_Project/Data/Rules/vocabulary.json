@@ -1,49 +1,166 @@
 {
-  "note": "The controlled vocabularies for slice S0. Every name used in character files, the event script, the rule files and the expectation table must appear here. Adding a name is a design decision; a typo is a validation failure.",
-
+  "note": "The controlled vocabularies for slices S0 and S1. Every name used in character files, the event script, the rule files and the expectation tables must appear here. Adding a name is a design decision; a typo is a validation failure.",
   "sets": {
-    "traits": ["cautious", "dominant", "empathetic", "impulsive", "proud", "anxious", "honest"],
-
-    "values": ["family_safety", "respect", "control", "fairness", "autonomy", "closeness"],
-
-    "meanings": ["support", "concern", "request", "challenge", "disrespect", "threat", "deception", "neutral"],
-
-    "self_meanings": ["take_responsibility", "share_information", "protect", "assert_authority", "prevent_argument"],
-
-    "emotions": ["anger", "anxiety", "fear", "frustration", "gratitude", "hurt", "relief", "shame", "warmth"],
-
+    "traits": [
+      "cautious",
+      "dominant",
+      "empathetic",
+      "impulsive",
+      "proud",
+      "anxious",
+      "honest"
+    ],
+    "values": [
+      "family_safety",
+      "respect",
+      "control",
+      "fairness",
+      "autonomy",
+      "closeness"
+    ],
+    "meanings": [
+      "support",
+      "concern",
+      "request",
+      "challenge",
+      "disrespect",
+      "threat",
+      "deception",
+      "neutral"
+    ],
+    "self_meanings": [
+      "take_responsibility",
+      "share_information",
+      "protect",
+      "assert_authority",
+      "prevent_argument",
+      "took_what_was_not_mine"
+    ],
+    "emotions": [
+      "anger",
+      "anxiety",
+      "fear",
+      "frustration",
+      "gratitude",
+      "hurt",
+      "relief",
+      "shame",
+      "warmth"
+    ],
     "ledger_entries": [
-      "protected_family", "protected_me", "proved_right", "overruled_me",
-      "raised_voice_at_me", "raised_voice", "comforted_me", "searched_my_things"
+      "protected_family",
+      "protected_me",
+      "proved_right",
+      "overruled_me",
+      "raised_voice_at_me",
+      "raised_voice",
+      "comforted_me",
+      "searched_my_things"
     ],
-
     "belief_patterns": [
-      "makes_risky_calls", "needs_to_be_in_charge", "does_not_respect_me",
-      "treats_me_like_a_child", "keeps_things_from_me"
+      "makes_risky_calls",
+      "needs_to_be_in_charge",
+      "does_not_respect_me",
+      "treats_me_like_a_child",
+      "keeps_things_from_me"
     ],
-
-    "role_claims": ["leads_family"],
-
-    "domains": ["survival", "physical", "social"],
-
-    "acts": ["tell", "suggest", "refuse", "demand"],
-
-    "actions": ["board_windows", "water_stops", "count_supplies", "comfort", "carry_to_safety", "search_belongings"],
-
-    "topics": ["shelter", "supplies", "going_outside", "who_decides", "sister", "missing_can"],
-
-    "tones": ["gentle", "calm", "neutral", "firm", "raised"],
-
-    "directness": ["direct", "indirect"],
-
-    "valences": ["good", "neutral", "bad"],
-
-    "family_roles": ["parent", "sibling"]
+    "role_claims": [
+      "leads_family"
+    ],
+    "domains": [
+      "survival",
+      "physical",
+      "social"
+    ],
+    "acts": [
+      "tell",
+      "suggest",
+      "refuse",
+      "demand"
+    ],
+    "actions": [
+      "board_windows",
+      "water_stops",
+      "count_supplies",
+      "comfort",
+      "carry_to_safety",
+      "search_belongings",
+      "observe",
+      "leave_room",
+      "enter_room",
+      "eat_portion",
+      "hide_portion",
+      "give_portion",
+      "show_distress"
+    ],
+    "topics": [
+      "shelter",
+      "supplies",
+      "going_outside",
+      "who_decides",
+      "sister",
+      "missing_can"
+    ],
+    "tones": [
+      "gentle",
+      "calm",
+      "neutral",
+      "firm",
+      "raised"
+    ],
+    "directness": [
+      "direct",
+      "indirect"
+    ],
+    "valences": [
+      "good",
+      "neutral",
+      "bad"
+    ],
+    "family_roles": [
+      "parent",
+      "sibling"
+    ],
+    "motives": [
+      "get_food",
+      "guard_supplies",
+      "find_out",
+      "avoid_exposure",
+      "restore_standing",
+      "keep_peace",
+      "look_after"
+    ],
+    "room_tags": [
+      "pantry",
+      "common",
+      "private",
+      "passage"
+    ],
+    "needs": [
+      "hunger"
+    ]
   },
-
   "belief_predicates": {
-    "tendency":           { "arg_domains": ["character", "belief_patterns"] },
-    "more_knowledgeable": { "arg_domains": ["character", "domains"] },
-    "role_claim":         { "arg_domains": ["character", "role_claims"] }
+    "tendency": {
+      "arg_domains": [
+        "character",
+        "belief_patterns"
+      ]
+    },
+    "more_knowledgeable": {
+      "arg_domains": [
+        "character",
+        "domains"
+      ]
+    },
+    "role_claim": {
+      "arg_domains": [
+        "character",
+        "role_claims"
+      ]
+    },
+    "supplies_short": {
+      "arg_domains": []
+    }
   }
 }

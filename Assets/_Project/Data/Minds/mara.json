@@ -4,30 +4,55 @@
   "age": 17,
   "family_role": "sibling",
   "note": "Younger sister. Frightened and easy to read, but old enough to resent being handled like a child. Everything she feels reaches her face before she decides to show it.",
-
   "traits": {
-    "cautious": 0.50,
+    "cautious": 0.5,
     "dominant": 0.25,
     "empathetic": 0.75,
-    "impulsive": 0.70,
+    "impulsive": 0.7,
     "proud": 0.55,
-    "anxious": 0.80,
+    "anxious": 0.8,
     "honest": 0.55
   },
-
-  "values": ["closeness", "autonomy", "fairness"],
-
+  "values": [
+    "closeness",
+    "autonomy",
+    "fairness"
+  ],
   "perception": {
-    "perceptiveness": 0.60,
-    "attention": { "threat": 1.40, "disrespect": 1.20 }
+    "perceptiveness": 0.6,
+    "attention": {
+      "threat": 1.4,
+      "disrespect": 1.2
+    }
   },
-
-  "expression": { "expressiveness": 0.90 },
-
-  "competence_self_belief": { "survival": 0.25, "physical": 0.30, "social": 0.50 },
-
+  "expression": {
+    "expressiveness": 0.9
+  },
+  "needs": {
+    "note": "Ordinary, a little less than the men.",
+    "hunger_rate": 0.95
+  },
+  "competence_self_belief": {
+    "survival": 0.25,
+    "physical": 0.3,
+    "social": 0.5
+  },
   "initial_beliefs": [
-    { "predicate": "tendency", "args": ["daniel", "treats_me_like_a_child"], "confidence": 0.55 },
-    { "predicate": "tendency", "args": ["elena", "keeps_things_from_me"], "confidence": 0.35 }
+    {
+      "predicate": "tendency",
+      "args": [
+        "daniel",
+        "treats_me_like_a_child"
+      ],
+      "confidence": 0.55
+    },
+    {
+      "predicate": "tendency",
+      "args": [
+        "elena",
+        "keeps_things_from_me"
+      ],
+      "confidence": 0.35
+    }
   ]
 }

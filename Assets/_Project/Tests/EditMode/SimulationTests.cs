@@ -50,7 +50,7 @@ namespace Fallow.Tests.Core
             ""dynamics"": { ""emotion_decay_base"": 0.5, ""emotion_decay_anxiety_resistance"": 0.0,
                             ""emotion_floor"": 0.05, ""overheard_confidence"": 0.6,
                             ""overheard_intensity_scale"": 0.5,
-                            ""salience_base"": 0.1, ""salience_emotion_weight"": 0.8 }
+                            ""salience_base"": 0.1 }
         }";
 
         static string Demand(string actor, string target, string[] witnesses, string[] overhearers = null, string intent = null)

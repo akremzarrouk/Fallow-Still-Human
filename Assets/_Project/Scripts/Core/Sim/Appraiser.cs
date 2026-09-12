@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Fallow.Core.Model;
 using Fallow.Core.Rules;
 using Fallow.Core.Tracing;
 
@@ -51,10 +52,17 @@ namespace Fallow.Core.Sim
         }
 
         /// <summary>
-        /// Works out what this reading stirred. Intensity is scaled by how
-        /// directly the person met the event and by how primed they are to
-        /// notice that kind of thing; neither can change which feeling wins,
-        /// only how hard it lands.
+        /// Works out what this reading stirred.
+        ///
+        /// Intensity runs 0 to 1, where 1 is as hard as this person feels
+        /// anything and is never quite reached. Several rules pushing the same
+        /// feeling add up, and the total is then squashed onto that scale, so a
+        /// feeling cannot be stacked past the top of it by writing another rule
+        /// and two strong feelings stay tellable apart. How directly the person
+        /// met the event,
+        /// and how primed they are to notice that kind of thing, scale each push
+        /// before it is folded in; neither can change which feeling wins, only
+        /// how hard it lands.
         /// </summary>
         public IReadOnlyList<EmotionContribution> Appraise(
             Mind perceiver,
@@ -86,15 +94,21 @@ namespace Fallow.Core.Sim
                     best[key] = 0.0;
                 }
 
-                contribution.Intensity += intensity;
+                // Kept as a raw total for now and squashed onto the scale once
+                // every rule has spoken, so that two strong feelings stay
+                // distinguishable instead of both arriving at the ceiling.
+                var landed = intensity * intensityScale;
+                contribution.Intensity += landed;
                 ((List<string>)contribution.RuleIds).Add(rule.Id);
                 detail[key].Add(terms.Count == 0
-                    ? $"{rule.Id} {intensity:0.00}"
-                    : $"{rule.Id} {intensity:0.00} (base {rule.BaseIntensity:0.00}; {string.Join("; ", terms)})");
+                    ? $"{rule.Id} {landed:0.00}"
+                    : $"{rule.Id} {landed:0.00} (base {rule.BaseIntensity:0.00}; {string.Join("; ", terms)})");
 
                 // The concern reported is the one from the rule that pushed hardest.
-                if (intensity > best[key]) best[key] = intensity;
+                if (landed > best[key]) best[key] = landed;
             }
+
+            foreach (var c in merged.Values) c.Intensity = Accumulate.Saturate(c.Intensity);
 
             var results = merged.Values
                 .OrderByDescending(c => c.Intensity)
@@ -103,7 +117,6 @@ namespace Fallow.Core.Sim
 
             foreach (var c in results)
             {
-                c.Intensity *= intensityScale;
                 var key = c.Type + "|" + (c.TargetId ?? "");
 
                 var data = new Dictionary<string, string>

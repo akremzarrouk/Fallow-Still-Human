@@ -82,6 +82,40 @@ namespace Fallow.Core.Model
         public double Intensity(string type, string targetId = null)
             => _live.TryGetValue(KeyOf(type, targetId), out var e) ? e.Intensity : 0.0;
 
+        /// <summary>
+        /// The strongest instance of a feeling, whoever it happens to be about.
+        /// Anger at somebody is still anger when it comes to what you do next.
+        /// </summary>
+        public double IntensityAny(string type)
+        {
+            var best = 0.0;
+            foreach (var e in _live.Values)
+            {
+                if (!string.Equals(e.Type, type, StringComparison.Ordinal)) continue;
+                if (e.Intensity > best) best = e.Intensity;
+            }
+            return best;
+        }
+
+        /// <summary>
+        /// Takes the edge off one particular feeling, the way being sat with
+        /// does. Not the same as time passing, which touches everything.
+        /// </summary>
+        public void Soften(string type, double remaining, double floor)
+        {
+            if (type == null) return;
+            var gone = new List<string>();
+
+            foreach (var pair in _live)
+            {
+                if (!string.Equals(pair.Value.Type, type, StringComparison.Ordinal)) continue;
+                pair.Value.Intensity *= remaining;
+                if (pair.Value.Intensity < floor) gone.Add(pair.Key);
+            }
+
+            foreach (var key in gone) _live.Remove(key);
+        }
+
         /// <summary>Time passing. Anything left below the floor stops being felt.</summary>
         public void Decay(double factor, double floor)
         {

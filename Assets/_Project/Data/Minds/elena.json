@@ -4,31 +4,64 @@
   "age": 42,
   "family_role": "parent",
   "note": "Mother. Reads everyone, says little, holds it in. Will lie to keep the family whole. Fears the household breaking apart more than she fears the outside.",
-
   "traits": {
-    "cautious": 0.70,
-    "dominant": 0.50,
-    "empathetic": 0.90,
+    "cautious": 0.7,
+    "dominant": 0.5,
+    "empathetic": 0.9,
     "impulsive": 0.25,
     "proud": 0.35,
     "anxious": 0.75,
-    "honest": 0.70
+    "honest": 0.7
   },
-
-  "values": ["family_safety", "closeness", "fairness"],
-
+  "values": [
+    "family_safety",
+    "closeness",
+    "fairness"
+  ],
   "perception": {
     "perceptiveness": 0.85,
-    "attention": { "challenge": 1.30, "threat": 1.20, "deception": 1.15 }
+    "attention": {
+      "challenge": 1.3,
+      "threat": 1.2,
+      "deception": 1.15
+    }
   },
-
-  "expression": { "expressiveness": 0.35 },
-
-  "competence_self_belief": { "survival": 0.45, "physical": 0.35, "social": 0.80 },
-
+  "expression": {
+    "expressiveness": 0.35
+  },
+  "needs": {
+    "note": "She has been eating least of all of them, and it is starting to tell.",
+    "hunger_rate": 0.85
+  },
+  "competence_self_belief": {
+    "survival": 0.45,
+    "physical": 0.35,
+    "social": 0.8
+  },
   "initial_beliefs": [
-    { "predicate": "tendency", "args": ["daniel", "needs_to_be_in_charge"], "confidence": 0.70 },
-    { "predicate": "more_knowledgeable", "args": ["leo", "survival"], "confidence": 0.65 },
-    { "predicate": "role_claim", "args": ["elena", "leads_family"], "confidence": 0.60 }
+    {
+      "predicate": "tendency",
+      "args": [
+        "daniel",
+        "needs_to_be_in_charge"
+      ],
+      "confidence": 0.7
+    },
+    {
+      "predicate": "more_knowledgeable",
+      "args": [
+        "leo",
+        "survival"
+      ],
+      "confidence": 0.65
+    },
+    {
+      "predicate": "role_claim",
+      "args": [
+        "elena",
+        "leads_family"
+      ],
+      "confidence": 0.6
+    }
   ]
 }

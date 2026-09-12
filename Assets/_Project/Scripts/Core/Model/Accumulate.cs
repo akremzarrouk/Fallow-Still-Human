@@ -32,6 +32,28 @@ namespace Fallow.Core.Model
             return next;
         }
 
+        /// <summary>
+        /// Turns an unbounded amount of pushing into a feeling on a 0 to 1 scale.
+        ///
+        /// Feelings need a scale with a top, because "how strongly do you feel
+        /// this" is a proportion and not a quantity of rules. But the pushing
+        /// that produces one has no natural ceiling: a person can be touched in
+        /// four places at once, and each of those weights can be large. Adding
+        /// them and clamping would make everybody who is very upset equally
+        /// upset, which is exactly the information worth keeping.
+        ///
+        /// So the total is squashed rather than cut off. The curve is strictly
+        /// increasing, so the order of two feelings is never lost however hard
+        /// either is pushed, and it never quite arrives at one, for the same
+        /// reason certainty never does.
+        /// </summary>
+        public static double Saturate(double total)
+        {
+            if (total <= 0.0) return 0.0;
+            var v = 1.0 - System.Math.Exp(-total);
+            return v > Certainty ? Certainty : v;
+        }
+
         /// <summary>Holds a value inside 0..1 without the accumulation curve.</summary>
         public static double Clamp01(double v) => v < 0.0 ? 0.0 : v > 1.0 ? 1.0 : v;
     }

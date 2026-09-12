@@ -94,6 +94,13 @@ namespace Fallow.Core.Sim
 
         int _eventsProcessed;
 
+        /// <summary>
+        /// How a bodily need stands for a given person, supplied by whatever is
+        /// running the world. Null while nothing has a body, in which case every
+        /// need reads as zero.
+        /// </summary>
+        public Func<string, string, double> Needs { get; set; }
+
         public TraceLog Trace { get; }
         public IReadOnlyDictionary<string, Mind> Minds => _minds;
 
@@ -156,22 +163,31 @@ namespace Fallow.Core.Sim
                 access == Access.Witnessed ? "was there and saw it" : "heard it without seeing it",
                 new[] { eventTrace });
 
-            var interpretation = _interpreter.Interpret(mind, e, access, _cast, Trace, accessTrace);
+            var interpretation = _interpreter.Interpret(
+                mind, e, access, _cast, Trace, accessTrace,
+                need => Needs == null ? 0.0 : Needs(mind.Id, need));
 
             _cast.TryGetValue(e.ActorId ?? "", out var actor);
-            var ctx = new MatchContext(e, mind.Profile, actor, access, interpretation.Meaning);
+            var ctx = new MatchContext(
+                e, mind.Profile, actor, access, interpretation.Meaning,
+                need => Needs == null ? 0.0 : Needs(mind.Id, need));
 
             var reach = access == Access.Overheard ? _rules.Dynamics.OverheardIntensityScale : 1.0;
             var attention = mind.Profile.Attention(interpretation.Meaning);
             var emotions = _appraiser.Appraise(mind, ctx, reach * attention, Trace, interpretation.TraceId);
 
-            // Several feelings at once make a moment stick harder, but not
-            // without limit: a saturating fold keeps salience able to tell one
-            // memory from another instead of pinning them all at the ceiling.
+            // How hard a moment landed, as one number: several feelings at once
+            // make it stick harder, each adding less than the last.
             var stirred = 0.0;
             foreach (var c in emotions) stirred = Accumulate.Toward(stirred, c.Intensity);
-            var salience = Accumulate.Clamp01(
-                (_rules.Dynamics.SalienceBase + _rules.Dynamics.SalienceEmotionWeight * stirred) * attention);
+
+            // Salience has to be able to tell one memory from another, so it
+            // spans the whole range between a moment that stirred nothing and
+            // one that stirred everything, rather than saturating near the top.
+            // Attention is not applied again here; it has already done its work
+            // on the feelings this is derived from.
+            var salience = _rules.Dynamics.SalienceBase
+                         + (1.0 - _rules.Dynamics.SalienceBase) * stirred;
             var confidence = access == Access.Overheard ? _rules.Dynamics.OverheardConfidence : 1.0;
 
             var experience = new Experience(
@@ -191,7 +207,10 @@ namespace Fallow.Core.Sim
                         { "confidence", confidence.ToString("0.00") },
                         { "salience", salience.ToString("0.00") }
                     }),
-                e.Summary);
+                e.Summary,
+                e.TargetsEveryone ? null : e.TargetId,
+                e.Topic,
+                e.Minute);
 
             mind.Remember(experience);
 

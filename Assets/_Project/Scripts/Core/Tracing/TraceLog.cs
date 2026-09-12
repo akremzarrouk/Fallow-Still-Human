@@ -15,7 +15,19 @@ namespace Fallow.Core.Tracing
         BeliefChange,
         LedgerEntry,
         Appraisal,
-        Emotion
+        Emotion,
+
+        /// <summary>Something the person came to want, and what raised it.</summary>
+        Motive,
+
+        /// <summary>Weighing what to do, and what the alternatives scored.</summary>
+        Deliberation,
+
+        /// <summary>What they settled on doing.</summary>
+        Action,
+
+        /// <summary>What that changed about the house.</summary>
+        Consequence
     }
 
     public sealed class TraceRecord

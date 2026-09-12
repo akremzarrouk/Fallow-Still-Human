@@ -42,6 +42,14 @@ namespace Fallow.Core.Model
         public string Intent { get; }
 
         public string Summary { get; }
+
+        /// <summary>
+        /// Minutes into the day, or -1 for the backstory, where only the order
+        /// is known. Recall needs this: what happened ten minutes ago presses on
+        /// you differently from what happened at breakfast.
+        /// </summary>
+        public int Minute { get; }
+
         public IReadOnlyList<LedgerEffect> LedgerEffects { get; }
         public IReadOnlyList<BeliefEffect> BeliefEffects { get; }
 
@@ -53,8 +61,10 @@ namespace Fallow.Core.Model
             IReadOnlyCollection<string> witnesses,
             IReadOnlyCollection<string> overhearers,
             IReadOnlyList<LedgerEffect> ledgerEffects,
-            IReadOnlyList<BeliefEffect> beliefEffects = null)
+            IReadOnlyList<BeliefEffect> beliefEffects = null,
+            int minute = -1)
         {
+            Minute = minute;
             Id = id;
             Day = day;
             Order = order;

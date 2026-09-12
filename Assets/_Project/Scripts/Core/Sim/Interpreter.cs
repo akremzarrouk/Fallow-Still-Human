@@ -84,7 +84,8 @@ namespace Fallow.Core.Sim
             Access access,
             IReadOnlyDictionary<string, Profile> cast,
             TraceLog trace,
-            int parentTraceId)
+            int parentTraceId,
+            Func<string, double> needs = null)
         {
             if (access == Access.None) return null;
 
@@ -100,7 +101,7 @@ namespace Fallow.Core.Sim
             }
 
             cast.TryGetValue(e.ActorId ?? "", out var actor);
-            var ctx = new MatchContext(e, perceiver.Profile, actor, access);
+            var ctx = new MatchContext(e, perceiver.Profile, actor, access, null, needs);
 
             var contributions = new List<RuleContribution>();
             var totals = new Dictionary<string, double>(StringComparer.Ordinal);
@@ -149,50 +150,12 @@ namespace Fallow.Core.Sim
         }
 
         /// <summary>
-        /// Works out how much each part of this person pushes a rule. Public so
-        /// the appraiser and the belief nudges use exactly the same arithmetic.
+        /// Works out how much each part of this person pushes a rule. Kept here
+        /// as the name the event pipeline already used; the arithmetic itself is
+        /// shared with deciding, so a weight means the same thing everywhere.
         /// </summary>
         public static IReadOnlyList<ScalerTerm> Evaluate(
             IReadOnlyList<Scaler> scalers, Mind perceiver, MatchContext ctx)
-        {
-            var terms = new List<ScalerTerm>();
-            if (scalers == null) return terms;
-
-            foreach (var s in scalers)
-            {
-                double level;
-                switch (s.Kind)
-                {
-                    case ScalerKind.Trait:
-                        level = perceiver.Profile.Trait(s.Name);
-                        break;
-                    case ScalerKind.Value:
-                        level = perceiver.Profile.ValueWeight(s.Name);
-                        break;
-                    case ScalerKind.Perceptiveness:
-                        level = perceiver.Profile.Perceptiveness;
-                        break;
-                    case ScalerKind.Emotion:
-                        level = perceiver.Emotions.Intensity(s.Name, ctx.Resolve(s.Target));
-                        break;
-                    case ScalerKind.Ledger:
-                        level = perceiver.Ledger.Strength(ctx.Resolve(s.About), s.Entry);
-                        break;
-                    case ScalerKind.Belief:
-                        level = perceiver.Beliefs.Confidence(
-                            s.Predicate, s.Args.Select(ctx.Resolve).ToList());
-                        break;
-                    case ScalerKind.Constant:
-                        level = 1.0;
-                        break;
-                    default:
-                        continue;
-                }
-
-                terms.Add(new ScalerTerm(s.Describe(ctx.Resolve), level, s.Factor));
-            }
-
-            return terms;
-        }
+            => ScalerEval.Evaluate(scalers, perceiver, ctx);
     }
 }

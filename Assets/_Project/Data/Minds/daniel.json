@@ -4,31 +4,63 @@
   "age": 25,
   "family_role": "sibling",
   "note": "Older brother. Takes charge because he is frightened, not because he is sure. Proud, poor at reading a room, genuinely protective. Believes responsibility is his by right of age.",
-
   "traits": {
     "cautious": 0.35,
     "dominant": 0.85,
-    "empathetic": 0.50,
-    "impulsive": 0.60,
+    "empathetic": 0.5,
+    "impulsive": 0.6,
     "proud": 0.85,
     "anxious": 0.65,
-    "honest": 0.50
+    "honest": 0.5
   },
-
-  "values": ["control", "respect", "family_safety"],
-
+  "values": [
+    "control",
+    "respect",
+    "family_safety"
+  ],
   "perception": {
     "perceptiveness": 0.35,
-    "attention": { "disrespect": 1.30, "challenge": 1.20 }
+    "attention": {
+      "disrespect": 1.3,
+      "challenge": 1.2
+    }
   },
-
-  "expression": { "expressiveness": 0.50 },
-
-  "competence_self_belief": { "survival": 0.70, "physical": 0.80, "social": 0.50 },
-
+  "expression": {
+    "expressiveness": 0.5
+  },
+  "needs": {
+    "note": "A big frame that runs through food faster than the rest of them.",
+    "hunger_rate": 1.15
+  },
+  "competence_self_belief": {
+    "survival": 0.7,
+    "physical": 0.8,
+    "social": 0.5
+  },
   "initial_beliefs": [
-    { "predicate": "tendency", "args": ["leo", "does_not_respect_me"], "confidence": 0.25 },
-    { "predicate": "more_knowledgeable", "args": ["leo", "survival"], "confidence": 0.40 },
-    { "predicate": "role_claim", "args": ["daniel", "leads_family"], "confidence": 0.80 }
+    {
+      "predicate": "tendency",
+      "args": [
+        "leo",
+        "does_not_respect_me"
+      ],
+      "confidence": 0.25
+    },
+    {
+      "predicate": "more_knowledgeable",
+      "args": [
+        "leo",
+        "survival"
+      ],
+      "confidence": 0.4
+    },
+    {
+      "predicate": "role_claim",
+      "args": [
+        "daniel",
+        "leads_family"
+      ],
+      "confidence": 0.8
+    }
   ]
 }

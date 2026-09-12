@@ -96,8 +96,10 @@ namespace Fallow.Core.Rules
     }
 
     /// <summary>Everything a rule is allowed to look at, assembled once per event per person.</summary>
-    public sealed class MatchContext
+    public sealed class MatchContext : IScalerContext
     {
+        readonly Func<string, double> _needs;
+
         public WorldEvent Event { get; }
         public Profile Perceiver { get; }
         public Profile Actor { get; }
@@ -111,8 +113,10 @@ namespace Fallow.Core.Rules
 
         public MatchContext(
             WorldEvent worldEvent, Profile perceiver, Profile actor,
-            Model.Access accessLevel, string meaning = null)
+            Model.Access accessLevel, string meaning = null,
+            Func<string, double> needs = null)
         {
+            _needs = needs;
             Event = worldEvent;
             Perceiver = perceiver;
             Actor = actor;
@@ -124,7 +128,23 @@ namespace Fallow.Core.Rules
         }
 
         public MatchContext WithMeaning(string meaning)
-            => new MatchContext(Event, Perceiver, Actor, AccessLevel, meaning);
+            => new MatchContext(Event, Perceiver, Actor, AccessLevel, meaning, _needs);
+
+        /// <summary>How a bodily need stands right now. Zero when nobody supplied one.</summary>
+        public double Need(string name) => _needs == null || name == null ? 0.0 : _needs(name);
+
+        /// <summary>The day this event belongs to, so a memory scaler can mean today.</summary>
+        public int Today => Event.Day;
+
+        /// <summary>When this event happened, as far as anything here knows.</summary>
+        public int Now => Event.Minute;
+
+        /// <summary>
+        /// Reading an event is not a decision, so nothing here is weighed
+        /// against how long ago something else was. Recall arrives at full
+        /// strength and the deciding layer is where it fades.
+        /// </summary>
+        public double RecallHalfLife => 0.0;
 
         public string EventTypeName => Event.Kind == EventKind.Speech ? "speech" : "action";
 

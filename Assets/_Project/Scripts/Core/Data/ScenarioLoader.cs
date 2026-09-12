@@ -30,7 +30,7 @@ namespace Fallow.Core.Data
 
         public static WorldEvent EventFromJson(string json) => ReadEvent(JObject.Parse(json));
 
-        static WorldEvent ReadEvent(JObject o)
+        internal static WorldEvent ReadEvent(JObject o)
         {
             var typeName = o["type"]?.Value<string>();
             var kind = string.Equals(typeName, "speech", StringComparison.Ordinal)
@@ -76,7 +76,7 @@ namespace Fallow.Core.Data
                 beliefEffects);
         }
 
-        static List<string> ReadStrings(JToken node)
+        internal static List<string> ReadStrings(JToken node)
         {
             var list = new List<string>();
             if (node is JArray arr)

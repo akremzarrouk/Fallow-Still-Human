@@ -160,7 +160,7 @@ namespace Fallow.Core.Data
                     case ScalerKind.Emotion:
                         if (!vocab.Contains("emotions", s.Name))
                             yield return $"{where}: '{s.Name}' is not an emotion";
-                        if (s.Target != null && !Tokens.Contains(s.Target))
+                        if (s.Target != null && !Tokens.Contains(s.Target) && s.Target != Scaler.Anybody)
                             yield return $"{where}: emotion target '{s.Target}' must be a token such as $actor";
                         break;
                     case ScalerKind.Ledger:

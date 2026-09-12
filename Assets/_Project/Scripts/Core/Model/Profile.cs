@@ -29,6 +29,20 @@ namespace Fallow.Core.Model
         public int Age { get; }
         public string FamilyRole { get; }
         public double Perceptiveness { get; }
+
+        /// <summary>
+        /// How much of what this person feels reaches the outside of them.
+        ///
+        /// Expression is not feeling. Someone composed may be frightened and
+        /// show almost none of it, and the difference is exactly what makes them
+        /// hard to read rather than empty. Nothing here scales an emotion; it
+        /// only decides whether anybody else in the room can tell.
+        /// </summary>
+        public double Expressiveness { get; }
+
+        /// <summary>How fast this body gets hungry, as a multiple of the ordinary rate.</summary>
+        public double HungerRate { get; }
+
         public IReadOnlyList<BeliefSeed> InitialBeliefs { get; }
 
         public IReadOnlyDictionary<string, double> Traits => _traits;
@@ -44,8 +58,12 @@ namespace Fallow.Core.Model
             IReadOnlyList<string> values,
             double perceptiveness,
             IReadOnlyDictionary<string, double> attention,
-            IReadOnlyList<BeliefSeed> initialBeliefs)
+            IReadOnlyList<BeliefSeed> initialBeliefs,
+            double expressiveness = 0.5,
+            double hungerRate = 1.0)
         {
+            Expressiveness = expressiveness;
+            HungerRate = hungerRate;
             Id = id;
             DisplayName = displayName;
             Age = age;

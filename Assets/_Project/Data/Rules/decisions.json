@@ -1,0 +1,570 @@
+{
+  "note": "How a person gets from the state they are in to something they do. Three stages, kept apart on purpose. A motivation rule says what there is to want and lets the person decide how badly. A proposal says which actions would serve a want, and most wants have several, so that no want is a disguised name for one action. A cost says what an action would take out of this particular person, which is what makes two people with the same want do different things. As in the event rules, no rule may name a member of the cast, and a condition may only ask about circumstances: everything about the person belongs in scaled_by, where it moves a weight instead of flipping a switch.",
+  "motivation": [
+    {
+      "id": "a_body_that_has_not_eaten",
+      "note": "The one need with a body behind it. Everything else people want here comes from what they value and what they are feeling.",
+      "motive": "get_food",
+      "base_urgency": 0.0,
+      "scaled_by": [
+        {
+          "kind": "need",
+          "name": "hunger",
+          "factor": 1.0
+        }
+      ]
+    },
+    {
+      "id": "making_it_last",
+      "note": "Knowing there is little left is not the same as being hungry, and pulls the opposite way.",
+      "motive": "guard_supplies",
+      "base_urgency": 0.0,
+      "scaled_by": [
+        {
+          "kind": "belief",
+          "predicate": "supplies_short",
+          "args": [],
+          "factor": 0.5
+        },
+        {
+          "kind": "value",
+          "name": "family_safety",
+          "factor": 0.4
+        },
+        {
+          "kind": "trait",
+          "name": "cautious",
+          "factor": 0.25
+        }
+      ]
+    },
+    {
+      "id": "needing_to_know_what_happened",
+      "note": "Carried by the memory of the morning rather than by the feeling, which fades. Weighed by how much of yourself is invested in being the one who settles things.",
+      "motive": "find_out",
+      "base_urgency": 0.0,
+      "scaled_by": [
+        {
+          "kind": "memory",
+          "name": "concern",
+          "topic": "missing_can",
+          "factor": 0.45
+        },
+        {
+          "kind": "memory",
+          "name": "threat",
+          "topic": "missing_can",
+          "factor": 0.35
+        },
+        {
+          "kind": "value",
+          "name": "control",
+          "factor": 0.5
+        },
+        {
+          "kind": "value",
+          "name": "fairness",
+          "factor": 0.4
+        },
+        {
+          "kind": "trait",
+          "name": "dominant",
+          "factor": 0.2
+        },
+        {
+          "kind": "belief",
+          "predicate": "role_claim",
+          "args": [
+            "$self",
+            "leads_family"
+          ],
+          "factor": 0.3
+        }
+      ]
+    },
+    {
+      "id": "not_wanting_to_be_looked_at",
+      "note": "Only somebody actually ashamed or frightened wants to be elsewhere. There is no standing wish to hide.",
+      "motive": "avoid_exposure",
+      "base_urgency": 0.0,
+      "scaled_by": [
+        {
+          "kind": "emotion",
+          "name": "shame",
+          "factor": 0.8
+        },
+        {
+          "kind": "emotion",
+          "name": "fear",
+          "factor": 0.35
+        }
+      ]
+    },
+    {
+      "id": "getting_back_what_was_taken_from_you",
+      "note": "Wanting to be the one who handles it, which is what being slighted turns into in somebody who minds.",
+      "motive": "restore_standing",
+      "base_urgency": 0.0,
+      "scaled_by": [
+        {
+          "kind": "emotion",
+          "name": "shame",
+          "factor": 0.5
+        },
+        {
+          "kind": "emotion",
+          "name": "anger",
+          "target": "$anybody",
+          "factor": 0.45
+        },
+        {
+          "kind": "value",
+          "name": "respect",
+          "factor": 0.25
+        },
+        {
+          "kind": "trait",
+          "name": "proud",
+          "factor": 0.15
+        }
+      ]
+    },
+    {
+      "id": "wanting_the_house_to_hold",
+      "note": "Wanting it not to turn into an argument, which for some people outweighs wanting to know.",
+      "motive": "keep_peace",
+      "base_urgency": 0.0,
+      "scaled_by": [
+        {
+          "kind": "value",
+          "name": "family_safety",
+          "factor": 0.45
+        },
+        {
+          "kind": "trait",
+          "name": "empathetic",
+          "factor": 0.3
+        },
+        {
+          "kind": "emotion",
+          "name": "anxiety",
+          "factor": 0.35
+        },
+        {
+          "kind": "trait",
+          "name": "cautious",
+          "factor": 0.15
+        }
+      ]
+    },
+    {
+      "id": "somebody_in_front_of_you_is_not_all_right",
+      "note": "Raised per person in the room, so caring about one of them is not the same as caring about whoever is nearest. It is carried by having seen that person go to pieces, not by them being upset, because you cannot want to help with what you never noticed, and not by them bringing bad news, which is a different thing entirely.",
+      "motive": "look_after",
+      "scope": "each_present",
+      "base_urgency": 0.0,
+      "scaled_by": [
+        {
+          "kind": "memory",
+          "name": "concern",
+          "about": "$target",
+          "factor": 0.7
+        },
+        {
+          "kind": "memory",
+          "name": "threat",
+          "about": "$target",
+          "factor": 0.5
+        },
+        {
+          "kind": "trait",
+          "name": "empathetic",
+          "factor": 0.15
+        },
+        {
+          "kind": "value",
+          "name": "closeness",
+          "factor": 0.2
+        },
+        {
+          "kind": "ledger",
+          "entry": "comforted_me",
+          "about": "$target",
+          "factor": 0.15
+        },
+        {
+          "kind": "ledger",
+          "entry": "protected_me",
+          "about": "$target",
+          "factor": 0.15
+        }
+      ]
+    }
+  ],
+  "proposals": [
+    {
+      "id": "eat_it",
+      "motive": "get_food",
+      "action": "eat",
+      "targeting": "none",
+      "fit": 1.0
+    },
+    {
+      "id": "go_where_the_food_is",
+      "motive": "get_food",
+      "action": "go_to",
+      "targeting": "nearest_tagged",
+      "room_tag": "pantry",
+      "fit": 0.55
+    },
+    {
+      "id": "see_what_there_is",
+      "motive": "get_food",
+      "action": "check_pantry",
+      "targeting": "none",
+      "fit": 0.4
+    },
+    {
+      "id": "count_it_properly",
+      "motive": "guard_supplies",
+      "action": "check_pantry",
+      "targeting": "none",
+      "fit": 0.5
+    },
+    {
+      "id": "leave_it_alone",
+      "note": "Not eating is a thing you do, not the absence of one.",
+      "motive": "guard_supplies",
+      "action": "wait",
+      "targeting": "none",
+      "fit": 0.3
+    },
+    {
+      "id": "keep_it_in_sight",
+      "motive": "guard_supplies",
+      "action": "go_to",
+      "targeting": "nearest_tagged",
+      "room_tag": "pantry",
+      "fit": 0.3
+    },
+    {
+      "id": "turn_the_room_over",
+      "motive": "find_out",
+      "action": "search_room",
+      "targeting": "none",
+      "fit": 0.8
+    },
+    {
+      "id": "look_at_the_shelf_yourself",
+      "motive": "find_out",
+      "action": "check_pantry",
+      "targeting": "none",
+      "fit": 0.6
+    },
+    {
+      "id": "watch_them",
+      "motive": "find_out",
+      "action": "observe",
+      "targeting": "each_present",
+      "fit": 0.45
+    },
+    {
+      "id": "somewhere_worth_looking",
+      "motive": "find_out",
+      "action": "go_to",
+      "targeting": "nearest_unsearched",
+      "room_tag": "private",
+      "fit": 0.7,
+      "when": {
+        "searched_this_room_myself": true
+      },
+      "note": "Worth doing once there is nothing left to turn over where you are standing, and aimed at a room nobody has been through yet, because a person looking for something does not search the same room twice."
+    },
+    {
+      "id": "get_out_of_the_room",
+      "when": {
+        "others_present_min": 1
+      },
+      "motive": "avoid_exposure",
+      "action": "go_to",
+      "targeting": "away_from_here",
+      "fit": 0.7
+    },
+    {
+      "id": "somewhere_with_a_door",
+      "motive": "avoid_exposure",
+      "action": "go_to",
+      "targeting": "nearest_tagged",
+      "room_tag": "private",
+      "fit": 0.5
+    },
+    {
+      "id": "stay_out_of_the_way",
+      "when": {
+        "alone": true
+      },
+      "motive": "avoid_exposure",
+      "action": "wait",
+      "targeting": "none",
+      "fit": 0.45
+    },
+    {
+      "id": "be_the_one_who_settles_it",
+      "motive": "restore_standing",
+      "action": "search_room",
+      "targeting": "none",
+      "fit": 0.6
+    },
+    {
+      "id": "check_it_yourself",
+      "motive": "restore_standing",
+      "action": "check_pantry",
+      "targeting": "none",
+      "fit": 0.45
+    },
+    {
+      "id": "keep_an_eye_on_them",
+      "motive": "restore_standing",
+      "action": "observe",
+      "targeting": "each_present",
+      "fit": 0.35
+    },
+    {
+      "id": "let_it_be",
+      "motive": "keep_peace",
+      "action": "wait",
+      "targeting": "none",
+      "fit": 0.5
+    },
+    {
+      "id": "be_where_they_are",
+      "motive": "keep_peace",
+      "action": "go_to",
+      "targeting": "nearest_tagged",
+      "room_tag": "common",
+      "fit": 0.35
+    },
+    {
+      "id": "settle_them_down",
+      "motive": "keep_peace",
+      "action": "comfort",
+      "targeting": "each_present",
+      "fit": 0.4
+    },
+    {
+      "id": "sit_with_them",
+      "motive": "look_after",
+      "action": "comfort",
+      "targeting": "motive_target",
+      "fit": 0.9
+    },
+    {
+      "id": "see_how_they_are",
+      "motive": "look_after",
+      "action": "observe",
+      "targeting": "motive_target",
+      "fit": 0.35
+    },
+    {
+      "id": "go_to_where_they_will_be",
+      "motive": "look_after",
+      "action": "go_to",
+      "targeting": "nearest_tagged",
+      "room_tag": "common",
+      "fit": 0.2
+    }
+  ],
+  "costs": [
+    {
+      "id": "taking_it_when_there_is_little",
+      "note": "The same handful of food out of the same cupboard, and not the same price for any two of them.",
+      "action": "eat",
+      "base": 0.15,
+      "scaled_by": [
+        {
+          "kind": "value",
+          "name": "family_safety",
+          "factor": 0.5
+        },
+        {
+          "kind": "value",
+          "name": "fairness",
+          "factor": 0.45
+        },
+        {
+          "kind": "belief",
+          "predicate": "supplies_short",
+          "args": [],
+          "factor": 0.5
+        },
+        {
+          "kind": "trait",
+          "name": "honest",
+          "factor": 0.2
+        }
+      ]
+    },
+    {
+      "id": "not_while_they_are_watching",
+      "note": "Which is how somebody comes to wait until the room is empty rather than decide not to.",
+      "when": {
+        "others_present_min": 1
+      },
+      "action": "eat",
+      "base": 0.1,
+      "scaled_by": [
+        {
+          "kind": "trait",
+          "name": "honest",
+          "factor": 0.25
+        },
+        {
+          "kind": "value",
+          "name": "fairness",
+          "factor": 0.3
+        },
+        {
+          "kind": "emotion",
+          "name": "shame",
+          "factor": 0.3
+        }
+      ]
+    },
+    {
+      "id": "going_through_what_is_not_yours",
+      "when": {
+        "in_somebody_elses_room": true
+      },
+      "action": "search_room",
+      "base": 0.2,
+      "scaled_by": [
+        {
+          "kind": "trait",
+          "name": "empathetic",
+          "factor": 0.4
+        },
+        {
+          "kind": "value",
+          "name": "closeness",
+          "factor": 0.35
+        },
+        {
+          "kind": "value",
+          "name": "autonomy",
+          "factor": 0.3
+        }
+      ]
+    },
+    {
+      "id": "with_them_standing_right_there",
+      "when": {
+        "in_somebody_elses_room": true,
+        "others_present_min": 1
+      },
+      "action": "search_room",
+      "base": 0.15,
+      "scaled_by": [
+        {
+          "kind": "trait",
+          "name": "empathetic",
+          "factor": 0.35
+        }
+      ]
+    },
+    {
+      "id": "staring_at_somebody",
+      "action": "observe",
+      "base": 0.1,
+      "scaled_by": [
+        {
+          "kind": "trait",
+          "name": "empathetic",
+          "factor": 0.2
+        },
+        {
+          "kind": "value",
+          "name": "closeness",
+          "factor": 0.15
+        }
+      ]
+    },
+    {
+      "id": "reaching_out_does_not_come_easily_to_everyone",
+      "note": "The negative term is the point: for somebody warm this is barely a cost at all.",
+      "action": "comfort",
+      "base": 0.3,
+      "scaled_by": [
+        {
+          "kind": "trait",
+          "name": "dominant",
+          "factor": 0.3
+        },
+        {
+          "kind": "trait",
+          "name": "proud",
+          "factor": 0.2
+        },
+        {
+          "kind": "trait",
+          "name": "empathetic",
+          "factor": -0.35
+        }
+      ]
+    },
+    {
+      "id": "getting_up_and_going_somewhere",
+      "action": "go_to",
+      "base": 0.12,
+      "scaled_by": [
+        {
+          "kind": "trait",
+          "name": "cautious",
+          "factor": 0.08
+        }
+      ]
+    },
+    {
+      "id": "opening_the_cupboard_again",
+      "action": "check_pantry",
+      "base": 0.08,
+      "scaled_by": [
+        {
+          "kind": "trait",
+          "name": "impulsive",
+          "factor": -0.05
+        }
+      ]
+    }
+  ],
+  "deciding": {
+    "ambiguity_band": 0.08,
+    "interrupt_intensity": 0.45,
+    "visible_distress": 0.3,
+    "hunger_per_minute": 0.004,
+    "portion_relief": 0.45,
+    "low_portions": 1,
+    "distress_shows": [
+      "fear",
+      "anxiety",
+      "shame",
+      "hurt",
+      "anger"
+    ],
+    "comfort_settles": [
+      "fear",
+      "anxiety"
+    ],
+    "comfort_settling": 0.55,
+    "action_minutes": {
+      "wait": 5,
+      "observe": 4,
+      "go_to": 2,
+      "check_pantry": 3,
+      "search_room": 8,
+      "comfort": 8,
+      "eat": 4
+    },
+    "recall_half_life": 20,
+    "watching_goes_stale_after": 15
+  }
+}

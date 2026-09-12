@@ -1,0 +1,239 @@
+{
+  "id": "scenario001_s1_morning",
+  "description": "Day four, the morning after. Everyone is in the kitchen when the count comes up short. From the opening event on, nobody is scripted: what each of them does is decided by what they want, and what they want is decided by who they are and what has happened to them.",
+  "day": 4,
+  "minutes": 90,
+  "house": {
+    "rooms": [
+      {
+        "id": "kitchen",
+        "name": "kitchen",
+        "tags": [
+          "pantry",
+          "common"
+        ],
+        "owners": []
+      },
+      {
+        "id": "living_room",
+        "name": "front room",
+        "tags": [
+          "common"
+        ],
+        "owners": []
+      },
+      {
+        "id": "hallway",
+        "name": "hallway",
+        "tags": [
+          "passage"
+        ],
+        "owners": []
+      },
+      {
+        "id": "brothers_room",
+        "name": "brothers room",
+        "tags": [
+          "private"
+        ],
+        "owners": [
+          "leo",
+          "daniel"
+        ]
+      },
+      {
+        "id": "back_room",
+        "name": "back room",
+        "tags": [
+          "private"
+        ],
+        "owners": [
+          "elena",
+          "mara"
+        ]
+      },
+      {
+        "id": "bathroom",
+        "name": "bathroom",
+        "tags": [
+          "private"
+        ],
+        "owners": []
+      }
+    ],
+    "connections": [
+      {
+        "a": "kitchen",
+        "b": "living_room",
+        "audible": true
+      },
+      {
+        "a": "kitchen",
+        "b": "hallway",
+        "audible": true
+      },
+      {
+        "a": "living_room",
+        "b": "hallway",
+        "audible": true
+      },
+      {
+        "a": "hallway",
+        "b": "brothers_room",
+        "audible": true
+      },
+      {
+        "a": "hallway",
+        "b": "back_room",
+        "audible": true
+      },
+      {
+        "a": "hallway",
+        "b": "bathroom",
+        "audible": false
+      }
+    ]
+  },
+  "start": {
+    "portions": 2,
+    "rooms": {
+      "leo": "kitchen",
+      "daniel": "kitchen",
+      "mara": "kitchen",
+      "elena": "kitchen"
+    },
+    "hunger": {
+      "leo": 0.45,
+      "daniel": 0.55,
+      "mara": 0.5,
+      "elena": 0.6
+    }
+  },
+  "opening": {
+    "id": "m000-open",
+    "day": 4,
+    "order": 1000,
+    "type": "action",
+    "actor": "elena",
+    "target": null,
+    "action": "count_supplies",
+    "topic": "missing_can",
+    "tone": "neutral",
+    "directness": "direct",
+    "valence": "bad",
+    "intent": "take_responsibility",
+    "witnesses": [
+      "leo",
+      "daniel",
+      "mara"
+    ],
+    "overhearers": [],
+    "summary": "Elena counts the pantry with everyone standing there. A can that should be on the shelf is not.",
+    "ledger_effects": []
+  },
+  "variants": [
+    {
+      "id": "daniel_ate_it",
+      "note": "He was hungry, told himself he needed the strength, and has been carrying it since.",
+      "night_events": [
+        {
+          "id": "n01",
+          "day": 3,
+          "order": 900,
+          "type": "action",
+          "actor": "daniel",
+          "target": null,
+          "action": "eat_portion",
+          "topic": "missing_can",
+          "tone": "neutral",
+          "directness": "direct",
+          "valence": "bad",
+          "intent": "took_what_was_not_mine",
+          "witnesses": [],
+          "overhearers": [],
+          "summary": "In the night Daniel eats a can standing at the counter in the dark.",
+          "ledger_effects": []
+        }
+      ]
+    },
+    {
+      "id": "daniel_hid_it",
+      "note": "The same act with a different meaning: he put one aside because somebody has to think ahead.",
+      "night_events": [
+        {
+          "id": "n01",
+          "day": 3,
+          "order": 900,
+          "type": "action",
+          "actor": "daniel",
+          "target": null,
+          "action": "hide_portion",
+          "topic": "missing_can",
+          "tone": "neutral",
+          "directness": "direct",
+          "valence": "neutral",
+          "intent": "take_responsibility",
+          "witnesses": [],
+          "overhearers": [],
+          "summary": "In the night Daniel puts a can behind the loose board, where nobody will get at it too soon.",
+          "ledger_effects": []
+        }
+      ]
+    },
+    {
+      "id": "mara_ate_it",
+      "note": "Seventeen, frightened, and it was there.",
+      "night_events": [
+        {
+          "id": "n01",
+          "day": 3,
+          "order": 900,
+          "type": "action",
+          "actor": "mara",
+          "target": null,
+          "action": "eat_portion",
+          "topic": "missing_can",
+          "tone": "neutral",
+          "directness": "direct",
+          "valence": "bad",
+          "intent": "took_what_was_not_mine",
+          "witnesses": [],
+          "overhearers": [],
+          "summary": "In the night Mara eats a can sitting on the kitchen floor.",
+          "ledger_effects": []
+        }
+      ]
+    },
+    {
+      "id": "elena_fed_mara",
+      "note": "She gave it to her daughter and said nothing. Two people know and neither will say.",
+      "night_events": [
+        {
+          "id": "n01",
+          "day": 3,
+          "order": 900,
+          "type": "action",
+          "actor": "elena",
+          "target": "mara",
+          "action": "give_portion",
+          "topic": "missing_can",
+          "tone": "neutral",
+          "directness": "direct",
+          "valence": "good",
+          "intent": "protect",
+          "witnesses": [
+            "mara"
+          ],
+          "overhearers": [],
+          "summary": "Mara is still awake and crying. Elena opens a can and gives it to her.",
+          "ledger_effects": []
+        }
+      ]
+    },
+    {
+      "id": "miscount",
+      "note": "Nobody took anything. There were only ever two. This one can never be solved, and is here to see what the house does with a question that has no answer.",
+      "night_events": []
+    }
+  ]
+}

@@ -63,11 +63,12 @@ namespace Fallow.Core.Rules
         /// <summary>How sure you are of something you only heard through a wall.</summary>
         public double OverheardConfidence { get; set; } = 0.60;
 
-        /// <summary>How much of an event sticks even when it stirred nothing.</summary>
+        /// <summary>
+        /// How much of an event sticks even when it stirred nothing. Feeling
+        /// carries a memory the rest of the way, so this is the floor of the
+        /// scale rather than a weight.
+        /// </summary>
         public double SalienceBase { get; set; } = 0.15;
-
-        /// <summary>How much feeling something makes it stick.</summary>
-        public double SalienceEmotionWeight { get; set; } = 0.85;
 
         /// <summary>How much less an overheard event stirs than a witnessed one.</summary>
         public double OverheardIntensityScale { get; set; } = 0.75;
@@ -79,5 +80,24 @@ namespace Fallow.Core.Rules
         public IReadOnlyList<BeliefNudgeRule> BeliefNudges { get; set; } = new List<BeliefNudgeRule>();
         public IReadOnlyList<AppraisalRule> Appraisal { get; set; } = new List<AppraisalRule>();
         public Dynamics Dynamics { get; set; } = new Dynamics();
+
+        // Deciding what to do, loaded from a separate file so that how a person
+        // reads the world and what they do about it can be changed apart.
+
+        public IReadOnlyList<MotivationRule> Motivation { get; set; } = new List<MotivationRule>();
+        public IReadOnlyList<ProposalRule> Proposals { get; set; } = new List<ProposalRule>();
+        public IReadOnlyList<CostRule> Costs { get; set; } = new List<CostRule>();
+        public DecisionDynamics Deciding { get; set; } = new DecisionDynamics();
+
+        /// <summary>Folds a decision rule file into this one, leaving the event rules alone.</summary>
+        public RuleSet With(RuleSet decisions)
+        {
+            if (decisions == null) return this;
+            Motivation = decisions.Motivation;
+            Proposals = decisions.Proposals;
+            Costs = decisions.Costs;
+            Deciding = decisions.Deciding;
+            return this;
+        }
     }
 }

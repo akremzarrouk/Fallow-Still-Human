@@ -34,6 +34,12 @@ namespace Fallow.Core.Data
                 foreach (var p in attentionNode)
                     attention[p.Key] = p.Value?.Value<double>() ?? 1.0;
 
+            var expression = o["expression"] as JObject;
+            var expressiveness = expression?["expressiveness"]?.Value<double>() ?? 0.5;
+
+            var needs = o["needs"] as JObject;
+            var hungerRate = needs?["hunger_rate"]?.Value<double>() ?? 1.0;
+
             var beliefs = new List<BeliefSeed>();
             if (o["initial_beliefs"] is JArray beliefsNode)
                 foreach (var b in beliefsNode)
@@ -61,7 +67,9 @@ namespace Fallow.Core.Data
                 values,
                 perceptiveness,
                 attention,
-                beliefs);
+                beliefs,
+                expressiveness,
+                hungerRate);
         }
 
         /// <summary>Loads every character file in a folder, keyed by character id.</summary>

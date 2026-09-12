@@ -25,6 +25,15 @@ namespace Fallow.Core.Model
         public int Order { get; }
         public string ActorId { get; }
 
+        /// <summary>Who it was aimed at, as far as this person could tell.</summary>
+        public string TargetId { get; }
+
+        /// <summary>What it was about. A memory that cannot say what it concerned cannot be recalled by subject.</summary>
+        public string Topic { get; }
+
+        /// <summary>When in the day it happened, or -1 when only the order is known.</summary>
+        public int Minute { get; }
+
         /// <summary>What it meant to this person.</summary>
         public string Meaning { get; }
 
@@ -49,12 +58,16 @@ namespace Fallow.Core.Model
             string eventId, int day, int order, string actorId,
             string meaning, bool fromOwnIntent, Access access,
             double confidence, double salience, string dominantEmotion,
-            int traceId, string summary)
+            int traceId, string summary,
+            string targetId = null, string topic = null, int minute = -1)
         {
+            Minute = minute;
             EventId = eventId;
             Day = day;
             Order = order;
             ActorId = actorId;
+            TargetId = targetId;
+            Topic = topic;
             Meaning = meaning;
             FromOwnIntent = fromOwnIntent;
             Access = access;
