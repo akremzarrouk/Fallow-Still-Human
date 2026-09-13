@@ -105,6 +105,8 @@ namespace Fallow.Tests.Core
             var peak = 0.0;
             var shameAtPeak = 0.0;
             var fearAtPeak = 0.0;
+            Motive peakWant = null;
+            Scenario001Run peakRun = null;
 
             for (ulong seed = 1; seed <= 10; seed++)
             {
@@ -116,6 +118,8 @@ namespace Fallow.Tests.Core
                     if (m.Urgency <= peak) continue;
 
                     peak = m.Urgency;
+                    peakWant = m;
+                    peakRun = run;
                     shameAtPeak = m.Terms
                         .Where(t => t.Description.Contains("shame"))
                         .Select(t => t.Amount).DefaultIfEmpty(0).Max();
@@ -131,11 +135,39 @@ namespace Fallow.Tests.Core
                 " and fear " + fearAtPeak.ToString("0.00") +
                 ". She carries no shame out of the night, as H1 confirms. She picks it up during " +
                 "the morning from being watched, and the prediction assumed guilt about the can was " +
-                "the only way in.");
+                "the only way in. Since S1.1 the fear in it is not the morning's alone: it leads back to " +
+                "her night through her belief that she is answerable for the can (found in S1.2).");
 
             Assert.Greater(peak, 0.10, "this is a recorded miss, not a passing prediction");
-            Assert.Greater(shameAtPeak, fearAtPeak,
-                "what she acquired during the morning did it, not what she brought into it");
+
+            // Changed in S1.2. This used to require the shame term to be larger
+            // than the fear term at her single strongest moment, as a stand-in for
+            // "what she acquired during the morning did it, not what she brought
+            // into it". After S1.2 the two are level at that moment (0.19 and
+            // 0.20), so the terms were walked back to their causes instead, and
+            // the stand-in turned out to have been hiding something since S1.1.
+            //
+            // The shame is still all the morning's: it leads back to her son
+            // watching her and nowhere else. The fear does not. It comes from
+            // reading her daughter's search of the kitchen as a threat, which she
+            // does only because her night left her believing she is answerable
+            // for the can. So half of her strongest wish to be elsewhere is what
+            // she brought out of the night, by way of a belief, which is the
+            // S1.1 mechanism reaching a person it was not written for. Recorded
+            // as observed, not predicted.
+            var night = _content.Morning.Variant(HeldOut).NightEvents.Select(e => e.Id).ToList();
+            bool FromTheNight(Fallow.Core.Rules.ScalerTerm t)
+                => t.Drew.Any(id => peakRun.Trace.Chain(id).Any(r => r.EventId != null && night.Contains(r.EventId)));
+
+            var shameTerms = peakWant.Terms.Where(t => t.Amount > 0 && t.Description.Contains("shame")).ToList();
+            var fearTerms = peakWant.Terms.Where(t => t.Amount > 0 && t.Description.Contains("fear")).ToList();
+            TestContext.WriteLine("S1.2: at the peak, shame from the night " + shameTerms.Any(FromTheNight) +
+                                  ", fear from the night " + fearTerms.Any(FromTheNight));
+
+            Assert.IsNotEmpty(shameTerms);
+            Assert.IsFalse(shameTerms.Any(FromTheNight), "the shame in it is still all the morning's");
+            Assert.IsTrue(fearTerms.Any(FromTheNight),
+                "OBSERVED IN S1.2: the fear in it leads back to her night through what she came to believe; if this fails, that route has closed");
         }
 
         [Test]

@@ -81,10 +81,38 @@ namespace Fallow.Tests.Core
                     run.Trace.Chain(id).Any(r => r.Summary.Contains("watches Elena")))),
                 "some of her shame came from somewhere other than being watched");
 
-            // And it is a passing thing, not a state she is left in. By the end
-            // of the morning it has almost gone.
-            Assert.Less(elena.Emotions.Intensity("shame"), 0.1,
-                "shame from a look should fade, unlike the memory of it");
+            // And it is a passing thing, not a state she is left in.
+            //
+            // Changed in S1.2. This used to read her shame at the end of the
+            // morning. Once people stopped being interrupted by what they were
+            // already feeling, Daniel watches her a second time on seed 1, at
+            // minute 88, two minutes before the end, and the end of the morning
+            // stopped measuring whether shame fades. The same morning is stepped
+            // again here, and the claim is checked where it can be: after every
+            // look with twenty minutes or more before the next one or the end,
+            // her shame is below the same 0.1 before he looks again.
+            var again = Scenario001.Prepare(content, "elena_fed_mara", 1);
+            var looks = new System.Collections.Generic.List<int>();
+            var shameAt = new System.Collections.Generic.Dictionary<int, double>();
+            for (var i = 0; i < content.Morning.Minutes; i++)
+            {
+                var seen = again.Result.Events.Count;
+                again.Morning.Step();
+                if (again.Result.Events.Skip(seen).Any(e => e.Summary.Contains("watches Elena"))) looks.Add(again.World.Minute);
+                shameAt[again.World.Minute] = again.Minds["elena"].Emotions.Intensity("shame");
+            }
+
+            var checkedLooks = 0;
+            for (var i = 0; i < looks.Count; i++)
+            {
+                var until = i + 1 < looks.Count ? looks[i + 1] - 1 : content.Morning.Minutes;
+                if (until - looks[i] < 20) continue;
+                checkedLooks++;
+                TestContext.WriteLine("looked at minute " + looks[i] + ": shame " + shameAt[looks[i]].ToString("0.00") +
+                                      ", by minute " + until + " " + shameAt[until].ToString("0.00"));
+                Assert.Less(shameAt[until], 0.1, "shame from a look should fade, unlike the memory of it");
+            }
+            Assert.Greater(checkedLooks, 0, "no look was followed by long enough to see whether it fades");
 
             var chain = run.Trace.Why(wanting.TraceId);
             TestContext.WriteLine(chain);

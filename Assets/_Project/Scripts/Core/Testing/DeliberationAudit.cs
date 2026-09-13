@@ -24,6 +24,8 @@ namespace Fallow.Core.Testing
         public int Mornings;
         public int Decisions;
 
+        bool _weighWants = true;
+
         public readonly Dictionary<string, int> ChosenKinds = new Dictionary<string, int>(StringComparer.Ordinal);
         public readonly Dictionary<string, int> Why = new Dictionary<string, int>(StringComparer.Ordinal);
 
@@ -66,6 +68,9 @@ namespace Fallow.Core.Testing
 
         public int Interruptions;
 
+        /// <summary>Of those, how many thought again and carried on with the same thing.</summary>
+        public int CarriedOn;
+
         /// <summary>Interruptions where the event itself stirred less than the threshold, and the standing feeling did the rest.</summary>
         public int InterruptedByWhatTheyAlreadyFelt;
 
@@ -84,9 +89,10 @@ namespace Fallow.Core.Testing
         public readonly Dictionary<string, int> DecisionsBy = new Dictionary<string, int>(StringComparer.Ordinal);
 
         public static DeliberationAudit Run(
-            Scenario001Content content, IReadOnlyList<string> variants, int seeds, ulong firstSeed = 1, int? minutes = null)
+            Scenario001Content content, IReadOnlyList<string> variants, int seeds, ulong firstSeed = 1, int? minutes = null,
+            bool weighWants = true)
         {
-            var audit = new DeliberationAudit();
+            var audit = new DeliberationAudit { _weighWants = weighWants };
             foreach (var variant in variants)
             for (var i = 0; i < seeds; i++)
             {
@@ -115,11 +121,11 @@ namespace Fallow.Core.Testing
                 if (d.Tied.Select(t => t.KindName).Distinct(StringComparer.Ordinal).Count() > 1) GenuineTies++;
             }
 
-            var top = d.Ranked[0];
+            var top = d.Considered[0];
             var wants = top.Contributions.Select(c => c.MotiveKey).Distinct(StringComparer.Ordinal).Count();
             if (wants >= 2) TopDrewOnSeveral++;
 
-            var byStrongest = d.Ranked
+            var byStrongest = d.Considered
                 .OrderByDescending(r => r.StrongestReason - r.Cost)
                 .ThenBy(r => r.Option.Key, StringComparer.Ordinal)
                 .First();
@@ -127,7 +133,7 @@ namespace Fallow.Core.Testing
 
             if (top.Contributions.GroupBy(c => c.MotiveKey).Any(g => g.Count() > 1)) TopCountedOneWantTwice++;
 
-            var onceEach = d.Ranked
+            var onceEach = d.Considered
                 .OrderByDescending(r => r.Contributions.GroupBy(c => c.MotiveKey).Sum(g => g.Max(c => c.Amount)) - r.Cost)
                 .ThenBy(r => r.Option.Key, StringComparer.Ordinal)
                 .First();
@@ -171,20 +177,43 @@ namespace Fallow.Core.Testing
             // one, and see whether something else comes out on top. The top of
             // the ranking is compared, not the pick, so the seed plays no part.
             var deliberator = new Deliberator(content.Rules);
-            foreach (var name in m.Motives.Select(x => x.Name).Distinct(StringComparer.Ordinal))
+            foreach (var name in m.Motives.Select(x => x.Name).Distinct(StringComparer.Ordinal).Where(_ => _weighWants))
             {
                 Bump(Present, name);
                 var without = m.Motives.Where(x => x.Name != name).ToList();
-                var again = deliberator.Decide(m.Mind, m.Percept, without, content.Morning.Day, new Rng(1), new TraceLog(), 0);
-                if (again.Ranked[0].Option.Key != top.Option.Key) Bump(Pivotal, name);
+                var again = deliberator.Decide(m.Mind, m.Percept, without, content.Morning.Day, new Rng(1), new TraceLog(), 0, d.Holding);
+                if (again.Considered[0].Option.Key != d.Considered[0].Option.Key) Bump(Pivotal, name);
+            }
+
+            if (d.Holding != null)
+            {
+                Bump(Commitments, d.Commitment);
+                Bump(CommitmentsByWant, d.Holding.MotiveName + ": " + d.Commitment);
+                if (d.Commitment == Commitment.Held)
+                {
+                    if (!d.Ranked[0].Option.SameAs(d.Chosen)) IntentionOverruledTheRanking++;
+                    var fullBand = d.Ranked.Where(r => d.Ranked[0].Score - r.Score <= content.Rules.Deciding.AmbiguityBand).ToList();
+                    if (fullBand.Select(r => r.Option.KindName).Distinct(StringComparer.Ordinal).Count() > 1) HeldWhereTheFullRankingWasATie++;
+                }
             }
         }
+
+        /// <summary>Intentions brought into decisions, and what became of them.</summary>
+        public readonly Dictionary<string, int> Commitments = new Dictionary<string, int>(StringComparer.Ordinal);
+        public readonly Dictionary<string, int> CommitmentsByWant = new Dictionary<string, int>(StringComparer.Ordinal);
+
+        /// <summary>Held intentions where something not serving the intention scored higher overall.</summary>
+        public int IntentionOverruledTheRanking;
+
+        /// <summary>Held intentions where the full ranking, ignoring the intention, would have gone to the seed between different kinds.</summary>
+        public int HeldWhereTheFullRankingWasATie;
 
         void Finish(Scenario001Content content, Scenario001Run run, string label, List<DecisionMoment> moments)
         {
             Mornings++;
 
             Interruptions += run.Morning.Interruptions.Count;
+            CarriedOn += run.Result.Actions.Count(a => a.Outcome == "thought again, and carried on");
             InterruptedByWhatTheyAlreadyFelt += run.Morning.Interruptions
                 .Count(x => x.EventIntensity < content.Rules.Deciding.InterruptIntensity);
 
@@ -315,12 +344,28 @@ namespace Fallow.Core.Testing
             sb.AppendLine("|---|---|");
             sb.AppendLine("| Interruptions per morning | " + (Interruptions / (double)Math.Max(1, Mornings)).ToString("0.00", CultureInfo.InvariantCulture) + " |");
             sb.AppendLine("| ... where the event itself stirred less than the threshold | " + P(InterruptedByWhatTheyAlreadyFelt, Interruptions) + " |");
+            sb.AppendLine("| ... after which they thought again and carried on | " + P(CarriedOn, Interruptions) + " |");
+            var brought = Commitments.Values.Sum();
+            sb.AppendLine("| Decisions taken with an intention carried in | " + P(brought, Decisions) + " |");
+            foreach (var k in Commitments.OrderBy(k => k.Key, StringComparer.Ordinal))
+                sb.AppendLine("| ... " + k.Key + " | " + P(k.Value, brought) + " |");
+            Commitments.TryGetValue(Commitment.Held, out var held);
+            sb.AppendLine("| ... held, where something serving a different want scored higher overall | " + P(IntentionOverruledTheRanking, held) + " |");
+            sb.AppendLine("| ... held, where ignoring the intention would have been a tie between different kinds | " + P(HeldWhereTheFullRankingWasATie, held) + " |");
             sb.AppendLine("| Walks completed and followed by a decision | " + WalksWithAPurpose + " |");
             sb.AppendLine("| ... followed by something the want behind the walk did not serve | " + P(Abandoned, WalksWithAPurpose) + " |");
             sb.AppendLine("| ... followed by walking straight back | " + P(WalkedStraightBack, WalksWithAPurpose) + " |");
             sb.AppendLine("| Back-and-forth pacing, mean per person per morning | " + (PacingTotal / Math.Max(1, PacingSeries)).ToString("0.00", CultureInfo.InvariantCulture) + " |");
             sb.AppendLine("| Worst pacing | " + WorstPacing + " (" + WorstPacingWho + ") |");
             sb.AppendLine("| Mornings anyone ate | " + MorningsAnyoneAte + " of " + Mornings + " |");
+
+            if (CommitmentsByWant.Count > 0)
+            {
+                sb.AppendLine();
+                sb.AppendLine("Intentions carried into a decision, by the want behind them: " +
+                              string.Join(", ", CommitmentsByWant.OrderBy(k => k.Key, StringComparer.Ordinal)
+                                  .Select(k => "`" + k.Key + "` " + k.Value)) + ".");
+            }
             return sb.ToString();
         }
     }

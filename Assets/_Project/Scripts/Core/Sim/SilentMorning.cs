@@ -46,6 +46,11 @@ namespace Fallow.Core.Sim
     /// The moment somebody decided, with everything the decision was made from,
     /// for an instrument to look at. Read-only in spirit: whatever looks at it
     /// must not change the mind or the percept.
+    ///
+    /// The mind is the live one. Anything that weighs the decision again must do
+    /// it inside the callback, while the mind is still in the state it decided
+    /// in; by the end of the morning its feelings have moved on, and a decision
+    /// weighed again then is weighed by somebody else.
     /// </summary>
     public sealed class DecisionMoment
     {
@@ -129,6 +134,12 @@ namespace Fallow.Core.Sim
         readonly int _day;
 
         readonly Dictionary<string, Busy> _busy = new Dictionary<string, Busy>(StringComparer.Ordinal);
+
+        /// <summary>What somebody was in the middle of when something stopped them to think again.</summary>
+        readonly Dictionary<string, Busy> _stopped = new Dictionary<string, Busy>(StringComparer.Ordinal);
+
+        /// <summary>Why somebody is walking where they are walking, kept until they arrive and decide.</summary>
+        readonly Dictionary<string, Intention> _intentions = new Dictionary<string, Intention>(StringComparer.Ordinal);
         readonly Dictionary<string, HashSet<string>> _searchedBy = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
         readonly HashSet<string> _showingIt = new HashSet<string>(StringComparer.Ordinal);
         readonly HashSet<string> _sawThePantry = new HashSet<string>(StringComparer.Ordinal);
@@ -180,6 +191,27 @@ namespace Fallow.Core.Sim
         /// <summary>Everything that has happened so far, without advancing anything.</summary>
         public MorningResult Snapshot() => new MorningResult(_actions, _decisions, _events, _world);
 
+        /// <summary>Why somebody is walking where they are walking. Null when they are not walking for anything.</summary>
+        public Intention Intends(string characterId)
+            => _intentions.TryGetValue(characterId, out var i) ? i : null;
+
+        /// <summary>What somebody is in the middle of, and how many minutes of it are left. Null when idle.</summary>
+        public (ActionOption Action, int MinutesLeft)? Doing(string characterId)
+            => _busy.TryGetValue(characterId, out var b) ? (b.Action, b.MinutesLeft) : ((ActionOption, int)?)null;
+
+        /// <summary>
+        /// For experiments: something happens in the house that nobody in the
+        /// morning decided to do. It reaches people by exactly the route their
+        /// own actions reach each other, and can stop them exactly as those can.
+        /// </summary>
+        public EventOutcome Happen(WorldEvent e)
+        {
+            _events.Add(e);
+            var outcome = _sim.Apply(e);
+            Interrupt(e, outcome);
+            return outcome;
+        }
+
         /// <summary>
         /// One minute. Whatever finished resolves first, so that the people who
         /// have yet to decide are deciding about the house as it now is.
@@ -230,9 +262,24 @@ namespace Fallow.Core.Sim
                 });
 
             var motives = _motivator.Raise(mind, percept, _day, _sim.Trace, opening);
+
+            // Arriving somewhere is the one moment an intention is carried into a
+            // decision. Something that landed hard enough to stop you means
+            // thinking again from the beginning, so it is not carried then.
+            _why.TryGetValue(characterId, out var reason);
+            _intentions.TryGetValue(characterId, out var holding);
+            if (reason != "finished") holding = null;
+
             var decision = _deliberator.Decide(
                 mind, percept, motives, _day, _rng.Fork(characterId + "@" + _world.Minute),
-                _sim.Trace, opening);
+                _sim.Trace, opening, holding);
+
+            // Only a walk is a means to something else, so only a walk leaves an
+            // intention standing. Anything else is the thing itself.
+            if (decision.Chosen.Kind == ActionKind.GoTo && decision.Forms != null)
+                _intentions[characterId] = decision.Forms;
+            else
+                _intentions.Remove(characterId);
 
             _decisions.Add(decision);
 
@@ -253,6 +300,28 @@ namespace Fallow.Core.Sim
                 leading?.Key ?? "nothing pressing", leading?.Urgency ?? 0.0,
                 decision.Resolution, decision.Margin, decision.TraceId);
             _actions.Add(record);
+
+            // Thinking again is not the same as giving up. Somebody stopped part
+            // way through who weighs it all again and still chooses the same
+            // thing picks it up where they left off.
+            if (_stopped.TryGetValue(characterId, out var was))
+            {
+                _stopped.Remove(characterId);
+                if (decision.Chosen.SameAs(was.Action))
+                {
+                    _busy[characterId] = was;
+                    record.Outcome = "thought again, and carried on";
+                    _sim.Trace.Add(
+                        TraceKind.Consequence, characterId, null, "thought again, and carried on",
+                        new[] { decision.TraceId },
+                        new Dictionary<string, string>
+                        {
+                            { "with", was.Action.Key },
+                            { "minutes_left", was.MinutesLeft.ToString() }
+                        });
+                    return;
+                }
+            }
 
             _busy[characterId] = new Busy
             {
@@ -489,6 +558,14 @@ namespace Fallow.Core.Sim
         /// Something that lands hard enough stops you doing what you were doing.
         /// Anything less and people finish what they started, which is what keeps
         /// them from turning round every time somebody walks past.
+        ///
+        /// What has to land is this moment. S1.2 found the rule reading the
+        /// strongest feeling the person was carrying from anything at all, so
+        /// somebody already upset was stopped by every door that opened: nearly
+        /// half of all decisions in a morning were taken because of an
+        /// interruption, and nearly half of those interruptions were events that
+        /// stirred almost nothing. Being stopped is now earned by what just
+        /// happened to you, measured against the same threshold.
         /// </summary>
         void Interrupt(WorldEvent e, EventOutcome outcome)
         {
@@ -501,8 +578,9 @@ namespace Fallow.Core.Sim
                 var stirred = mind.Experiences.LastOrDefault(x => x.EventId == e.Id);
                 if (stirred == null) continue;
 
-                var dominant = mind.Emotions.Dominant;
-                if (dominant == null || dominant.Intensity < _rules.Deciding.InterruptIntensity) continue;
+                PerceptionOutcome landed = null;
+                if (outcome == null || !outcome.ByCharacter.TryGetValue(id, out landed)) continue;
+                if (landed.Dominant == null || landed.DominantIntensity < _rules.Deciding.InterruptIntensity) continue;
 
                 _interruptions.Add(new InterruptionRecord
                 {
@@ -510,18 +588,20 @@ namespace Fallow.Core.Sim
                     CharacterId = id,
                     Was = busy.Action.Key,
                     EventId = e.Id,
-                    EventIntensity = outcome != null && outcome.ByCharacter.TryGetValue(id, out var o) ? o.DominantIntensity : 0.0,
-                    StandingIntensity = dominant.Intensity
+                    EventIntensity = landed.DominantIntensity,
+                    StandingIntensity = mind.Emotions.Dominant?.Intensity ?? 0.0
                 });
                 _why[id] = "interrupted";
                 _busy.Remove(id);
+                _stopped[id] = busy;
                 _sim.Trace.Add(
                     TraceKind.Consequence, id, e.Id, "stopped what they were doing",
                     new[] { stirred.TraceId },
                     new Dictionary<string, string>
                     {
                         { "was", busy.Action.Key },
-                        { "because", dominant.ToString() }
+                        { "minutes_left", busy.MinutesLeft.ToString() },
+                        { "because", landed.Dominant.ToString() }
                     });
             }
         }

@@ -4,16 +4,16 @@ Found by `S11CausalExamplesTests`: the first seed on which the night changed a d
 and the want behind the changed decision leads back to the night. Chains are printed
 by the trace tool as they are.
 
-## mara_ate_it, mara, seed 1, minute 71
+## mara_ate_it, mara, seed 1, minute 12
 
-- **Without the night:** comfort:elena because `look_after:elena` (0.59)
-- **With the night:** go_to->back_room because `find_out` (0.53)
+- **Without the night:** comfort:elena because `look_after:elena` (0.76)
+- **With the night:** check_pantry because `find_out` (0.53)
 
 The want that led the changed decision, and everything it rests on:
 
 ```
 Motive [mara]: wants find_out 0.53  {motive=find_out, urgency=0.53, rules=needing_to_know_what_happened, because=memory of threat about missing_can 0.80 x 0.35 = +0.28; value fairness 0.5...
-  because Access [mara]: at minute 71, mara in kitchen at minute 71, with daniel, elena, leo  {room=kitchen, present=daniel, elena, leo, hunger=0.77}
+  because Access [mara]: at minute 12, mara in kitchen at minute 12, with daniel, elena, leo  {room=kitchen, present=daniel, elena, leo, hunger=0.55}
   because Experience [mara]: kept it as threat, felt as fear  {meaning=threat, source=witnessed, confidence=1.00, salience=0.80}
     because Interpretation [mara]: read it as threat (0.90)  {meaning=threat, weight=0.90, runner_up=concern 0.60, rules=bad_news_reads_as_a_problem -> concern 0.60 | the_search_is_for_wh...
       because Access [mara]: was there and saw it
@@ -68,16 +68,16 @@ Motive [leo]: wants avoid_exposure 0.59  {motive=avoid_exposure, urgency=0.59, r
 
 ```
 
-## elena_fed_mara, elena, seed 1, minute 71
+## elena_fed_mara, elena, seed 1, minute 60
 
-- **Without the night:** wait because `guard_supplies` (0.85)
-- **With the night:** search_room because `find_out` (0.58)
+- **Without the night:** wait because `keep_peace` (0.93)
+- **With the night:** search_room because `find_out` (0.79)
 
 The want that led the changed decision, and everything it rests on:
 
 ```
-Motive [elena]: wants find_out 0.58  {motive=find_out, urgency=0.58, rules=needing_to_know_what_happened, because=value fairness 0.50 x 0.40 = +0.20; belief role_claim(elena,leads_family)...
-  because Access [elena]: at minute 71, elena in kitchen at minute 71, with daniel, leo, mara  {room=kitchen, present=daniel, leo, mara, hunger=0.84}
+Motive [elena]: wants find_out 0.79  {motive=find_out, urgency=0.79, rules=needing_to_know_what_happened, because=memory of threat about missing_can 0.88 x 0.35 = +0.31; value fairness 0....
+  because Access [elena]: at minute 60, elena in kitchen at minute 60, with daniel, leo, mara  {room=kitchen, present=daniel, leo, mara, hunger=0.80}
   because Experience [elena]: kept it as threat, felt as anxiety  {meaning=threat, source=witnessed, confidence=1.00, salience=0.88}
     because Interpretation [elena]: read it as threat (0.90)  {meaning=threat, weight=0.90, runner_up=challenge 0.86, rules=authority_taken_without_asking -> challenge 0.86 (base 0.40; va...
       because Access [elena]: was there and saw it

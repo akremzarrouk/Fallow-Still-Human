@@ -10,9 +10,9 @@ where both worlds are identical apart from the person, so any difference there i
 |---|---|
 | First decision: best-scoring option differs from control | 0 of 20 seeds |
 | First decision: chosen option differs from control | 4 of 20 seeds |
-| `avoid_exposure` decisive, with the night | 15 of 368 decisions |
+| `avoid_exposure` decisive, with the night | 12 of 365 decisions |
 | `avoid_exposure` decisive, without it | 21 of 326 decisions |
-| Deciding at the same minute in both worlds, and choosing differently | 61 of 120 |
+| Deciding at the same minute in both worlds, and choosing differently | 56 of 117 |
 
 Score change at minute zero, night minus no night, mean over seeds, largest moves:
 
@@ -49,7 +49,7 @@ Seed 1, first decision, with the night:
 
 Resolution: Ambiguous, tied check_pantry, comfort:daniel, comfort:elena.
 
-Seed 1, the first ten decisions: without `1:comfort:elena 9:check_pantry 12:comfort:elena 20:search_room 28:comfort:elena 36:search_room 44:comfort:elena 52:comfort:elena 60:comfort:daniel 68:comfort:daniel`; with `1:comfort:elena 9:check_pantry 12:check_pantry 13:comfort:elena 14:comfort:daniel 22:comfort:elena 25:comfort:elena 31:comfort:daniel 32:search_room 33:search_room`.
+Seed 1, the first ten decisions: without `1:comfort:elena 9:check_pantry 12:comfort:elena 20:search_room 28:comfort:elena 36:search_room 44:comfort:elena 52:comfort:elena 60:comfort:daniel 68:comfort:daniel`; with `1:comfort:elena 9:check_pantry 12:check_pantry 13:comfort:elena 14:comfort:daniel 22:comfort:elena 25:comfort:elena 31:comfort:elena 33:comfort:elena 39:comfort:elena`.
 
 ## elena_fed_mara, elena
 
@@ -106,7 +106,7 @@ Seed 1, the first ten decisions: without `1:comfort:daniel 9:check_pantry 12:che
 | First decision: chosen option differs from control | 0 of 20 seeds |
 | `avoid_exposure` decisive, with the night | 22 of 383 decisions |
 | `avoid_exposure` decisive, without it | 0 of 381 decisions |
-| Deciding at the same minute in both worlds, and choosing differently | 107 of 270 |
+| Deciding at the same minute in both worlds, and choosing differently | 115 of 261 |
 
 Score change at minute zero, night minus no night, mean over seeds, largest moves:
 

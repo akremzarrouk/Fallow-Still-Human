@@ -2,36 +2,36 @@
 
 ## daniel_ate_it
 
-- **Daniel**: needing to know what happened 67 %, hunger 16 %, it has to last 16 %, wanting the house to hold 1 %
-- **Elena**: wanting the house to hold 80 %, it has to last 20 %, needing to know what happened 0 %
-- **Leo**: it has to last 73 %, wanting the house to hold 19 %, needing to know what happened 9 %
-- **Mara**: somebody is not all right (elena) 46 %, needing to know what happened 32 %, somebody is not all right (daniel) 19 %, hunger 2 %
+- **Daniel**: needing to know what happened 66 %, wanting the house to hold 22 %, hunger 13 %
+- **Elena**: wanting the house to hold 59 %, somebody is not all right (mara) 27 %, it has to last 8 %, somebody is not all right (daniel) 5 %
+- **Leo**: wanting the house to hold 80 %, needing to know what happened 9 %, somebody is not all right (mara) 4 %, it has to last 4 %
+- **Mara**: somebody is not all right (elena) 53 %, needing to know what happened 25 %, somebody is not all right (daniel) 19 %, hunger 3 %
 
 ## daniel_hid_it
 
-- **Daniel**: needing to know what happened 70 %, hunger 15 %, it has to last 9 %, wanting the house to hold 6 %
-- **Elena**: wanting the house to hold 82 %, it has to last 18 %, needing to know what happened 0 %
-- **Leo**: it has to last 73 %, wanting the house to hold 19 %, needing to know what happened 9 %
-- **Mara**: somebody is not all right (elena) 45 %, needing to know what happened 33 %, somebody is not all right (daniel) 19 %, hunger 3 %
+- **Daniel**: needing to know what happened 67 %, wanting the house to hold 21 %, hunger 11 %
+- **Elena**: wanting the house to hold 58 %, somebody is not all right (mara) 28 %, it has to last 8 %, somebody is not all right (daniel) 5 %
+- **Leo**: wanting the house to hold 80 %, needing to know what happened 9 %, somebody is not all right (mara) 5 %, it has to last 4 %
+- **Mara**: somebody is not all right (elena) 52 %, needing to know what happened 26 %, somebody is not all right (daniel) 18 %, hunger 4 %
 
 ## elena_fed_mara
 
-- **Daniel**: needing to know what happened 70 %, hunger 14 %, it has to last 11 %, wanting the house to hold 4 %
-- **Elena**: wanting the house to hold 77 %, it has to last 20 %, needing to know what happened 3 %
-- **Leo**: it has to last 77 %, wanting the house to hold 14 %, needing to know what happened 9 %
-- **Mara**: somebody is not all right (elena) 42 %, needing to know what happened 34 %, somebody is not all right (daniel) 22 %, hunger 2 %
+- **Daniel**: needing to know what happened 68 %, wanting the house to hold 21 %, hunger 11 %
+- **Elena**: wanting the house to hold 57 %, somebody is not all right (mara) 25 %, needing to know what happened 9 %, somebody is not all right (daniel) 5 %
+- **Leo**: wanting the house to hold 81 %, needing to know what happened 9 %, somebody is not all right (mara) 4 %, it has to last 4 %
+- **Mara**: somebody is not all right (elena) 48 %, needing to know what happened 27 %, somebody is not all right (daniel) 20 %, hunger 5 %
 
 ## mara_ate_it
 
-- **Daniel**: needing to know what happened 70 %, hunger 13 %, it has to last 13 %, wanting the house to hold 5 %
-- **Elena**: wanting the house to hold 82 %, it has to last 18 %, needing to know what happened 0 %
-- **Leo**: it has to last 75 %, wanting the house to hold 18 %, needing to know what happened 7 %
-- **Mara**: somebody is not all right (elena) 42 %, needing to know what happened 35 %, somebody is not all right (daniel) 17 %, hunger 5 %
+- **Daniel**: needing to know what happened 70 %, wanting the house to hold 19 %, hunger 11 %
+- **Elena**: somebody is not all right (mara) 47 %, wanting the house to hold 35 %, it has to last 9 %, somebody is not all right (daniel) 9 %
+- **Leo**: wanting the house to hold 72 %, needing to know what happened 10 %, somebody is not all right (mara) 8 %, it has to last 4 %
+- **Mara**: somebody is not all right (elena) 51 %, needing to know what happened 24 %, somebody is not all right (daniel) 24 %, hunger 1 %
 
 ## miscount
 
-- **Daniel**: needing to know what happened 70 %, hunger 15 %, it has to last 11 %, wanting the house to hold 4 %
-- **Elena**: wanting the house to hold 81 %, it has to last 18 %, needing to know what happened 0 %
-- **Leo**: it has to last 73 %, wanting the house to hold 18 %, needing to know what happened 9 %
-- **Mara**: somebody is not all right (elena) 47 %, needing to know what happened 32 %, somebody is not all right (daniel) 20 %, hunger 1 %
+- **Daniel**: needing to know what happened 68 %, wanting the house to hold 21 %, hunger 11 %
+- **Elena**: wanting the house to hold 58 %, somebody is not all right (mara) 29 %, it has to last 8 %, somebody is not all right (daniel) 4 %
+- **Leo**: wanting the house to hold 80 %, needing to know what happened 9 %, somebody is not all right (mara) 5 %, it has to last 4 %
+- **Mara**: somebody is not all right (elena) 52 %, needing to know what happened 26 %, somebody is not all right (daniel) 18 %, hunger 4 %
 

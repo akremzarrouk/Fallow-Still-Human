@@ -84,46 +84,127 @@ namespace Fallow.Core.Sim
         Ambiguous
     }
 
+    /// <summary>
+    /// What somebody set out to do, and for which want, when getting it done
+    /// takes more than one act.
+    ///
+    /// The only act in this slice that is a means rather than an end is walking
+    /// somewhere, so an intention outlives an act only across a walk. It is not a
+    /// plan: nothing is searched for and nothing is sequenced. It is the memory
+    /// of why you came, carried into the one decision you take when you arrive.
+    /// </summary>
+    public sealed class Intention
+    {
+        public string MotiveKey { get; }
+        public string MotiveName { get; }
+
+        /// <summary>The act that set out on it.</summary>
+        public ActionOption SetOutWith { get; }
+
+        public int FormedAt { get; }
+
+        /// <summary>The decision that formed it.</summary>
+        public int TraceId { get; }
+
+        public Intention(string motiveKey, string motiveName, ActionOption setOutWith, int formedAt, int traceId)
+        {
+            MotiveKey = motiveKey;
+            MotiveName = motiveName;
+            SetOutWith = setOutWith;
+            FormedAt = formedAt;
+            TraceId = traceId;
+        }
+
+        public override string ToString() => MotiveKey + " (set out at minute " + FormedAt + " with " + SetOutWith + ")";
+    }
+
+    /// <summary>What became of an intention somebody brought into a decision.</summary>
+    public static class Commitment
+    {
+        /// <summary>Nothing was carried in.</summary>
+        public const string None = "none";
+
+        /// <summary>It still stands, and only what serves it was weighed.</summary>
+        public const string Held = "held";
+
+        /// <summary>The want behind it is no longer there.</summary>
+        public const string NoLongerWanted = "lapsed: no longer wanted";
+
+        /// <summary>Nothing that can be done from here serves it.</summary>
+        public const string Impossible = "lapsed: nothing here serves it";
+
+        /// <summary>The best way of serving it here costs more than it is worth.</summary>
+        public const string NotWorthIt = "lapsed: not worth what it costs here";
+    }
+
     /// <summary>What a person decided to do, and everything behind it.</summary>
     public sealed class Decision
     {
         public string CharacterId { get; }
         public ActionOption Chosen { get; }
         public IReadOnlyList<Motive> Motives { get; }
+
+        /// <summary>Every option, scored, whether or not it was considered.</summary>
         public IReadOnlyList<ScoredOption> Ranked { get; }
+
+        /// <summary>The options actually chosen among: all of them, or those serving an intention that held.</summary>
+        public IReadOnlyList<ScoredOption> Considered { get; }
+
         public Resolution Resolution { get; }
 
-        /// <summary>How far ahead the chosen option was of the next one.</summary>
+        /// <summary>How far ahead the chosen option was of the next one considered.</summary>
         public double Margin { get; }
 
         /// <summary>The options that were too close to separate, when there were any.</summary>
         public IReadOnlyList<ActionOption> Tied { get; }
+
+        /// <summary>The intention brought into this decision, if any, and what became of it.</summary>
+        public Intention Holding { get; }
+        public string Commitment { get; }
+
+        /// <summary>The intention this decision leaves the person with: the want the chosen act was mostly for.</summary>
+        public Intention Forms { get; internal set; }
 
         public int TraceId { get; internal set; }
 
         public Decision(
             string characterId, ActionOption chosen, IReadOnlyList<Motive> motives,
             IReadOnlyList<ScoredOption> ranked, Resolution resolution, double margin,
-            IReadOnlyList<ActionOption> tied)
+            IReadOnlyList<ActionOption> tied,
+            IReadOnlyList<ScoredOption> considered = null, Intention holding = null, string commitment = null)
         {
             CharacterId = characterId;
             Chosen = chosen;
             Motives = motives ?? new List<Motive>();
             Ranked = ranked ?? new List<ScoredOption>();
+            Considered = considered ?? Ranked;
             Resolution = resolution;
             Margin = margin;
             Tied = tied ?? new List<ActionOption>();
+            Holding = holding;
+            Commitment = commitment ?? Sim.Commitment.None;
         }
 
-        /// <summary>The want that did most to produce this, for a one line account.</summary>
+        /// <summary>What was chosen, with its arithmetic.</summary>
+        public ScoredOption ChosenScored => Ranked.FirstOrDefault(r => r.Option.SameAs(Chosen));
+
+        /// <summary>
+        /// The want that added most to what was chosen. S1 took whichever want
+        /// happened to be listed first, which was the most urgent want serving
+        /// it rather than the one that contributed most.
+        /// </summary>
         public Motive Leading
         {
             get
             {
-                var top = Ranked.FirstOrDefault(r => r.Option.SameAs(Chosen));
-                if (top == null || top.Serves.Count == 0) return null;
-                var name = top.Serves[0].Split(' ')[0];
-                return Motives.FirstOrDefault(m => string.Equals(m.Key, name, StringComparison.Ordinal));
+                var top = ChosenScored;
+                var biggest = top?.Contributions
+                    .Where(c => c.Amount > 0.0)
+                    .OrderByDescending(c => c.Amount)
+                    .ThenBy(c => c.MotiveKey, StringComparer.Ordinal)
+                    .FirstOrDefault();
+                if (biggest == null) return null;
+                return Motives.FirstOrDefault(m => string.Equals(m.Key, biggest.MotiveKey, StringComparison.Ordinal));
             }
         }
     }
@@ -154,7 +235,7 @@ namespace Fallow.Core.Sim
 
         public Decision Decide(
             Mind mind, Percept percept, IReadOnlyList<Motive> motives,
-            int today, Rng rng, TraceLog trace, int parentTraceId)
+            int today, Rng rng, TraceLog trace, int parentTraceId, Intention holding = null)
         {
             var dyn = _rules.Deciding;
             var available = ActionCatalog.Available(percept, dyn);
@@ -206,9 +287,36 @@ namespace Fallow.Core.Sim
                 .ThenBy(s => s.Option.Key, StringComparer.Ordinal)
                 .ToList();
 
-            var top = ranked[0];
-            var band = ranked.Where(s => top.Score - s.Score <= dyn.AmbiguityBand).ToList();
-            var margin = ranked.Count > 1 ? top.Score - ranked[1].Score : top.Score;
+            // Somebody who walked here for a reason weighs what serves that
+            // reason, and nothing else, unless the reason has gone, cannot be
+            // served from here, or is not worth what serving it would cost. No
+            // option gets a bonus for being what was intended; the ones that do
+            // not serve it are simply not what this person is deciding between.
+            var considered = ranked;
+            var commitment = Commitment.None;
+            if (holding != null)
+            {
+                var serving = ranked
+                    .Where(r => r.Contributions.Any(c => c.Amount > 0.0 &&
+                                                         string.Equals(c.MotiveKey, holding.MotiveKey, StringComparison.Ordinal)))
+                    .ToList();
+
+                if (!motives.Any(m => string.Equals(m.Key, holding.MotiveKey, StringComparison.Ordinal)))
+                    commitment = Commitment.NoLongerWanted;
+                else if (serving.Count == 0)
+                    commitment = Commitment.Impossible;
+                else if (serving[0].Score <= 0.0)
+                    commitment = Commitment.NotWorthIt;
+                else
+                {
+                    commitment = Commitment.Held;
+                    considered = serving;
+                }
+            }
+
+            var top = considered[0];
+            var band = considered.Where(s => top.Score - s.Score <= dyn.AmbiguityBand).ToList();
+            var margin = considered.Count > 1 ? top.Score - considered[1].Score : top.Score;
 
             ScoredOption picked;
             Resolution resolution;
@@ -226,7 +334,8 @@ namespace Fallow.Core.Sim
 
             var decision = new Decision(
                 mind.Id, picked.Option, motives, ranked, resolution, margin,
-                band.Count <= 1 ? new List<ActionOption>() : band.Select(b => b.Option).ToList());
+                band.Count <= 1 ? new List<ActionOption>() : band.Select(b => b.Option).ToList(),
+                considered, holding, commitment);
 
             var data = new Dictionary<string, string>
             {
@@ -240,14 +349,34 @@ namespace Fallow.Core.Sim
             if (picked.Prices.Count > 0) data["against"] = string.Join("; ", picked.Prices);
             if (resolution == Resolution.Ambiguous)
                 data["tied"] = string.Join(", ", band.Select(b => b.Option.Key));
+            if (holding != null)
+            {
+                data["intention"] = holding.MotiveKey + ", " + commitment;
+                if (commitment == Commitment.Held && !ranked[0].Option.SameAs(picked.Option))
+                    data["without_it"] = ranked[0].ToString();
+            }
+
+            var parents = motives.Select(m => m.TraceId).Concat(new[] { parentTraceId }).ToList();
+            if (holding != null) parents.Add(holding.TraceId);
 
             decision.TraceId = trace.Add(
                 TraceKind.Deliberation, mind.Id, null,
                 (resolution == Resolution.Clear
                     ? "settled on " + picked.Option
                     : "had no real preference, and " + picked.Option + " is what happened"),
-                motives.Select(m => m.TraceId).Concat(new[] { parentTraceId }).ToList(),
+                parents,
                 data);
+
+            // What this leaves them intending. An intention that held and is
+            // still being served goes on being the reason; otherwise it is the
+            // want that added most to what was chosen.
+            var leading = decision.Leading;
+            if (commitment == Commitment.Held)
+                decision.Forms = holding;
+            else if (leading != null)
+                decision.Forms = new Intention(leading.Key, leading.Name, picked.Option, percept.Minute, decision.TraceId);
+
+            if (decision.Forms != null) data["intends"] = decision.Forms.MotiveKey;
 
             return decision;
         }

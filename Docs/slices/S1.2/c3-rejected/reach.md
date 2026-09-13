@@ -10,18 +10,18 @@ where both worlds are identical apart from the person, so any difference there i
 |---|---|
 | First decision: best-scoring option differs from control | 0 of 20 seeds |
 | First decision: chosen option differs from control | 4 of 20 seeds |
-| `avoid_exposure` decisive, with the night | 15 of 368 decisions |
-| `avoid_exposure` decisive, without it | 21 of 326 decisions |
-| Deciding at the same minute in both worlds, and choosing differently | 61 of 120 |
+| `avoid_exposure` decisive, with the night | 9 of 465 decisions |
+| `avoid_exposure` decisive, without it | 24 of 440 decisions |
+| Deciding at the same minute in both worlds, and choosing differently | 66 of 173 |
 
 Score change at minute zero, night minus no night, mean over seeds, largest moves:
 
+- `eat` -0.134
 - `go_to->hallway` +0.126
 - `go_to->living_room` +0.126
-- `eat` -0.119
 - `go_to->back_room` +0.090
 - `check_pantry` +0.039
-- `wait` +0.014
+- `search_room` +0.017
 
 Seed 1, first decision, without the night:
 
@@ -30,9 +30,9 @@ Seed 1, first decision, without the night:
 | check_pantry | 0.906 | 0.045 | 0.861 | find_out 0.355; get_food 0.202; guard_supplies 0.200; restore_standing 0.150 |
 | comfort:daniel | 1.076 | 0.223 | 0.854 | look_after:daniel 0.837; keep_peace 0.240 |
 | comfort:elena **(chosen)** | 1.070 | 0.223 | 0.847 | look_after:elena 0.830; keep_peace 0.240 |
-| search_room | 0.673 | 0.000 | 0.673 | find_out 0.473; restore_standing 0.200 |
-| wait | 0.420 | 0.000 | 0.420 | keep_peace 0.300; guard_supplies 0.120 |
-| observe:daniel | 0.708 | 0.400 | 0.308 | look_after:daniel 0.325; find_out 0.266; restore_standing 0.117 |
+| search_room | 0.373 | 0.000 | 0.373 | keep_peace -0.300; find_out 0.473; restore_standing 0.200 |
+| comfort:leo | 0.521 | 0.223 | 0.298 | keep_peace 0.240; look_after:leo 0.281 |
+| go_to->hallway | 0.387 | 0.160 | 0.227 | avoid_exposure 0.387 |
 
 Resolution: Ambiguous, tied check_pantry, comfort:daniel, comfort:elena.
 
@@ -43,13 +43,13 @@ Seed 1, first decision, with the night:
 | check_pantry | 0.945 | 0.045 | 0.900 | find_out 0.318; get_food 0.202; guard_supplies 0.228; restore_standing 0.197 |
 | comfort:daniel | 1.074 | 0.223 | 0.852 | look_after:daniel 0.837; keep_peace 0.238 |
 | comfort:elena **(chosen)** | 1.068 | 0.223 | 0.845 | look_after:elena 0.830; keep_peace 0.238 |
-| search_room | 0.687 | 0.000 | 0.687 | find_out 0.424; restore_standing 0.263 |
-| wait | 0.434 | 0.000 | 0.434 | keep_peace 0.297; guard_supplies 0.137 |
+| search_room | 0.390 | 0.000 | 0.390 | keep_peace -0.297; find_out 0.424; restore_standing 0.263 |
 | go_to->hallway | 0.514 | 0.160 | 0.354 | avoid_exposure 0.514 |
+| go_to->living_room | 0.514 | 0.160 | 0.354 | avoid_exposure 0.514 |
 
 Resolution: Ambiguous, tied check_pantry, comfort:daniel, comfort:elena.
 
-Seed 1, the first ten decisions: without `1:comfort:elena 9:check_pantry 12:comfort:elena 20:search_room 28:comfort:elena 36:search_room 44:comfort:elena 52:comfort:elena 60:comfort:daniel 68:comfort:daniel`; with `1:comfort:elena 9:check_pantry 12:check_pantry 13:comfort:elena 14:comfort:daniel 22:comfort:elena 25:comfort:elena 31:comfort:daniel 32:search_room 33:search_room`.
+Seed 1, the first ten decisions: without `1:comfort:elena 9:check_pantry 12:comfort:elena 13:comfort:daniel 21:comfort:elena 29:comfort:elena 30:comfort:elena 31:comfort:elena 37:comfort:elena 40:comfort:elena`; with `1:comfort:elena 9:check_pantry 12:check_pantry 13:comfort:elena 14:comfort:daniel 22:comfort:elena 25:comfort:elena 31:comfort:daniel 33:comfort:elena 34:comfort:elena`.
 
 ## elena_fed_mara, elena
 
@@ -57,18 +57,18 @@ Seed 1, the first ten decisions: without `1:comfort:elena 9:check_pantry 12:comf
 |---|---|
 | First decision: best-scoring option differs from control | 0 of 20 seeds |
 | First decision: chosen option differs from control | 0 of 20 seeds |
-| `avoid_exposure` decisive, with the night | 0 of 469 decisions |
-| `avoid_exposure` decisive, without it | 0 of 473 decisions |
-| Deciding at the same minute in both worlds, and choosing differently | 46 of 384 |
+| `avoid_exposure` decisive, with the night | 0 of 474 decisions |
+| `avoid_exposure` decisive, without it | 0 of 474 decisions |
+| Deciding at the same minute in both worlds, and choosing differently | 0 of 474 |
 
 Score change at minute zero, night minus no night, mean over seeds, largest moves:
 
-- `wait` 0.000
-- `comfort:daniel` 0.000
-- `comfort:mara` 0.000
-- `comfort:leo` 0.000
-- `check_pantry` 0.000
+- `eat` 0.000
+- `observe:daniel` 0.000
+- `observe:mara` 0.000
+- `observe:leo` 0.000
 - `search_room` 0.000
+- `comfort:daniel` 0.000
 
 Seed 1, first decision, without the night:
 
@@ -77,9 +77,9 @@ Seed 1, first decision, without the night:
 | comfort:daniel **(chosen)** | 1.182 | 0.205 | 0.977 | keep_peace 0.392; look_after:daniel 0.789 |
 | comfort:mara | 1.182 | 0.205 | 0.977 | keep_peace 0.392; look_after:mara 0.789 |
 | check_pantry | 0.978 | 0.068 | 0.910 | guard_supplies 0.425; get_food 0.241; find_out 0.288; restore_standing 0.024 |
-| wait | 0.746 | 0.000 | 0.746 | keep_peace 0.491; guard_supplies 0.255 |
 | comfort:leo | 0.649 | 0.205 | 0.444 | keep_peace 0.392; look_after:leo 0.257 |
-| search_room | 0.416 | 0.000 | 0.416 | find_out 0.384; restore_standing 0.032 |
+| go_to->hallway | 0.197 | 0.176 | 0.021 | avoid_exposure 0.197 |
+| go_to->living_room | 0.197 | 0.176 | 0.021 | avoid_exposure 0.197 |
 
 Resolution: Ambiguous, tied comfort:daniel, comfort:mara, check_pantry.
 
@@ -90,13 +90,13 @@ Seed 1, first decision, with the night:
 | comfort:daniel **(chosen)** | 1.182 | 0.205 | 0.977 | keep_peace 0.393; look_after:daniel 0.789 |
 | comfort:mara | 1.182 | 0.205 | 0.977 | keep_peace 0.393; look_after:mara 0.789 |
 | check_pantry | 0.978 | 0.068 | 0.910 | guard_supplies 0.425; get_food 0.241; find_out 0.288; restore_standing 0.024 |
-| wait | 0.746 | 0.000 | 0.746 | keep_peace 0.491; guard_supplies 0.255 |
 | comfort:leo | 0.649 | 0.205 | 0.444 | keep_peace 0.393; look_after:leo 0.257 |
-| search_room | 0.416 | 0.000 | 0.416 | find_out 0.384; restore_standing 0.032 |
+| go_to->hallway | 0.197 | 0.176 | 0.021 | avoid_exposure 0.197 |
+| go_to->living_room | 0.197 | 0.176 | 0.021 | avoid_exposure 0.197 |
 
 Resolution: Ambiguous, tied comfort:daniel, comfort:mara, check_pantry.
 
-Seed 1, the first ten decisions: without `1:comfort:daniel 9:check_pantry 12:check_pantry 13:wait 18:wait 20:comfort:mara 28:wait 33:wait 36:wait 38:wait`; with `1:comfort:daniel 9:check_pantry 12:check_pantry 13:wait 18:wait 20:comfort:mara 28:wait 33:wait 36:wait 38:wait`.
+Seed 1, the first ten decisions: without `1:comfort:daniel 9:check_pantry 12:check_pantry 13:comfort:mara 21:comfort:mara 29:comfort:mara 30:comfort:mara 31:comfort:mara 37:comfort:mara 40:comfort:daniel`; with `1:comfort:daniel 9:check_pantry 12:check_pantry 13:comfort:mara 21:comfort:mara 29:comfort:mara 30:comfort:mara 31:comfort:mara 37:comfort:mara 40:comfort:daniel`.
 
 ## daniel_ate_it, daniel
 
@@ -104,29 +104,29 @@ Seed 1, the first ten decisions: without `1:comfort:daniel 9:check_pantry 12:che
 |---|---|
 | First decision: best-scoring option differs from control | 0 of 20 seeds |
 | First decision: chosen option differs from control | 0 of 20 seeds |
-| `avoid_exposure` decisive, with the night | 22 of 383 decisions |
-| `avoid_exposure` decisive, without it | 0 of 381 decisions |
-| Deciding at the same minute in both worlds, and choosing differently | 107 of 270 |
+| `avoid_exposure` decisive, with the night | 1 of 399 decisions |
+| `avoid_exposure` decisive, without it | 0 of 383 decisions |
+| Deciding at the same minute in both worlds, and choosing differently | 108 of 292 |
 
 Score change at minute zero, night minus no night, mean over seeds, largest moves:
 
-- `eat` -0.101
+- `eat` -0.116
 - `go_to->hallway` +0.099
 - `go_to->living_room` +0.099
 - `go_to->back_room` +0.071
 - `check_pantry` +0.057
-- `search_room` +0.038
+- `search_room` +0.040
 
 Seed 1, first decision, without the night:
 
 | Option | Appeal | Cost | Score | Contributions |
 |---|---|---|---|---|
 | check_pantry **(chosen)** | 1.381 | 0.050 | 1.331 | find_out 0.594; restore_standing 0.284; guard_supplies 0.281; get_food 0.222 |
-| search_room | 1.171 | 0.000 | 1.171 | find_out 0.792; restore_standing 0.379 |
-| observe:elena | 0.880 | 0.200 | 0.680 | find_out 0.445; restore_standing 0.221; look_after:elena 0.213 |
-| observe:mara | 0.880 | 0.200 | 0.680 | find_out 0.445; restore_standing 0.221; look_after:mara 0.213 |
-| wait | 0.544 | 0.000 | 0.544 | keep_peace 0.376; guard_supplies 0.169 |
-| observe:leo | 0.693 | 0.200 | 0.493 | find_out 0.445; restore_standing 0.221; look_after:leo 0.026 |
+| search_room | 0.795 | 0.000 | 0.795 | find_out 0.792; keep_peace -0.376; restore_standing 0.379 |
+| observe:elena | 0.504 | 0.200 | 0.304 | find_out 0.445; keep_peace -0.376; restore_standing 0.221; look_after:elena 0.213 |
+| observe:mara | 0.504 | 0.200 | 0.304 | find_out 0.445; keep_peace -0.376; restore_standing 0.221; look_after:mara 0.213 |
+| comfort:elena | 0.849 | 0.550 | 0.299 | keep_peace 0.301; look_after:elena 0.549 |
+| comfort:mara | 0.849 | 0.550 | 0.299 | keep_peace 0.301; look_after:mara 0.549 |
 
 Resolution: Clear.
 
@@ -135,13 +135,13 @@ Seed 1, first decision, with the night:
 | Option | Appeal | Cost | Score | Contributions |
 |---|---|---|---|---|
 | check_pantry **(chosen)** | 1.438 | 0.050 | 1.388 | find_out 0.589; restore_standing 0.318; guard_supplies 0.309; get_food 0.222 |
-| search_room | 1.209 | 0.000 | 1.209 | find_out 0.785; restore_standing 0.424 |
-| observe:elena | 0.902 | 0.200 | 0.702 | find_out 0.442; restore_standing 0.247; look_after:elena 0.213 |
-| observe:mara | 0.902 | 0.200 | 0.702 | find_out 0.442; restore_standing 0.247; look_after:mara 0.213 |
-| wait | 0.560 | 0.000 | 0.560 | keep_peace 0.374; guard_supplies 0.186 |
-| observe:leo | 0.715 | 0.200 | 0.515 | find_out 0.442; restore_standing 0.247; look_after:leo 0.026 |
+| search_room | 0.835 | 0.000 | 0.835 | find_out 0.785; keep_peace -0.374; restore_standing 0.424 |
+| go_to->hallway | 0.497 | 0.148 | 0.349 | avoid_exposure 0.497 |
+| go_to->living_room | 0.497 | 0.148 | 0.349 | avoid_exposure 0.497 |
+| observe:elena | 0.528 | 0.200 | 0.328 | find_out 0.442; keep_peace -0.374; restore_standing 0.247; look_after:elena 0.213 |
+| observe:mara | 0.528 | 0.200 | 0.328 | find_out 0.442; keep_peace -0.374; restore_standing 0.247; look_after:mara 0.213 |
 
 Resolution: Clear.
 
-Seed 1, the first ten decisions: without `1:check_pantry 4:search_room 9:search_room 12:go_to->back_room 16:search_room 24:go_to->bathroom 28:search_room 36:go_to->kitchen 40:go_to->brothers_room 44:search_room`; with `1:check_pantry 4:search_room 9:search_room 12:go_to->back_room 16:search_room 24:go_to->kitchen 28:go_to->bathroom 32:search_room 40:go_to->kitchen 44:go_to->brothers_room`.
+Seed 1, the first ten decisions: without `1:check_pantry 4:search_room 9:search_room 12:go_to->back_room 13:go_to->back_room 16:search_room 24:go_to->bathroom 28:search_room 36:go_to->kitchen 40:go_to->brothers_room`; with `1:check_pantry 4:search_room 9:search_room 12:go_to->back_room 13:go_to->back_room 16:search_room 24:go_to->kitchen 28:go_to->bathroom 32:search_room 40:go_to->kitchen`.
 

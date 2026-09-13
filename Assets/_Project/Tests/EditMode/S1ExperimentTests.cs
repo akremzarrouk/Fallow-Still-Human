@@ -181,14 +181,12 @@ namespace Fallow.Tests.Core
 
             TestContext.WriteLine("worst back and forth: " + worst + " (" + who + ")");
 
-            // DEFECT, recorded rather than tuned away. Walking somewhere for a
-            // reason and then leaving without doing the thing you went for.
-            // Nothing in the model remembers why anybody went anywhere, so every
-            // arrival is reconsidered from nothing. Architectural, not content,
-            // and set out in the S1 review.
-            Assert.Less(worst, 20, "worse than it already is");
-            Assert.Greater(worst, 3,
-                "if this starts failing the follow-through problem is solved, and the gate should come down to 4");
+            // Was a DEFECT, recorded in S1 with the instruction that when it
+            // started failing the gate should come down to 4. It did in S1.2,
+            // at a worst of 2, once people stopped being interrupted by feelings
+            // they were already carrying and started carrying the reason for a
+            // walk into the room they walked to. Turned round as instructed.
+            Assert.Less(worst, 4, "pacing is back");
         }
 
         [Test]
