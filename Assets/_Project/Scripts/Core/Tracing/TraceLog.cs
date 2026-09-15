@@ -27,7 +27,10 @@ namespace Fallow.Core.Tracing
         Action,
 
         /// <summary>What that changed about the house.</summary>
-        Consequence
+        Consequence,
+
+        /// <summary>What came of acting on a want, judged by what happened. Added in S1.3.</summary>
+        Outcome
     }
 
     public sealed class TraceRecord

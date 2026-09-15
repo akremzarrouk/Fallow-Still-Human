@@ -123,6 +123,9 @@ namespace Fallow.Core.Sim
             public ActionOption Action;
             public int MinutesLeft;
             public int StartedAt;
+
+            /// <summary>The decision it was chosen by, so what comes of it can be judged against why.</summary>
+            public Decision Decision;
         }
 
         readonly Simulation _sim;
@@ -281,6 +284,19 @@ namespace Fallow.Core.Sim
             else
                 _intentions.Remove(characterId);
 
+            // Walking somewhere for a want and giving it up on arrival is itself
+            // something that came of acting on it.
+            var lapsed = Outcomes.OfLapse(decision.Commitment);
+            if (decision.Holding != null && lapsed.HasValue)
+                foreach (var need in NeedsReadBy(decision.Holding.MotiveName))
+                {
+                    var level = _sim.Needs(characterId, need);
+                    Keep(characterId, new PursuitOutcome(
+                            decision.Holding.MotiveKey, decision.Holding.MotiveName, decision.Holding.SetOutWith.Key,
+                            need, level, level, lapsed.Value, _world.Minute, null, decision.Commitment),
+                        new[] { decision.TraceId, decision.Holding.TraceId });
+                }
+
             _decisions.Add(decision);
 
             Decided?.Invoke(new DecisionMoment
@@ -309,6 +325,8 @@ namespace Fallow.Core.Sim
                 _stopped.Remove(characterId);
                 if (decision.Chosen.SameAs(was.Action))
                 {
+                    // Carried on, and for the reasons weighed just now.
+                    was.Decision = decision;
                     _busy[characterId] = was;
                     record.Outcome = "thought again, and carried on";
                     _sim.Trace.Add(
@@ -327,7 +345,8 @@ namespace Fallow.Core.Sim
             {
                 Action = decision.Chosen,
                 MinutesLeft = decision.Chosen.Duration,
-                StartedAt = _world.Minute
+                StartedAt = _world.Minute,
+                Decision = decision
             };
         }
 
@@ -409,17 +428,26 @@ namespace Fallow.Core.Sim
                     break;
 
                 case ActionKind.Eat:
+                    var hungerBefore = _world.HungerOf(characterId);
                     if (_world.TakePortion())
                     {
-                        _world.SetHunger(characterId, _world.HungerOf(characterId) - _rules.Deciding.PortionRelief);
+                        _world.SetHunger(characterId, hungerBefore - _rules.Deciding.PortionRelief);
                         Note(record, "ate a portion, leaving " + _world.Portions);
-                        Happened(characterId, null, "eat_portion",
+                        var ate = Happened(characterId, null, "eat_portion",
                             _world.Portions <= _rules.Deciding.LowPortions ? "bad" : "neutral", "supplies", roomId,
                             Named(characterId) + " takes a portion and eats it. " + _world.Portions + " left.");
+                        Resolve(characterId, busy, ate, true, Needs.Hunger, hungerBefore, _world.HungerOf(characterId));
                     }
                     else
                     {
+                        // Reaching for food that is not there is something that
+                        // happens, to the person reaching and in front of anybody
+                        // in the room. Until S1.3 it was written on the action
+                        // record and nowhere anybody could perceive it.
                         Note(record, "found nothing left to eat");
+                        var gone = Happened(characterId, null, "find_nothing_left", "bad", "supplies", roomId,
+                            Named(characterId) + " reaches for the food and there is none left.");
+                        Resolve(characterId, busy, gone, false, Needs.Hunger, hungerBefore, _world.HungerOf(characterId));
                     }
                     break;
             }
@@ -523,7 +551,7 @@ namespace Fallow.Core.Sim
         /// everyone near enough make of it what they will. Who counts as near
         /// enough is decided by the house, never by the event.
         /// </summary>
-        void Happened(
+        WorldEvent Happened(
             string actorId, string targetId, string action, string valence, string topic,
             string roomId, string summary, IReadOnlyList<string> witnesses = null)
         {
@@ -552,7 +580,89 @@ namespace Fallow.Core.Sim
             _events.Add(e);
             var outcome = _sim.Apply(e);
             Interrupt(e, outcome);
+            return e;
         }
+
+        /// <summary>
+        /// Judges what came of an act against the wants it was chosen for, by
+        /// what its consequence did to the need each of them reads, and gives the
+        /// person a record of it.
+        ///
+        /// Only wants that read the need the act touched are judged. The judgement
+        /// uses nothing but the need before and after and whether the act could
+        /// happen at all. It changes no level: the world has already done that, or
+        /// has not.
+        /// </summary>
+        void Resolve(string characterId, Busy busy, WorldEvent consequence, bool couldHappen, string need, double before, double after)
+        {
+            var chosen = busy.Decision?.ChosenScored;
+            if (chosen == null) return;
+
+            var mind = _sim.Minds[characterId];
+            var felt = mind.Experiences.LastOrDefault(x => x.EventId == consequence.Id);
+
+            var world = _sim.Trace.Add(
+                TraceKind.Consequence, characterId, consequence.Id,
+                couldHappen
+                    ? need + " " + before.ToString("0.00") + " -> " + after.ToString("0.00")
+                    : "could not be done: " + need + " stays " + after.ToString("0.00"),
+                new[] { busy.Decision.TraceId },
+                new Dictionary<string, string>
+                {
+                    { "act", busy.Action.Key },
+                    { "need", need },
+                    { "before", before.ToString("0.000") },
+                    { "after", after.ToString("0.000") },
+                    { "could_happen", couldHappen ? "yes" : "no" }
+                });
+
+            foreach (var want in chosen.Contributions
+                         .Where(c => c.Amount > 0.0)
+                         .GroupBy(c => c.MotiveKey, StringComparer.Ordinal)
+                         .Select(g => g.First()))
+            {
+                if (!NeedsReadBy(want.MotiveName).Contains(need, StringComparer.Ordinal)) continue;
+
+                // Nearest reasons first: what the act did, what the person made of
+                // it, the want it was for, and then the whole decision.
+                var parents = new List<int> { world };
+                if (felt != null) parents.Add(felt.TraceId);
+                parents.Add(want.MotiveTraceId);
+                parents.Add(busy.Decision.TraceId);
+
+                Keep(characterId, new PursuitOutcome(
+                        want.MotiveKey, want.MotiveName, busy.Action.Key, need, before, after,
+                        Outcomes.OfConsequence(couldHappen, before, after), _world.Minute, consequence.Id),
+                    parents);
+            }
+        }
+
+        void Keep(string characterId, PursuitOutcome outcome, IEnumerable<int> restsOn)
+        {
+            outcome.TraceId = _sim.Trace.Add(
+                TraceKind.Outcome, characterId, outcome.EventId,
+                outcome.MotiveKey + ": " + outcome,
+                restsOn.Distinct().ToList(),
+                new Dictionary<string, string>
+                {
+                    { "want", outcome.MotiveKey },
+                    { "outcome", PursuitOutcome.Words(outcome.Kind) },
+                    { "need", outcome.Need },
+                    { "before", outcome.Before.ToString("0.000") },
+                    { "after", outcome.After.ToString("0.000") }
+                });
+            _sim.Minds[characterId].Record(outcome);
+        }
+
+        /// <summary>The needs a want reads, according to the rules that raise it.</summary>
+        IReadOnlyList<string> NeedsReadBy(string motiveName)
+            => _rules.Motivation
+                .Where(r => string.Equals(r.Motive, motiveName, StringComparison.Ordinal))
+                .SelectMany(r => r.ScaledBy ?? new List<Scaler>())
+                .Where(sc => string.Equals(sc.Kind, ScalerKind.Need, StringComparison.Ordinal))
+                .Select(sc => sc.Name)
+                .Distinct(StringComparer.Ordinal)
+                .ToList();
 
         /// <summary>
         /// Something that lands hard enough stops you doing what you were doing.

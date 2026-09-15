@@ -14,12 +14,31 @@ namespace Fallow.Core.Sim
     public sealed class Mind
     {
         readonly List<Experience> _experiences = new List<Experience>();
+        readonly List<PursuitOutcome> _outcomes = new List<PursuitOutcome>();
 
         public Profile Profile { get; }
         public BeliefStore Beliefs { get; } = new BeliefStore();
         public Ledger Ledger { get; } = new Ledger();
         public EmotionSet Emotions { get; } = new EmotionSet();
         public IReadOnlyList<Experience> Experiences => _experiences;
+
+        /// <summary>What came of acting on their wants, oldest first. See PursuitOutcome.</summary>
+        public IReadOnlyList<PursuitOutcome> Outcomes => _outcomes;
+
+        /// <summary>
+        /// Keeps what came of acting on a want. Written by the world as it
+        /// resolves what somebody did; public so that an experiment can hand a
+        /// mind a record it would otherwise have to run a morning to get.
+        /// </summary>
+        public void Record(PursuitOutcome outcome) => _outcomes.Add(outcome);
+
+        /// <summary>The most recent thing done about a need, or null if nothing ever was.</summary>
+        public PursuitOutcome LatestOutcomeFor(string need)
+        {
+            for (var i = _outcomes.Count - 1; i >= 0; i--)
+                if (string.Equals(_outcomes[i].Need, need, System.StringComparison.Ordinal)) return _outcomes[i];
+            return null;
+        }
 
         public Mind(Profile profile)
         {

@@ -3,11 +3,12 @@
 A human-life simulation under changing circumstances. The apocalypse is the
 pressure placed on people; the game is the people.
 
-This repository contains **slices S0, S1, S1.1 and S1.2**: the causal spine of the
-social simulation, a morning in a house where four people decide for themselves what
-to do, a counterfactual experiment on whether something that happens to a person
-changes what that person wants and does, and a pass on the deliberation layer that
-stands between the two. No dialogue, no player, no 3D.
+This repository contains **slices S0, S1, S1.1, S1.2 and S1.3**: the causal spine of
+the social simulation, a morning in a house where four people decide for themselves
+what to do, a counterfactual experiment on whether something that happens to a person
+changes what that person wants and does, a pass on the deliberation layer that stands
+between the two, and a first test of what acting on a want does to it. No dialogue, no
+player, no 3D.
 
 - `Docs/slices/S0/review.md` — one event, four people, four different experiences.
 - `Docs/slices/S1/review.md` — what they do about it, and where that fails.
@@ -15,6 +16,8 @@ stands between the two. No dialogue, no player, no 3D.
   against a control that differs only in that night.
 - `Docs/slices/S1.2/report.md` — whether a changed want now reaches the choice, and what
   still stands in the way.
+- `Docs/slices/S1.3/report.md` — what eating does to wanting food, why nobody in the house
+  eats, and what failing to eat leaves behind.
 
 Where those documents disagree with the code, the code is right and the reviews say when
 they were written.
@@ -48,8 +51,8 @@ of that is written down anywhere as a fact about them.
     ./run-tests.sh
 
 Runs the EditMode suite headlessly through the Unity CLI and prints a per-test
-summary. Takes about twelve minutes, most of it counterfactual pairs of mornings.
-One test fails on purpose at the end of S1.2 and is explained in its report.
+summary. Takes about eighteen minutes, most of it counterfactual pairs of mornings.
+One test has failed on purpose since S1.2 and is explained in that report.
 Re-running it regenerates everything under `Docs/slices/*/traces` and
 `Docs/slices/S1/batch`.
 
@@ -76,12 +79,14 @@ All five are enforced by tests, not by discipline.
 
 ## Known defects
 
-Recorded in `Docs/slices/S1/review.md` section 5, `Docs/slices/S1.1/report.md` section G
-and `Docs/slices/S1.2/report.md` section 6, and pinned by characterisation tests that say
-in their names that they should be turned round when fixed. The largest now: most of
-what people want is raised every minute by who they are, and nothing they do ever
-satisfies it. Standing still is credited for what it avoids, which is unearned and is
-also the only thing holding that in check; removing it collapses the cast.
+Recorded in `Docs/slices/S1/review.md` section 5, `Docs/slices/S1.1/report.md` section G,
+`Docs/slices/S1.2/report.md` section 6 and `Docs/slices/S1.3/report.md` section 9, and
+pinned by characterisation tests that say in their names that they should be turned
+round when fixed. The largest now: most of what people want is raised every minute by
+who they are, and nothing they do ever satisfies it. Standing still is credited for what
+it avoids, which is unearned and is also the only thing holding that in check; removing
+it collapses the cast. And nobody eats in the house as written: for two of the four, no
+amount of hunger can ever outweigh what taking food costs them.
 
 `Comfort` writes directly into another person's feelings. It is marked in code as
 technical debt and is not evidence that the social pipeline works.

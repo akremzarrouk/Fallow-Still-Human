@@ -122,7 +122,7 @@ namespace Fallow.Tests.Core
             foreach (var p in People)
             {
                 var want = Wants(run, p).FirstOrDefault(m => m.Name == "get_food");
-                var term = want?.Terms.FirstOrDefault(t => t.Description == "hunger");
+                var term = want?.Terms.FirstOrDefault(t => t.Description.StartsWith("hunger", StringComparison.Ordinal));
                 sb.AppendLine("| " + p + " | " + run.Minds[p].Profile.HungerRate + " | " + string.Join(" / ", levels[p].Select(F)) + " | " +
                               (want == null ? "not raised" : F(want.Urgency)) + " | " + (term == null ? "n/a" : term.Drew.Count.ToString()) + " |");
             }
@@ -168,6 +168,18 @@ namespace Fallow.Tests.Core
 
             sb.AppendLine();
             sb.AppendLine("The same, at the top of the hunger scale (1.0, worth " + F(Accumulate.Knee(1.0, _content.Rules.Deciding.UrgencyKnee)) + " after the knee), is the column of best scores shifted up by the difference.");
+            sb.AppendLine();
+            sb.AppendLine("The same price, alone, where the count did not come up short and there is plenty (nobody believes supplies are short), against the top of the hunger scale:");
+            sb.AppendLine();
+            sb.AppendLine("| Who | Price alone, nothing short | Best score alone at hunger 1.0 |");
+            sb.AppendLine("|---|---|---|");
+            foreach (var p in People)
+            {
+                var run = Scenario001.Prepare(Plenty(_content, 10, false), "mara_ate_it", 1);
+                StarvingAlone(run, p, 1.0);
+                var price = Price(run, p).cost;
+                sb.AppendLine("| " + p + " | " + F(price) + " | " + F(Accumulate.Knee(1.0, _content.Rules.Deciding.UrgencyKnee) - price) + " |");
+            }
             Record("2", sb.ToString());
         }
 

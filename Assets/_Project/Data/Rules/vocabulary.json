@@ -91,7 +91,8 @@
       "eat_portion",
       "hide_portion",
       "give_portion",
-      "show_distress"
+      "show_distress",
+      "find_nothing_left"
     ],
     "topics": [
       "shelter",

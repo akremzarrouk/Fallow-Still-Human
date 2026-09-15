@@ -50,6 +50,7 @@ namespace Fallow.Core.Rules
             foreach (var s in scalers)
             {
                 double level;
+                string note = null;
                 var drew = new List<int>();
 
                 switch (s.Kind)
@@ -73,7 +74,18 @@ namespace Fallow.Core.Rules
                         level = Held(mind, s, ctx, drew);
                         break;
                     case ScalerKind.Need:
+                        // The level is the body, read now. What the term rests on
+                        // is the last thing this person did about it, so a need
+                        // that fell because they ate, or stayed because the food
+                        // was gone, can say so. The record moves nothing: time and
+                        // the body do the rest, as they always did. Added in S1.3.
                         level = ctx.Need(s.Name);
+                        var latest = mind.LatestOutcomeFor(s.Name);
+                        if (latest != null)
+                        {
+                            drew.Add(latest.TraceId);
+                            note = " (" + latest + ")";
+                        }
                         break;
                     case ScalerKind.Memory:
                         level = Recall(mind, s, ctx, drew);
@@ -85,7 +97,7 @@ namespace Fallow.Core.Rules
                         continue;
                 }
 
-                terms.Add(new ScalerTerm(s.Describe(ctx.Resolve), level, s.Factor, drew));
+                terms.Add(new ScalerTerm(s.Describe(ctx.Resolve) + note, level, s.Factor, drew));
             }
 
             return terms;
