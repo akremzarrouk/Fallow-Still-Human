@@ -53,6 +53,15 @@ namespace Fallow.Core.Rules
         /// <summary>Who an emotion must be about. Null means about the situation.</summary>
         public string Target { get; set; }
 
+        /// <summary>
+        /// For a memory scaler: readings that answer it. A memory stops pressing
+        /// once a later memory of the same person, or the same thing, carries one
+        /// of these readings. Having seen somebody go to pieces presses until you
+        /// have seen them come right, and not a moment longer or shorter; nothing
+        /// here is a number. Added in S1.4.
+        /// </summary>
+        public IReadOnlyList<string> Until { get; set; } = new List<string>();
+
         public double Factor { get; set; }
 
         /// <summary>
@@ -86,6 +95,7 @@ namespace Fallow.Core.Rules
                     if (Topic != null) what += " about " + Topic;
                     if (About != null) what += " happening to " + R(About);
                     if (By != null) what += " done by " + R(By);
+                    if (Until != null && Until.Count > 0) what += " until " + string.Join(" or ", Until);
                     return what;
                 default: return Kind ?? "unknown";
             }
@@ -108,15 +118,24 @@ namespace Fallow.Core.Rules
         /// </summary>
         public System.Collections.Generic.IReadOnlyList<int> Drew { get; }
 
+        /// <summary>
+        /// True when this term is nothing because what it would have read has been
+        /// answered by something later (see Scaler.Until). A term like that still
+        /// rests on what answered it, so a want that fell because a memory was
+        /// answered can be walked back to the answer. Added in S1.4.
+        /// </summary>
+        public bool Answered { get; }
+
         public ScalerTerm(
             string description, double level, double factor,
-            System.Collections.Generic.IReadOnlyList<int> drew = null)
+            System.Collections.Generic.IReadOnlyList<int> drew = null, bool answered = false)
         {
             Description = description;
             Level = level;
             Factor = factor;
             Amount = level * factor;
             Drew = drew ?? new System.Collections.Generic.List<int>();
+            Answered = answered;
         }
 
         public override string ToString() => $"{Description} {Level:0.00} x {Factor:0.00} = {Amount:+0.00;-0.00;0.00}";

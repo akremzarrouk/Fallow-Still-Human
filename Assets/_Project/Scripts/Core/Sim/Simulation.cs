@@ -133,9 +133,15 @@ namespace Fallow.Core.Sim
             return outcomes;
         }
 
-        public EventOutcome Apply(WorldEvent e)
+        /// <summary>
+        /// Lets everybody the event reaches make of it what they will. An event
+        /// can say what in the world brought it about, when something did, so
+        /// that what people make of it can be walked back past the event to its
+        /// cause; an event nothing in particular caused rests on nothing.
+        /// </summary>
+        public EventOutcome Apply(WorldEvent e, IEnumerable<int> causes = null)
         {
-            var eventTrace = Trace.Add(TraceKind.Event, null, e.Id, e.Summary);
+            var eventTrace = Trace.Add(TraceKind.Event, null, e.Id, e.Summary, causes);
 
             // Between episodes of the backstory, time passes, so feelings fade
             // before the next one arrives. Memories and grudges do not. Once a

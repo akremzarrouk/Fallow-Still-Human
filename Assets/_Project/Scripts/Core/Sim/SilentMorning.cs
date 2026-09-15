@@ -145,6 +145,10 @@ namespace Fallow.Core.Sim
         readonly Dictionary<string, Intention> _intentions = new Dictionary<string, Intention>(StringComparer.Ordinal);
         readonly Dictionary<string, HashSet<string>> _searchedBy = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
         readonly HashSet<string> _showingIt = new HashSet<string>(StringComparer.Ordinal);
+
+        /// <summary>Whoever was sat with and settled this minute, and the record of the settling, so that what can be seen of it rests on it.</summary>
+        readonly Dictionary<string, int> _settledThisMinute = new Dictionary<string, int>(StringComparer.Ordinal);
+        readonly Dictionary<string, int[]> _beingSatWith = new Dictionary<string, int[]>(StringComparer.Ordinal);
         readonly HashSet<string> _sawThePantry = new HashSet<string>(StringComparer.Ordinal);
         readonly Dictionary<string, int> _watched = new Dictionary<string, int>(StringComparer.Ordinal);
 
@@ -240,6 +244,8 @@ namespace Fallow.Core.Sim
             }
 
             ShowWhatShows();
+            _settledThisMinute.Clear();
+            _beingSatWith.Clear();
 
             foreach (var id in _world.Inhabitants)
             {
@@ -421,10 +427,30 @@ namespace Fallow.Core.Sim
                     break;
 
                 case ActionKind.Comfort:
+                    // You cannot sit with somebody who has left the room. Until S1.4
+                    // the world soothed them anyway, wherever they had gone.
+                    if (!string.Equals(_world.RoomOf(action.TargetId), roomId, StringComparison.Ordinal))
+                    {
+                        Note(record, action.TargetId + " had gone before it could help");
+                        _sim.Trace.Add(
+                            TraceKind.Consequence, characterId, null,
+                            "could not sit with " + action.TargetId + ": they had gone",
+                            busy.Decision == null ? null : new[] { busy.Decision.TraceId },
+                            new Dictionary<string, string> { { "act", action.Key }, { "could_happen", "no" } });
+                        break;
+                    }
+
                     Note(record, "sat with " + action.TargetId);
-                    Happened(characterId, action.TargetId, "comfort", "good", null, roomId,
+                    var sat = Happened(characterId, action.TargetId, "comfort", "good", null, roomId,
                         Named(characterId) + " sits with " + Named(action.TargetId) + " for a while.");
-                    Soothe(action.TargetId, characterId);
+                    Soothe(action.TargetId, characterId, busy.Decision?.TraceId);
+
+                    // Whatever can be seen of them afterwards rests on both things
+                    // being sat with did to them: what they made of it, and the
+                    // settling.
+                    var felt = _sim.Minds[action.TargetId].Experiences.LastOrDefault(x => x.EventId == sat.Id);
+                    if (felt != null && _settledThisMinute.TryGetValue(action.TargetId, out var settledRecord))
+                        _beingSatWith[action.TargetId] = new[] { settledRecord, felt.TraceId };
                     break;
 
                 case ActionKind.Eat:
@@ -485,7 +511,7 @@ namespace Fallow.Core.Sim
         /// replaced by perception and appraisal of being comforted when
         /// interpersonal acts get that machinery.
         /// </summary>
-        void Soothe(string targetId, string byWhom)
+        void Soothe(string targetId, string byWhom, int? decisionTraceId = null)
         {
             if (targetId == null || !_sim.Minds.TryGetValue(targetId, out var mind)) return;
 
@@ -493,10 +519,10 @@ namespace Fallow.Core.Sim
             foreach (var type in _rules.Deciding.ComfortSettles)
                 mind.Emotions.Soften(type, _rules.Deciding.ComfortSettling, _rules.Dynamics.EmotionFloor);
 
-            _sim.Trace.Add(
+            _settledThisMinute[targetId] = _sim.Trace.Add(
                 TraceKind.Consequence, targetId, null,
                 "was settled a little by " + byWhom,
-                null,
+                decisionTraceId.HasValue ? new[] { decisionTraceId.Value } : null,
                 new Dictionary<string, string>
                 {
                     { "before", before == null ? "nothing" : before.ToString() },
@@ -510,8 +536,9 @@ namespace Fallow.Core.Sim
         /// how much of themselves this person lets out; someone composed can be
         /// frightened in a room full of people and nobody is any the wiser.
         ///
-        /// Only the moment it becomes visible is an event, because a person who
-        /// has been upset for ten minutes is not news every minute.
+        /// Only the moments it becomes visible, and stops being visible, are
+        /// events, because a person who has been upset for ten minutes is not news
+        /// every minute. The second was added in S1.4.
         /// </summary>
         void ShowWhatShows()
         {
@@ -526,7 +553,20 @@ namespace Fallow.Core.Sim
 
                 if (!shows)
                 {
-                    _showingIt.Remove(id);
+                    // Distress stopping is as visible as distress starting. Until
+                    // S1.4 only the start was announced, so nobody could ever see
+                    // that somebody had come right, including whoever had just sat
+                    // with them. If it stopped because they were just sat with, what
+                    // can be seen rests on that.
+                    if (_showingIt.Remove(id))
+                    {
+                        var watching = _world.WithMe(id);
+                        if (watching.Count > 0)
+                            Happened(null, id, "steady", "neutral", null, _world.RoomOf(id),
+                                Named(id) + " seems to be holding together again.",
+                                watching, audible: false,
+                                causes: _beingSatWith.TryGetValue(id, out var sat) ? sat : null);
+                    }
                     continue;
                 }
 
@@ -553,17 +593,21 @@ namespace Fallow.Core.Sim
         /// </summary>
         WorldEvent Happened(
             string actorId, string targetId, string action, string valence, string topic,
-            string roomId, string summary, IReadOnlyList<string> witnesses = null)
+            string roomId, string summary, IReadOnlyList<string> witnesses = null,
+            bool audible = true, IReadOnlyList<int> causes = null)
         {
             var saw = witnesses ?? _world.InRoom(roomId)
                 .Where(id => !string.Equals(id, actorId, StringComparison.Ordinal))
                 .ToList();
 
-            var heard = _world.WithinEarshotOf(roomId)
-                .Where(id => !saw.Contains(id, StringComparer.Ordinal))
-                .Where(id => !string.Equals(id, actorId, StringComparison.Ordinal))
-                .Where(id => !string.Equals(id, targetId, StringComparison.Ordinal))
-                .ToList();
+            // Some things can only be seen: somebody's face settling makes no sound.
+            var heard = !audible
+                ? new List<string>()
+                : _world.WithinEarshotOf(roomId)
+                    .Where(id => !saw.Contains(id, StringComparer.Ordinal))
+                    .Where(id => !string.Equals(id, actorId, StringComparison.Ordinal))
+                    .Where(id => !string.Equals(id, targetId, StringComparison.Ordinal))
+                    .ToList();
 
             _order++;
             var e = new WorldEvent(
@@ -578,7 +622,7 @@ namespace Fallow.Core.Sim
                 _world.Minute);
 
             _events.Add(e);
-            var outcome = _sim.Apply(e);
+            var outcome = _sim.Apply(e, causes);
             Interrupt(e, outcome);
             return e;
         }

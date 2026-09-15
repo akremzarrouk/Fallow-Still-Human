@@ -3,12 +3,12 @@
 A human-life simulation under changing circumstances. The apocalypse is the
 pressure placed on people; the game is the people.
 
-This repository contains **slices S0, S1, S1.1, S1.2 and S1.3**: the causal spine of
-the social simulation, a morning in a house where four people decide for themselves
+This repository contains **slices S0, S1, S1.1, S1.2, S1.3 and S1.4**: the causal spine
+of the social simulation, a morning in a house where four people decide for themselves
 what to do, a counterfactual experiment on whether something that happens to a person
 changes what that person wants and does, a pass on the deliberation layer that stands
-between the two, and a first test of what acting on a want does to it. No dialogue, no
-player, no 3D.
+between the two, and two tests of what acting on a want does to it, one for a need and
+one for a social want. No dialogue, no player, no 3D.
 
 - `Docs/slices/S0/review.md` — one event, four people, four different experiences.
 - `Docs/slices/S1/review.md` — what they do about it, and where that fails.
@@ -18,6 +18,8 @@ player, no 3D.
   still stands in the way.
 - `Docs/slices/S1.3/report.md` — what eating does to wanting food, why nobody in the house
   eats, and what failing to eat leaves behind.
+- `Docs/slices/S1.4/report.md` — what sitting with somebody does to wanting to look after
+  them, and what the house looks like once that want can be answered.
 
 Where those documents disagree with the code, the code is right and the reviews say when
 they were written.
@@ -51,8 +53,10 @@ of that is written down anywhere as a fact about them.
     ./run-tests.sh
 
 Runs the EditMode suite headlessly through the Unity CLI and prints a per-test
-summary. Takes about eighteen minutes, most of it counterfactual pairs of mornings.
-One test has failed on purpose since S1.2 and is explained in that report.
+summary. Takes about twenty minutes, most of it counterfactual pairs of mornings.
+Two tests fail since S1.4, the pacing gate and one check in the emergent-moment test.
+Both are regressions that slice caused, explained in its report section 9 and left
+failing rather than loosened.
 Re-running it regenerates everything under `Docs/slices/*/traces` and
 `Docs/slices/S1/batch`.
 
@@ -80,13 +84,16 @@ All five are enforced by tests, not by discipline.
 ## Known defects
 
 Recorded in `Docs/slices/S1/review.md` section 5, `Docs/slices/S1.1/report.md` section G,
-`Docs/slices/S1.2/report.md` section 6 and `Docs/slices/S1.3/report.md` section 9, and
-pinned by characterisation tests that say in their names that they should be turned
-round when fixed. The largest now: most of what people want is raised every minute by
-who they are, and nothing they do ever satisfies it. Standing still is credited for what
-it avoids, which is unearned and is also the only thing holding that in check; removing
-it collapses the cast. And nobody eats in the house as written: for two of the four, no
-amount of hunger can ever outweigh what taking food costs them.
+`Docs/slices/S1.2/report.md` section 6, `Docs/slices/S1.3/report.md` section 9 and
+`Docs/slices/S1.4/report.md` section 9, and pinned by characterisation tests that say in
+their names that they should be turned round when fixed. The largest now: most of what
+people want is raised every minute by who they are, with nothing in the circumstances
+calling for it. Once S1.4 let the concern behind looking after somebody be answered, that
+standing part was all that was left, and two of the four people became hard to tell apart
+while pacing came back. Standing still is credited for what it avoids, which is unearned.
+And nobody eats in the house as written: for two of the four, no amount of hunger can ever
+outweigh what taking food costs them.
 
-`Comfort` writes directly into another person's feelings. It is marked in code as
-technical debt and is not evidence that the social pipeline works.
+`Comfort` still softens another person's feelings directly, as technical debt, and is
+not evidence that the social pipeline works. S1.4 found that people come right about as
+often without it, from their own reading of being sat with, but did not isolate that further.

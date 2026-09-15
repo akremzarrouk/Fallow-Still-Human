@@ -17,34 +17,34 @@ First decision of the morning, where both worlds are identical apart from the pe
 
 | Condition | Who | Same situation, both clear | Different choice | ... led by a want resting on the night | Same situation, seed settled one or both | Different choice |
 |---|---|---|---|---|---|---|
-| mara_ate_it | mara | 13 | 0 | 0 | 51 | 16 |
-| elena_fed_mara | elena | 169 | 8 | 8 | 179 | 31 |
-| daniel_ate_it | daniel | 113 | 0 | 0 | 55 | 23 |
-| daniel_hid_it | daniel | 120 | 0 | 0 | 53 | 21 |
+| mara_ate_it | mara | 25 | 0 | 0 | 28 | 7 |
+| elena_fed_mara | elena | 188 | 4 | 2 | 67 | 30 |
+| daniel_ate_it | daniel | 135 | 0 | 0 | 62 | 17 |
+| daniel_hid_it | daniel | 151 | 0 | 0 | 90 | 14 |
 
-### elena_fed_mara, elena, seed 1, minute 65
+### elena_fed_mara, elena, seed 13, minute 60
 
 Without the night:
 
 ```
 Active motivations
-  keep_peace 0.91   because value family_safety 1.00 x 0.45 = +0.45; trait empathetic 0.90 x 0.30 = +0.27; trait cautious 0.70 x 0.15 = +0.11; feeling anxiety 0.29 x 0.35 = +0.10
+  keep_peace 0.91   because value family_safety 1.00 x 0.45 = +0.45; trait empathetic 0.90 x 0.30 = +0.27; feeling anxiety 0.30 x 0.35 = +0.11; trait cautious 0.70 x 0.15 = +0.11
   guard_supplies 0.85   because value family_safety 1.00 x 0.40 = +0.40; belief supplies_short 0.55 x 0.50 = +0.28; trait cautious 0.70 x 0.25 = +0.18
-  get_food 0.82   because hunger 0.82 x 1.00 = +0.82
+  get_food 0.80   because hunger 0.80 x 1.00 = +0.80
   find_out 0.48   because value fairness 0.50 x 0.40 = +0.20; belief role_claim(elena,leads_family) 0.60 x 0.30 = +0.18; trait dominant 0.50 x 0.20 = +0.10
-  look_after:daniel 0.43   because value closeness 0.75 x 0.20 = +0.15; memory of concern happening to daniel 0.20 x 0.70 = +0.14; trait empathetic 0.90 x 0.15 = +0.14
-  look_after:mara 0.43   because value closeness 0.75 x 0.20 = +0.15; memory of concern happening to mara 0.20 x 0.70 = +0.14; trait empathetic 0.90 x 0.15 = +0.14
   restore_standing 0.36   because feeling shame 0.33 x 0.50 = +0.16; feeling anger toward anyone 0.31 x 0.45 = +0.14; trait proud 0.35 x 0.15 = +0.05
+  look_after:daniel 0.29   because value closeness 0.75 x 0.20 = +0.15; trait empathetic 0.90 x 0.15 = +0.14
   look_after:leo 0.29   because value closeness 0.75 x 0.20 = +0.15; trait empathetic 0.90 x 0.15 = +0.14
+  look_after:mara 0.29   because value closeness 0.75 x 0.20 = +0.15; trait empathetic 0.90 x 0.15 = +0.14
   avoid_exposure 0.26   because feeling shame 0.33 x 0.80 = +0.26
 -> candidate actions (12), best 4 shown
   wait   <- chosen
     -> contribution from each motivation
-       keep_peace: urgency 0.91 x fit +0.50 = +0.455 (let_it_be)
+       keep_peace: urgency 0.91 x fit +0.50 = +0.456 (let_it_be)
        guard_supplies: urgency 0.85 x fit +0.30 = +0.255 (leave_it_alone)
     -> trait/context costs
        none
-    -> total score 0.710 - 0.000 = 0.710
+    -> total score 0.711 - 0.000 = 0.711
   search_room
     -> contribution from each motivation
        find_out: urgency 0.48 x fit +0.80 = +0.384 (turn_the_room_over)
@@ -54,19 +54,19 @@ Active motivations
     -> total score 0.598 - 0.000 = 0.598
   comfort:daniel
     -> contribution from each motivation
-       keep_peace: urgency 0.91 x fit +0.40 = +0.364 (settle_them_down)
-       look_after:daniel: urgency 0.43 x fit +0.90 = +0.384 (sit_with_them)
+       keep_peace: urgency 0.91 x fit +0.40 = +0.365 (settle_them_down)
+       look_after:daniel: urgency 0.29 x fit +0.90 = +0.257 (sit_with_them)
     -> trait/context costs
        reaching_out_does_not_come_easily_to_everyone 0.21 (trait dominant 0.50 x 0.30 = +0.15; trait proud 0.35 x 0.20 = +0.07; trait empathetic 0.90 x -0.35 = -0.32)
-    -> total score 0.748 - 0.205 = 0.543
-  comfort:mara
+    -> total score 0.621 - 0.205 = 0.416
+  comfort:leo
     -> contribution from each motivation
-       keep_peace: urgency 0.91 x fit +0.40 = +0.364 (settle_them_down)
-       look_after:mara: urgency 0.43 x fit +0.90 = +0.384 (sit_with_them)
+       keep_peace: urgency 0.91 x fit +0.40 = +0.365 (settle_them_down)
+       look_after:leo: urgency 0.29 x fit +0.90 = +0.257 (sit_with_them)
     -> trait/context costs
        reaching_out_does_not_come_easily_to_everyone 0.21 (trait dominant 0.50 x 0.30 = +0.15; trait proud 0.35 x 0.20 = +0.07; trait empathetic 0.90 x -0.35 = -0.32)
-    -> total score 0.748 - 0.205 = 0.543
--> ambiguity status: clear, ahead of the next option considered by 0.111
+    -> total score 0.621 - 0.205 = 0.416
+-> ambiguity status: clear, ahead of the next option considered by 0.113
 -> selected intention: keep_peace, done once this is done
 -> action: wait (5 min)
 ```
@@ -75,45 +75,45 @@ With the night:
 
 ```
 Active motivations
-  keep_peace 0.90   because value family_safety 1.00 x 0.45 = +0.45; trait empathetic 0.90 x 0.30 = +0.27; trait cautious 0.70 x 0.15 = +0.11; feeling anxiety 0.27 x 0.35 = +0.09
+  keep_peace 0.91   because value family_safety 1.00 x 0.45 = +0.45; trait empathetic 0.90 x 0.30 = +0.27; trait cautious 0.70 x 0.15 = +0.11; feeling anxiety 0.28 x 0.35 = +0.10
   guard_supplies 0.85   because value family_safety 1.00 x 0.40 = +0.40; belief supplies_short 0.55 x 0.50 = +0.28; trait cautious 0.70 x 0.25 = +0.18
-  get_food 0.82   because hunger 0.82 x 1.00 = +0.82
-  find_out 0.73   because memory of threat about missing_can 0.71 x 0.35 = +0.25; value fairness 0.50 x 0.40 = +0.20; belief role_claim(elena,leads_family) 0.60 x 0.30 = +0.18; trait dominant 0.50 x 0.20 = +0.10
-  look_after:daniel 0.43   because value closeness 0.75 x 0.20 = +0.15; memory of concern happening to daniel 0.20 x 0.70 = +0.14; trait empathetic 0.90 x 0.15 = +0.14
-  look_after:mara 0.43   because value closeness 0.75 x 0.20 = +0.15; memory of concern happening to mara 0.20 x 0.70 = +0.14; trait empathetic 0.90 x 0.15 = +0.14
+  get_food 0.80   because hunger 0.80 x 1.00 = +0.80
+  find_out 0.74   because memory of threat about missing_can 0.73 x 0.35 = +0.26; value fairness 0.50 x 0.40 = +0.20; belief role_claim(elena,leads_family) 0.60 x 0.30 = +0.18; trait dominant 0.50 x 0.20 = +0.10
   restore_standing 0.36   because feeling shame 0.33 x 0.50 = +0.16; feeling anger toward anyone 0.31 x 0.45 = +0.14; trait proud 0.35 x 0.15 = +0.05
   avoid_exposure 0.34   because feeling shame 0.33 x 0.80 = +0.26; feeling fear 0.22 x 0.35 = +0.08
+  look_after:daniel 0.29   because value closeness 0.75 x 0.20 = +0.15; trait empathetic 0.90 x 0.15 = +0.14
   look_after:leo 0.29   because value closeness 0.75 x 0.20 = +0.15; trait empathetic 0.90 x 0.15 = +0.14
+  look_after:mara 0.29   because value closeness 0.75 x 0.20 = +0.15; trait empathetic 0.90 x 0.15 = +0.14
 -> candidate actions (12), best 4 shown
   search_room   <- chosen
     -> contribution from each motivation
-       find_out: urgency 0.73 x fit +0.80 = +0.582 (turn_the_room_over)
+       find_out: urgency 0.74 x fit +0.80 = +0.590 (turn_the_room_over)
        restore_standing: urgency 0.36 x fit +0.60 = +0.214 (be_the_one_who_settles_it)
     -> trait/context costs
        none
-    -> total score 0.796 - 0.000 = 0.796
+    -> total score 0.804 - 0.000 = 0.804
   wait
     -> contribution from each motivation
-       keep_peace: urgency 0.90 x fit +0.50 = +0.452 (let_it_be)
+       keep_peace: urgency 0.91 x fit +0.50 = +0.453 (let_it_be)
        guard_supplies: urgency 0.85 x fit +0.30 = +0.255 (leave_it_alone)
     -> trait/context costs
        none
-    -> total score 0.707 - 0.000 = 0.707
+    -> total score 0.708 - 0.000 = 0.708
   comfort:daniel
     -> contribution from each motivation
-       keep_peace: urgency 0.90 x fit +0.40 = +0.362 (settle_them_down)
-       look_after:daniel: urgency 0.43 x fit +0.90 = +0.384 (sit_with_them)
+       keep_peace: urgency 0.91 x fit +0.40 = +0.363 (settle_them_down)
+       look_after:daniel: urgency 0.29 x fit +0.90 = +0.257 (sit_with_them)
     -> trait/context costs
        reaching_out_does_not_come_easily_to_everyone 0.21 (trait dominant 0.50 x 0.30 = +0.15; trait proud 0.35 x 0.20 = +0.07; trait empathetic 0.90 x -0.35 = -0.32)
-    -> total score 0.746 - 0.205 = 0.541
-  comfort:mara
+    -> total score 0.619 - 0.205 = 0.414
+  comfort:leo
     -> contribution from each motivation
-       keep_peace: urgency 0.90 x fit +0.40 = +0.362 (settle_them_down)
-       look_after:mara: urgency 0.43 x fit +0.90 = +0.384 (sit_with_them)
+       keep_peace: urgency 0.91 x fit +0.40 = +0.363 (settle_them_down)
+       look_after:leo: urgency 0.29 x fit +0.90 = +0.257 (sit_with_them)
     -> trait/context costs
        reaching_out_does_not_come_easily_to_everyone 0.21 (trait dominant 0.50 x 0.30 = +0.15; trait proud 0.35 x 0.20 = +0.07; trait empathetic 0.90 x -0.35 = -0.32)
-    -> total score 0.746 - 0.205 = 0.541
--> ambiguity status: clear, ahead of the next option considered by 0.088
+    -> total score 0.619 - 0.205 = 0.414
+-> ambiguity status: clear, ahead of the next option considered by 0.096
 -> selected intention: find_out, done once this is done
 -> action: search_room (8 min)
 ```
@@ -121,8 +121,8 @@ Active motivations
 The want that led the changed choice, and what it rests on:
 
 ```
-Motive [elena]: wants find_out 0.73  {motive=find_out, urgency=0.73, rules=needing_to_know_what_happened, because=memory of threat about missing_can 0.71 x 0.35 = +0.25; value fairness 0.50 x 0.40 ...
-  because Access [elena]: at minute 65, elena in kitchen at minute 65, with daniel, leo, mara  {room=kitchen, present=daniel, leo, mara, hunger=0.82}
+Motive [elena]: wants find_out 0.74  {motive=find_out, urgency=0.74, rules=needing_to_know_what_happened, because=memory of threat about missing_can 0.73 x 0.35 = +0.26; value fairness 0.50 x 0.40 ...
+  because Access [elena]: at minute 60, elena in kitchen at minute 60, with daniel, leo, mara  {room=kitchen, present=daniel, leo, mara, hunger=0.80}
   because Experience [elena]: kept it as threat, felt as anxiety  {meaning=threat, source=witnessed, confidence=1.00, salience=0.88}
     because Interpretation [elena]: read it as threat (0.90)  {meaning=threat, weight=0.90, runner_up=challenge 0.86, rules=authority_taken_without_asking -> challenge 0.86 (base 0.40; value contro...
       because Access [elena]: was there and saw it
@@ -142,14 +142,14 @@ Twenty-seed pools, seeds 81 to 100 and 101 to 120.
 
 | Condition | Who | Night vs no night | No night vs no night | Night vs night | Above the noise |
 |---|---|---|---|---|---|
-| mara_ate_it | mara | 0.084 | 0.019 | 0.043 | yes |
-| elena_fed_mara | elena | 0.075 | 0.026 | 0.034 | yes |
-| daniel_ate_it | daniel | 0.032 | 0.016 | 0.009 | yes |
-| daniel_hid_it | daniel | 0.015 | 0.016 | 0.008 | no |
+| mara_ate_it | mara | 0.184 | 0.032 | 0.041 | yes |
+| elena_fed_mara | elena | 0.061 | 0.012 | 0.039 | yes |
+| daniel_ate_it | daniel | 0.052 | 0.026 | 0.030 | yes |
+| daniel_hid_it | daniel | 0.040 | 0.026 | 0.053 | no |
 
 ## 2. Removing the cause
 
-With the night event removed, 988 decisions across all four design conditions on seeds 1 to 3 are identical to the control: same options, same score for every option to the last bit, same contributions, same intention carried in and formed, same choice.
+With the night event removed, 956 decisions across all four design conditions on seeds 1 to 3 are identical to the control: same options, same score for every option to the last bit, same contributions, same intention carried in and formed, same choice.
 ## 3a. Removing a want, upstream
 
 `mara_ate_it`, seed 1, after the opening count. With `avoid_exposure`: feels `fear 0.85 (family_safety), relief 0.54 (family_safety), shame 0.54 (fairness), anxiety 0.54 (family_safety), gratitude 0.50 toward elena (closeness), hurt 0.45 toward daniel (closeness), frustration 0.40 toward daniel (autonomy), gratitude 0.34 toward daniel (closeness), anger 0.25 toward daniel (respect), gratitude 0.07 toward leo (closeness)`. Without it: feels `fear 0.85 (family_safety), relief 0.54 (family_safety), shame 0.54 (fairness), anxiety 0.54 (family_safety), gratitude 0.50 toward elena (closeness), hurt 0.45 toward daniel (closeness), frustration 0.40 toward daniel (autonomy), gratitude 0.34 toward daniel (closeness), anger 0.25 toward daniel (respect), gratitude 0.07 toward leo (closeness)`. Beliefs identical: True.
@@ -157,85 +157,69 @@ With the night event removed, 988 decisions across all four design conditions on
 
 | Want removed | Mara's decisions | Where it added to any option considered | Where the best option changed |
 |---|---|---|---|
-| `avoid_exposure` | 189 | 179 | 6 |
-| `find_out` | 189 | 189 | 64 |
-| `look_after` | 189 | 183 | 123 |
-| `keep_peace` | 189 | 185 | 72 |
+| `avoid_exposure` | 182 | 171 | 12 |
+| `find_out` | 182 | 182 | 48 |
+| `look_after` | 182 | 166 | 78 |
+| `keep_peace` | 182 | 174 | 47 |
 
-### Seed 1, minute 87, with `avoid_exposure`
+### Seed 1, minute 40, with `avoid_exposure`
 
 ```
 Active motivations
-  get_food 0.83   because hunger 0.83 x 1.00 = +0.83
-  restore_standing 0.56   because feeling shame 0.55 x 0.50 = +0.28; feeling anger toward anyone 0.45 x 0.45 = +0.20; trait proud 0.55 x 0.15 = +0.08
-  look_after:daniel 0.55   because value closeness 1.00 x 0.20 = +0.20; remembers protected_me of daniel 0.80 x 0.15 = +0.12; memory of concern happening to daniel 0.16 x 0.70 = +0.11; trait empathetic 0.75 x 0.15 = +0.11
-  look_after:elena 0.53   because value closeness 1.00 x 0.20 = +0.20; memory of concern happening to elena 0.16 x 0.70 = +0.11; trait empathetic 0.75 x 0.15 = +0.11; remembers comforted_me of elena 0.70 x 0.15 = +0.11
+  get_food 0.65   because hunger 0.65 x 1.00 = +0.65
   find_out 0.53   because memory of threat about missing_can 0.80 x 0.35 = +0.28; value fairness 0.50 x 0.40 = +0.20; trait dominant 0.25 x 0.20 = +0.05
   guard_supplies 0.46   because belief supplies_short 0.66 x 0.50 = +0.33; trait cautious 0.50 x 0.25 = +0.13
-  avoid_exposure 0.44   because feeling shame 0.55 x 0.80 = +0.44
+  look_after:elena 0.42   because value closeness 1.00 x 0.20 = +0.20; trait empathetic 0.75 x 0.15 = +0.11; remembers comforted_me of elena 0.70 x 0.15 = +0.11
+  restore_standing 0.32   because feeling shame 0.29 x 0.50 = +0.14; feeling anger toward anyone 0.21 x 0.45 = +0.10; trait proud 0.55 x 0.15 = +0.08
   look_after:leo 0.31   because value closeness 1.00 x 0.20 = +0.20; trait empathetic 0.75 x 0.15 = +0.11
   keep_peace 0.30   because trait empathetic 0.75 x 0.30 = +0.23; trait cautious 0.50 x 0.15 = +0.08
--> candidate actions (11), best 4 shown
-  go_to->back_room   <- chosen
+  avoid_exposure 0.23   because feeling shame 0.29 x 0.80 = +0.23
+-> candidate actions (9), best 4 shown
+  go_to->back_room
     -> contribution from each motivation
        find_out: urgency 0.53 x fit +0.70 = +0.371 (somewhere_worth_looking)
-       avoid_exposure: urgency 0.44 x fit +0.50 = +0.222 (somewhere_with_a_door)
+       avoid_exposure: urgency 0.23 x fit +0.50 = +0.115 (somewhere_with_a_door)
     -> trait/context costs
        getting_up_and_going_somewhere 0.16 (trait cautious 0.50 x 0.08 = +0.04)
-    -> total score 0.593 - 0.160 = 0.433
-  comfort:daniel
-    -> contribution from each motivation
-       look_after:daniel: urgency 0.55 x fit +0.90 = +0.492 (sit_with_them)
-       keep_peace: urgency 0.30 x fit +0.40 = +0.120 (settle_them_down)
-    -> trait/context costs
-       reaching_out_does_not_come_easily_to_everyone 0.22 (trait dominant 0.25 x 0.30 = +0.08; trait proud 0.55 x 0.20 = +0.11; trait empathetic 0.75 x -0.35 = -0.26)
-    -> total score 0.612 - 0.223 = 0.390
-  comfort:elena
-    -> contribution from each motivation
-       look_after:elena: urgency 0.53 x fit +0.90 = +0.477 (sit_with_them)
-       keep_peace: urgency 0.30 x fit +0.40 = +0.120 (settle_them_down)
-    -> trait/context costs
-       reaching_out_does_not_come_easily_to_everyone 0.22 (trait dominant 0.25 x 0.30 = +0.08; trait proud 0.55 x 0.20 = +0.11; trait empathetic 0.75 x -0.35 = -0.26)
-    -> total score 0.597 - 0.223 = 0.375
-  wait
+    -> total score 0.486 - 0.160 = 0.326
+  wait   <- chosen
     -> contribution from each motivation
        guard_supplies: urgency 0.46 x fit +0.30 = +0.137 (leave_it_alone)
        keep_peace: urgency 0.30 x fit +0.50 = +0.150 (let_it_be)
     -> trait/context costs
        none
     -> total score 0.287 - 0.000 = 0.287
--> ambiguity status: too close to call between go_to->back_room, comfort:daniel, comfort:elena; the seed settled it
--> selected intention: find_out, kept until they arrive
--> action: go_to->back_room (4 min)
+  comfort:elena
+    -> contribution from each motivation
+       look_after:elena: urgency 0.42 x fit +0.90 = +0.376 (sit_with_them)
+       keep_peace: urgency 0.30 x fit +0.40 = +0.120 (settle_them_down)
+    -> trait/context costs
+       reaching_out_does_not_come_easily_to_everyone 0.22 (trait dominant 0.25 x 0.30 = +0.08; trait proud 0.55 x 0.20 = +0.11; trait empathetic 0.75 x -0.35 = -0.26)
+    -> total score 0.496 - 0.223 = 0.273
+  comfort:leo
+    -> contribution from each motivation
+       look_after:leo: urgency 0.31 x fit +0.90 = +0.281 (sit_with_them)
+       keep_peace: urgency 0.30 x fit +0.40 = +0.120 (settle_them_down)
+    -> trait/context costs
+       reaching_out_does_not_come_easily_to_everyone 0.22 (trait dominant 0.25 x 0.30 = +0.08; trait proud 0.55 x 0.20 = +0.11; trait empathetic 0.75 x -0.35 = -0.26)
+    -> total score 0.401 - 0.223 = 0.179
+-> ambiguity status: too close to call between go_to->back_room, wait, comfort:elena; the seed settled it
+-> selected intention: keep_peace, done once this is done
+-> action: wait (5 min)
 ```
 
 ### The same moment, without it
 
 ```
 Active motivations
-  get_food 0.83   because hunger 0.83 x 1.00 = +0.83
-  restore_standing 0.56   because feeling shame 0.55 x 0.50 = +0.28; feeling anger toward anyone 0.45 x 0.45 = +0.20; trait proud 0.55 x 0.15 = +0.08
-  look_after:daniel 0.55   because value closeness 1.00 x 0.20 = +0.20; remembers protected_me of daniel 0.80 x 0.15 = +0.12; memory of concern happening to daniel 0.16 x 0.70 = +0.11; trait empathetic 0.75 x 0.15 = +0.11
-  look_after:elena 0.53   because value closeness 1.00 x 0.20 = +0.20; memory of concern happening to elena 0.16 x 0.70 = +0.11; trait empathetic 0.75 x 0.15 = +0.11; remembers comforted_me of elena 0.70 x 0.15 = +0.11
+  get_food 0.65   because hunger 0.65 x 1.00 = +0.65
   find_out 0.53   because memory of threat about missing_can 0.80 x 0.35 = +0.28; value fairness 0.50 x 0.40 = +0.20; trait dominant 0.25 x 0.20 = +0.05
   guard_supplies 0.46   because belief supplies_short 0.66 x 0.50 = +0.33; trait cautious 0.50 x 0.25 = +0.13
+  look_after:elena 0.42   because value closeness 1.00 x 0.20 = +0.20; trait empathetic 0.75 x 0.15 = +0.11; remembers comforted_me of elena 0.70 x 0.15 = +0.11
+  restore_standing 0.32   because feeling shame 0.29 x 0.50 = +0.14; feeling anger toward anyone 0.21 x 0.45 = +0.10; trait proud 0.55 x 0.15 = +0.08
   look_after:leo 0.31   because value closeness 1.00 x 0.20 = +0.20; trait empathetic 0.75 x 0.15 = +0.11
   keep_peace 0.30   because trait empathetic 0.75 x 0.30 = +0.23; trait cautious 0.50 x 0.15 = +0.08
--> candidate actions (11), best 4 shown
-  comfort:daniel
-    -> contribution from each motivation
-       look_after:daniel: urgency 0.55 x fit +0.90 = +0.492 (sit_with_them)
-       keep_peace: urgency 0.30 x fit +0.40 = +0.120 (settle_them_down)
-    -> trait/context costs
-       reaching_out_does_not_come_easily_to_everyone 0.22 (trait dominant 0.25 x 0.30 = +0.08; trait proud 0.55 x 0.20 = +0.11; trait empathetic 0.75 x -0.35 = -0.26)
-    -> total score 0.612 - 0.223 = 0.390
-  comfort:elena   <- chosen
-    -> contribution from each motivation
-       look_after:elena: urgency 0.53 x fit +0.90 = +0.477 (sit_with_them)
-       keep_peace: urgency 0.30 x fit +0.40 = +0.120 (settle_them_down)
-    -> trait/context costs
-       reaching_out_does_not_come_easily_to_everyone 0.22 (trait dominant 0.25 x 0.30 = +0.08; trait proud 0.55 x 0.20 = +0.11; trait empathetic 0.75 x -0.35 = -0.26)
-    -> total score 0.597 - 0.223 = 0.375
+-> candidate actions (9), best 4 shown
   wait
     -> contribution from each motivation
        guard_supplies: urgency 0.46 x fit +0.30 = +0.137 (leave_it_alone)
@@ -243,15 +227,27 @@ Active motivations
     -> trait/context costs
        none
     -> total score 0.287 - 0.000 = 0.287
-  observe:daniel
+  comfort:elena   <- chosen
     -> contribution from each motivation
-       restore_standing: urgency 0.56 x fit +0.35 = +0.196 (keep_an_eye_on_them)
-       look_after:daniel: urgency 0.55 x fit +0.35 = +0.191 (see_how_they_are)
-       find_out: urgency 0.53 x fit +0.45 = +0.239 (watch_them)
+       look_after:elena: urgency 0.42 x fit +0.90 = +0.376 (sit_with_them)
+       keep_peace: urgency 0.30 x fit +0.40 = +0.120 (settle_them_down)
     -> trait/context costs
-       staring_at_somebody 0.40 (trait empathetic 0.75 x 0.20 = +0.15; value closeness 1.00 x 0.15 = +0.15)
-    -> total score 0.626 - 0.400 = 0.226
--> ambiguity status: too close to call between comfort:daniel, comfort:elena; the seed settled it
+       reaching_out_does_not_come_easily_to_everyone 0.22 (trait dominant 0.25 x 0.30 = +0.08; trait proud 0.55 x 0.20 = +0.11; trait empathetic 0.75 x -0.35 = -0.26)
+    -> total score 0.496 - 0.223 = 0.273
+  go_to->back_room
+    -> contribution from each motivation
+       find_out: urgency 0.53 x fit +0.70 = +0.371 (somewhere_worth_looking)
+    -> trait/context costs
+       getting_up_and_going_somewhere 0.16 (trait cautious 0.50 x 0.08 = +0.04)
+    -> total score 0.371 - 0.160 = 0.211
+  comfort:leo
+    -> contribution from each motivation
+       look_after:leo: urgency 0.31 x fit +0.90 = +0.281 (sit_with_them)
+       keep_peace: urgency 0.30 x fit +0.40 = +0.120 (settle_them_down)
+    -> trait/context costs
+       reaching_out_does_not_come_easily_to_everyone 0.22 (trait dominant 0.25 x 0.30 = +0.08; trait proud 0.55 x 0.20 = +0.11; trait empathetic 0.75 x -0.35 = -0.26)
+    -> total score 0.401 - 0.223 = 0.179
+-> ambiguity status: too close to call between wait, comfort:elena, go_to->back_room; the seed settled it
 -> selected intention: look_after:elena, done once this is done
 -> action: comfort:elena (8 min)
 ```
@@ -261,40 +257,40 @@ Active motivations
 
 | Rules | Night vs no night | Larger same-condition difference | Above the noise |
 |---|---|---|---|
-| all wants | 0.079 | 0.024 | yes |
-| without `avoid_exposure` | 0.022 | 0.017 | no |
-| without `find_out` | 0.001 | 0.001 | no |
+| all wants | 0.173 | 0.051 | yes |
+| without `avoid_exposure` | 0.206 | 0.101 | yes |
+| without `find_out` | 0.086 | 0.032 | yes |
 
 ## 4. Commitment across the batch
 
-50 mornings, 4252 decisions (21.3 per person per morning).
+50 mornings, 4066 decisions (20.3 per person per morning).
 
 ### What was chosen
 
 | wait | observe | go_to | check_pantry | search_room | comfort | eat |
 |---|---|---|---|---|---|---|
-| 44.0 % | 4.9 % | 8.1 % | 6.0 % | 10.6 % | 26.5 % | 0.0 % |
+| 52.9 % | 4.4 % | 10.8 % | 6.2 % | 11.0 % | 14.8 % | 0.0 % |
 
-Why they were deciding: finished 60.8 %, interrupted 34.5 %, start 4.7 %.
+Why they were deciding: finished 70.1 %, interrupted 25.0 %, start 4.9 %.
 
 ### How appeal was put together
 
 | Measure | Share of decisions |
 |---|---|
-| Settled by the seed | 47.4 % |
-| ... between different kinds of action | 39.7 % |
-| Top option drew on two or more wants | 97.9 % |
-| Summing changed which kind of action came top (vs strongest single reason) | 28.6 % |
+| Settled by the seed | 38.2 % |
+| ... between different kinds of action | 35.2 % |
+| Top option drew on two or more wants | 98.1 % |
+| Summing changed which kind of action came top (vs strongest single reason) | 38.0 % |
 | Top option credited twice by one want | 0.0 % |
 | Counting each want once would have changed the top option | 0.0 % |
 | Top option, aimed at nobody, credited once per person by the same kind of want | 0.0 % |
-| Standing still on top | 49.7 % |
+| Standing still on top | 59.1 % |
 
-When standing still came top it drew on 2.00 wants on average. Its appeal came from: `let_it_be` 62.3 %, `leave_it_alone` 37.7 %.
+When standing still came top it drew on 2.00 wants on average. Its appeal came from: `let_it_be` 62.2 %, `leave_it_alone` 37.8 %.
 
-Watching somebody came top in 4.8 % of decisions. Its appeal came from: `watch_them` 69.4 %, `keep_an_eye_on_them` 17.2 %, `see_how_they_are` 13.4 %.
+Watching somebody came top in 0.8 % of decisions. Its appeal came from: `watch_them` 66.6 %, `see_how_they_are` 16.9 %, `keep_an_eye_on_them` 16.5 %.
 
-Wants raised with no available option serving them at all: 0.9 % of 34363.
+Wants raised with no available option serving them at all: 1.1 % of 32555.
 
 ### Which wants decide anything
 
@@ -307,25 +303,25 @@ Each decision weighed again without one want. Decisive means a different option 
 
 | Measure | Value |
 |---|---|
-| Interruptions per morning | 29.30 |
+| Interruptions per morning | 20.34 |
 | ... where the event itself stirred less than the threshold | 0.0 % |
-| ... after which they thought again and carried on | 63.6 % |
-| Decisions taken with an intention carried in | 7.6 % |
-| ... held | 59.0 % |
-| ... lapsed: not worth what it costs here | 41.0 % |
-| ... held, where something serving a different want scored higher overall | 0.0 % |
-| ... held, where ignoring the intention would have been a tie between different kinds | 7.4 % |
-| Walks completed and followed by a decision | 322 |
-| ... followed by something the want behind the walk did not serve | 41.0 % |
-| ... followed by walking straight back | 0.0 % |
-| Back-and-forth pacing, mean per person per morning | 0.24 |
-| Worst pacing | 2 (daniel_ate_it/1/daniel) |
+| ... after which they thought again and carried on | 57.3 % |
+| Decisions taken with an intention carried in | 10.1 % |
+| ... held | 54.1 % |
+| ... lapsed: not worth what it costs here | 45.9 % |
+| ... held, where something serving a different want scored higher overall | 0.5 % |
+| ... held, where ignoring the intention would have been a tie between different kinds | 17.1 % |
+| Walks completed and followed by a decision | 410 |
+| ... followed by something the want behind the walk did not serve | 45.9 % |
+| ... followed by walking straight back | 1.2 % |
+| Back-and-forth pacing, mean per person per morning | 0.43 |
+| Worst pacing | 3 (daniel_hid_it/7/mara) |
 | Mornings anyone ate | 0 of 50 |
 
-Intentions carried into a decision, by the want behind them: `find_out: held` 190, `get_food: lapsed: not worth what it costs here` 132.
+Intentions carried into a decision, by the want behind them: `find_out: held` 222, `find_out: lapsed: not worth what it costs here` 3, `get_food: lapsed: not worth what it costs here` 185.
 
 ## 5. People stay themselves
 
-`mara_ate_it`, 40 mornings. The same person across two twenty-seed pools differs by at most **0.045**. Two different people differ by a mean of **0.63**; the closest pair is elena/mara at **0.35**.
+`mara_ate_it`, 40 mornings. The same person across two twenty-seed pools differs by at most **0.034**. Two different people differ by a mean of **0.55**; the closest pair is elena/leo at **0.18**.
 
-daniel/elena 0.76, daniel/leo 0.67, daniel/mara 0.78, elena/leo 0.48, elena/mara 0.35, leo/mara 0.72
+daniel/elena 0.74, daniel/leo 0.69, daniel/mara 0.56, elena/leo 0.18, elena/mara 0.52, leo/mara 0.63

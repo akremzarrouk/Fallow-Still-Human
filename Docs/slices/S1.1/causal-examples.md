@@ -6,7 +6,7 @@ by the trace tool as they are.
 
 ## mara_ate_it, mara, seed 1, minute 12
 
-- **Without the night:** comfort:elena because `look_after:elena` (0.76)
+- **Without the night:** search_room because `find_out` (0.59)
 - **With the night:** check_pantry because `find_out` (0.53)
 
 The want that led the changed decision, and everything it rests on:
@@ -68,25 +68,72 @@ Motive [leo]: wants avoid_exposure 0.59  {motive=avoid_exposure, urgency=0.59, r
 
 ```
 
-## elena_fed_mara, elena, seed 1, minute 60
+## elena_fed_mara, elena, seed 1, minute 20
 
-- **Without the night:** wait because `keep_peace` (0.93)
-- **With the night:** search_room because `find_out` (0.79)
+- **Without the night:** comfort:mara because `look_after:mara` (0.88)
+- **With the night:** wait because `keep_peace` (0.97)
 
 The want that led the changed decision, and everything it rests on:
 
 ```
-Motive [elena]: wants find_out 0.79  {motive=find_out, urgency=0.79, rules=needing_to_know_what_happened, because=memory of threat about missing_can 0.88 x 0.35 = +0.31; value fairness 0....
-  because Access [elena]: at minute 60, elena in kitchen at minute 60, with daniel, leo, mara  {room=kitchen, present=daniel, leo, mara, hunger=0.80}
-  because Experience [elena]: kept it as threat, felt as anxiety  {meaning=threat, source=witnessed, confidence=1.00, salience=0.88}
+Motive [elena]: wants keep_peace 0.97  {motive=keep_peace, urgency=0.97, rules=wanting_the_house_to_hold, because=value family_safety 1.00 x 0.45 = +0.45; feeling anxiety 0.82 x 0.35 = +0...
+  because Access [elena]: at minute 20, elena in kitchen at minute 20, with leo, mara  {room=kitchen, present=leo, mara, hunger=0.67}
+  because Appraisal [elena]: concern touched family_safety: anxiety 0.66 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.66, rules=a_problem_is_felt_as_anxiety 1.08 ...
+    because Interpretation [elena]: read it as concern (0.60)  {meaning=concern, weight=0.60, rules=bad_news_reads_as_a_problem -> concern 0.60}
+      because Access [elena]: was there and saw it
+        because Event: Leo says the water will stop running within a day and they should fill everything they have.
+  because Appraisal [elena]: concern touched family_safety: anxiety 0.66 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.66, rules=a_problem_is_felt_as_anxiety 1.08 ...
+    because Interpretation [elena]: read it as concern (0.60)  {meaning=concern, weight=0.60, rules=bad_news_reads_as_a_problem -> concern 0.60}
+      because Access [elena]: was there and saw it
+        because Event: The taps run dry, exactly as Leo said they would.
+  because Appraisal [elena]: concern touched family_safety: anxiety 0.66 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.66, rules=a_problem_is_felt_as_anxiety 1.08 ...
+    because Interpretation [elena]: read it as concern (0.84)  {meaning=concern, weight=0.84, runner_up=threat 0.65, rules=a_dangerous_plan_is_a_problem_to_solve -> concern 0.84 (base 0.4...
+      because Access [elena]: was there and saw it
+        because Event: Daniel says they should cross to the neighbour's house tonight and see what is left there.
+  because Appraisal [elena]: threat touched family_safety: anxiety 0.69 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.69, rules=a_threat_to_the_family_is_felt_as_a...
+    because Interpretation [elena]: read it as threat (1.40)  {meaning=threat, weight=1.40, runner_up=concern 1.14, rules=a_raised_voice_is_frightening -> threat 0.73 (base 0.35; trait an...
+      because Access [elena]: was there and saw it
+        because Event: Later, louder than he meant to be, Daniel tells Leo that he is the oldest and the decisions are his.
+  because Appraisal [elena]: protect touched family_safety: anxiety 0.55 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.55, rules=looking_after_someone_does_not_sto...
+    because Interpretation [elena]: knew their own intention: protect  {meaning=protect, source=own intention}
+      because Access [elena]: was there and saw it
+        because Event: Mara cries in the night. Elena sits with her until it stops.
+  because Appraisal [elena]: concern touched family_safety: anxiety 0.66 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.66, rules=a_problem_is_felt_as_anxiety 1.08 ...
+    because Interpretation [elena]: read it as concern (1.14)  {meaning=concern, weight=1.14, runner_up=challenge 0.86, rules=corrected_by_a_junior_with_people_watching -> disrespect 0.53...
+      because Access [elena]: was there and saw it
+        because Event: Leo says maybe they should let someone else handle this one.
+  because Appraisal [elena]: challenge touched family_safety: anxiety 0.75 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.75, rules=being_overruled_in_your_own_hous...
+    because Interpretation [elena]: read it as challenge (0.86)  {meaning=challenge, weight=0.86, rules=authority_taken_without_asking -> challenge 0.86 (base 0.40; value control 0.00 x 0...
+      because Access [elena]: was there and saw it
+        because Event: Daniel empties Mara's bag onto the bed while she is standing there.
+  because Appraisal [elena]: protect touched family_safety: anxiety 0.55 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.55, rules=looking_after_someone_does_not_sto...
+    because Interpretation [elena]: knew their own intention: protect  {meaning=protect, source=own intention}
+      because Access [elena]: was there and saw it
+        because Event: Elena says she is quite sure nobody in this house would take food from the others.
+  because Appraisal [elena]: protect touched family_safety: anxiety 0.55 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.55, rules=looking_after_someone_does_not_sto...
+    because Interpretation [elena]: knew their own intention: protect  {meaning=protect, source=own intention}
+      because Access [elena]: was there and saw it
+        because Event: Mara is still awake and crying. Elena opens a can and gives it to her.
+  because Appraisal [elena]: concern touched family_safety: anxiety 0.66 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.66, rules=a_problem_is_felt_as_anxiety 1.08 ...
+    because Interpretation [elena]: read it as concern (1.54)  {meaning=concern, weight=1.54, rules=bad_news_reads_as_a_problem -> concern 0.60 | somebody_not_holding_it_together -> conce...
+      because Access [elena]: was there and saw it
+        because Event: Daniel is not hiding it well.
+  because Appraisal [elena]: concern touched family_safety: anxiety 0.66 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.66, rules=a_problem_is_felt_as_anxiety 1.08 ...
+    because Interpretation [elena]: read it as concern (1.54)  {meaning=concern, weight=1.54, rules=bad_news_reads_as_a_problem -> concern 0.60 | somebody_not_holding_it_together -> conce...
+      because Access [elena]: was there and saw it
+        because Event: Mara is not hiding it well.
+  because Appraisal [elena]: threat touched family_safety: anxiety 0.69 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.69, rules=a_threat_to_the_family_is_felt_as_a...
     because Interpretation [elena]: read it as threat (0.90)  {meaning=threat, weight=0.90, runner_up=challenge 0.86, rules=authority_taken_without_asking -> challenge 0.86 (base 0.40; va...
       because Access [elena]: was there and saw it
-        because Event: Leo goes through the kitchen.
+        because Event: Daniel goes through the kitchen.
       because BeliefChange [elena]: answerable_for(elena,missing_can): 0.00 -> pending
         because Experience [elena]: kept it as protect, felt as anxiety  {meaning=protect, source=own intention, confidence=1.00, salience=0.61}
-          because Interpretation [elena]: knew their own intention: protect  {meaning=protect, source=own intention}
-            because Access [elena]: was there and saw it
-              because Event: Mara is still awake and crying. Elena opens a can and gives it to her.
+          because #283 Interpretation, shown above
+  because Appraisal [elena]: threat touched family_safety: anxiety 0.69 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.69, rules=a_threat_to_the_family_is_felt_as_a...
+    because Interpretation [elena]: read it as threat (0.90)  {meaning=threat, weight=0.90, runner_up=challenge 0.86, rules=authority_taken_without_asking -> challenge 0.86 (base 0.40; va...
+      because Access [elena]: was there and saw it
+        because Event: Mara goes through the kitchen.
+      because #286 BeliefChange, shown above
 
 ```
 

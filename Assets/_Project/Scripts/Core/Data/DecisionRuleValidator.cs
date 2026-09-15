@@ -246,6 +246,10 @@ namespace Fallow.Core.Data
                             yield return where + ": a memory of '" + s.Name + "' is not a reading";
                         if (s.Topic != null && !vocab.Contains("topics", s.Topic))
                             yield return where + ": '" + s.Topic + "' is not a topic";
+                        if (s.Until != null)
+                            foreach (var u in s.Until)
+                                if (!vocab.IsMeaning(u))
+                                    yield return where + ": a memory answered by '" + u + "', which is not a reading";
                         break;
                     case ScalerKind.Ledger:
                         if (!vocab.Contains("ledger_entries", s.Entry))

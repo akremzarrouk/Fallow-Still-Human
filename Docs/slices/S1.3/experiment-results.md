@@ -19,48 +19,48 @@ Plenty, five conditions, seeds 1 to 10. 41 meals; next decision checked on 41.
 | daniel | 44 | 0.752 -> 0.302 | partly satisfied | 0.734 | 0.302 (minute 44) |
 | daniel | 60 | 0.826 -> 0.376 | partly satisfied | 0.808 | 0.376 (minute 60) |
 | daniel | 44 | 0.752 -> 0.302 | partly satisfied | 0.734 | 0.302 (minute 44) |
-| daniel | 52 | 0.789 -> 0.339 | partly satisfied | 0.771 | 0.339 (minute 52) |
-| daniel | 49 | 0.775 -> 0.325 | partly satisfied | 0.757 | 0.325 (minute 49) |
+| daniel | 48 | 0.771 -> 0.321 | partly satisfied | 0.752 | 0.321 (minute 48) |
+| daniel | 76 | 0.900 -> 0.450 | partly satisfied | 0.878 | 0.450 (minute 76) |
 
-### The whole loop, daniel_ate_it seed 10, daniel
+### The whole loop, daniel_ate_it seed 6, daniel
 
 The decision to eat:
 
 ```
 Active motivations
-  find_out 0.94   because value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family) 0.80 x 0.30 = +0.24; trait dominant 0.85 x 0.20 = +0.17; memory of threat about missing_can 0.19 x 0.35 = +0.07
+  find_out 0.94   because value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family) 0.80 x 0.30 = +0.24; trait dominant 0.85 x 0.20 = +0.17; memory of threat about missing_can 0.24 x 0.35 = +0.08
   get_food 0.87   because hunger (unresolved by go_to->kitchen at minute 53, lapsed: not worth what it costs here, hunger 0.79) 0.87 x 1.00 = +0.87
   keep_peace 0.43   because value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = +0.15; trait cautious 0.35 x 0.15 = +0.05
   guard_supplies 0.41   because value family_safety 0.50 x 0.40 = +0.20; belief supplies_short 0.25 x 0.50 = +0.13; trait cautious 0.35 x 0.25 = +0.09
   restore_standing 0.32   because value respect 0.75 x 0.25 = +0.19; trait proud 0.85 x 0.15 = +0.13
-  look_after:elena 0.21   because memory of concern happening to elena 0.20 x 0.70 = +0.14; trait empathetic 0.50 x 0.15 = +0.08
-  look_after:mara 0.21   because memory of concern happening to mara 0.20 x 0.70 = +0.14; trait empathetic 0.50 x 0.15 = +0.08
+  look_after:elena 0.08   because trait empathetic 0.50 x 0.15 = +0.08
   look_after:leo 0.08   because trait empathetic 0.50 x 0.15 = +0.08
+  look_after:mara 0.08   because trait empathetic 0.50 x 0.15 = +0.08
 -> candidate actions (11), best 3 shown, plus any that the intention left in
   observe:elena   (not considered: does not serve the intention)
     -> contribution from each motivation
-       find_out: urgency 0.94 x fit +0.45 = +0.421 (watch_them)
+       find_out: urgency 0.94 x fit +0.45 = +0.424 (watch_them)
        restore_standing: urgency 0.32 x fit +0.35 = +0.110 (keep_an_eye_on_them)
-       look_after:elena: urgency 0.21 x fit +0.35 = +0.075 (see_how_they_are)
+       look_after:elena: urgency 0.08 x fit +0.35 = +0.026 (see_how_they_are)
     -> trait/context costs
        staring_at_somebody 0.20 (trait empathetic 0.50 x 0.20 = +0.10; value closeness 0.00 x 0.15 = 0.00)
-    -> total score 0.606 - 0.200 = 0.406
-  observe:mara   (not considered: does not serve the intention)
-    -> contribution from each motivation
-       find_out: urgency 0.94 x fit +0.45 = +0.421 (watch_them)
-       restore_standing: urgency 0.32 x fit +0.35 = +0.110 (keep_an_eye_on_them)
-       look_after:mara: urgency 0.21 x fit +0.35 = +0.075 (see_how_they_are)
-    -> trait/context costs
-       staring_at_somebody 0.20 (trait empathetic 0.50 x 0.20 = +0.10; value closeness 0.00 x 0.15 = 0.00)
-    -> total score 0.606 - 0.200 = 0.406
+    -> total score 0.561 - 0.200 = 0.361
   observe:leo   (not considered: does not serve the intention)
     -> contribution from each motivation
-       find_out: urgency 0.94 x fit +0.45 = +0.421 (watch_them)
+       find_out: urgency 0.94 x fit +0.45 = +0.424 (watch_them)
        restore_standing: urgency 0.32 x fit +0.35 = +0.110 (keep_an_eye_on_them)
        look_after:leo: urgency 0.08 x fit +0.35 = +0.026 (see_how_they_are)
     -> trait/context costs
        staring_at_somebody 0.20 (trait empathetic 0.50 x 0.20 = +0.10; value closeness 0.00 x 0.15 = 0.00)
-    -> total score 0.557 - 0.200 = 0.357
+    -> total score 0.561 - 0.200 = 0.361
+  observe:mara   (not considered: does not serve the intention)
+    -> contribution from each motivation
+       find_out: urgency 0.94 x fit +0.45 = +0.424 (watch_them)
+       restore_standing: urgency 0.32 x fit +0.35 = +0.110 (keep_an_eye_on_them)
+       look_after:mara: urgency 0.08 x fit +0.35 = +0.026 (see_how_they_are)
+    -> trait/context costs
+       staring_at_somebody 0.20 (trait empathetic 0.50 x 0.20 = +0.10; value closeness 0.00 x 0.15 = 0.00)
+    -> total score 0.561 - 0.200 = 0.361
   eat   <- chosen
     -> contribution from each motivation
        get_food: urgency 0.87 x fit +1.00 = +0.866 (eat_it)
@@ -81,36 +81,36 @@ Motive [daniel]: wants get_food 0.44  {motive=get_food, urgency=0.44, rules=a_bo
   because Access [daniel]: at minute 73, daniel in kitchen at minute 73, with elena, leo, mara  {room=kitchen, present=elena, leo, mara, hunger=0.44}
   because Outcome [daniel]: get_food: partly satisfied by eat at minute 73, hunger 0.89 -> 0.44  {want=get_food, outcome=partly satisfied, need=hunger, before=0.886, after=0.436}
     because Consequence [daniel]: hunger 0.89 -> 0.44  {act=eat, need=hunger, before=0.886, after=0.436, could_happen=yes}
-      because Deliberation [daniel]: settled on eat  {chose=eat, score=0.016, resolution=clear, margin=0.016, options=observe:elena 0.406 (for 0.61, against 0.20) | observe:mara 0.406 (for 0.61, against 0.20) | observ...
+      because Deliberation [daniel]: settled on eat  {chose=eat, score=0.016, resolution=clear, margin=0.016, options=observe:elena 0.361 (for 0.56, against 0.20) | observe:leo 0.361 (for 0.56, against 0.20) | observe...
         because Motive [daniel]: wants find_out 0.94  {motive=find_out, urgency=0.94, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family) 0.80 x 0.30 ...
           because Access [daniel]: at minute 69, daniel in kitchen at minute 69, with elena, leo, mara  {room=kitchen, present=elena, leo, mara, hunger=0.87}
           because Experience [daniel]: kept it as threat, felt as fear  {meaning=threat, source=witnessed, confidence=1.00, salience=0.73}
             because Interpretation [daniel]: read it as threat (0.90)  {meaning=threat, weight=0.90, rules=the_search_is_for_what_you_did -> threat 0.90 (base 0.00; belief answerable_for(daniel,missing_can) 0.90 x 1.0...
               because Access [daniel]: was there and saw it
-                because Event: Mara goes through the kitchen.
+                because Event: Leo goes through the kitchen.
               because BeliefChange [daniel]: answerable_for(daniel,missing_can): 0.00 -> pending
                 because Experience [daniel]: kept it as took_what_was_not_mine, felt as fear  {meaning=took_what_was_not_mine, source=own intention, confidence=1.00, salience=0.75}
                   because Interpretation [daniel]: knew their own intention: took_what_was_not_mine  {meaning=took_what_was_not_mine, source=own intention}
                     because Access [daniel]: was there and saw it
                       because Event: In the night Daniel eats a can standing at the counter in the dark.
         because Motive [daniel]: wants get_food 0.87  {motive=get_food, urgency=0.87, rules=a_body_that_has_not_eaten, because=hunger (unresolved by go_to->kitchen at minute 53, lapsed: not worth what it costs here, h...
-          because #1507 Access, shown above
+          because #1549 Access, shown above
           because Outcome [daniel]: get_food: unresolved by go_to->kitchen at minute 53, lapsed: not worth what it costs here, hunger 0.79  {want=get_food, outcome=unresolved, need=hunger, before=0.794, after=0.794}
-            because Deliberation [daniel]: settled on go_to->brothers_room  {chose=go_to->brothers_room, score=0.512, resolution=clear, margin=0.090, options=go_to->brothers_room 0.512 (for 0.66, against 0.15) | obser...
-              because Motive [daniel]: wants find_out 0.94  {motive=find_out, urgency=0.94, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family) 0.80 x...
+            because Deliberation [daniel]: settled on go_to->brothers_room  {chose=go_to->brothers_room, score=0.519, resolution=clear, margin=0.154, options=go_to->brothers_room 0.519 (for 0.67, against 0.15) | obser...
+              because Motive [daniel]: wants find_out 0.95  {motive=find_out, urgency=0.95, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family) 0.80 x...
                 because Access [daniel]: at minute 53, daniel in kitchen at minute 53, with elena, leo, mara  {room=kitchen, present=elena, leo, mara, hunger=0.79}
-                because #488 Experience, shown above
-              because Motive [daniel]: wants get_food 0.79  {motive=get_food, urgency=0.79, rules=a_body_that_has_not_eaten, because=hunger (unresolved by go_to->kitchen at minute 33, lapsed: not worth what it costs h...
-                because #1291 Access, shown above
-                because Outcome [daniel]: get_food: unresolved by go_to->kitchen at minute 33, lapsed: not worth what it costs here, hunger 0.70  {want=get_food, outcome=unresolved, need=hunger, before=0.702, after=0....
-                  because Deliberation [daniel]: had no real preference, and observe:elena is what happened  {chose=observe:elena, score=0.458, resolution=too close to call, margin=0.063, options=go_to->bathroom 0.521...
-                    because Motive [daniel]: wants find_out 0.96  {motive=find_out, urgency=0.96, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family) ...
-                      because Access [daniel]: at minute 33, daniel in kitchen at minute 33, with elena, leo, mara  {room=kitchen, present=elena, leo, mara, hunger=0.70}
-                      because #488 Experience, shown above
-                    because Motive [daniel]: wants get_food 0.70  {motive=get_food, urgency=0.70, rules=a_body_that_has_not_eaten, because=hunger 0.70 x 1.00 = +0.70}
-                      because #931 Access, shown above
-                    because Motive [daniel]: wants keep_peace 0.47  {motive=keep_peace, urgency=0.47, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = +0...
-                      because #931 Access, shown above
+                because #773 Experience, shown above
+              because Motive [daniel]: wants get_food 0.79  {motive=get_food, urgency=0.79, rules=a_body_that_has_not_eaten, because=hunger (unresolved by go_to->kitchen at minute 28, lapsed: not worth what it costs h...
+                because #1358 Access, shown above
+                because Outcome [daniel]: get_food: unresolved by go_to->kitchen at minute 28, lapsed: not worth what it costs here, hunger 0.68  {want=get_food, outcome=unresolved, need=hunger, before=0.679, after=0....
+                  because Deliberation [daniel]: had no real preference, and observe:mara is what happened  {chose=observe:mara, score=0.482, resolution=too close to call, margin=0.057, options=go_to->bathroom 0.539 (...
+                    because Motive [daniel]: wants find_out 0.98  {motive=find_out, urgency=0.98, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; memory of threat about missing_can 0.73...
+                      because Access [daniel]: at minute 28, daniel in kitchen at minute 28, with elena, leo, mara  {room=kitchen, present=elena, leo, mara, hunger=0.68}
+                      because #773 Experience, shown above
+                    because Motive [daniel]: wants get_food 0.68  {motive=get_food, urgency=0.68, rules=a_body_that_has_not_eaten, because=hunger 0.68 x 1.00 = +0.68}
+                      because #816 Access, shown above
+                    because Motive [daniel]: wants keep_peace 0.62  {motive=keep_peace, urgency=0.62, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; feeling anxiety 0.54 x 0.35 = +0....
+                      because #816 Access, shown above
                       because Appraisal [daniel]: concern touched family_safety: anxiety 0.51 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.51, rules=a_problem_is_felt_as_anxiety 0.71 (base 0.1...
                         because Interpretation [daniel]: read it as concern (0.60)  {meaning=concern, weight=0.60, rules=bad_news_reads_as_a_problem -> concern 0.60}
                           because Access [daniel]: was there and saw it
@@ -128,7 +128,10 @@ Motive [daniel]: wants get_food 0.44  {motive=get_food, urgency=0.44, rules=a_bo
                           because Access [daniel]: was there and saw it
                             because Event: Elena says she is quite sure nobody in this house would take food from the others.
                       because Appraisal [daniel]: threat touched family_safety: anxiety 0.42 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.42, rules=a_threat_to_the_family_is_felt_as_anxiety 0....
-                        because #485 Interpretation, shown above
+                        because Interpretation [daniel]: read it as threat (0.90)  {meaning=threat, weight=0.90, rules=the_search_is_for_what_you_did -> threat 0.90 (base 0.00; belief answerable_for(daniel,missing_can...
+                          because Access [daniel]: was there and saw it
+                            because Event: Mara goes through the kitchen.
+                          because #288 BeliefChange, shown above
                       because Appraisal [daniel]: concern touched family_safety: anxiety 0.51 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.51, rules=a_problem_is_felt_as_anxiety 0.71 (base 0.1...
                         because Interpretation [daniel]: read it as concern (1.15)  {meaning=concern, weight=1.15, rules=bad_news_reads_as_a_problem -> concern 0.60 | somebody_not_holding_it_together -> concern 0.55 (...
                           because Access [daniel]: was there and saw it
@@ -137,24 +140,20 @@ Motive [daniel]: wants get_food 0.44  {motive=get_food, urgency=0.44, rules=a_bo
                         because Interpretation [daniel]: read it as concern (1.15)  {meaning=concern, weight=1.15, rules=bad_news_reads_as_a_problem -> concern 0.60 | somebody_not_holding_it_together -> concern 0.55 (...
                           because Access [daniel]: was there and saw it
                             because Event: Mara is not hiding it well.
+                      because Appraisal [daniel]: threat touched family_safety: anxiety 0.42 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.42, rules=a_threat_to_the_family_is_felt_as_anxiety 0....
+                        because #770 Interpretation, shown above
                     because Motive [daniel]: wants guard_supplies 0.41  {motive=guard_supplies, urgency=0.41, rules=making_it_last, because=value family_safety 0.50 x 0.40 = +0.20; belief supplies_short 0.25 x 0.50 = ...
-                      because #931 Access, shown above
+                      because #816 Access, shown above
                       because BeliefChange [daniel]: supplies_short: 0.00 -> pending
                         because #285 Experience, shown above
-                    because Motive [daniel]: wants look_after (elena) 0.34  {motive=look_after, urgency=0.34, rules=somebody_in_front_of_you_is_not_all_right, because=memory of concern happening to elena 0.37 x 0.70 =...
-                      because #931 Access, shown above
-                      because Experience [daniel]: kept it as concern, felt as anxiety  {meaning=concern, source=witnessed, confidence=1.00, salience=0.76}
-                        because #502 Interpretation, shown above
-                    because Motive [daniel]: wants look_after (mara) 0.34  {motive=look_after, urgency=0.34, rules=somebody_in_front_of_you_is_not_all_right, because=memory of concern happening to mara 0.37 x 0.70 = +...
-                      because #931 Access, shown above
+                    because Motive [daniel]: wants look_after (mara) 0.37  {motive=look_after, urgency=0.37, rules=somebody_in_front_of_you_is_not_all_right, because=memory of concern happening to mara until reassuran...
+                      because #816 Access, shown above
                       because Experience [daniel]: kept it as concern, felt as anxiety  {meaning=concern, source=witnessed, confidence=1.00, salience=0.76}
                         because #520 Interpretation, shown above
                     because Motive [daniel]: wants restore_standing 0.32  {motive=restore_standing, urgency=0.32, rules=getting_back_what_was_taken_from_you, because=value respect 0.75 x 0.25 = +0.19; trait proud 0.85...
-                      because #931 Access, shown above
-                    because Motive [daniel]: wants look_after (leo) 0.08  {motive=look_after, urgency=0.08, rules=somebody_in_front_of_you_is_not_all_right, because=trait empathetic 0.50 x 0.15 = +0.08}
-                      because #931 Access, shown above
-                    because Motive [daniel]: wants avoid_exposure 0.04  {motive=avoid_exposure, urgency=0.04, rules=not_wanting_to_be_looked_at, because=feeling fear 0.13 x 0.35 = +0.04}
-                      because #931 Access, shown above
+                      because #816 Access, shown above
+                    because Motive [daniel]: wants avoid_exposure 0.20  {motive=avoid_exposure, urgency=0.20, rules=not_wanting_to_be_looked_at, because=feeling fear 0.56 x 0.35 = +0.20}
+                      because #816 Access, shown above
                       because Appraisal [daniel]: concern touched family_safety: fear 0.43 (family_safety)  {emotion=fear, concern=family_safety, intensity=0.43, rules=a_problem_is_felt_as_fear_by_the_fearful 0.57 (ba...
                         because #30 Interpretation, shown above
                       because Appraisal [daniel]: concern touched family_safety: fear 0.43 (family_safety)  {emotion=fear, concern=family_safety, intensity=0.43, rules=a_problem_is_felt_as_fear_by_the_fearful 0.57 (ba...
@@ -167,15 +166,26 @@ Motive [daniel]: wants get_food 0.44  {motive=get_food, urgency=0.44, rules=a_bo
                         because #502 Interpretation, shown above
                       because Appraisal [daniel]: concern touched family_safety: fear 0.43 (family_safety)  {emotion=fear, concern=family_safety, intensity=0.43, rules=a_problem_is_felt_as_fear_by_the_fearful 0.57 (ba...
                         because #520 Interpretation, shown above
-                    because #931 Access, shown above
-                    because Deliberation [daniel]: had no real preference, and go_to->kitchen is what happened  {chose=go_to->kitchen, score=0.525, resolution=too close to call, margin=0.001, options=go_to->kitchen 0....
-                      because Motive [daniel]: wants find_out 0.96  {motive=find_out, urgency=0.96, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family...
-                        because Access [daniel]: at minute 29, daniel in back_room at minute 29, with nobody  {room=back_room, present=nobody, hunger=0.68}
-                        because #488 Experience, shown above
-                      because Motive [daniel]: wants get_food 0.68  {motive=get_food, urgency=0.68, rules=a_body_that_has_not_eaten, because=hunger 0.68 x 1.00 = +0.68}
-                        because #852 Access, shown above
-                      because Motive [daniel]: wants keep_peace 0.49  {motive=keep_peace, urgency=0.49, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = ...
-                        because #852 Access, shown above
+                      because Appraisal [daniel]: threat touched family_safety: fear 0.45 (family_safety)  {emotion=fear, concern=family_safety, intensity=0.45, rules=a_threat_is_felt_as_fear 0.61 (base 0.15; trait an...
+                        because #770 Interpretation, shown above
+                    because Motive [daniel]: wants look_after (elena) 0.08  {motive=look_after, urgency=0.08, rules=somebody_in_front_of_you_is_not_all_right, because=trait empathetic 0.50 x 0.15 = +0.08}
+                      because #816 Access, shown above
+                      because Experience [daniel]: kept it as reassurance  {meaning=reassurance, source=witnessed, confidence=1.00, salience=0.15}
+                        because Interpretation [daniel]: read it as reassurance (1.00)  {meaning=reassurance, weight=1.00, rules=seeing_somebody_hold_together_again -> reassurance 1.00}
+                          because Access [daniel]: was there and saw it
+                            because Event: Elena seems to be holding together again.
+                    because Motive [daniel]: wants look_after (leo) 0.08  {motive=look_after, urgency=0.08, rules=somebody_in_front_of_you_is_not_all_right, because=trait empathetic 0.50 x 0.15 = +0.08}
+                      because #816 Access, shown above
+                    because #816 Access, shown above
+                    because Deliberation [daniel]: had no real preference, and go_to->kitchen is what happened  {chose=go_to->kitchen, score=0.525, resolution=too close to call, margin=0.003, options=go_to->bathroom 0...
+                      because Motive [daniel]: wants find_out 0.97  {motive=find_out, urgency=0.97, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family...
+                        because Access [daniel]: at minute 24, daniel in back_room at minute 24, with nobody  {room=back_room, present=nobody, hunger=0.66}
+                        because Experience [daniel]: kept it as threat, felt as fear  {meaning=threat, source=witnessed, confidence=1.00, salience=0.73}
+                          because #485 Interpretation, shown above
+                      because Motive [daniel]: wants get_food 0.66  {motive=get_food, urgency=0.66, rules=a_body_that_has_not_eaten, because=hunger 0.66 x 1.00 = +0.66}
+                        because #737 Access, shown above
+                      because Motive [daniel]: wants keep_peace 0.53  {motive=keep_peace, urgency=0.53, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = ...
+                        because #737 Access, shown above
                         because #31 Appraisal, shown above
                         because #50 Appraisal, shown above
                         because #187 Appraisal, shown above
@@ -184,89 +194,163 @@ Motive [daniel]: wants get_food 0.44  {motive=get_food, urgency=0.44, rules=a_bo
                         because #503 Appraisal, shown above
                         because #521 Appraisal, shown above
                       because Motive [daniel]: wants guard_supplies 0.41  {motive=guard_supplies, urgency=0.41, rules=making_it_last, because=value family_safety 0.50 x 0.40 = +0.20; belief supplies_short 0.25 x 0.50 ...
-                        because #852 Access, shown above
+                        because #737 Access, shown above
                         because #286 BeliefChange, shown above
-                      because Motive [daniel]: wants restore_standing 0.32  {motive=restore_standing, urgency=0.32, rules=getting_back_what_was_taken_from_you, because=value respect 0.75 x 0.25 = +0.19; trait proud 0....
-                        because #852 Access, shown above
-                      because Motive [daniel]: wants avoid_exposure 0.06  {motive=avoid_exposure, urgency=0.06, rules=not_wanting_to_be_looked_at, because=feeling fear 0.18 x 0.35 = +0.06}
-                        because #852 Access, shown above
+                      because Motive [daniel]: wants restore_standing 0.35  {motive=restore_standing, urgency=0.35, rules=getting_back_what_was_taken_from_you, because=value respect 0.75 x 0.25 = +0.19; trait proud 0....
+                        because #737 Access, shown above
+                        because Appraisal [daniel]: disrespect touched respect: shame 0.85 (respect)  {emotion=shame, concern=respect, intensity=0.85, rules=a_slight_is_felt_as_shame 1.04 (base 0.00; trait proud 0.85 ...
+                          because Interpretation [daniel]: read it as disrespect (1.18)  {meaning=disrespect, weight=1.18, runner_up=support 1.03, rules=a_dangerous_plan_frightens_the_frightened -> threat 0.59 (base 0...
+                            because Access [daniel]: was there and saw it
+                              because Event: Leo lays out, evenly and in front of everyone, why crossing at night gets someone killed. Daniel drops it.
+                        because Appraisal [daniel]: disrespect touched respect: shame 0.85 (respect)  {emotion=shame, concern=respect, intensity=0.85, rules=a_slight_is_felt_as_shame 1.04 (base 0.00; trait proud 0.85 ...
+                          because Interpretation [daniel]: read it as disrespect (1.46)  {meaning=disrespect, weight=1.46, runner_up=concern 0.71, rules=corrected_by_a_junior_with_people_watching -> disrespect 1.46 (b...
+                            because Access [daniel]: was there and saw it
+                              because Event: Leo says maybe they should let someone else handle this one.
+                            because BeliefChange [daniel]: tendency(leo,does_not_respect_me): 0.25 -> pending
+                              because Experience [daniel]: kept it as disrespect, felt as shame  {meaning=disrespect, source=witnessed, confidence=1.00, salience=0.98}
+                                because #98 Interpretation, shown above
+                            because LedgerEntry [daniel]: will not forget: overruled_me (leo)  {weight=0.70}
+                              because #103 Experience, shown above
+                        because Appraisal [daniel]: took_what_was_not_mine touched fairness: shame 0.44 (fairness)  {emotion=shame, concern=fairness, intensity=0.44, rules=what_you_did_in_the_night_is_felt_as_shame 0....
+                          because #282 Interpretation, shown above
+                      because Motive [daniel]: wants avoid_exposure 0.15  {motive=avoid_exposure, urgency=0.15, rules=not_wanting_to_be_looked_at, because=feeling fear 0.29 x 0.35 = +0.10; feeling shame 0.06 x 0.80 = ...
+                        because #737 Access, shown above
+                        because #99 Appraisal, shown above
+                        because #216 Appraisal, shown above
+                        because #284 Appraisal, shown above
                         because #32 Appraisal, shown above
                         because #51 Appraisal, shown above
                         because #283 Appraisal, shown above
                         because #486 Appraisal, shown above
                         because #504 Appraisal, shown above
                         because #522 Appraisal, shown above
-                      because #852 Access, shown above
-                  because #859 Deliberation, shown above
-              because Motive [daniel]: wants keep_peace 0.43  {motive=keep_peace, urgency=0.43, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = +0.15; t...
-                because #1291 Access, shown above
+                      because #737 Access, shown above
+                  because #744 Deliberation, shown above
+              because Motive [daniel]: wants keep_peace 0.45  {motive=keep_peace, urgency=0.45, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = +0.15; t...
+                because #1358 Access, shown above
+                because #31 Appraisal, shown above
+                because #50 Appraisal, shown above
+                because #187 Appraisal, shown above
+                because #262 Appraisal, shown above
+                because #487 Appraisal, shown above
+                because #503 Appraisal, shown above
+                because #521 Appraisal, shown above
+                because #772 Appraisal, shown above
+                because Appraisal [daniel]: concern touched family_safety: anxiety 0.51 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.51, rules=a_problem_is_felt_as_anxiety 0.71 (base 0.10; val...
+                  because Interpretation [daniel]: read it as concern (1.15)  {meaning=concern, weight=1.15, rules=bad_news_reads_as_a_problem -> concern 0.60 | somebody_not_holding_it_together -> concern 0.55 (base 0...
+                    because Access [daniel]: was there and saw it
+                      because Event: Mara is not hiding it well.
+                because Appraisal [daniel]: concern touched family_safety: anxiety 0.51 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.51, rules=a_problem_is_felt_as_anxiety 0.71 (base 0.10; val...
+                  because Interpretation [daniel]: read it as concern (1.15)  {meaning=concern, weight=1.15, rules=bad_news_reads_as_a_problem -> concern 0.60 | somebody_not_holding_it_together -> concern 0.55 (base 0...
+                    because Access [daniel]: was there and saw it
+                      because Event: Elena is not hiding it well.
               because Motive [daniel]: wants guard_supplies 0.41  {motive=guard_supplies, urgency=0.41, rules=making_it_last, because=value family_safety 0.50 x 0.40 = +0.20; belief supplies_short 0.25 x 0.50 = +0.13;...
-                because #1291 Access, shown above
+                because #1358 Access, shown above
                 because #286 BeliefChange, shown above
               because Motive [daniel]: wants restore_standing 0.32  {motive=restore_standing, urgency=0.32, rules=getting_back_what_was_taken_from_you, because=value respect 0.75 x 0.25 = +0.19; trait proud 0.85 x 0.1...
-                because #1291 Access, shown above
-              because Motive [daniel]: wants look_after (elena) 0.25  {motive=look_after, urgency=0.25, rules=somebody_in_front_of_you_is_not_all_right, because=memory of concern happening to elena 0.25 x 0.70 = +0.18...
-                because #1291 Access, shown above
-                because #505 Experience, shown above
-              because Motive [daniel]: wants look_after (mara) 0.25  {motive=look_after, urgency=0.25, rules=somebody_in_front_of_you_is_not_all_right, because=memory of concern happening to mara 0.25 x 0.70 = +0.18; ...
-                because #1291 Access, shown above
-                because #523 Experience, shown above
+                because #1358 Access, shown above
+              because Motive [daniel]: wants look_after (elena) 0.08  {motive=look_after, urgency=0.08, rules=somebody_in_front_of_you_is_not_all_right, because=trait empathetic 0.50 x 0.15 = +0.08}
+                because #1358 Access, shown above
+                because Experience [daniel]: kept it as reassurance  {meaning=reassurance, source=witnessed, confidence=1.00, salience=0.15}
+                  because Interpretation [daniel]: read it as reassurance (1.00)  {meaning=reassurance, weight=1.00, rules=seeing_somebody_hold_together_again -> reassurance 1.00}
+                    because Access [daniel]: was there and saw it
+                      because Event: Elena seems to be holding together again.
               because Motive [daniel]: wants look_after (leo) 0.08  {motive=look_after, urgency=0.08, rules=somebody_in_front_of_you_is_not_all_right, because=trait empathetic 0.50 x 0.15 = +0.08}
-                because #1291 Access, shown above
-              because #1291 Access, shown above
-              because Deliberation [daniel]: had no real preference, and go_to->kitchen is what happened  {chose=go_to->kitchen, score=0.552, resolution=too close to call, margin=0.038, options=go_to->kitchen 0.552 (f...
-                because Motive [daniel]: wants find_out 0.94  {motive=find_out, urgency=0.94, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family) 0.80...
+                because #1358 Access, shown above
+              because Motive [daniel]: wants look_after (mara) 0.08  {motive=look_after, urgency=0.08, rules=somebody_in_front_of_you_is_not_all_right, because=trait empathetic 0.50 x 0.15 = +0.08}
+                because #1358 Access, shown above
+                because Experience [daniel]: kept it as reassurance  {meaning=reassurance, source=witnessed, confidence=1.00, salience=0.15}
+                  because Interpretation [daniel]: read it as reassurance (1.00)  {meaning=reassurance, weight=1.00, rules=seeing_somebody_hold_together_again -> reassurance 1.00}
+                    because Access [daniel]: was there and saw it
+                      because Event: Mara seems to be holding together again.
+              because Motive [daniel]: wants avoid_exposure 0.02  {motive=avoid_exposure, urgency=0.02, rules=not_wanting_to_be_looked_at, because=feeling fear 0.07 x 0.35 = +0.02}
+                because #1358 Access, shown above
+                because #32 Appraisal, shown above
+                because #51 Appraisal, shown above
+                because #283 Appraisal, shown above
+                because #486 Appraisal, shown above
+                because #504 Appraisal, shown above
+                because #522 Appraisal, shown above
+                because #771 Appraisal, shown above
+                because Appraisal [daniel]: concern touched family_safety: fear 0.43 (family_safety)  {emotion=fear, concern=family_safety, intensity=0.43, rules=a_problem_is_felt_as_fear_by_the_fearful 0.57 (base 0.0...
+                  because #885 Interpretation, shown above
+                because Appraisal [daniel]: concern touched family_safety: fear 0.43 (family_safety)  {emotion=fear, concern=family_safety, intensity=0.43, rules=a_problem_is_felt_as_fear_by_the_fearful 0.57 (base 0.0...
+                  because #969 Interpretation, shown above
+              because #1358 Access, shown above
+              because Deliberation [daniel]: had no real preference, and go_to->kitchen is what happened  {chose=go_to->kitchen, score=0.565, resolution=too close to call, margin=0.043, options=go_to->kitchen 0.565 (f...
+                because Motive [daniel]: wants find_out 0.96  {motive=find_out, urgency=0.96, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family) 0.80...
                   because Access [daniel]: at minute 49, daniel in bathroom at minute 49, with nobody  {room=bathroom, present=nobody, hunger=0.78}
-                  because #488 Experience, shown above
-                because Motive [daniel]: wants get_food 0.78  {motive=get_food, urgency=0.78, rules=a_body_that_has_not_eaten, because=hunger (unresolved by go_to->kitchen at minute 33, lapsed: not worth what it costs...
-                  because #1184 Access, shown above
-                  because #942 Outcome, shown above
-                because Motive [daniel]: wants keep_peace 0.43  {motive=keep_peace, urgency=0.43, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = +0.15;...
-                  because #1184 Access, shown above
+                  because #773 Experience, shown above
+                because Motive [daniel]: wants get_food 0.78  {motive=get_food, urgency=0.78, rules=a_body_that_has_not_eaten, because=hunger (unresolved by go_to->kitchen at minute 28, lapsed: not worth what it costs...
+                  because #1286 Access, shown above
+                  because #827 Outcome, shown above
+                because Motive [daniel]: wants keep_peace 0.46  {motive=keep_peace, urgency=0.46, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = +0.15;...
+                  because #1286 Access, shown above
+                  because #31 Appraisal, shown above
+                  because #50 Appraisal, shown above
+                  because #187 Appraisal, shown above
+                  because #262 Appraisal, shown above
+                  because #487 Appraisal, shown above
+                  because #503 Appraisal, shown above
+                  because #521 Appraisal, shown above
+                  because #772 Appraisal, shown above
+                  because #886 Appraisal, shown above
+                  because #970 Appraisal, shown above
                 because Motive [daniel]: wants guard_supplies 0.41  {motive=guard_supplies, urgency=0.41, rules=making_it_last, because=value family_safety 0.50 x 0.40 = +0.20; belief supplies_short 0.25 x 0.50 = +0.1...
-                  because #1184 Access, shown above
+                  because #1286 Access, shown above
                   because #286 BeliefChange, shown above
                 because Motive [daniel]: wants restore_standing 0.32  {motive=restore_standing, urgency=0.32, rules=getting_back_what_was_taken_from_you, because=value respect 0.75 x 0.25 = +0.19; trait proud 0.85 x 0...
-                  because #1184 Access, shown above
-                because #1184 Access, shown above
-            because #1190 Deliberation, shown above
+                  because #1286 Access, shown above
+                because Motive [daniel]: wants avoid_exposure 0.04  {motive=avoid_exposure, urgency=0.04, rules=not_wanting_to_be_looked_at, because=feeling fear 0.10 x 0.35 = +0.04}
+                  because #1286 Access, shown above
+                  because #32 Appraisal, shown above
+                  because #51 Appraisal, shown above
+                  because #283 Appraisal, shown above
+                  because #486 Appraisal, shown above
+                  because #504 Appraisal, shown above
+                  because #522 Appraisal, shown above
+                  because #771 Appraisal, shown above
+                  because #887 Appraisal, shown above
+                  because #971 Appraisal, shown above
+                because #1286 Access, shown above
+            because #1293 Deliberation, shown above
         because Motive [daniel]: wants keep_peace 0.43  {motive=keep_peace, urgency=0.43, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = +0.15; trait c...
-          because #1507 Access, shown above
+          because #1549 Access, shown above
         because Motive [daniel]: wants guard_supplies 0.41  {motive=guard_supplies, urgency=0.41, rules=making_it_last, because=value family_safety 0.50 x 0.40 = +0.20; belief supplies_short 0.25 x 0.50 = +0.13; trait...
-          because #1507 Access, shown above
+          because #1549 Access, shown above
           because #286 BeliefChange, shown above
         because Motive [daniel]: wants restore_standing 0.32  {motive=restore_standing, urgency=0.32, rules=getting_back_what_was_taken_from_you, because=value respect 0.75 x 0.25 = +0.19; trait proud 0.85 x 0.15 = +0...
-          because #1507 Access, shown above
-        because Motive [daniel]: wants look_after (elena) 0.21  {motive=look_after, urgency=0.21, rules=somebody_in_front_of_you_is_not_all_right, because=memory of concern happening to elena 0.20 x 0.70 = +0.14; trai...
-          because #1507 Access, shown above
-          because #505 Experience, shown above
-        because Motive [daniel]: wants look_after (mara) 0.21  {motive=look_after, urgency=0.21, rules=somebody_in_front_of_you_is_not_all_right, because=memory of concern happening to mara 0.20 x 0.70 = +0.14; trait ...
-          because #1507 Access, shown above
-          because #523 Experience, shown above
+          because #1549 Access, shown above
+        because Motive [daniel]: wants look_after (elena) 0.08  {motive=look_after, urgency=0.08, rules=somebody_in_front_of_you_is_not_all_right, because=trait empathetic 0.50 x 0.15 = +0.08}
+          because #1549 Access, shown above
+          because #1033 Experience, shown above
         because Motive [daniel]: wants look_after (leo) 0.08  {motive=look_after, urgency=0.08, rules=somebody_in_front_of_you_is_not_all_right, because=trait empathetic 0.50 x 0.15 = +0.08}
-          because #1507 Access, shown above
-        because #1507 Access, shown above
+          because #1549 Access, shown above
+        because Motive [daniel]: wants look_after (mara) 0.08  {motive=look_after, urgency=0.08, rules=somebody_in_front_of_you_is_not_all_right, because=trait empathetic 0.50 x 0.15 = +0.08}
+          because #1549 Access, shown above
+          because #1108 Experience, shown above
+        because #1549 Access, shown above
         because Deliberation [daniel]: settled on go_to->kitchen  {chose=go_to->kitchen, score=0.592, resolution=clear, margin=0.255, options=go_to->kitchen 0.592 (for 0.74, against 0.15) | wait 0.338 (for 0.34, again...
           because Motive [daniel]: wants find_out 0.94  {motive=find_out, urgency=0.94, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family) 0.80 x 0.3...
             because Access [daniel]: at minute 65, daniel in brothers_room at minute 65, with nobody  {room=brothers_room, present=nobody, hunger=0.85}
-            because #488 Experience, shown above
+            because #773 Experience, shown above
           because Motive [daniel]: wants get_food 0.85  {motive=get_food, urgency=0.85, rules=a_body_that_has_not_eaten, because=hunger (unresolved by go_to->kitchen at minute 53, lapsed: not worth what it costs here,...
-            because #1487 Access, shown above
-            because #1301 Outcome, shown above
+            because #1479 Access, shown above
+            because #1369 Outcome, shown above
           because Motive [daniel]: wants keep_peace 0.43  {motive=keep_peace, urgency=0.43, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = +0.15; trait...
-            because #1487 Access, shown above
+            because #1479 Access, shown above
           because Motive [daniel]: wants guard_supplies 0.41  {motive=guard_supplies, urgency=0.41, rules=making_it_last, because=value family_safety 0.50 x 0.40 = +0.20; belief supplies_short 0.25 x 0.50 = +0.13; tra...
-            because #1487 Access, shown above
+            because #1479 Access, shown above
             because #286 BeliefChange, shown above
           because Motive [daniel]: wants restore_standing 0.32  {motive=restore_standing, urgency=0.32, rules=getting_back_what_was_taken_from_you, because=value respect 0.75 x 0.25 = +0.19; trait proud 0.85 x 0.15 = ...
-            because #1487 Access, shown above
-          because #1487 Access, shown above
+            because #1479 Access, shown above
+          because #1479 Access, shown above
     because Experience [daniel]: kept it as neutral  {meaning=neutral, source=witnessed, confidence=1.00, salience=0.15}
       because Interpretation [daniel]: read it as neutral (0.00)  {meaning=neutral, weight=0.00}
         because Access [daniel]: was there and saw it
           because Event: Daniel takes a portion and eats it. 9 left.
-    because #1509 Motive, shown above
-    because #1516 Deliberation, shown above
+    because #1551 Motive, shown above
+    because #1558 Deliberation, shown above
 
 ```
 
@@ -280,18 +364,18 @@ daniel at minute 73: satisfied by eat at minute 73, hunger 0.30 -> 0.00. At the 
 
 41 meals checked, every link present. 41 of them were chosen on arrival under an intention to get food carried from a walk (S1.2).
 
-### daniel_ate_it, seed 10, daniel
+### daniel_ate_it, seed 6, daniel
 
 | Stage | Record | What it says |
 |---|---|---|
 | need | the body | hunger 0.867 at minute 69 |
-| want | #1509 Motive | wants get_food 0.87 |
-| decision | #1516 Deliberation | settled on eat |
-| eating | #1654 Event | Daniel takes a portion and eats it. 9 left. |
-| consequence | #1667 Consequence | hunger 0.89 -> 0.44 |
-| experience | #1657 Experience | kept it as neutral |
-| outcome | #1668 Outcome | get_food: partly satisfied by eat at minute 73, hunger 0.89 -> 0.44 |
-| want again | #1671 Motive | wants get_food 0.44 |
+| want | #1551 Motive | wants get_food 0.87 |
+| decision | #1558 Deliberation | settled on eat |
+| eating | #1612 Event | Daniel takes a portion and eats it. 9 left. |
+| consequence | #1625 Consequence | hunger 0.89 -> 0.44 |
+| experience | #1615 Experience | kept it as neutral |
+| outcome | #1626 Outcome | get_food: partly satisfied by eat at minute 73, hunger 0.89 -> 0.44 |
+| want again | #1629 Motive | wants get_food 0.44 |
 
 Each record in the table is a parent of the one below it, checked. The want at the next decision, printed by the trace tool with the decision's own reasons cut:
 
@@ -304,7 +388,7 @@ Motive [daniel]: wants get_food 0.44  {motive=get_food, urgency=0.44, rules=a_bo
 
 ## B1. Not enough
 
-- daniel, daniel_ate_it seed 10: ate at minute 73 (0.886 -> 0.436); at minute 85, 12 minutes on, `get_food` 0.491, resting on: hunger (partly satisfied by eat at minute 73, hunger 0.89 -> 0.44) 0.49 x 1.00 = +0.49
+- daniel, daniel_ate_it seed 6: ate at minute 73 (0.886 -> 0.436); at minute 87, 14 minutes on, `get_food` 0.500, resting on: hunger (partly satisfied by eat at minute 73, hunger 0.89 -> 0.44) 0.50 x 1.00 = +0.50
 - daniel, daniel_hid_it seed 1: ate at minute 56 (0.808 -> 0.358); at minute 69, 13 minutes on, `get_food` 0.417, resting on: hunger (partly satisfied by eat at minute 56, hunger 0.81 -> 0.36) 0.42 x 1.00 = +0.42
 - daniel, daniel_hid_it seed 2: ate at minute 56 (0.808 -> 0.358); at minute 68, 12 minutes on, `get_food` 0.413, resting on: hunger (partly satisfied by eat at minute 56, hunger 0.81 -> 0.36) 0.41 x 1.00 = +0.41
 
@@ -312,10 +396,10 @@ Motive [daniel]: wants get_food 0.44  {motive=get_food, urgency=0.44, rules=a_bo
 
 ## B2. One portion
 
-One portion, count not short at the opening, five conditions, seeds 1 to 10: 0 meals. On seed 1 the pantry was opened and found short 20 times across the five conditions, and by the end of the morning the four of them believed supplies were short at a mean of 0.958.
+One portion, count not short at the opening, five conditions, seeds 1 to 10: 0 meals. On seed 1 the pantry was opened and found short 20 times across the five conditions, and by the end of the morning the four of them believed supplies were short at a mean of 0.948.
 ## C1. Reaching for food that is gone
 
-### daniel_ate_it, seed 10, daniel, minute 73
+### daniel_ate_it, seed 6, daniel, minute 73
 
 | | Pantry emptied first | Control |
 |---|---|---|
@@ -332,36 +416,36 @@ Motive [daniel]: wants get_food 0.88  {motive=get_food, urgency=0.88, rules=a_bo
   because Access [daniel]: at minute 73, daniel in kitchen at minute 73, with elena, leo, mara  {room=kitchen, present=elena, leo, mara, hunger=0.89}
   because Outcome [daniel]: get_food: blocked by eat at minute 73, hunger 0.89  {want=get_food, outcome=blocked, need=hunger, before=0.886, after=0.886}
     because Consequence [daniel]: could not be done: hunger stays 0.89  {act=eat, need=hunger, before=0.886, after=0.886, could_happen=no}
-      because Deliberation [daniel]: settled on eat  {chose=eat, score=0.016, resolution=clear, margin=0.016, options=observe:elena 0.406 (for 0.61, against 0.20) | observe:mara 0.406 (for 0.61, against 0.20) | observ...
+      because Deliberation [daniel]: settled on eat  {chose=eat, score=0.016, resolution=clear, margin=0.016, options=observe:elena 0.361 (for 0.56, against 0.20) | observe:leo 0.361 (for 0.56, against 0.20) | observe...
         because Motive [daniel]: wants find_out 0.94  {motive=find_out, urgency=0.94, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family) 0.80 x 0.30 ...
           because Access [daniel]: at minute 69, daniel in kitchen at minute 69, with elena, leo, mara  {room=kitchen, present=elena, leo, mara, hunger=0.87}
           because Experience [daniel]: kept it as threat, felt as fear  {meaning=threat, source=witnessed, confidence=1.00, salience=0.73}
             because Interpretation [daniel]: read it as threat (0.90)  {meaning=threat, weight=0.90, rules=the_search_is_for_what_you_did -> threat 0.90 (base 0.00; belief answerable_for(daniel,missing_can) 0.90 x 1.0...
               because Access [daniel]: was there and saw it
-                because Event: Mara goes through the kitchen.
+                because Event: Leo goes through the kitchen.
               because BeliefChange [daniel]: answerable_for(daniel,missing_can): 0.00 -> pending
                 because Experience [daniel]: kept it as took_what_was_not_mine, felt as fear  {meaning=took_what_was_not_mine, source=own intention, confidence=1.00, salience=0.75}
                   because Interpretation [daniel]: knew their own intention: took_what_was_not_mine  {meaning=took_what_was_not_mine, source=own intention}
                     because Access [daniel]: was there and saw it
                       because Event: In the night Daniel eats a can standing at the counter in the dark.
         because Motive [daniel]: wants get_food 0.87  {motive=get_food, urgency=0.87, rules=a_body_that_has_not_eaten, because=hunger (unresolved by go_to->kitchen at minute 53, lapsed: not worth what it costs here, h...
-          because #1507 Access, shown above
+          because #1549 Access, shown above
           because Outcome [daniel]: get_food: unresolved by go_to->kitchen at minute 53, lapsed: not worth what it costs here, hunger 0.79  {want=get_food, outcome=unresolved, need=hunger, before=0.794, after=0.794}
-            because Deliberation [daniel]: settled on go_to->brothers_room  {chose=go_to->brothers_room, score=0.512, resolution=clear, margin=0.090, options=go_to->brothers_room 0.512 (for 0.66, against 0.15) | obser...
-              because Motive [daniel]: wants find_out 0.94  {motive=find_out, urgency=0.94, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family) 0.80 x...
+            because Deliberation [daniel]: settled on go_to->brothers_room  {chose=go_to->brothers_room, score=0.519, resolution=clear, margin=0.154, options=go_to->brothers_room 0.519 (for 0.67, against 0.15) | obser...
+              because Motive [daniel]: wants find_out 0.95  {motive=find_out, urgency=0.95, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family) 0.80 x...
                 because Access [daniel]: at minute 53, daniel in kitchen at minute 53, with elena, leo, mara  {room=kitchen, present=elena, leo, mara, hunger=0.79}
-                because #488 Experience, shown above
-              because Motive [daniel]: wants get_food 0.79  {motive=get_food, urgency=0.79, rules=a_body_that_has_not_eaten, because=hunger (unresolved by go_to->kitchen at minute 33, lapsed: not worth what it costs h...
-                because #1291 Access, shown above
-                because Outcome [daniel]: get_food: unresolved by go_to->kitchen at minute 33, lapsed: not worth what it costs here, hunger 0.70  {want=get_food, outcome=unresolved, need=hunger, before=0.702, after=0....
-                  because Deliberation [daniel]: had no real preference, and observe:elena is what happened  {chose=observe:elena, score=0.458, resolution=too close to call, margin=0.063, options=go_to->bathroom 0.521...
-                    because Motive [daniel]: wants find_out 0.96  {motive=find_out, urgency=0.96, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family) ...
-                      because Access [daniel]: at minute 33, daniel in kitchen at minute 33, with elena, leo, mara  {room=kitchen, present=elena, leo, mara, hunger=0.70}
-                      because #488 Experience, shown above
-                    because Motive [daniel]: wants get_food 0.70  {motive=get_food, urgency=0.70, rules=a_body_that_has_not_eaten, because=hunger 0.70 x 1.00 = +0.70}
-                      because #931 Access, shown above
-                    because Motive [daniel]: wants keep_peace 0.47  {motive=keep_peace, urgency=0.47, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = +0...
-                      because #931 Access, shown above
+                because #773 Experience, shown above
+              because Motive [daniel]: wants get_food 0.79  {motive=get_food, urgency=0.79, rules=a_body_that_has_not_eaten, because=hunger (unresolved by go_to->kitchen at minute 28, lapsed: not worth what it costs h...
+                because #1358 Access, shown above
+                because Outcome [daniel]: get_food: unresolved by go_to->kitchen at minute 28, lapsed: not worth what it costs here, hunger 0.68  {want=get_food, outcome=unresolved, need=hunger, before=0.679, after=0....
+                  because Deliberation [daniel]: had no real preference, and observe:mara is what happened  {chose=observe:mara, score=0.482, resolution=too close to call, margin=0.057, options=go_to->bathroom 0.539 (...
+                    because Motive [daniel]: wants find_out 0.98  {motive=find_out, urgency=0.98, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; memory of threat about missing_can 0.73...
+                      because Access [daniel]: at minute 28, daniel in kitchen at minute 28, with elena, leo, mara  {room=kitchen, present=elena, leo, mara, hunger=0.68}
+                      because #773 Experience, shown above
+                    because Motive [daniel]: wants get_food 0.68  {motive=get_food, urgency=0.68, rules=a_body_that_has_not_eaten, because=hunger 0.68 x 1.00 = +0.68}
+                      because #816 Access, shown above
+                    because Motive [daniel]: wants keep_peace 0.62  {motive=keep_peace, urgency=0.62, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; feeling anxiety 0.54 x 0.35 = +0....
+                      because #816 Access, shown above
                       because Appraisal [daniel]: concern touched family_safety: anxiety 0.51 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.51, rules=a_problem_is_felt_as_anxiety 0.71 (base 0.1...
                         because Interpretation [daniel]: read it as concern (0.60)  {meaning=concern, weight=0.60, rules=bad_news_reads_as_a_problem -> concern 0.60}
                           because Access [daniel]: was there and saw it
@@ -379,7 +463,10 @@ Motive [daniel]: wants get_food 0.88  {motive=get_food, urgency=0.88, rules=a_bo
                           because Access [daniel]: was there and saw it
                             because Event: Elena says she is quite sure nobody in this house would take food from the others.
                       because Appraisal [daniel]: threat touched family_safety: anxiety 0.42 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.42, rules=a_threat_to_the_family_is_felt_as_anxiety 0....
-                        because #485 Interpretation, shown above
+                        because Interpretation [daniel]: read it as threat (0.90)  {meaning=threat, weight=0.90, rules=the_search_is_for_what_you_did -> threat 0.90 (base 0.00; belief answerable_for(daniel,missing_can...
+                          because Access [daniel]: was there and saw it
+                            because Event: Mara goes through the kitchen.
+                          because #288 BeliefChange, shown above
                       because Appraisal [daniel]: concern touched family_safety: anxiety 0.51 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.51, rules=a_problem_is_felt_as_anxiety 0.71 (base 0.1...
                         because Interpretation [daniel]: read it as concern (1.15)  {meaning=concern, weight=1.15, rules=bad_news_reads_as_a_problem -> concern 0.60 | somebody_not_holding_it_together -> concern 0.55 (...
                           because Access [daniel]: was there and saw it
@@ -388,24 +475,20 @@ Motive [daniel]: wants get_food 0.88  {motive=get_food, urgency=0.88, rules=a_bo
                         because Interpretation [daniel]: read it as concern (1.15)  {meaning=concern, weight=1.15, rules=bad_news_reads_as_a_problem -> concern 0.60 | somebody_not_holding_it_together -> concern 0.55 (...
                           because Access [daniel]: was there and saw it
                             because Event: Mara is not hiding it well.
+                      because Appraisal [daniel]: threat touched family_safety: anxiety 0.42 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.42, rules=a_threat_to_the_family_is_felt_as_anxiety 0....
+                        because #770 Interpretation, shown above
                     because Motive [daniel]: wants guard_supplies 0.41  {motive=guard_supplies, urgency=0.41, rules=making_it_last, because=value family_safety 0.50 x 0.40 = +0.20; belief supplies_short 0.25 x 0.50 = ...
-                      because #931 Access, shown above
+                      because #816 Access, shown above
                       because BeliefChange [daniel]: supplies_short: 0.00 -> pending
                         because #285 Experience, shown above
-                    because Motive [daniel]: wants look_after (elena) 0.34  {motive=look_after, urgency=0.34, rules=somebody_in_front_of_you_is_not_all_right, because=memory of concern happening to elena 0.37 x 0.70 =...
-                      because #931 Access, shown above
-                      because Experience [daniel]: kept it as concern, felt as anxiety  {meaning=concern, source=witnessed, confidence=1.00, salience=0.76}
-                        because #502 Interpretation, shown above
-                    because Motive [daniel]: wants look_after (mara) 0.34  {motive=look_after, urgency=0.34, rules=somebody_in_front_of_you_is_not_all_right, because=memory of concern happening to mara 0.37 x 0.70 = +...
-                      because #931 Access, shown above
+                    because Motive [daniel]: wants look_after (mara) 0.37  {motive=look_after, urgency=0.37, rules=somebody_in_front_of_you_is_not_all_right, because=memory of concern happening to mara until reassuran...
+                      because #816 Access, shown above
                       because Experience [daniel]: kept it as concern, felt as anxiety  {meaning=concern, source=witnessed, confidence=1.00, salience=0.76}
                         because #520 Interpretation, shown above
                     because Motive [daniel]: wants restore_standing 0.32  {motive=restore_standing, urgency=0.32, rules=getting_back_what_was_taken_from_you, because=value respect 0.75 x 0.25 = +0.19; trait proud 0.85...
-                      because #931 Access, shown above
-                    because Motive [daniel]: wants look_after (leo) 0.08  {motive=look_after, urgency=0.08, rules=somebody_in_front_of_you_is_not_all_right, because=trait empathetic 0.50 x 0.15 = +0.08}
-                      because #931 Access, shown above
-                    because Motive [daniel]: wants avoid_exposure 0.04  {motive=avoid_exposure, urgency=0.04, rules=not_wanting_to_be_looked_at, because=feeling fear 0.13 x 0.35 = +0.04}
-                      because #931 Access, shown above
+                      because #816 Access, shown above
+                    because Motive [daniel]: wants avoid_exposure 0.20  {motive=avoid_exposure, urgency=0.20, rules=not_wanting_to_be_looked_at, because=feeling fear 0.56 x 0.35 = +0.20}
+                      because #816 Access, shown above
                       because Appraisal [daniel]: concern touched family_safety: fear 0.43 (family_safety)  {emotion=fear, concern=family_safety, intensity=0.43, rules=a_problem_is_felt_as_fear_by_the_fearful 0.57 (ba...
                         because #30 Interpretation, shown above
                       because Appraisal [daniel]: concern touched family_safety: fear 0.43 (family_safety)  {emotion=fear, concern=family_safety, intensity=0.43, rules=a_problem_is_felt_as_fear_by_the_fearful 0.57 (ba...
@@ -418,15 +501,26 @@ Motive [daniel]: wants get_food 0.88  {motive=get_food, urgency=0.88, rules=a_bo
                         because #502 Interpretation, shown above
                       because Appraisal [daniel]: concern touched family_safety: fear 0.43 (family_safety)  {emotion=fear, concern=family_safety, intensity=0.43, rules=a_problem_is_felt_as_fear_by_the_fearful 0.57 (ba...
                         because #520 Interpretation, shown above
-                    because #931 Access, shown above
-                    because Deliberation [daniel]: had no real preference, and go_to->kitchen is what happened  {chose=go_to->kitchen, score=0.525, resolution=too close to call, margin=0.001, options=go_to->kitchen 0....
-                      because Motive [daniel]: wants find_out 0.96  {motive=find_out, urgency=0.96, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family...
-                        because Access [daniel]: at minute 29, daniel in back_room at minute 29, with nobody  {room=back_room, present=nobody, hunger=0.68}
-                        because #488 Experience, shown above
-                      because Motive [daniel]: wants get_food 0.68  {motive=get_food, urgency=0.68, rules=a_body_that_has_not_eaten, because=hunger 0.68 x 1.00 = +0.68}
-                        because #852 Access, shown above
-                      because Motive [daniel]: wants keep_peace 0.49  {motive=keep_peace, urgency=0.49, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = ...
-                        because #852 Access, shown above
+                      because Appraisal [daniel]: threat touched family_safety: fear 0.45 (family_safety)  {emotion=fear, concern=family_safety, intensity=0.45, rules=a_threat_is_felt_as_fear 0.61 (base 0.15; trait an...
+                        because #770 Interpretation, shown above
+                    because Motive [daniel]: wants look_after (elena) 0.08  {motive=look_after, urgency=0.08, rules=somebody_in_front_of_you_is_not_all_right, because=trait empathetic 0.50 x 0.15 = +0.08}
+                      because #816 Access, shown above
+                      because Experience [daniel]: kept it as reassurance  {meaning=reassurance, source=witnessed, confidence=1.00, salience=0.15}
+                        because Interpretation [daniel]: read it as reassurance (1.00)  {meaning=reassurance, weight=1.00, rules=seeing_somebody_hold_together_again -> reassurance 1.00}
+                          because Access [daniel]: was there and saw it
+                            because Event: Elena seems to be holding together again.
+                    because Motive [daniel]: wants look_after (leo) 0.08  {motive=look_after, urgency=0.08, rules=somebody_in_front_of_you_is_not_all_right, because=trait empathetic 0.50 x 0.15 = +0.08}
+                      because #816 Access, shown above
+                    because #816 Access, shown above
+                    because Deliberation [daniel]: had no real preference, and go_to->kitchen is what happened  {chose=go_to->kitchen, score=0.525, resolution=too close to call, margin=0.003, options=go_to->bathroom 0...
+                      because Motive [daniel]: wants find_out 0.97  {motive=find_out, urgency=0.97, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family...
+                        because Access [daniel]: at minute 24, daniel in back_room at minute 24, with nobody  {room=back_room, present=nobody, hunger=0.66}
+                        because Experience [daniel]: kept it as threat, felt as fear  {meaning=threat, source=witnessed, confidence=1.00, salience=0.73}
+                          because #485 Interpretation, shown above
+                      because Motive [daniel]: wants get_food 0.66  {motive=get_food, urgency=0.66, rules=a_body_that_has_not_eaten, because=hunger 0.66 x 1.00 = +0.66}
+                        because #737 Access, shown above
+                      because Motive [daniel]: wants keep_peace 0.53  {motive=keep_peace, urgency=0.53, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = ...
+                        because #737 Access, shown above
                         because #31 Appraisal, shown above
                         because #50 Appraisal, shown above
                         because #187 Appraisal, shown above
@@ -435,107 +529,181 @@ Motive [daniel]: wants get_food 0.88  {motive=get_food, urgency=0.88, rules=a_bo
                         because #503 Appraisal, shown above
                         because #521 Appraisal, shown above
                       because Motive [daniel]: wants guard_supplies 0.41  {motive=guard_supplies, urgency=0.41, rules=making_it_last, because=value family_safety 0.50 x 0.40 = +0.20; belief supplies_short 0.25 x 0.50 ...
-                        because #852 Access, shown above
+                        because #737 Access, shown above
                         because #286 BeliefChange, shown above
-                      because Motive [daniel]: wants restore_standing 0.32  {motive=restore_standing, urgency=0.32, rules=getting_back_what_was_taken_from_you, because=value respect 0.75 x 0.25 = +0.19; trait proud 0....
-                        because #852 Access, shown above
-                      because Motive [daniel]: wants avoid_exposure 0.06  {motive=avoid_exposure, urgency=0.06, rules=not_wanting_to_be_looked_at, because=feeling fear 0.18 x 0.35 = +0.06}
-                        because #852 Access, shown above
+                      because Motive [daniel]: wants restore_standing 0.35  {motive=restore_standing, urgency=0.35, rules=getting_back_what_was_taken_from_you, because=value respect 0.75 x 0.25 = +0.19; trait proud 0....
+                        because #737 Access, shown above
+                        because Appraisal [daniel]: disrespect touched respect: shame 0.85 (respect)  {emotion=shame, concern=respect, intensity=0.85, rules=a_slight_is_felt_as_shame 1.04 (base 0.00; trait proud 0.85 ...
+                          because Interpretation [daniel]: read it as disrespect (1.18)  {meaning=disrespect, weight=1.18, runner_up=support 1.03, rules=a_dangerous_plan_frightens_the_frightened -> threat 0.59 (base 0...
+                            because Access [daniel]: was there and saw it
+                              because Event: Leo lays out, evenly and in front of everyone, why crossing at night gets someone killed. Daniel drops it.
+                        because Appraisal [daniel]: disrespect touched respect: shame 0.85 (respect)  {emotion=shame, concern=respect, intensity=0.85, rules=a_slight_is_felt_as_shame 1.04 (base 0.00; trait proud 0.85 ...
+                          because Interpretation [daniel]: read it as disrespect (1.46)  {meaning=disrespect, weight=1.46, runner_up=concern 0.71, rules=corrected_by_a_junior_with_people_watching -> disrespect 1.46 (b...
+                            because Access [daniel]: was there and saw it
+                              because Event: Leo says maybe they should let someone else handle this one.
+                            because BeliefChange [daniel]: tendency(leo,does_not_respect_me): 0.25 -> pending
+                              because Experience [daniel]: kept it as disrespect, felt as shame  {meaning=disrespect, source=witnessed, confidence=1.00, salience=0.98}
+                                because #98 Interpretation, shown above
+                            because LedgerEntry [daniel]: will not forget: overruled_me (leo)  {weight=0.70}
+                              because #103 Experience, shown above
+                        because Appraisal [daniel]: took_what_was_not_mine touched fairness: shame 0.44 (fairness)  {emotion=shame, concern=fairness, intensity=0.44, rules=what_you_did_in_the_night_is_felt_as_shame 0....
+                          because #282 Interpretation, shown above
+                      because Motive [daniel]: wants avoid_exposure 0.15  {motive=avoid_exposure, urgency=0.15, rules=not_wanting_to_be_looked_at, because=feeling fear 0.29 x 0.35 = +0.10; feeling shame 0.06 x 0.80 = ...
+                        because #737 Access, shown above
+                        because #99 Appraisal, shown above
+                        because #216 Appraisal, shown above
+                        because #284 Appraisal, shown above
                         because #32 Appraisal, shown above
                         because #51 Appraisal, shown above
                         because #283 Appraisal, shown above
                         because #486 Appraisal, shown above
                         because #504 Appraisal, shown above
                         because #522 Appraisal, shown above
-                      because #852 Access, shown above
-                  because #859 Deliberation, shown above
-              because Motive [daniel]: wants keep_peace 0.43  {motive=keep_peace, urgency=0.43, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = +0.15; t...
-                because #1291 Access, shown above
+                      because #737 Access, shown above
+                  because #744 Deliberation, shown above
+              because Motive [daniel]: wants keep_peace 0.45  {motive=keep_peace, urgency=0.45, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = +0.15; t...
+                because #1358 Access, shown above
+                because #31 Appraisal, shown above
+                because #50 Appraisal, shown above
+                because #187 Appraisal, shown above
+                because #262 Appraisal, shown above
+                because #487 Appraisal, shown above
+                because #503 Appraisal, shown above
+                because #521 Appraisal, shown above
+                because #772 Appraisal, shown above
+                because Appraisal [daniel]: concern touched family_safety: anxiety 0.51 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.51, rules=a_problem_is_felt_as_anxiety 0.71 (base 0.10; val...
+                  because Interpretation [daniel]: read it as concern (1.15)  {meaning=concern, weight=1.15, rules=bad_news_reads_as_a_problem -> concern 0.60 | somebody_not_holding_it_together -> concern 0.55 (base 0...
+                    because Access [daniel]: was there and saw it
+                      because Event: Mara is not hiding it well.
+                because Appraisal [daniel]: concern touched family_safety: anxiety 0.51 (family_safety)  {emotion=anxiety, concern=family_safety, intensity=0.51, rules=a_problem_is_felt_as_anxiety 0.71 (base 0.10; val...
+                  because Interpretation [daniel]: read it as concern (1.15)  {meaning=concern, weight=1.15, rules=bad_news_reads_as_a_problem -> concern 0.60 | somebody_not_holding_it_together -> concern 0.55 (base 0...
+                    because Access [daniel]: was there and saw it
+                      because Event: Elena is not hiding it well.
               because Motive [daniel]: wants guard_supplies 0.41  {motive=guard_supplies, urgency=0.41, rules=making_it_last, because=value family_safety 0.50 x 0.40 = +0.20; belief supplies_short 0.25 x 0.50 = +0.13;...
-                because #1291 Access, shown above
+                because #1358 Access, shown above
                 because #286 BeliefChange, shown above
               because Motive [daniel]: wants restore_standing 0.32  {motive=restore_standing, urgency=0.32, rules=getting_back_what_was_taken_from_you, because=value respect 0.75 x 0.25 = +0.19; trait proud 0.85 x 0.1...
-                because #1291 Access, shown above
-              because Motive [daniel]: wants look_after (elena) 0.25  {motive=look_after, urgency=0.25, rules=somebody_in_front_of_you_is_not_all_right, because=memory of concern happening to elena 0.25 x 0.70 = +0.18...
-                because #1291 Access, shown above
-                because #505 Experience, shown above
-              because Motive [daniel]: wants look_after (mara) 0.25  {motive=look_after, urgency=0.25, rules=somebody_in_front_of_you_is_not_all_right, because=memory of concern happening to mara 0.25 x 0.70 = +0.18; ...
-                because #1291 Access, shown above
-                because #523 Experience, shown above
+                because #1358 Access, shown above
+              because Motive [daniel]: wants look_after (elena) 0.08  {motive=look_after, urgency=0.08, rules=somebody_in_front_of_you_is_not_all_right, because=trait empathetic 0.50 x 0.15 = +0.08}
+                because #1358 Access, shown above
+                because Experience [daniel]: kept it as reassurance  {meaning=reassurance, source=witnessed, confidence=1.00, salience=0.15}
+                  because Interpretation [daniel]: read it as reassurance (1.00)  {meaning=reassurance, weight=1.00, rules=seeing_somebody_hold_together_again -> reassurance 1.00}
+                    because Access [daniel]: was there and saw it
+                      because Event: Elena seems to be holding together again.
               because Motive [daniel]: wants look_after (leo) 0.08  {motive=look_after, urgency=0.08, rules=somebody_in_front_of_you_is_not_all_right, because=trait empathetic 0.50 x 0.15 = +0.08}
-                because #1291 Access, shown above
-              because #1291 Access, shown above
-              because Deliberation [daniel]: had no real preference, and go_to->kitchen is what happened  {chose=go_to->kitchen, score=0.552, resolution=too close to call, margin=0.038, options=go_to->kitchen 0.552 (f...
-                because Motive [daniel]: wants find_out 0.94  {motive=find_out, urgency=0.94, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family) 0.80...
+                because #1358 Access, shown above
+              because Motive [daniel]: wants look_after (mara) 0.08  {motive=look_after, urgency=0.08, rules=somebody_in_front_of_you_is_not_all_right, because=trait empathetic 0.50 x 0.15 = +0.08}
+                because #1358 Access, shown above
+                because Experience [daniel]: kept it as reassurance  {meaning=reassurance, source=witnessed, confidence=1.00, salience=0.15}
+                  because Interpretation [daniel]: read it as reassurance (1.00)  {meaning=reassurance, weight=1.00, rules=seeing_somebody_hold_together_again -> reassurance 1.00}
+                    because Access [daniel]: was there and saw it
+                      because Event: Mara seems to be holding together again.
+              because Motive [daniel]: wants avoid_exposure 0.02  {motive=avoid_exposure, urgency=0.02, rules=not_wanting_to_be_looked_at, because=feeling fear 0.07 x 0.35 = +0.02}
+                because #1358 Access, shown above
+                because #32 Appraisal, shown above
+                because #51 Appraisal, shown above
+                because #283 Appraisal, shown above
+                because #486 Appraisal, shown above
+                because #504 Appraisal, shown above
+                because #522 Appraisal, shown above
+                because #771 Appraisal, shown above
+                because Appraisal [daniel]: concern touched family_safety: fear 0.43 (family_safety)  {emotion=fear, concern=family_safety, intensity=0.43, rules=a_problem_is_felt_as_fear_by_the_fearful 0.57 (base 0.0...
+                  because #885 Interpretation, shown above
+                because Appraisal [daniel]: concern touched family_safety: fear 0.43 (family_safety)  {emotion=fear, concern=family_safety, intensity=0.43, rules=a_problem_is_felt_as_fear_by_the_fearful 0.57 (base 0.0...
+                  because #969 Interpretation, shown above
+              because #1358 Access, shown above
+              because Deliberation [daniel]: had no real preference, and go_to->kitchen is what happened  {chose=go_to->kitchen, score=0.565, resolution=too close to call, margin=0.043, options=go_to->kitchen 0.565 (f...
+                because Motive [daniel]: wants find_out 0.96  {motive=find_out, urgency=0.96, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family) 0.80...
                   because Access [daniel]: at minute 49, daniel in bathroom at minute 49, with nobody  {room=bathroom, present=nobody, hunger=0.78}
-                  because #488 Experience, shown above
-                because Motive [daniel]: wants get_food 0.78  {motive=get_food, urgency=0.78, rules=a_body_that_has_not_eaten, because=hunger (unresolved by go_to->kitchen at minute 33, lapsed: not worth what it costs...
-                  because #1184 Access, shown above
-                  because #942 Outcome, shown above
-                because Motive [daniel]: wants keep_peace 0.43  {motive=keep_peace, urgency=0.43, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = +0.15;...
-                  because #1184 Access, shown above
+                  because #773 Experience, shown above
+                because Motive [daniel]: wants get_food 0.78  {motive=get_food, urgency=0.78, rules=a_body_that_has_not_eaten, because=hunger (unresolved by go_to->kitchen at minute 28, lapsed: not worth what it costs...
+                  because #1286 Access, shown above
+                  because #827 Outcome, shown above
+                because Motive [daniel]: wants keep_peace 0.46  {motive=keep_peace, urgency=0.46, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = +0.15;...
+                  because #1286 Access, shown above
+                  because #31 Appraisal, shown above
+                  because #50 Appraisal, shown above
+                  because #187 Appraisal, shown above
+                  because #262 Appraisal, shown above
+                  because #487 Appraisal, shown above
+                  because #503 Appraisal, shown above
+                  because #521 Appraisal, shown above
+                  because #772 Appraisal, shown above
+                  because #886 Appraisal, shown above
+                  because #970 Appraisal, shown above
                 because Motive [daniel]: wants guard_supplies 0.41  {motive=guard_supplies, urgency=0.41, rules=making_it_last, because=value family_safety 0.50 x 0.40 = +0.20; belief supplies_short 0.25 x 0.50 = +0.1...
-                  because #1184 Access, shown above
+                  because #1286 Access, shown above
                   because #286 BeliefChange, shown above
                 because Motive [daniel]: wants restore_standing 0.32  {motive=restore_standing, urgency=0.32, rules=getting_back_what_was_taken_from_you, because=value respect 0.75 x 0.25 = +0.19; trait proud 0.85 x 0...
-                  because #1184 Access, shown above
-                because #1184 Access, shown above
-            because #1190 Deliberation, shown above
+                  because #1286 Access, shown above
+                because Motive [daniel]: wants avoid_exposure 0.04  {motive=avoid_exposure, urgency=0.04, rules=not_wanting_to_be_looked_at, because=feeling fear 0.10 x 0.35 = +0.04}
+                  because #1286 Access, shown above
+                  because #32 Appraisal, shown above
+                  because #51 Appraisal, shown above
+                  because #283 Appraisal, shown above
+                  because #486 Appraisal, shown above
+                  because #504 Appraisal, shown above
+                  because #522 Appraisal, shown above
+                  because #771 Appraisal, shown above
+                  because #887 Appraisal, shown above
+                  because #971 Appraisal, shown above
+                because #1286 Access, shown above
+            because #1293 Deliberation, shown above
         because Motive [daniel]: wants keep_peace 0.43  {motive=keep_peace, urgency=0.43, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = +0.15; trait c...
-          because #1507 Access, shown above
+          because #1549 Access, shown above
         because Motive [daniel]: wants guard_supplies 0.41  {motive=guard_supplies, urgency=0.41, rules=making_it_last, because=value family_safety 0.50 x 0.40 = +0.20; belief supplies_short 0.25 x 0.50 = +0.13; trait...
-          because #1507 Access, shown above
+          because #1549 Access, shown above
           because #286 BeliefChange, shown above
         because Motive [daniel]: wants restore_standing 0.32  {motive=restore_standing, urgency=0.32, rules=getting_back_what_was_taken_from_you, because=value respect 0.75 x 0.25 = +0.19; trait proud 0.85 x 0.15 = +0...
-          because #1507 Access, shown above
-        because Motive [daniel]: wants look_after (elena) 0.21  {motive=look_after, urgency=0.21, rules=somebody_in_front_of_you_is_not_all_right, because=memory of concern happening to elena 0.20 x 0.70 = +0.14; trai...
-          because #1507 Access, shown above
-          because #505 Experience, shown above
-        because Motive [daniel]: wants look_after (mara) 0.21  {motive=look_after, urgency=0.21, rules=somebody_in_front_of_you_is_not_all_right, because=memory of concern happening to mara 0.20 x 0.70 = +0.14; trait ...
-          because #1507 Access, shown above
-          because #523 Experience, shown above
+          because #1549 Access, shown above
+        because Motive [daniel]: wants look_after (elena) 0.08  {motive=look_after, urgency=0.08, rules=somebody_in_front_of_you_is_not_all_right, because=trait empathetic 0.50 x 0.15 = +0.08}
+          because #1549 Access, shown above
+          because #1033 Experience, shown above
         because Motive [daniel]: wants look_after (leo) 0.08  {motive=look_after, urgency=0.08, rules=somebody_in_front_of_you_is_not_all_right, because=trait empathetic 0.50 x 0.15 = +0.08}
-          because #1507 Access, shown above
-        because #1507 Access, shown above
+          because #1549 Access, shown above
+        because Motive [daniel]: wants look_after (mara) 0.08  {motive=look_after, urgency=0.08, rules=somebody_in_front_of_you_is_not_all_right, because=trait empathetic 0.50 x 0.15 = +0.08}
+          because #1549 Access, shown above
+          because #1108 Experience, shown above
+        because #1549 Access, shown above
         because Deliberation [daniel]: settled on go_to->kitchen  {chose=go_to->kitchen, score=0.592, resolution=clear, margin=0.255, options=go_to->kitchen 0.592 (for 0.74, against 0.15) | wait 0.338 (for 0.34, again...
           because Motive [daniel]: wants find_out 0.94  {motive=find_out, urgency=0.94, rules=needing_to_know_what_happened, because=value control 1.00 x 0.50 = +0.50; belief role_claim(daniel,leads_family) 0.80 x 0.3...
             because Access [daniel]: at minute 65, daniel in brothers_room at minute 65, with nobody  {room=brothers_room, present=nobody, hunger=0.85}
-            because #488 Experience, shown above
+            because #773 Experience, shown above
           because Motive [daniel]: wants get_food 0.85  {motive=get_food, urgency=0.85, rules=a_body_that_has_not_eaten, because=hunger (unresolved by go_to->kitchen at minute 53, lapsed: not worth what it costs here,...
-            because #1487 Access, shown above
-            because #1301 Outcome, shown above
+            because #1479 Access, shown above
+            because #1369 Outcome, shown above
           because Motive [daniel]: wants keep_peace 0.43  {motive=keep_peace, urgency=0.43, rules=wanting_the_house_to_hold, because=value family_safety 0.50 x 0.45 = +0.23; trait empathetic 0.50 x 0.30 = +0.15; trait...
-            because #1487 Access, shown above
+            because #1479 Access, shown above
           because Motive [daniel]: wants guard_supplies 0.41  {motive=guard_supplies, urgency=0.41, rules=making_it_last, because=value family_safety 0.50 x 0.40 = +0.20; belief supplies_short 0.25 x 0.50 = +0.13; tra...
-            because #1487 Access, shown above
+            because #1479 Access, shown above
             because #286 BeliefChange, shown above
           because Motive [daniel]: wants restore_standing 0.32  {motive=restore_standing, urgency=0.32, rules=getting_back_what_was_taken_from_you, because=value respect 0.75 x 0.25 = +0.19; trait proud 0.85 x 0.15 = ...
-            because #1487 Access, shown above
-          because #1487 Access, shown above
+            because #1479 Access, shown above
+          because #1479 Access, shown above
     because Experience [daniel]: kept it as concern, felt as anxiety  {meaning=concern, source=witnessed, confidence=1.00, salience=0.76}
       because Interpretation [daniel]: read it as concern (0.60)  {meaning=concern, weight=0.60, rules=bad_news_reads_as_a_problem -> concern 0.60}
         because Access [daniel]: was there and saw it
           because Event: Daniel reaches for the food and there is none left.
-    because #1509 Motive, shown above
-    because #1516 Deliberation, shown above
+    because #1551 Motive, shown above
+    because #1558 Deliberation, shown above
 
 ```
 
 ## C2. Going for food and not eating
 
-The scenario as written, five conditions, seeds 1 to 10: 132 walks to the food given up on arrival, 132 outcomes recorded. Example: `unresolved by go_to->kitchen at minute 28, lapsed: not worth what it costs here, hunger 0.68`. The want is unchanged by it: still exactly what the body says, and it now says why.
+The scenario as written, five conditions, seeds 1 to 10: 185 walks to the food given up on arrival, 185 outcomes recorded. Example: `unresolved by go_to->kitchen at minute 28, lapsed: not worth what it costs here, hunger 0.68`. The want is unchanged by it: still exactly what the body says, and it now says why.
 ## C3. No longer relevant
 
-daniel, daniel_ate_it seed 1: `no longer relevant by go_to->kitchen at minute 52, lapsed: no longer wanted, hunger 0.00`.
+mara, daniel_ate_it seed 1: `no longer relevant by go_to->kitchen at minute 44, lapsed: no longer wanted, hunger 0.00`.
 ## D. With and without what eating does to the body
 
 | Condition, seed | First meal | Outcome with relief / without | First difference of any kind | ... in whom, and what | First difference in anybody else |
 |---|---|---|---|---|---|
-| mara_ate_it, 1 | daniel at 49 | partly satisfied / unresolved | minute 49 | daniel: hunger, wants | minute 65 |
+| mara_ate_it, 1 | daniel at 76 | partly satisfied / unresolved | minute 76 | daniel: hunger, wants | never |
 | mara_ate_it, 2 | daniel at 44 | partly satisfied / unresolved | minute 44 | daniel: hunger, wants | minute 64 |
 | mara_ate_it, 3 | daniel at 57 | partly satisfied / unresolved | minute 57 | daniel: hunger, wants | never |
 | mara_ate_it, 4 | daniel at 45 | partly satisfied / unresolved | minute 45 | daniel: hunger, wants | minute 65 |
-| mara_ate_it, 5 | daniel at 48 | partly satisfied / unresolved | minute 48 | daniel: hunger, wants | minute 64 |
+| mara_ate_it, 5 | daniel at 54 | partly satisfied / unresolved | minute 54 | daniel: hunger, wants | minute 74 |
 | elena_fed_mara, 1 | daniel at 52 | partly satisfied / unresolved | minute 52 | daniel: hunger, wants | minute 72 |
 | elena_fed_mara, 2 | daniel at 44 | partly satisfied / unresolved | minute 44 | daniel: hunger, wants | minute 64 |
 | elena_fed_mara, 3 | daniel at 52 | partly satisfied / unresolved | minute 52 | daniel: hunger, wants | minute 68 |
@@ -552,9 +720,9 @@ Shipped rules; only circumstances change. Every eating act and every reach for f
 |---|---|---|---|---|---|---|---|
 | the scenario as written | 100 | 0 / 0 / 0 / 0 | 0 | 0 | 0 |  | 0 |
 | plenty of food, count still short | 100 | 0 / 0 / 0 / 0 | 0 | 0 | 0 |  | 0 |
-| plenty of food, count not short | 100 | 81 / 0 / 0 / 0 | 81 | 81 | 0 | partly satisfied 81 | 0 |
-| two portions, count not short | 100 | 81 / 0 / 0 / 0 | 81 | 81 | 0 | partly satisfied 81 | 0 |
-| daniel starving alone, plenty, not short | 20 | 20 / 0 / 0 / 0 | 22 | 22 | 2 | partly satisfied 22 | 0 |
+| plenty of food, count not short | 100 | 82 / 0 / 0 / 0 | 82 | 82 | 0 | partly satisfied 82 | 0 |
+| two portions, count not short | 100 | 82 / 0 / 0 / 0 | 82 | 82 | 0 | partly satisfied 82 | 0 |
+| daniel starving alone, plenty, not short | 20 | 20 / 0 / 0 / 0 | 21 | 21 | 1 | partly satisfied 21 | 0 |
 | elena starving alone, plenty, not short | 20 | 16 / 0 / 0 / 0 | 16 | 16 | 0 | partly satisfied 16 | 0 |
 | leo starving alone, plenty, not short | 20 | 16 / 0 / 0 / 0 | 16 | 16 | 0 | partly satisfied 16 | 0 |
 | mara starving alone, plenty, not short | 20 | 16 / 0 / 0 / 16 | 32 | 16 | 0 | partly satisfied 32 | 0 |

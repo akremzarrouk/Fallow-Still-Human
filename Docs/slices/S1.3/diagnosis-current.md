@@ -13,7 +13,7 @@ The want is raised by the rule `a_body_that_has_not_eaten`: `get_food` = hunger 
 | daniel | 1.15 | 0.550 / 0.688 / 0.826 / 0.964 | 0.930 | 1 |
 | elena | 0.85 | 0.600 / 0.702 / 0.804 / 0.906 | 0.897 | 0 |
 | leo | 1 | 0.450 / 0.570 / 0.690 / 0.810 | 0.810 | 0 |
-| mara | 0.95 | 0.500 / 0.614 / 0.728 / 0.842 | 0.842 | 0 |
+| mara | 0.95 | 0.500 / 0.614 / 0.728 / 0.842 | 0.842 | 1 |
 
 Every other kind of term a want can rest on names the records it read (a feeling's causes, a memory, a belief's evidence). The hunger term names none: nothing in the trace can say why somebody is as hungry as they are.
 
@@ -47,26 +47,27 @@ Shipped rules, five design conditions, seeds 1 to 20. Decisions where eating was
 
 | Who | Decisions with eating available | Eating scored above zero | Eating beat standing still | Eating beat everything except standing still | Eating came top | Mean score of eating | Mean score of what came top | What came top most |
 |---|---|---|---|---|---|---|---|---|
-| daniel | 1335 | 0 | 0 | 21 | 0 | -0.258 | 0.617 | wait |
-| elena | 2346 | 0 | 0 | 0 | 0 | -0.977 | 0.774 | wait |
-| leo | 2535 | 0 | 0 | 0 | 0 | -1.323 | 0.680 | wait |
-| mara | 1522 | 0 | 0 | 0 | 0 | -0.546 | 0.570 | comfort |
+| daniel | 1352 | 0 | 0 | 41 | 0 | -0.253 | 0.594 | wait |
+| elena | 2224 | 0 | 0 | 0 | 0 | -0.972 | 0.766 | wait |
+| leo | 2218 | 0 | 0 | 0 | 0 | -1.328 | 0.684 | wait |
+| mara | 1321 | 0 | 0 | 0 | 0 | -0.543 | 0.465 | comfort |
 
 ## 4. Walking to the food, and what happens on arrival
 
 Shipped rules, five conditions, seeds 1 to 20, from the S1.2 audit: intentions carried into a decision, by want and fate:
 
-- `find_out: held` 376
-- `get_food: lapsed: not worth what it costs here` 262
+- `find_out: held` 447
+- `find_out: lapsed: not worth what it costs here` 19
+- `get_food: lapsed: not worth what it costs here` 376
 
-Walks for food that arrived: daniel 216, elena 0, leo 0, mara 46.
-After a walk for food ended without eating, `get_food` at the person's next decision differed from what it was on arrival by a mean of 0.019 (235 cases): the only change is the body getting hungrier. Nothing about having gone and not eaten is recorded anywhere a want can read.
+Walks for food that arrived: daniel 220, elena 0, leo 0, mara 156.
+After a walk for food ended without eating, `get_food` at the person's next decision differed from what it was on arrival by a mean of 0.021 (363 cases): the only change is the body getting hungrier. Nothing about having gone and not eaten is recorded anywhere a want can read.
 
 ## 5. What eating does to the want, when it happens
 
 | Setting | Who, minute | Hunger before -> after | `get_food` the minute before -> the minute after | Eater's own reading of it | Beliefs it moved in the eater | Does `get_food` afterwards lead back to the eating? | Does anything the eater wants lead back to it? |
 |---|---|---|---|---|---|---|---|
-| DIAGNOSTIC rules, eating unpriced, `mara_ate_it` seed 1 | mara, 29 | 0.606 -> 0.160 | 0.606 -> 0.160 | challenge, felt as anxiety | supplies_short moved 0.66 -> 0.75 | yes | guard_supplies, keep_peace, get_food |
+| DIAGNOSTIC rules, eating unpriced, `mara_ate_it` seed 1 | mara, 27 | 0.599 -> 0.153 | 0.599 -> 0.153 | challenge, felt as anxiety | supplies_short moved 0.66 -> 0.75 | yes | guard_supplies, keep_peace, get_food |
 | shipped rules, Mara starving alone, plenty and not short | daniel, 60 | 0.821 -> 0.376 | 0.821 -> 0.376 | neutral | none | yes | get_food |
 
 The body is relieved directly by the world (`SetHunger`), so the want falls. Nothing records that it fell because of the eating: the want cannot be walked back to the act that changed it.

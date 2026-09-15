@@ -25,75 +25,70 @@ count that opens it.
 - **13** Mara, in the kitchen: sits with Elena because somebody is not all right (elena) (0.92)
 - **14** Elena, in the kitchen: opens the pantry and counts because it has to last (0.85) *(nothing in it either way)*. Found 2 portions left
 - **14** Leo, in the kitchen: stays where they are because wanting the house to hold (0.97) *(nothing in it either way)*. Stayed where they were
-- **14** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.93) *(nothing in it either way)*. Sat with daniel
+- **14** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.93) *(nothing in it either way)*. Daniel had gone before it could help
 - **16** Daniel, in the back room: goes through the room because needing to know what happened (0.99). Went through the room
 - **17** Elena, in the kitchen: sits with Mara because somebody is not all right (mara) (0.76). Sat with mara
 - **19** Leo, in the kitchen: stays where they are because wanting the house to hold (0.91). Stayed where they were
-- **22** Elena, in the kitchen: sits with Mara because somebody is not all right (mara) (0.68) *(nothing in it either way)*. Thought again, and carried on
-- **22** Leo, in the kitchen: stays where they are because wanting the house to hold (0.87). Thought again, and carried on
-- **22** Mara, in the kitchen: sits with Elena because somebody is not all right (elena) (0.78). Sat with elena
+- **22** Mara, in the kitchen: goes through the room because needing to know what happened (0.53). Went through the room
 - **24** Daniel, in the back room: goes to the kitchen because hunger (0.66) *(nothing in it either way)*. Went to kitchen
 - **24** Leo, in the kitchen: stays where they are because wanting the house to hold (0.84) *(nothing in it either way)*. Stayed where they were
-- **25** Elena, in the kitchen: sits with Mara because somebody is not all right (mara) (0.65) *(nothing in it either way)*. Sat with mara
+- **25** Elena, in the kitchen: stays where they are because wanting the house to hold (0.93). Stayed where they were
 - **25** Leo, in the kitchen: stays where they are because wanting the house to hold (0.83) *(nothing in it either way)*. Thought again, and carried on
-- **25** Mara, in the kitchen: sits with Elena because somebody is not all right (elena) (0.75). Thought again, and carried on
+- **25** Mara, in the kitchen: goes through the room because needing to know what happened (0.53). Thought again, and carried on
 - **28** Daniel, in the kitchen: watches Mara because needing to know what happened (0.99) *(nothing in it either way)*. Watched mara
+- **30** Elena, in the kitchen: stays where they are because wanting the house to hold (0.90) *(nothing in it either way)*
 - **30** Leo, in the kitchen: goes through the room because needing to know what happened (0.70) *(nothing in it either way)*
-- **31** Elena, in the kitchen: sits with Mara because somebody is not all right (mara) (0.59) *(nothing in it either way)*. Thought again, and carried on
-- **31** Leo, in the kitchen: goes through the room because needing to know what happened (0.70) *(nothing in it either way)*. Thought again, and carried on
-- **31** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.72) *(nothing in it either way)*
+- **31** Elena, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.61) *(nothing in it either way)*
+- **31** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.72)
 - **32** Daniel, in the kitchen: goes to the bathroom because needing to know what happened (0.99) *(nothing in it either way)*. Went to bathroom
-- **32** Elena, in the kitchen: sits with Mara because somebody is not all right (mara) (0.88). Thought again, and carried on
+- **32** Elena, in the kitchen: sits with Mara because somebody is not all right (mara) (0.88). Sat with mara
 - **32** Leo, in the kitchen: sits with Mara because somebody is not all right (mara) (0.68) *(nothing in it either way)*
-- **32** Mara, in the kitchen: goes through the room because needing to know what happened (0.53). Went through the room
-- **33** Elena, in the kitchen: sits with Mara because somebody is not all right (mara) (0.85). Sat with mara
-- **33** Leo, in the kitchen: sits with Mara because somebody is not all right (mara) (0.65) *(nothing in it either way)*. Thought again, and carried on
-- **33** Mara, in the kitchen: goes through the room because needing to know what happened (0.53). Thought again, and carried on
+- **32** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.71). Thought again, and carried on
 - **36** Daniel, in the bathroom: goes through the room because needing to know what happened (0.99). Went through the room
-- **41** Elena, in the kitchen: sits with Mara because somebody is not all right (mara) (0.70) *(nothing in it either way)*. Sat with mara
-- **41** Leo, in the kitchen: stays where they are because wanting the house to hold (0.83) *(nothing in it either way)*. Stayed where they were
-- **41** Mara, in the kitchen: goes through the room because needing to know what happened (0.53). Thought again, and carried on
-- **42** Elena, in the kitchen: sits with Mara because somebody is not all right (mara) (0.68) *(nothing in it either way)*. Thought again, and carried on
-- **42** Mara, in the kitchen: sits with Elena because somebody is not all right (elena) (0.63)
+- **40** Elena, in the kitchen: stays where they are because wanting the house to hold (0.94). Stayed where they were
+- **40** Leo, in the kitchen: stays where they are because wanting the house to hold (0.84) *(nothing in it either way)*. Stayed where they were
+- **40** Mara, in the kitchen: stays where they are because wanting the house to hold (0.30) *(nothing in it either way)*. Stayed where they were
 - **44** Daniel, in the bathroom: goes to the kitchen because hunger (0.75) *(nothing in it either way)*. Went to kitchen
-- **46** Leo, in the kitchen: stays where they are because wanting the house to hold (0.80) *(nothing in it either way)*
+- **45** Elena, in the kitchen: stays where they are because wanting the house to hold (0.92). Stayed where they were
+- **45** Leo, in the kitchen: goes through the room because needing to know what happened (0.70) *(nothing in it either way)*. Went through the room
+- **45** Mara, in the kitchen: goes to the back room because needing to know what happened (0.53) *(nothing in it either way)*. Went to back_room
 - **48** Daniel, in the kitchen: goes to the brothers room because needing to know what happened (0.99) *(nothing in it either way)*. Went to brothers_room
-- **49** Elena, in the kitchen: sits with Mara because somebody is not all right (mara) (0.61) *(nothing in it either way)*. Sat with mara
-- **49** Leo, in the kitchen: goes through the room because needing to know what happened (0.70) *(nothing in it either way)*
-- **49** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.63) *(nothing in it either way)*
+- **49** Mara, in the back room: goes through the room because needing to know what happened (0.53). Went through the room
+- **50** Elena, in the kitchen: stays where they are because wanting the house to hold (0.89). Stayed where they were
 - **52** Daniel, in the brothers room: goes through the room because needing to know what happened (0.99). Went through the room
-- **57** Elena, in the kitchen: stays where they are because wanting the house to hold (0.90) *(nothing in it either way)*. Stayed where they were
-- **57** Leo, in the kitchen: stays where they are because wanting the house to hold (0.77) *(nothing in it either way)*. Stayed where they were
-- **57** Mara, in the kitchen: sits with Elena because somebody is not all right (elena) (0.58). Sat with elena
+- **53** Elena, in the kitchen: stays where they are because wanting the house to hold (0.97). Thought again, and carried on
+- **53** Leo, in the kitchen: stays where they are because wanting the house to hold (0.77). Stayed where they were
+- **55** Elena, in the kitchen: stays where they are because wanting the house to hold (0.96). Stayed where they were
+- **57** Mara, in the back room: goes to the kitchen because hunger (0.72). Went to kitchen
+- **58** Leo, in the kitchen: stays where they are because wanting the house to hold (0.77). Stayed where they were
 - **60** Daniel, in the brothers room: goes to the kitchen because hunger (0.83). Went to kitchen
-- **62** Elena, in the kitchen: stays where they are because wanting the house to hold (0.88) *(nothing in it either way)*. Stayed where they were
-- **62** Leo, in the kitchen: stays where they are because wanting the house to hold (0.77) *(nothing in it either way)*
+- **60** Elena, in the kitchen: stays where they are because wanting the house to hold (0.94). Stayed where they were
+- **61** Mara, in the kitchen: stays where they are because wanting the house to hold (0.30) *(nothing in it either way)*. Stayed where they were
+- **63** Leo, in the kitchen: stays where they are because wanting the house to hold (0.77). Stayed where they were
 - **64** Daniel, in the kitchen: watches Mara because needing to know what happened (0.99) *(nothing in it either way)*. Watched mara
-- **65** Elena, in the kitchen: stays where they are because wanting the house to hold (0.85). Thought again, and carried on
-- **65** Leo, in the kitchen: goes through the room because needing to know what happened (0.70) *(nothing in it either way)*
-- **65** Mara, in the kitchen: sits with Elena because somebody is not all right (elena) (0.57) *(nothing in it either way)*
-- **67** Elena, in the kitchen: stays where they are because wanting the house to hold (0.85)
+- **65** Elena, in the kitchen: stays where they are because wanting the house to hold (0.91)
+- **66** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.58). Sat with daniel
 - **68** Daniel, in the kitchen: stays where they are because wanting the house to hold (0.61) *(nothing in it either way)*. Stayed where they were
-- **68** Elena, in the kitchen: sits with Mara because somebody is not all right (mara) (0.88). Sat with mara
+- **68** Elena, in the kitchen: sits with Mara because somebody is not all right (mara) (0.88)
 - **68** Leo, in the kitchen: stays where they are because wanting the house to hold (0.94) *(nothing in it either way)*. Stayed where they were
-- **68** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.58) *(nothing in it either way)*. Sat with daniel
-- **73** Daniel, in the kitchen: stays where they are because wanting the house to hold (0.54) *(nothing in it either way)*. Stayed where they were
-- **73** Leo, in the kitchen: stays where they are because wanting the house to hold (0.87)
-- **76** Elena, in the kitchen: sits with Mara because somebody is not all right (mara) (0.71). Sat with mara
-- **76** Leo, in the kitchen: goes through the room because needing to know what happened (0.70) *(nothing in it either way)*
-- **76** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.56) *(nothing in it either way)*. Thought again, and carried on
-- **77** Daniel, in the kitchen: stays where they are because wanting the house to hold (0.47) *(nothing in it either way)*. Thought again, and carried on
-- **77** Elena, in the kitchen: sits with Mara because somebody is not all right (mara) (0.70) *(nothing in it either way)*. Thought again, and carried on
-- **77** Leo, in the kitchen: goes through the room because needing to know what happened (0.70) *(nothing in it either way)*. Thought again, and carried on
-- **77** Mara, in the kitchen: sits with Elena because somebody is not all right (elena) (0.54) *(nothing in it either way)*
-- **78** Daniel, in the kitchen: stays where they are because wanting the house to hold (0.47) *(nothing in it either way)*. Stayed where they were
-- **83** Daniel, in the kitchen: watches Mara because needing to know what happened (0.99) *(nothing in it either way)*. Watched mara
-- **84** Elena, in the kitchen: stays where they are because wanting the house to hold (0.89) *(nothing in it either way)*
-- **84** Leo, in the kitchen: stays where they are because wanting the house to hold (0.79) *(nothing in it either way)*
-- **84** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.55) *(nothing in it either way)*
-- **87** Daniel, in the kitchen: watches Elena because needing to know what happened (0.99) *(nothing in it either way)*
-- **87** Elena, in the kitchen: sits with Mara because somebody is not all right (mara) (0.88)
-- **87** Leo, in the kitchen: sits with Mara because somebody is not all right (mara) (0.68) *(nothing in it either way)*
-- **87** Mara, in the kitchen: goes to the back room because needing to know what happened (0.53) *(nothing in it either way)*
+- **68** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.58). Thought again, and carried on
+- **73** Daniel, in the kitchen: stays where they are because wanting the house to hold (0.54) *(nothing in it either way)*
+- **73** Leo, in the kitchen: stays where they are because wanting the house to hold (0.87). Stayed where they were
+- **75** Daniel, in the kitchen: watches Elena because needing to know what happened (0.99) *(nothing in it either way)*. Watched elena
+- **75** Elena, in the kitchen: stays where they are because wanting the house to hold (0.93). Stayed where they were
+- **75** Leo, in the kitchen: stays where they are because wanting the house to hold (0.85). Thought again, and carried on
+- **75** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.56). Sat with daniel
+- **78** Leo, in the kitchen: stays where they are because wanting the house to hold (0.82). Stayed where they were
+- **79** Daniel, in the kitchen: stays where they are because wanting the house to hold (0.46) *(nothing in it either way)*. Stayed where they were
+- **79** Elena, in the kitchen: stays where they are because wanting the house to hold (0.91). Thought again, and carried on
+- **81** Elena, in the kitchen: stays where they are because wanting the house to hold (0.90). Stayed where they were
+- **83** Daniel, in the kitchen: stays where they are because wanting the house to hold (0.43) *(nothing in it either way)*. Thought again, and carried on
+- **83** Elena, in the kitchen: stays where they are because wanting the house to hold (0.90). Thought again, and carried on
+- **83** Leo, in the kitchen: stays where they are because wanting the house to hold (0.79). Stayed where they were
+- **83** Mara, in the kitchen: sits with Daniel because somebody is not all right (daniel) (0.55)
+- **84** Daniel, in the kitchen: stays where they are because wanting the house to hold (0.43) *(nothing in it either way)*. Stayed where they were
+- **86** Elena, in the kitchen: stays where they are because wanting the house to hold (0.88)
+- **88** Leo, in the kitchen: stays where they are because wanting the house to hold (0.77)
+- **89** Daniel, in the kitchen: watches Mara because needing to know what happened (0.99) *(nothing in it either way)*
 
 At the end: 2 portions left, and Daniel in the kitchen, Elena in the kitchen, Leo in the kitchen, Mara in the kitchen.

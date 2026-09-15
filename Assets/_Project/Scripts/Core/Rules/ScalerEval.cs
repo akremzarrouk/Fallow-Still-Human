@@ -51,6 +51,7 @@ namespace Fallow.Core.Rules
             {
                 double level;
                 string note = null;
+                var answered = false;
                 var drew = new List<int>();
 
                 switch (s.Kind)
@@ -88,7 +89,12 @@ namespace Fallow.Core.Rules
                         }
                         break;
                     case ScalerKind.Memory:
-                        level = Recall(mind, s, ctx, drew);
+                        level = Recall(mind, s, ctx, drew, out var answer);
+                        if (answer != null && level == 0.0)
+                        {
+                            answered = true;
+                            note = " (answered: " + answer.Meaning + " at minute " + answer.Minute + ")";
+                        }
                         break;
                     case ScalerKind.Constant:
                         level = 1.0;
@@ -97,7 +103,7 @@ namespace Fallow.Core.Rules
                         continue;
                 }
 
-                terms.Add(new ScalerTerm(s.Describe(ctx.Resolve) + note, level, s.Factor, drew));
+                terms.Add(new ScalerTerm(s.Describe(ctx.Resolve) + note, level, s.Factor, drew, answered));
             }
 
             return terms;
@@ -120,20 +126,42 @@ namespace Fallow.Core.Rules
         /// Only the day being lived counts. Yesterday works through beliefs and
         /// grudges instead, as it should.
         /// </summary>
-        static double Recall(Mind mind, Scaler s, IScalerContext ctx, List<int> drew)
+        static double Recall(Mind mind, Scaler s, IScalerContext ctx, List<int> drew, out Experience answeredBy)
         {
             var about = ctx.Resolve(s.About);
             var by = ctx.Resolve(s.By);
             var best = 0.0;
             Experience strongest = null;
+            answeredBy = null;
 
-            foreach (var x in mind.Experiences)
+            bool SameSubject(Experience x)
+                => x.Day == ctx.Today
+                   && (s.Topic == null || string.Equals(x.Topic, s.Topic, StringComparison.Ordinal))
+                   && (about == null || string.Equals(x.TargetId, about, StringComparison.Ordinal))
+                   && (by == null || string.Equals(x.ActorId, by, StringComparison.Ordinal));
+
+            var experiences = mind.Experiences;
+            for (var i = 0; i < experiences.Count; i++)
             {
-                if (x.Day != ctx.Today) continue;
+                var x = experiences[i];
+                if (!SameSubject(x)) continue;
                 if (s.Name != null && !string.Equals(x.Meaning, s.Name, StringComparison.Ordinal)) continue;
-                if (s.Topic != null && !string.Equals(x.Topic, s.Topic, StringComparison.Ordinal)) continue;
-                if (about != null && !string.Equals(x.TargetId, about, StringComparison.Ordinal)) continue;
-                if (by != null && !string.Equals(x.ActorId, by, StringComparison.Ordinal)) continue;
+
+                // Answered by anything later about the same subject that carries
+                // one of the readings that answer it. Memories are kept in the
+                // order they were made, so later means further along the list.
+                if (s.Until != null && s.Until.Count > 0)
+                {
+                    Experience answer = null;
+                    for (var j = i + 1; j < experiences.Count; j++)
+                        if (SameSubject(experiences[j]) && s.Until.Contains(experiences[j].Meaning, StringComparer.Ordinal))
+                            answer = experiences[j];
+                    if (answer != null)
+                    {
+                        answeredBy = answer;
+                        continue;
+                    }
+                }
 
                 var pressing = x.Salience * Freshness(x.Minute, ctx);
                 if (pressing <= best) continue;
@@ -143,6 +171,7 @@ namespace Fallow.Core.Rules
             }
 
             if (strongest != null) drew.Add(strongest.TraceId);
+            else if (answeredBy != null) drew.Add(answeredBy.TraceId);
             return best;
         }
 

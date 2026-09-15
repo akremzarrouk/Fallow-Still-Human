@@ -26,7 +26,8 @@
       "disrespect",
       "threat",
       "deception",
-      "neutral"
+      "neutral",
+      "reassurance"
     ],
     "self_meanings": [
       "take_responsibility",
@@ -92,7 +93,8 @@
       "hide_portion",
       "give_portion",
       "show_distress",
-      "find_nothing_left"
+      "find_nothing_left",
+      "steady"
     ],
     "topics": [
       "shelter",

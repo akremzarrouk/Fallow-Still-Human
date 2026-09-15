@@ -196,6 +196,7 @@ namespace Fallow.Core.Data
                     About = s["about"]?.Value<string>(),
                     Topic = s["topic"]?.Value<string>(),
                     By = s["by"]?.Value<string>(),
+                    Until = ReadStrings(s["until"]),
                     Target = s["target"]?.Value<string>(),
                     Factor = s["factor"]?.Value<double>() ?? 0.0
                 });

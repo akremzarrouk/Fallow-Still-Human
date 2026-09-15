@@ -7,21 +7,21 @@ condition is reported separately. Every comparison is paired on the seed.
 
 | Condition | Who | Start sensitivity | Morning sensitivity (mean of 10 seeds) | Lasting share | `avoid_exposure` at start | `avoid_exposure` over morning | Attribution at start | Attribution over morning |
 |---|---|---|---|---|---|---|---|---|
-| daniel_ate_it | daniel | 0.053 | 0.034 | 64 % | +0.209 | +0.024 | 100 % | 70 % |
-| mara_ate_it | mara | 0.069 | 0.075 | 109 % | +0.234 | +0.089 | 100 % | 74 % |
-| daniel_hid_it | daniel | 0.004 | 0.018 | n/a (nothing at the start) | +0.007 | +0.004 | nothing changed | 11 % |
-| elena_fed_mara | elena | 0.001 | 0.033 | n/a (nothing at the start) | 0.000 | +0.039 | nothing changed | 88 % |
+| daniel_ate_it | daniel | 0.053 | 0.022 | 42 % | +0.209 | +0.021 | 100 % | 84 % |
+| mara_ate_it | mara | 0.069 | 0.087 | 126 % | +0.234 | +0.109 | 100 % | 78 % |
+| daniel_hid_it | daniel | 0.004 | 0.011 | n/a (nothing at the start) | +0.007 | +0.003 | nothing changed | 28 % |
+| elena_fed_mara | elena | 0.001 | 0.040 | n/a (nothing at the start) | 0.000 | +0.034 | nothing changed | 82 % |
 
 For scale: two different people in the same world differ at the start by a mean of **0.244** per want.
-Strongest lasting effect: **mara_ate_it/mara**, 0.075 per want, 31 % of the personality gap.
+Strongest lasting effect: **mara_ate_it/mara**, 0.087 per want, 36 % of the personality gap.
 
 ## A. Across seeds
 
 `mara_ate_it`, mara, `avoid_exposure` averaged over the morning, treatment minus control on the same seed, 20 seeds.
 
 - positive on 20 of 20 seeds
-- mean +0.081, standard deviation 0.033, standard error 0.007, mean over standard error 11.1
-- per seed: +0.12 +0.07 +0.10 +0.08 +0.07 +0.06 +0.15 +0.14 +0.03 +0.07 +0.04 +0.07 +0.06 +0.06 +0.09 +0.07 +0.13 +0.04 +0.08 +0.07
+- mean +0.094, standard deviation 0.040, standard error 0.009, mean over standard error 10.5
+- per seed: +0.15 +0.06 +0.18 +0.08 +0.13 +0.08 +0.12 +0.06 +0.11 +0.13 +0.07 +0.05 +0.11 +0.07 +0.06 +0.01 +0.13 +0.08 +0.10 +0.11
 ## A. Attribution at the start
 
 Every want that moved by more than 0.02 at the start, in every design condition, has a reason that leads back to the night.
@@ -34,10 +34,10 @@ With the originating event removed, every person in every design condition on se
 
 | | At the start | Averaged over the morning |
 |---|---|---|
-| Night, with the belief it formed | +0.234 | +0.089 |
-| Night, belief removed | +0.215 | +0.027 |
+| Night, with the belief it formed | +0.234 | +0.109 |
+| Night, belief removed | +0.215 | +0.029 |
 
-Share of the lasting effect carried by the belief: **69 %**.
+Share of the lasting effect carried by the belief: **73 %**.
 ## B. Taking one witness out of the room
 
 `elena_fed_mara` with Mara removed from the witnesses of the night: her belief about Elena 0.00; her feelings and wants identical to the control: True; Elena's wants identical to the full night: True.
@@ -54,19 +54,19 @@ Share of the lasting effect carried by the belief: **69 %**.
 
 | Mara | `avoid_exposure` at start | over the morning | Reads a search as | Fear it stirs |
 |---|---|---|---|---|
-| as written (anxious 0.80, honest 0.55) | +0.234 | +0.089 | threat | 0.63 |
-| anxious 0.20 | +0.251 | +0.035 | threat | 0.33 |
-| honest 0.10 | +0.170 | +0.080 | threat | 0.63 |
+| as written (anxious 0.80, honest 0.55) | +0.234 | +0.109 | threat | 0.63 |
+| anxious 0.20 | +0.251 | +0.044 | threat | 0.33 |
+| honest 0.10 | +0.170 | +0.103 | threat | 0.63 |
 
 The reading of the search comes from the belief and is the same in all three. What it does to her comes from her.
 ## E. Behaviour against the noise floor
 
 | Condition | Who | Night vs no night | No night vs no night | Night vs night | Above the noise |
 |---|---|---|---|---|---|
-| daniel_ate_it | daniel | 0.030 | 0.009 | 0.017 | yes |
-| mara_ate_it | mara | 0.079 | 0.012 | 0.024 | yes |
-| daniel_hid_it | daniel | 0.018 | 0.009 | 0.032 | no |
-| elena_fed_mara | elena | 0.047 | 0.017 | 0.026 | yes |
+| daniel_ate_it | daniel | 0.052 | 0.005 | 0.075 | no |
+| mara_ate_it | mara | 0.173 | 0.051 | 0.014 | yes |
+| daniel_hid_it | daniel | 0.037 | 0.005 | 0.069 | no |
+| elena_fed_mara | elena | 0.036 | 0.014 | 0.021 | yes |
 
 Above the noise means the night-versus-no-night difference is more than one and a half times the larger of the two same-condition differences.
 
@@ -74,6 +74,6 @@ Above the noise means the night-versus-no-night difference is more than one and 
 
 | Condition | Who | Night vs no night | No night vs no night | Night vs night | Above the noise |
 |---|---|---|---|---|---|
-| mara_ate_it | mara | 0.060 | 0.055 | 0.016 | no |
-| elena_fed_mara | elena | 0.069 | 0.064 | 0.051 | no |
+| mara_ate_it | mara | 0.152 | 0.070 | 0.012 | yes |
+| elena_fed_mara | elena | 0.034 | 0.005 | 0.008 | yes |
 

@@ -5,103 +5,103 @@ noise is the larger same-condition difference between the two pools.
 
 | Seeds | Counting | Night vs no night | Noise | Ratio |
 |---|---|---|---|---|
-| 1 to 40 | every decision (the S1.1 measure) | 0.079 | 0.024 | 3.3 |
-| 1 to 40 | decisions, not counting carrying on | 0.088 | 0.025 | 3.6 |
-| 1 to 40 | minutes spent | 0.060 | 0.039 | 1.5 |
-| 41 to 80 | every decision (the S1.1 measure) | 0.060 | 0.055 | 1.1 |
-| 41 to 80 | decisions, not counting carrying on | 0.081 | 0.043 | 1.9 |
-| 41 to 80 | minutes spent | 0.057 | 0.044 | 1.3 |
+| 1 to 40 | every decision (the S1.1 measure) | 0.173 | 0.051 | 3.4 |
+| 1 to 40 | decisions, not counting carrying on | 0.164 | 0.041 | 4.0 |
+| 1 to 40 | minutes spent | 0.153 | 0.042 | 3.6 |
+| 41 to 80 | every decision (the S1.1 measure) | 0.152 | 0.070 | 2.2 |
+| 41 to 80 | decisions, not counting carrying on | 0.134 | 0.072 | 1.9 |
+| 41 to 80 | minutes spent | 0.126 | 0.053 | 2.4 |
 
 ## What the night does to how her morning runs, seeds 1 to 40
 
 | Who | Night | Stopped per morning | ... by what they already felt | ... then carried on | Decisions | Minutes, by kind of action |
 |---|---|---|---|---|---|---|
-| mara | yes | 10.2 | 0.0 | 5.0 | 18.6 | comfort 78 %, search_room 16 %, check_pantry 4 %, go_to 2 % |
-| mara | no | 5.0 | 0.0 | 2.5 | 15.9 | comfort 73 %, search_room 17 %, go_to 7 %, check_pantry 3 % |
-| elena | yes | 10.0 | 0.0 | 6.4 | 23.3 | wait 47 %, comfort 42 %, search_room 6 %, check_pantry 4 % |
-| elena | no | 10.3 | 0.0 | 7.1 | 23.7 | wait 49 %, comfort 47 %, check_pantry 4 %, search_room 0 % |
+| mara | yes | 7.2 | 0.0 | 2.9 | 18.0 | comfort 58 %, search_room 19 %, wait 11 %, go_to 8 %, check_pantry 4 % |
+| mara | no | 3.5 | 0.0 | 0.5 | 15.9 | comfort 44 %, search_room 24 %, go_to 16 %, wait 13 %, check_pantry 3 % |
+| elena | yes | 6.8 | 0.0 | 4.8 | 22.4 | wait 69 %, comfort 21 %, search_room 5 %, check_pantry 4 % |
+| elena | no | 6.6 | 0.0 | 4.7 | 22.3 | wait 70 %, comfort 26 %, check_pantry 4 % |
 
 ## Seeds 41 to 80, one morning each
 
 | Seed | Night | Decisions | Of which carrying on | Most of her morning, by minutes |
 |---|---|---|---|---|
-| 41 | night | 18 | 4 | comfort 69 %, search_room 19 %, go_to 9 % |
-| 42 | night | 19 | 4 | comfort 87 %, search_room 10 %, check_pantry 3 % |
-| 43 | night | 20 | 7 | comfort 84 %, search_room 9 %, check_pantry 4 % |
-| 44 | night | 20 | 6 | comfort 80 %, search_room 13 %, check_pantry 3 % |
-| 45 | night | 20 | 8 | comfort 85 %, search_room 11 %, check_pantry 3 % |
-| 46 | night | 20 | 6 | comfort 79 %, search_room 12 %, go_to 6 % |
-| 47 | night | 18 | 6 | comfort 87 %, search_room 10 %, check_pantry 3 % |
-| 48 | night | 19 | 5 | comfort 85 %, search_room 11 %, check_pantry 3 % |
-| 49 | night | 18 | 4 | comfort 69 %, search_room 18 %, go_to 9 % |
-| 50 | night | 17 | 4 | comfort 73 %, search_room 18 %, check_pantry 4 % |
-| 51 | night | 23 | 10 | comfort 87 %, search_room 10 %, check_pantry 3 % |
-| 52 | night | 18 | 4 | comfort 76 %, search_room 15 %, check_pantry 4 % |
-| 53 | night | 18 | 4 | comfort 84 %, search_room 11 %, check_pantry 4 % |
-| 54 | night | 22 | 9 | comfort 70 %, search_room 19 %, go_to 8 % |
-| 55 | night | 17 | 3 | comfort 79 %, search_room 17 %, check_pantry 4 % |
-| 56 | night | 21 | 9 | comfort 88 %, search_room 9 %, check_pantry 3 % |
-| 57 | night | 17 | 3 | comfort 87 %, search_room 9 %, check_pantry 4 % |
-| 58 | night | 20 | 8 | comfort 83 %, search_room 12 %, check_pantry 4 % |
-| 59 | night | 17 | 1 | comfort 87 %, search_room 10 %, check_pantry 3 % |
-| 60 | night | 19 | 4 | comfort 74 %, search_room 20 %, check_pantry 3 % |
-| 61 | night | 20 | 5 | comfort 79 %, search_room 18 %, check_pantry 3 % |
-| 62 | night | 18 | 5 | comfort 84 %, search_room 11 %, check_pantry 4 % |
-| 63 | night | 16 | 2 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 64 | night | 17 | 3 | comfort 67 %, search_room 19 %, go_to 9 % |
-| 65 | night | 19 | 6 | comfort 85 %, search_room 9 %, check_pantry 4 % |
-| 66 | night | 21 | 7 | comfort 69 %, search_room 19 %, go_to 9 % |
-| 67 | night | 19 | 5 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 68 | night | 20 | 7 | comfort 83 %, search_room 13 %, check_pantry 3 % |
-| 69 | night | 18 | 4 | comfort 76 %, search_room 19 %, check_pantry 4 % |
-| 70 | night | 19 | 6 | comfort 76 %, search_room 19 %, check_pantry 4 % |
-| 71 | night | 18 | 3 | comfort 88 %, search_room 9 %, check_pantry 3 % |
-| 72 | night | 16 | 2 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 73 | night | 19 | 5 | comfort 78 %, search_room 19 %, check_pantry 3 % |
-| 74 | night | 20 | 7 | comfort 83 %, search_room 13 %, check_pantry 3 % |
-| 75 | night | 22 | 6 | comfort 87 %, search_room 10 %, check_pantry 3 % |
-| 76 | night | 16 | 0 | comfort 88 %, search_room 9 %, check_pantry 3 % |
-| 77 | night | 16 | 2 | comfort 79 %, search_room 12 %, check_pantry 4 % |
-| 78 | night | 20 | 7 | comfort 88 %, search_room 9 %, check_pantry 3 % |
-| 79 | night | 20 | 5 | comfort 72 %, search_room 19 %, check_pantry 4 % |
-| 80 | night | 22 | 9 | comfort 88 %, search_room 9 %, check_pantry 3 % |
-| 41 | no night | 15 | 1 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 42 | no night | 14 | 0 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 43 | no night | 18 | 4 | comfort 85 %, search_room 9 %, check_pantry 3 % |
-| 44 | no night | 14 | 0 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 45 | no night | 17 | 3 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 46 | no night | 16 | 3 | comfort 72 %, search_room 18 %, go_to 7 % |
-| 47 | no night | 14 | 0 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 48 | no night | 15 | 2 | comfort 88 %, search_room 9 %, check_pantry 3 % |
-| 49 | no night | 19 | 3 | comfort 84 %, search_room 9 %, check_pantry 3 % |
-| 50 | no night | 12 | 0 | comfort 88 %, search_room 9 %, check_pantry 3 % |
-| 51 | no night | 17 | 4 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 52 | no night | 16 | 2 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 53 | no night | 18 | 5 | comfort 79 %, search_room 12 %, go_to 6 % |
-| 54 | no night | 18 | 4 | comfort 69 %, search_room 19 %, go_to 9 % |
-| 55 | no night | 16 | 3 | comfort 85 %, search_room 9 %, check_pantry 3 % |
-| 56 | no night | 18 | 5 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 57 | no night | 14 | 1 | comfort 88 %, search_room 9 %, check_pantry 3 % |
-| 58 | no night | 18 | 5 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 59 | no night | 20 | 7 | comfort 88 %, search_room 9 %, check_pantry 3 % |
-| 60 | no night | 18 | 4 | comfort 85 %, search_room 10 %, check_pantry 3 % |
-| 61 | no night | 19 | 5 | comfort 83 %, search_room 9 %, go_to 4 % |
-| 62 | no night | 16 | 3 | comfort 81 %, search_room 11 %, go_to 4 % |
-| 63 | no night | 16 | 2 | comfort 60 %, search_room 28 %, go_to 9 % |
-| 64 | no night | 14 | 0 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 65 | no night | 14 | 2 | comfort 88 %, search_room 9 %, check_pantry 3 % |
-| 66 | no night | 14 | 0 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 67 | no night | 15 | 2 | comfort 74 %, search_room 18 %, go_to 4 % |
-| 68 | no night | 13 | 0 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 69 | no night | 14 | 0 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 70 | no night | 16 | 3 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 71 | no night | 18 | 4 | comfort 61 %, search_room 27 %, go_to 9 % |
-| 72 | no night | 16 | 3 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 73 | no night | 18 | 3 | comfort 73 %, search_room 18 %, go_to 6 % |
-| 74 | no night | 15 | 2 | comfort 69 %, search_room 19 %, go_to 9 % |
-| 75 | no night | 14 | 0 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 76 | no night | 14 | 0 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 77 | no night | 19 | 4 | comfort 81 %, search_room 11 %, go_to 4 % |
-| 78 | no night | 18 | 5 | comfort 83 %, search_room 9 %, go_to 4 % |
-| 79 | no night | 17 | 4 | comfort 70 %, search_room 18 %, go_to 9 % |
-| 80 | no night | 14 | 0 | comfort 70 %, search_room 18 %, go_to 9 % |
+| 41 | night | 15 | 0 | comfort 42 %, wait 28 %, search_room 18 % |
+| 42 | night | 18 | 3 | comfort 65 %, search_room 16 %, wait 11 % |
+| 43 | night | 19 | 5 | comfort 70 %, wait 11 %, search_room 10 % |
+| 44 | night | 18 | 4 | comfort 73 %, search_room 13 %, wait 6 % |
+| 45 | night | 16 | 2 | comfort 63 %, search_room 19 %, go_to 9 % |
+| 46 | night | 19 | 4 | comfort 61 %, search_room 22 %, go_to 13 % |
+| 47 | night | 17 | 3 | comfort 60 %, search_room 22 %, go_to 9 % |
+| 48 | night | 18 | 1 | comfort 55 %, search_room 31 %, go_to 10 % |
+| 49 | night | 17 | 3 | comfort 63 %, search_room 18 %, go_to 9 % |
+| 50 | night | 16 | 1 | comfort 73 %, wait 12 %, search_room 9 % |
+| 51 | night | 23 | 3 | wait 35 %, comfort 30 %, search_room 22 % |
+| 52 | night | 16 | 2 | comfort 51 %, search_room 27 %, go_to 18 % |
+| 53 | night | 18 | 4 | comfort 60 %, search_room 18 %, go_to 12 % |
+| 54 | night | 18 | 2 | comfort 55 %, wait 22 %, search_room 15 % |
+| 55 | night | 17 | 4 | comfort 69 %, search_room 18 %, go_to 9 % |
+| 56 | night | 18 | 3 | comfort 60 %, search_room 22 %, go_to 9 % |
+| 57 | night | 16 | 2 | comfort 74 %, wait 10 %, search_room 9 % |
+| 58 | night | 18 | 5 | comfort 56 %, search_room 18 %, wait 11 % |
+| 59 | night | 19 | 4 | comfort 62 %, search_room 20 %, wait 10 % |
+| 60 | night | 17 | 3 | comfort 65 %, search_room 22 %, go_to 9 % |
+| 61 | night | 19 | 3 | comfort 58 %, search_room 22 %, go_to 9 % |
+| 62 | night | 18 | 4 | comfort 56 %, search_room 18 %, wait 11 % |
+| 63 | night | 18 | 1 | comfort 38 %, wait 30 %, search_room 19 % |
+| 64 | night | 17 | 3 | comfort 62 %, search_room 18 %, wait 11 % |
+| 65 | night | 17 | 3 | comfort 63 %, search_room 18 %, go_to 9 % |
+| 66 | night | 22 | 8 | comfort 65 %, search_room 22 %, go_to 9 % |
+| 67 | night | 19 | 4 | comfort 54 %, search_room 22 %, wait 11 % |
+| 68 | night | 18 | 3 | comfort 54 %, search_room 22 %, wait 11 % |
+| 69 | night | 16 | 2 | comfort 87 %, search_room 9 %, check_pantry 4 % |
+| 70 | night | 18 | 4 | comfort 56 %, search_room 18 %, wait 12 % |
+| 71 | night | 17 | 1 | comfort 54 %, search_room 22 %, wait 11 % |
+| 72 | night | 18 | 3 | comfort 54 %, search_room 22 %, wait 11 % |
+| 73 | night | 18 | 2 | comfort 45 %, wait 22 %, search_room 19 % |
+| 74 | night | 17 | 2 | comfort 56 %, search_room 22 %, wait 9 % |
+| 75 | night | 18 | 2 | comfort 60 %, search_room 22 %, go_to 9 % |
+| 76 | night | 18 | 3 | comfort 65 %, search_room 22 %, go_to 9 % |
+| 77 | night | 20 | 3 | comfort 55 %, search_room 18 %, wait 13 % |
+| 78 | night | 16 | 2 | comfort 60 %, search_room 22 %, go_to 9 % |
+| 79 | night | 18 | 4 | comfort 60 %, search_room 18 %, go_to 12 % |
+| 80 | night | 21 | 5 | comfort 46 %, wait 34 %, search_room 13 % |
+| 41 | no night | 16 | 1 | comfort 47 %, wait 22 %, search_room 18 % |
+| 42 | no night | 16 | 1 | comfort 44 %, search_room 27 %, go_to 18 % |
+| 43 | no night | 15 | 0 | comfort 47 %, wait 22 %, search_room 18 % |
+| 44 | no night | 17 | 1 | comfort 34 %, wait 28 %, search_room 21 % |
+| 45 | no night | 16 | 1 | comfort 40 %, search_room 27 %, go_to 18 % |
+| 46 | no night | 17 | 2 | comfort 53 %, search_room 18 %, wait 17 % |
+| 47 | no night | 15 | 0 | comfort 57 %, search_room 18 %, wait 11 % |
+| 48 | no night | 16 | 0 | comfort 42 %, search_room 27 %, go_to 18 % |
+| 49 | no night | 16 | 1 | comfort 46 %, search_room 27 %, go_to 18 % |
+| 50 | no night | 15 | 0 | comfort 53 %, search_room 18 %, wait 17 % |
+| 51 | no night | 15 | 1 | comfort 66 %, search_room 18 %, go_to 9 % |
+| 52 | no night | 16 | 1 | comfort 35 %, search_room 27 %, go_to 18 % |
+| 53 | no night | 16 | 1 | comfort 44 %, wait 26 %, search_room 18 % |
+| 54 | no night | 16 | 1 | comfort 48 %, search_room 18 %, wait 17 % |
+| 55 | no night | 16 | 0 | comfort 44 %, wait 22 %, search_room 18 % |
+| 56 | no night | 17 | 0 | go_to 36 %, comfort 34 %, search_room 27 % |
+| 57 | no night | 16 | 0 | comfort 47 %, wait 22 %, search_room 18 % |
+| 58 | no night | 15 | 1 | comfort 64 %, search_room 18 %, go_to 9 % |
+| 59 | no night | 16 | 0 | comfort 48 %, search_room 18 %, wait 17 % |
+| 60 | no night | 16 | 0 | comfort 47 %, wait 22 %, search_room 18 % |
+| 61 | no night | 14 | 0 | comfort 52 %, search_room 27 %, go_to 18 % |
+| 62 | no night | 18 | 0 | comfort 30 %, go_to 28 %, search_room 27 % |
+| 63 | no night | 16 | 1 | comfort 40 %, search_room 27 %, go_to 18 % |
+| 64 | no night | 16 | 1 | comfort 40 %, search_room 27 %, go_to 18 % |
+| 65 | no night | 15 | 0 | comfort 42 %, search_room 27 %, go_to 22 % |
+| 66 | no night | 17 | 0 | comfort 37 %, wait 22 %, search_room 21 % |
+| 67 | no night | 18 | 1 | wait 30 %, search_room 27 %, comfort 21 % |
+| 68 | no night | 19 | 1 | go_to 33 %, comfort 28 %, search_room 27 % |
+| 69 | no night | 17 | 2 | comfort 38 %, search_room 27 %, go_to 18 % |
+| 70 | no night | 17 | 2 | comfort 47 %, search_room 24 %, go_to 16 % |
+| 71 | no night | 17 | 0 | go_to 33 %, comfort 31 %, search_room 27 % |
+| 72 | no night | 16 | 0 | comfort 43 %, search_room 27 %, go_to 21 % |
+| 73 | no night | 14 | 0 | comfort 64 %, search_room 18 %, go_to 9 % |
+| 74 | no night | 15 | 0 | comfort 53 %, search_room 18 %, wait 17 % |
+| 75 | no night | 16 | 1 | comfort 60 %, search_room 18 %, wait 10 % |
+| 76 | no night | 16 | 1 | comfort 47 %, search_room 27 %, go_to 18 % |
+| 77 | no night | 14 | 0 | comfort 65 %, wait 22 %, search_room 9 % |
+| 78 | no night | 15 | 0 | comfort 60 %, search_room 18 %, go_to 13 % |
+| 79 | no night | 16 | 2 | comfort 66 %, search_room 18 %, go_to 9 % |
+| 80 | no night | 14 | 0 | comfort 60 %, search_room 18 %, wait 10 % |

@@ -10,9 +10,9 @@ where both worlds are identical apart from the person, so any difference there i
 |---|---|
 | First decision: best-scoring option differs from control | 0 of 20 seeds |
 | First decision: chosen option differs from control | 4 of 20 seeds |
-| `avoid_exposure` decisive, with the night | 15 of 368 decisions |
-| `avoid_exposure` decisive, without it | 21 of 326 decisions |
-| Deciding at the same minute in both worlds, and choosing differently | 61 of 120 |
+| `avoid_exposure` decisive, with the night | 19 of 357 decisions |
+| `avoid_exposure` decisive, without it | 2 of 321 decisions |
+| Deciding at the same minute in both worlds, and choosing differently | 66 of 116 |
 
 Score change at minute zero, night minus no night, mean over seeds, largest moves:
 
@@ -49,7 +49,7 @@ Seed 1, first decision, with the night:
 
 Resolution: Ambiguous, tied check_pantry, comfort:daniel, comfort:elena.
 
-Seed 1, the first ten decisions: without `1:comfort:elena 9:check_pantry 12:comfort:elena 20:search_room 28:comfort:elena 36:search_room 44:comfort:elena 52:comfort:elena 60:comfort:daniel 68:comfort:daniel`; with `1:comfort:elena 9:check_pantry 12:check_pantry 13:comfort:elena 14:comfort:daniel 22:comfort:elena 25:comfort:elena 31:comfort:daniel 32:search_room 33:search_room`.
+Seed 1, the first ten decisions: without `1:comfort:elena 9:check_pantry 12:search_room 20:comfort:elena 28:go_to->back_room 32:search_room 40:go_to->kitchen 44:wait 49:comfort:elena 57:comfort:elena`; with `1:comfort:elena 9:check_pantry 12:check_pantry 13:comfort:elena 14:comfort:daniel 22:search_room 25:search_room 31:comfort:daniel 32:comfort:daniel 40:wait`.
 
 ## elena_fed_mara, elena
 
@@ -57,9 +57,9 @@ Seed 1, the first ten decisions: without `1:comfort:elena 9:check_pantry 12:comf
 |---|---|
 | First decision: best-scoring option differs from control | 0 of 20 seeds |
 | First decision: chosen option differs from control | 0 of 20 seeds |
-| `avoid_exposure` decisive, with the night | 0 of 469 decisions |
-| `avoid_exposure` decisive, without it | 0 of 473 decisions |
-| Deciding at the same minute in both worlds, and choosing differently | 46 of 384 |
+| `avoid_exposure` decisive, with the night | 0 of 453 decisions |
+| `avoid_exposure` decisive, without it | 0 of 442 decisions |
+| Deciding at the same minute in both worlds, and choosing differently | 39 of 324 |
 
 Score change at minute zero, night minus no night, mean over seeds, largest moves:
 
@@ -96,7 +96,7 @@ Seed 1, first decision, with the night:
 
 Resolution: Ambiguous, tied comfort:daniel, comfort:mara, check_pantry.
 
-Seed 1, the first ten decisions: without `1:comfort:daniel 9:check_pantry 12:check_pantry 13:wait 18:wait 20:comfort:mara 28:wait 33:wait 36:wait 38:wait`; with `1:comfort:daniel 9:check_pantry 12:check_pantry 13:wait 18:wait 20:comfort:mara 28:wait 33:wait 36:wait 38:wait`.
+Seed 1, the first ten decisions: without `1:comfort:daniel 9:check_pantry 12:check_pantry 13:wait 18:wait 20:comfort:mara 28:wait 33:wait 38:wait 39:wait`; with `1:comfort:daniel 9:check_pantry 12:check_pantry 13:wait 18:wait 20:wait 23:comfort:mara 31:wait 32:wait 36:wait`.
 
 ## daniel_ate_it, daniel
 
@@ -104,9 +104,9 @@ Seed 1, the first ten decisions: without `1:comfort:daniel 9:check_pantry 12:che
 |---|---|
 | First decision: best-scoring option differs from control | 0 of 20 seeds |
 | First decision: chosen option differs from control | 0 of 20 seeds |
-| `avoid_exposure` decisive, with the night | 22 of 383 decisions |
+| `avoid_exposure` decisive, with the night | 0 of 387 decisions |
 | `avoid_exposure` decisive, without it | 0 of 381 decisions |
-| Deciding at the same minute in both worlds, and choosing differently | 107 of 270 |
+| Deciding at the same minute in both worlds, and choosing differently | 68 of 277 |
 
 Score change at minute zero, night minus no night, mean over seeds, largest moves:
 

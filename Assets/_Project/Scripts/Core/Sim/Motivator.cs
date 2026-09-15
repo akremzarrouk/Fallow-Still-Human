@@ -141,7 +141,7 @@ namespace Fallow.Core.Sim
                 var restsOn = new List<int> { parentTraceId };
                 foreach (var t in withReasons.Terms)
                 foreach (var id in t.Drew)
-                    if (t.Amount != 0.0 && !restsOn.Contains(id)) restsOn.Add(id);
+                    if ((t.Amount != 0.0 || t.Answered) && !restsOn.Contains(id)) restsOn.Add(id);
 
                 withReasons.TraceId = trace.Add(
                     TraceKind.Motive, mind.Id, null,

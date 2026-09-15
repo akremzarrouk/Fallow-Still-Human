@@ -531,6 +531,17 @@
       ]
     },
     {
+      "id": "seeing_somebody_hold_together_again",
+      "note": "Added in S1.4. The other half of watching somebody go to pieces: watching them come back. It is the only reading this sight can have, so its weight decides nothing. No feeling follows from it by rule; what it does is answer the memory of having seen them go to pieces, wherever a want reads that memory.",
+      "when": {
+        "actions": [
+          "steady"
+        ]
+      },
+      "label": "reassurance",
+      "base_weight": 1.0
+    },
+    {
       "id": "the_search_is_for_what_you_did",
       "note": "Added in S1.1. Somebody else looking into what went missing, heard by a person who believes they are the reason it went. They hear it closing in. Nobody without the belief reads it this way, and nobody reads their own search this way. How frightening it is, and whether it frightens at all, is left to appraisal and so to temperament.",
       "when": {
