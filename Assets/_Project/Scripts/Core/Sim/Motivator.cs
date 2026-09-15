@@ -100,8 +100,7 @@ namespace Fallow.Core.Sim
                 {
                     var ctx = new DecisionContext(
                         percept, mind.Id, about, today, _rules.Deciding.RecallHalfLife);
-                    var scaled = ScalerEval.Evaluate(rule.ScaledBy, mind, ctx);
-                    var urgency = rule.BaseUrgency + scaled.Sum(t => t.Amount);
+                    var scaled = Weigh(ScalerEval.Evaluate(rule.ScaledBy, mind, ctx), rule.BaseUrgency, out var urgency);
                     if (urgency <= 0.0) continue;
 
                     // Above the knee, more reasons still make a want stronger,
@@ -159,6 +158,54 @@ namespace Fallow.Core.Sim
 
             return final;
         }
+
+        /// <summary>
+        /// How a rule's terms become a want. Before S1.5 there was one way: add
+        /// them up, so that what a person values raises the want at every moment
+        /// whether or not anything has happened (DispositionMode.Standing, still
+        /// the default). S1.5 tests another: a trait or value scales how strongly
+        /// the person responds to what the rule responds to, and raises nothing on
+        /// its own (Respond). In that case each trait and value term is restated
+        /// as what it added to that response, so the terms still sum to the want.
+        /// Gated is an ablation for attribution only.
+        /// </summary>
+        IReadOnlyList<ScalerTerm> Weigh(IReadOnlyList<ScalerTerm> terms, double baseUrgency, out double urgency)
+        {
+            var mode = _rules.Deciding.Dispositions;
+            if (string.Equals(mode, DispositionMode.Standing, StringComparison.Ordinal) || mode == null)
+            {
+                urgency = baseUrgency + terms.Sum(t => t.Amount);
+                return terms;
+            }
+
+            var respondsTo = baseUrgency + terms.Where(t => !IsDisposition(t)).Sum(t => t.Amount);
+            if (respondsTo <= 0.0)
+            {
+                urgency = 0.0;
+                return terms;
+            }
+
+            if (string.Equals(mode, DispositionMode.Gated, StringComparison.Ordinal))
+            {
+                urgency = baseUrgency + terms.Sum(t => t.Amount);
+                return terms;
+            }
+
+            var weighed = terms
+                .Select(t => IsDisposition(t)
+                    ? new ScalerTerm(
+                        t.Description + " (in response to " + respondsTo.ToString("0.00") + ")",
+                        t.Level, t.Factor * respondsTo, t.Drew, t.Answered, t.Kind)
+                    : t)
+                .ToList();
+            urgency = baseUrgency + weighed.Sum(t => t.Amount);
+            return weighed;
+        }
+
+        static bool IsDisposition(ScalerTerm t)
+            => string.Equals(t.Kind, ScalerKind.Trait, StringComparison.Ordinal)
+               || string.Equals(t.Kind, ScalerKind.Value, StringComparison.Ordinal)
+               || string.Equals(t.Kind, ScalerKind.Perceptiveness, StringComparison.Ordinal);
 
         /// <summary>
         /// Who a want is about. A want about the situation has one subject, which

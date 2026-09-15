@@ -64,6 +64,24 @@ namespace Fallow.Core.Rules
     }
 
     /// <summary>
+    /// How the traits and values named in a motivation rule enter the want it
+    /// raises. Added in S1.5 to test whether they are better as dispositions.
+    /// </summary>
+    public static class DispositionMode
+    {
+        /// <summary>They add to the want like any other reason, whatever is happening: a want that is always on. Before S1.5, the only way.</summary>
+        public const string Standing = "standing";
+
+        /// <summary>They scale how strongly the person responds to what the rule responds to, and raise nothing on their own.</summary>
+        public const string Respond = "respond";
+
+        /// <summary>Diagnostic only: they add as in Standing, but only once the rule has something else behind it.</summary>
+        public const string Gated = "gated";
+
+        public static readonly IReadOnlyList<string> All = new[] { Standing, Respond, Gated };
+    }
+
+    /// <summary>
     /// The few numbers that govern deciding and doing, kept as data so that
     /// tuning them is an edit rather than a rebuild.
     /// </summary>
@@ -124,6 +142,13 @@ namespace Fallow.Core.Rules
 
         /// <summary>Minutes each kind of action occupies. Movement is per room crossed.</summary>
         public IReadOnlyDictionary<string, int> ActionMinutes { get; set; } = new Dictionary<string, int>();
+
+        /// <summary>
+        /// How traits and values enter a want (see DispositionMode). The default is
+        /// how every slice before S1.5 raised wants. Added in S1.5 as a diagnostic
+        /// switch, not as a decision: the shipped rules do not set it.
+        /// </summary>
+        public string Dispositions { get; set; } = DispositionMode.Standing;
 
         public int MinutesFor(string actionName, int fallback = 3)
             => actionName != null && ActionMinutes.TryGetValue(actionName, out var m) ? m : fallback;

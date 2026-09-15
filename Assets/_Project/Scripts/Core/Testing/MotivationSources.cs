@@ -139,6 +139,9 @@ namespace Fallow.Core.Testing
         public readonly Dictionary<Source, double> Amounts = new Dictionary<Source, double>();
         public int StandingWithReasons;
 
+        /// <summary>Unsupported wants with no authored belief in them either: raised on traits and values alone.</summary>
+        public int OnTraitsAndValuesAlone;
+
         public readonly Dictionary<string, Dictionary<Support, int>> ClassByMotive = new Dictionary<string, Dictionary<Support, int>>(StringComparer.Ordinal);
         public readonly Dictionary<string, Dictionary<Source, double>> AmountsByMotive = new Dictionary<string, Dictionary<Source, double>>(StringComparer.Ordinal);
         public readonly Dictionary<string, Dictionary<Support, int>> ClassByPerson = new Dictionary<string, Dictionary<Support, int>>(StringComparer.Ordinal);
@@ -175,6 +178,7 @@ namespace Fallow.Core.Testing
                 Raised++;
                 Bump(ByClass, s.Class);
                 if (s.StandingWithReasons) StandingWithReasons++;
+                if (s.Class == Support.Unsupported && s.Authored <= 0.0) OnTraitsAndValuesAlone++;
                 Bump(Nested(ClassByMotive, s.MotiveName), s.Class);
                 Bump(Nested(ClassByPerson, m.CharacterId), s.Class);
                 foreach (Source src in Enum.GetValues(typeof(Source)))

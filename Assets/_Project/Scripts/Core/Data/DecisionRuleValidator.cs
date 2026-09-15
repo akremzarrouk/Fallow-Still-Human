@@ -93,6 +93,9 @@ namespace Fallow.Core.Data
             if (rules.Deciding.AmbiguityBand < 0.0)
                 problems.Add("deciding: the ambiguity band cannot be negative");
 
+            if (!DispositionMode.All.Contains(rules.Deciding.Dispositions))
+                problems.Add("deciding: '" + rules.Deciding.Dispositions + "' is not a way for dispositions to enter a want");
+
             problems.AddRange(NothingIsStranded(rules, vocab));
             return problems;
         }

@@ -3,12 +3,13 @@
 A human-life simulation under changing circumstances. The apocalypse is the
 pressure placed on people; the game is the people.
 
-This repository contains **slices S0, S1, S1.1, S1.2, S1.3 and S1.4**: the causal spine
-of the social simulation, a morning in a house where four people decide for themselves
-what to do, a counterfactual experiment on whether something that happens to a person
-changes what that person wants and does, a pass on the deliberation layer that stands
-between the two, and two tests of what acting on a want does to it, one for a need and
-one for a social want. No dialogue, no player, no 3D.
+This repository contains **slices S0, S1, S1.1, S1.2, S1.3, S1.4 and S1.5**: the causal
+spine of the social simulation, a morning in a house where four people decide for
+themselves what to do, a counterfactual experiment on whether something that happens to a
+person changes what that person wants and does, a pass on the deliberation layer that
+stands between the two, two tests of what acting on a want does to it (one for a need, one
+for a social want), and a diagnostic experiment on whether traits and values should be
+wants at all. No dialogue, no player, no 3D.
 
 - `Docs/slices/S0/review.md` — one event, four people, four different experiences.
 - `Docs/slices/S1/review.md` — what they do about it, and where that fails.
@@ -20,6 +21,8 @@ one for a social want. No dialogue, no player, no 3D.
   eats, and what failing to eat leaves behind.
 - `Docs/slices/S1.4/report.md` — what sitting with somebody does to wanting to look after
   them, and what the house looks like once that want can be answered.
+- `Docs/slices/S1.5/report.md` — traits and values as always-on wants against traits and
+  values as dispositions that shape a response, and what each hides.
 
 Where those documents disagree with the code, the code is right and the reviews say when
 they were written.
@@ -53,12 +56,18 @@ of that is written down anywhere as a fact about them.
     ./run-tests.sh
 
 Runs the EditMode suite headlessly through the Unity CLI and prints a per-test
-summary. Takes about twenty minutes, most of it counterfactual pairs of mornings.
+summary. Takes about forty minutes, most of it counterfactual pairs of mornings and the
+S1.5 comparisons, which run the house three ways.
 Two tests fail since S1.4, the pacing gate and one check in the emergent-moment test.
 Both are regressions that slice caused, explained in its report section 9 and left
 failing rather than loosened.
 Re-running it regenerates everything under `Docs/slices/*/traces` and
 `Docs/slices/S1/batch`.
+
+    python merge-slice-docs.py S1.5
+
+Merges every Markdown file of a slice into `Docs/slices/<slice>/<slice>-all.md`, report
+first. The separate files stay the sources; run it again after they change.
 
 ## The rules that keep it honest
 
@@ -84,15 +93,16 @@ All five are enforced by tests, not by discipline.
 ## Known defects
 
 Recorded in `Docs/slices/S1/review.md` section 5, `Docs/slices/S1.1/report.md` section G,
-`Docs/slices/S1.2/report.md` section 6, `Docs/slices/S1.3/report.md` section 9 and
-`Docs/slices/S1.4/report.md` section 9, and pinned by characterisation tests that say in
-their names that they should be turned round when fixed. The largest now: most of what
-people want is raised every minute by who they are, with nothing in the circumstances
-calling for it. Once S1.4 let the concern behind looking after somebody be answered, that
-standing part was all that was left, and two of the four people became hard to tell apart
-while pacing came back. Standing still is credited for what it avoids, which is unearned.
-And nobody eats in the house as written: for two of the four, no amount of hunger can ever
-outweigh what taking food costs them.
+`Docs/slices/S1.2/report.md` section 6, `Docs/slices/S1.3/report.md` section 9,
+`Docs/slices/S1.4/report.md` section 9 and `Docs/slices/S1.5/report.md` section 5, and
+pinned by characterisation tests that say in their names that they should be turned round
+when fixed. The largest now: traits and values raise wants at every moment with nothing
+calling for them (53 % of all urgency, S1.5). That is the wrong model, and it is still
+shipped because the alternative S1.5 tested exposes what it was hiding. With traits and
+values only shaping responses, people walk back and forth between ends they have already
+found not worth pursuing: nothing registers that a walk's end was declined on arrival, and
+the memory of the opening count never fades. And for two of the four, no amount of hunger
+can ever outweigh what taking food costs them.
 
 `Comfort` still softens another person's feelings directly, as technical debt, and is
 not evidence that the social pipeline works. S1.4 found that people come right about as

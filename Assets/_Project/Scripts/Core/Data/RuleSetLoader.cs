@@ -142,6 +142,7 @@ namespace Fallow.Core.Data
             if (o["urgency_knee"] != null) d.UrgencyKnee = o["urgency_knee"].Value<double>();
             if (o["watching_goes_stale_after"] != null)
                 d.WatchingGoesStaleAfter = o["watching_goes_stale_after"].Value<int>();
+            if (o["dispositions"] != null) d.Dispositions = o["dispositions"].Value<string>();
             d.DistressShows = ReadStrings(o["distress_shows"]);
             d.ComfortSettles = ReadStrings(o["comfort_settles"]);
 
