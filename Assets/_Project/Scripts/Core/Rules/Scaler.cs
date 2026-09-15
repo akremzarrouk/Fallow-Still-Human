@@ -126,9 +126,17 @@ namespace Fallow.Core.Rules
         /// </summary>
         public bool Answered { get; }
 
+        /// <summary>
+        /// What sort of thing this term read (see ScalerKind): a trait, a value, a
+        /// memory, a need. Recorded so that where a want came from can be counted
+        /// rather than guessed from its wording. Null for terms made by hand.
+        /// Added in S1.5.
+        /// </summary>
+        public string Kind { get; }
+
         public ScalerTerm(
             string description, double level, double factor,
-            System.Collections.Generic.IReadOnlyList<int> drew = null, bool answered = false)
+            System.Collections.Generic.IReadOnlyList<int> drew = null, bool answered = false, string kind = null)
         {
             Description = description;
             Level = level;
@@ -136,6 +144,7 @@ namespace Fallow.Core.Rules
             Amount = level * factor;
             Drew = drew ?? new System.Collections.Generic.List<int>();
             Answered = answered;
+            Kind = kind;
         }
 
         public override string ToString() => $"{Description} {Level:0.00} x {Factor:0.00} = {Amount:+0.00;-0.00;0.00}";

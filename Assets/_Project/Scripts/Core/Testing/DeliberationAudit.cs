@@ -88,9 +88,14 @@ namespace Fallow.Core.Testing
 
         public readonly Dictionary<string, int> DecisionsBy = new Dictionary<string, int>(StringComparer.Ordinal);
 
+        /// <param name="alsoWatch">
+        /// Another instrument that wants to see every decision as it is taken, with
+        /// the run it belongs to. Added in S1.5 so that where wants come from can be
+        /// counted on exactly the decisions audited here.
+        /// </param>
         public static DeliberationAudit Run(
             Scenario001Content content, IReadOnlyList<string> variants, int seeds, ulong firstSeed = 1, int? minutes = null,
-            bool weighWants = true)
+            bool weighWants = true, Action<DecisionMoment, Scenario001Run> alsoWatch = null)
         {
             var audit = new DeliberationAudit { _weighWants = weighWants };
             foreach (var variant in variants)
@@ -99,7 +104,11 @@ namespace Fallow.Core.Testing
                 var seed = firstSeed + (ulong)i;
                 var run = Scenario001.Prepare(content, variant, seed);
                 var moments = new List<DecisionMoment>();
-                run.Morning.Decided = m => audit.Look(content, m, moments);
+                run.Morning.Decided = m =>
+                {
+                    audit.Look(content, m, moments);
+                    alsoWatch?.Invoke(m, run);
+                };
                 run.Morning.Run(minutes ?? content.Morning.Minutes);
                 audit.Finish(content, run, variant + "/" + seed, moments);
             }

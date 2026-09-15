@@ -103,7 +103,7 @@ namespace Fallow.Core.Rules
                         continue;
                 }
 
-                terms.Add(new ScalerTerm(s.Describe(ctx.Resolve) + note, level, s.Factor, drew, answered));
+                terms.Add(new ScalerTerm(s.Describe(ctx.Resolve) + note, level, s.Factor, drew, answered, s.Kind));
             }
 
             return terms;
