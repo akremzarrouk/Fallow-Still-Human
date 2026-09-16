@@ -10,7 +10,7 @@ rm -f "$R"
 mkdir -p "$PROJ/Logs"
 
 unity test "$PROJ" --editor-version 6000.3.24f1 --mode EditMode \
-  --format json --no-banner --non-interactive --timeout 3600 >"$LOG" 2>&1
+  --format json --no-banner --non-interactive --timeout 4800 >"$LOG" 2>&1
 CLI_EXIT=$?
 
 if [ ! -f "$R" ]; then

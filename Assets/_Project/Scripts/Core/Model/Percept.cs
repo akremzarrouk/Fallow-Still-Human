@@ -112,6 +112,29 @@ namespace Fallow.Core.Model
         public int DistanceTo(string roomId)
             => _house == null || Room == null ? -1 : _house.Distance(Room.Id, roomId);
 
+        /// <summary>
+        /// Another room as I can imagine it from here, from what I know and
+        /// nothing else: which room it is and whose (knowing my own house is not
+        /// privileged), the rooms I have been through, whether I have looked in
+        /// the pantry, and how hungry I am. Who is there I cannot know, so it
+        /// holds whoever I am told to imagine there. Food kept there I take to be
+        /// within reach, because I have no way of knowing it is not. Added in
+        /// S1.6 so that a walk can be weighed by what could be done at its end.
+        /// </summary>
+        public Percept Imagine(string roomId, IReadOnlyList<string> present, string pantryTag)
+        {
+            if (_house == null) return null;
+            var room = _house.Get(roomId);
+            if (room == null) return null;
+
+            var holdsFood = room.HasTag(pantryTag);
+            return new Percept(
+                CharacterId, Minute, room, present ?? new List<string>(), _house.Adjacent(roomId), Hunger,
+                holdsFood, holdsFood ? (bool?)true : null,
+                RoomsIHaveSearched.Contains(roomId, StringComparer.Ordinal),
+                _house, LookedInThePantryMyself, new List<string>(), RoomsIHaveSearched);
+        }
+
         public override string ToString()
             => CharacterId + " in " + (Room == null ? "nowhere" : Room.Id) + " at minute " + Minute +
                ", with " + (Present.Count == 0 ? "nobody" : string.Join(", ", Present));

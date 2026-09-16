@@ -82,6 +82,26 @@ namespace Fallow.Core.Rules
     }
 
     /// <summary>
+    /// How a walk, the one means in this slice, is credited to a want. Added in
+    /// S1.6 to test whether a means should be weighed by its end.
+    /// </summary>
+    public static class MeansMode
+    {
+        /// <summary>A walk is worth its want, whatever waits at the end. Before S1.6, the only way.</summary>
+        public const string Want = "want";
+
+        /// <summary>
+        /// A walk is credited to a want only if something could be done for that
+        /// want on arrival that would be worth doing, as far as the walker can
+        /// foresee from what they know. What it is worth when it is credited is
+        /// unchanged.
+        /// </summary>
+        public const string End = "end";
+
+        public static readonly IReadOnlyList<string> All = new[] { Want, End };
+    }
+
+    /// <summary>
     /// The few numbers that govern deciding and doing, kept as data so that
     /// tuning them is an edit rather than a rebuild.
     /// </summary>
@@ -149,6 +169,13 @@ namespace Fallow.Core.Rules
         /// switch, not as a decision: the shipped rules do not set it.
         /// </summary>
         public string Dispositions { get; set; } = DispositionMode.Standing;
+
+        /// <summary>
+        /// How a walk is credited to a want (see MeansMode). The default is how
+        /// every slice before S1.6 credited it. Added in S1.6 as a switch the
+        /// shipped rules do not set.
+        /// </summary>
+        public string Means { get; set; } = MeansMode.Want;
 
         public int MinutesFor(string actionName, int fallback = 3)
             => actionName != null && ActionMinutes.TryGetValue(actionName, out var m) ? m : fallback;

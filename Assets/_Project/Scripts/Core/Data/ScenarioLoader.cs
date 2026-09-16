@@ -73,7 +73,10 @@ namespace Fallow.Core.Data
                 ReadStrings(o["witnesses"]),
                 ReadStrings(o["overhearers"]),
                 effects,
-                beliefEffects);
+                beliefEffects,
+                // When in the day it happened, for events on a day with a clock.
+                // Absent, only the order is known, which is right for the backstory.
+                o["minute"]?.Value<int>() ?? -1);
         }
 
         internal static List<string> ReadStrings(JToken node)

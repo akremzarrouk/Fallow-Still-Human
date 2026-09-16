@@ -82,7 +82,7 @@ namespace Fallow.Tests.Core
                 HungerPerMinute = d.HungerPerMinute, PortionRelief = d.PortionRelief, LowPortions = d.LowPortions,
                 DistressShows = d.DistressShows, ComfortSettles = d.ComfortSettles, ComfortSettling = d.ComfortSettling,
                 UrgencyKnee = d.UrgencyKnee, RecallHalfLife = d.RecallHalfLife, WatchingGoesStaleAfter = d.WatchingGoesStaleAfter,
-                ActionMinutes = d.ActionMinutes, Dispositions = d.Dispositions
+                ActionMinutes = d.ActionMinutes, Dispositions = d.Dispositions, Means = d.Means
             };
             change(copy);
             var rules = new RuleSet

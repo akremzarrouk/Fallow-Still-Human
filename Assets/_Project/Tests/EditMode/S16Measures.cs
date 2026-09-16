@@ -186,6 +186,90 @@ namespace Fallow.Tests.Core
         static bool NeedsRead(Scenario001Content c, string motiveName)
             => c.Rules.Motivation.Where(r => r.Motive == motiveName).SelectMany(r => r.ScaledBy).Any(s => s.Kind == "need");
 
+        // ---- conditions ----
+
+        /// <summary>
+        /// M1: the same content with every scripted event of the lived day
+        /// carrying the clock's minute, 0, instead of no minute at all. The four
+        /// such events (the three day-4 events of the backstory and the opening)
+        /// all happen before the morning's first decision.
+        /// </summary>
+        internal static Scenario001Content Timed(Scenario001Content c)
+        {
+            var day = c.Morning.Day;
+            WorldEvent At(WorldEvent e, int minute) => new WorldEvent(
+                e.Id, e.Day, e.Order, e.Kind, e.ActorId, e.TargetId, e.Act, e.Action, e.Topic, e.Tone,
+                e.Directness, e.Valence, e.Intent, e.Summary, e.Witnesses, e.Overhearers,
+                e.LedgerEffects, e.BeliefEffects, minute);
+            WorldEvent Stamp(WorldEvent e) => e != null && e.Day == day && e.Minute < 0 ? At(e, 0) : e;
+
+            var backstory = new ScenarioScript(
+                c.Backstory.Id, c.Backstory.Description, c.Backstory.CharacterIds,
+                c.Backstory.Events.Select(Stamp).ToList());
+            var m = c.Morning;
+            var morning = new MorningScenario(
+                m.Id, m.Description, m.Day, m.Minutes, m.House, m.Portions, m.StartRooms, m.StartHunger,
+                Stamp(m.Opening), m.Variants, m.HeldOutVariants);
+            return new Scenario001Content(c.Vocabulary, c.Cast, backstory, morning, c.Rules);
+        }
+
+        /// <summary>M2: the same content with walks credited to a want the given way (see MeansMode).</summary>
+        internal static Scenario001Content Means(Scenario001Content c, string mode) => S15.Deciding(c, d => d.Means = mode);
+
+        /// <summary>The six conditions of the S1.6 experiment, in the order they are reported.</summary>
+        internal static readonly (string Label, Func<Scenario001Content, Scenario001Content> Make)[] Conditions =
+        {
+            ("A", c => S15.Mode(c, Fallow.Core.Rules.DispositionMode.Standing)),
+            ("A timed", c => Timed(S15.Mode(c, Fallow.Core.Rules.DispositionMode.Standing))),
+            ("B", c => S15.Mode(c, Fallow.Core.Rules.DispositionMode.Respond)),
+            ("B timed", c => Timed(S15.Mode(c, Fallow.Core.Rules.DispositionMode.Respond))),
+            ("B end", c => Means(S15.Mode(c, Fallow.Core.Rules.DispositionMode.Respond), Fallow.Core.Rules.MeansMode.End)),
+            ("B timed end", c => Means(Timed(S15.Mode(c, Fallow.Core.Rules.DispositionMode.Respond)), Fallow.Core.Rules.MeansMode.End))
+        };
+
+        /// <summary>One person's morning, decision by decision, as walks.md printed it.</summary>
+        internal static string Table(Scenario001Content c, string variant, ulong seed, string who)
+        {
+            var run = Scenario001.Prepare(c, variant, seed);
+            var sb = new System.Text.StringBuilder();
+            sb.AppendLine("| Minute | Room | Chose | For | Intention brought in | Wants at 0.10 or more |");
+            sb.AppendLine("|---|---|---|---|---|---|");
+            run.Morning.Decided = m =>
+            {
+                if (m.CharacterId != who) return;
+                var d = m.Decision;
+                var l = d.Leading;
+                sb.AppendLine("| " + m.Minute + " | " + m.Percept.Room.Id + " | " + d.Chosen + " | " + (l == null ? "nothing" : l.Name) + " | " +
+                              (d.Holding == null ? "" : d.Holding.MotiveName + ": " + d.Commitment) + " | " +
+                              string.Join("; ", m.Motives.Where(x => x.Urgency >= 0.1).Select(x => x.Key + " " + x.Urgency.ToString("0.00", CultureInfo.InvariantCulture))) + " |");
+            };
+            run.Morning.Run(c.Morning.Minutes);
+            return sb.ToString();
+        }
+
+        /// <summary>Decisions in a set of mornings where no want added to what was chosen, and what was chosen.</summary>
+        internal static (int Decisions, int Unled, Dictionary<string, int> Chose, int Ambiguous) NothingPressing(Scenario001Content c, IEnumerable<string> variants, ulong firstSeed, int seeds)
+        {
+            var decisions = 0; var unled = 0; var ambiguous = 0;
+            var chose = new Dictionary<string, int>(StringComparer.Ordinal);
+            foreach (var v in variants)
+            for (var seed = firstSeed; seed < firstSeed + (ulong)seeds; seed++)
+            {
+                var run = Scenario001.Prepare(c, v, seed);
+                run.Morning.Decided = m =>
+                {
+                    decisions++;
+                    if (m.Decision.Leading != null) return;
+                    unled++;
+                    if (m.Decision.Resolution == Resolution.Ambiguous) ambiguous++;
+                    chose.TryGetValue(m.Decision.Chosen.KindName, out var n);
+                    chose[m.Decision.Chosen.KindName] = n + 1;
+                };
+                run.Morning.Run(c.Morning.Minutes);
+            }
+            return (decisions, unled, chose, ambiguous);
+        }
+
         /// <summary>Mean urgency of one want per person in ten-minute buckets, over a set of mornings.</summary>
         internal static string Timeline(Scenario001Content c, IEnumerable<string> variants, ulong firstSeed, int seeds, string wantName, int bucket = 10)
         {

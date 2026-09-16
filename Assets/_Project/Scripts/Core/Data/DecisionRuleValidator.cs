@@ -96,6 +96,9 @@ namespace Fallow.Core.Data
             if (!DispositionMode.All.Contains(rules.Deciding.Dispositions))
                 problems.Add("deciding: '" + rules.Deciding.Dispositions + "' is not a way for dispositions to enter a want");
 
+            if (!MeansMode.All.Contains(rules.Deciding.Means))
+                problems.Add("deciding: '" + rules.Deciding.Means + "' is not a way of crediting a walk to a want");
+
             problems.AddRange(NothingIsStranded(rules, vocab));
             return problems;
         }

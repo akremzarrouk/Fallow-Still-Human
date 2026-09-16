@@ -240,52 +240,8 @@ namespace Fallow.Core.Sim
             var dyn = _rules.Deciding;
             var available = ActionCatalog.Available(percept, dyn);
 
-            var appeal = new Dictionary<string, double>(StringComparer.Ordinal);
-            var serves = new Dictionary<string, List<string>>(StringComparer.Ordinal);
-            var parts = new Dictionary<string, List<Contribution>>(StringComparer.Ordinal);
-            var byKey = new Dictionary<string, ActionOption>(StringComparer.Ordinal);
-
-            foreach (var option in available)
-            {
-                byKey[option.Key] = option;
-                appeal[option.Key] = 0.0;
-                serves[option.Key] = new List<string>();
-                parts[option.Key] = new List<Contribution>();
-            }
-
-            foreach (var motive in motives)
-            foreach (var proposal in _rules.Proposals)
-            {
-                if (!string.Equals(proposal.Motive, motive.Name, StringComparison.Ordinal)) continue;
-                if (proposal.When != null && !proposal.When.Matches(percept)) continue;
-
-                foreach (var option in ActionCatalog.Endorsed(proposal, motive, percept, available))
-                {
-                    var contribution = motive.Urgency * proposal.Fit;
-                    if (contribution == 0.0) continue;
-
-                    appeal[option.Key] += contribution;
-                    parts[option.Key].Add(new Contribution(
-                        motive.Key, motive.Name, motive.Urgency, proposal.Fit, proposal.Id, motive.TraceId));
-                    serves[option.Key].Add(
-                        motive.Key + " " + contribution.ToString("0.00") +
-                        " (urgency " + motive.Urgency.ToString("0.00") +
-                        " x fit " + proposal.Fit.ToString("0.00") + ", " + proposal.Id + ")");
-                }
-            }
-
-            var scored = new List<ScoredOption>();
-            foreach (var option in available)
-            {
-                var prices = new List<string>();
-                var cost = PriceOf(option, mind, percept, today, prices);
-                scored.Add(new ScoredOption(option, serves[option.Key], appeal[option.Key], prices, cost, parts[option.Key]));
-            }
-
-            var ranked = scored
-                .OrderByDescending(s => s.Score)
-                .ThenBy(s => s.Option.Key, StringComparer.Ordinal)
-                .ToList();
+            var foresaw = new List<string>();
+            var ranked = Rank(mind, percept, motives, available, today, WeighsMeansByTheirEnds, foresaw);
 
             // Somebody who walked here for a reason weighs what serves that
             // reason, and nothing else, unless the reason has gone, cannot be
@@ -347,6 +303,7 @@ namespace Fallow.Core.Sim
                 { "serves", string.Join("; ", picked.Serves) }
             };
             if (picked.Prices.Count > 0) data["against"] = string.Join("; ", picked.Prices);
+            if (foresaw.Count > 0) data["foresaw"] = string.Join("; ", foresaw);
             if (resolution == Resolution.Ambiguous)
                 data["tied"] = string.Join(", ", band.Select(b => b.Option.Key));
             if (holding != null)
@@ -379,6 +336,108 @@ namespace Fallow.Core.Sim
             if (decision.Forms != null) data["intends"] = decision.Forms.MotiveKey;
 
             return decision;
+        }
+
+        bool WeighsMeansByTheirEnds
+            => string.Equals(_rules.Deciding.Means, MeansMode.End, StringComparison.Ordinal);
+
+        /// <summary>
+        /// Every option worth what the wants it serves add up to, less what it
+        /// costs this person, best first. Used for the room the person is in,
+        /// and, when means are weighed by their ends, for a room they are
+        /// thinking of walking to.
+        /// </summary>
+        List<ScoredOption> Rank(
+            Mind mind, Percept percept, IReadOnlyList<Motive> motives, IReadOnlyList<ActionOption> available,
+            int today, bool lookAhead, List<string> foresaw)
+        {
+            var appeal = new Dictionary<string, double>(StringComparer.Ordinal);
+            var serves = new Dictionary<string, List<string>>(StringComparer.Ordinal);
+            var parts = new Dictionary<string, List<Contribution>>(StringComparer.Ordinal);
+
+            foreach (var option in available)
+            {
+                appeal[option.Key] = 0.0;
+                serves[option.Key] = new List<string>();
+                parts[option.Key] = new List<Contribution>();
+            }
+
+            foreach (var motive in motives)
+            foreach (var proposal in _rules.Proposals)
+            {
+                if (!string.Equals(proposal.Motive, motive.Name, StringComparison.Ordinal)) continue;
+                if (proposal.When != null && !proposal.When.Matches(percept)) continue;
+
+                foreach (var option in ActionCatalog.Endorsed(proposal, motive, percept, available))
+                {
+                    var contribution = motive.Urgency * proposal.Fit;
+                    if (contribution == 0.0) continue;
+
+                    // A walk is a means, and the only one in this slice. Somebody
+                    // who weighs a means by its end asks, before crediting a walk
+                    // to a want, the question they will ask on arrival: could
+                    // anything be done for this want there that would be worth
+                    // doing? If not, the walk is not a way of serving it. What a
+                    // walk is worth when it is credited does not change. Added in
+                    // S1.6; the shipped rules do not set it.
+                    if (lookAhead && option.Kind == ActionKind.GoTo)
+                    {
+                        var end = Foresee(mind, percept, motives, motive, option.DestinationRoomId, today);
+                        var worth = end != null && end.Score > 0.0;
+                        foresaw?.Add(
+                            option.Key + " for " + motive.Key + ": " +
+                            (end == null ? "nothing there serves it" : end.Option.Key + " " + end.Score.ToString("+0.000;-0.000")) +
+                            (worth ? "" : ", not worth walking for"));
+                        if (!worth) continue;
+                    }
+
+                    appeal[option.Key] += contribution;
+                    parts[option.Key].Add(new Contribution(
+                        motive.Key, motive.Name, motive.Urgency, proposal.Fit, proposal.Id, motive.TraceId));
+                    serves[option.Key].Add(
+                        motive.Key + " " + contribution.ToString("0.00") +
+                        " (urgency " + motive.Urgency.ToString("0.00") +
+                        " x fit " + proposal.Fit.ToString("0.00") + ", " + proposal.Id + ")");
+                }
+            }
+
+            var scored = new List<ScoredOption>();
+            foreach (var option in available)
+            {
+                var prices = new List<string>();
+                var cost = PriceOf(option, mind, percept, today, prices);
+                scored.Add(new ScoredOption(option, serves[option.Key], appeal[option.Key], prices, cost, parts[option.Key]));
+            }
+
+            return scored
+                .OrderByDescending(s => s.Score)
+                .ThenBy(s => s.Option.Key, StringComparer.Ordinal)
+                .ToList();
+        }
+
+        /// <summary>
+        /// The best thing that could be done for a want at a destination, other
+        /// than walking on, weighed as it would be on arrival: with every want the
+        /// person has now, priced as this person prices it, on the room as they
+        /// can imagine it from what they know (see Percept.Imagine). Null when
+        /// nothing there would serve the want at all.
+        /// </summary>
+        ScoredOption Foresee(
+            Mind mind, Percept percept, IReadOnlyList<Motive> motives, Motive want, string destination, int today)
+        {
+            var present = want.TargetId == null ? new List<string>() : new List<string> { want.TargetId };
+            var there = percept.Imagine(destination, present, ActionCatalog.PantryTag);
+            if (there == null) return null;
+
+            var could = ActionCatalog.Available(there, _rules.Deciding)
+                .Where(o => o.Kind != ActionKind.GoTo)
+                .ToList();
+
+            return Rank(mind, there, motives, could, today, false, null)
+                .Where(r => r.Contributions.Any(c => c.Amount > 0.0 && string.Equals(c.MotiveKey, want.Key, StringComparison.Ordinal)))
+                .OrderByDescending(r => r.Score)
+                .ThenBy(r => r.Option.Key, StringComparer.Ordinal)
+                .FirstOrDefault();
         }
 
         double PriceOf(
