@@ -2,11 +2,9 @@
 
 Date: 2026-09-16. Status: complete, stopped for review. Two switchable defect fixes, measured
 alone and together on B; the shipped rules are unchanged and do not set either.
-Reproduce with `./run-tests.sh`. **Full-suite tally pending at commit time**: the mechanism,
-experiment and held-out fixtures (`S16MeansTests`, `S16ExperimentTests`, `S16HeldOutTests`)
-were each run individually and pass exactly as reported below; the full suite, which also
-confirms every S1–S1.5 generated file regenerates byte-identical, was still running when this
-was committed and will be confirmed in a follow-up commit.
+Reproduce with `./run-tests.sh`. **350 tests, 348 pass, 2 fail**: the two regressions S1.4
+left failing, unchanged (the pacing gate and the emergent-moment fading check). Every generated
+file for S1 to S1.5 regenerates byte-identical, confirmed by a clean working tree after the run.
 
 | File | What it is |
 |---|---|
