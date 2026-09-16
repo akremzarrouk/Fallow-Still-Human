@@ -3,14 +3,15 @@
 A human-life simulation under changing circumstances. The apocalypse is the
 pressure placed on people; the game is the people.
 
-This repository contains **slices S0, S1, S1.1, S1.2, S1.3, S1.4, S1.5 and S1.6**: the causal
+This repository contains **slices S0, S1, S1.1, S1.2, S1.3, S1.4, S1.5, S1.6 and S1.7**: the causal
 spine of the social simulation, a morning in a house where four people decide for
 themselves what to do, a counterfactual experiment on whether something that happens to a
 person changes what that person wants and does, a pass on the deliberation layer that
 stands between the two, two tests of what acting on a want does to it (one for a need, one
 for a social want), a diagnostic experiment on whether traits and values should be
-wants at all, and a diagnosis of what a walk given up on arrival should change, and where.
-No dialogue, no player, no 3D.
+wants at all, a diagnosis of what a walk given up on arrival should change, and where, and a test of
+whether a past event can change a later decision when the later situation is otherwise the
+same. No dialogue, no player, no 3D.
 
 - `Docs/slices/S0/review.md` — one event, four people, four different experiences.
 - `Docs/slices/S1/review.md` — what they do about it, and where that fails.
@@ -27,6 +28,10 @@ No dialogue, no player, no 3D.
 - `Docs/slices/S1.6/report.md` — why people walk to ends they will not pursue: nothing is
   learned on such a walk, a walk was credited without its end, and four scripted memories
   never aged. Two switchable fixes, and what a silent morning looks like without the loop.
+- `Docs/slices/S1.7/report.md` — whether yesterday changes tomorrow. The same search of her
+  things is a threat to one woman and a slight to the same woman who has watched him do it
+  before, traceably and with no new code. But it takes eleven earlier times to change
+  anything at all, and over a morning the difference is below the noise of the dice.
 
 Where those documents disagree with the code, the code is right and the reviews say when
 they were written.
@@ -100,8 +105,9 @@ All five are enforced by tests, not by discipline.
 Recorded in `Docs/slices/S1/review.md` section 5, `Docs/slices/S1.1/report.md` section G,
 `Docs/slices/S1.2/report.md` section 6, `Docs/slices/S1.3/report.md` section 9,
 `Docs/slices/S1.4/report.md` section 9, `Docs/slices/S1.5/report.md` section 5 and
-`Docs/slices/S1.6/report.md` section 7, and pinned by characterisation tests that say in
-their names that they should be turned round when fixed. The largest now: traits and values
+`Docs/slices/S1.6/report.md` section 7 and `Docs/slices/S1.7/report.md` section 3, and pinned
+by characterisation tests that say in their names that they should be turned round when
+fixed. The largest now: traits and values
 raise wants at every moment with nothing calling for them (53 % of all urgency, S1.5). That
 is the wrong model, and it is still shipped. S1.6 found the cause of the pacing that stopped
 S1.5 shipping the alternative: a walk was credited to a want without asking what could be
@@ -113,6 +119,15 @@ Under them the pacing is gone and every want rests on something that happened, a
 of the four people stand still most of a silent morning, because nothing worth doing is
 left to them. And for two of the four, no amount of hunger can ever outweigh what taking
 food costs them.
+
+S1.7 added two more, neither of which it fixed. **A reading's weight is thrown away**: only
+the winning meaning reaches appraisal, so being read twice as darkly feels exactly the same,
+and a past event can only matter by flipping a reading outright. It took eleven earlier
+slights to flip one, and over a whole morning the difference was below the noise of the dice.
+**And a belief never decays**, so once history lands it never wears off, which is the same
+defect as S1.6's never-fading memory wearing different clothes. The ledger, which ought to
+hold what people have done to each other, is authored rather than simulated: no rule writes
+one, and five of its eight entry kinds are read by nothing.
 
 `Comfort` still softens another person's feelings directly, as technical debt, and is
 not evidence that the social pipeline works. S1.4 found that people come right about as
