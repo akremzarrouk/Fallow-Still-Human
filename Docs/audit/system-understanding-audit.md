@@ -914,7 +914,7 @@ Summed over every decision in fifty mornings, people held 128,117 memories:
 |---|---|---|---|---|
 | `supplies_short` | formed from the opening count, every run | **yes**: raises `guard_supplies` at every decision, and prices eating out for everybody | census (4,066 terms; eat chosen 0 of 3,620); S1.3 | PROVEN |
 | `answerable_for` | formed by the culprit's own act | **yes**: turns other people's searches into threats, which reaches wants and, for Mara, a morning above noise | S1.1 | PROVEN (Mara); FAILED (Daniel) |
-| `tendency(x, treats_me_like_a_child)` / `does_not_respect_me` | formed from slights and kindness | **reading yes, action rarely**: flips a reading after 11 slights; act changed in 2 of 27 circumstances; below noise over a morning | S1.7 | PROVEN for reading; FAILED for behaviour |
+| `tendency(x, treats_me_like_a_child)` / `does_not_respect_me` | formed from slights and kindness | **reading yes, action rarely**: flips a reading after 11 slights; act changed in 2 of 27 circumstances, both seed-settled ties; below noise over a morning | S1.7 | PROVEN for reading; FAILED for behaviour |
 | `role_claim` | authored | **yes**: keeps `find_out` raised for Daniel and Elena with nothing missing | S1.5 section 7 | PROVEN |
 | `tendency(x, needs_to_be_in_charge)` | authored | weights one reading of demands; cannot change | S1.7 E5 | PLAUSIBLE, and inert over time |
 | `more_knowledgeable`, `makes_risky_calls`, `keeps_things_from_me` | authored | **no**: nothing reads them | data census | PROVEN inert |
@@ -1334,7 +1334,7 @@ answered memories (S1.4).
 
 38 markers pin known defects or recorded misses to be turned round when fixed.
 
-**Full-suite result for this audit:** RESULT-PENDING
+**Full-suite result for this audit:** **363 tests, 359 pass, 4 fail.** Two are the regressions S1.4 left failing (the pacing gate and the emergent-moment fading check). The other two, `S14AttributionTests.WhereTheChangeInBehaviourComesFrom` and `S1HeldOutTests.H6_TheFourOfThemStayFourPeopleInEveryCondition`, failed on their wall-clock timeouts, not on an assertion: their recorded durations (1.6 h and 13.6 h, against 69 s and 40 s in the S1.6 run) show the host was suspended during the run, H6's own output reports the prediction held, and re-run alone on the same code both pass (88.5 s and 41.3 s). No generated file for S0 to S1.6 changed.
 
 | Mechanism | Unit tests | Scenario / integration | Behavioural experiment | Knowledge |
 |---|---|---|---|---|
@@ -1344,7 +1344,7 @@ answered memories (S1.4).
 | Emotion decay on the clock | yes | S1.1 locality | S1.7 diagnosis | **PROVEN** |
 | Belief formation from readings | yes | | S1.1, S1.7 | **PROVEN** |
 | Belief changes later reading | | | S1.7 E1, E2 | **PROVEN** |
-| Belief (about people) changes later action | | | S1.7 E6, E7 | **FAILED** (2 of 27; below noise) |
+| Belief (about people) changes later action | | | S1.7 E6, E7 | **FAILED** (2 of 27, both ties; below noise) |
 | Belief (about the world) changes behaviour | | | S1.3, census | **PROVEN** (`supplies_short` prices eating out) |
 | Memory recall shapes wants | yes | | S1.1, S1.4 | **PROVEN** (same day) |
 | Memory ages correctly | | | S1.6 | **FAILED** for scripted events (shipped) |
@@ -1398,7 +1398,7 @@ project has.
 | Reduced differentiation after removing pathology | S1.5-S1.6 | the cast was distinct because of personality | distinctness was standing wants (A) or the loop (B); 0.267, closest pair 0.012 | open |
 | History -> belief -> interpretation | S1.7 | longitudinal effects needed new machinery | a general loop already existed and works | active, shipped |
 | Interpretation strength discarded | S1.7 | a stronger reading lands harder | only the label propagates; a step at 11 slights | **unchanged** |
-| History changes internal state more than action | S1.7 | a changed want changes the act | 2 of 27 circumstances; below noise over a morning | open |
+| History changes internal state more than action | S1.7 | a changed want changes the act | 2 of 27 circumstances, both ties settled by the seed; below noise over a morning | open |
 | Ledger connectivity | S1.7 | the ledger is relationship history | authored only; 5 of 8 entry kinds unread | **unchanged** |
 | **Own morning acts read as a witness would** | **this audit** | actors know what they meant | morning events have no intent; 251 of 251 comforters grateful to themselves | new |
 | **Overhearing never happens in a morning** | **this audit** | walls carry information between rooms | 0 of 1,960 morning events had an overhearer | new |
@@ -1513,7 +1513,7 @@ Ranked by causal importance to believable behaviour, not by difficulty.
 
 | Rank | Compression | Lost | Why it matters | Evidence |
 |---|---|---|---|---|
-| 1 | **All wants -> one summed score per option -> argmax, else a 0.08 coin** | which want an act serves, how urgent the most urgent reason is, and every change smaller than the margin | this is where S1.7's history died (2 of 27 acts changed); breadth beats urgency (nobody eats); 38 % coin | S1, S1.7, census |
+| 1 | **All wants -> one summed score per option -> argmax, else a 0.08 coin** | which want an act serves, how urgent the most urgent reason is, and every change smaller than the margin | this is where S1.7's history died (2 of 27 acts changed, both inside the band); breadth beats urgency (nobody eats); 38 % coin | S1, S1.7, census |
 | 2 | **Many interpretation rules -> one label** (weight, margin, runner-up discarded) | how clearly something was read; whether it was nearly read otherwise | history about people can matter only by flipping a label (11 slights) | S1.7 D4, E2 |
 | 3 | **An event -> a memory of its meaning** (act, tone, valence, context discarded) | what happened, as opposed to what it meant | no reinterpretation; no recall by kind of act; no learning from a pattern of acts | Experience fields |
 | 4 | **A morning act -> an event with no intent** | the actor's own meaning | actors misread themselves; self-gratitude; beliefs about oneself | census |
@@ -1614,7 +1614,7 @@ Recorded, not fixed.
 - **Possible experiment:** S1.8 as a switch, but after item 3 (section 28).
 
 **3. Motivation rarely reaches action.**
-- **Evidence:** S1.7 E6 (2 of 27), E7 (below noise); 38 % ties; summed appeal.
+- **Evidence:** S1.7 E6 (2 of 27, both ties the seed settled: no clear choice changed), E7 (below noise); 38 % ties; summed appeal.
 - **Why it matters:** internal life that never shows is not a life anyone lives through.
 - **Current consequence:** a changed person acts the same.
 - **Confidence:** high that it happens; **unknown why** (baseline, fit, vocabulary, or band).
@@ -1755,7 +1755,7 @@ Recorded, not fixed.
 
 S1.8 would turn the categorical channel into a graded one *at the level of feeling and wanting*. S1.7
 already showed that history changes feelings and wants and seldom changes the act. That happened in
-2 of 27 circumstances, and below noise over a morning. A graded input to a layer that responds as a
+2 of 27 circumstances, both of them ties the seed settled, and below noise over a morning. A graded input to a layer that responds as a
 step function is unlikely to show a behavioural difference. If it shows none, we will not know
 whether S1.8 failed or deliberation hid it. The largest unknown is downstream of S1.8, not upstream.
 

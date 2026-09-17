@@ -136,37 +136,37 @@ Being read *more strongly* is therefore not the same as being read *differently*
 
 The same two arms, in twenty-seven different immediate circumstances: three rooms, three sets of people to be with, three levels of hunger. Nothing about the history or the later event changes between them.
 
-| Room | With her | Hunger | Without the history | With it | Changed |
-|---|---|---|---|---|---|
-| back_room | daniel | 0.10 | wait (keep_peace) | wait (keep_peace) | no |
-| back_room | daniel | 0.60 | go_to->kitchen (keep_peace) | go_to->kitchen (get_food) | no |
-| back_room | daniel | 0.95 | go_to->kitchen (get_food) | go_to->kitchen (get_food) | no |
-| back_room | daniel, mara | 0.10 | wait (keep_peace) | wait (keep_peace) | no |
-| back_room | daniel, mara | 0.60 | go_to->kitchen (keep_peace) | go_to->kitchen (get_food) | no |
-| back_room | daniel, mara | 0.95 | go_to->kitchen (get_food) | go_to->kitchen (get_food) | no |
-| back_room | nobody | 0.10 | wait (keep_peace) | wait (keep_peace) | no |
-| back_room | nobody | 0.60 | wait (keep_peace) | wait (keep_peace) | no |
-| back_room | nobody | 0.95 | go_to->kitchen (get_food) | go_to->kitchen (get_food) | no |
-| kitchen | daniel | 0.10 | check_pantry (find_out) | check_pantry (find_out) | no |
-| kitchen | daniel | 0.60 | check_pantry (find_out) | check_pantry (find_out) | no |
-| kitchen | daniel | 0.95 | check_pantry (find_out) | check_pantry (get_food) | no |
-| kitchen | daniel, mara | 0.10 | check_pantry (find_out) | check_pantry (find_out) | no |
-| kitchen | daniel, mara | 0.60 | check_pantry (find_out) | check_pantry (find_out) | no |
-| kitchen | daniel, mara | 0.95 | check_pantry (find_out) | check_pantry (get_food) | no |
-| kitchen | nobody | 0.10 | wait (keep_peace) | check_pantry (find_out) | **yes** |
-| kitchen | nobody | 0.60 | check_pantry (find_out) | check_pantry (find_out) | no |
-| kitchen | nobody | 0.95 | check_pantry (find_out) | check_pantry (get_food) | no |
-| living_room | daniel | 0.10 | wait (keep_peace) | wait (keep_peace) | no |
-| living_room | daniel | 0.60 | wait (keep_peace) | wait (keep_peace) | no |
-| living_room | daniel | 0.95 | wait (keep_peace) | wait (keep_peace) | no |
-| living_room | daniel, mara | 0.10 | wait (keep_peace) | wait (keep_peace) | no |
-| living_room | daniel, mara | 0.60 | wait (keep_peace) | wait (keep_peace) | no |
-| living_room | daniel, mara | 0.95 | wait (keep_peace) | go_to->kitchen (get_food) | **yes** |
-| living_room | nobody | 0.10 | wait (keep_peace) | wait (keep_peace) | no |
-| living_room | nobody | 0.60 | wait (keep_peace) | wait (keep_peace) | no |
-| living_room | nobody | 0.95 | wait (keep_peace) | wait (keep_peace) | no |
+| Room | With her | Hunger | Without the history | With it | Changed | Both clear |
+|---|---|---|---|---|---|---|
+| back_room | daniel | 0.10 | wait (keep_peace) | wait (keep_peace) | no | no |
+| back_room | daniel | 0.60 | go_to->kitchen (keep_peace) | go_to->kitchen (get_food) | no | no |
+| back_room | daniel | 0.95 | go_to->kitchen (get_food) | go_to->kitchen (get_food) | no | yes |
+| back_room | daniel, mara | 0.10 | wait (keep_peace) | wait (keep_peace) | no | no |
+| back_room | daniel, mara | 0.60 | go_to->kitchen (keep_peace) | go_to->kitchen (get_food) | no | yes |
+| back_room | daniel, mara | 0.95 | go_to->kitchen (get_food) | go_to->kitchen (get_food) | no | yes |
+| back_room | nobody | 0.10 | wait (keep_peace) | wait (keep_peace) | no | no |
+| back_room | nobody | 0.60 | wait (keep_peace) | wait (keep_peace) | no | no |
+| back_room | nobody | 0.95 | go_to->kitchen (get_food) | go_to->kitchen (get_food) | no | yes |
+| kitchen | daniel | 0.10 | check_pantry (find_out) | check_pantry (find_out) | no | yes |
+| kitchen | daniel | 0.60 | check_pantry (find_out) | check_pantry (find_out) | no | yes |
+| kitchen | daniel | 0.95 | check_pantry (find_out) | check_pantry (get_food) | no | yes |
+| kitchen | daniel, mara | 0.10 | check_pantry (find_out) | check_pantry (find_out) | no | yes |
+| kitchen | daniel, mara | 0.60 | check_pantry (find_out) | check_pantry (find_out) | no | yes |
+| kitchen | daniel, mara | 0.95 | check_pantry (find_out) | check_pantry (get_food) | no | yes |
+| kitchen | nobody | 0.10 | wait (keep_peace) | check_pantry (find_out) | **yes** | no |
+| kitchen | nobody | 0.60 | check_pantry (find_out) | check_pantry (find_out) | no | yes |
+| kitchen | nobody | 0.95 | check_pantry (find_out) | check_pantry (get_food) | no | yes |
+| living_room | daniel | 0.10 | wait (keep_peace) | wait (keep_peace) | no | no |
+| living_room | daniel | 0.60 | wait (keep_peace) | wait (keep_peace) | no | no |
+| living_room | daniel | 0.95 | wait (keep_peace) | wait (keep_peace) | no | no |
+| living_room | daniel, mara | 0.10 | wait (keep_peace) | wait (keep_peace) | no | no |
+| living_room | daniel, mara | 0.60 | wait (keep_peace) | wait (keep_peace) | no | no |
+| living_room | daniel, mara | 0.95 | wait (keep_peace) | go_to->kitchen (get_food) | **yes** | no |
+| living_room | nobody | 0.10 | wait (keep_peace) | wait (keep_peace) | no | no |
+| living_room | nobody | 0.60 | wait (keep_peace) | wait (keep_peace) | no | no |
+| living_room | nobody | 0.95 | wait (keep_peace) | wait (keep_peace) | no | no |
 
-**The act she chose differed in 2 of 27 circumstances.** The reason behind the act differed in 7 of 27.
+**The act she chose differed in 2 of 27 circumstances**, and in 0 of those both sides were clear rather than settled by the seed. The reason behind the act differed in 7 of 27.
 
 ## 7. Over a whole morning
 
