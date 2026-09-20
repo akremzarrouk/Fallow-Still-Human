@@ -1,0 +1,140 @@
+{
+  "note": "EXPERIMENT ONLY. Nothing in Fallow.Core loads this file; it is read by IntentionFormationExperimentTests and by nothing else. It is the whole of the hand-authored surface of the intention-formation experiment, and it was written blind: from the shipped character sheets, the shipped rule files and the shipped vocabulary, before a single case was run.\n\nA rule says an intention is AVAILABLE to a set of wants in given circumstances, with a weight that depends on the person. It never says a want MUST express that intention. Two constraints are structural rather than promised: 'when' is the shipped SituationCondition, which has no field for a trait, a value, a feeling or a need, so a circumstance can gate a candidate but can never be the reason one wins; and everything about the person is a scaler, evaluated by the shipped ScalerEval, the same code that weighs an interpretation rule and prices an action.\n\nRules speaking for the same intention add up, as interpretation rules speaking for the same reading do. The heaviest wins, ties broken ordinally, and there is no randomness anywhere.\n\nOnly the six intentions of the shipped vocabulary are used. No label was invented.",
+
+  "candidates": [
+    {
+      "id": "pulling_rank_needs_an_audience",
+      "note": "Nobody pulls rank in an empty room. The want is the same; what makes it authority rather than housekeeping is that somebody is there to see it.",
+      "motives": ["restore_standing", "find_out", "guard_supplies"],
+      "intent": "assert_authority",
+      "when": { "others_present_min": 1 },
+      "base": 0.10,
+      "scaled_by": [
+        { "kind": "trait", "name": "dominant", "factor": 0.45 },
+        { "kind": "value", "name": "control", "factor": 0.35 },
+        { "kind": "belief", "predicate": "role_claim", "args": ["$self", "leads_family"], "factor": 0.30 },
+        { "kind": "trait", "name": "proud", "factor": 0.15 }
+      ]
+    },
+    {
+      "id": "being_the_one_who_decides_it",
+      "note": "Settling a thing because settling things is yours to do. Needs no audience, and rises when you are already angry.",
+      "motives": ["restore_standing", "guard_supplies"],
+      "intent": "assert_authority",
+      "when": {},
+      "base": 0.05,
+      "scaled_by": [
+        { "kind": "value", "name": "control", "factor": 0.25 },
+        { "kind": "belief", "predicate": "role_claim", "args": ["$self", "leads_family"], "factor": 0.25 },
+        { "kind": "emotion", "name": "anger", "target": "$anybody", "factor": 0.30 }
+      ]
+    },
+
+    {
+      "id": "somebody_has_to_do_it",
+      "note": "The plainest reading of one's own act: a job that needed doing. Available to most wants, and strongest in people who are honest and mind about the family.",
+      "motives": ["restore_standing", "find_out", "guard_supplies", "get_food"],
+      "intent": "take_responsibility",
+      "when": {},
+      "base": 0.18,
+      "scaled_by": [
+        { "kind": "trait", "name": "honest", "factor": 0.30 },
+        { "kind": "value", "name": "family_safety", "factor": 0.35 },
+        { "kind": "trait", "name": "cautious", "factor": 0.20 }
+      ]
+    },
+    {
+      "id": "doing_it_where_nobody_is_watching",
+      "note": "Proving it to yourself rather than to them. Only alone, and strongest in the proud, who mind about being right more than about being seen to be.",
+      "motives": ["restore_standing", "find_out"],
+      "intent": "take_responsibility",
+      "when": { "alone": true },
+      "base": 0.22,
+      "scaled_by": [
+        { "kind": "trait", "name": "proud", "factor": 0.25 },
+        { "kind": "value", "name": "respect", "factor": 0.20 }
+      ]
+    },
+
+    {
+      "id": "so_that_they_know_too",
+      "note": "Finding out on behalf of the room rather than for yourself. Needs somebody to tell.",
+      "motives": ["find_out", "look_after", "keep_peace"],
+      "intent": "share_information",
+      "when": { "others_present_min": 1 },
+      "base": 0.12,
+      "scaled_by": [
+        { "kind": "trait", "name": "honest", "factor": 0.40 },
+        { "kind": "value", "name": "closeness", "factor": 0.30 },
+        { "kind": "value", "name": "fairness", "factor": 0.20 }
+      ]
+    },
+
+    {
+      "id": "standing_between_them_and_it",
+      "note": "Putting yourself in the way of something, which takes somebody to put yourself in front of.",
+      "motives": ["look_after", "keep_peace", "avoid_exposure"],
+      "intent": "protect",
+      "when": { "others_present_min": 1 },
+      "base": 0.15,
+      "scaled_by": [
+        { "kind": "trait", "name": "empathetic", "factor": 0.40 },
+        { "kind": "value", "name": "family_safety", "factor": 0.35 },
+        { "kind": "emotion", "name": "anxiety", "target": "$anybody", "factor": 0.30 }
+      ]
+    },
+    {
+      "id": "keeping_it_off_them",
+      "note": "Shielding somebody from a thing they are not in the room for.",
+      "motives": ["look_after", "guard_supplies"],
+      "intent": "protect",
+      "when": {},
+      "base": 0.10,
+      "scaled_by": [
+        { "kind": "trait", "name": "empathetic", "factor": 0.30 },
+        { "kind": "value", "name": "closeness", "factor": 0.25 }
+      ]
+    },
+
+    {
+      "id": "not_making_a_scene_of_it",
+      "note": "Defusing. Needs a scene to not make. The dominant factor is negative on purpose: a dominant person does not defuse, they settle it.",
+      "motives": ["keep_peace", "avoid_exposure", "look_after"],
+      "intent": "prevent_argument",
+      "when": { "others_present_min": 1 },
+      "base": 0.15,
+      "scaled_by": [
+        { "kind": "trait", "name": "cautious", "factor": 0.35 },
+        { "kind": "value", "name": "closeness", "factor": 0.30 },
+        { "kind": "trait", "name": "dominant", "factor": -0.25 }
+      ]
+    },
+    {
+      "id": "letting_it_go_for_now",
+      "note": "Choosing not to have it out, with nobody there to have it out with yet.",
+      "motives": ["keep_peace", "restore_standing"],
+      "intent": "prevent_argument",
+      "when": { "alone": true },
+      "base": 0.08,
+      "scaled_by": [
+        { "kind": "trait", "name": "cautious", "factor": 0.25 },
+        { "kind": "trait", "name": "anxious", "factor": 0.20 }
+      ]
+    },
+
+    {
+      "id": "what_you_did_in_the_night",
+      "note": "The one intention that is about the past rather than the present. It is reachable only by somebody who believes they are answerable for the missing can, which is a belief and not a rule.",
+      "motives": ["get_food", "avoid_exposure"],
+      "intent": "took_what_was_not_mine",
+      "when": {},
+      "base": 0.05,
+      "scaled_by": [
+        { "kind": "belief", "predicate": "answerable_for", "args": ["$self", "missing_can"], "factor": 0.60 },
+        { "kind": "trait", "name": "honest", "factor": 0.30 },
+        { "kind": "value", "name": "fairness", "factor": 0.25 },
+        { "kind": "emotion", "name": "shame", "target": "$anybody", "factor": 0.30 }
+      ]
+    }
+  ]
+}
