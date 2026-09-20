@@ -327,7 +327,9 @@ That is left exactly where it is, for review.
 
 Reproduce with `./run-tests.sh`, or the fixture alone with
 `unity test . --mode EditMode --filter IntentionFormationExperimentTests`. It
-takes about a minute. Suite: PENDING.
+takes about a minute.
+
+**Suite: 414 tests, 412 pass, 2 fail** — the two regressions S1.4 left failing, unchanged (the pacing gate, still 7 on Model A, and the emergent-moment fading check). 401 before these two experiments, plus their seven and six tests, is exactly 414. **Every generated document of S0 to S1.7 and of the seven earlier experiments regenerated with identical content**; the only change anywhere in the repository was the wall-clock seconds in the decision-sensitivity results, and one file that differed in line endings only.
 
 ---
 
