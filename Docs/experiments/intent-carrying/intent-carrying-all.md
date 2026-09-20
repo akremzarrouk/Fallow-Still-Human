@@ -19,7 +19,7 @@ experiment. The only change to `Fallow.Core` is a hook that lets an act's event 
 person took themselves to be doing, and the event field it fills, which is null unless an
 experiment sets it. No rule, number, want, action, appraisal or interpretation was changed, and
 no want-to-meaning mapping was shipped.
-Reproduce with `./run-tests.sh`. **Suite: PENDING.**
+Reproduce with `./run-tests.sh`. **394 tests, 392 pass, 2 fail**: the two regressions S1.4 left failing, unchanged (the pacing gate, still 7 on Model A, and the emergent-moment fading check). **Every generated document of S0 to S1.7 and the audit regenerated with identical content**; the only content change anywhere was the wall-clock seconds in the decision-sensitivity results, and one file differed in line endings only.
 
 | File | What it is |
 |---|---|
@@ -191,7 +191,9 @@ later decision        go_to->back_room -> observe:elena, and 61 of 72 decisions 
 ```
 
 **The social path, which was not predicted.** In case A the largest part of the effect did not
-stay inside Daniel:
+stay inside Daniel. (Whether the feeling became visible was measured after this report was first
+written; it did in case A, at minute 12, seen by Elena, Leo and Mara, and it did **not** in case
+B, where two later decisions differed anyway, by a route this experiment does not establish.)
 
 1. His anger (0.61) became his strongest feeling, and anger is one of the feelings that show.
 2. `ShowWhatShows` made a `show_distress` event about him, in the room.
@@ -285,7 +287,7 @@ restores the baseline), P10 (salience rose only where something was stirred).
 | The memory changes with it | **PROVEN** (373 of 373) |
 | A carried meaning can change appraisal, emotion, motivation and the act chosen | **PROVEN** for `assert_authority` (case A: anger 0.61, four wants moved, the act changed, 61 of 72 decisions differed) |
 | A carried meaning does so only where a rule already reads that meaning | **PROVEN** on this pair (`take_responsibility`: 367 acts, nothing stirred) |
-| The main route from a private meaning to behaviour is **social**, through the feeling showing | **PLAUSIBLE**, strongly supported by case A, seen in 2 cases of 2 where anything moved at all |
+| The main route from a private meaning to behaviour is **social**, through the feeling showing | **PLAUSIBLE for case A, and not general.** Measured afterwards: in case A the anger showed at minute 12 and was seen by all three others, and the large effect followed. In case B it **never showed**, and two decisions still differed later, by somebody else, which this experiment cannot attribute |
 | Under a plausible mapping the effect on behaviour is small | **PLAUSIBLE** (1 morning of 50; 0 immediate act changes of 373), on a sample of 6 acts that could stir anything |
 | Preserving intent alone is sufficient to make the life different | **FAILED** |
 | The pairing of a want to a meaning | **UNPROVEN** and not attempted: no evidence here says which meaning a want expresses |
@@ -430,6 +432,7 @@ For each case: the baseline (no intent), the same act carrying `take_responsibil
 | **Wants** there | find_out 0.668, get_food 0.605, guard_supplies 0.426, avoid_exposure 0.212, restore_standing 0.190, keep_peace 0.093 | find_out 0.668, get_food 0.605, guard_supplies 0.426, avoid_exposure 0.212, restore_standing 0.190, keep_peace 0.093 | find_out 0.668, get_food 0.605, look_after:elena 0.575, look_after:mara 0.575, restore_standing 0.485, guard_supplies 0.426, avoid_exposure 0.408, keep_peace 0.401 |
 | **Options** there | go_to->back_room +0.426; wait +0.175; observe:elena +0.167; observe:leo +0.167 | go_to->back_room +0.426; wait +0.175; observe:elena +0.167; observe:leo +0.167 | go_to->back_room +0.524; observe:elena +0.472; observe:mara +0.472; wait +0.329 |
 | **Chose** there | go_to->back_room for find_out, clear by 0.251 | go_to->back_room for find_out, clear by 0.251 | observe:elena for find_out, the seed settled it |
+| **Did what it stirred become visible?** | no | no | m12, seen by elena, leo, mara |
 | **What else reached the actor in the same minute** | nothing | nothing | m12 show_distress to daniel -> not perceived; m12 show_distress to elena -> concern; m12 show_distress to mara -> concern |
 | **What others made of the search** | elena: challenge (witnessed); leo: neutral (witnessed); mara: neutral (witnessed) | elena: challenge (witnessed); leo: neutral (witnessed); mara: neutral (witnessed) | elena: challenge (witnessed); leo: neutral (witnessed); mara: neutral (witnessed) |
 | **The rest of the morning** | - | identical to the baseline | 61 of 72 decisions differ; first at act 12: min 12 daniel go_to->back_room in kitchen because find_out  ->  min 12 daniel observe:elena in kitchen because find_out |
@@ -446,6 +449,7 @@ For each case: the baseline (no intent), the same act carrying `take_responsibil
 | **Wants** there | get_food 0.827, guard_supplies 0.373, restore_standing 0.150, find_out 0.137, avoid_exposure 0.129 | get_food 0.827, guard_supplies 0.373, restore_standing 0.150, find_out 0.137, avoid_exposure 0.129 | get_food 0.827, guard_supplies 0.373, restore_standing 0.282, find_out 0.137, avoid_exposure 0.129 |
 | **Options** there | go_to->kitchen +0.407; wait +0.170; go_to->back_room +0.001; go_to->hallway -0.160 | go_to->kitchen +0.407; wait +0.170; go_to->back_room +0.001; go_to->hallway -0.160 | go_to->kitchen +0.407; wait +0.170; go_to->back_room +0.001; go_to->hallway -0.160 |
 | **Chose** there | go_to->kitchen for get_food, clear by 0.236 | go_to->kitchen for get_food, clear by 0.236 | go_to->kitchen for get_food, clear by 0.236 |
+| **Did what it stirred become visible?** | no | no | no |
 | **What else reached the actor in the same minute** | nothing | nothing | nothing |
 | **What others made of the search** | daniel: concern (overheard); elena: challenge (overheard); leo: concern (overheard) | daniel: concern (overheard); elena: challenge (overheard); leo: concern (overheard) | daniel: concern (overheard); elena: challenge (overheard); leo: concern (overheard) |
 | **The rest of the morning** | - | identical to the baseline | 2 of 83 decisions differ; first at act 80: min 89 elena comfort:mara in kitchen because look_after:mara  ->  min 89 elena wait in kitchen because keep_peace |

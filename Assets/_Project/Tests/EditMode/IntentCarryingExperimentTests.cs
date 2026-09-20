@@ -213,6 +213,15 @@ namespace Fallow.Tests.Core
             return r.Summary + " (weight " + weight + ", runner-up " + runner + ")";
         }
 
+        /// <summary>Whether what the act stirred became visible in the room afterwards, and to whom.</summary>
+        static string Showed(Watch w, string who, int from)
+        {
+            var shown = w.Events.Where(e => e.Action == "show_distress" && e.TargetId == who && e.Minute >= from).ToList();
+            if (shown.Count == 0) return "no";
+            return string.Join("; ", shown.Take(3).Select(e => "m" + e.Minute + ", seen by " + string.Join(", ", e.Witnesses)))
+                   + (shown.Count > 3 ? "; and " + (shown.Count - 3) + " more" : "");
+        }
+
         /// <summary>Everything else the actor perceived between their act becoming an event and their next decision.</summary>
         static string Between(Watch w, string who, WorldEvent act, int until)
         {
@@ -351,6 +360,7 @@ namespace Fallow.Tests.Core
                 sb.AppendLine("| **Wants** there | " + string.Join(" | ", afters.Select(s => string.Join(", ", s.Wants.OrderByDescending(x => x.Value).Select(x => x.Key + " " + F(x.Value))))) + " |");
                 sb.AppendLine("| **Options** there | " + string.Join(" | ", afters.Select(s => s.Options)) + " |");
                 sb.AppendLine("| **Chose** there | " + string.Join(" | ", afters.Select(s => s.Chosen + " for " + (s.Leading ?? "nothing") + (s.Ambiguous ? ", the seed settled it" : ", clear by " + F(s.Margin)))) + " |");
+                sb.AppendLine("| **Did what it stirred become visible?** | " + string.Join(" | ", arms.Select((w, i) => Showed(w, c.Who, events[i].Minute))) + " |");
                 sb.AppendLine("| **What else reached the actor in the same minute** | " + string.Join(" | ", arms.Select((w, i) => Between(w, c.Who, events[i], afters[i].Minute))) + " |");
                 sb.AppendLine("| **What others made of the search** | " + string.Join(" | ", arms.Select((w, i) => string.Join("; ", events[i].Witnesses.Concat(events[i].Overhearers).Select(p => p + ": " + ReadingOf(w, p, events[i]).Split(',')[0])))) + " |");
                 sb.AppendLine("| **The rest of the morning** | - | " + string.Join(" | ", arms.Skip(1).Select(w => FirstDifference(c.Baseline, w) == "none" ? "identical to the baseline" : DecisionsDiffering(c.Baseline, w) + " of " + c.Baseline.Decisions.Count + " decisions differ; first at " + FirstDifference(c.Baseline, w))) + " |");

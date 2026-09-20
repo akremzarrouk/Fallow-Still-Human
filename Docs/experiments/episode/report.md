@@ -4,7 +4,7 @@ Date: 2026-09-20. Status: complete, stopped for review. **Not a system audit and
 Nothing in `Fallow.Core` and nothing in the data was changed: no rule, number, want, action,
 meaning or mapping. Two events are put into a live morning through `SilentMorning.Happen`,
 which already existed for experiments, and everything between and after them is the simulation.
-Reproduce with `./run-tests.sh`. **Suite: PENDING.**
+Reproduce with `./run-tests.sh`. **394 tests, 392 pass, 2 fail**: the two regressions S1.4 left failing, unchanged (the pacing gate, still 7 on Model A, and the emergent-moment fading check). **Every generated document of S0 to S1.7 and the audit regenerated with identical content**; the only content change anywhere was the wall-clock seconds in the decision-sensitivity results, and one file differed in line endings only.
 
 | File | What it is |
 |---|---|

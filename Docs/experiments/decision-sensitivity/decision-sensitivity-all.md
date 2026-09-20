@@ -734,7 +734,7 @@ Every decision of the five design conditions (`daniel_ate_it`, `daniel_hid_it`, 
 | Want and decision pairs moved | 3001 | 3718 | 3331 |
 | ... of which the want had been raised | 1839 | 3531 | 3187 |
 | Decisions weighed | 93,532 | 125,754 | 110,819 |
-| Seconds | 195 | 272 | 160 |
+| Seconds | 199 | 277 | 162 |
 
 ##### 1.2 What moving one want across its whole range does
 
