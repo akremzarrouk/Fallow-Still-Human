@@ -54,6 +54,10 @@ same. No dialogue, no player, no 3D.
   context-sensitive intention without a table that maps one to the other. Ten authored rules over
   the existing machinery: six of seven wants come out many-valued on cases they were never
   written against, and the one that does not fails for a reason worth keeping.
+- `Docs/experiments/intention-generalization/report.md` — whether those ten rules are a reusable
+  function of a person or a table fitted to four of them. Frozen and run against 2,187 profiles
+  nobody designed: they generalize, and they rank by a sum, which a duplicate rule can move
+  without anything about the person changing.
 
 Where those documents disagree with the code, the code is right and the reviews say when
 they were written.

@@ -56,7 +56,8 @@ were committed together, in one commit, before any of it was run.
 mechanism behaved as a lookup table, which is the failure mode the brief names.
 The cause is visible in the rules and is not a tuning accident: `protect` has two
 candidates and one of them needs no circumstance at all, while its competitors
-have one each. Two rules beat one, for the same reason the previous experiment
+have one each. Two rules beat one (**refined later**: it is the summed weight and
+not the count — see `Docs/experiments/intention-generalization/`), for the same reason the previous experiment
 found an intention's effect size tracking its reader count. The pathology
 followed me from one layer to the next.
 

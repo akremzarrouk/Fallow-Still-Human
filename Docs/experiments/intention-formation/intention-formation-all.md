@@ -207,6 +207,13 @@ names. The cause is legible in the file and is not a tuning accident: `protect`
 has two candidate rules and one of them needs no circumstance at all, while its
 two competitors have one rule each. Two rules beat one.
 
+> **Refined by a later measurement, not retracted.** The generalization experiment
+> separated the two things this sentence runs together. Cloning a rule (more rules,
+> double the weight) changed 2,898 outcomes; splitting a rule in half (more rules,
+> the same weight) changed **0**. So what beats one rule is the total weight, and a
+> second rule is only one way of adding it. The description of this case stands; the
+> mechanism it names does not. See `Docs/experiments/intention-generalization/`.
+
 This is the same pathology the previous experiment found one layer down, where an
 intention's effect size tracked how many appraisal rules happened to name it.
 **It followed me from the reader layer into the selector layer**, which is worth
@@ -1022,7 +1029,8 @@ were committed together, in one commit, before any of it was run.
 mechanism behaved as a lookup table, which is the failure mode the brief names.
 The cause is visible in the rules and is not a tuning accident: `protect` has two
 candidates and one of them needs no circumstance at all, while its competitors
-have one each. Two rules beat one, for the same reason the previous experiment
+have one each. Two rules beat one (**refined later**: it is the summed weight and
+not the count — see `Docs/experiments/intention-generalization/`), for the same reason the previous experiment
 found an intention's effect size tracking its reader count. The pathology
 followed me from one layer to the next.
 
