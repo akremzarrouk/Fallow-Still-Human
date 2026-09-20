@@ -18,7 +18,7 @@ namespace Fallow.Tests.Core
         static Scenario001Content _content;
 
         [OneTimeSetUp]
-        public void Load() => _content = Scenario001Content.Load(TestPaths.DataRoot);
+        public void Load() => _content = Baselines.ModelA();
 
         Scenario001Run Fresh(string variant = "daniel_ate_it", ulong seed = 3)
             => Scenario001.Prepare(_content, variant, seed);

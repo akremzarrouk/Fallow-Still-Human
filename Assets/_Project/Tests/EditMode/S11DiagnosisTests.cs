@@ -23,7 +23,7 @@ namespace Fallow.Tests.Core
         static Scenario001Content _content;
 
         [OneTimeSetUp]
-        public void Load() => _content = Scenario001Content.Load(TestPaths.DataRoot);
+        public void Load() => _content = Baselines.ModelA();
 
         static IReadOnlyList<string> Motives => _content.Vocabulary.Set("motives").ToList();
 

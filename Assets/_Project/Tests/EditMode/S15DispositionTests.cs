@@ -183,7 +183,7 @@ namespace Fallow.Tests.Core
         [Test]
         public void TheShippedRulesKeepTheStandingModeAndEveryModeIsValid()
         {
-            var content = Scenario001Content.Load(TestPaths.DataRoot);
+            var content = Baselines.ModelA();
             Assert.AreEqual(DispositionMode.Standing, content.Rules.Deciding.Dispositions, "S1.5 is a diagnostic; the shipped rules do not change");
 
             foreach (var mode in DispositionMode.All)

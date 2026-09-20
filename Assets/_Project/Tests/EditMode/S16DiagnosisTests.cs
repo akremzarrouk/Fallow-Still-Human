@@ -30,7 +30,7 @@ namespace Fallow.Tests.Core
         [OneTimeSetUp]
         public void Load()
         {
-            _content = Scenario001Content.Load(TestPaths.DataRoot);
+            _content = Baselines.ModelA();
             _b = S15.Mode(_content, DispositionMode.Respond);
             _variants = _content.Morning.Variants.Select(v => v.Id).ToList();
         }

@@ -27,7 +27,7 @@ namespace Fallow.Tests.Core
         [Test, Timeout(3600000)]
         public void WhatTheWalksAreForAndWhatTheyTurnInto()
         {
-            var content = Scenario001Content.Load(TestPaths.DataRoot);
+            var content = Baselines.ModelA();
             var variants = content.Morning.Variants.Select(v => v.Id).ToList();
             var sb = new StringBuilder();
             sb.AppendLine("# S1.5: what the walks are for, and what they turn into");

@@ -150,7 +150,7 @@ namespace Fallow.Tests.Core
     public class PerceptTests
     {
         static Scenario001Run Fresh()
-            => Scenario001.Prepare(Scenario001Content.Load(TestPaths.DataRoot), "daniel_ate_it", 7);
+            => Scenario001.Prepare(Baselines.ModelA(), "daniel_ate_it", 7);
 
         [Test]
         public void WhatISeeIsMyRoomAndTheRoomOnly()

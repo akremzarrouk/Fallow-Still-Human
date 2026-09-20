@@ -113,6 +113,7 @@
     "id": "m000-open",
     "day": 4,
     "order": 1000,
+    "minute": 0,
     "type": "action",
     "actor": "elena",
     "target": null,

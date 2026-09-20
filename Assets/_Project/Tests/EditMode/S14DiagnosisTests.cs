@@ -26,7 +26,7 @@ namespace Fallow.Tests.Core
         const int Seeds = 10;
 
         [OneTimeSetUp]
-        public void Load() => _content = Scenario001Content.Load(TestPaths.DataRoot);
+        public void Load() => _content = Baselines.ModelA();
 
         [OneTimeTearDown]
         public void Write()

@@ -34,7 +34,7 @@ namespace Fallow.Tests.Core
         [OneTimeSetUp]
         public void Load()
         {
-            _content = Scenario001Content.Load(TestPaths.DataRoot);
+            _content = Baselines.ModelA();
             _plenty = S13DiagnosisTests.Plenty(_content, 10, false);
         }
 

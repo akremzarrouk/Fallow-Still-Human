@@ -31,7 +31,7 @@ namespace Fallow.Tests.Core
         [OneTimeSetUp]
         public void Load()
         {
-            _content = Scenario001Content.Load(TestPaths.DataRoot);
+            _content = Baselines.ModelA();
             foreach (var (label, make) in S16.Conditions) _conditions[label] = make(_content);
         }
 

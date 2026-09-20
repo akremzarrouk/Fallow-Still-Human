@@ -31,7 +31,7 @@ namespace Fallow.Tests.Core
         static readonly List<string> _findings = new List<string>();
 
         [OneTimeSetUp]
-        public void Load() => _content = Scenario001Content.Load(TestPaths.DataRoot);
+        public void Load() => _content = Baselines.ModelA();
 
         [OneTimeTearDown]
         public void WriteWhatHappened()

@@ -95,7 +95,7 @@ namespace Fallow.Tests.Core
         [Test, Timeout(1800000)]
         public void Census()
         {
-            var content = Scenario001Content.Load(TestPaths.DataRoot);
+            var content = Baselines.ModelA();
             var variants = content.Morning.Variants.Select(v => v.Id).ToList();
             var sb = new StringBuilder();
             sb.AppendLine("# Audit census: what actually fires on the shipped rules");

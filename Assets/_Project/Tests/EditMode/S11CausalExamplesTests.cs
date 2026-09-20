@@ -24,7 +24,7 @@ namespace Fallow.Tests.Core
         [OneTimeSetUp]
         public void Load()
         {
-            _content = Scenario001Content.Load(TestPaths.DataRoot);
+            _content = Baselines.ModelA();
             _report.Clear();
             _report.AppendLine("# S1.1 causal examples");
             _report.AppendLine();

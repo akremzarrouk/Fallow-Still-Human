@@ -572,6 +572,8 @@
     },
     "recall_half_life": 20,
     "watching_goes_stale_after": 15,
-    "urgency_knee": 0.85
+    "urgency_knee": 0.85,
+    "dispositions": "respond",
+    "means": "end"
   }
 }

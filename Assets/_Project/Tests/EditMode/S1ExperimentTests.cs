@@ -32,7 +32,7 @@ namespace Fallow.Tests.Core
         [OneTimeSetUp]
         public void RunTheBatchOnce()
         {
-            _content = Scenario001Content.Load(TestPaths.DataRoot);
+            _content = Baselines.ModelA();
             _variants = _content.Morning.Variants.Select(v => v.Id).ToList();
             _people = _content.Cast.Keys.OrderBy(k => k, StringComparer.Ordinal).ToList();
 

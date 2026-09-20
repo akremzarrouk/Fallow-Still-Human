@@ -86,7 +86,7 @@ namespace Fallow.Tests.Core
         [Test, Timeout(1800000)]
         public void WhereTheChangeInBehaviourComesFrom()
         {
-            var content = Scenario001Content.Load(TestPaths.DataRoot);
+            var content = Baselines.ModelA();
             var variants = content.Morning.Variants.Select(v => v.Id).ToList();
             var people = content.Cast.Keys.OrderBy(k => k, StringComparer.Ordinal).ToList();
 

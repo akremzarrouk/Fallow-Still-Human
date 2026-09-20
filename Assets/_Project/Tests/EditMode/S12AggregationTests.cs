@@ -43,7 +43,7 @@ namespace Fallow.Tests.Core
         [OneTimeSetUp]
         public void Load()
         {
-            _content = Scenario001Content.Load(TestPaths.DataRoot);
+            _content = Baselines.ModelA();
             _withoutCredit = new Scenario001Content(_content.Vocabulary, _content.Cast, _content.Backstory, _content.Morning,
                 WithoutTheCredit(_content.Rules));
         }

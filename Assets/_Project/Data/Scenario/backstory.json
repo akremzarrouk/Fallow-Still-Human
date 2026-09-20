@@ -122,7 +122,7 @@
     },
 
     {
-      "id": "p01", "day": 4, "order": 10,
+      "id": "p01", "day": 4, "order": 10, "minute": 0,
       "type": "speech", "actor": "leo", "target": "all",
       "act": "suggest", "topic": "who_decides",
       "tone": "calm", "directness": "indirect", "valence": "neutral",
@@ -132,7 +132,7 @@
       "ledger_effects": []
     },
     {
-      "id": "p02", "day": 4, "order": 11,
+      "id": "p02", "day": 4, "order": 11, "minute": 0,
       "type": "action", "actor": "daniel", "target": "mara",
       "action": "search_belongings", "topic": "missing_can",
       "tone": "firm", "directness": "direct", "valence": "neutral",
@@ -144,7 +144,7 @@
       ]
     },
     {
-      "id": "p03", "day": 4, "order": 12,
+      "id": "p03", "day": 4, "order": 12, "minute": 0,
       "type": "speech", "actor": "elena", "target": "all",
       "act": "tell", "topic": "missing_can",
       "tone": "gentle", "directness": "direct", "valence": "neutral",

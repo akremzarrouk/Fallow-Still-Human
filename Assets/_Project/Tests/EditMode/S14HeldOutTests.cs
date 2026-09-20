@@ -27,7 +27,7 @@ namespace Fallow.Tests.Core
         static readonly string[] People = S14ExperimentTests.People;
 
         [OneTimeSetUp]
-        public void Load() => _content = Scenario001Content.Load(TestPaths.DataRoot);
+        public void Load() => _content = Baselines.ModelA();
 
         [OneTimeTearDown]
         public void Write()

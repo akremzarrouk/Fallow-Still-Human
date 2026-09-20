@@ -27,7 +27,7 @@ namespace Fallow.Tests.Core
         [Test]
         public void BeingWatchedByYourSonMakesYouWantToLeaveTheRoom()
         {
-            var content = Scenario001Content.Load(TestPaths.DataRoot);
+            var content = Baselines.ModelA();
             var run = Scenario001.Run(content, "elena_fed_mara", 1);
 
             // He does watch her, and it is wanting to know that puts him there.

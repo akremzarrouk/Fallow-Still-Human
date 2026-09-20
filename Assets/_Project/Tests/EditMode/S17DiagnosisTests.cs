@@ -22,7 +22,7 @@ namespace Fallow.Tests.Core
         static readonly SortedDictionary<string, string> _sections = new SortedDictionary<string, string>(StringComparer.Ordinal);
 
         [OneTimeSetUp]
-        public void Load() => _content = Scenario001Content.Load(TestPaths.DataRoot);
+        public void Load() => _content = Baselines.ModelA();
 
         [OneTimeTearDown]
         public void Write()

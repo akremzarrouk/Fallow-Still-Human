@@ -16,7 +16,7 @@ namespace Fallow.Tests.Core
         [Test]
         public void AMorningRunsAndSomebodyDoesSomething()
         {
-            var content = Scenario001Content.Load(TestPaths.DataRoot);
+            var content = Baselines.ModelA();
             var run = Scenario001.Run(content, "daniel_ate_it", 1);
 
             Assert.IsNotEmpty(run.Result.Actions, "nobody did anything all morning");
