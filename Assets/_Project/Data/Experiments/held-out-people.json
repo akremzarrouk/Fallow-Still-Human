@@ -1,0 +1,75 @@
+{
+  "note": "EXPERIMENT ONLY. Nothing in Fallow.Core loads this file. It declares the held-out people of the intention-generalization experiment, and it was committed before any of them was run through the frozen rule set.\n\nTwo holdouts, in increasing strength. The four declared people are for readable traces, and each is placed by a stated principle in a region of trait or value space the shipped cast does not occupy. The sweep is the real evidence: a mechanical enumeration of trait space that nobody designed, so nothing in it can have been fitted to.\n\nThe frozen rule file this is run against is intentions.json, sha256 61e6412e8a7cb77674f0c7685e4cb0e5f7dca5db3ad05f928a63f34dfb099d92, git blob 41112b95d75d75786ad4df442e25330c74c5d6b3. Not one byte of it may change.",
+
+  "cast_ranges_this_is_held_out_from": {
+    "note": "The shipped four, for reference. Nobody among them is below 0.50 on empathetic or honest, nobody is above 0.70 on cautious, and nobody is high on dominant and empathetic together.",
+    "cautious": [0.35, 0.70],
+    "dominant": [0.25, 0.85],
+    "empathetic": [0.50, 0.90],
+    "impulsive": [0.20, 0.70],
+    "proud": [0.35, 0.85],
+    "anxious": [0.25, 0.80],
+    "honest": [0.50, 0.80]
+  },
+
+  "declared": [
+    {
+      "id": "hollow",
+      "principle": "Below the cast's floor on the two traits it never goes low on: empathetic and honest.",
+      "age": 30,
+      "family_role": "sibling",
+      "traits": { "cautious": 0.50, "dominant": 0.60, "empathetic": 0.10, "impulsive": 0.50, "proud": 0.50, "anxious": 0.50, "honest": 0.15 },
+      "values": ["control", "autonomy"],
+      "beliefs": []
+    },
+    {
+      "id": "warden",
+      "principle": "High on dominant and empathetic together, which no member of the cast is, and more cautious than any of them.",
+      "age": 45,
+      "family_role": "parent",
+      "traits": { "cautious": 0.85, "dominant": 0.95, "empathetic": 0.95, "impulsive": 0.30, "proud": 0.30, "anxious": 0.15, "honest": 0.90 },
+      "values": ["family_safety", "respect"],
+      "beliefs": [
+        { "predicate": "role_claim", "args": ["$self", "leads_family"], "confidence": 0.95 }
+      ]
+    },
+    {
+      "id": "drifter",
+      "principle": "The null person: every trait at exactly one half, and a single value the cast never ranks first.",
+      "age": 30,
+      "family_role": "sibling",
+      "traits": { "cautious": 0.50, "dominant": 0.50, "empathetic": 0.50, "impulsive": 0.50, "proud": 0.50, "anxious": 0.50, "honest": 0.50 },
+      "values": ["autonomy"],
+      "beliefs": []
+    },
+    {
+      "id": "firebrand",
+      "principle": "Extremes on the volatile traits, outside the cast on impulsive, proud, anxious and cautious at once, holding a value ordering nobody holds.",
+      "age": 19,
+      "family_role": "sibling",
+      "traits": { "cautious": 0.10, "dominant": 0.45, "empathetic": 0.55, "impulsive": 0.95, "proud": 0.95, "anxious": 0.95, "honest": 0.35 },
+      "values": ["respect", "control", "autonomy"],
+      "beliefs": [
+        { "predicate": "answerable_for", "args": ["$self", "missing_can"], "confidence": 0.95 }
+      ]
+    }
+  ],
+
+  "sweep": {
+    "note": "Mechanical, not designed. Every combination of the seven shipped traits at three levels is one profile, in the fixed order below, so the enumeration is reproducible and covers trait space uniformly. Values and beliefs rotate by the profile's index, so no combination is chosen by hand. 3^7 = 2187 profiles.",
+    "traits": ["anxious", "cautious", "dominant", "empathetic", "honest", "impulsive", "proud"],
+    "levels": [0.15, 0.50, 0.85],
+    "value_ring": ["autonomy", "closeness", "control", "fairness", "family_safety", "respect"],
+    "value_ring_note": "Profile i holds all six values, rotated left by (i mod 6). Rank decides weight, so the rotation varies which values weigh anything at all.",
+    "belief_sets": [
+      [],
+      [{ "predicate": "role_claim", "args": ["$self", "leads_family"], "confidence": 0.80 }],
+      [{ "predicate": "answerable_for", "args": ["$self", "missing_can"], "confidence": 0.90 }],
+      [
+        { "predicate": "role_claim", "args": ["$self", "leads_family"], "confidence": 0.80 },
+        { "predicate": "answerable_for", "args": ["$self", "missing_can"], "confidence": 0.90 }
+      ]
+    ],
+    "belief_set_note": "Profile i takes belief set (i mod 4)."
+  }
+}
