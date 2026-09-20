@@ -163,6 +163,20 @@ namespace Fallow.Core.Sim
         /// <summary>Called after every decision, for instruments. Nothing in the simulation reads it.</summary>
         public Action<DecisionMoment> Decided { get; set; }
 
+        /// <summary>
+        /// What the person takes themselves to be doing, carried onto the event
+        /// their act becomes, so that they can read their own act by it the way
+        /// they read their own authored history (see Interpreter: the actor of
+        /// an event with an intent knows their own intention).
+        ///
+        /// Added for the intent-carrying experiment, and deliberately a hook
+        /// rather than a rule: which reason an act expresses is a claim about
+        /// people that nothing here is entitled to make. Null, the default,
+        /// leaves every act's event with no intent, which is what every slice up
+        /// to this one ran.
+        /// </summary>
+        public Func<string, ActionOption, Decision, string> IntentOfAct { get; set; }
+
         public IReadOnlyList<InterruptionRecord> Interruptions => _interruptions;
 
         public SilentMorning(Simulation sim, RuleSet rules, WorldState world, Rng rng, int day)
@@ -387,6 +401,7 @@ namespace Fallow.Core.Sim
         {
             var action = busy.Action;
             var roomId = _world.RoomOf(characterId);
+            var intent = IntentOfAct == null ? null : IntentOfAct(characterId, action, busy.Decision);
             var record = _actions.LastOrDefault(a =>
                 string.Equals(a.CharacterId, characterId, StringComparison.Ordinal) && a.Minute == busy.StartedAt);
 
@@ -400,11 +415,12 @@ namespace Fallow.Core.Sim
                     _watched[characterId + ">" + action.TargetId] = _world.Minute;
                     Note(record, "watched " + action.TargetId);
                     Happened(characterId, action.TargetId, "observe", "neutral", null, roomId,
-                        Named(characterId) + " watches " + Named(action.TargetId) + " without saying anything.");
+                        Named(characterId) + " watches " + Named(action.TargetId) + " without saying anything.",
+                        intent: intent);
                     break;
 
                 case ActionKind.GoTo:
-                    Walk(characterId, roomId, action.DestinationRoomId, record);
+                    Walk(characterId, roomId, action.DestinationRoomId, record, intent);
                     break;
 
                 case ActionKind.CheckPantry:
@@ -412,7 +428,8 @@ namespace Fallow.Core.Sim
                     var short_ = _world.Portions <= _rules.Deciding.LowPortions;
                     Note(record, "found " + _world.Portions + " portions left");
                     Happened(characterId, null, "count_supplies", short_ ? "bad" : "neutral", "supplies", roomId,
-                        Named(characterId) + " opens the pantry and counts what is left: " + _world.Portions + ".");
+                        Named(characterId) + " opens the pantry and counts what is left: " + _world.Portions + ".",
+                        intent: intent);
                     break;
 
                 case ActionKind.SearchRoom:
@@ -423,7 +440,8 @@ namespace Fallow.Core.Sim
                     Happened(characterId, owner, "search_belongings", "neutral", "missing_can", roomId,
                         owner == null
                             ? Named(characterId) + " goes through the " + RoomName(roomId) + "."
-                            : Named(characterId) + " goes through " + Named(owner) + " things while they stand there.");
+                            : Named(characterId) + " goes through " + Named(owner) + " things while they stand there.",
+                        intent: intent);
                     break;
 
                 case ActionKind.Comfort:
@@ -442,7 +460,8 @@ namespace Fallow.Core.Sim
 
                     Note(record, "sat with " + action.TargetId);
                     var sat = Happened(characterId, action.TargetId, "comfort", "good", null, roomId,
-                        Named(characterId) + " sits with " + Named(action.TargetId) + " for a while.");
+                        Named(characterId) + " sits with " + Named(action.TargetId) + " for a while.",
+                        intent: intent);
                     Soothe(action.TargetId, characterId, busy.Decision?.TraceId);
 
                     // Whatever can be seen of them afterwards rests on both things
@@ -461,7 +480,8 @@ namespace Fallow.Core.Sim
                         Note(record, "ate a portion, leaving " + _world.Portions);
                         var ate = Happened(characterId, null, "eat_portion",
                             _world.Portions <= _rules.Deciding.LowPortions ? "bad" : "neutral", "supplies", roomId,
-                            Named(characterId) + " takes a portion and eats it. " + _world.Portions + " left.");
+                            Named(characterId) + " takes a portion and eats it. " + _world.Portions + " left.",
+                            intent: intent);
                         Resolve(characterId, busy, ate, true, Needs.Hunger, hungerBefore, _world.HungerOf(characterId));
                     }
                     else
@@ -472,14 +492,15 @@ namespace Fallow.Core.Sim
                         // record and nowhere anybody could perceive it.
                         Note(record, "found nothing left to eat");
                         var gone = Happened(characterId, null, "find_nothing_left", "bad", "supplies", roomId,
-                            Named(characterId) + " reaches for the food and there is none left.");
+                            Named(characterId) + " reaches for the food and there is none left.",
+                            intent: intent);
                         Resolve(characterId, busy, gone, false, Needs.Hunger, hungerBefore, _world.HungerOf(characterId));
                     }
                     break;
             }
         }
 
-        void Walk(string characterId, string fromRoom, string toRoom, ActionRecord record)
+        void Walk(string characterId, string fromRoom, string toRoom, ActionRecord record, string intent = null)
         {
             var leftBehind = _world.WithMe(characterId);
             _world.Place(characterId, toRoom);
@@ -490,12 +511,12 @@ namespace Fallow.Core.Sim
             if (leftBehind.Count > 0)
                 Happened(characterId, null, "leave_room", "neutral", null, fromRoom,
                     Named(characterId) + " walks out of the " + RoomName(fromRoom) + ".",
-                    leftBehind);
+                    leftBehind, intent: intent);
 
             if (walkedInOn.Count > 0)
                 Happened(characterId, null, "enter_room", "neutral", null, toRoom,
                     Named(characterId) + " comes into the " + RoomName(toRoom) + ".",
-                    walkedInOn);
+                    walkedInOn, intent: intent);
         }
 
         /// <summary>
@@ -594,7 +615,7 @@ namespace Fallow.Core.Sim
         WorldEvent Happened(
             string actorId, string targetId, string action, string valence, string topic,
             string roomId, string summary, IReadOnlyList<string> witnesses = null,
-            bool audible = true, IReadOnlyList<int> causes = null)
+            bool audible = true, IReadOnlyList<int> causes = null, string intent = null)
         {
             var saw = witnesses ?? _world.InRoom(roomId)
                 .Where(id => !string.Equals(id, actorId, StringComparison.Ordinal))
@@ -615,7 +636,7 @@ namespace Fallow.Core.Sim
                 _day, 1000 + _order, EventKind.Action,
                 actorId, targetId,
                 null, action, topic, "neutral", "direct", valence,
-                null, summary,
+                intent, summary,
                 saw, heard,
                 new List<LedgerEffect>(),
                 null,
