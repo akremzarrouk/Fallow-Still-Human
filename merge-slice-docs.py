@@ -2,8 +2,10 @@
 """Merges every Markdown file of one slice into a single document.
 
 Usage: python merge-slice-docs.py S1.5
+       python merge-slice-docs.py Docs/experiments/decision-sensitivity
 
-Writes Docs/slices/<slice>/<slice>-all.md. The separate files are left as they are.
+Writes Docs/slices/<slice>/<slice>-all.md, or <folder>/<folder name>-all.md when given
+a folder path. The separate files are left as they are.
 The report (or review) comes first, then the files in the order the work produced
 them, then anything else alphabetically. Each file's headings are moved down two
 levels, outside code blocks, so they sit under that file's section.
@@ -55,8 +57,14 @@ def main():
     if len(sys.argv) != 2:
         print(__doc__)
         return 2
-    name = sys.argv[1]
-    root = Path(__file__).resolve().parent / "Docs" / "slices" / name
+    arg = sys.argv[1]
+    here = Path(__file__).resolve().parent
+    if "/" in arg or "\\" in arg:
+        root = (here / arg).resolve()
+        name = root.name
+    else:
+        root = here / "Docs" / "slices" / arg
+        name = arg
     if not root.is_dir():
         print("no such slice folder: " + str(root))
         return 2
@@ -75,7 +83,7 @@ def main():
     parts = [
         "# " + name + ": all documents",
         "",
-        "Merged by `merge-slice-docs.py` from the " + str(len(files)) + " Markdown files in `Docs/slices/" + name + "/`, "
+        "Merged by `merge-slice-docs.py` from the " + str(len(files)) + " Markdown files in `" + root.relative_to(here).as_posix() + "/`, "
         "which remain the sources. Regenerate this file whenever they change.",
         "",
         "## Contents",

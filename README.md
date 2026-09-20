@@ -32,6 +32,10 @@ same. No dialogue, no player, no 3D.
   things is a threat to one woman and a slight to the same woman who has watched him do it
   before, traceably and with no new code. But it takes eleven earlier times to change
   anything at all, and over a morning the difference is below the noise of the dice.
+- `Docs/experiments/decision-sensitivity/report.md` — the primary baseline made explicit
+  (Model B with both S1.6 fixes is now what the data ships; Model A is kept as a comparison),
+  and how far one want has to move before the act changes, measured on every decision of
+  real mornings with nothing else changed.
 
 Where those documents disagree with the code, the code is right and the reviews say when
 they were written.
@@ -107,18 +111,20 @@ Recorded in `Docs/slices/S1/review.md` section 5, `Docs/slices/S1.1/report.md` s
 `Docs/slices/S1.4/report.md` section 9, `Docs/slices/S1.5/report.md` section 5 and
 `Docs/slices/S1.6/report.md` section 7 and `Docs/slices/S1.7/report.md` section 3, and pinned
 by characterisation tests that say in their names that they should be turned round when
-fixed. The largest now: traits and values
-raise wants at every moment with nothing calling for them (53 % of all urgency, S1.5). That
-is the wrong model, and it is still shipped. S1.6 found the cause of the pacing that stopped
-S1.5 shipping the alternative: a walk was credited to a want without asking what could be
-done at its end (92 % of walks given up were foreseeably pointless from what the walker
-knew), and four scripted memories of the lived day carry no minute and never age. Both have
-switchable fixes (`deciding.means: end`; an event `minute`) that the shipped rules do not
-set, because shipping them changes every regression baseline and is a review decision.
-Under them the pacing is gone and every want rests on something that happened, and three
-of the four people stand still most of a silent morning, because nothing worth doing is
-left to them. And for two of the four, no amount of hunger can ever outweigh what taking
-food costs them.
+fixed. Until the decision-sensitivity experiment the data shipped traits and values as wants
+raised at every moment with nothing calling for them (53 % of all urgency, S1.5), with a walk
+credited to a want without asking what could be done at its end, and four scripted memories
+of the lived day that never age (S1.6). **Since that experiment the data ships S1.6's
+recommendation**: traits and values as dispositions (`deciding.dispositions: respond`), a
+walk credited only when its end could be worth doing (`deciding.means: end`), and `minute: 0`
+on the four scripted events. The code defaults are unchanged, so a rule file that names
+neither setting still runs the old model. That old model, Model A, is kept as a comparison:
+`Baselines.ModelA()` in the tests restores the three settings and nothing else, and every
+test written before the change selects it, so the documents those slices generated still
+describe what they measured. Under the new baseline the pacing is gone and every want rests
+on something that happened, and three of the four people stand still most of a silent
+morning, because nothing worth doing is left to them. And for two of the four, no amount of
+hunger can ever outweigh what taking food costs them.
 
 S1.7 added two more, neither of which it fixed. **A reading's weight is thrown away**: only
 the winning meaning reaches appraisal, so being read twice as darkly feels exactly the same,

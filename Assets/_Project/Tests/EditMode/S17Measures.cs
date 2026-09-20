@@ -109,6 +109,14 @@ namespace Fallow.Tests.Core
         public string Resolution;
         public int DecisionTraceId = -1;
 
+        // The decision as it was taken, kept so that it can be weighed again
+        // with one want changed (the decision-sensitivity experiment). Read
+        // only: nothing here is used by S1.7 itself.
+        public Mind Mind;
+        public Percept Percept;
+        public IReadOnlyList<Motive> Motives;
+        public int Day;
+
         public TraceLog Trace;
 
         /// <summary>The ids of the earlier events this arm lived through, so a trace can be asked to reach them.</summary>
@@ -345,6 +353,10 @@ namespace Fallow.Tests.Core
             chain.LeadingWant = decision.Leading?.Key ?? "nothing";
             chain.Resolution = decision.Resolution == Resolution.Clear ? "clear" : "too close to call";
             chain.DecisionTraceId = decision.TraceId;
+            chain.Mind = sim.Minds[subject];
+            chain.Percept = percept;
+            chain.Motives = motives;
+            chain.Day = probe.Day;
             return chain;
         }
 
