@@ -50,6 +50,10 @@ same. No dialogue, no player, no 3D.
   apart when it is done for different reasons. It can, and the reason reaches behaviour; but a
   reason matters only where somebody once wrote an appraisal rule naming it, and half of them
   have none.
+- `Docs/experiments/intention-formation/report.md` — whether a want can be turned into a
+  context-sensitive intention without a table that maps one to the other. Ten authored rules over
+  the existing machinery: six of seven wants come out many-valued on cases they were never
+  written against, and the one that does not fails for a reason worth keeping.
 
 Where those documents disagree with the code, the code is right and the reviews say when
 they were written.
