@@ -36,6 +36,20 @@ same. No dialogue, no player, no 3D.
   (Model B with both S1.6 fixes is now what the data ships; Model A is kept as a comparison),
   and how far one want has to move before the act changes, measured on every decision of
   real mornings with nothing else changed.
+- `Docs/experiments/action-representation/report.md` — a read-only audit of the chain from
+  want to world event: which wants share which acts, where the reason for an act stops being
+  recoverable, and what standing still is made of.
+- `Docs/experiments/intent-carrying/report.md` — whether what a person took themselves to be
+  doing, carried onto the event their act becomes, changes anything afterwards.
+- `Docs/experiments/episode/report.md` — one small lived episode composed out of the existing
+  mechanisms, and how far into a morning it carries.
+- `Docs/experiments/accumulated-history/report.md` — whether repeated experience with the same
+  person changes what a later identical event means. It changes the reading completely and the
+  act not at all.
+- `Docs/experiments/same-act-different-reason/report.md` — whether one physical act can be told
+  apart when it is done for different reasons. It can, and the reason reaches behaviour; but a
+  reason matters only where somebody once wrote an appraisal rule naming it, and half of them
+  have none.
 
 Where those documents disagree with the code, the code is right and the reviews say when
 they were written.
