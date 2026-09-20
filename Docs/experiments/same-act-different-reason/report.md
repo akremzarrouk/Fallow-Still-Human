@@ -343,4 +343,6 @@ Stopping for review, as instructed.
 
 Reproduce with `./run-tests.sh`, or the fixture alone with
 `unity test . --mode EditMode --filter SameActExperimentTests`. The fixture takes
-about four minutes; it runs roughly 1,100 whole mornings. Suite: PENDING.
+about four minutes; it runs roughly 1,100 whole mornings.
+
+**Suite: 401 tests, 399 pass, 2 fail** — the two regressions S1.4 left failing, unchanged (the pacing gate, still 7 on Model A, and the emergent-moment fading check). The seven tests of this fixture are the whole of the difference from the 394 the previous run counted. **Every generated document of S0 to S1.7 and of the five earlier experiments regenerated with identical content**; the only change anywhere in the repository was the wall-clock seconds in the decision-sensitivity results, and one file that differed in line endings only. That is what shows the `IntentOfAct` hook still inert when unset, and this fixture disturbing nothing.
