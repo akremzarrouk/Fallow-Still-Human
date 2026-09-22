@@ -1,0 +1,214 @@
+{
+  "note": "EXPERIMENT ONLY. Nothing in Fallow.Core loads this file; it is read by CausalRouteExperimentTests and by nothing else. It was committed with the predictions of the causal-route experiment, before any of it was run.\n\nA causal route is one declared explanation of why some evidence supports an intention. A route key is an experiment-only name for one such declared meaning, and nothing more: it is not a rule id, it is not a file position, and renaming every key consistently must change nothing. Two rules that carry the same route key are declared to state the same reason. Two rules that carry different route keys are declared to be different reasons, whatever they read. Whether a declaration is right is a modelling judgment, and is tested separately by a blind annotation, not by this file.\n\nNo production vocabulary is added. Every intention, want, trait, value, belief and feeling used here is already in the shipped vocabulary.",
+
+  "frozen": {
+    "file": "Assets/_Project/Data/Experiments/intentions.json",
+    "sha256": "61e6412e8a7cb77674f0c7685e4cb0e5f7dca5db3ad05f928a63f34dfb099d92",
+    "declaration_note": "One route per frozen rule. Each rule's authored note describes a different reason, so no two frozen rules are declared to be the same route. Every relation between routes is independent unless a what-if below says otherwise. Roles are driver for a positive coefficient and inhibitor for a negative one, except where declared.",
+    "routes": [
+      { "rule": "pulling_rank_needs_an_audience", "route": "authority_shown_to_witnesses",
+        "means": "Asserting authority as something done in front of others: it is authority rather than housekeeping because somebody is there to see it." },
+      { "rule": "being_the_one_who_decides_it", "route": "settling_is_mine",
+        "means": "Settling the matter because settling such things is one's own place, audience or not; being angry already makes it stronger." },
+      { "rule": "somebody_has_to_do_it", "route": "a_job_that_needed_doing",
+        "means": "Doing it because it needed doing and somebody had to." },
+      { "rule": "doing_it_where_nobody_is_watching", "route": "proving_it_to_myself",
+        "means": "Doing it to prove it to oneself rather than to anyone else, which only makes sense unwatched." },
+      { "rule": "so_that_they_know_too", "route": "finding_out_for_the_room",
+        "means": "Finding out on behalf of the others present, so that they know too." },
+      { "rule": "standing_between_them_and_it", "route": "standing_in_the_way",
+        "means": "Protecting somebody by putting oneself physically in the way of what threatens them." },
+      { "rule": "keeping_it_off_them", "route": "shielding_from_afar",
+        "means": "Protecting somebody by keeping a matter away from them, including when they are not there." },
+      { "rule": "not_making_a_scene_of_it", "route": "defusing_the_scene",
+        "means": "Keeping things from becoming a scene in front of others; a dominant person settles rather than defuses.",
+        "roles": { "trait:dominant": "inhibitor" } },
+      { "rule": "letting_it_go_for_now", "route": "letting_it_go",
+        "means": "Choosing not to have it out yet, with nobody there to have it out with." },
+      { "rule": "what_you_did_in_the_night", "route": "owning_the_night",
+        "means": "Taking one's own act as a theft, which is only possible for somebody who believes they are answerable for the missing can: the belief is the condition, and honesty, fairness and shame are what act on it.",
+        "roles": { "belief:answerable_for($self,missing_can)": "enabler" } }
+    ],
+    "relations": [],
+    "what_if_alternatives": [
+      [ "standing_in_the_way", "shielding_from_afar" ],
+      [ "authority_shown_to_witnesses", "settling_is_mine" ]
+    ],
+    "what_if_note": "Diagnostic only. The same routes, but each listed pair declared as alternatives: two ways of forming the one intention of which only the stronger operates, rather than two reasons that both push. It measures how much the relation judgment moves real conclusions, not a proposal."
+  },
+
+  "synthetic": {
+    "note": "Controlled families built from the existing vocabulary. Every variant is written out in full, rule by rule. Each is evaluated for want look_after, in company in the kitchen, over the 2,187 profiles of the generalization sweep. The rivals are the two frozen rules for look_after in company other than protect's, unchanged and on their own frozen routes, so protect always has somebody to beat.",
+    "want": "look_after",
+    "rivals": [ "so_that_they_know_too", "not_making_a_scene_of_it" ],
+
+    "routes": {
+      "duty":                  { "means": "I take it on myself to keep them from harm: looking after them is my job." },
+      "compassion":            { "means": "I cannot bear to see them suffer, so I put myself between them and it." },
+      "compassion_distinct":   { "means": "Seeing them hurt is unbearable to me, and keeping the family safe is what I care about most." },
+      "overwhelmed":           { "means": "Feeling their fear so strongly freezes me, and I hold back." },
+      "telling_them_gently":   { "means": "I tell them what is going on, gently, because I feel for them and do not lie." },
+      "guardian":              { "means": "I guard them because I feel for them, because they are family and must be safe, and because I want them near: one reason, drawing on all three." },
+      "feel_for_them":         { "means": "I protect them because I feel what they feel." },
+      "keep_family_safe":      { "means": "I protect them because the family's safety comes first." },
+      "stay_close":            { "means": "I protect them because I want them near me." }
+    },
+
+    "variants": {
+      "A0": [
+        { "id": "duty_1", "route": "duty", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] }
+      ],
+      "A1": [
+        { "id": "duty_1", "route": "duty", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] },
+        { "id": "duty_2", "route": "duty", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] }
+      ],
+      "A2": [
+        { "id": "duty_1", "route": "duty", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] },
+        { "id": "keeping_them_from_harm_is_mine", "route": "duty", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "value", "name": "closeness", "factor": 0.25 }, { "kind": "trait", "name": "empathetic", "factor": 0.40 } ] }
+      ],
+      "A3": [
+        { "id": "duty_1", "route": "duty", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] },
+        { "id": "duty_nearly", "route": "duty", "intent": "protect", "base": 0.099,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.396 }, { "kind": "value", "name": "closeness", "factor": 0.2475 } ] }
+      ],
+      "A4": [
+        { "id": "duty_1", "route": "duty", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] },
+        { "id": "duty_partly", "route": "duty", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 } ] }
+      ],
+      "A5": [
+        { "id": "duty_part_a", "route": "duty", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 } ] },
+        { "id": "duty_part_b", "route": "duty", "intent": "protect", "base": 0.0,
+          "scaled_by": [ { "kind": "value", "name": "closeness", "factor": 0.25 } ] }
+      ],
+      "A6": [
+        { "id": "duty_1", "route": "q17", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] }
+      ],
+
+      "B1": [
+        { "id": "duty_1", "route": "duty", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] },
+        { "id": "duty_2", "route": "compassion", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] }
+      ],
+      "B3": [
+        { "id": "z_first", "route": "k_b", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "value", "name": "closeness", "factor": 0.25 }, { "kind": "trait", "name": "empathetic", "factor": 0.40 } ] },
+        { "id": "a_second", "route": "k_a", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] }
+      ],
+
+      "C0": [
+        { "id": "duty_1", "route": "duty", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] },
+        { "id": "gently", "route": "telling_them_gently", "intent": "share_information", "base": 0.05,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.50 }, { "kind": "trait", "name": "honest", "factor": 0.20 } ] }
+      ],
+      "C1": [
+        { "id": "duty_1", "route": "duty", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] }
+      ],
+
+      "D0": [
+        { "id": "guard", "route": "guardian", "intent": "protect", "base": 0.15,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "family_safety", "factor": 0.35 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] }
+      ],
+      "D1": [
+        { "id": "feel", "route": "feel_for_them", "intent": "protect", "base": 0.05,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 } ] },
+        { "id": "safe", "route": "keep_family_safe", "intent": "protect", "base": 0.05,
+          "scaled_by": [ { "kind": "value", "name": "family_safety", "factor": 0.35 } ] },
+        { "id": "near", "route": "stay_close", "intent": "protect", "base": 0.05,
+          "scaled_by": [ { "kind": "value", "name": "closeness", "factor": 0.25 } ] }
+      ],
+      "D2": [
+        { "id": "guard_a", "route": "guardian", "intent": "protect", "base": 0.15,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 } ] },
+        { "id": "guard_b", "route": "guardian", "intent": "protect", "base": 0.0,
+          "scaled_by": [ { "kind": "value", "name": "family_safety", "factor": 0.35 } ] },
+        { "id": "guard_c", "route": "guardian", "intent": "protect", "base": 0.0,
+          "scaled_by": [ { "kind": "value", "name": "closeness", "factor": 0.25 } ] }
+      ],
+      "D3": [
+        { "id": "guard", "route": "guardian", "intent": "protect", "base": 0.15,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "family_safety", "factor": 0.35 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] },
+        { "id": "guard_partly", "route": "guardian", "intent": "protect", "base": 0.15,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "family_safety", "factor": 0.35 } ] }
+      ],
+      "D4": [
+        { "id": "feel", "route": "feel_for_them", "intent": "protect", "base": 0.05,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 } ] },
+        { "id": "safe", "route": "keep_family_safe", "intent": "protect", "base": 0.05,
+          "scaled_by": [ { "kind": "value", "name": "family_safety", "factor": 0.35 } ] },
+        { "id": "near", "route": "stay_close", "intent": "protect", "base": 0.05,
+          "scaled_by": [ { "kind": "value", "name": "closeness", "factor": 0.25 } ] },
+        { "id": "feel_again", "route": "feel_for_them", "intent": "protect", "base": 0.05,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 } ] }
+      ],
+
+      "E1": [
+        { "id": "duty_1", "route": "duty", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] },
+        { "id": "duty_weaker", "route": "duty", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.30 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] }
+      ],
+      "E2": [
+        { "id": "duty_1", "route": "duty", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] },
+        { "id": "compassion_1", "route": "compassion_distinct", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.30 }, { "kind": "value", "name": "family_safety", "factor": 0.35 } ] }
+      ],
+      "E3": [
+        { "id": "duty_1", "route": "duty", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] },
+        { "id": "compassion_1", "route": "compassion_distinct", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.30 }, { "kind": "value", "name": "family_safety", "factor": 0.35 } ] }
+      ],
+      "E4": [
+        { "id": "duty_1", "route": "duty", "intent": "protect", "base": 0.10,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": 0.40 }, { "kind": "value", "name": "closeness", "factor": 0.25 } ] },
+        { "id": "freeze", "route": "overwhelmed", "intent": "protect", "base": 0.0,
+          "scaled_by": [ { "kind": "trait", "name": "empathetic", "factor": -0.20 } ] }
+      ]
+    },
+
+    "variant_relations": {
+      "E3": [ { "type": "alternative", "routes": [ "duty", "compassion_distinct" ] } ]
+    },
+
+    "renamings": {
+      "A6": { "q17": "duty" },
+      "B3": { "k_a": "duty", "k_b": "compassion" }
+    },
+
+    "pairs": [
+      { "a": "A0", "b": "A1", "declared": "same",      "tests": "exact restatement" },
+      { "a": "A0", "b": "A2", "declared": "same",      "tests": "restatement, reworded: terms reordered, new id" },
+      { "a": "A0", "b": "A3", "declared": "same",      "tests": "near restatement at 0.99" },
+      { "a": "A0", "b": "A4", "declared": "same",      "tests": "partial restatement" },
+      { "a": "A0", "b": "A5", "declared": "same",      "tests": "one route written as two rules" },
+      { "a": "A0", "b": "A6", "declared": "same",      "tests": "the route key renamed" },
+      { "a": "A1", "b": "B1", "declared": "different", "tests": "THE CRITICAL PAIR: identical rule contents, one reason twice against two reasons" },
+      { "a": "A0", "b": "B1", "declared": "different", "tests": "a second, independent reason on the same facts" },
+      { "a": "B1", "b": "B3", "declared": "same",      "tests": "two routes, reordered, renamed rules and renamed route keys" },
+      { "a": "C0", "b": "C1", "declared": "reuse",     "tests": "the same fact supporting a second intention must not change the first" },
+      { "a": "D0", "b": "D2", "declared": "same",      "tests": "one bundled reason written as three rules" },
+      { "a": "D0", "b": "D3", "declared": "same",      "tests": "a bundled reason partly restated" },
+      { "a": "D1", "b": "D4", "declared": "same",      "tests": "one of three single-fact reasons restated" },
+      { "a": "D0", "b": "D1", "declared": "structure", "tests": "one reason on three facts against three reasons on one fact each: the same numbers, a different structure" },
+      { "a": "A0", "b": "E1", "declared": "malformed", "tests": "one route stating one fact at two strengths" },
+      { "a": "A0", "b": "E2", "declared": "different", "tests": "an independent route citing the same fact at another strength" },
+      { "a": "E2", "b": "E3", "declared": "different", "tests": "the same two routes, independent against alternative" },
+      { "a": "A0", "b": "E4", "declared": "different", "tests": "the same fact as a driver in one route and an inhibitor in another" }
+    ]
+  }
+}

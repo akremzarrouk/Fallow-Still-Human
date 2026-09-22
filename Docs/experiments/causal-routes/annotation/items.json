@@ -1,0 +1,116 @@
+{
+  "note": "The blind annotation of the causal-route experiment. Committed with the predictions, before any reviewer saw anything. Reviewers are shown only the 'intention', 'reasons' and questions of each item, in the order and orientation the protocol gives them. They are never shown this file, the rule ids, the route keys, the answer key, the experiment's hypotheses or each other's answers.",
+
+  "items": [
+    { "id": "real_protect", "source": "frozen file: standing_between_them_and_it and keeping_it_off_them",
+      "intention": "protect somebody",
+      "reasons": [
+        { "says": "Putting yourself in the way of something, which takes somebody to put yourself in front of.",
+          "draws_on": [ "how empathetic the person is", "how much they value keeping the family safe", "how anxious they are feeling" ] },
+        { "says": "Shielding somebody from a thing they are not in the room for.",
+          "draws_on": [ "how empathetic the person is", "how much they value closeness" ] } ] },
+
+    { "id": "real_assert", "source": "frozen file: pulling_rank_needs_an_audience and being_the_one_who_decides_it",
+      "intention": "assert their authority",
+      "reasons": [
+        { "says": "Nobody pulls rank in an empty room. What makes it authority rather than housekeeping is that somebody is there to see it.",
+          "draws_on": [ "how dominant the person is", "how much they value control", "whether they believe they lead the family", "how proud they are" ] },
+        { "says": "Settling a thing because settling things is yours to do. It needs no audience, and it rises when you are already angry.",
+          "draws_on": [ "how much they value control", "whether they believe they lead the family", "how angry they are feeling" ] } ] },
+
+    { "id": "real_take", "source": "frozen file: somebody_has_to_do_it and doing_it_where_nobody_is_watching",
+      "intention": "take responsibility for something",
+      "reasons": [
+        { "says": "The plainest reading of one's own act: a job that needed doing.",
+          "draws_on": [ "how honest the person is", "how much they value keeping the family safe", "how cautious they are" ] },
+        { "says": "Proving it to yourself rather than to them, which only makes sense where nobody is watching.",
+          "draws_on": [ "how proud the person is", "how much they value respect" ] } ] },
+
+    { "id": "real_prevent", "source": "frozen file: not_making_a_scene_of_it and letting_it_go_for_now",
+      "intention": "prevent an argument",
+      "reasons": [
+        { "says": "Defusing: not making a scene of it. A dominant person does not defuse, they settle it.",
+          "draws_on": [ "how cautious the person is", "how much they value closeness", "how dominant they are, which counts against this" ] },
+        { "says": "Choosing not to have it out, with nobody there to have it out with yet.",
+          "draws_on": [ "how cautious the person is", "how anxious a person they are" ] } ] },
+
+    { "id": "syn_restate_protect", "source": "synthetic family A",
+      "intention": "protect somebody",
+      "reasons": [
+        { "says": "I take it on myself to keep them from harm: looking after them is my job.",
+          "draws_on": [ "how empathetic the person is", "how much they value closeness" ] },
+        { "says": "Keeping them out of harm's way is my responsibility, so I do it.",
+          "draws_on": [ "how empathetic the person is", "how much they value closeness" ] } ] },
+
+    { "id": "syn_critical", "source": "synthetic family B, the critical pair",
+      "intention": "protect somebody",
+      "reasons": [
+        { "says": "I take it on myself to keep them from harm: looking after them is my job.",
+          "draws_on": [ "how empathetic the person is", "how much they value closeness" ] },
+        { "says": "I cannot bear to see them suffer, so I put myself between them and it.",
+          "draws_on": [ "how empathetic the person is", "how much they value closeness" ] } ] },
+
+    { "id": "syn_alternative", "source": "synthetic family E, competing routes",
+      "intention": "take responsibility for something",
+      "reasons": [
+        { "says": "I do it quietly, so that nobody knows I was the one who cared.",
+          "draws_on": [ "how proud the person is" ] },
+        { "says": "I do it openly, so that everyone sees I can be relied on.",
+          "draws_on": [ "how proud the person is" ] } ] },
+
+    { "id": "syn_roles", "source": "synthetic family E, opposite roles",
+      "intention": "protect somebody",
+      "reasons": [
+        { "says": "I protect them because I feel their fear as if it were mine.",
+          "draws_on": [ "how empathetic the person is" ] },
+        { "says": "Feeling their fear so strongly freezes me, and I hold back.",
+          "draws_on": [ "how empathetic the person is, which here counts against protecting" ] } ] },
+
+    { "id": "real_role", "source": "frozen file: what_you_did_in_the_night",
+      "intention": "take their own act as a theft, and own up to it",
+      "single": true,
+      "reasons": [
+        { "says": "The one intention that is about the past rather than the present. It is reachable only by somebody who believes they are answerable for the missing can, which is a belief and not a rule.",
+          "draws_on": [ "whether they believe they are answerable for the missing can", "how honest they are", "how much they value fairness", "how much shame they are feeling" ] } ] },
+
+    { "id": "control_same", "source": "control: word for word the same",
+      "intention": "assert their authority",
+      "reasons": [
+        { "says": "Somebody has to decide this, and deciding is my place.",
+          "draws_on": [ "how much they value control", "whether they believe they lead the family" ] },
+        { "says": "Somebody has to decide this, and deciding is my place.",
+          "draws_on": [ "how much they value control", "whether they believe they lead the family" ] } ] },
+
+    { "id": "control_different", "source": "control: different meaning and different facts",
+      "intention": "protect somebody",
+      "reasons": [
+        { "says": "I shield them because I am the one responsible for the family's safety.",
+          "draws_on": [ "how much they value keeping the family safe" ] },
+        { "says": "I shield them because I cannot stand to see them afraid.",
+          "draws_on": [ "how empathetic the person is" ] } ] },
+
+    { "id": "syn_restate_assert", "source": "synthetic family A, a second restatement",
+      "intention": "assert their authority",
+      "reasons": [
+        { "says": "Somebody has to decide this, and deciding is my place.",
+          "draws_on": [ "how much they value control", "whether they believe they lead the family" ] },
+        { "says": "It is my place to make this call, so I make it.",
+          "draws_on": [ "how much they value control", "whether they believe they lead the family" ] } ] }
+  ],
+
+  "answer_key": {
+    "note": "The author's declared structure, which the representation D encodes. It is a modelling judgment, not the truth, and reviewer agreement is used only to see whether it is legible and reproducible.",
+    "real_protect":        { "judgment": "different",   "combine": "both" },
+    "real_assert":         { "judgment": "different",   "combine": "both" },
+    "real_take":           { "judgment": "different",   "combine": "both" },
+    "real_prevent":        { "judgment": "different",   "combine": "both" },
+    "syn_restate_protect": { "judgment": "restatement", "combine": "not_applicable" },
+    "syn_critical":        { "judgment": "different",   "combine": "both" },
+    "syn_alternative":     { "judgment": "different",   "combine": "one_or_other" },
+    "syn_roles":           { "judgment": "different",   "combine": "both" },
+    "real_role":           { "role": "precondition" },
+    "control_same":        { "judgment": "restatement", "combine": "not_applicable" },
+    "control_different":   { "judgment": "different",   "combine": "both" },
+    "syn_restate_assert":  { "judgment": "restatement", "combine": "not_applicable" }
+  }
+}
