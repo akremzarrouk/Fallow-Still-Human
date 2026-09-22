@@ -1,0 +1,78 @@
+{
+  "experiment": "intention-ranking",
+  "date": "2026-09-22",
+  "frozen_rules": {
+    "file": "Assets/_Project/Data/Experiments/intentions.json",
+    "sha256": "61e6412e8a7cb77674f0c7685e4cb0e5f7dca5db3ad05f928a63f34dfb099d92",
+    "unchanged_after_run": true
+  },
+  "predictions_commit": "964d056",
+  "production_changes": "none",
+  "verdict": "MODIFY",
+
+  "classification": {
+    "PROVEN": [
+      { "id": "stages-separable", "claim": "The selector's five stages can be run apart; the stage-wise sum reproduces IntentionSelector.Form bit for bit", "evidence": "0 of 30618 winners differ, 0 weights differ; measurements 0" },
+      { "id": "compatibility-person-independent", "claim": "No change to the person alters the compatible set", "evidence": "0 of 642978 person-move pairs; measurements F" },
+      { "id": "preference-real", "claim": "With the candidate set identical, the person changes the intention", "evidence": "27951 of 457086 contested pairs, 6.1 %; measurements F" },
+      { "id": "sum-equivalence-classes", "claim": "Under the sum, {W, 2 x W/2, 4 x W/4} and {2W, W + W} are the only equivalence classes", "evidence": "0 disagreements within each class, 19992 between; measurements C" },
+      { "id": "restatement-changes-conclusions", "claim": "Duplicating one rule changes the intention with nothing about the person changed", "evidence": "19992 cells, all toward the copied intention, none outside where it applies; 48.8 % of all cells reversible by some single copy; measurements A" },
+      { "id": "split-invariance", "claim": "Weight-preserving splits change nothing under the sum (regression invariant)", "evidence": "0 of 306180 for halves and for quarters; measurements B" },
+      { "id": "impossibility", "claim": "No aggregator of anonymous contributions keeps restatement and split invariance and responds to weight", "evidence": "theorem committed in predictions; 0 of 6 aggregators measured; measurements H" },
+      { "id": "discard", "claim": "The discard of non-positive contributions is a person-dependent exclusion that breaks term-grouping invariance", "evidence": "243 cells, 81 profiles, 0 winners changed; 469 cells changed by splitting not_making_a_scene_of_it by term; measurements E, H" },
+      { "id": "ties-by-label-or-rounding", "claim": "Real ties are settled by the alphabet or by floating-point rounding", "evidence": "25 real ties: 12 exact (renaming intentions flips all 12), 13 within 1e-9; measurements G, H" },
+      { "id": "anxious-idle", "claim": "anxious cannot change any intention for any possible person", "evidence": "live in no group; 0 of 61236 moves; measurements D" },
+      { "id": "dominated-candidate", "claim": "prevent_argument can never win restore_standing alone", "evidence": "best margin -0.070 over the unit box; measurements D" },
+      { "id": "gates-decide", "claim": "Gates decide 27.5 % of cells, including every change a circumstance makes", "evidence": "8407 cells changed by lifting every gate = 8407 changed by company arriving; measurements E, F" },
+      { "id": "exclusions-override-preference", "claim": "Undeclared intention-level exclusions override person-dependent preferences", "evidence": "8 of 9 exclusions; up to 88.9 % of people would otherwise choose the excluded intention; measurements E" },
+      { "id": "forced-share", "claim": "A third of all conclusions are the same whoever the person is", "evidence": "10935 cells, 35.7 %; measurements D" }
+    ],
+    "PLAUSIBLE": [
+      { "id": "evidence-identity-repair", "claim": "Giving rules evidence identity, so support aggregates over distinct things read, is the necessary repair", "evidence": "follows from the impossibility; no such design was built or tested" },
+      { "id": "gate-semantics-mixed", "claim": "The authored gates mix preconditions of a reason with situational plausibility", "evidence": "a reading of the rule notes; report section 3" },
+      { "id": "failure-is-local", "claim": "The failures are local to ranking and the rule representation, not the want/circumstance/person architecture", "evidence": "every stage below ranking passed every test; report section 9" }
+    ],
+    "UNPROVEN": [
+      { "id": "replacement-generalizes", "claim": "A mechanism meeting every requirement would still generalize as the current one does" },
+      { "id": "forced-share-is-content", "claim": "The 35.7 % single-winner share is fixable by authoring rules rather than by architecture" },
+      { "id": "plausibility-in-gates", "claim": "Whether situational plausibility belongs in a gate at all" }
+    ],
+    "FAILED": [
+      { "id": "current-ranking", "claim": "The current ranking as a causal mechanism", "evidence": "violates R3, R4, R5, C4, C5, C6, J1" },
+      { "id": "family-as-fix", "claim": "Any aggregator in the family as a replacement", "evidence": "each gives up restatement, splitting, weight or monotonicity; mean moves 819 cells away from a strengthened intention" },
+      { "id": "textual-dedup", "claim": "Deduplicating identical rules as a fix", "evidence": "a 0.99 copy changes 19844 cells; identical to the sum on the real file" }
+    ],
+    "UNKNOWN": [
+      { "id": "feelings-memories-ledger", "claim": "Anything involving feelings, memories or the ledger", "evidence": "the sweep varies none of them; three emotion reads are structurally live and untested" },
+      { "id": "larger-vocabulary", "claim": "Behaviour under more rules, intentions or circumstances" },
+      { "id": "psychological-truth", "claim": "Whether any conclusion is psychologically right" }
+    ]
+  },
+
+  "properties": [
+    { "id": "R1", "name": "rule order is not psychology", "required": "hard", "current": "holds", "evidence": "T1: 0" },
+    { "id": "R2", "name": "rule names are not psychology", "required": "hard", "current": "holds", "evidence": "T2: 0" },
+    { "id": "R3", "name": "intention names are not psychology; a tie is a tie", "required": "hard", "current": "fails", "evidence": "12 ties by the alphabet, 13 by rounding" },
+    { "id": "R4", "name": "restating a reason does not strengthen it", "required": "hard", "current": "fails", "evidence": "T4: 19992; T5: 19844" },
+    { "id": "R5", "name": "the same reasons grouped differently conclude the same", "required": "hard", "current": "fails narrowly", "evidence": "T10: 0; T8: 469 through the discard" },
+    { "id": "R6", "name": "scaling everything together changes nothing", "required": "hard", "current": "holds", "evidence": "T11: 0" },
+    { "id": "C1", "name": "a stronger reason can win", "required": "hard", "current": "holds", "evidence": "T9: 19992" },
+    { "id": "C2", "name": "strengthening a reason for X never makes X lose", "required": "hard", "current": "holds", "evidence": "0 away" },
+    { "id": "C3", "name": "changing a reason changes only cases where it applies", "required": "hard", "current": "holds", "evidence": "0 outside, every aggregator" },
+    { "id": "C4", "name": "what is possible does not depend on the person", "required": "hard", "current": "holds for gates, fails in principle through the discard", "evidence": "0 of 642978; discard 243 cells, 0 winners" },
+    { "id": "C5", "name": "what is impossible is declared, not emergent", "required": "audited", "current": "fails", "evidence": "9 of 9 exclusions emergent; 8 override preference" },
+    { "id": "C6", "name": "everything read can matter to someone somewhere", "required": "audited", "current": "fails", "evidence": "anxious idle; one unwinnable candidate; respect only through anger" },
+    { "id": "C7", "name": "with the candidates fixed, the person decides", "required": "hard", "current": "holds", "evidence": "6.1 %" },
+    { "id": "C8", "name": "the same input gives the same answer", "required": "hard", "current": "holds", "evidence": "300 of 300 in the generalization experiment; no randomness" },
+    { "id": "J1", "name": "a reason carries the identity of its evidence, and support aggregates over distinct evidence", "required": "hard", "current": "fails", "evidence": "impossibility theorem; 0 of 6 aggregators escape it" }
+  ],
+
+  "success_conditions": {
+    "availability_decides": "35.7 % of cells have one winner whoever the person is; gates decide 27.5 % of cells, including every change a circumstance makes",
+    "preference_decides": "64.3 % of cells vary with the person; with candidates fixed, one attribute moves 6.1 % of contested pairs",
+    "violated_now": ["R3", "R4", "R5", "C4", "C5", "C6", "J1"],
+    "required_of_any_replacement": ["R1", "R2", "R3", "R4", "R5", "R6", "C1", "C2", "C3", "C4", "C7", "C8", "J1"],
+    "audited": ["C5", "C6", "forced share"],
+    "local_or_architecture": "local: ranking plus the rule representation; every stage below ranking held"
+  }
+}

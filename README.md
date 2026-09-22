@@ -58,6 +58,11 @@ same. No dialogue, no player, no 3D.
   function of a person or a table fitted to four of them. Frozen and run against 2,187 profiles
   nobody designed: they generalize, and they rank by a sum, which a duplicate rule can move
   without anything about the person changing.
+- `Docs/experiments/intention-ranking/report.md` — what an intention-selection mechanism must
+  satisfy to be a causal mechanism rather than a ranking. Everything below ranking holds: no
+  change to a person ever changes what is possible. Ranking does not: copying one existing
+  rule reverses 48.8 % of all conclusions, and no formula over anonymous contributions can
+  fix that without giving up splitting or weight, so a rule has to know what evidence it reads.
 
 Where those documents disagree with the code, the code is right and the reviews say when
 they were written.
