@@ -63,6 +63,10 @@ same. No dialogue, no player, no 3D.
   change to a person ever changes what is possible. Ranking does not: copying one existing
   rule reverses 48.8 % of all conclusions, and no formula over anonymous contributions can
   fix that without giving up splitting or weight, so a rule has to know what evidence it reads.
+- `Docs/experiments/intention-representation/report.md` — whether a rule that knows what
+  evidence it reads fixes that. It does: no restatement moves anything, and everything already
+  proven survives. It is not enough: where two different reasons cite one fact about a person,
+  counting it once or twice changes 660 conclusions, and no invariant can choose.
 
 Where those documents disagree with the code, the code is right and the reviews say when
 they were written.

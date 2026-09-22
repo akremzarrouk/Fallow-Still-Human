@@ -1,0 +1,88 @@
+{
+  "experiment": "intention-representation",
+  "date": "2026-09-22",
+  "frozen_rules": {
+    "file": "Assets/_Project/Data/Experiments/intentions.json",
+    "sha256": "61e6412e8a7cb77674f0c7685e4cb0e5f7dca5db3ad05f928a63f34dfb099d92",
+    "unchanged_after_run": true
+  },
+  "predictions_commit": "a21fc76",
+  "production_changes": "none",
+  "verdict": "MODIFY",
+  "verdict_scope": "the representation experiment, not the Fallow architecture",
+
+  "representations": {
+    "A": "current anonymous sum with discard and name tie-break; reproduces IntentionSelector.Form bit for bit (control)",
+    "A0": "A without the discard, ties reported (ablation only)",
+    "B": "evidence-identified: one entry per (intention, evidence key); identical restatements count once; conflicting statements count once at the strongest (largest magnitude) and are recorded; no discard; ties reported",
+    "C": "reason-identified: a reason is (intention, gate, set of evidence keys); identical reasons count once; different reasons add even when they share evidence; no discard; ties reported",
+    "B_mean": "B with conflicts settled by the mean (policy sensitivity only)"
+  },
+
+  "invariants": {
+    "R1_order":        { "A": "pass", "B": "pass", "C": "pass", "evidence": "0 changes each" },
+    "R2_rule_names":   { "A": "pass", "B": "pass", "C": "pass", "evidence": "0 changes each" },
+    "R3_intent_names": { "A": "fail", "B": "pass", "C": "pass", "evidence": "A 12 ties decided by name; B, C report ties" },
+    "R4a_exact_copy":  { "A": "fail", "B": "pass", "C": "pass", "evidence": "A 19992; B 0; C 0" },
+    "R4b_reworded":    { "A": "fail", "B": "pass", "C": "pass", "evidence": "A 19992; B 0; C 0" },
+    "R4c_near_copy":   { "A": "fail", "B": "pass", "C": "pass", "evidence": "A 19844; B 0; C 0" },
+    "R4d_partial":     { "A": "fail", "B": "pass", "C": "fail", "evidence": "A 18938; B 0; C 19062, none flagged" },
+    "R5_split":        { "A": "invariant", "B": "changes, all flagged", "C": "changes, all flagged", "evidence": "B 15210 and 19340; C 13796 and 18632; 0 unflagged; 78732 of 78732 exposed cells flagged" },
+    "R6_weight":       { "A": "pass", "B": "pass", "C": "pass", "evidence": "A 19992; B 22520; C 20021" },
+    "R7_monotonicity": { "A": "pass", "B": "pass", "C": "pass", "evidence": "0 changes away" },
+    "R8_locality":     { "A": "pass", "B": "pass", "C": "pass", "evidence": "0 outside" },
+    "R9_grouping":     { "A": "fail", "B": "pass", "C": "pass", "evidence": "term split A 469 (the discard); merge 0 for all" },
+    "R10_candidates":  { "A": "fail", "B": "pass", "C": "pass", "evidence": "A 243 on the frozen file, 22113 over all rewrites; B, C 0" }
+  },
+
+  "classification": {
+    "PROVEN": [
+      { "id": "A-is-the-selector", "evidence": "0 of 30618 winners differ; weights equal to the bit" },
+      { "id": "evidence-identity-restatement-invariant", "evidence": "B: 0 changes under exact, reworded, near and partial restatement" },
+      { "id": "reason-identity-defeated-by-partial-restatement", "evidence": "C: 19062 changes under R4d, none flagged" },
+      { "id": "split-cannot-be-both", "evidence": "B and C read W/2 + W/2 as a weaker restated reason and flag 78732 of 78732 exposed cells; 0 unflagged changes" },
+      { "id": "discard-causes-R9a-and-R10-only", "evidence": "A0 clears 469 and 243 and changes no winner except by reporting 25 ties" },
+      { "id": "tie-reporting-clears-R3", "evidence": "A 12; A0, B, C 0" },
+      { "id": "proven-properties-preserved", "evidence": "28.6 % single-candidate, blindness 0, replay exact, no character names, fixed-candidate sensitivity B 7.1 % C 6.1 %, under every representation" },
+      { "id": "C-equals-A-outside-ties", "evidence": "25 differing cells, all reported ties" },
+      { "id": "B-changes-are-exactly-the-shared-facts", "evidence": "660 cells, all in the 3 groups where two reasons cite one fact, all away from protect or assert_authority" },
+      { "id": "conflict-policy-decides", "evidence": "B against B-mean: 242 cells" },
+      { "id": "forced-share-not-representational", "evidence": "35.7 % under all four; causes: no alternative 28.6 %, dominated and evidence-limited 7.1 %; no representation cause; assert never wins restore_standing alone in 560 real moments" },
+      { "id": "no-evidence-status-depends-on-representation", "evidence": "live/cancelled/idle identical under A, A0, B, C in every group" },
+      { "id": "restatement-creates-influence-under-A", "evidence": "5 inert (group, evidence) pairs made live by one copy under A, 0 under B; honesty in get_food 0 -> 1134 of 8748 moves under A with one rule copied" },
+      { "id": "same-act-different-reasons", "evidence": "771 real matched pairs: 63.0 % different intentions; 36.8 % of same-intention pairs led by different evidence" },
+      { "id": "stated-reason-stability", "evidence": "one copied rule changes 110 of 2570 real intentions under A and 0 under B; a partial copy re-ranks 20 reasons under A and C, 0 under B" }
+    ],
+    "PLAUSIBLE": [
+      { "id": "evidence-identity-is-the-right-unit", "evidence": "the only tested unit invariant to every restatement; one file" },
+      { "id": "B-reasons-closer-to-person", "evidence": "invariant to rewriting where A's are not; invariance is not truth" }
+    ],
+    "UNPROVEN": [
+      { "id": "one-fact-two-reasons", "question": "does one fact cited by two different reasons count once (B) or twice (C), and if once, by which rule" },
+      { "id": "B-changes-are-improvements", "question": "whether B's 660 changed conclusions are psychologically better" },
+      { "id": "base-by-gate-identity", "question": "whether keying a base by its gate is right; the frozen file never exercises it" }
+    ],
+    "FAILED": [
+      { "id": "A-as-representation", "evidence": "R3, R4a-d, R9a, R10; influence created by pasting a line" },
+      { "id": "C-as-replacement", "evidence": "silently defeated by partial restatement" },
+      { "id": "evidence-identity-alone-settles-it", "evidence": "the shared-fact decision stays open and moves 660 conclusions, 242 of them by policy alone" }
+    ],
+    "UNKNOWN": [
+      { "id": "psychological-correctness" },
+      { "id": "files-with-many-shared-facts" },
+      { "id": "feelings-varied-across-the-whole-sweep" }
+    ]
+  },
+
+  "the_ranking_layer_must_keep": [
+    "the evidence key of every statement (term) and the circumstance of every base",
+    "each statement's coefficient and sign, separate from the level",
+    "provenance: which reason made which statement",
+    "a declared rule for one fact cited by several reasons for one intention",
+    "the compatible set as the candidate set (no discard)",
+    "ties as ties",
+    "the why as person evidence, derived from the above",
+    "availability and compatibility as separate, earlier, person-independent stages"
+  ],
+  "the_ranking_layer_must_not_keep": ["rule ids", "rule order", "rule count", "the grouping of statements into rules", "intention name spelling"]
+}
