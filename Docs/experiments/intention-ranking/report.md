@@ -467,4 +467,9 @@ Reproduce with `./run-tests.sh`, or the fixture alone with
 `unity test . --mode EditMode --filter IntentionRankingExperimentTests`. It takes
 about four minutes, most of it in the 65 rewritten rule sets.
 
-**Suite: pending**, to be filled in from the full run.
+**Suite: 424 tests, 422 pass, 2 fail**: the two regressions S1.4 left failing, unchanged
+(the pacing gate, still 7 on Model A, and the emergent-moment fading check). The 414
+before this experiment, plus its ten, is exactly 424. **Every generated document of S0
+to S1.7 and of the nine earlier experiments regenerated with identical content.** The
+only differences anywhere were the wall-clock seconds in the decision-sensitivity
+results and one file that differed in line endings only.
