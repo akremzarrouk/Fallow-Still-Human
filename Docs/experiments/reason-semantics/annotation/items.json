@@ -1,0 +1,184 @@
+{
+  "note": "The blind annotation of the reason-semantics experiment. Committed with the predictions, before any reviewer saw anything. Reviewers are shown only each item's 'intention', 'reasons' (what each says, and the facts it draws on) and, where present, 'this_person', under a neutral id, in the order and orientation the protocol gives them. They never see this file's ids, sources or answer key, the experiment's vocabulary, its hypotheses, the representations, or each other's answers. The fact lists are neutral: they name a fact, never its part.",
+
+  "items": [
+    { "id": "critical", "source": "B1: two reasons on the same facts",
+      "intention": "protect somebody",
+      "reasons": [
+        { "says": "I take it on myself to keep them from harm: looking after them is my job.",
+          "draws_on": [ "how empathetic the person is", "how much they value closeness" ] },
+        { "says": "I cannot bear to see them suffer, so I put myself between them and it.",
+          "draws_on": [ "how empathetic the person is", "how much they value closeness" ] } ] },
+
+    { "id": "owning_graded", "source": "C1e: the belief as a push",
+      "intention": "take their own act as a theft, and own up to it",
+      "reasons": [
+        { "says": "The more certain they are that the missing can was theirs to answer for, the more readily they take it as their own theft; honesty and a sense of fairness add to it.",
+          "draws_on": [ "whether they believe the missing can was theirs to answer for", "how honest they are", "how much they value fairness" ] } ] },
+
+    { "id": "easier_unseen", "source": "D5: a situational push",
+      "intention": "protect somebody",
+      "reasons": [
+        { "says": "Looking after them is my job; it is easier to do when nobody is watching.",
+          "draws_on": [ "how empathetic the person is", "how much they value closeness", "whether anyone is watching" ] } ] },
+
+    { "id": "quiet_or_open", "source": "E2: alternatives",
+      "intention": "take responsibility for something",
+      "reasons": [
+        { "says": "I do it quietly, so that nobody knows I was the one who cared.",
+          "draws_on": [ "how proud they are", "whether others will know it was them" ] },
+        { "says": "I do it openly, so that everyone sees I can be relied on.",
+          "draws_on": [ "how proud they are", "how much they value respect", "whether others will know it was them" ] } ] },
+
+    { "id": "no_fairness", "source": "F3: the only reason pushes with nothing",
+      "intention": "take their own act as a theft, and own up to it",
+      "reasons": [
+        { "says": "I own up because it is only fair.",
+          "draws_on": [ "how much they value fairness" ] } ],
+      "this_person": "This person does not value fairness at all." },
+
+    { "id": "settling_conditional", "source": "C2c: the belief as a condition",
+      "intention": "assert their authority",
+      "reasons": [
+        { "says": "Only someone who believes they lead the family would settle it on their own authority at all; for them, how much they value control decides how firmly.",
+          "draws_on": [ "whether they believe they lead the family", "how much they value control" ] } ] },
+
+    { "id": "restate", "source": "A2: one reason written twice in other words",
+      "intention": "protect somebody",
+      "reasons": [
+        { "says": "I take it on myself to keep them from harm: looking after them is my job.",
+          "draws_on": [ "how empathetic the person is", "how much they value closeness" ] },
+        { "says": "Keeping them out of harm's way is my responsibility, so I do it.",
+          "draws_on": [ "how empathetic the person is", "how much they value closeness" ] } ] },
+
+    { "id": "present_or_absent", "source": "E3: exclusive by circumstance",
+      "intention": "protect somebody",
+      "reasons": [
+        { "says": "Putting myself between them and what threatens them, which needs them there.",
+          "draws_on": [ "how empathetic the person is", "how much they value keeping the family safe", "whether the person they protect is in the room" ] },
+        { "says": "Keeping a matter away from them while they are not in the room.",
+          "draws_on": [ "how empathetic the person is", "how much they value closeness", "whether the person they protect is in the room" ] } ] },
+
+    { "id": "at_their_side", "source": "D3: a circumstance naming the person concerned; one irrelevant fact",
+      "intention": "protect somebody",
+      "reasons": [
+        { "says": "Looking after them by staying at their side, which needs them to be in the room.",
+          "draws_on": [ "how empathetic the person is", "how much they value closeness", "whether the person they look after is in the room", "how impulsive they are" ] } ] },
+
+    { "id": "fear_holds_back", "source": "E6: a hold-back local to one reason",
+      "intention": "protect somebody",
+      "reasons": [
+        { "says": "I step in myself, though being frightened holds me back from that.",
+          "draws_on": [ "how empathetic the person is", "how anxious a person they are" ] },
+        { "says": "I make sure someone who can help knows.",
+          "draws_on": [ "how much they value closeness", "how much they value keeping the family safe", "how anxious a person they are" ] } ] },
+
+    { "id": "no_belief", "source": "F1: the needed belief is absent",
+      "intention": "take their own act as a theft, and own up to it",
+      "reasons": [
+        { "says": "Only someone who believes the missing can was theirs to answer for could take it as their own theft at all; for them, honesty and a sense of fairness decide how readily.",
+          "draws_on": [ "whether they believe the missing can was theirs to answer for", "how honest they are", "how much they value fairness" ] } ],
+      "this_person": "This person does not believe the missing can was theirs to answer for." },
+
+    { "id": "independent", "source": "E1: independent reasons on different facts",
+      "intention": "protect somebody",
+      "reasons": [
+        { "says": "I shield them because I am the one responsible for the family's safety.",
+          "draws_on": [ "how much they value keeping the family safe" ] },
+        { "says": "I shield them because I cannot stand to see them afraid.",
+          "draws_on": [ "how empathetic the person is" ] } ] },
+
+    { "id": "owning_conditional", "source": "C1c: the belief as a condition",
+      "intention": "take their own act as a theft, and own up to it",
+      "reasons": [
+        { "says": "Only someone who believes the missing can was theirs to answer for could take it as their own theft at all; for them, honesty and a sense of fairness decide how readily.",
+          "draws_on": [ "whether they believe the missing can was theirs to answer for", "how honest they are", "how much they value fairness" ] } ] },
+
+    { "id": "worry_family", "source": "E4: one reason only strengthens another",
+      "intention": "protect somebody",
+      "reasons": [
+        { "says": "I am frightened for them when there are others about.",
+          "draws_on": [ "how anxious a person they are", "whether anyone else is in the room" ] },
+        { "says": "And because they are family, the fear becomes unbearable.",
+          "draws_on": [ "how much they value keeping the family safe" ] } ] },
+
+    { "id": "verbatim", "source": "control: word for word the same",
+      "intention": "assert their authority",
+      "reasons": [
+        { "says": "Somebody has to decide this, and deciding is my place.",
+          "draws_on": [ "how much they value control", "how dominant they are" ] },
+        { "says": "Somebody has to decide this, and deciding is my place.",
+          "draws_on": [ "how much they value control", "how dominant they are" ] } ] },
+
+    { "id": "unseen_only", "source": "D2: only when nobody is watching",
+      "intention": "protect somebody",
+      "reasons": [
+        { "says": "Looking after them where nobody can see, because they would be ashamed to be helped in front of others.",
+          "draws_on": [ "how empathetic the person is", "how much they value closeness", "whether anyone is watching" ] } ] },
+
+    { "id": "against", "source": "E5: a reason against the intention",
+      "intention": "protect somebody",
+      "reasons": [
+        { "says": "I take it on myself to keep them from harm: looking after them is my job.",
+          "draws_on": [ "how empathetic the person is", "how much they value closeness" ] },
+        { "says": "I hold back, because stepping in could make it worse.",
+          "draws_on": [ "how cautious they are" ] } ] },
+
+    { "id": "settling_graded", "source": "C2e: the belief as a push",
+      "intention": "assert their authority",
+      "reasons": [
+        { "says": "Believing they lead the family adds to their readiness to settle it themselves, as does valuing control.",
+          "draws_on": [ "whether they believe they lead the family", "how much they value control" ] } ] },
+
+    { "id": "not_there", "source": "F2: the needed circumstance is absent",
+      "intention": "protect somebody",
+      "reasons": [
+        { "says": "Putting myself between them and what threatens them, which needs them there.",
+          "draws_on": [ "how empathetic the person is", "how much they value keeping the family safe", "whether the person they protect is in the room" ] } ],
+      "this_person": "The person they would protect is not in the room." },
+
+    { "id": "seen", "source": "B2: shared facts, one reason needing the person there",
+      "intention": "protect somebody",
+      "reasons": [
+        { "says": "I take it on myself to keep them from harm: looking after them is my job.",
+          "draws_on": [ "how empathetic the person is", "how much they value closeness" ] },
+        { "says": "Seeing them suffer in front of me is what I cannot bear.",
+          "draws_on": [ "how empathetic the person is", "how much they value closeness", "whether the person they look after is in the room" ] } ] },
+
+    { "id": "weak_pull", "source": "F5: a weak but real reason",
+      "intention": "take responsibility for something",
+      "reasons": [
+        { "says": "It needed doing, and I am a little honest about such things.",
+          "draws_on": [ "how honest they are" ] } ],
+      "this_person": "This person is only slightly honest, and nothing else about them bears on it." }
+  ],
+
+  "answer_key": {
+    "note": "The author's declared semantics, which the representations B and C encode. A modelling judgment, not the truth: reviewer agreement is used only to see whether it is legible and reproducible. 'parts' lists one answer per reason, one per fact, in items.json order.",
+    "critical":             { "q1": "different", "q2": "both_add",             "parts": [["pushes", "pushes"], ["pushes", "pushes"]] },
+    "owning_graded":        {                                                 "parts": [["pushes", "pushes", "pushes"]] },
+    "easier_unseen":        {                                                 "parts": [["pushes", "pushes", "situation_strengthens"]] },
+    "quiet_or_open":        { "q1": "different", "q2": "one_or_other",         "parts": [["pushes", "consequence"], ["pushes", "pushes", "consequence"]] },
+    "no_fairness":          { "q5": "no",                                     "parts": [["pushes"]] },
+    "settling_conditional": {                                                 "parts": [["must_hold", "pushes"]] },
+    "restate":              { "q1": "same",      "q2": "not_applicable",       "parts": [["pushes", "pushes"], ["pushes", "pushes"]] },
+    "present_or_absent":    { "q1": "different", "q2": "never_together",       "parts": [["pushes", "pushes", "situation_needed"], ["pushes", "pushes", "situation_needed"]] },
+    "at_their_side":        {                                                 "parts": [["pushes", "pushes", "situation_needed", "no_part"]] },
+    "fear_holds_back":      { "q1": "different", "q2": "both_add",             "parts": [["pushes", "holds_back"], ["pushes", "pushes", "no_part"]] },
+    "no_belief":            { "q5": "no",                                     "parts": [["must_hold", "pushes", "pushes"]] },
+    "independent":          { "q1": "different", "q2": "both_add",             "parts": [["pushes"], ["pushes"]] },
+    "owning_conditional":   {                                                 "parts": [["must_hold", "pushes", "pushes"]] },
+    "worry_family":         { "q1": "different", "q2": "one_strengthens_other", "parts": [["pushes", "situation_needed"], ["pushes"]] },
+    "verbatim":             { "q1": "same",      "q2": "not_applicable",       "parts": [["pushes", "pushes"], ["pushes", "pushes"]] },
+    "unseen_only":          {                                                 "parts": [["pushes", "pushes", "situation_needed"]] },
+    "against":              { "q1": "different", "q2": "opposed",              "parts": [["pushes", "pushes"], ["pushes"]] },
+    "settling_graded":      {                                                 "parts": [["pushes", "pushes"]] },
+    "not_there":            { "q5": "no",                                     "parts": [["pushes", "pushes", "situation_needed"]] },
+    "seen":                 { "q1": "different", "q2": "both_add",             "parts": [["pushes", "pushes"], ["pushes", "pushes", "situation_needed"]] },
+    "weak_pull":            { "q5": "yes",                                    "parts": [["pushes"]] },
+    "ambiguous_slots": {
+      "note": "Pre-registered: excluded from the parts agreement and match counts, and reported on their own. In a reason AGAINST the intention, a fact that strengthens that reason holds the person back from the intention; the parts question, which asks about the fact's part in the reason, can be read either way.",
+      "slots": [ { "item": "against", "reason": 1, "fact": 0 } ]
+    }
+  }
+}

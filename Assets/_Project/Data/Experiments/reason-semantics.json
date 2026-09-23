@@ -1,0 +1,421 @@
+{
+  "note": "EXPERIMENT ONLY. Nothing in Fallow.Core loads this file; it is read by ReasonSemanticsExperimentTests and by nothing else. It was committed with the predictions, before the fixture existed. It declares what each synthetic reason MEANS, what an author writing only in the shipped rule language would have written for it (the 'authored' surface), and every check. No representation is tuned to it: each representation reads only the kinds of information its vocabulary holds, by the fixed reading rules below, and the checks are properties that follow from the declared meanings.",
+
+  "vocabulary": {
+    "fact": "A level read from the person (a trait, a value, a belief, a feeling) or a feature of the situation (someone present, the person the want concerns present, someone watching). Person facts are read through the shipped ScalerEval.",
+    "intention": "What the person is trying to accomplish. Only the shipped intention names are used.",
+    "reason": "A declared explanation of why some facts lead a person toward, or away from, an intention. It has an identity (its key), which names its meaning and nothing else: not a rule, a position or a wording.",
+    "part": "What a fact does inside one reason. 'push': the more of it, the stronger the reason. 'hold_back': the more of it, the weaker the reason; it can cancel its reason but not push against the intention. 'condition': it must be true of the person for the reason to apply at all, and it is not a strength.",
+    "circumstance": "A feature of the situation that must hold for a reason to apply at all. It is not a strength. A feature of the situation that makes a reason stronger without being needed is a 'situational push', declared as such.",
+    "direction": "Whether a whole reason leads toward the intention or away from it.",
+    "relation": "What two reasons for one intention do together. 'independent' (the default): both operate, each with its own push. 'alternative': if both apply, only one operates. 'reinforces': one reason operates only where another operates. 'exclusive': they never apply in the same situation (a check, not a computation)."
+  },
+
+  "situations": [
+    { "id": "s0", "label": "alone",                                          "others_present": false, "target_present": false, "watched": false },
+    { "id": "s1", "label": "in company, the person concerned absent, unwatched", "others_present": true,  "target_present": false, "watched": false },
+    { "id": "s2", "label": "in company, the person concerned present, unwatched", "others_present": true,  "target_present": true,  "watched": false },
+    { "id": "s3", "label": "in company, the person concerned absent, watched",   "others_present": true,  "target_present": false, "watched": true },
+    { "id": "s4", "label": "in company, the person concerned present, watched",  "others_present": true,  "target_present": true,  "watched": true }
+  ],
+  "situation_note": "'The person concerned' is the target of the want: the person looked after, the other party to a dispute. 'Watched' means somebody is watching the person act. The shipped SituationCondition can say whether anyone is present (others_present_min, alone). It cannot say whether the person concerned is present, or whether anyone is watching.",
+
+  "circumstances": {
+    "anyone":         {},
+    "company":        { "others_present": true },
+    "nobody":         { "others_present": false },
+    "target_present": { "target_present": true },
+    "target_absent":  { "target_present": false },
+    "watched":        { "watched": true },
+    "unwatched":      { "watched": false }
+  },
+
+  "reading_rules": {
+    "S":      "The shipped selector (IntentionSelector.Form): the authored rules only, anonymous; each rule's shipped gate; weights summed per intention; a rule weighing zero or less is discarded; ties broken by name.",
+    "A":      "Reasons + weights: the authored rules, each statement carrying its reason's key and the rule that stated it. Every fact is a weight, including a condition (read as the weight the author wrote for it). Circumstances are the rules' shipped gates. A restatement within a reason counts once; one fact at two strengths within a reason is a flagged conflict, kept at the larger magnitude. Reasons add. Any intention with a compatible rule is a candidate. Ties reported. This is the causal-route experiment's D without declared alternatives.",
+    "B-parts": "A, plus each fact's part and each reason's direction. A condition that fails makes its reason inapplicable, and a condition adds no strength. A reason toward the intention contributes at least zero (its hold-backs can cancel it, not reverse it); a reason against contributes at most zero. Circumstances are still the shipped gates. An intention forms only if its support is positive.",
+    "B-circ": "A, plus each reason's declared circumstance, which replaces the shipped gate, and declared situational pushes. Parts are not read: every person fact is a weight. An intention forms only if its support is positive.",
+    "B":      "A, plus parts, direction, circumstances and situational pushes. An intention forms only if its support is positive.",
+    "C":      "B, plus declared relations between reasons: of a group of alternatives only the strongest applicable member operates; a reason that reinforces another operates only where that one operates; a declared exclusive pair is checked, not computed.",
+    "relation_fallback": "A representation that cannot hold a relation reads the two reasons as independent. Where the author, lacking relations, would have copied one reason's applicability into another ('circumstance_as_copied'), representations without relations read that copy.",
+    "viability_ablations": "Reported for family F and the frozen file only. Sel-0: a candidate forms if any of its rules or declared circumstances admit it (the current rule, without the discard). Sel-1: only if at least one reason toward it applies. Sel-2: only if its support is positive (the default for B-parts, B-circ, B and C)."
+  },
+
+  "rival": {
+    "intent": "share_information",
+    "route": "telling_the_others",
+    "meaning": "A fixed competitor, so that a change in the focal intention's support can be seen to change what is chosen. Read the same way by every representation.",
+    "rule": { "id": "rival", "when": {}, "base": 0.12, "terms": [
+      { "kind": "trait", "name": "honest", "factor": 0.40, "part": "push" },
+      { "kind": "value", "name": "closeness", "factor": 0.30, "part": "push" },
+      { "kind": "value", "name": "fairness", "factor": 0.20, "part": "push" } ] },
+    "circumstance": "anyone"
+  },
+
+  "cases": [
+    { "id": "A0", "family": "A", "want": "look_after", "intent": "protect", "rival": true,
+      "note": "The focal reason, stated once.",
+      "routes": [ { "key": "duty", "direction": "toward", "circumstance": "anyone",
+        "meaning": "I take it on myself to keep them from harm: looking after them is my job." } ],
+      "rules": [ { "id": "a0", "route": "duty", "when": {}, "base": 0.10, "terms": [
+        { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+        { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" } ] } ] },
+
+    { "id": "A1", "family": "A", "want": "look_after", "intent": "protect", "rival": true,
+      "note": "The same reason written twice, word for word.",
+      "routes": [ { "key": "duty", "direction": "toward", "circumstance": "anyone",
+        "meaning": "I take it on myself to keep them from harm: looking after them is my job." } ],
+      "rules": [
+        { "id": "a1a", "route": "duty", "when": {}, "base": 0.10, "terms": [
+          { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+          { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" } ] },
+        { "id": "a1b", "route": "duty", "when": {}, "base": 0.10, "terms": [
+          { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+          { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" } ] } ] },
+
+    { "id": "A2", "family": "A", "want": "look_after", "intent": "protect", "rival": true,
+      "note": "The same reason written a second time in other words: terms reversed, another id, another note.",
+      "routes": [ { "key": "duty", "direction": "toward", "circumstance": "anyone",
+        "meaning": "I take it on myself to keep them from harm: looking after them is my job." } ],
+      "rules": [
+        { "id": "a2a", "route": "duty", "when": {}, "base": 0.10, "terms": [
+          { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+          { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" } ] },
+        { "id": "keeping_them_out_of_harms_way", "route": "duty", "when": {}, "base": 0.10, "terms": [
+          { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" },
+          { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" } ] } ] },
+
+    { "id": "A3", "family": "A", "want": "look_after", "intent": "protect", "rival": true,
+      "note": "The one reason split into two rules by term.",
+      "routes": [ { "key": "duty", "direction": "toward", "circumstance": "anyone",
+        "meaning": "I take it on myself to keep them from harm: looking after them is my job." } ],
+      "rules": [
+        { "id": "a3a", "route": "duty", "when": {}, "base": 0.10, "terms": [
+          { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" } ] },
+        { "id": "a3b", "route": "duty", "when": {}, "base": 0.0, "terms": [
+          { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" } ] } ] },
+
+    { "id": "B1", "family": "B", "want": "look_after", "intent": "protect", "rival": true,
+      "note": "Two different reasons with identical facts and strengths. Identical, rule for rule, to A1 apart from ids and declared reasons.",
+      "routes": [
+        { "key": "duty", "direction": "toward", "circumstance": "anyone",
+          "meaning": "I take it on myself to keep them from harm: looking after them is my job." },
+        { "key": "compassion", "direction": "toward", "circumstance": "anyone",
+          "meaning": "I cannot bear to see them suffer, so I put myself between them and it." } ],
+      "rules": [
+        { "id": "b1a", "route": "duty", "when": {}, "base": 0.10, "terms": [
+          { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+          { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" } ] },
+        { "id": "b1b", "route": "compassion", "when": {}, "base": 0.10, "terms": [
+          { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+          { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" } ] } ] },
+
+    { "id": "B2", "family": "B", "want": "look_after", "intent": "protect", "rival": true,
+      "note": "Two different reasons on the same facts that also differ in circumstance: the second needs the person there.",
+      "routes": [
+        { "key": "duty", "direction": "toward", "circumstance": "anyone",
+          "meaning": "I take it on myself to keep them from harm: looking after them is my job." },
+        { "key": "compassion_seen", "direction": "toward", "circumstance": "target_present",
+          "meaning": "Seeing them suffer in front of me is what I cannot bear." } ],
+      "rules": [
+        { "id": "b2a", "route": "duty", "when": {}, "base": 0.10, "terms": [
+          { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+          { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" } ] },
+        { "id": "b2b", "route": "compassion_seen", "when": { "others_present_min": 1 }, "base": 0.10, "terms": [
+          { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+          { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" } ] } ] },
+
+    { "id": "C1e", "family": "C", "want": "avoid_exposure", "intent": "took_what_was_not_mine", "rival": true,
+      "note": "The belief as a push.",
+      "routes": [ { "key": "owning_it", "direction": "toward", "circumstance": "anyone",
+        "meaning": "The more certain they are that the missing can was theirs to answer for, the more readily they take it as their own theft; honesty and a sense of fairness add to it." } ],
+      "rules": [ { "id": "c1e", "route": "owning_it", "when": {}, "base": 0.05, "terms": [
+        { "kind": "belief", "predicate": "answerable_for", "args": ["$self", "missing_can"], "factor": 0.60, "part": "push" },
+        { "kind": "trait", "name": "honest", "factor": 0.30, "part": "push" },
+        { "kind": "value", "name": "fairness", "factor": 0.25, "part": "push" } ] } ] },
+
+    { "id": "C1c", "family": "C", "want": "avoid_exposure", "intent": "took_what_was_not_mine", "rival": true,
+      "note": "The same fact as a condition. The authored surface is identical to C1e: a weights-only author can only write the condition as a weight.",
+      "routes": [ { "key": "owning_it_only_if_answerable", "direction": "toward", "circumstance": "anyone",
+        "meaning": "Only someone who believes the missing can was theirs to answer for could take it as their own theft at all; for them, honesty and a sense of fairness decide how readily." } ],
+      "rules": [ { "id": "c1c", "route": "owning_it_only_if_answerable", "when": {}, "base": 0.05, "terms": [
+        { "kind": "belief", "predicate": "answerable_for", "args": ["$self", "missing_can"], "factor": 0.60, "part": "condition" },
+        { "kind": "trait", "name": "honest", "factor": 0.30, "part": "push" },
+        { "kind": "value", "name": "fairness", "factor": 0.25, "part": "push" } ] } ] },
+
+    { "id": "C2e", "family": "C", "want": "restore_standing", "intent": "assert_authority", "rival": true,
+      "note": "A second belief as a push.",
+      "routes": [ { "key": "settling_it", "direction": "toward", "circumstance": "anyone",
+        "meaning": "Believing they lead the family adds to their readiness to settle it themselves, as does valuing control." } ],
+      "rules": [ { "id": "c2e", "route": "settling_it", "when": {}, "base": 0.05, "terms": [
+        { "kind": "belief", "predicate": "role_claim", "args": ["$self", "leads_family"], "factor": 0.30, "part": "push" },
+        { "kind": "value", "name": "control", "factor": 0.25, "part": "push" } ] } ] },
+
+    { "id": "C2c", "family": "C", "want": "restore_standing", "intent": "assert_authority", "rival": true,
+      "note": "The same belief as a condition; authored surface identical to C2e.",
+      "routes": [ { "key": "settling_it_only_if_leading", "direction": "toward", "circumstance": "anyone",
+        "meaning": "Only someone who believes they lead the family would settle it on their own authority at all; for them, how much they value control decides how firmly." } ],
+      "rules": [ { "id": "c2c", "route": "settling_it_only_if_leading", "when": {}, "base": 0.05, "terms": [
+        { "kind": "belief", "predicate": "role_claim", "args": ["$self", "leads_family"], "factor": 0.30, "part": "condition" },
+        { "kind": "value", "name": "control", "factor": 0.25, "part": "push" } ] } ] },
+
+    { "id": "D1", "family": "D", "want": "look_after", "intent": "protect", "rival": true,
+      "note": "The focal reason's facts, applying only when anyone else is present: a circumstance the shipped gate can say.",
+      "routes": [ { "key": "looking_after_them_in_company", "direction": "toward", "circumstance": "company",
+        "meaning": "Looking after them is my job when there are others about who could hurt them." } ],
+      "rules": [ { "id": "d1", "route": "looking_after_them_in_company", "when": { "others_present_min": 1 }, "base": 0.10, "terms": [
+        { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+        { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" } ] } ] },
+
+    { "id": "D2", "family": "D", "want": "look_after", "intent": "protect", "rival": true,
+      "note": "The same facts, applying only when nobody is watching. Authored as 'alone', the nearest the shipped gate can say.",
+      "routes": [ { "key": "looking_after_them_unseen", "direction": "toward", "circumstance": "unwatched",
+        "meaning": "Looking after them where nobody can see, because they would be ashamed to be helped in front of others." } ],
+      "rules": [ { "id": "d2", "route": "looking_after_them_unseen", "when": { "alone": true }, "base": 0.10, "terms": [
+        { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+        { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" } ] } ] },
+
+    { "id": "D3", "family": "D", "want": "look_after", "intent": "protect", "rival": true,
+      "note": "The same facts, applying only when the person looked after is present. Authored as 'anyone present'.",
+      "routes": [ { "key": "at_their_side", "direction": "toward", "circumstance": "target_present",
+        "meaning": "Looking after them by staying at their side, which needs them to be in the room." } ],
+      "rules": [ { "id": "d3", "route": "at_their_side", "when": { "others_present_min": 1 }, "base": 0.10, "terms": [
+        { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+        { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" } ] } ] },
+
+    { "id": "D4", "family": "D", "want": "look_after", "intent": "protect", "rival": true,
+      "note": "The same facts, applying only when the person looked after is absent. The shipped gate cannot say it, so the author wrote no gate.",
+      "routes": [ { "key": "while_they_are_away", "direction": "toward", "circumstance": "target_absent",
+        "meaning": "Looking after their interests while they are not in the room to look after themselves." } ],
+      "rules": [ { "id": "d4", "route": "while_they_are_away", "when": {}, "base": 0.10, "terms": [
+        { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+        { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" } ] } ] },
+
+    { "id": "D5", "family": "D", "want": "look_after", "intent": "protect", "rival": true,
+      "note": "The same facts applying everywhere, with a situational push: easier when nobody is watching. Authored as a second rule gated 'alone'.",
+      "routes": [ { "key": "easier_unseen", "direction": "toward", "circumstance": "anyone",
+        "meaning": "Looking after them is my job; it is easier to do when nobody is watching.",
+        "situational_pushes": [ { "feature": "unwatched", "amount": 0.15 } ] } ],
+      "rules": [
+        { "id": "d5a", "route": "easier_unseen", "when": {}, "base": 0.10, "terms": [
+          { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+          { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" } ] },
+        { "id": "d5b", "route": "easier_unseen", "when": { "alone": true }, "base": 0.15, "terms": [],
+          "stands_for": { "situational_push": "unwatched" } } ] },
+
+    { "id": "E1", "family": "E", "want": "look_after", "intent": "protect", "rival": true,
+      "note": "Two independent reasons on different facts.",
+      "routes": [
+        { "key": "responsible_for_their_safety", "direction": "toward", "circumstance": "anyone",
+          "meaning": "I shield them because I am the one responsible for the family's safety." },
+        { "key": "their_fear", "direction": "toward", "circumstance": "anyone",
+          "meaning": "I shield them because I cannot stand to see them afraid." } ],
+      "rules": [
+        { "id": "e1a", "route": "responsible_for_their_safety", "when": {}, "base": 0.10, "terms": [
+          { "kind": "value", "name": "family_safety", "factor": 0.35, "part": "push" } ] },
+        { "id": "e1b", "route": "their_fear", "when": {}, "base": 0.05, "terms": [
+          { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" } ] } ] },
+
+    { "id": "E2", "family": "E", "want": "restore_standing", "intent": "take_responsibility", "rival": true,
+      "note": "Two alternatives in the same situation: the person acts from one or the other.",
+      "routes": [
+        { "key": "quietly", "direction": "toward", "circumstance": "anyone",
+          "meaning": "I do it quietly, so that nobody knows I was the one who cared." },
+        { "key": "openly", "direction": "toward", "circumstance": "anyone",
+          "meaning": "I do it openly, so that everyone sees I can be relied on." } ],
+      "relations": [ { "kind": "alternative", "routes": ["quietly", "openly"] } ],
+      "rules": [
+        { "id": "e2a", "route": "quietly", "when": {}, "base": 0.10, "terms": [
+          { "kind": "trait", "name": "proud", "factor": 0.30, "part": "push" } ] },
+        { "id": "e2b", "route": "openly", "when": {}, "base": 0.10, "terms": [
+          { "kind": "trait", "name": "proud", "factor": 0.30, "part": "push" },
+          { "kind": "value", "name": "respect", "factor": 0.20, "part": "push" } ] } ] },
+
+    { "id": "E3", "family": "E", "want": "look_after", "intent": "protect", "rival": true,
+      "note": "Two reasons that can never apply together, because their circumstances exclude each other.",
+      "routes": [
+        { "key": "standing_in_the_way", "direction": "toward", "circumstance": "target_present",
+          "meaning": "Putting myself between them and what threatens them, which needs them there." },
+        { "key": "keeping_it_from_them", "direction": "toward", "circumstance": "target_absent",
+          "meaning": "Keeping a matter away from them while they are not in the room." } ],
+      "relations": [ { "kind": "exclusive", "routes": ["standing_in_the_way", "keeping_it_from_them"] } ],
+      "rules": [
+        { "id": "e3a", "route": "standing_in_the_way", "when": { "others_present_min": 1 }, "base": 0.15, "terms": [
+          { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+          { "kind": "value", "name": "family_safety", "factor": 0.35, "part": "push" } ] },
+        { "id": "e3b", "route": "keeping_it_from_them", "when": {}, "base": 0.10, "terms": [
+          { "kind": "trait", "name": "empathetic", "factor": 0.30, "part": "push" },
+          { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" } ] } ] },
+
+    { "id": "E4", "family": "E", "want": "look_after", "intent": "protect", "rival": true,
+      "note": "One reason that only strengthens another: without the worry it does nothing. The author, lacking relations, copied the worry's gate onto it.",
+      "routes": [
+        { "key": "worry", "direction": "toward", "circumstance": "company",
+          "meaning": "I am frightened for them when there are others about." },
+        { "key": "because_they_are_family", "direction": "toward", "circumstance": "anyone", "circumstance_as_copied": "company",
+          "meaning": "And because they are family, the fear becomes unbearable." } ],
+      "relations": [ { "kind": "reinforces", "routes": ["because_they_are_family", "worry"] } ],
+      "rules": [
+        { "id": "e4a", "route": "worry", "when": { "others_present_min": 1 }, "base": 0.05, "terms": [
+          { "kind": "trait", "name": "anxious", "factor": 0.40, "part": "push" } ] },
+        { "id": "e4b", "route": "because_they_are_family", "when": { "others_present_min": 1 }, "base": 0.0, "terms": [
+          { "kind": "value", "name": "family_safety", "factor": 0.35, "part": "push" } ] } ] },
+
+    { "id": "E4b", "family": "E", "want": "look_after", "intent": "protect", "rival": true,
+      "note": "E4 after one edit: the worry now applies everywhere. The copy of its old gate on the reinforcing reason was not updated.",
+      "routes": [
+        { "key": "worry", "direction": "toward", "circumstance": "anyone",
+          "meaning": "I am frightened for them." },
+        { "key": "because_they_are_family", "direction": "toward", "circumstance": "anyone", "circumstance_as_copied": "company",
+          "meaning": "And because they are family, the fear becomes unbearable." } ],
+      "relations": [ { "kind": "reinforces", "routes": ["because_they_are_family", "worry"] } ],
+      "rules": [
+        { "id": "e4a", "route": "worry", "when": {}, "base": 0.05, "terms": [
+          { "kind": "trait", "name": "anxious", "factor": 0.40, "part": "push" } ] },
+        { "id": "e4b", "route": "because_they_are_family", "when": { "others_present_min": 1 }, "base": 0.0, "terms": [
+          { "kind": "value", "name": "family_safety", "factor": 0.35, "part": "push" } ] } ] },
+
+    { "id": "E5", "family": "E", "want": "look_after", "intent": "protect", "rival": true,
+      "note": "A reason against the intention as a whole.",
+      "routes": [
+        { "key": "duty", "direction": "toward", "circumstance": "anyone",
+          "meaning": "I take it on myself to keep them from harm: looking after them is my job." },
+        { "key": "it_could_make_it_worse", "direction": "against", "circumstance": "anyone",
+          "meaning": "I hold back, because stepping in could make it worse." } ],
+      "rules": [
+        { "id": "e5a", "route": "duty", "when": {}, "base": 0.10, "terms": [
+          { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+          { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" } ] },
+        { "id": "e5b", "route": "it_could_make_it_worse", "when": {}, "base": 0.0, "terms": [
+          { "kind": "trait", "name": "cautious", "factor": -0.30, "part": "push" } ] } ] },
+
+    { "id": "E6", "family": "E", "want": "look_after", "intent": "protect", "rival": true,
+      "note": "A fact that holds back one reason only, and two independent reasons.",
+      "routes": [
+        { "key": "stepping_in", "direction": "toward", "circumstance": "anyone",
+          "meaning": "I step in myself, though being frightened holds me back from that." },
+        { "key": "getting_help", "direction": "toward", "circumstance": "anyone",
+          "meaning": "I make sure someone who can help knows." } ],
+      "rules": [
+        { "id": "e6a", "route": "stepping_in", "when": {}, "base": 0.15, "terms": [
+          { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+          { "kind": "trait", "name": "anxious", "factor": -0.60, "part": "hold_back" } ] },
+        { "id": "e6b", "route": "getting_help", "when": {}, "base": 0.10, "terms": [
+          { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" },
+          { "kind": "value", "name": "family_safety", "factor": 0.35, "part": "push" } ] } ] },
+
+    { "id": "F1", "family": "F", "want": "avoid_exposure", "intent": "took_what_was_not_mine", "rival": false,
+      "note": "The only candidate; its only reason needs a belief. No viable cause for anyone without it.",
+      "routes": [ { "key": "owning_it_only_if_answerable", "direction": "toward", "circumstance": "anyone",
+        "meaning": "Only someone who believes the missing can was theirs to answer for could take it as their own theft at all; for them, honesty and a sense of fairness decide how readily." } ],
+      "rules": [ { "id": "f1", "route": "owning_it_only_if_answerable", "when": {}, "base": 0.05, "terms": [
+        { "kind": "belief", "predicate": "answerable_for", "args": ["$self", "missing_can"], "factor": 0.60, "part": "condition" },
+        { "kind": "trait", "name": "honest", "factor": 0.30, "part": "push" },
+        { "kind": "value", "name": "fairness", "factor": 0.25, "part": "push" } ] } ] },
+
+    { "id": "F2", "family": "F", "want": "look_after", "intent": "protect", "rival": false,
+      "note": "The only candidate; its only reason needs the person there. No viable cause when they are not.",
+      "routes": [ { "key": "standing_in_the_way", "direction": "toward", "circumstance": "target_present",
+        "meaning": "Putting myself between them and what threatens them, which needs them there." } ],
+      "rules": [ { "id": "f2", "route": "standing_in_the_way", "when": { "others_present_min": 1 }, "base": 0.15, "terms": [
+        { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+        { "kind": "value", "name": "family_safety", "factor": 0.35, "part": "push" } ] } ] },
+
+    { "id": "F3", "family": "F", "want": "avoid_exposure", "intent": "took_what_was_not_mine", "rival": false,
+      "note": "The only candidate; its only reason applies, but pushes with nothing for someone who does not value fairness at all.",
+      "routes": [ { "key": "only_fair", "direction": "toward", "circumstance": "anyone",
+        "meaning": "I own up because it is only fair." } ],
+      "rules": [ { "id": "f3", "route": "only_fair", "when": {}, "base": 0.0, "terms": [
+        { "kind": "value", "name": "fairness", "factor": 0.40, "part": "push" } ] } ] },
+
+    { "id": "F4", "family": "F", "want": "look_after", "intent": "protect", "rival": false,
+      "note": "The only candidate; a reason toward it and a stronger reason against it, as two rules.",
+      "routes": [
+        { "key": "duty", "direction": "toward", "circumstance": "anyone",
+          "meaning": "I take it on myself to keep them from harm: looking after them is my job." },
+        { "key": "it_would_make_it_much_worse", "direction": "against", "circumstance": "anyone",
+          "meaning": "I hold back, because stepping in would make it much worse." } ],
+      "rules": [
+        { "id": "f4a", "route": "duty", "when": {}, "base": 0.10, "terms": [
+          { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+          { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" } ] },
+        { "id": "f4b", "route": "it_would_make_it_much_worse", "when": {}, "base": 0.0, "terms": [
+          { "kind": "trait", "name": "cautious", "factor": -0.80, "part": "push" } ] } ] },
+
+    { "id": "F4m", "family": "F", "want": "look_after", "intent": "protect", "rival": false,
+      "note": "F4 with both reasons written in one rule, each statement still carrying its reason.",
+      "routes": [
+        { "key": "duty", "direction": "toward", "circumstance": "anyone",
+          "meaning": "I take it on myself to keep them from harm: looking after them is my job." },
+        { "key": "it_would_make_it_much_worse", "direction": "against", "circumstance": "anyone",
+          "meaning": "I hold back, because stepping in would make it much worse." } ],
+      "rules": [
+        { "id": "f4m", "route": "duty", "when": {}, "base": 0.10, "terms": [
+          { "kind": "trait", "name": "empathetic", "factor": 0.40, "part": "push" },
+          { "kind": "value", "name": "closeness", "factor": 0.25, "part": "push" },
+          { "kind": "trait", "name": "cautious", "factor": -0.80, "part": "push", "route": "it_would_make_it_much_worse" } ] } ] },
+
+    { "id": "F5", "family": "F", "want": "restore_standing", "intent": "take_responsibility", "rival": false,
+      "note": "The only candidate; a weak but real reason. It must still form.",
+      "routes": [ { "key": "a_slight_pull", "direction": "toward", "circumstance": "anyone",
+        "meaning": "It needed doing, and I am a little honest about such things." } ],
+      "rules": [ { "id": "f5", "route": "a_slight_pull", "when": {}, "base": 0.02, "terms": [
+        { "kind": "trait", "name": "honest", "factor": 0.05, "part": "push" } ] } ] }
+  ],
+
+  "checks": [
+    { "id": "A.1", "family": "A", "kind": "same_as", "case": "A1", "reference": "A0", "text": "the reason written twice, word for word, changes nothing" },
+    { "id": "A.2", "family": "A", "kind": "same_as", "case": "A2", "reference": "A0", "text": "the reason written a second time in other words changes nothing" },
+    { "id": "A.3", "family": "A", "kind": "same_as", "case": "A3", "reference": "A0", "text": "the reason split into two rules changes nothing" },
+
+    { "id": "B.1", "family": "B", "kind": "differs_from", "case": "B1", "reference": "A1", "text": "two reasons on the same facts are not one reason written twice (the critical pair)" },
+    { "id": "B.2", "family": "B", "kind": "flag_identical", "case": "B1", "routes": ["duty", "compassion"], "text": "two reasons identical in every declared respect are flagged for confirmation wherever both apply" },
+    { "id": "B.3", "family": "B", "kind": "applies_exactly", "case": "B2", "route": "compassion_seen", "circumstance": "target_present", "text": "a reason on shared facts that needs the person there applies exactly where they are" },
+
+    { "id": "C.1", "family": "C", "kind": "evidence", "case": "C1e", "route": "owning_it", "fact": "belief:answerable_for($self,missing_can)", "text": "a belief as a push: the reason applies without it, and it adds its weight" },
+    { "id": "C.2", "family": "C", "kind": "evidence", "case": "C2e", "route": "settling_it", "fact": "belief:role_claim($self,leads_family)", "text": "a second belief as a push" },
+    { "id": "C.3", "family": "C", "kind": "condition", "case": "C1c", "route": "owning_it_only_if_answerable", "fact": "belief:answerable_for($self,missing_can)", "text": "the same belief as a condition: without it the reason does not apply; with it, it adds no strength" },
+    { "id": "C.4", "family": "C", "kind": "condition", "case": "C2c", "route": "settling_it_only_if_leading", "fact": "belief:role_claim($self,leads_family)", "text": "the second belief as a condition" },
+    { "id": "C.5", "family": "C", "kind": "differs_from", "case": "C1c", "reference": "C1e", "text": "identical authored rules with the belief in different parts are told apart" },
+    { "id": "C.6", "family": "C", "kind": "differs_from", "case": "C2c", "reference": "C2e", "text": "the same, for the second belief" },
+
+    { "id": "D.1", "family": "D", "kind": "applies_exactly", "case": "D1", "route": "looking_after_them_in_company", "circumstance": "company", "text": "a circumstance the shipped gate can say: anyone present" },
+    { "id": "D.2", "family": "D", "kind": "applies_exactly", "case": "D2", "route": "looking_after_them_unseen", "circumstance": "unwatched", "text": "only when nobody is watching" },
+    { "id": "D.3", "family": "D", "kind": "applies_exactly", "case": "D3", "route": "at_their_side", "circumstance": "target_present", "text": "only when the person looked after is present" },
+    { "id": "D.4", "family": "D", "kind": "applies_exactly", "case": "D4", "route": "while_they_are_away", "circumstance": "target_absent", "text": "only when the person looked after is absent" },
+    { "id": "D.5", "family": "D", "kind": "not_a_strength", "cases": ["D1", "D2", "D3", "D4"], "reference": "A0", "reference_route": "duty", "text": "where a circumstantial reason applies, it is exactly as strong as the same facts everywhere: the circumstance is not a weight" },
+    { "id": "D.6", "family": "D", "kind": "situational_push", "case": "D5", "route": "easier_unseen", "feature": "unwatched", "amount": 0.15, "reference": "A0", "reference_route": "duty", "text": "a situation that makes a reason stronger, without being needed, adds exactly its push wherever it holds and gates nothing" },
+
+    { "id": "E.1", "family": "E", "kind": "co_active", "case": "E1", "routes": ["responsible_for_their_safety", "their_fear"], "text": "independent reasons: each adds, wherever both push" },
+    { "id": "E.2", "family": "E", "kind": "alternative", "case": "E2", "routes": ["quietly", "openly"], "text": "alternatives: adding the weaker never adds support, and one reason is named as operating" },
+    { "id": "E.3", "family": "E", "kind": "exclusive", "case": "E3", "routes": ["standing_in_the_way", "keeping_it_from_them"], "text": "reasons whose circumstances exclude each other never both contribute" },
+    { "id": "E.4", "family": "E", "kind": "reinforces", "case": "E4", "route": "because_they_are_family", "of": "worry", "text": "a reinforcing reason contributes exactly where the reason it strengthens applies" },
+    { "id": "E.5", "family": "E", "kind": "reinforces", "case": "E4b", "route": "because_they_are_family", "of": "worry", "text": "the same after the reinforced reason was edited" },
+    { "id": "E.6", "family": "E", "kind": "against", "case": "E5", "route": "it_could_make_it_worse", "text": "a reason against lowers the intention's support wherever it has force" },
+    { "id": "E.7", "family": "E", "kind": "hold_back_local", "case": "E6", "route": "stepping_in", "other": "getting_help", "text": "a fact that holds back one reason never lowers another, and never turns its reason against the intention" },
+
+    { "id": "F.1", "family": "F", "kind": "forms_iff", "case": "F1", "when": { "held": "belief:answerable_for($self,missing_can)" }, "text": "no viable cause without the needed belief: the intention does not form" },
+    { "id": "F.2", "family": "F", "kind": "forms_iff", "case": "F2", "when": { "circumstance": "target_present" }, "text": "no viable cause without the needed circumstance" },
+    { "id": "F.3", "family": "F", "kind": "forms_iff", "case": "F3", "when": { "positive": { "const": 0.0, "terms": { "value:fairness": 0.40 } } }, "text": "no viable cause when the only reason pushes with nothing" },
+    { "id": "F.4", "family": "F", "kind": "forms_iff", "case": "F4", "when": { "positive": { "const": 0.10, "terms": { "trait:empathetic": 0.40, "value:closeness": 0.25, "trait:cautious": -0.80 } } }, "text": "no viable cause when a stronger reason against outweighs the reason toward" },
+    { "id": "F.5", "family": "F", "kind": "forms_iff", "case": "F5", "when": { "always": true }, "text": "a weak but real reason still forms the intention" },
+    { "id": "F.6", "family": "F", "kind": "same_outcome", "case": "F4m", "reference": "F4", "text": "whether an intention is viable does not depend on how reasons are split into rules" }
+  ],
+
+  "negative_controls": [
+    { "id": "G.1", "kind": "unread_trait", "trait": "impulsive", "text": "moving a trait no reason reads (impulsive, to another level) changes nothing" },
+    { "id": "G.2", "kind": "text", "text": "rewriting every note and every declared meaning changes nothing" },
+    { "id": "G.3", "kind": "order", "text": "reversing the order of the rules changes nothing" },
+    { "id": "G.4", "kind": "rule_ids", "text": "renaming every rule changes nothing" },
+    { "id": "G.5", "kind": "route_keys", "text": "renaming every reason key consistently changes nothing" },
+    { "id": "G.6", "kind": "unread_situation", "text": "toggling a situation feature that no reason in the case reads (watched, or the person concerned being present) changes nothing" },
+    { "id": "G.7", "kind": "unread_belief", "text": "adding, at full confidence, a belief that no reason in the case reads changes nothing" }
+  ],
+  "negative_control_scope": "Every case above, under every representation, in every cell. A 'change' is any difference in the outcome, the focal intention's support, or the representation's explanation after undoing a declared renaming.",
+
+  "frozen_reading": {
+    "note": "How each representation reads the frozen intentions.json with the route declarations of causal-routes.json, both unchanged. No new declaration is made about any frozen rule: the parts are the causal-route experiment's declared roles (the belief in what_you_did_in_the_night as 'enabler', read here as a condition; dominant in not_making_a_scene_of_it as 'inhibitor', read here as a hold-back); the circumstances are the shipped gates; no relations are declared.",
+    "role_to_part": { "enabler": "condition", "inhibitor": "hold_back", "driver": "push", "sign": "push" },
+    "diagnostic_condition_keeps_weight": "B-parts with a condition that also keeps its authored weight when it holds, as D-enablers did in the causal-route experiment"
+  }
+}
