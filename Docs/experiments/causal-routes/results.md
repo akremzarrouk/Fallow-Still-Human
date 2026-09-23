@@ -39,7 +39,9 @@ stated here rather than hidden:**
    committed analysis. The comparison itself is an addition, and the verdict
    below says where it is used.
 
-Nothing in the fixture changed after it ran.
+Nothing in the fixture changed after it ran. Run again inside the full suite (439
+tests, 437 pass, the same two known failures), it regenerated `measurements.md`
+byte for byte.
 
 ## P1. The families
 

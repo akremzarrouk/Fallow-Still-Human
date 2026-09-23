@@ -574,4 +574,13 @@ Reproduce with `./run-tests.sh`, or the fixture alone with
 `unity test . --mode EditMode --filter CausalRouteExperimentTests`. It takes
 about half an hour, most of it in the 95 rewritten rule sets.
 
-**Suite: pending.**
+**Suite: 439 tests, 437 pass, 2 fail**: the two regressions S1.4 left failing, unchanged
+(the pacing gate, still 7 on Model A, and the emergent-moment fading check). The 432
+before this experiment, plus its seven, is exactly 439. The full suite now takes 131
+minutes, longer than the 7,200-second timeout in `run-tests.sh`. The first attempt
+timed out before writing results, and the run reported here used a copy with the timeout
+raised to four hours; the repository's script was not changed. **This experiment's
+measurements, regenerated inside the suite, are byte-identical to the first run.** Every
+other generated document regenerated with identical content, except the wall-clock
+seconds in the decision-sensitivity results and one file that differed in line endings
+only.
