@@ -1,0 +1,90 @@
+{
+  "reviewer": 1,
+  "model": "opus",
+  "order": "items.json order rotated left by 0; reasons swapped: no",
+  "ids": "neutral: item-NN is the NNth item of items.json",
+  "answers": [
+    {
+      "id": "item-01",
+      "q1": "no",
+      "q2": "yes",
+      "q3": "one_or_other",
+      "q4": "Whether the protected person is present. Reason 1 needs someone there to stand in front of, and Reason 2 applies only when they are absent. Also whether safety and anxiety, or closeness, did the work."
+    },
+    {
+      "id": "item-02",
+      "q1": "no",
+      "q2": "yes",
+      "q3": "both",
+      "q4": "Whether anyone was watching, and which facts were active: pride and dominance with witnesses for Reason 1, anger with or without witnesses for Reason 2. Both reasons draw on control and believing they lead, so those cannot separate them."
+    },
+    {
+      "id": "item-03",
+      "q1": "no",
+      "q2": "yes",
+      "q3": "both",
+      "q4": "Whether anyone was watching, and whether honesty, family safety and caution or pride and respect carried the intention. The two reasons share no facts, so the explanation should name which set was high."
+    },
+    {
+      "id": "item-04",
+      "q1": "no",
+      "q2": "yes",
+      "q3": "one_or_other",
+      "q4": "Whether the other person is there, meaning a live tension to defuse or an argument avoided in advance. Also whether closeness with low dominance, or anxiety, carried it. Both reasons draw on caution, so it cannot separate them."
+    },
+    {
+      "id": "item-05",
+      "q1": "yes",
+      "q2": "no",
+      "q3": "not_applicable",
+      "q4": "That there is no difference. Both say that protecting them is one's job, and both draw on the same facts, so no situation or fact could favour one over the other."
+    },
+    {
+      "id": "item-06",
+      "q1": "no",
+      "q2": "yes",
+      "q3": "both",
+      "q4": "Whether the person acted from duty or from distress at the other's suffering. Both draw on exactly the same facts, so the explanation needs another fact, such as a sense of role or seeing the suffering, to separate them."
+    },
+    {
+      "id": "item-07",
+      "q1": "no",
+      "q2": "yes",
+      "q3": "one_or_other",
+      "q4": "Whether the act was done quietly or openly, and what besides pride decides that, such as whether others are there or how much respect is valued. Both reasons draw on pride, so pride alone cannot tell them apart."
+    },
+    {
+      "id": "item-08",
+      "q1": "no",
+      "q2": "yes",
+      "q3": "one_or_other",
+      "q4": "That one fact, empathy, leads to protecting in one case and blocks it in the other, and what tips the balance, for example how afraid the person is. Reason 2 is a reason against, not another route."
+    },
+    {
+      "id": "item-09",
+      "q5": "precondition",
+      "q4": "That the belief gates the route. Without it the intention cannot be reached, however honest, fair-minded or ashamed the person is. Honesty, fairness and shame only add strength once the belief holds."
+    },
+    {
+      "id": "item-10",
+      "q1": "yes",
+      "q2": "no",
+      "q3": "not_applicable",
+      "q4": "Nothing. The two have the same words and the same facts, so this is a duplicate entry. An explanation should present one reason, not two."
+    },
+    {
+      "id": "item-11",
+      "q1": "no",
+      "q2": "yes",
+      "q3": "both",
+      "q4": "Which fact was high: valuing family safety (shielding out of duty) or empathy (unable to bear their fear). The reasons share no facts, so naming the active fact makes the difference visible. Both may be active at once."
+    },
+    {
+      "id": "item-12",
+      "q1": "yes",
+      "q2": "no",
+      "q3": "not_applicable",
+      "q4": "That there is no difference. Both say the decision is theirs to make, and both draw on the same facts. Only the wording differs, so an explanation should treat them as one reason."
+    }
+  ]
+}

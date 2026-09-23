@@ -67,6 +67,12 @@ same. No dialogue, no player, no 3D.
   evidence it reads fixes that. It does: no restatement moves anything, and everything already
   proven survives. It is not enough: where two different reasons cite one fact about a person,
   counting it once or twice changes 660 conclusions, and no invariant can choose.
+- `Docs/experiments/causal-routes/report.md` — what must be declared to tell two reasons on
+  one fact from one reason written twice. Nothing in the rules' contents can: the two are
+  identical in every case. A declared route for every statement can, and passes every test
+  built for it. It is not enough: a precondition is not a weight, and the relation readers
+  see between two reasons follows the situation each reason is about, which the rules do not
+  fully say.
 
 Where those documents disagree with the code, the code is right and the reviews say when
 they were written.

@@ -1,0 +1,90 @@
+{
+  "reviewer": 2,
+  "model": "opus",
+  "order": "items.json order rotated left by 2; reasons swapped: yes",
+  "ids": "neutral: item-NN is the NNth item of items.json",
+  "answers": [
+    {
+      "id": "item-03",
+      "q1": "no",
+      "q2": "yes",
+      "q3": "unclear",
+      "q4": "It would need to show whether anyone was watching, and whether pride and respect or honesty, safety and caution carried the decision. It would also need to show whether the 'plainest reading' rules out a self-proving motive or can sit alongside one."
+    },
+    {
+      "id": "item-04",
+      "q1": "no",
+      "q2": "yes",
+      "q3": "one_or_other",
+      "q4": "It would need to show whether the other party is present. Reason 1 needs them absent (anxious avoidance), while defusing needs someone there. It would also need to show whether anxiety or closeness drove it, with dominance weakening only Reason 2."
+    },
+    {
+      "id": "item-05",
+      "q1": "yes",
+      "q2": "no",
+      "q3": "not_applicable",
+      "q4": "Nothing separates them: both say protecting is their responsibility and cite the same facts. Oddly, those facts are empathy and closeness rather than any sense of duty or role, so the wording and the facts do not match."
+    },
+    {
+      "id": "item-06",
+      "q1": "no",
+      "q2": "yes",
+      "q3": "both",
+      "q4": "Distress at their suffering and a sense of duty are different reasons, but both cite the same facts. An explanation needs a fact behind the duty reason, such as valuing the family's safety, or the difference cannot be seen."
+    },
+    {
+      "id": "item-07",
+      "q1": "no",
+      "q2": "yes",
+      "q3": "one_or_other",
+      "q4": "It would need to show whether the act was done in public or in secret, and what the person wanted others to know. Pride drives both, so pride alone cannot tell them apart."
+    },
+    {
+      "id": "item-08",
+      "q1": "no",
+      "q2": "yes",
+      "q3": "one_or_other",
+      "q4": "Reason 1 pushes away from protecting: it is the same empathy leading to freezing. An explanation would need to show which way the empathy went, protecting or freezing, and what tipped it. Reason 1 should not be listed as a route to this intention."
+    },
+    {
+      "id": "item-09",
+      "q5": "precondition",
+      "q4": "It would need to show that the belief of being answerable is in place first. Without it the intention cannot be reached at all. Honesty, fairness and shame only strengthen it once that belief holds."
+    },
+    {
+      "id": "item-10",
+      "q1": "yes",
+      "q2": "no",
+      "q3": "not_applicable",
+      "q4": "Nothing: the text and the facts are identical, so this is one reason listed twice. An explanation could only show a single route."
+    },
+    {
+      "id": "item-11",
+      "q1": "no",
+      "q2": "yes",
+      "q3": "both",
+      "q4": "It would need to show how much empathy and how much valuing the family's safety each contribute. For example: would they still shield with low empathy, or if the person at risk were not family?"
+    },
+    {
+      "id": "item-12",
+      "q1": "yes",
+      "q2": "no",
+      "q3": "not_applicable",
+      "q4": "The only extra in Reason 2 is the premise that a decision is needed. Unless an explanation shows that as a separate fact, the two are the same reason about their rightful place, drawing on the same facts."
+    },
+    {
+      "id": "item-01",
+      "q1": "no",
+      "q2": "yes",
+      "q3": "one_or_other",
+      "q4": "It would need to show whether the protected person is present. Reason 1 applies when they are absent, Reason 2 when someone is there to stand in front of. Also, only Reason 2 draws on family safety and anxiety."
+    },
+    {
+      "id": "item-02",
+      "q1": "no",
+      "q2": "yes",
+      "q3": "both",
+      "q4": "It would need to show whether anyone was watching, and whether anger or dominance and pride drove it. It would also need to settle Reason 2's claim that settling things with no audience is housekeeping, not authority."
+    }
+  ]
+}

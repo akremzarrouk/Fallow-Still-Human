@@ -1,0 +1,161 @@
+{
+  "experiment": "causal-routes",
+  "date": "2026-09-23",
+  "frozen_rules": {
+    "file": "Assets/_Project/Data/Experiments/intentions.json",
+    "sha256": "61e6412e8a7cb77674f0c7685e4cb0e5f7dca5db3ad05f928a63f34dfb099d92",
+    "unchanged_after_run": true
+  },
+  "route_declarations": {
+    "file": "Assets/_Project/Data/Experiments/causal-routes.json",
+    "sha256": "781b776d3a1cbbba78cc215c85af4750261a79f998c317f6a1ee920c4c37828a",
+    "unchanged_after_run": true
+  },
+  "predictions_commit": "3780435",
+  "production_changes": "none",
+  "verdict": "MODIFY",
+  "verdict_scope": "the causal-route representation, not the Fallow architecture",
+  "verdict_basis": "the declared enabler cannot be computed by D's statement form (named in the committed MODIFY criterion); the reviewers' disagreement with the declared relation supports it but was compared post hoc",
+
+  "representations": {
+    "A": "current anonymous sum with discard and name tie-break; reproduces IntentionSelector.Form bit for bit (control)",
+    "B": "evidence identity per intention; base keyed by gate; conflicts at the strongest; ties reported",
+    "C": "reason signature (intention, gate, set of evidence keys); ties reported",
+    "D": "declared causal route per statement (intention, route, evidence, coefficient, sign, role, provenance); identical statements within a route count once; conflicts within a route flagged; independent routes add; declared alternatives contribute their strongest; identical routes flagged; ties reported",
+    "D_alt": "diagnostic: D with two pairs of frozen routes declared alternatives",
+    "D_enablers": "diagnostic: D with the declared enabler honoured (a route contributes nothing when its enabler is absent)",
+    "G": "negative control: each fact given only to the intention that states it most strongly"
+  },
+
+  "critical_pair": {
+    "A1": "one reason (duty) written twice",
+    "B1": "two declared reasons (duty, compassion) with identical rule contents",
+    "cells_differing": { "A": 0, "B": 0, "C": 0, "D": 2187 },
+    "of": 2187,
+    "outcome_changed_under_D": 1259
+  },
+
+  "families_passed": { "A": 6, "B": 13, "C": 11, "D": 18, "of": 18, "as_predicted": "72 of 72 entries" },
+
+  "invariants_D": {
+    "R1_order": 0, "R2_rule_ids": 0, "R3_intent_names": 0,
+    "R4a_exact": 0, "R4b_reworded": 0, "R4c_near": 0, "R4d_partial": 0,
+    "R4new_copy_as_new_route": "20021 changed, 0 unflagged; flag fires in 78732 of 78732 (rule, cell) pairs where the copy applies",
+    "R5a_split": "13796 changed, 0 unflagged",
+    "R6_weight": "responds (20021)", "R7_monotonicity": "0 away", "R8_locality": "0 outside",
+    "R9a_term_split": 0, "R9b_merge": 0, "R10_candidates": 0,
+    "R11_route_key_renaming": 0,
+    "R15_provenance": "30593 of 30593 winners reconstructed within 1e-9; 25 cells are ties"
+  },
+
+  "new_invariants": {
+    "causal_identity_invariance": "R2 0, R11 0, A0/A6 and B1/B3 pass",
+    "route_independence": "A1/B1, A0/B1, A0/E2 pass; a copy is 0 within its route and 20021 (all flagged) as a new route",
+    "restatement_immunity": "R4a-d 0; families A and D pass; 0 of 5140 real re-decisions",
+    "evidence_reuse": "C0/C1 pass under A, B, C, D; G fails in 2187",
+    "provenance": "30593 of 30593"
+  },
+
+  "diagnostics": {
+    "D_alt": { "sweep_cells_changed": 1604, "real_decisions_changed": 0, "look_after_protect_in_company": "86.0 % -> 45.9 %" },
+    "D_enablers": { "sweep_cells_changed": 91, "all_innocent_theft": true, "real_decisions_changed": 0, "sole_candidates_formed_with_zero_support": 1094 }
+  },
+
+  "real_mornings": {
+    "pantry_checks": 257, "matched_pairs": 771, "real_decisions": 1028,
+    "different_intentions": "486 of 771 under every representation",
+    "same_intention_leading_route_differs": "0 of 285",
+    "same_intention_evidence_differs": "285 of 285",
+    "one_rule_copied_same_route": { "A": 110, "C": 0, "D": 0, "of": 2570 },
+    "one_rule_partly_copied_same_route": { "A": 110, "C": 110, "D": 0, "of": 2570 },
+    "one_rule_copied_as_new_route": { "A": 110, "C": 0, "D": "110, all flagged", "of": 2570 }
+  },
+
+  "annotation": {
+    "reviewers": "6 language-model subagents (2 opus, 2 sonnet, 2 haiku), blind; not people",
+    "judgment_kappa": 0.925,
+    "majority_matches_key": "11 of 11",
+    "q3_kappa": 0.592,
+    "q3_majority_matches_declared_relation": "4 of 8 (compared post hoc); mismatches real_protect, real_assert, real_prevent, and syn_roles where Q3 was ill-posed",
+    "role_item_precondition": "6 of 6",
+    "author_coding": "on every real pair, the relation reviewers chose follows the circumstance each reason is about (who is present, whether anyone watches); real_prevent's gates never both hold; real_protect's circumstance concerns one particular person, which SituationCondition cannot express; real_assert's texts contradict each other"
+  },
+
+  "classification": {
+    "representation_properties": {
+      "PROVEN": [
+        { "id": "A-is-the-selector", "evidence": "0 of 30618" },
+        { "id": "content-only-representations-cannot-hold-the-critical-pair", "evidence": "A, B, C identical on A1 and B1 in 2187 of 2187 cells, as the committed theorem requires" },
+        { "id": "declared-routes-hold-it", "evidence": "D differs in 2187 of 2187; families D 18, A 6, B 13, C 11, all 72 entries as predicted" },
+        { "id": "D-invariances", "evidence": "R1, R2, R3, R4a-d, R9a, R9b, R10, R11 all 0; R7 0 away; R8 0 outside" },
+        { "id": "D-never-silent", "evidence": "R5a 13796 and R4new 20021 changes, 0 unflagged; new-route flag in 78732 of 78732 applicable (rule, cell) pairs" },
+        { "id": "provenance", "evidence": "30593 of 30593 winners" },
+        { "id": "evidence-reuse", "evidence": "C0/C1 pass under all four; G fails" },
+        { "id": "proven-properties-preserved", "evidence": "28.6 %, blindness 0 and 0, replay 2100 of 2100, no character names, 6.1 % fixed-candidate sensitivity" },
+        { "id": "D-equals-C-on-the-frozen-file", "evidence": "0 cells; A 25, all reported ties; B 660" },
+        { "id": "authoring-robustness-on-real-mornings", "evidence": "one copied rule: A 110 of 2570, D 0 within its route, 110 all flagged as a new route" }
+      ],
+      "PLAUSIBLE": [
+        { "id": "declared-route-is-the-unit", "evidence": "only representation passing every family; one focal reason, one file" }
+      ],
+      "FAILED": [
+        { "id": "A-B-C-as-representations-of-reasons", "evidence": "none holds the critical pair; none holds a relation (E3)" },
+        { "id": "D-explanation-complete", "evidence": "E2 and E3 explain identically in 2187 cells while support differs in 2187; the operating alternative is not marked" }
+      ],
+      "UNKNOWN": [
+        { "id": "files-with-shared-routes-or-many-shared-facts" }
+      ]
+    },
+    "causal_semantics": {
+      "PROVEN": [
+        { "id": "relation-judgment-moves-sweep-not-mornings", "evidence": "D-alt 1604 sweep cells, 0 of 1028 real decisions" },
+        { "id": "role-judgment-moves-innocent-thefts", "evidence": "D-enablers 91 cells, 91 of 91 innocent; 0 real decisions; 1094 zero-support sole candidates" },
+        { "id": "additive-statements-cannot-express-an-enabler", "evidence": "by construction; 91 innocent profiles form the theft over a rival under D" },
+        { "id": "prevent-relation-is-vacuous", "evidence": "gates alone and others_present_min 1 never both hold (Percept.Alone is Present.Count == 0)" },
+        { "id": "gate-cannot-name-a-person", "evidence": "SituationCondition has no field for a particular person being present or absent" },
+        { "id": "routes-coincide-with-rules-on-the-frozen-file", "evidence": "D equals C; B's 660 rest on the declaration that each rule is its own reason" },
+        { "id": "routes-do-not-separate-real-people", "evidence": "leading route differs in 0 of 285 same-intention pairs; evidence in 285 of 285" }
+      ],
+      "PLAUSIBLE": [
+        { "id": "perceived-relation-is-circumstance", "evidence": "4 real pairs and their Q4 answers, coded by the author" },
+        { "id": "route-circumstance-is-causal-meaning", "evidence": "real_protect: the note names the protected person's absence; the gate cannot" }
+      ],
+      "UNPROVEN": [
+        { "id": "protect-and-authority-routes-combine-or-exclude" },
+        { "id": "strongest-only-describes-any-real-co-active-pair" },
+        { "id": "selection-with-no-active-reason" }
+      ],
+      "FAILED": [
+        { "id": "D-as-declared-is-complete", "evidence": "cannot compute the enabler; cannot represent the circumstance reviewers read in real_protect" },
+        { "id": "author-relation-declarations-shared", "evidence": "3 of 4 real pairs, compared post hoc" }
+      ]
+    },
+    "psychological_validity": {
+      "PROVEN": [],
+      "PLAUSIBLE": [
+        { "id": "identity-is-legible", "evidence": "language-model readers: judgment kappa 0.925, 11 of 11; precondition 6 of 6" }
+      ],
+      "UNPROVEN": [
+        { "id": "any-declared-route-role-or-relation-is-how-people-are" },
+        { "id": "two-independent-reasons-on-one-fact-move-a-person-more", "note": "D's default declaration assumes it" }
+      ],
+      "UNKNOWN": [
+        { "id": "human-readers-agree" }
+      ]
+    }
+  },
+
+  "the_simulation_must_retain": [
+    "each statement's evidence key, coefficient and sign, apart from the level read",
+    "the compatible set as the candidate set; ties as ties",
+    "a declared route for every statement, independent of rule ids, order, wording and grouping",
+    "provenance: which rule made which statement",
+    "the role of each fact within its route: driver, inhibitor or enabling condition, the last not a term",
+    "the circumstance each route is about, including whom it concerns",
+    "for co-active routes, a declared and flagged relation: combine or exclude",
+    "flags instead of silent resolution, and explanations that name which routes operated"
+  ],
+  "the_simulation_must_not_keep_as_meaning": ["rule ids", "rule order", "rule count", "the grouping of statements into rules", "wording", "route key spelling"],
+
+  "predictions": { "pass": 22, "partly": 3, "fail": 2, "failed": ["3.6 D-enablers changes a real decision", "4.6 Q3 kappa below 0.4"], "partly": ["1.3 agreement summary sentence", "4.4 authority pair least firm", "P5 the answer: incomplete about route circumstances"] }
+}
