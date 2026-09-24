@@ -1,0 +1,29 @@
+{
+  "reviewer": 6,
+  "model": "haiku",
+  "order": "items.json order rotated left by 15; reasons swapped: yes",
+  "ids": "neutral: item-NN is the NNth item of items.json",
+  "answers": [
+    { "id": "item-16", "parts": [["pushes", "pushes", "situation_needed"]], "q4": "How the person balances empathy/closeness values with concern for the protected person's shame when help is witnessed." },
+    { "id": "item-17", "parts": [["pushes"], ["pushes", "pushes"]], "q1": "different", "q2": "opposed", "q4": "Whether the person's caution about making things worse outweighs their sense of responsibility to protect." },
+    { "id": "item-18", "parts": [["pushes", "pushes"]], "q4": "Whether the person's belief in family leadership combines with desire for control to drive independent authority assertion." },
+    { "id": "item-19", "parts": [["pushes", "pushes", "situation_needed"]], "q5": "unclear", "q4": "Whether the person can protect someone absent through means other than putting themselves between them and threats." },
+    { "id": "item-20", "parts": [["pushes", "pushes", "situation_needed"], ["pushes", "pushes"]], "q1": "different", "q2": "both_add", "q4": "How empathy and closeness values drive both emotional reaction to suffering and sense of responsibility for protection." },
+    { "id": "item-21", "parts": [["pushes"]], "q5": "yes", "q4": "What task needed doing and whether the person's slight honesty is sufficient motivation to take responsibility." },
+    { "id": "item-01", "parts": [["pushes", "pushes"], ["pushes", "pushes"]], "q1": "same", "q2": "not_applicable", "q4": "How empathy and closeness values drive both emotional reactions and sense of duty in protecting someone." },
+    { "id": "item-02", "parts": [["pushes", "pushes", "pushes"]], "q4": "How certainty about responsibility, honesty, and fairness values combine to drive claiming and owning up to theft." },
+    { "id": "item-03", "parts": [["pushes", "pushes", "situation_strengthens"]], "q4": "How empathy and closeness values drive protection, facilitated by the absence of observers." },
+    { "id": "item-04", "parts": [["pushes", "pushes", "situation_needed"], ["pushes", "situation_needed"]], "q1": "different", "q2": "opposed", "q4": "Whether pride and respect values lead them to seek public recognition or hide their caring depending on context." },
+    { "id": "item-05", "parts": [["pushes"]], "q5": "no", "q4": "What motivates someone without fairness values to own up to a theft they committed." },
+    { "id": "item-06", "parts": [["must_hold", "pushes"]], "q4": "Whether the person must believe they lead the family, and how much control values drive authority assertion." },
+    { "id": "item-07", "parts": [["pushes", "pushes"], ["pushes", "pushes"]], "q1": "same", "q2": "not_applicable", "q4": "How empathy and closeness values drive their sense of responsibility to protect someone." },
+    { "id": "item-08", "parts": [["pushes", "pushes", "situation_needed"], ["pushes", "pushes", "situation_needed"]], "q1": "different", "q2": "never_together", "q4": "Whether the person adapts protection methods based on whether the protected person is present or absent." },
+    { "id": "item-09", "parts": [["pushes", "pushes", "situation_needed", "pushes"]], "q4": "How empathy, closeness, and impulsivity combine to drive staying at someone's side when they need protection." },
+    { "id": "item-10", "parts": [["pushes", "pushes", "pushes"], ["pushes", "holds_back"]], "q1": "different", "q2": "both_add", "q4": "How anxiety affects whether they get others to help or directly intervene, while empathy drives both." },
+    { "id": "item-11", "parts": [["must_hold", "pushes", "pushes"]], "q5": "no", "q4": "What would make someone who doesn't feel responsible for a theft come to own it as theirs." },
+    { "id": "item-12", "parts": [["pushes"], ["pushes"]], "q1": "different", "q2": "both_add", "q4": "Whether empathy and family safety values independently drive protection or operate together." },
+    { "id": "item-13", "parts": [["must_hold", "pushes", "pushes"]], "q4": "How belief in responsibility, honesty, and fairness values combine to drive owning up to theft." },
+    { "id": "item-14", "parts": [["pushes"], ["pushes", "situation_strengthens"]], "q1": "different", "q2": "both_add", "q4": "Whether family values drive unbearable fear, and whether anxiety specifically intensifies when others are present." },
+    { "id": "item-15", "parts": [["pushes", "pushes"], ["pushes", "pushes"]], "q1": "same", "q2": "not_applicable", "q4": "How valuing control and dominance combine to drive asserting authority over decisions." }
+  ]
+}

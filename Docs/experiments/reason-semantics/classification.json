@@ -1,0 +1,131 @@
+{
+  "experiment": "reason-semantics",
+  "date": "2026-09-23",
+  "frozen": {
+    "Assets/_Project/Data/Experiments/intentions.json": "61e6412e8a7cb77674f0c7685e4cb0e5f7dca5db3ad05f928a63f34dfb099d92",
+    "Assets/_Project/Data/Experiments/causal-routes.json": "781b776d3a1cbbba78cc215c85af4750261a79f998c317f6a1ee920c4c37828a",
+    "Assets/_Project/Data/Experiments/held-out-people.json": "0b3f4bc95fbeffbf4e1359b8779a45fdefabdbfb3bed28b3f4de975781ff4131",
+    "Assets/_Project/Data/Experiments/reason-semantics.json": "5ffe17feb1cfe3cd36cf4043e06a75812133846ac5bfc3f51469b4eeeedc7638",
+    "unchanged_after_run": true
+  },
+  "predictions_commit": "e5a5131",
+  "production_changes": "none",
+  "verdict": "MODIFY",
+  "verdict_scope": "the vocabulary a simulated reason needs, before any formula; not the Fallow architecture; nothing is to be implemented yet",
+  "verdict_basis": "computed by the committed rule: C meets (i) required checks, (ii) restatement, negative controls and PV1, and (iv) no pass through a copy, but fails (iii): it carries the alternative relation and a hold-back declaration that readers did not reproduce. No representation meets all four; none fails (i) and (ii) for lack of stage support, so not REBUILD",
+
+  "representations": {
+    "S": "the shipped selector (IntentionSelector.Form), bit for bit: anonymous rules, shipped gates, discard of rules weighing zero or less, name tie-break",
+    "A": "reasons + weights: declared reason per statement, every fact a weight, shipped gates, reasons add, any compatible candidate forms (the causal-route experiment's D without alternatives)",
+    "B-parts": "A + each fact's part (push, hold-back, condition) and each reason's direction; forms only with positive support",
+    "B-circ": "A + declared circumstances (naming the person concerned and watching) and situational pushes; forms only with positive support",
+    "B": "A + parts, direction, circumstances and situational pushes",
+    "C": "B + relations: alternative (strongest applicable operates), reinforces (operates only where the other applies), exclusive (checked, not computed)",
+    "ablations": "A-Sel2, B-Sel0, B-Sel1: the viability rule varied (compatible / a reason applies / positive support)"
+  },
+
+  "checks_passed_of_31": { "S": 9, "A": 14, "B-parts": 22, "B-circ": 23, "B": 29, "C": 31, "all_counts_as_predicted": "186 of 186" },
+  "negative_controls": "7 controls x 6 representations: 0 changes (306,180 to 428,652 cells each)",
+  "provenance": {
+    "PV1_reconstruction": "0 of 2,755,620 outcomes not reconstructed",
+    "PV2_full_chain": "not met by any representation as implemented: explanations omit each fact's part, a reason's direction and the circumstance under which an applicable reason applied; B and C hold all of them"
+  },
+
+  "distinctions": {
+    "reason_identity":        { "status": "REQUIRED",    "checks": "A.1-A.3, B.1, B.2", "legibility": "10 of 10 items, Q1 kappa 0.851" },
+    "condition_vs_push":      { "status": "REQUIRED",    "checks": "C.3-C.6, F.1", "legibility": "5 of 5 slots; all three minimal pairs discriminated 6 of 6 each way for both beliefs; Q3 kappa 0.862" },
+    "holdback_vs_against":    { "status": "UNSUPPORTED", "checks": "E.6, E.7", "legibility": "2 of 3: fear holds back its reason 6 of 6 and a reason against is opposed 6 of 6, but the declared 'no part' of fear in the other reason was read as a push 4 of 6" },
+    "circumstance":           { "status": "REQUIRED",    "checks": "B.3, D.2-D.4, E.3, F.2", "legibility": "7 of 7 slots" },
+    "situational_push":       { "status": "REQUIRED",    "checks": "D.6", "legibility": "strengthens 4 of 6; the needed twin 6 of 6" },
+    "alternative":            { "status": "UNSUPPORTED", "checks": "E.2", "legibility": "one or the other 1 of 6; never together 3, opposed 2" },
+    "reinforcing":            { "status": "REQUIRED",    "checks": "E.4, E.5", "legibility": "one strengthens the other 5 of 6; only a reference survives an edit (copy fails 1,458 cells)" },
+    "exclusive":              { "status": "REDUNDANT",   "checks": "E.3", "carried_by": "circumstances", "legibility": "never together 6 of 6" },
+    "opposed":                { "status": "REDUNDANT",   "checks": "E.6, E.7", "carried_by": "parts and direction", "legibility": "opposed 6 of 6" },
+    "no_viable_cause":        { "status": "REQUIRED",    "checks": "F.1-F.6", "legibility": "4 of 4, Q5 kappa 0.808", "sources": { "failed_circumstance": "compatibility (B-Sel0 passes F.2)", "failed_condition": "applicability (Sel-1)", "no_or_outweighed_support": "positive-support rule (Sel-2)" } }
+  },
+
+  "annotation": {
+    "reviewers": "6 language-model subagents (2 opus, 2 sonnet, 2 haiku), blind; not people",
+    "kappa": { "Q1_same_or_different": 0.851, "Q2_relation": 0.630, "Q3_part": 0.862, "Q5_reachable": 0.808 },
+    "majority_matches_key": { "Q1": "10 of 10", "Q2": "6 of 8", "Q3": "65 of 68 slots", "Q5": "4 of 4" }
+  },
+
+  "behaviour": {
+    "synthetic_choices_differing_from_C": { "S": "50,815 (16.6 %)", "A": "45,830 (15.0 %)", "B-parts": "20,530 (6.7 %)", "B-circ": "16,280 (5.3 %)", "B": "4,740 (1.5 %)", "of": 306180 },
+    "frozen_file": { "condition_reading_differs_from_A": "4,074 of 30,618 (13.3 %): 1,094 no intention, 2,889 believers losing the belief's weight, 91 innocents over a rival", "condition_keeping_weight": 1185, "B-circ": 0 },
+    "real_mornings": { "live_cells_changed": "1,388 of 25,823 (5.4 %)", "live_cells_no_intention": 272, "real_decisions_changed": "99 of 1,028 (Daniel, daniel_ate_it, get_food)", "real_decisions_changed_if_condition_keeps_weight": 0 }
+  },
+
+  "classification": {
+    "representational": {
+      "PROVEN": [
+        { "id": "S-is-the-selector", "evidence": "0 of 336,798 cells" },
+        { "id": "family-results-as-predicted", "evidence": "186 of 186 counts; S 9, A 14, B-parts 22, B-circ 23, B 29, C 31 of 31" },
+        { "id": "parts-needed-for-conditions", "evidence": "10,935 cells per condition case without them" },
+        { "id": "typed-negative-amounts", "evidence": "S passes E.7 and fails E.6; A the reverse; only typed parts pass both" },
+        { "id": "circumstances-needed-beyond-the-gate", "evidence": "4,374 cells per case" },
+        { "id": "exclusive-and-opposed-reducible", "evidence": "B-circ and B pass E.3; B-parts and B pass E.6 and E.7" },
+        { "id": "copy-is-not-reference", "evidence": "E.4 passes only through the copy; E.5 fails 1,458 cells for all but C" },
+        { "id": "three-sources-of-no-viable-cause", "evidence": "ablations: compatibility, applicability, positive support; discard split-dependent (5,060)" },
+        { "id": "negative-controls", "evidence": "0 changes everywhere" },
+        { "id": "PV1", "evidence": "2,755,620 of 2,755,620" }
+      ],
+      "PLAUSIBLE": [ { "id": "B-plus-reference-is-minimal", "evidence": "smallest tested vocabulary expressing every required distinction; 28 synthetic cases" } ],
+      "UNPROVEN": [ { "id": "alternative-needs-a-relation" }, { "id": "declared-combination-floor-and-threshold" } ],
+      "FAILED": [ { "id": "S-and-A-as-representations-of-reasons" }, { "id": "copy-as-reference" }, { "id": "PV2-as-implemented" } ]
+    },
+    "semantic_legibility": {
+      "PROVEN": [
+        { "id": "identity-legible", "evidence": "kappa 0.851" },
+        { "id": "condition-vs-push-legible-from-wording", "evidence": "three minimal pairs discriminated; kappa 0.862" },
+        { "id": "circumstances-legible", "evidence": "7 of 7 slots; gate vs push pair" },
+        { "id": "reinforcement-legible", "evidence": "5 of 6" },
+        { "id": "exclusive-and-opposed-legible", "evidence": "6 of 6 each" },
+        { "id": "no-viable-cause-legible", "evidence": "4 of 4, kappa 0.808" }
+      ],
+      "PLAUSIBLE": [
+        { "id": "exclusion-read-as-circumstance-not-strength", "evidence": "two experiments, few items" },
+        { "id": "one-fact-different-parts-in-different-reasons", "evidence": "fear: holds back one reason 6/6, pushes another 4/6" }
+      ],
+      "UNPROVEN": [ { "id": "human-readers-agree" } ],
+      "FAILED": [
+        { "id": "alternative-as-declared", "evidence": "1 of 6" },
+        { "id": "whether-known-as-consequence", "evidence": "read as a needed situation 4 of 6" },
+        { "id": "hold-back-with-no-part-elsewhere", "evidence": "read as a push 4 of 6" }
+      ]
+    },
+    "behavioural": {
+      "PROVEN": [
+        { "id": "condition-reading-moves-frozen-file", "evidence": "4,074 cells, 2,889 from the lost weight; 1,185 if the weight is kept" },
+        { "id": "reaches-real-decisions", "evidence": "99 of 1,028 real decisions; 1,388 live cells; 272 no intention" },
+        { "id": "synthetic-choice-differences", "evidence": "B 1.5 %, S 16.6 % against C" }
+      ],
+      "PLAUSIBLE": [ { "id": "real-changes-generalize", "evidence": "one character in one variant" } ],
+      "UNPROVEN": [ { "id": "changed-choices-are-better" }, { "id": "no-intention-is-right-and-what-follows" } ],
+      "FAILED": [ { "id": "prediction-no-real-decision-changes", "evidence": "99 changed" } ]
+    }
+  },
+
+  "a_reason_must_contain": [
+    "a declared identity, independent of rules, order, wording and grouping",
+    "for each fact, its part in that reason: push, hold-back or condition (a fact may play different parts in different reasons)",
+    "the circumstance it needs, able to name the person concerned and whether anyone watches, separate from situational pushes",
+    "where it only works through another reason, a reference to that reason",
+    "at selection: the possibility of no intention, with its stated reason"
+  ],
+  "not_needed_as_relations": ["exclusive (circumstances)", "opposed (parts and direction)"],
+  "remaining_modelling_choices": [
+    "whether a condition also carries strength (4,074 vs 1,185 frozen cells; 99 vs 0 real decisions)",
+    "how independent reasons combine",
+    "how far a hold-back reaches",
+    "the viability threshold",
+    "how much a reinforcement adds",
+    "graded conditions and their thresholds",
+    "whether exclusion by strength exists at all",
+    "psychological validity"
+  ],
+
+  "predictions": { "total": 30, "pass": 20, "partly": 5, "fail": 5,
+    "failed": ["1.6 PV2 (not met as implemented)", "2.4 reinforcement illegible", "2.9 irrelevant fact at 5 of 6", "2.10 'whether others will know' as a consequence", "3.9 no real decision changes"],
+    "partly": ["2.3 relation majorities 5 of 7", "2.6 graded answerable belief weakest", "2.8 fear has no part in the other reason", "P4 the answer", "verdict: right, by another route"] }
+}

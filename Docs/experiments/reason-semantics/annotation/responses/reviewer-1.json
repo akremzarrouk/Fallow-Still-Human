@@ -1,0 +1,29 @@
+{
+  "reviewer": 1,
+  "model": "opus",
+  "order": "items.json order rotated left by 0; reasons swapped: no",
+  "ids": "neutral: item-NN is the NNth item of items.json",
+  "answers": [
+    { "id": "item-01", "parts": [["pushes", "pushes"], ["pushes", "pushes"]], "q1": "different", "q2": "both_add", "q4": "Which reason moved them: a sense that looking after this person is their job, or being unable to bear their suffering. It should also show how empathy and valuing closeness fed each one." },
+    { "id": "item-02", "parts": [["pushes", "pushes", "pushes"]], "q4": "How sure they were that the missing can was theirs to answer for, and how their honesty and sense of fairness added to their readiness to call it theft and own up." },
+    { "id": "item-03", "parts": [["pushes", "pushes", "situation_strengthens"]], "q4": "That they saw looking after this person as their job, driven by empathy and valuing closeness, and whether being unobserved made it easier to act here." },
+    { "id": "item-04", "parts": [["pushes", "consequence"], ["pushes", "pushes", "consequence"]], "q1": "different", "q2": "one_or_other", "q4": "Whether they took responsibility quietly or openly, and why. Quietly: pride that hides their caring. Openly: pride and wanting respect for being reliable. Whether others know follows from that choice." },
+    { "id": "item-05", "parts": [["pushes"]], "q5": "no", "q4": "They place no value on fairness, so the only stated reason gives them nothing. An explanation would need another reason for owning up, or would have to show that they did not." },
+    { "id": "item-06", "parts": [["must_hold", "pushes"]], "q4": "That they believe they lead the family, without which they would not settle it on their own authority at all, and how much they value control, which sets how firmly." },
+    { "id": "item-07", "parts": [["pushes", "pushes"], ["pushes", "pushes"]], "q1": "same", "q2": "not_applicable", "q4": "That they see keeping this person from harm as their own responsibility, and how empathy and valuing closeness strengthened that sense of duty." },
+    { "id": "item-08", "parts": [["pushes", "pushes", "situation_needed"], ["pushes", "pushes", "situation_needed"]], "q1": "different", "q2": "never_together", "q4": "Whether the person was in the room. If so, they shielded them from the threat. If not, they kept the matter from them. It should also show the empathy and values behind whichever applied." },
+    { "id": "item-09", "parts": [["pushes", "pushes", "situation_needed", "no_part"]], "q4": "That the person was in the room, so staying at their side was possible, and how empathy and valuing closeness drove it. Impulsiveness plays no part." },
+    { "id": "item-10", "parts": [["pushes", "holds_back"], ["pushes", "pushes", "unclear"]], "q1": "different", "q2": "both_add", "q4": "Whether they stepped in themselves, with empathy overcoming fear, or made sure someone able to help knew, or both. It should also show how their anxiety bore on each route." },
+    { "id": "item-11", "parts": [["must_hold", "pushes", "pushes"]], "q5": "no", "q4": "They do not believe the missing can was theirs to answer for, so this reason cannot apply. An explanation would need to show that they did not take it as theft, or give another route." },
+    { "id": "item-12", "parts": [["pushes"], ["pushes"]], "q1": "different", "q2": "both_add", "q4": "Whether they shielded the person out of responsibility for the family's safety, out of empathy at seeing them afraid, or both, and how much each weighed." },
+    { "id": "item-13", "parts": [["must_hold", "pushes", "pushes"]], "q4": "That they believe the missing can was theirs to answer for, without which this reason cannot apply, and how honest and fairness-minded they are, which sets how readily." },
+    { "id": "item-14", "parts": [["pushes", "situation_needed"], ["pushes"]], "q1": "different", "q2": "one_strengthens_other", "q4": "That others were present, so they felt afraid for the person, and that because the person is family this fear became unbearable enough to make them protect." },
+    { "id": "item-15", "parts": [["pushes", "pushes"], ["pushes", "pushes"]], "q1": "same", "q2": "not_applicable", "q4": "That they saw the matter as needing a decision that was theirs to make, driven by how much they value control and how dominant they are." },
+    { "id": "item-16", "parts": [["pushes", "pushes", "situation_needed"]], "q4": "That nobody was watching, so they could help without shaming the person, and how empathy and valuing closeness moved them to look after them." },
+    { "id": "item-17", "parts": [["pushes", "pushes"], ["pushes"]], "q1": "different", "q2": "opposed", "q4": "How their sense of duty, fed by empathy and closeness, weighed against the caution that stepping in could make things worse, and which one won." },
+    { "id": "item-18", "parts": [["pushes", "pushes"]], "q4": "How much believing they lead the family, and how much valuing control, each added to their readiness to settle it themselves." },
+    { "id": "item-19", "parts": [["pushes", "pushes", "situation_needed"]], "q5": "no", "q4": "The person to be protected is not in the room, so standing between them and the threat is impossible. An explanation would need another route, or would have to show why they did not act." },
+    { "id": "item-20", "parts": [["pushes", "pushes"], ["pushes", "pushes", "situation_needed"]], "q1": "different", "q2": "both_add", "q4": "Their sense that looking after the person is their job and, if the person was suffering in front of them, their inability to bear it. Each adds through empathy and closeness." },
+    { "id": "item-21", "parts": [["pushes"]], "q5": "yes", "q4": "That the task needed doing and their slight honesty was enough, with nothing else bearing on it, to make them take responsibility." }
+  ]
+}

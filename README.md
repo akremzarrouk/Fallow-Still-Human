@@ -73,6 +73,12 @@ same. No dialogue, no player, no 3D.
   built for it. It is not enough: a precondition is not a weight, and the relation readers
   see between two reasons follows the situation each reason is about, which the rules do not
   fully say.
+- `Docs/experiments/reason-semantics/report.md` — what a reason has to contain before any
+  formula is chosen. Five things, each needed and each read the same way by blind readers: its
+  identity, what each fact does in it (push, hold-back, or a condition that is not a weight), the
+  situation it needs, a reference to any reason it only strengthens, and the possibility of
+  forming no intention. Readers never read two reasons as competing by strength. Reading the one
+  declared precondition as a condition changes 99 of 1,028 real decisions.
 
 Where those documents disagree with the code, the code is right and the reviews say when
 they were written.
