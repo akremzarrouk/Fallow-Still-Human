@@ -1,0 +1,217 @@
+{
+  "note": "EXPERIMENT ONLY. Nothing in Fallow.Core loads this file; it is read by RouteApplicabilityExperimentTests and by nothing else. Committed with the predictions, before the fixture existed. It declares, for each synthetic case, what an author writing only in the shipped rule language would write (the authored rules: base, scaled terms, the shipped gate) and what the route is declared to mean: each term's role, and the facts that decide whether the route applies at all. Representations read only what their vocabulary holds, by the fixed reading rules below. Checks are properties of the declared meaning. No representation is tuned to a case.",
+
+  "vocabulary": {
+    "route": "one declared explanation of why facts lead a person toward an intention, with an identity independent of rules, order and wording (as in the causal-route experiment)",
+    "applicability": "whether the route applies at all in this moment, for this person. A route that does not apply contributes nothing and says nothing about strength",
+    "support": "a fact whose level makes an applicable route stronger",
+    "inhibitor": "a fact whose level makes an applicable route weaker. It never decides whether the route applies",
+    "condition": "a fact about the person (here, a belief) that must hold for the route to apply. It is not a strength",
+    "circumstance": "a fact about the situation that must hold for the route to apply. It may concern the intention's target ($target: the person the want is about) or anyone at all",
+    "strength": "for an applicable route: its base plus its support and inhibitor amounts, restatements counted once (the causal-route experiment's D arithmetic). It may be zero or negative",
+    "target": "the entity the want concerns. Circumstances name it only as $target, never by name, so no case contains character-specific logic"
+  },
+
+  "people": ["mara", "daniel", "elena", "leo"],
+  "situations": [
+    { "id": "n0", "present": [] },
+    { "id": "n1", "present": ["mara"] },
+    { "id": "n2", "present": ["daniel"] },
+    { "id": "n3", "present": ["elena"] },
+    { "id": "n4", "present": ["daniel", "elena"] },
+    { "id": "n5", "present": ["mara", "daniel"] }
+  ],
+  "situation_note": "Presence is real data: a shipped Percept lists who is present, and a want names its target. The shipped SituationCondition can say only whether anyone is present (others_present_min) or nobody is (alone).",
+
+  "predicates": {
+    "present:$target": "the want's target is among those present",
+    "absent:$target": "the want's target is not among those present",
+    "present:anyone": "at least one other person is present",
+    "absent:anyone": "nobody else is present"
+  },
+
+  "reading_rules": {
+    "S": "Control: the shipped selector (IntentionSelector.Form). Authored rules only; a rule applies if its shipped gate admits it and it weighs more than zero (the discard).",
+    "A": "The causal-route experiment's D, unchanged: declared route per statement; every term a weight whatever its role; roles recorded, not computed; a route applies if any of its rules is admitted by its shipped gate; restatement within a route counted once, a conflict kept at the larger magnitude and flagged, two routes identical in content flagged; declared alternatives keep the stronger; ties reported.",
+    "B": "A plus typed roles. A term declared a condition makes its route inapplicable when the fact does not hold, and adds no strength. Support and inhibitor terms are typed but add exactly as in A. Circumstances are still the shipped gates. A term declared with two roles in one route is flagged as ambiguous.",
+    "C": "A plus an applicability layer: a route applies when every one of its conditions and declared circumstances holds (one construct: a conjunction of predicates over the person and the situation). The shipped gates are not read. Once applicable, strength is computed as in B. A route without declared circumstances reads its rules' gates as generic ones (others_present_min -> present:anyone, alone -> absent:anyone). Every intention available for the want is a candidate.",
+    "C-entity": "Ablation: C whose circumstances cannot name the target: present:$target is read as present:anyone; absent:$target cannot be said and is dropped.",
+    "C-conditions": "Ablation: C without conditions: a declared condition is read as the weight its author wrote, as in A.",
+    "C-split": "Ablation: conditions and circumstances as separate constructs, circumstances at compatibility. An intention is a candidate only if at least one of its routes' circumstances holds; a route whose circumstance fails is not compatible rather than inapplicable. Route-level applicability otherwise as in C.",
+    "C-kind": "Counterexample for over-application: roles inferred from the kind of fact instead of read from the declaration. Every belief term is a condition; every presence circumstance is bound to the target (present:anyone -> present:$target, absent:anyone -> absent:$target) when the want has one."
+  },
+
+  "selection_policies": {
+    "note": "The selection layer, measured separately and judged by nothing. The route layer is judged by the checks.",
+    "P0": "Current: among the representation's candidates, the largest support wins, where an intention's support is the sum of its applicable routes' strengths (alternatives keep the stronger); ties reported. A candidate with no applicable route has support 0 and can still be chosen.",
+    "P1": "Active only: as P0, but only candidates with at least one applicable route may be chosen; if none has one, no intention."
+  },
+
+  "rival": {
+    "intent": "share_information", "route": "telling_the_others",
+    "rule": { "id": "rival", "when": {}, "base": 0.12, "terms": [
+      { "kind": "trait", "name": "honest", "factor": 0.40, "role": "support" },
+      { "kind": "value", "name": "closeness", "factor": 0.30, "role": "support" },
+      { "kind": "value", "name": "fairness", "factor": 0.20, "role": "support" } ] },
+    "applies_when": []
+  },
+
+  "cases": [
+    { "id": "owning_c", "want": "avoid_exposure", "target": null, "intent": "took_what_was_not_mine", "rival": true,
+      "note": "The belief as a condition: only someone who believes they were answerable for the missing can could take it as their own theft at all.",
+      "routes": [ { "key": "owning_up", "applies_when": [] } ],
+      "rules": [ { "id": "owning", "route": "owning_up", "when": {}, "base": 0.05, "terms": [
+        { "kind": "belief", "predicate": "answerable_for", "args": ["$self", "missing_can"], "factor": 0.60, "role": "condition" },
+        { "kind": "trait", "name": "honest", "factor": 0.30, "role": "support" },
+        { "kind": "value", "name": "fairness", "factor": 0.25, "role": "support" } ] } ] },
+
+    { "id": "owning_e", "want": "avoid_exposure", "target": null, "intent": "took_what_was_not_mine", "rival": true,
+      "note": "The same authored rule, the belief declared as support: the more certain they are, the more readily. The counterexample for conditions.",
+      "routes": [ { "key": "owning_up_graded", "applies_when": [] } ],
+      "rules": [ { "id": "owning", "route": "owning_up_graded", "when": {}, "base": 0.05, "terms": [
+        { "kind": "belief", "predicate": "answerable_for", "args": ["$self", "missing_can"], "factor": 0.60, "role": "support" },
+        { "kind": "trait", "name": "honest", "factor": 0.30, "role": "support" },
+        { "kind": "value", "name": "fairness", "factor": 0.25, "role": "support" } ] } ] },
+
+    { "id": "settling_c", "want": "restore_standing", "target": null, "intent": "assert_authority", "rival": true,
+      "note": "A second belief as a condition: only someone who believes they lead the family would settle it on their own authority.",
+      "routes": [ { "key": "settling", "applies_when": [] } ],
+      "rules": [ { "id": "settling", "route": "settling", "when": {}, "base": 0.05, "terms": [
+        { "kind": "belief", "predicate": "role_claim", "args": ["$self", "leads_family"], "factor": 0.30, "role": "condition" },
+        { "kind": "value", "name": "control", "factor": 0.25, "role": "support" } ] } ] },
+
+    { "id": "settling_e", "want": "restore_standing", "target": null, "intent": "assert_authority", "rival": true,
+      "note": "The same authored rule, the belief declared as support.",
+      "routes": [ { "key": "settling_graded", "applies_when": [] } ],
+      "rules": [ { "id": "settling", "route": "settling_graded", "when": {}, "base": 0.05, "terms": [
+        { "kind": "belief", "predicate": "role_claim", "args": ["$self", "leads_family"], "factor": 0.30, "role": "support" },
+        { "kind": "value", "name": "control", "factor": 0.25, "role": "support" } ] } ] },
+
+    { "id": "side_mara", "want": "look_after", "target": "mara", "intent": "protect", "rival": true,
+      "note": "Looking after Mara by staying at her side, which needs Mara in the room. Authored with the nearest shipped gate: anyone present.",
+      "routes": [ { "key": "at_their_side", "applies_when": ["present:$target"] } ],
+      "rules": [ { "id": "side", "route": "at_their_side", "when": { "others_present_min": 1 }, "base": 0.10, "terms": [
+        { "kind": "trait", "name": "empathetic", "factor": 0.40, "role": "support" },
+        { "kind": "value", "name": "closeness", "factor": 0.25, "role": "support" } ] } ] },
+
+    { "id": "side_daniel", "want": "look_after", "target": "daniel", "intent": "protect", "rival": true,
+      "note": "The same declared route, with Daniel as the target. No name appears in any route.",
+      "routes": [ { "key": "at_their_side", "applies_when": ["present:$target"] } ],
+      "rules": [ { "id": "side", "route": "at_their_side", "when": { "others_present_min": 1 }, "base": 0.10, "terms": [
+        { "kind": "trait", "name": "empathetic", "factor": 0.40, "role": "support" },
+        { "kind": "value", "name": "closeness", "factor": 0.25, "role": "support" } ] } ] },
+
+    { "id": "side_elena", "want": "look_after", "target": "elena", "intent": "protect", "rival": true,
+      "note": "The same declared route, with Elena as the target.",
+      "routes": [ { "key": "at_their_side", "applies_when": ["present:$target"] } ],
+      "rules": [ { "id": "side", "route": "at_their_side", "when": { "others_present_min": 1 }, "base": 0.10, "terms": [
+        { "kind": "trait", "name": "empathetic", "factor": 0.40, "role": "support" },
+        { "kind": "value", "name": "closeness", "factor": 0.25, "role": "support" } ] } ] },
+
+    { "id": "away_mara", "want": "look_after", "target": "mara", "intent": "protect", "rival": true,
+      "note": "Looking after Mara's interests while she is not in the room. The shipped gate cannot say it; the author wrote none.",
+      "routes": [ { "key": "while_they_are_away", "applies_when": ["absent:$target"] } ],
+      "rules": [ { "id": "away", "route": "while_they_are_away", "when": {}, "base": 0.10, "terms": [
+        { "kind": "trait", "name": "empathetic", "factor": 0.40, "role": "support" },
+        { "kind": "value", "name": "closeness", "factor": 0.25, "role": "support" } ] } ] },
+
+    { "id": "duty_mara", "want": "look_after", "target": "mara", "intent": "protect", "rival": true,
+      "note": "Looking after Mara is my job, wherever she is. No circumstance: the counterexample in which presence must have no effect.",
+      "routes": [ { "key": "duty", "applies_when": [] } ],
+      "rules": [ { "id": "duty", "route": "duty", "when": {}, "base": 0.10, "terms": [
+        { "kind": "trait", "name": "empathetic", "factor": 0.40, "role": "support" },
+        { "kind": "value", "name": "closeness", "factor": 0.25, "role": "support" } ] } ] },
+
+    { "id": "scene_mara", "want": "keep_peace", "target": "mara", "intent": "prevent_argument", "rival": true,
+      "note": "Not making a scene in front of others: it needs somebody there to see it, anybody. The want concerns Mara, but the circumstance does not. The counterexample for target binding.",
+      "routes": [ { "key": "not_in_front_of_others", "applies_when": ["present:anyone"] } ],
+      "rules": [ { "id": "scene", "route": "not_in_front_of_others", "when": { "others_present_min": 1 }, "base": 0.15, "terms": [
+        { "kind": "trait", "name": "cautious", "factor": 0.35, "role": "support" },
+        { "kind": "value", "name": "closeness", "factor": 0.30, "role": "support" } ] } ] },
+
+    { "id": "stepping_in", "want": "look_after", "target": "mara", "intent": "protect", "rival": true,
+      "note": "Stepping in myself, though fear holds me back. The route always applies; fear only weakens it.",
+      "routes": [ { "key": "stepping_in", "applies_when": [] } ],
+      "rules": [ { "id": "step", "route": "stepping_in", "when": {}, "base": 0.15, "terms": [
+        { "kind": "trait", "name": "empathetic", "factor": 0.40, "role": "support" },
+        { "kind": "trait", "name": "anxious", "factor": -0.60, "role": "inhibitor" } ] } ] },
+
+    { "id": "only_side_mara", "want": "look_after", "target": "mara", "intent": "protect", "rival": false,
+      "note": "Family G: protect is a candidate whose only route needs Mara present.",
+      "routes": [ { "key": "at_their_side", "applies_when": ["present:$target"] } ],
+      "rules": [ { "id": "side", "route": "at_their_side", "when": { "others_present_min": 1 }, "base": 0.10, "terms": [
+        { "kind": "trait", "name": "empathetic", "factor": 0.40, "role": "support" },
+        { "kind": "value", "name": "closeness", "factor": 0.25, "role": "support" } ] } ] },
+
+    { "id": "only_owning", "want": "avoid_exposure", "target": null, "intent": "took_what_was_not_mine", "rival": false,
+      "note": "Family G: the only candidate's only route needs the belief.",
+      "routes": [ { "key": "owning_up", "applies_when": [] } ],
+      "rules": [ { "id": "owning", "route": "owning_up", "when": {}, "base": 0.05, "terms": [
+        { "kind": "belief", "predicate": "answerable_for", "args": ["$self", "missing_can"], "factor": 0.60, "role": "condition" },
+        { "kind": "trait", "name": "honest", "factor": 0.30, "role": "support" },
+        { "kind": "value", "name": "fairness", "factor": 0.25, "role": "support" } ] } ] },
+
+    { "id": "only_fair", "want": "avoid_exposure", "target": null, "intent": "took_what_was_not_mine", "rival": false,
+      "note": "Family G control: the route applies, but for someone who does not value fairness its strength is zero. Applicable with no strength is not the same as not applicable.",
+      "routes": [ { "key": "only_fair", "applies_when": [] } ],
+      "rules": [ { "id": "fair", "route": "only_fair", "when": {}, "base": 0.0, "terms": [
+        { "kind": "value", "name": "fairness", "factor": 0.40, "role": "support" } ] } ] },
+
+    { "id": "weak_pull", "want": "restore_standing", "target": null, "intent": "take_responsibility", "rival": false,
+      "note": "Family G control: a weak but real route. Always applicable.",
+      "routes": [ { "key": "a_slight_pull", "applies_when": [] } ],
+      "rules": [ { "id": "weak", "route": "a_slight_pull", "when": {}, "base": 0.02, "terms": [
+        { "kind": "trait", "name": "honest", "factor": 0.05, "role": "support" } ] } ] },
+
+    { "id": "owning_ambiguous", "want": "avoid_exposure", "target": null, "intent": "took_what_was_not_mine", "rival": true,
+      "note": "Family I: one route whose two rules declare the same belief as a condition and as support. Ambiguous semantics must be flagged, not silently resolved.",
+      "routes": [ { "key": "owning_up", "applies_when": [] } ],
+      "rules": [
+        { "id": "owning_a", "route": "owning_up", "when": {}, "base": 0.05, "terms": [
+          { "kind": "belief", "predicate": "answerable_for", "args": ["$self", "missing_can"], "factor": 0.60, "role": "condition" },
+          { "kind": "trait", "name": "honest", "factor": 0.30, "role": "support" } ] },
+        { "id": "owning_b", "route": "owning_up", "when": {}, "base": 0.0, "terms": [
+          { "kind": "belief", "predicate": "answerable_for", "args": ["$self", "missing_can"], "factor": 0.60, "role": "support" },
+          { "kind": "value", "name": "fairness", "factor": 0.25, "role": "support" } ] } ] }
+  ],
+
+  "families": {
+    "A": { "title": "Condition absent or present", "cases": ["owning_c", "settling_c"],
+      "vary": { "fact_of_case": { "owning_c": "belief:answerable_for($self,missing_can)", "settling_c": "belief:role_claim($self,leads_family)" }, "levels": { "absent": 0.0, "present": "the sweep's confidence (0.9 and 0.8)" } },
+      "passes_if": "the route is inapplicable in every cell where the condition is absent and applicable in every cell where it is present" },
+    "B": { "title": "Condition against weighted evidence", "pairs": [["owning_c", "owning_e"], ["settling_c", "settling_e"]],
+      "passes_if": "with the fact absent, the condition route is inapplicable and the evidence route applicable, in every cell; with it present, both apply. The two readings of one authored rule must behave differently when the fact is absent" },
+    "C": { "title": "Circumstance switch", "cases": ["side_mara", "away_mara", "duty_mara"],
+      "passes_if": "each route applies exactly where its declared circumstance holds (duty_mara: everywhere). Internal state is identical across the situations compared" },
+    "D": { "title": "Person-specific circumstance", "cases": ["side_mara", "side_daniel", "side_elena"],
+      "passes_if": "the route applies when its own target is present, and not when only an unrelated person, or nobody, is present; the same declared route with three targets" },
+    "E": { "title": "Supporting evidence strength", "cases": ["side_mara", "owning_c"], "vary": { "fact": "trait:empathetic for side_mara, trait:honest for owning_c", "levels": [0.15, 0.5, 0.85] },
+      "passes_if": "varying only the support never changes applicability; where the route applies, its strength changes by exactly factor x change in level" },
+    "F": { "title": "Inhibiting evidence", "cases": ["stepping_in"], "vary": { "fact": "trait:anxious", "levels": [0.15, 0.5, 0.85] },
+      "passes_if": "varying only the inhibitor never changes applicability or the set of routes; the route's strength falls by exactly 0.60 x change in level" },
+    "G": { "title": "No active route", "cases": ["only_side_mara", "only_owning", "only_fair", "weak_pull"],
+      "passes_if": "wherever the declared meaning has no applicable route, the representation reports no applicable route or no candidate, never an applicable route; wherever it has one (only_fair included, at zero strength, and weak_pull), the representation reports it applicable. The selection layer is reported under P0 and P1 and not judged" },
+    "H": { "title": "Irrelevant facts", "cases": "all cases",
+      "controls": ["an unread trait (impulsive) moved to another level", "an unrelated person added while the target's presence and the anyone-present fact are unchanged (n1 against n5; n2 against n4)", "which unrelated person is present (n2 against n3)", "an unread belief added at full confidence", "the target changed for a route that reads no circumstance (duty_mara as duty for daniel)"],
+      "passes_if": "no applicability, strength or selected intention changes" },
+    "I": { "title": "The causal-route controls", "cases": "the 18 declared pairs of causal-routes.json, and rewrites of side_mara, owning_c and stepping_in",
+      "rewrites": ["the rule copied within its route", "two routes with identical content (the critical pair: a second declared route)", "the rule copied and declared a new route", "rules reversed", "every route key renamed", "the rule split into one rule per term, in the same route", "owning_ambiguous"],
+      "passes_if": "the 18 pairs reproduce the causal-route experiment's D counts exactly; copies, reordering, renaming and regrouping change nothing; a copy declared a new route changes support and is flagged; two routes identical in content are flagged; the ambiguous declaration is flagged in every cell" },
+    "J": { "title": "Target identity against generic presence", "cases": ["side_mara", "scene_mara"],
+      "passes_if": "side_mara applies with Mara present and not with only Daniel or only Elena or nobody; scene_mara applies whenever anyone is present, Daniel or Elena included, and not with nobody. Neither meaning may collapse into the other" }
+  },
+
+  "causal_route_d_counts": {
+    "note": "The causal-route experiment's published D column (support, explanation, outcome cells of 2,187, and flagged), which A must reproduce and B and C must preserve.",
+    "A0|A1": [0, 0, 0], "A0|A2": [0, 0, 0], "A0|A3": [0, 0, 0], "A0|A4": [0, 0, 0], "A0|A5": [0, 0, 0], "A0|A6": [0, 0, 0],
+    "A1|B1": [2187, 2187, 1259], "A0|B1": [2187, 2187, 1259], "B1|B3": [0, 0, 0], "C0|C1": [0, 2187, 626],
+    "D0|D2": [0, 0, 0], "D0|D3": [0, 0, 0], "D1|D4": [0, 0, 0], "D0|D1": [0, 2187, 0],
+    "A0|E1": [0, 0, 0, 2187], "A0|E2": [2187, 2187, 1398], "E2|E3": [2187, 0, 985], "A0|E4": [2187, 2187, 344]
+  },
+
+  "frozen_reading": {
+    "note": "The frozen intentions.json with causal-routes.json's routes and roles, unchanged, and no new declaration about any frozen rule. The declared enabler (the belief in what_you_did_in_the_night) is a condition; the declared inhibitor (dominant in not_making_a_scene_of_it) and every negative factor are inhibitors; the rest are support. Circumstances are the shipped gates, read as generic predicates.",
+    "role_map": { "enabler": "condition", "inhibitor": "inhibitor", "driver": "support" },
+    "diagnostic": "B+w: B with a condition that also keeps its authored weight when it holds (the causal-route experiment's D-enablers)"
+  }
+}
