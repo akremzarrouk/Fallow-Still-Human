@@ -1,0 +1,24 @@
+{
+  "reviewer": 3,
+  "model": "sonnet",
+  "order": "items.json order rotated left by 6",
+  "ids": "neutral: item-NN is the NNth item of items.json",
+  "answers": [
+    {"id":"item-07","q1":"yes","q2":"Daniel is present, so somebody is there to witness restraint, satisfying the reason's requirement; caution and valuing closeness supply the underlying motive.","facts":["supporting","supporting","circumstance"],"q7":"anyone","q8":"disappear"},
+    {"id":"item-08","q1":"no","q2":"No one else is in the room, so there is no witness; the required circumstance—somebody there to see it—is not met.","facts":["supporting","supporting","circumstance"],"q7":"anyone","q8":"disappear"},
+    {"id":"item-09","q1":"yes","q2":"The reason holds 'wherever she is,' so Mara's absence doesn't block it; empathy and valuing closeness sustain the duty regardless of location.","facts":["supporting","supporting","no_part"],"q7":"none","q8":"no_change"},
+    {"id":"item-10","q1":"yes","q2":"Mara is in the room, meeting the requirement to be at her side; low but nonzero empathy and closeness-valuing still weakly motivate staying near her.","facts":["supporting","supporting","circumstance"],"q7":"person:Mara","q8":"weaker_or_stronger"},
+    {"id":"item-11","q1":"yes","q2":"Empathy still motivates stepping in; very high anxiety strongly counteracts it but does not erase the reason, only weakens its pull.","facts":["supporting","inhibiting"],"q7":"none","q8":"weaker_or_stronger"},
+    {"id":"item-12","q1":"no","q2":"Mara is absent—Daniel is present instead—so the requirement to be at her side, which the reason needs, is unmet.","facts":["supporting","supporting","circumstance"],"q7":"person:Mara","q8":"disappear","q9":"no"},
+    {"id":"item-13","q1":"no","q2":"They do not believe the can was theirs to answer for, so the required belief is missing; taking it as their own theft cannot occur.","facts":["prerequisite","supporting","supporting"],"q7":"none","q8":"disappear","q9":"no"},
+    {"id":"item-14","q1":"no","q2":"They value fairness not at all, so the reason's sole stated basis—that it is fair—gives them no actual motivation to own up.","facts":["supporting"],"q7":"none","q8":"weaker_or_stronger","q9":"no"},
+    {"id":"item-15","q1":"no","q2":"Daniel is absent (Mara is present instead), so the requirement to be at his side, which the reason needs, is unmet.","facts":["supporting","supporting","circumstance"],"q7":"person:Daniel","q8":"disappear"},
+    {"id":"item-16","q1":"yes","q2":"Mara is present, meeting the reason's requirement; Leo also being there is beside the point since the reason concerns only Mara.","facts":["supporting","supporting","circumstance","no_part"],"q7":"person:Mara","q8":"no_change"},
+    {"id":"item-01","q1":"no","q2":"They do not believe the can was theirs to answer for, so the required belief is missing; taking it as their own theft cannot occur.","facts":["prerequisite","supporting","supporting"],"q7":"none","q8":"disappear"},
+    {"id":"item-02","q1":"yes","q2":"They believe the can was theirs to answer for, satisfying the required belief; honesty and valuing fairness add to how readily they own up.","facts":["prerequisite","supporting","supporting"],"q7":"none","q8":"disappear"},
+    {"id":"item-03","q1":"no","q2":"They have zero certainty the can was theirs to answer for, so there is no readiness for honesty and fairness to add to.","facts":["supporting","supporting","supporting"],"q7":"none","q8":"weaker_or_stronger"},
+    {"id":"item-04","q1":"yes","q2":"Mara is in the room, meeting the reason's requirement to be at her side; empathy and valuing closeness motivate staying near her.","facts":["supporting","supporting","circumstance"],"q7":"person:Mara","q8":"disappear"},
+    {"id":"item-05","q1":"no","q2":"Mara is absent (Daniel is present), so the requirement to be at her side, which the reason needs, is unmet.","facts":["supporting","supporting","circumstance"],"q7":"person:Mara","q8":"disappear"},
+    {"id":"item-06","q1":"no","q2":"Nobody, including Mara, is in the room, so the requirement to be at her side cannot possibly be satisfied.","facts":["supporting","supporting","circumstance"],"q7":"person:Mara","q8":"disappear"}
+  ]
+}

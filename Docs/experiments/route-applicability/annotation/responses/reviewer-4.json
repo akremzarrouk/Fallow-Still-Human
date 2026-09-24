@@ -1,0 +1,24 @@
+{
+  "reviewer": 4,
+  "model": "sonnet",
+  "order": "items.json order rotated left by 9",
+  "ids": "neutral: item-NN is the NNth item of items.json",
+  "answers": [
+    {"id":"item-10","q1":"yes","q2":"Mara's presence satisfies the spatial requirement; empathy and valued closeness are minimal but nonzero, so the reason still applies, just weakly.","facts":["supporting","supporting","circumstance"],"q7":"person:Mara","q8":"weaker_or_stronger"},
+    {"id":"item-11","q1":"unclear","q2":"Empathy supports stepping in while strong anxiety pulls back; nothing in the text says which force wins, so the outcome is indeterminate.","facts":["supporting","inhibiting"],"q7":"none","q8":"weaker_or_stronger"},
+    {"id":"item-12","q1":"no","q2":"Staying at Mara's side needs her presence; she's absent (only Daniel is there), so this, her only reason, does not apply.","facts":["supporting","supporting","circumstance"],"q7":"person:Mara","q8":"disappear","q9":"no"},
+    {"id":"item-13","q1":"no","q2":"Belief that the can was theirs to answer for is required first; it's absent, so this sole reason cannot apply.","facts":["prerequisite","supporting","supporting"],"q7":"none","q8":"disappear","q9":"no"},
+    {"id":"item-14","q1":"no","q2":"Owning up here rests entirely on valuing fairness; the person values it not at all, leaving no basis for the reason.","facts":["supporting"],"q7":"none","q8":"weaker_or_stronger","q9":"no"},
+    {"id":"item-15","q1":"no","q2":"Staying at Daniel's side requires his presence; he is not in the room (Mara is), so the reason does not apply.","facts":["supporting","supporting","circumstance"],"q7":"person:Daniel","q8":"disappear"},
+    {"id":"item-16","q1":"yes","q2":"Mara's presence satisfies the requirement to stay by her; empathy and closeness support it. Leo also being there plays no role.","facts":["supporting","supporting","circumstance","no_part"],"q7":"person:Mara","q8":"no_change"},
+    {"id":"item-01","q1":"no","q2":"The reason requires believing the can was theirs to answer for; the person lacks that belief, so it cannot apply regardless of honesty or fairness.","facts":["prerequisite","supporting","supporting"],"q7":"none","q8":"disappear"},
+    {"id":"item-02","q1":"yes","q2":"The person believes the can was theirs to answer for, satisfying the required belief; their honesty and fairness further support owning up.","facts":["prerequisite","supporting","supporting"],"q7":"none","q8":"disappear"},
+    {"id":"item-03","q1":"unclear","q2":"Belief is graded here, not required outright; zero certainty weakens the reason sharply, but honesty and fairness still add, leaving the result uncertain.","facts":["supporting","supporting","supporting"],"q7":"none","q8":"weaker_or_stronger"},
+    {"id":"item-04","q1":"yes","q2":"Mara is in the room, satisfying the requirement to stay at her side; the person's empathy and value of closeness support doing so.","facts":["supporting","supporting","circumstance"],"q7":"person:Mara","q8":"disappear"},
+    {"id":"item-05","q1":"no","q2":"The reason needs Mara in the room to stay at her side; she is absent, only Daniel is there, so it fails.","facts":["supporting","supporting","circumstance"],"q7":"person:Mara","q8":"disappear"},
+    {"id":"item-06","q1":"no","q2":"Staying at Mara's side requires her presence; she is not in the room, so the required circumstance is not met.","facts":["supporting","supporting","circumstance"],"q7":"person:Mara","q8":"disappear"},
+    {"id":"item-07","q1":"yes","q2":"Avoiding a scene needs a witness; Daniel's presence satisfies that, and caution plus valuing closeness support avoiding conflict, keeping peace with Mara.","facts":["supporting","supporting","circumstance"],"q7":"anyone","q8":"disappear"},
+    {"id":"item-08","q1":"no","q2":"No one else is present to witness a scene, so the required circumstance for avoiding one in front of others fails.","facts":["supporting","supporting","circumstance"],"q7":"anyone","q8":"disappear"},
+    {"id":"item-09","q1":"yes","q2":"The reason explicitly holds wherever Mara is, so her being elsewhere doesn't block it; empathy and closeness still support looking after her.","facts":["supporting","supporting","no_part"],"q7":"person:Mara","q8":"no_change"}
+  ]
+}

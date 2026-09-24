@@ -1,0 +1,1478 @@
+# route-applicability: all documents
+
+Merged by `merge-slice-docs.py` from the 5 Markdown files in `Docs/experiments/route-applicability/`, which remain the sources. Regenerate this file whenever they change.
+
+## Contents
+
+- [`review.md`](#reviewmd)
+- [`measurements.md`](#measurementsmd)
+- [`predictions.md`](#predictionsmd)
+- [`protocol.md`](#protocolmd)
+- [`results.md`](#resultsmd)
+
+---
+
+## review.md
+
+### Route applicability: review
+
+*What causal information must a route contain to decide whether it applies in
+the current situation, before its supporting and inhibiting evidence is
+combined?*
+
+This is a representation experiment. Nothing was implemented.
+
+#### 1. The answer, first
+
+**A route needs one more layer than it has, and only one:** a set of conditions
+under which it applies at all, kept apart from what makes it stronger.
+
+- **What the layer must be able to express:**
+  - a fact about the person that must hold;
+  - a fact about the situation that must hold;
+  - a situation fact that concerns the want's target (Mara, whoever she is in a
+    given case), distinct from one that anyone at all satisfies.
+- **The shape of the layer:**
+  - **one construct, not two.** Conditions and circumstances behaved
+    identically in every one of 209,952 cells. Readers give them different
+    names ("prerequisite", "circumstance") and the same behaviour ("the reason
+    disappears");
+  - **declared per route, not inferred** from the kind of fact.
+- **What stays outside it:** once a route applies, support and inhibitors change
+  only its strength, never whether it applies.
+
+The evidence, in short:
+
+| | A: the causal-route D | B: typed roles | C: applicability layer |
+|---|---|---|---|
+| Route-layer families passed, of 10 | 3 | 6 | **10** |
+| Prerequisite read as a weight (family A) | 26,244 false activations of 52,488 (50.0 %) | 0 | 0 |
+| "Someone present" standing in for "Mara present" (family D) | 17,496 of 39,366 (44.4 %) | 17,496 (44.4 %) | 0 |
+| "No applicable route" representable (family G) | no | for conditions only | yes |
+| The causal-route experiment's 18 pairs | 18 of 18 | 18 of 18 | 18 of 18 |
+
+**Every element of C was tested for need and for over-reach.** Each element
+failed when removed:
+- without target binding (C-entity): C, D, G and J fail;
+- without conditions (C-conditions): A, B and G fail.
+
+Each also failed when applied by the kind of fact instead of by declaration
+(C-kind). Reading every belief as a precondition breaks the case where a belief
+is only support. Binding every presence to the target breaks the case where
+anyone will do.
+
+Six blind readers drew every one of these distinctions the way it was declared
+(facts kappa 0.931, Q7 0.891).
+
+**What it changes in behaviour: on real mornings, nothing that is its own.**
+- C and B change the same 99 of 1,028 real decisions.
+- All 99 come from one modelling choice: a precondition adds no strength. With
+  the weight kept, none change.
+- The circumstance and target machinery changes thousands of synthetic cells
+  and no real decision. No frozen rule declares a circumstance the shipped gate
+  cannot already say.
+
+**Two questions this experiment cannot settle, and should not:**
+- **What the deliberator should do when no route applies.** Where "does not
+  apply" is recorded already decides behaviour. Readers were unanimous that
+  such an intention is not causally supported.
+- **How to treat "applies, but pushes with nothing".** The representation keeps
+  it as its own state; no reader recognised it.
+
+These are the next experiment.
+
+#### 2. What was run
+
+| | |
+|---|---|
+| Frozen | `intentions.json`, `causal-routes.json`, `held-out-people.json`, `reason-semantics.json`, `route-applicability.json`, and the fixtures `CausalRouteExperimentTests.cs`, `ReasonSemanticsExperimentTests.cs` and `IntentionSelector.cs`, all sha256-checked at the start and the end: **unchanged** (hashes in `protocol.md` and `measurements.md`) |
+| Production | **nothing changed**. The causal-route fixture, with D, its 18 families, the critical pair and its rewrite and provenance tests, still runs unchanged in the suite |
+| Committed first | `431db11`: predictions, protocol, 16 cases in ten families, the reading rules, two selection policies, D's published counts, an independent prediction model, and 16 annotation items with their key |
+| Representations | S (the shipped selector), A (D), B (typed roles), C (applicability layer), and four ablations of C |
+| Evaluation | 2,187 profiles x 6 presence sets (nobody; Mara; Daniel; Elena; Daniel and Elena; Mara and Daniel) = 13,122 cells per case and condition |
+| Behaviour | the frozen file (30,618 cells); 50 real mornings (1,028 real decisions, 25,823 live cells) |
+| Annotation | 6 blind language-model reviewers, 16 items, 9 questions each. Human reviewers were not available; the result is legibility evidence only |
+| Fixture | `RouteApplicabilityExperimentTests`, **8 of 8 pass**, 28 minutes. No randomness |
+| Predictions | 21 of 24 pass, 2 partly, 1 fails (`results.md`) |
+
+#### 3. The route layer
+
+Errors against the declared meaning. FA: the representation applies a route
+that should not apply. FS: it suppresses one that should.
+
+| Family | Cells | S | A | B | C | C-entity | C-conditions | C-split | C-kind |
+|---|---|---|---|---|---|---|---|---|---|
+| A prerequisite absent/present | 52,488 | 26,244 FA | 26,244 FA | 0 | 0 | 0 | 26,244 FA | 0 | 0 |
+| B prerequisite against evidence | 52,488 | 26,244 | 26,244 | 0 | 0 | 0 | 26,244 | 0 | **26,244** |
+| C circumstance switch | 39,366 | 10,935 FA | 10,935 FA | 10,935 FA | 0 | 10,935 FA | 0 | 0 | 0 |
+| D target-specific presence | 39,366 | 17,496 FA | 17,496 FA | 17,496 FA | 0 | 17,496 FA | 0 | 0 | 0 |
+| J target against generic | 26,244 | 6,561 FA | 6,561 FA | 6,561 FA | 0 | 6,561 FA | 0 | 0 | **6,561 FS** |
+| E support varied: applicability changed | 26,244 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| F inhibitor varied: applicability changed | 13,122 | **13,122** | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| G wrong route-layer state | 52,488 | 17,493 | 13,125 | 6,561 | 0 | 6,561 | 6,564 | 0 | 0 |
+| H irrelevant facts changed something | 588,303 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **6,561** |
+| I causal-route controls failed | | many | I.4 (13,122) | 0 | 0 | 0 | 0 | 0 | 0 |
+| **Families passed, of 10** | | **2** | **3** | **6** | **10** | **6** | **7** | **10** | **7** |
+
+**What each row shows:**
+
+- **Typed roles alone (B) fix preconditions and nothing else.** B reads
+  "believes they are answerable" as a prerequisite, so an innocent person's
+  theft route no longer applies (A, B, G). But B still takes "someone is
+  present" for "Mara is present": 17,496 false activations when only Daniel,
+  only Elena, or both are there.
+- **Only a circumstance that can name the target distinguishes the four
+  presence sets of family J.** For `protect(Mara)` with Mara present, Daniel
+  present, Elena present or nobody present:
+  - C applies the route exactly when Mara is present;
+  - A, B and C-entity also apply it when only Daniel or only Elena is there;
+  - `scene_mara`, whose circumstance really is "anyone", is applied by C with
+    Daniel or Elena present.
+  The same declared route with Daniel or Elena as the target follows its own
+  target (0 errors), and no name appears in any route.
+- **Applicability is separate from strength in every representation but the
+  shipped selector.** Varying support or an inhibitor changed only strength,
+  across 26,244 and 13,122 profile-situations. The shipped selector's discard
+  turns the inhibitor into a switch in all 13,122: enough fear, and the rule
+  disappears. It also turns "applies, with zero strength" into "no candidate"
+  (4,368 cells).
+- **An inhibitor never becomes a route or a prerequisite in B or C.** The route
+  still applies at the highest fear. Its strength falls by exactly 0.60 per unit
+  of fear, and goes to zero or below in 17,496 of 39,366 evaluations. That is
+  reported, not floored.
+
+#### 4. Condition and circumstance: one construct
+
+The brief asked whether conditions and circumstances are different concepts, and
+said not to assume it. Two tests address it:
+
+- **Behaviour.** C-split (conditions and circumstances as separate constructs,
+  circumstances placed at candidacy as the shipped gate does) was compared with
+  C (one construct at the route). Their route applicability differs in **0 of
+  209,952** cells. They differ only in *where* a failed circumstance is
+  recorded: "no candidate" rather than "candidate with no applicable route", in
+  39,366 cells.
+- **Readers.** Readers label a belief the reason needs a `prerequisite` (6 of 6,
+  on three items) and a presence it needs a `circumstance` (6 of 6, on seven
+  items). But when either changes, they say the reason **disappears**, by
+  majorities of 4 to 6 of 6 on every item.
+
+So the two differ in **what they read** (the person, or the situation) and in
+**what they are called**. They do not differ in **what they do**. A single
+applicability construct (a conjunction of predicates, each about the person or
+the situation, each optionally bound to the target) expresses every case here.
+
+The one real difference is placement, and placement is a selection question
+(section 6).
+
+#### 5. Behaviour
+
+**On the frozen file** (30,618 cells), read with the causal-route declarations
+and nothing new:
+
+| | Differs from A (P0) | No intention | Ties |
+|---|---|---|---|
+| B, P0 | 2,980 (9.7 %) | 0 | 32 |
+| B, P1 | 4,074 (13.3 %) | 1,094 | 32 |
+| C, P0 | 4,074 (13.3 %) | 0 | **1,126** |
+| C, P1 | 4,074 (13.3 %) | 1,094 | 32 |
+| C-split | as B | as B | as B |
+| B with the condition keeping its weight | 91 / 1,185 | 0 / 1,094 | 25 |
+
+**In real mornings:**
+
+| | B | C | C-split | B+w |
+|---|---|---|---|---|
+| Real decisions whose intention changed, of 1,028 | 99 | 99 | 99 | 0 |
+| Real decisions whose explanation changed, the act not | 3 | 3 | 3 | 102 |
+| Real decisions with no intention | 0 | 0 | 0 | 0 |
+| Live cells changed, of 25,823, P0 / P1 | 1,116 / 1,388 | 1,388 / 1,388 | 1,116 / 1,388 | 40 / 312 |
+| Live cells with no intention (P1) or tied at zero (C, P0) | 272 | 272 | 272 | 272 |
+
+- **The 99 real decisions are all the same event.** Daniel, in the mornings
+  where he ate the can, is matched at others' `get_food` pantry-checks. Read as
+  a pure prerequisite, his belief that he is answerable adds no strength, so he
+  takes responsibility instead of owning a theft.
+- **None of the 99 is a regression of the representation.** Each traces to one
+  declared reading, and disappears when the condition keeps its weight.
+- **The applicability layer contributes nothing of its own to real behaviour.**
+  C and B change the same number of real decisions, and under P1 the same
+  number of live cells. A representation that changes 17,496 synthetic cells in
+  family D and no real decision is telling us something: the real rule file
+  does not yet contain a route whose meaning needs it.
+
+#### 6. What the selection layer will have to decide
+
+This was measured, not judged.
+
+- **A candidate with no applicable route can still be chosen under P0.** Under
+  C, `protect(Mara)` forms in all 8,748 cells of `only_side_mara` where Mara is
+  absent. On the frozen file, 1,094 innocent people alone tie three intentions
+  at zero support. In live cells, 272 do.
+- **C-split does neither.** It records a failed circumstance at candidacy, as
+  the shipped gate does, so the intention is not a candidate. **Where "does not
+  apply" is recorded is already a selection policy.**
+- **Readers answer part of the question.** They say an intention with no
+  applicable route is not causally supported (Q9, 6 of 6, on both kinds). And
+  they say the same of a route that applies but pushes with nothing: 6 of 6 say
+  it does not apply at all, and 6 of 6 that the intention is not causally
+  supported. The representation keeps "applicable, strength zero" as a state of
+  its own. Readers do not recognise it.
+
+#### 7. The blind annotation
+
+| Question | Majority matches the key | Fleiss' kappa |
+|---|---|---|
+| Q1 does the reason apply | 14 of 16 | 0.834 |
+| Q3 to Q6 the part each fact plays | 46 of 46 | 0.931 |
+| Q7 does applicability depend on a particular person | 15 of 16 | 0.891 |
+| Q8 if the named fact changed: disappear, weaker or no change | 16 of 16 | 0.727 |
+| Q9 still causally supported when the only route does not apply | 3 of 3 | undefined (18 of 18 answered `no`) |
+
+The misses:
+- `zero_support` (readers: does not apply, 6 of 6);
+- `evid_absent` (no 3, yes 2, unclear 1);
+- `duty_absent` Q7, split 3 and 3 between "no circumstance" and "Mara". All six
+  agreed that her presence plays no part and changes nothing, so the question
+  conflated "about Mara" with "depends on her presence".
+
+**The reviewers are language models, not people**, and the author declared the
+cases, wrote the items and wrote the key. Agreement shows that the distinctions
+can be written down and read back consistently. It says nothing about how people
+decide.
+
+#### 8. Limitations
+
+- **Every route is declared by the author.** The checks prove what a
+  representation does with a declaration, not that the declaration is right.
+- **Only binary circumstances** (presence) and **binary conditions** (beliefs)
+  were tested. A graded condition would need a threshold, which is a modelling
+  choice this experiment avoided.
+- **Presence is the only situation fact.** Watching, time, place and objects
+  were not tested.
+- **The target is the want's target.** Circumstances about other roles (the
+  person one is hiding from, the owner of the can) were not tested.
+- **Route combination was deliberately not tested.** Every new case has one
+  focal route. The 18 inherited pairs keep D's combination unchanged.
+- **The sweep's attributes are correlated.** Values and beliefs follow the
+  profile index, so some combinations never occur.
+- **The real-morning sample has no route whose meaning needs the new layer**,
+  so it cannot show that layer's behavioural value.
+- **The reviewers are language models.** A human panel is the obvious next check
+  of legibility.
+
+#### 9. Conclusions
+
+##### PROVEN
+
+- A single applicability layer (C) expresses every declared distinction tested
+  here: all ten route-layer families, with 0 false activations and 0 false
+  suppressions. It does so with no name in any route: the same route with three
+  targets follows each.
+- A (the causal-route D) and B cannot. Treating a prerequisite as a weight
+  activates the route in all 26,244 prerequisite-absent cells. Generic presence
+  activates a target-bound route in 17,496 of 39,366 cells.
+- Each element of C is needed, and needs to be declared:
+  - removing target binding fails C, D, G and J;
+  - removing conditions fails A, B and G;
+  - inferring roles from the kind of fact fails the evidence counterexample
+    (26,244), the generic-presence counterexample (6,561) and an irrelevant-fact
+    control (6,561).
+- Conditions and circumstances behave as one construct: C and C-split never
+  differ in applicability (0 of 209,952).
+- In A, B and C, support and inhibitors change strength and never
+  applicability. The shipped selector's discard is the only thing here that
+  turns an inhibitor into a switch (13,122 of 13,122).
+- The causal-route experiment's invariants survive every representation: 18 of
+  18 pairs reproduced exactly; restatement, reordering, renaming and regrouping
+  change nothing; copies and ambiguous declarations are flagged.
+- On real mornings, the new layer changes no decision of its own. The 99
+  changed real decisions all come from the precondition carrying no weight, and
+  none change when it keeps its weight.
+
+##### PLAUSIBLE
+
+- That one construct with target binding is the smallest applicability layer
+  that will serve the real rules. It is the smallest tested, but on 16 synthetic
+  cases and one real rule file that exercises none of its circumstances.
+- That readers' "applies" means "applies and pushes". Two items point that way
+  (`zero_support`, `evid_absent`), and Q9 was unanimous.
+
+##### UNPROVEN
+
+- What the deliberator should do when no candidate has an applicable route, or
+  only routes that push with nothing.
+- Whether a precondition should also carry strength when it holds. Only this
+  choice moves real decisions (99 against 0).
+- Circumstances beyond presence, conditions beyond held beliefs, and targets
+  beyond the want's own.
+- Whether any of it describes people.
+
+##### FAILED
+
+- A (the causal-route D) as a representation of applicability: 3 of 10
+  families.
+- B (typed roles without applicability): 6 of 10; blind to whom a circumstance
+  concerns.
+- The shipped discard as a notion of "does not apply": it conflates strength
+  with applicability (families F and G).
+- The prediction that no irrelevant fact would change anything under any
+  representation (C-kind, H.5).
+
+##### OVERFITTING RISKS
+
+- **Target binding was tested on one predicate** (the target's presence) and
+  one kind of target. A route about someone other than the want's target (a
+  witness, a rival) would need binding to that role, and nothing here shows the
+  construct generalises to it.
+- **The circumstance cases were authored with their answer in mind.** Their
+  counterexamples (generic presence, no circumstance, an unrelated person) guard
+  against over-application, but all were written by the same author, in the same
+  vocabulary.
+- **"One construct" rests on presence and belief**, both binary. A graded or
+  temporal circumstance ("has been alone for an hour") might need something a
+  conjunction of predicates cannot say.
+- **The layer changed no real decision**, so there is no behavioural evidence
+  that it is needed, only representational evidence that it is sufficient.
+
+##### KEEP
+
+- Route identity and the causal-route invariants: restatement counted once,
+  flags for copies and ambiguity.
+- D's arithmetic once a route applies.
+- The shipped compatibility stage as it is: circumstances there are
+  person-independent, and no change to a person changes what is possible.
+
+##### MODIFY
+
+- Give a route an applicability layer: one conjunction of predicates over the
+  person and the situation, where a situation predicate names either the want's
+  target or anyone.
+- Declare roles per route (prerequisite, support, inhibitor); never infer them
+  from the kind of fact.
+- Record applicability separately from strength. An inhibitor is never a
+  switch.
+
+##### REBUILD
+
+- **Nothing.** Every distinction was expressed over the existing stages, and
+  every earlier invariant held.
+
+##### ABANDON
+
+- **Conditions and circumstances as separate constructs.** They never behave
+  differently. Keep the words as documentation of what a predicate reads.
+- **Generic presence as a stand-in for a particular person's presence.**
+- **The discard of rules weighing zero or less** as a way of saying "does not
+  apply".
+
+##### NEXT EXPERIMENT
+
+**The selection layer: what should a person do when none of their candidate
+intentions has an applicable route, or only routes that push with nothing?**
+
+The smallest version holds the route layer fixed as C and compares only
+selection policies, including:
+- P0;
+- P1;
+- recording failed circumstances at candidacy (C-split);
+- treating "applicable, strength zero or less" as unsupported.
+
+Run it on the three states the route layer can report (no candidate, no
+applicable route, applicable without push) and on the real mornings' 272 live
+cells. Ask blind human readers, not only models, what a person with no
+supported intention does. The precondition-weight choice (99 real decisions)
+should be decided alongside it, because it is the only choice here that moves
+real behaviour.
+
+**Nothing has been implemented. This is a recommendation about vocabulary, not
+architecture.**
+
+---
+
+Reproduce with `./run-tests.sh` or, for the fixture alone,
+`unity test . --mode EditMode --filter RouteApplicabilityExperimentTests` (about
+30 minutes); the analytic predictions with
+`python Docs/experiments/route-applicability/prediction-model.py`.
+
+**Suite: pending.**
+
+---
+
+## measurements.md
+
+### Route applicability: measurements
+
+Generated by `RouteApplicabilityExperimentTests` from the committed cases, the frozen candidate rules, the causal-route declarations and the sweep, every input hashed at the start and the end of the run. The predictions, the protocol, the cases and the annotation were committed before this fixture existed. There is no randomness anywhere. Every percentage names its denominator; none measures psychological validity.
+
+#### 0. What is frozen, and whether S is the shipped selector
+
+| File | sha256 at the start of this run | Match |
+|---|---|---|
+| `Data/Experiments/intentions.json` | `61e6412e8a7cb77674f0c7685e4cb0e5f7dca5db3ad05f928a63f34dfb099d92` | **yes** |
+| `Data/Experiments/causal-routes.json` | `781b776d3a1cbbba78cc215c85af4750261a79f998c317f6a1ee920c4c37828a` | **yes** |
+| `Data/Experiments/held-out-people.json` | `0b3f4bc95fbeffbf4e1359b8779a45fdefabdbfb3bed28b3f4de975781ff4131` | **yes** |
+| `Data/Experiments/reason-semantics.json` | `5ffe17feb1cfe3cd36cf4043e06a75812133846ac5bfc3f51469b4eeeedc7638` | **yes** |
+| `Data/Experiments/route-applicability.json` | `a0e965403d21a218ae63d3857acf0edaabf159f7603448b1b8a304257c8ce426` | **yes** |
+| `Tests/EditMode/CausalRouteExperimentTests.cs` | `3fb852f2cb7763a44d331b62e0c8897e720228ff5cd2b32fbf177908039212c4` | **yes** |
+| `Tests/EditMode/ReasonSemanticsExperimentTests.cs` | `4bc51cbd4b0f3069de99845c9ef693fab1a482b82683e97c8b370aaf7f1c6d79` | **yes** |
+| `Tests/EditMode/IntentionSelector.cs` | `8553b74ff0189f4be5cb10e2fded0a9d7c37268bf46eca3d42e3785b23f39cfd` | **yes** |
+
+S, rebuilt from the authored rules, differs from `IntentionSelector.Form` in **0** of 209,952 cells (16 cases x 13,122); winning weights not equal to the bit: **0**.
+
+Evaluation space: 2,187 profiles x 6 situations (n0 nobody; n1 mara; n2 daniel; n3 elena; n4 daniel and elena; n5 mara and daniel) = 13,122 cells per case and condition.
+
+#### 1. The route layer: families A to G and J
+
+FA: false activations (the representation says the route applies; the declared meaning says it does not). FS: false suppressions. Shares are of the family's route-cells.
+
+| Family | Route-cells | S | A | B | C | C-entity | C-conditions | C-split | C-kind |
+|---|---|---|---|---|---|---|---|---|---|
+| A condition absent or present | 52,488 | **fail**: 26,244 FA (50.0 %) | **fail**: 26,244 FA (50.0 %) | pass | pass | pass | **fail**: 26,244 FA (50.0 %) | pass | pass |
+| C circumstance switch | 39,366 | **fail**: 10,935 FA (27.8 %) | **fail**: 10,935 FA (27.8 %) | **fail**: 10,935 FA (27.8 %) | pass | **fail**: 10,935 FA (27.8 %) | pass | pass | pass |
+| D person-specific circumstance | 39,366 | **fail**: 17,496 FA (44.4 %) | **fail**: 17,496 FA (44.4 %) | **fail**: 17,496 FA (44.4 %) | pass | **fail**: 17,496 FA (44.4 %) | pass | pass | pass |
+| J target against generic | 26,244 | **fail**: 6,561 FA (25.0 %); meanings collapse in 6,561 | **fail**: 6,561 FA (25.0 %); meanings collapse in 6,561 | **fail**: 6,561 FA (25.0 %); meanings collapse in 6,561 | pass | **fail**: 6,561 FA (25.0 %); meanings collapse in 6,561 | pass | pass | **fail**: 6,561 FS (25.0 %); meanings collapse in 6,561 |
+| B condition against evidence (cells not read as declared) | 52,488 | **fail**: 26,244 (50.0 %); told apart when absent in 0 of 26,244 | **fail**: 26,244 (50.0 %); told apart when absent in 0 of 26,244 | pass; told apart when absent in 26,244 of 26,244 | pass; told apart when absent in 26,244 of 26,244 | pass; told apart when absent in 26,244 of 26,244 | **fail**: 26,244 (50.0 %); told apart when absent in 0 of 26,244 | pass; told apart when absent in 26,244 of 26,244 | **fail**: 26,244 (50.0 %); told apart when absent in 0 of 26,244 |
+| E support varied (profile-situations) | 26,244 | pass: applicability changed 0 | pass: applicability changed 0, strength wrong 0, strength-only changes 24,057 | pass: applicability changed 0, strength wrong 0, strength-only changes 24,057 | pass: applicability changed 0, strength wrong 0, strength-only changes 26,244 | pass: applicability changed 0, strength wrong 0, strength-only changes 26,244 | pass: applicability changed 0, strength wrong 0, strength-only changes 26,244 | pass: applicability changed 0, strength wrong 0, strength-only changes 26,244 | pass: applicability changed 0, strength wrong 0, strength-only changes 26,244 |
+| F inhibitor varied (profile-situations) | 13,122 | **fail**: applicability changed 13,122 | pass: applicability changed 0, strength wrong 0, strength-only changes 13,122 | pass: applicability changed 0, strength wrong 0, strength-only changes 13,122 | pass: applicability changed 0, strength wrong 0, strength-only changes 13,122 | pass: applicability changed 0, strength wrong 0, strength-only changes 13,122 | pass: applicability changed 0, strength wrong 0, strength-only changes 13,122 | pass: applicability changed 0, strength wrong 0, strength-only changes 13,122 | pass: applicability changed 0, strength wrong 0, strength-only changes 13,122 |
+| G no active route (cells whose route-layer state is wrong) | 52,488 | **fail**: 17,493 (33.3 %); no applicable route 0, no candidate 6,555 | **fail**: 13,125 (25.0 %); no applicable route 0, no candidate 2,187 | **fail**: 6,561 (12.5 %); no applicable route 6,564, no candidate 2,187 | pass; no applicable route 15,312, no candidate 0 | **fail**: 6,561 (12.5 %); no applicable route 8,751, no candidate 0 | **fail**: 6,564 (12.5 %); no applicable route 8,748, no candidate 0 | pass; no applicable route 6,564, no candidate 8,748 | pass; no applicable route 15,312, no candidate 0 |
+
+**Per case, circumstance families** (FA / FS of 13,122):
+
+| Case | Declared | S | A | B | C | C-entity | C-conditions | C-split | C-kind |
+|---|---|---|---|---|---|---|---|---|---|
+| `side_mara` | present:$target (target mara) | 6,561 FA | 6,561 FA | 6,561 FA | 0 | 6,561 FA | 0 | 0 | 0 |
+| `side_daniel` | present:$target (target daniel) | 4,374 FA | 4,374 FA | 4,374 FA | 0 | 4,374 FA | 0 | 0 | 0 |
+| `side_elena` | present:$target (target elena) | 6,561 FA | 6,561 FA | 6,561 FA | 0 | 6,561 FA | 0 | 0 | 0 |
+| `away_mara` | absent:$target (target mara) | 4,374 FA | 4,374 FA | 4,374 FA | 0 | 4,374 FA | 0 | 0 | 0 |
+| `duty_mara` | no circumstance (target mara) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| `scene_mara` | present:anyone (target mara) | 0 | 0 | 0 | 0 | 0 | 0 | 0 |  6,561 FS |
+
+**Applicability changes along the varied fact or situation, and choices.** A: profile-situations where the route switches between condition absent and present (declared: all 26,244). Choices: profile-situations whose outcome changes between the conditions (A, E, F) or differs from C's (C, D, J), under P0 / P1.
+
+| Family | S | A | B | C | C-entity | C-conditions | C-split | C-kind |
+|---|---|---|---|---|---|---|---|---|
+| A switches | 0 | 0 | 26,244 | 26,244 | 26,244 | 0 | 26,244 | 26,244 |
+| A choices, P0 / P1 | 16,032 / 16,032 | 16,032 / 16,032 | 0 / 0 | 0 / 0 | 0 / 0 | 16,032 / 16,032 | 0 / 0 | 0 / 0 |
+| B choices, P0 / P1 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 |
+| C choices, P0 / P1 | 2,435 / 2,435 | 2,435 / 2,435 | 2,435 / 2,435 | 0 / 0 | 2,435 / 2,435 | 0 / 0 | 0 / 0 | 0 / 0 |
+| D choices, P0 / P1 | 3,896 / 3,896 | 3,896 / 3,896 | 3,896 / 3,896 | 0 / 0 | 3,896 / 3,896 | 0 / 0 | 0 / 0 | 0 / 0 |
+| E choices, P0 / P1 | 5,470 / 5,470 | 5,470 / 5,470 | 5,470 / 5,470 | 2,188 / 2,188 | 5,470 / 5,470 | 2,188 / 2,188 | 2,188 / 2,188 | 2,188 / 2,188 |
+| F choices, P0 / P1 | 1,458 / 1,458 | 1,458 / 1,458 | 1,458 / 1,458 | 1,458 / 1,458 | 1,458 / 1,458 | 1,458 / 1,458 | 1,458 / 1,458 | 1,458 / 1,458 |
+| J choices, P0 / P1 | 1,461 / 1,461 | 1,461 / 1,461 | 1,461 / 1,461 | 0 / 0 | 1,461 / 1,461 | 0 / 0 | 0 / 0 | 2,181 / 2,181 |
+| F applicable with strength <= 0 (of 39,366 evaluations) | - | 17,496 | 17,496 | 17,496 | 17,496 | 17,496 | 17,496 | 17,496 |
+
+##### Family G, and the selection layer (reported, not judged)
+
+Route-layer state of the focal intention, and outcomes under P0 (current) and P1 (active only), of 13,122 cells per case.
+
+| Case | Rep | Route-layer state | P0 | P1 |
+|---|---|---|---|---|
+| `only_side_mara` | S | applicable 10,935, no candidate 2,187 | protect 10,935, none 2,187 | protect 10,935, none 2,187 |
+| `only_side_mara` | A | applicable 10,935, no candidate 2,187 | protect 10,935, none 2,187 | protect 10,935, none 2,187 |
+| `only_side_mara` | B | applicable 10,935, no candidate 2,187 | protect 10,935, none 2,187 | protect 10,935, none 2,187 |
+| `only_side_mara` | C | no applicable route 8,748, applicable 4,374 | protect 13,122 | none 8,748, protect 4,374 |
+| `only_side_mara` | C-entity | applicable 10,935, no applicable route 2,187 | protect 13,122 | protect 10,935, none 2,187 |
+| `only_side_mara` | C-conditions | no applicable route 8,748, applicable 4,374 | protect 13,122 | none 8,748, protect 4,374 |
+| `only_side_mara` | C-split | no candidate 8,748, applicable 4,374 | none 8,748, protect 4,374 | none 8,748, protect 4,374 |
+| `only_side_mara` | C-kind | no applicable route 8,748, applicable 4,374 | protect 13,122 | none 8,748, protect 4,374 |
+| `only_owning` | S | applicable 13,122 | took_what_was_not_mine 13,122 | took_what_was_not_mine 13,122 |
+| `only_owning` | A | applicable 13,122 | took_what_was_not_mine 13,122 | took_what_was_not_mine 13,122 |
+| `only_owning` | B | no applicable route 6,564, applicable 6,558 | took_what_was_not_mine 13,122 | none 6,564, took_what_was_not_mine 6,558 |
+| `only_owning` | C | no applicable route 6,564, applicable 6,558 | took_what_was_not_mine 13,122 | none 6,564, took_what_was_not_mine 6,558 |
+| `only_owning` | C-entity | no applicable route 6,564, applicable 6,558 | took_what_was_not_mine 13,122 | none 6,564, took_what_was_not_mine 6,558 |
+| `only_owning` | C-conditions | applicable 13,122 | took_what_was_not_mine 13,122 | took_what_was_not_mine 13,122 |
+| `only_owning` | C-split | no applicable route 6,564, applicable 6,558 | took_what_was_not_mine 13,122 | none 6,564, took_what_was_not_mine 6,558 |
+| `only_owning` | C-kind | no applicable route 6,564, applicable 6,558 | took_what_was_not_mine 13,122 | none 6,564, took_what_was_not_mine 6,558 |
+| `only_fair` | S | applicable 8,754, no candidate 4,368 | took_what_was_not_mine 8,754, none 4,368 | took_what_was_not_mine 8,754, none 4,368 |
+| `only_fair` | A | applicable 13,122 | took_what_was_not_mine 13,122 | took_what_was_not_mine 13,122 |
+| `only_fair` | B | applicable 13,122 | took_what_was_not_mine 13,122 | took_what_was_not_mine 13,122 |
+| `only_fair` | C | applicable 13,122 | took_what_was_not_mine 13,122 | took_what_was_not_mine 13,122 |
+| `only_fair` | C-entity | applicable 13,122 | took_what_was_not_mine 13,122 | took_what_was_not_mine 13,122 |
+| `only_fair` | C-conditions | applicable 13,122 | took_what_was_not_mine 13,122 | took_what_was_not_mine 13,122 |
+| `only_fair` | C-split | applicable 13,122 | took_what_was_not_mine 13,122 | took_what_was_not_mine 13,122 |
+| `only_fair` | C-kind | applicable 13,122 | took_what_was_not_mine 13,122 | took_what_was_not_mine 13,122 |
+| `weak_pull` | S | applicable 13,122 | take_responsibility 13,122 | take_responsibility 13,122 |
+| `weak_pull` | A | applicable 13,122 | take_responsibility 13,122 | take_responsibility 13,122 |
+| `weak_pull` | B | applicable 13,122 | take_responsibility 13,122 | take_responsibility 13,122 |
+| `weak_pull` | C | applicable 13,122 | take_responsibility 13,122 | take_responsibility 13,122 |
+| `weak_pull` | C-entity | applicable 13,122 | take_responsibility 13,122 | take_responsibility 13,122 |
+| `weak_pull` | C-conditions | applicable 13,122 | take_responsibility 13,122 | take_responsibility 13,122 |
+| `weak_pull` | C-split | applicable 13,122 | take_responsibility 13,122 | take_responsibility 13,122 |
+| `weak_pull` | C-kind | applicable 13,122 | take_responsibility 13,122 | take_responsibility 13,122 |
+
+#### 2. Irrelevant facts (H) and the causal-route controls (I)
+
+A change is any difference in the outcome under P0 or P1, in a focal route's applicability or strength, or in the explanation, after undoing a declared renaming. For I.3 and I.4 the count is of cells where the representation fails to do what it must.
+
+| Control | Cells compared | S | A | B | C | C-entity | C-conditions | C-split | C-kind |
+|---|---|---|---|---|---|---|---|---|---|
+| H.1 an unread trait moved | 209,952 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| H.2 an unrelated person added or swapped | 129,033 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| H.4 an unread belief added | 209,952 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| H.5 the target changed, for a route that reads no circumstance | 39,366 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | **6,561** |
+| I.2a the rule copied within its route | 39,366 | **31,347** | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| I.2b rules reversed | 39,366 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| I.2c every route key renamed | 39,366 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| I.2d the rule split into one rule per term | 39,366 | **13,122** | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| I.3 a copy declared a new route: not flagged (should be) | 24,054 | **31,347** | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| I.3 a copy declared a new route: support unchanged (should change) | 24,054 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| I.4 the ambiguous declaration not flagged (should be) | 13,122 | **13,122** | **13,122** | 0 | 0 | 0 | 0 | 0 | 0 |
+
+##### I.1 The causal-route experiment's 18 declared pairs, re-read
+
+Each cell: cells of 2,187 where the pair differ in protect's support / the explanation / the outcome (and flagged, for the malformed pair). **Published D** is the causal-route experiment's measured column.
+
+| Pair | Published D | A | B | C | C-entity | C-conditions | C-split | C-kind |
+|---|---|---|---|---|---|---|---|---|
+| A0 A1 | 0 / 0 / 0 | same | same | same | same | same | same | same |
+| A0 A2 | 0 / 0 / 0 | same | same | same | same | same | same | same |
+| A0 A3 | 0 / 0 / 0 | same | same | same | same | same | same | same |
+| A0 A4 | 0 / 0 / 0 | same | same | same | same | same | same | same |
+| A0 A5 | 0 / 0 / 0 | same | same | same | same | same | same | same |
+| A0 A6 | 0 / 0 / 0 | same | same | same | same | same | same | same |
+| A1 B1 | 2187 / 2187 / 1259 | same | same | same | same | same | same | same |
+| A0 B1 | 2187 / 2187 / 1259 | same | same | same | same | same | same | same |
+| B1 B3 | 0 / 0 / 0 | same | same | same | same | same | same | same |
+| C0 C1 | 0 / 2187 / 626 | same | same | same | same | same | same | same |
+| D0 D2 | 0 / 0 / 0 | same | same | same | same | same | same | same |
+| D0 D3 | 0 / 0 / 0 | same | same | same | same | same | same | same |
+| D1 D4 | 0 / 0 / 0 | same | same | same | same | same | same | same |
+| D0 D1 | 0 / 2187 / 0 | same | same | same | same | same | same | same |
+| A0 E1 | 0 / 0 / 0 / 2187 | same | same | same | same | same | same | same |
+| A0 E2 | 2187 / 2187 / 1398 | same | same | same | same | same | same | same |
+| E2 E3 | 2187 / 0 / 985 | same | same | same | same | same | same | same |
+| A0 E4 | 2187 / 2187 / 344 | same | same | same | same | same | same | same |
+| **Reproduced** | | **18 of 18** | **18 of 18** | **18 of 18** | **18 of 18** | **18 of 18** | **18 of 18** | **18 of 18** |
+
+#### 3. Behaviour on the frozen file
+
+`intentions.json` with the causal-route routes and roles, unchanged: the declared enabler read as a condition, negative factors as inhibitors, gates as generic circumstances. 30,618 cells (2,187 profiles x 7 wants x 2 circumstances). Differences are counted against A under P0, the causal-route experiment's representation.
+
+| | Differs from A, P0 | No intention | Ties |
+|---|---|---|---|
+| S P0 | 25 (0.1 %) | 0 | 0 |
+| S P1 | 25 (0.1 %) | 0 | 0 |
+| A P0 | 0 (0.0 %) | 0 | 25 |
+| A P1 | 0 (0.0 %) | 0 | 25 |
+| B P0 | 2,980 (9.7 %) | 0 | 32 |
+| B P1 | 4,074 (13.3 %) | 1,094 | 32 |
+| C P0 | 4,074 (13.3 %) | 0 | 1,126 |
+| C P1 | 4,074 (13.3 %) | 1,094 | 32 |
+| C-split P0 | 2,980 (9.7 %) | 0 | 32 |
+| C-split P1 | 4,074 (13.3 %) | 1,094 | 32 |
+| B+w P0 | 91 (0.3 %) | 0 | 25 |
+| B+w P1 | 1,185 (3.9 %) | 1,094 | 25 |
+
+**B P0 against A, P0:**
+
+| Group | Profile | A | B P0 | Cells |
+|---|---|---|---|---|
+| `get_food` in company | believer | took_what_was_not_mine | take_responsibility | 972 |
+| `get_food` alone | believer | took_what_was_not_mine | take_responsibility | 972 |
+| `avoid_exposure` in company | believer | took_what_was_not_mine | protect | 627 |
+| `avoid_exposure` in company | believer | took_what_was_not_mine | prevent_argument | 311 |
+| `avoid_exposure` in company | no belief | took_what_was_not_mine | protect | 70 |
+| `avoid_exposure` in company | no belief | took_what_was_not_mine | prevent_argument | 21 |
+| `avoid_exposure` in company | believer | took_what_was_not_mine | tie(prevent_argument=protect) | 7 |
+
+**C P0 against A, P0:**
+
+| Group | Profile | A | C P0 | Cells |
+|---|---|---|---|---|
+| `avoid_exposure` alone | no belief | took_what_was_not_mine | tie(prevent_argument=protect=took_what_was_not_mine) | 1,094 |
+| `get_food` in company | believer | took_what_was_not_mine | take_responsibility | 972 |
+| `get_food` alone | believer | took_what_was_not_mine | take_responsibility | 972 |
+| `avoid_exposure` in company | believer | took_what_was_not_mine | protect | 627 |
+| `avoid_exposure` in company | believer | took_what_was_not_mine | prevent_argument | 311 |
+| `avoid_exposure` in company | no belief | took_what_was_not_mine | protect | 70 |
+| `avoid_exposure` in company | no belief | took_what_was_not_mine | prevent_argument | 21 |
+| `avoid_exposure` in company | believer | took_what_was_not_mine | tie(prevent_argument=protect) | 7 |
+
+
+#### 4. Real mornings
+
+50 baseline mornings (5 variants x 10 seeds), the frozen file read as in section 3. **Real decisions:** every real pantry-check for a want whose shipped proposals lead there, and every other member of the cast at the same moment: **1,028**. **Live cells:** every decision moment (3,689) asked about every want with a compatible rule: **25,823**. Everything is compared with A under P0, the causal-route experiment's representation.
+
+| | A P0 | A P1 | B P0 | B P1 | C P0 | C P1 | C-split P0 | C-split P1 | B+w P0 | B+w P1 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Real decisions whose intention changed, of 1,028 | 0 (0.0 %) | 0 (0.0 %) | 99 (9.6 %) | 99 (9.6 %) | 99 (9.6 %) | 99 (9.6 %) | 99 (9.6 %) | 99 (9.6 %) | 0 (0.0 %) | 0 (0.0 %) |
+| Real decisions whose explanation changed, the act not | 0 | 0 | 3 | 3 | 3 | 3 | 3 | 3 | 102 | 102 |
+| Real decisions with no intention | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| Live cells whose outcome changed, of 25,823 | 0 (0.0 %) | 0 (0.0 %) | 1,116 (4.3 %) | 1,388 (5.4 %) | 1,388 (5.4 %) | 1,388 (5.4 %) | 1,116 (4.3 %) | 1,388 (5.4 %) | 40 (0.2 %) | 312 (1.2 %) |
+| Live cells with no intention | 0 | 0 | 0 | 272 | 0 | 272 | 0 | 272 | 0 | 272 |
+| Live cells ending in a tie | 0 | 0 | 0 | 0 | 272 | 0 | 0 | 0 | 0 | 0 |
+
+Real decisions C changes under P0 (the first eight):
+
+| Morning | Who | Want | A | C, P0 |
+|---|---|---|---|---|
+| daniel_ate_it/1 m9 | daniel (matched) | `get_food` | took_what_was_not_mine | take_responsibility |
+| daniel_ate_it/1 m12 | daniel (matched) | `get_food` | took_what_was_not_mine | take_responsibility |
+| daniel_ate_it/2 m9 | daniel (matched) | `get_food` | took_what_was_not_mine | take_responsibility |
+| daniel_ate_it/2 m12 | daniel (matched) | `get_food` | took_what_was_not_mine | take_responsibility |
+| daniel_ate_it/3 m9 | daniel (matched) | `get_food` | took_what_was_not_mine | take_responsibility |
+| daniel_ate_it/3 m9 | daniel (matched) | `get_food` | took_what_was_not_mine | take_responsibility |
+| daniel_ate_it/3 m12 | daniel (matched) | `get_food` | took_what_was_not_mine | take_responsibility |
+| daniel_ate_it/4 m9 | daniel (matched) | `get_food` | took_what_was_not_mine | take_responsibility |
+
+#### 5. The blind annotation
+
+6 reviewers (#1 opus, #2 opus, #3 sonnet, #4 sonnet, #5 haiku, #6 haiku), fresh subagents, shown only the items under neutral ids, in rotated order. **They are language models, not people**: their agreement is legibility and reproducibility evidence only, never psychological validation.
+
+| Item | Q1 key | Q1 | Q7 key | Q7 | Q8 key | Q8 | Q9 key | Q9 | Matches (Q1, Q7, Q8, Q9) |
+|---|---|---|---|---|---|---|---|---|---|
+| `cond_absent` | no | no 6 | none | none 6 | disappear | disappear 5, weaker_or_stronger 1 | - | - | yes, yes, yes |
+| `cond_present` | yes | yes 6 | none | none 6 | disappear | disappear 6 | - | - | yes, yes, yes |
+| `evid_absent` | yes | no 3, yes 2, unclear 1 | none | none 6 | weaker_or_stronger | weaker_or_stronger 6 | - | - | **no**, yes, yes |
+| `side_target` | yes | yes 6 | person:mara | person:mara 6 | disappear | disappear 6 | - | - | yes, yes, yes |
+| `side_other` | no | no 6 | person:mara | person:mara 6 | disappear | disappear 5, weaker_or_stronger 1 | - | - | yes, yes, yes |
+| `side_nobody` | no | no 5, unclear 1 | person:mara | person:mara 6 | disappear | disappear 4, weaker_or_stronger 2 | - | - | yes, yes, yes |
+| `scene_other` | yes | yes 6 | anyone | anyone 6 | disappear | disappear 6 | - | - | yes, yes, yes |
+| `scene_nobody` | no | no 6 | anyone | anyone 6 | disappear | disappear 5, weaker_or_stronger 1 | - | - | yes, yes, yes |
+| `duty_absent` | yes | yes 6 | none | none 3, person:mara 3 | no_change | no_change 6 | - | - | yes, **no**, yes |
+| `support_low` | yes | yes 6 | person:mara | person:mara 6 | weaker_or_stronger | weaker_or_stronger 6 | - | - | yes, yes, yes |
+| `inhibitor_high` | yes | yes 5, unclear 1 | none | none 4, person:mara 2 | weaker_or_stronger | weaker_or_stronger 6 | - | - | yes, yes, yes |
+| `no_route_circ` | no | no 6 | person:mara | person:mara 6 | disappear | disappear 5, weaker_or_stronger 1 | no | no 6 | yes, yes, yes, yes |
+| `no_route_cond` | no | no 6 | none | none 6 | disappear | disappear 5, weaker_or_stronger 1 | no | no 6 | yes, yes, yes, yes |
+| `zero_support` | yes | no 6 | none | none 6 | weaker_or_stronger | weaker_or_stronger 6 | no | no 6 | **no**, yes, yes, yes |
+| `target_daniel` | no | no 6 | person:daniel | person:daniel 6 | disappear | disappear 5, weaker_or_stronger 1 | - | - | yes, yes, yes |
+| `irrelevant_person` | yes | yes 6 | person:mara | person:mara 6 | no_change | no_change 6 | - | - | yes, yes, yes |
+
+##### The part each fact plays (Q3 to Q6)
+
+| Item | Fact | Key | Answers | Majority | Matches |
+|---|---|---|---|---|---|
+| `cond_absent` | whether they believe the missing can was theirs to answer for | prerequisite | prerequisite 6 | prerequisite | yes |
+| `cond_absent` | how honest they are | supporting | supporting 5, no_part 1 | supporting | yes |
+| `cond_absent` | how much they value fairness | supporting | supporting 5, no_part 1 | supporting | yes |
+| `cond_present` | whether they believe the missing can was theirs to answer for | prerequisite | prerequisite 6 | prerequisite | yes |
+| `cond_present` | how honest they are | supporting | supporting 6 | supporting | yes |
+| `cond_present` | how much they value fairness | supporting | supporting 6 | supporting | yes |
+| `evid_absent` | whether they believe the missing can was theirs to answer for | supporting | supporting 6 | supporting | yes |
+| `evid_absent` | how honest they are | supporting | supporting 6 | supporting | yes |
+| `evid_absent` | how much they value fairness | supporting | supporting 6 | supporting | yes |
+| `side_target` | how empathetic the person is | supporting | supporting 6 | supporting | yes |
+| `side_target` | how much they value closeness | supporting | supporting 6 | supporting | yes |
+| `side_target` | whether Mara is in the room | circumstance | circumstance 6 | circumstance | yes |
+| `side_other` | how empathetic the person is | supporting | supporting 6 | supporting | yes |
+| `side_other` | how much they value closeness | supporting | supporting 6 | supporting | yes |
+| `side_other` | whether Mara is in the room | circumstance | circumstance 6 | circumstance | yes |
+| `side_nobody` | how empathetic the person is | supporting | supporting 6 | supporting | yes |
+| `side_nobody` | how much they value closeness | supporting | supporting 6 | supporting | yes |
+| `side_nobody` | whether Mara is in the room | circumstance | circumstance 6 | circumstance | yes |
+| `scene_other` | how cautious the person is | supporting | supporting 6 | supporting | yes |
+| `scene_other` | how much they value closeness | supporting | supporting 6 | supporting | yes |
+| `scene_other` | whether anyone else is in the room | circumstance | circumstance 6 | circumstance | yes |
+| `scene_nobody` | how cautious the person is | supporting | supporting 6 | supporting | yes |
+| `scene_nobody` | how much they value closeness | supporting | supporting 6 | supporting | yes |
+| `scene_nobody` | whether anyone else is in the room | circumstance | circumstance 6 | circumstance | yes |
+| `duty_absent` | how empathetic the person is | supporting | supporting 6 | supporting | yes |
+| `duty_absent` | how much they value closeness | supporting | supporting 5, no_part 1 | supporting | yes |
+| `duty_absent` | whether Mara is in the room | no_part | no_part 6 | no_part | yes |
+| `support_low` | how empathetic the person is | supporting | supporting 6 | supporting | yes |
+| `support_low` | how much they value closeness | supporting | supporting 6 | supporting | yes |
+| `support_low` | whether Mara is in the room | circumstance | circumstance 6 | circumstance | yes |
+| `inhibitor_high` | how empathetic the person is | supporting | supporting 6 | supporting | yes |
+| `inhibitor_high` | how anxious a person they are | inhibiting | inhibiting 6 | inhibiting | yes |
+| `no_route_circ` | how empathetic the person is | supporting | supporting 6 | supporting | yes |
+| `no_route_circ` | how much they value closeness | supporting | supporting 6 | supporting | yes |
+| `no_route_circ` | whether Mara is in the room | circumstance | circumstance 6 | circumstance | yes |
+| `no_route_cond` | whether they believe the missing can was theirs to answer for | prerequisite | prerequisite 6 | prerequisite | yes |
+| `no_route_cond` | how honest they are | supporting | supporting 5, no_part 1 | supporting | yes |
+| `no_route_cond` | how much they value fairness | supporting | supporting 5, no_part 1 | supporting | yes |
+| `zero_support` | how much they value fairness | supporting | supporting 6 | supporting | yes |
+| `target_daniel` | how empathetic the person is | supporting | supporting 6 | supporting | yes |
+| `target_daniel` | how much they value closeness | supporting | supporting 6 | supporting | yes |
+| `target_daniel` | whether Daniel is in the room | circumstance | circumstance 6 | circumstance | yes |
+| `irrelevant_person` | how empathetic the person is | supporting | supporting 6 | supporting | yes |
+| `irrelevant_person` | how much they value closeness | supporting | supporting 6 | supporting | yes |
+| `irrelevant_person` | whether Mara is in the room | circumstance | circumstance 6 | circumstance | yes |
+| `irrelevant_person` | whether Leo is in the room | no_part | no_part 6 | no_part | yes |
+
+##### Agreement
+
+| Question | Majority matches the key | Fleiss' kappa |
+|---|---|---|
+| q1 | 14 of 16 (87.5 %) | **0.834** |
+| facts | 46 of 46 (100.0 %) | **0.931** |
+| q7 | 15 of 16 (93.8 %) | **0.891** |
+| q8 | 16 of 16 (100.0 %) | **0.727** |
+| q9 | 3 of 3 (100.0 %) | **n/a** |
+
+##### Condition against circumstance, as readers see it
+
+| | Items | Label (majority) | If it changed (Q8, majority) |
+|---|---|---|---|
+| A belief the reason needs | `cond_absent`, `cond_present`, `no_route_cond` | prerequisite, prerequisite, prerequisite | disappear, disappear, disappear |
+| A person's presence the reason needs | `side_target`, `side_other`, `side_nobody`, `no_route_circ`, `target_daniel` | circumstance, circumstance, circumstance, circumstance, circumstance | disappear, disappear, disappear, disappear, disappear |
+| Anyone's presence the reason needs | `scene_other`, `scene_nobody` | circumstance, circumstance | disappear, disappear |
+| The same belief as support | `evid_absent` | supporting | weaker_or_stronger |
+
+##### Q2, verbatim
+
+**`cond_absent`**
+
+- #1 opus: Taking it as their own theft requires believing the missing can was theirs to answer for. This person does not believe that, so their honesty and fairness have nothing to act on.
+- #2 opus: Only someone who believes the can was theirs to answer for can take it as their theft. This person does not believe it.
+- #3 sonnet: They do not believe the can was theirs to answer for, so the required belief is missing; taking it as their own theft cannot occur.
+- #4 sonnet: The reason requires believing the can was theirs to answer for; the person lacks that belief, so it cannot apply regardless of honesty or fairness.
+- #5 haiku: Prerequisite belief is lacking.
+- #6 haiku: Person lacks the required belief that the can was theirs to answer for.
+
+**`cond_present`**
+
+- #1 opus: They believe the can was theirs to answer for, which is the required condition. Being quite honest and valuing fairness make them more ready to own up.
+- #2 opus: They believe the can was theirs to answer for, so it applies. Honesty and fairness make them more ready.
+- #3 sonnet: They believe the can was theirs to answer for, satisfying the required belief; honesty and valuing fairness add to how readily they own up.
+- #4 sonnet: The person believes the can was theirs to answer for, satisfying the required belief; their honesty and fairness further support owning up.
+- #5 haiku: All prerequisites and supporting factors are present.
+- #6 haiku: Belief is present; honesty and fairness values support readily taking it as theft.
+
+**`evid_absent`**
+
+- #1 opus: Certainty is graded here, not required. With no belief the reason is weak, but honesty and fairness still add to it.
+- #2 opus: Here belief only adds strength and does not gate the reason. With no belief it is weak, but honesty and fairness still add to it.
+- #3 sonnet: They have zero certainty the can was theirs to answer for, so there is no readiness for honesty and fairness to add to.
+- #4 sonnet: Belief is graded here, not required outright; zero certainty weakens the reason sharply, but honesty and fairness still add, leaving the result uncertain.
+- #5 haiku: They lack certainty about whether the can was theirs to answer for.
+- #6 haiku: Person has no certainty that the can was theirs, so no motivation arises.
+
+**`side_target`**
+
+- #1 opus: Mara is in the room, so the person can stay at her side. Empathy and valuing closeness strengthen the reason.
+- #2 opus: The reason needs Mara in the room, and she is there. Empathy and valuing closeness make it stronger.
+- #3 sonnet: Mara is in the room, meeting the reason's requirement to be at her side; empathy and valuing closeness motivate staying near her.
+- #4 sonnet: Mara is in the room, satisfying the requirement to stay at her side; the person's empathy and value of closeness support doing so.
+- #5 haiku: Mara is in the room, and the person is empathetic and values closeness.
+- #6 haiku: Mara is in the room; person is empathetic and values closeness.
+
+**`side_other`**
+
+- #1 opus: Staying at Mara's side needs her in the room. She is absent, and Daniel being there does not count.
+- #2 opus: The reason needs Mara in the room, and she is not there. Daniel being there does not count.
+- #3 sonnet: Mara is absent (Daniel is present), so the requirement to be at her side, which the reason needs, is unmet.
+- #4 sonnet: The reason needs Mara in the room to stay at her side; she is absent, only Daniel is there, so it fails.
+- #5 haiku: Mara is absent, so the person cannot protect her by staying at her side.
+- #6 haiku: Mara is not in the room, so staying at her side is impossible.
+
+**`side_nobody`**
+
+- #1 opus: Nobody else is in the room, so Mara is absent and the person cannot stay at her side.
+- #2 opus: Nobody else is in the room, so Mara is not there, and staying at her side needs her there.
+- #3 sonnet: Nobody, including Mara, is in the room, so the requirement to be at her side cannot possibly be satisfied.
+- #4 sonnet: Staying at Mara's side requires her presence; she is not in the room, so the required circumstance is not met.
+- #5 haiku: Mara is absent, preventing the stated protective action.
+- #6 haiku: Whether Mara is in the room is not specified in the moment.
+
+**`scene_other`**
+
+- #1 opus: Daniel is present, so someone could see a scene. Any onlooker is enough. Caution and valuing closeness strengthen it.
+- #2 opus: The reason needs somebody there to see a scene. Daniel is there, and anyone would do. Being cautious and valuing closeness make it stronger.
+- #3 sonnet: Daniel is present, so somebody is there to witness restraint, satisfying the reason's requirement; caution and valuing closeness supply the underlying motive.
+- #4 sonnet: Avoiding a scene needs a witness; Daniel's presence satisfies that, and caution plus valuing closeness support avoiding conflict, keeping peace with Mara.
+- #5 haiku: Daniel's presence provides an audience, triggering caution about making a scene.
+- #6 haiku: Daniel is present to observe; the person is cautious.
+
+**`scene_nobody`**
+
+- #1 opus: Nobody else is in the room, so no one could see a scene and the reason has no grip.
+- #2 opus: Nobody else is in the room to see a scene, so there is nothing to avoid.
+- #3 sonnet: No one else is in the room, so there is no witness; the required circumstance—somebody there to see it—is not met.
+- #4 sonnet: No one else is present to witness a scene, so the required circumstance for avoiding one in front of others fails.
+- #5 haiku: No audience present, so there is no risk of making a scene.
+- #6 haiku: Nobody else is present to witness a scene.
+
+**`duty_absent`**
+
+- #1 opus: The reason holds wherever Mara is, so her absence does not matter. Empathy and valuing closeness drive it.
+- #2 opus: The reason says 'wherever she is', so it does not need Mara in the room. Empathy and valuing closeness still drive it.
+- #3 sonnet: The reason holds 'wherever she is,' so Mara's absence doesn't block it; empathy and valuing closeness sustain the duty regardless of location.
+- #4 sonnet: The reason explicitly holds wherever Mara is, so her being elsewhere doesn't block it; empathy and closeness still support looking after her.
+- #5 haiku: It is their job to protect Mara regardless of her location.
+- #6 haiku: The person's job is to look after Mara regardless of location.
+
+**`support_low`**
+
+- #1 opus: Mara is in the room, so it applies, but only weakly because the person is barely empathetic and values closeness only a little.
+- #2 opus: Mara is in the room, so it applies. Very little empathy and only a little closeness make it weak, but it is still there.
+- #3 sonnet: Mara is in the room, meeting the requirement to be at her side; low but nonzero empathy and closeness-valuing still weakly motivate staying near her.
+- #4 sonnet: Mara's presence satisfies the spatial requirement; empathy and valued closeness are minimal but nonzero, so the reason still applies, just weakly.
+- #5 haiku: Mara is in the room, but low empathy weakens the reason.
+- #6 haiku: Mara is in room; empathy and closeness values exist but are weak.
+
+**`inhibitor_high`**
+
+- #1 opus: Empathy pushes them to step in. Being very anxious holds them back and weakens the reason, but does not remove it.
+- #2 opus: Empathy pushes them to step in. Strong anxiety holds them back and weakens the reason, but does not remove it.
+- #3 sonnet: Empathy still motivates stepping in; very high anxiety strongly counteracts it but does not erase the reason, only weakens its pull.
+- #4 sonnet: Empathy supports stepping in while strong anxiety pulls back; nothing in the text says which force wins, so the outcome is indeterminate.
+- #5 haiku: Empathy motivates protection, but significant anxiety provides strong resistance.
+- #6 haiku: Empathy motivates intervention; high anxiety significantly inhibits.
+
+**`no_route_circ`**
+
+- #1 opus: Staying at Mara's side needs her in the room. Only Daniel is there, so the reason does not apply.
+- #2 opus: Staying at Mara's side needs her in the room, and she is absent. Daniel being there does not count.
+- #3 sonnet: Mara is absent—Daniel is present instead—so the requirement to be at her side, which the reason needs, is unmet.
+- #4 sonnet: Staying at Mara's side needs her presence; she's absent (only Daniel is there), so this, her only reason, does not apply.
+- #5 haiku: Mara is absent, so this specific reason cannot apply.
+- #6 haiku: Mara is not in the room; the reason's strategy cannot be executed.
+
+**`no_route_cond`**
+
+- #1 opus: They do not believe the can was theirs to answer for, which is required. Honesty and fairness cannot make up for that.
+- #2 opus: Believing the can was theirs to answer for is required. They do not believe it, so honesty and fairness have nothing to act on.
+- #3 sonnet: They do not believe the can was theirs to answer for, so the required belief is missing; taking it as their own theft cannot occur.
+- #4 sonnet: Belief that the can was theirs to answer for is required first; it's absent, so this sole reason cannot apply.
+- #5 haiku: The person lacks the required belief that the missing can was theirs to answer for.
+- #6 haiku: Person lacks the required belief.
+
+**`zero_support`**
+
+- #1 opus: The reason rests entirely on valuing fairness. This person does not value it at all, so the reason gives them no push.
+- #2 opus: Fairness is the reason's only ground. This person does not value it at all, so the reason has no strength.
+- #3 sonnet: They value fairness not at all, so the reason's sole stated basis—that it is fair—gives them no actual motivation to own up.
+- #4 sonnet: Owning up here rests entirely on valuing fairness; the person values it not at all, leaving no basis for the reason.
+- #5 haiku: They do not value fairness at all, so fairness cannot motivate them.
+- #6 haiku: Person does not value fairness, so the reason provides no motivation.
+
+**`target_daniel`**
+
+- #1 opus: Staying at Daniel's side needs him in the room. He is absent, and Mara being there does not count.
+- #2 opus: The reason needs Daniel in the room. Only Mara is there.
+- #3 sonnet: Daniel is absent (Mara is present instead), so the requirement to be at his side, which the reason needs, is unmet.
+- #4 sonnet: Staying at Daniel's side requires his presence; he is not in the room (Mara is), so the reason does not apply.
+- #5 haiku: Daniel is not in the room, so the person cannot protect him by staying at his side.
+- #6 haiku: Daniel is not in the room; staying at his side is not possible.
+
+**`irrelevant_person`**
+
+- #1 opus: Mara is in the room, so the person can stay at her side. Leo being there plays no part.
+- #2 opus: Mara is in the room, which is all the reason needs. Whether Leo is there plays no part in it.
+- #3 sonnet: Mara is present, meeting the reason's requirement; Leo also being there is beside the point since the reason concerns only Mara.
+- #4 sonnet: Mara's presence satisfies the requirement to stay by her; empathy and closeness support it. Leo also being there plays no role.
+- #5 haiku: Mara is in the room, and the person is empathetic and values closeness.
+- #6 haiku: Mara is in the room; the person is empathetic and values closeness.
+
+
+#### 6. Families passed, and what each element of C is worth
+
+| Family | S | A | B | C | C-entity | C-conditions | C-split | C-kind |
+|---|---|---|---|---|---|---|---|---|
+| A | **fail** | **fail** | pass | pass | pass | **fail** | pass | pass |
+| B | **fail** | **fail** | pass | pass | pass | **fail** | pass | **fail** |
+| C | **fail** | **fail** | **fail** | pass | **fail** | pass | pass | pass |
+| D | **fail** | **fail** | **fail** | pass | **fail** | pass | pass | pass |
+| E | pass | pass | pass | pass | pass | pass | pass | pass |
+| F | **fail** | pass | pass | pass | pass | pass | pass | pass |
+| G | **fail** | **fail** | **fail** | pass | **fail** | **fail** | pass | pass |
+| H | pass | pass | pass | pass | pass | pass | pass | **fail** |
+| I | **fail** | **fail** | pass | pass | pass | pass | pass | pass |
+| J | **fail** | **fail** | **fail** | pass | **fail** | pass | pass | **fail** |
+| **Passed, of 10** | **2** | **3** | **6** | **10** | **6** | **7** | **10** | **7** |
+
+**Condition and circumstance, one construct or two.** Over all 16 cases x 13,122 = 209,952 cells: C-split's route applicability differs from C's in **0**; the recorded state differs ("no candidate" instead of "no applicable route") in **39,366**.
+
+| Element of C | Removing it fails | Over-applying it fails | Readers draw it (majorities) |
+|---|---|---|---|
+| Conditions (a declared prerequisite, not a weight) | C-conditions: A, B, G | C-kind: B (the belief as evidence) | yes |
+| Target binding (a circumstance about the want's target) | C-entity: C, D, G, J | C-kind: J (generic presence) | yes |
+| Applicability separate from strength | S (the discard): F, G | - | yes |
+| No applicable route, recorded at the route | B: G; A: G | - | yes |
+
+Kappa: Q1 0.834, facts 0.931, Q7 0.891, Q8 0.727, Q9 n/a.
+
+#### Z. The files after the whole run
+
+| File | sha256 | |
+|---|---|---|
+| `Data/Experiments/intentions.json` | `61e6412e8a7cb77674f0c7685e4cb0e5f7dca5db3ad05f928a63f34dfb099d92` | unchanged |
+| `Data/Experiments/causal-routes.json` | `781b776d3a1cbbba78cc215c85af4750261a79f998c317f6a1ee920c4c37828a` | unchanged |
+| `Data/Experiments/held-out-people.json` | `0b3f4bc95fbeffbf4e1359b8779a45fdefabdbfb3bed28b3f4de975781ff4131` | unchanged |
+| `Data/Experiments/reason-semantics.json` | `5ffe17feb1cfe3cd36cf4043e06a75812133846ac5bfc3f51469b4eeeedc7638` | unchanged |
+| `Data/Experiments/route-applicability.json` | `a0e965403d21a218ae63d3857acf0edaabf159f7603448b1b8a304257c8ce426` | unchanged |
+| `Tests/EditMode/CausalRouteExperimentTests.cs` | `3fb852f2cb7763a44d331b62e0c8897e720228ff5cd2b32fbf177908039212c4` | unchanged |
+| `Tests/EditMode/ReasonSemanticsExperimentTests.cs` | `4bc51cbd4b0f3069de99845c9ef693fab1a482b82683e97c8b370aaf7f1c6d79` | unchanged |
+| `Tests/EditMode/IntentionSelector.cs` | `8553b74ff0189f4be5cb10e2fded0a9d7c37268bf46eca3d42e3785b23f39cfd` | unchanged |
+
+Every case, rewrite and representation above lived in memory.
+
+---
+
+## predictions.md
+
+### Route applicability: predictions
+
+Written and committed **before the fixture existed and before any reviewer was
+asked anything**, together with:
+- `protocol.md`: the frozen hashes, the representations, the metrics, the
+  real-morning procedure and the annotation protocol;
+- `Assets/_Project/Data/Experiments/route-applicability.json`: every case,
+  reading rule and family;
+- `annotation/items.json`: 16 items and their answer key;
+- `prediction-model.py`: an independent Python reading of the same files, which
+  produced every analytic count below.
+
+Every prediction is marked either **analytic** or **empirical**:
+- **analytic:** it follows from the reading rules by arithmetic. If it fails,
+  the fixture or the model is wrong.
+- **empirical:** it is a guess. If it fails, that is a finding.
+
+#### What this experiment is, and is not, about
+
+Two earlier experiments bear on it:
+- **The causal-route experiment** showed that a route identity is necessary.
+- **The reason-semantics experiment** found that a condition cannot be written
+  as a weight, and that the gate cannot say "the person concerned is present".
+
+This experiment asks whether those distinctions are:
+- **real:** each can be falsified, and some representation without it fails;
+- **general:** an over-applied version of each fails a counterexample;
+- **minimal:** whether condition and circumstance are two constructs, or one.
+
+It also separates two questions the reason-semantics experiment joined:
+- **Does the route apply?** (the route layer);
+- **What should the deliberator do when nothing applies?** (the selection layer).
+
+#### The hypothesis, and what could falsify it
+
+> A route needs `intention -> route -> applicability -> support and inhibitors -> strength`,
+> where applicability can depend on conditions and circumstances.
+
+| Distinction | Falsified if |
+|---|---|
+| Applicability is separate from strength | varying only support or an inhibitor changes whether a route applies (E, F) in the representation that has both |
+| A condition is not a weight | C-conditions (conditions read as weights) passes A, B and G |
+| A condition is a declared role, not a kind of fact | C-kind (every belief a condition) passes B's counterexample |
+| A circumstance can concern a particular person | C-entity (presence only generic) passes D and J |
+| Target presence is not the only kind of presence | C-kind (every presence bound to the target) passes J's generic route |
+| **Condition and circumstance are different constructs** | **C-split (two constructs) behaves differently from C (one construct) at the route layer. Predicted: it does not** |
+| "No applicable route" is representable | C fails G |
+
+#### P1. The route layer, family by family (analytic)
+
+Cells in which the representation's applicability disagrees with the declared
+meaning. FA: false activations. FS: false suppressions. The share is of
+route-cells.
+
+| Family | Route-cells | S | A | B | C | C-entity | C-conditions | C-split | C-kind |
+|---|---|---|---|---|---|---|---|---|---|
+| **A** condition absent/present | 52,488 | 26,244 FA (50.0 %) | 26,244 FA (50.0 %) | 0 | 0 | 0 | 26,244 FA (50.0 %) | 0 | 0 |
+| **B** condition vs evidence (cells not read as declared) | 52,488 | 26,244 (50.0 %) | 26,244 (50.0 %) | 0 | 0 | 0 | 26,244 (50.0 %) | 0 | **26,244 (50.0 %)** |
+| **C** circumstance switch | 39,366 | 10,935 FA (27.8 %) | 10,935 FA (27.8 %) | 10,935 FA (27.8 %) | 0 | 10,935 FA (27.8 %) | 0 | 0 | 0 |
+| **D** person-specific circumstance | 39,366 | 17,496 FA (44.4 %) | 17,496 FA (44.4 %) | 17,496 FA (44.4 %) | 0 | 17,496 FA (44.4 %) | 0 | 0 | 0 |
+| **J** target against generic | 26,244 | 6,561 FA (25.0 %) | 6,561 FA (25.0 %) | 6,561 FA (25.0 %) | 0 | 6,561 FA (25.0 %) | 0 | 0 | **6,561 FS (25.0 %)** |
+
+Per case, in the circumstance families:
+
+| Case | Declared | A, B, C-entity | C, C-split, C-kind |
+|---|---|---|---|
+| `side_mara` | Mara present | 6,561 FA (Daniel, Elena, or both, without Mara) | 0 |
+| `side_daniel` | Daniel present | 4,374 FA | 0 |
+| `side_elena` | Elena present | 6,561 FA | 0 |
+| `away_mara` | Mara absent | 4,374 FA (A, B: no gate can say it; C-entity: dropped) | 0 |
+| `duty_mara` | no circumstance | 0 | 0 |
+| `scene_mara` | anyone present | 0 | 0, except **C-kind: 6,561 FS** |
+
+The remaining families:
+
+| Family | Check | S | A | B | C | C-entity | C-conditions | C-split | C-kind |
+|---|---|---|---|---|---|---|---|---|---|
+| **E** support varied (26,244 profile-situations, 3 levels) | applicability changes / strength wrong | 0 / - | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 |
+| **F** inhibitor varied (13,122, 3 levels) | applicability changes / strength wrong | **13,122 / -** | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 |
+| **G** no active route, wrong route-layer states | `only_side_mara` / `only_owning` / `only_fair` / `weak_pull` | 6,561 / 6,564 / **4,368** / 0 | 6,561 / 6,564 / 0 / 0 | 6,561 / 0 / 0 / 0 | 0 / 0 / 0 / 0 | 6,561 / 0 / 0 / 0 | 0 / 6,564 / 0 / 0 | 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 |
+| **H** irrelevant facts | changes | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+- **In F, S fails because of its discard.** Where anxiety pushes the rule's
+  weight to zero or below, S drops the rule. The inhibitor then works as a
+  switch.
+- **In G, S also turns "applies, with zero strength" into "no candidate"** for
+  the 4,368 profile-situations in which fairness is not valued at all.
+- **Every representation that computes strength** leaves `stepping_in`
+  applicable with zero or negative strength in 17,496 of 39,366 evaluations.
+  That is reported, not corrected: an inhibitor is not floored.
+
+**Family I** (the causal-route controls):
+
+| | S | A | B | C | C-entity | C-conditions | C-split | C-kind |
+|---|---|---|---|---|---|---|---|---|
+| I.1 the 18 pairs reproduce D's support, explanation, outcome and flagged counts | - (not a route representation) | **18 of 18** | **18 of 18** | **18 of 18** | 18 of 18 | 18 of 18 | 18 of 18 | 18 of 18 |
+| I.2 copy within the route, reorder, rename routes, regroup: no change | fail (a copy doubles) | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| I.3 a copy declared a new route changes support and is flagged; identical routes flagged | fail | pass | pass | pass | pass | pass | pass | pass |
+| I.4 the ambiguous declaration (one belief both condition and support in one route) is flagged | fail | **fail** (roles not read) | pass | pass | pass | pass | pass | pass |
+
+**Families passed, of 10:**
+
+| S | A | B | C | C-entity | C-conditions | C-split | C-kind |
+|---|---|---|---|---|---|---|---|
+| 2 (E, H) | 3 (E, F, H) | 6 (A, B, E, F, H, I) | **10** | 6 (A, B, E, F, H, I) | 7 (C to F, H, I, J) | **10** | 8 (fails B, J) |
+
+**What the pattern would mean:**
+- **Typed roles alone (B)** solve conditions (A, B) and "no applicable route"
+  for a failed condition. They solve nothing about circumstances (C, D, J).
+- **Each element of C is needed.** Remove person binding and D and J fail;
+  remove conditions and A, B and G fail.
+- **Each element must be declared, not inferred.** Inferring roles from the
+  kind of fact fails B's evidence counterexample, and binding every presence to
+  the target fails J's generic route.
+- **C and C-split pass exactly the same checks.** At the route layer, conditions
+  and circumstances are one construct: a conjunction of predicates over the
+  person and the situation. Separating them changes only where "does not apply"
+  is recorded (section P2).
+
+#### P2. The selection layer (analytic; reported, not judged)
+
+Outcomes of the sole-candidate cases of family G, of 13,122 cells each:
+
+| Case | C, P0 | C, P1 | C-split, P0 | C-split, P1 | B, P0 | B, P1 |
+|---|---|---|---|---|---|---|
+| `only_side_mara` | protect 13,122 (8,748 with no applicable route) | protect 4,374, none 8,748 | protect 4,374, none 8,748 | the same | protect 10,935, none 2,187 | the same |
+| `only_owning` | theft 13,122 (6,564 with no applicable route) | theft 6,558, none 6,564 | theft 13,122 | theft 6,558, none 6,564 | theft 13,122 | theft 6,558, none 6,564 |
+| `only_fair` | theft 13,122 | theft 13,122 | the same | the same | the same | the same |
+
+**Where "does not apply" is recorded decides what P0 does.**
+- **A failed circumstance.** C records it at the route, and P0 still forms
+  protect with nothing behind it. C-split records it at candidacy, as the
+  shipped gate does, and P0 forms nothing.
+- **A failed condition.** Every representation that reads conditions records
+  it at the route, so only P1 leaves the person without an intention.
+
+#### P3. Behaviour on the frozen file (analytic; 30,618 cells)
+
+The frozen file is read with the causal-route declarations and nothing new.
+Circumstances are the shipped gates, read as generic predicates.
+
+| | Differs from A, P0 | No intention | Ties |
+|---|---|---|---|
+| A, P0 or P1 | 0 | 0 | 25 |
+| **B, P0** | **2,980 (9.7 %)** | 0 | 32 |
+| B, P1 | 4,074 (13.3 %) | 1,094 | 32 |
+| **C, P0** | **4,074 (13.3 %)** | 0 | **1,126** |
+| C, P1 | 4,074 (13.3 %) | 1,094 | 32 |
+| C-split, P0 / P1 | 2,980 / 4,074 | 0 / 1,094 | 32 / 32 |
+| B+w (a condition that keeps its weight), P0 / P1 | 91 / 1,185 | 0 / 1,094 | 25 / 25 |
+
+**B against A under P0** (2,980 cells):
+- **2,889 believers.** The condition adds no strength, so they lose the belief's
+  0.60: 972 each in `get_food` in company and alone move to
+  `take_responsibility`, 627 move to `protect`, 311 to `prevent_argument`, and
+  7 tie.
+- **91 innocents** who had formed the theft over a rival.
+- **The 1,094 innocents in `avoid_exposure` alone** still form the theft under
+  P0, with no applicable route.
+
+**Under C and P0, those 1,094 become three-way ties at zero support.** Protect,
+prevent-argument and the theft are all candidates, and none of them applies.
+This is the placement effect, not a finding about people.
+
+#### P4. Real mornings (empirical)
+
+| # | Prediction |
+|---|---|
+| 4.1 | Of the 1,028 real pantry decisions, **B and C change the same 99 under P0**: Daniel, in the mornings where he ate the can, matched at others' `get_food` checks. The reason-semantics experiment found these 99 under its condition reading |
+| 4.2 | C-split equals B on every real decision |
+| 4.3 | B+w (the condition keeps its weight) changes no real decision |
+| 4.4 | At least one real decision's explanation changes while its chosen intention does not (a believer who still forms the theft, with the belief now a condition rather than an amount). Weak |
+| 4.5 | In the live cells, C under P0 produces zero-support ties where B does not: people alone and without the belief, asked about `avoid_exposure`. B under P1 forms no intention there |
+| 4.6 | Every real decision that changes is one A formed as a theft |
+
+#### P5. The annotation (empirical)
+
+| # | Prediction |
+|---|---|
+| 5.1 | Q1 (does the reason apply?): the majority matches the key on at least 14 of 16 items; kappa at least 0.6 |
+| 5.2 | **`zero_support` does not match: readers say the reason does not apply** to someone who does not value fairness at all (key: it applies, with nothing behind it). Readers are predicted not to separate "applies with zero strength" from "does not apply" |
+| 5.3 | Facts: the belief in `cond_*` and `no_route_cond` is a `prerequisite` (at least 5 of 6); the presence facts are `circumstance` (at least 4 of 6); the belief in `evid_absent` is `supporting` (at least 4 of 6); fear in `inhibitor_high` is `inhibiting` (at least 5 of 6) |
+| 5.4 | **Two names, one behaviour:** Q8 is `disappear` for the prerequisite items and for the presence items alike (at least 5 of 6 each), while their labels differ (prerequisite against circumstance) |
+| 5.5 | Q8 is `weaker_or_stronger` for `support_low`, `inhibitor_high` and `evid_absent` (at least 5 of 6), and `no_change` for `duty_absent` and `irrelevant_person` (at least 4 of 6) |
+| 5.6 | Q7: `person:mara` on the `side_*` items and `no_route_circ`, `person:daniel` on `target_daniel`, `anyone` on the `scene_*` items (at least 5 of 6 each) |
+| 5.7 | Q9: `no` on `no_route_circ`, `no_route_cond` and `zero_support` (at least 5 of 6) |
+| 5.8 | Kappa at least 0.4 for the facts, Q7 and Q8 |
+
+#### P6. The expected answer
+
+- A route needs **applicability as its own layer**, separate from strength.
+- Applicability is **one construct**: a conjunction of predicates, each over
+  either the person (a belief) or the situation (presence). A situation
+  predicate can be bound to the want's target (`$target`) or be generic
+  (anyone). **Condition and circumstance are two names for the same construct,
+  not two constructs.** Separating them changes only the placement of "does not
+  apply".
+- Roles must be **declared per route**, not inferred from the kind of fact.
+- Support and inhibitors change strength and never applicability. An inhibitor
+  never becomes a switch.
+- "No applicable route" is representable at the route layer. **What the
+  deliberator should do then is a selection question** that the placement of
+  circumstances already prejudges. It is the next experiment.
+
+#### Success criteria (from the brief, section 12, committed)
+
+**C counts as an improvement only if all of the following hold:**
+1. It passes families A, B, C, D, E, F, G and J: prerequisite absent against
+   present, prerequisite against evidence, circumstance, target, support,
+   inhibition, and no applicable route.
+2. A or B fails at least one of them, and an ablation shows each failure comes
+   from information A or B lacks.
+3. It passes H (irrelevant facts) and I (the causal-route invariants: the 18
+   pairs reproduce D; restatement, reordering, renaming and regrouping change
+   nothing; copies and ambiguity are flagged).
+4. The parametric targets pass: the same declared route with Mara, Daniel and
+   Elena, and no name in any route.
+5. Nothing in production changed, and the S1.4 failures are exactly as before.
+
+**No element of C counts as needed unless:**
+- removing it fails a family (an ablation);
+- over-applying it fails a counterexample (C-kind), where one exists;
+- readers draw it: the relevant majorities match, with kappa at least 0.4.
+
+**Condition and circumstance count as different constructs only if** C-split
+passes something C fails, or readers give them different Q8 answers. Otherwise
+the split goes under ABANDON, and the labels are kept only as documentation.
+
+#### How the final sections will be filled
+
+The review ends with PROVEN, PLAUSIBLE, UNPROVEN, FAILED, OVERFITTING RISKS,
+KEEP, MODIFY, REBUILD, ABANDON and NEXT EXPERIMENT. Each is decided from the
+rules above:
+- **REBUILD** only if some required distinction cannot be expressed without
+  breaking the invariants of family I or the stage separation;
+- **ABANDON** for any construct an ablation shows adds nothing.
+
+**Not claimed by any outcome:** that any declared applicability is how people
+are. The checks prove properties of representations. The reviewers show
+legibility.
+
+---
+
+## protocol.md
+
+### Route applicability: protocol
+
+Committed with the predictions, before the fixture existed and before any
+reviewer was asked anything.
+
+#### The question
+
+*What causal information must a route contain to decide whether it applies in
+the current situation, before its supporting and inhibiting evidence is
+combined?*
+
+This is a representation experiment. Nothing is implemented in production.
+
+#### What is frozen
+
+Every file below is sha256-checked by the fixture at the start and at the end of
+its run.
+
+| File | sha256 | Role |
+|---|---|---|
+| `Assets/_Project/Data/Experiments/intentions.json` | `61e6412e8a7cb77674f0c7685e4cb0e5f7dca5db3ad05f928a63f34dfb099d92` | the frozen candidate rules |
+| `Assets/_Project/Data/Experiments/causal-routes.json` | `781b776d3a1cbbba78cc215c85af4750261a79f998c317f6a1ee920c4c37828a` | the causal-route declarations, its 20 synthetic variants and 18 pairs |
+| `Assets/_Project/Data/Experiments/held-out-people.json` | `0b3f4bc95fbeffbf4e1359b8779a45fdefabdbfb3bed28b3f4de975781ff4131` | the 2,187-profile sweep |
+| `Assets/_Project/Data/Experiments/reason-semantics.json` | `5ffe17feb1cfe3cd36cf4043e06a75812133846ac5bfc3f51469b4eeeedc7638` | the previous experiment's cases (not read; frozen) |
+| `Assets/_Project/Data/Experiments/route-applicability.json` | `a0e965403d21a218ae63d3857acf0edaabf159f7603448b1b8a304257c8ce426` | this experiment's cases, reading rules and families |
+| `Assets/_Project/Tests/EditMode/CausalRouteExperimentTests.cs` | `3fb852f2cb7763a44d331b62e0c8897e720228ff5cd2b32fbf177908039212c4` | D, its 18 families, the critical pair and the rewrite and provenance tests, **unchanged** and still run by the suite |
+| `Assets/_Project/Tests/EditMode/ReasonSemanticsExperimentTests.cs` | `4bc51cbd4b0f3069de99845c9ef693fab1a482b82683e97c8b370aaf7f1c6d79` | the previous experiment, unchanged and still run |
+| `Assets/_Project/Tests/EditMode/IntentionSelector.cs` | `8553b74ff0189f4be5cb10e2fded0a9d7c37268bf46eca3d42e3785b23f39cfd` | the experimental selector S, unchanged |
+
+**Nothing in production changes:**
+- not `Fallow.Core`, the selector's behaviour, the shipped rules, or character
+  data;
+- not beliefs, emotions, memories, actions or scoring.
+
+The two failures S1.4 left (the pacing gate and the emergent-moment fading
+check) must stay exactly as they are.
+
+**"No Unity changes"** is read as: nothing in the game's Unity content or
+runtime changes. As in every earlier experiment, the fixture is an EditMode
+test under `Tests/EditMode`, run through the Unity test runner. It adds no
+scene, asset or runtime code.
+
+#### Three things kept apart
+
+| Layer | Question | Judged by |
+|---|---|---|
+| **Route layer** | does this route apply now, for this person, and how strong is it? | the families' checks |
+| **Selection layer** | what does the deliberator choose, especially when no candidate has an applicable route? | reported under two policies, never judged |
+| **Legibility** | do blind readers draw the same distinctions? | the annotation, reported as legibility only |
+
+#### Representations
+
+The fixed reading rules are in `route-applicability.json`, under `reading_rules`.
+
+| | Route identity | Typed roles (support, inhibitor, condition) | Applicability from declared circumstances | Circumstances can name the target | Where "does not apply" is recorded |
+|---|---|---|---|---|---|
+| **S** shipped selector (control) | no | no | no (shipped gates) | no | the discard, rule by rule |
+| **A** D, unchanged | yes | recorded, not computed | no (shipped gates) | no | the candidate set (gates) |
+| **B** typed roles | yes | yes | no (shipped gates) | no | gates, and conditions at the route |
+| **C** applicability layer | yes | yes | yes, one construct for conditions and circumstances | yes | the route |
+| C-entity (ablation) | yes | yes | yes | **no** | the route |
+| C-conditions (ablation) | yes | **conditions read as weights** | yes | yes | the route |
+| C-split (ablation) | yes | yes | conditions and circumstances **as separate constructs** | yes | circumstances at the candidate set, conditions at the route |
+| C-kind (counterexample) | yes | **inferred from the kind of fact**, not declared | yes | **every presence bound to the target** | the route |
+
+- **B, C and the ablations do D's arithmetic** once a route applies: restatement
+  counted once, conflicts flagged, alternatives where declared.
+- **An inhibitor is additive and is never floored.** A route's strength may be
+  zero or negative, and that is reported, not corrected.
+- **A condition, where it is read as one, adds no strength.**
+
+#### Selection policies
+
+Neither policy is part of any representation.
+
+- **P0, current:** the largest support among the candidates wins. A candidate
+  with no applicable route has support 0 and can still win.
+- **P1, active only:** only candidates with at least one applicable route may
+  win; otherwise, no intention.
+
+#### The evaluation space
+
+- **Profiles:** the 2,187 sweep profiles.
+- **Situations:** six presence sets:
+  - n0: nobody;
+  - n1: Mara;
+  - n2: Daniel;
+  - n3: Elena;
+  - n4: Daniel and Elena;
+  - n5: Mara and Daniel.
+- **Cells:** 2,187 x 6 = **13,122 per case and condition**.
+- **Target:** each want's target is its motive target. Presence and targets are
+  real Percept and Motive data.
+- **Holding everything else fixed:** where a family varies one fact (a
+  prerequisite, a support, an inhibitor), the fact is overridden in every cell,
+  and everything else is left as it is.
+
+The families (A to J), their cases and what passing means are in the JSON,
+under `families`, and summarised in `predictions.md`.
+
+#### Metrics
+
+Every count is reported with its denominator.
+
+| Metric | Definition |
+|---|---|
+| **cells** | profile x situation x condition x case, per family |
+| **false activation** | the representation says the route applies; the declared meaning says it does not |
+| **false suppression** | the reverse |
+| **error rate** | (false activations + false suppressions) / route-cells, per family. Percentage points are differences in this rate |
+| **applicability change** | along a family's varied fact or situation, the route switches between applying and not |
+| **strength-only change** | along the varied fact, the strength changes and applicability does not |
+| **selection change** | the chosen outcome differs, under P0 or P1, between the family's conditions or from C's |
+| **no-active-route case** | a candidate with no applicable route |
+| **invariant violation** | a change where the family requires none (E: applicability; F: applicability or the route set; H: anything; I: anything but a declared new route) |
+
+**Aggregates.** No figure here measures psychological validity. Any aggregate
+percentage names what it counts.
+
+#### Real-morning regression
+
+This uses the same 50 baseline mornings as the causal-route experiment:
+- **257 real pantry-checks**, with every other cast member at the same moment:
+  **1,028 real decisions**;
+- **every decision moment asked about every want** (live cells).
+
+Each is decided under S, A, B, C and C-split, with the frozen file read by the
+committed `frozen_reading`, and under P0 and P1. The fixture reports:
+- decisions changed by B, and by C;
+- decisions whose explanation changed while the chosen intention did not;
+- decisions whose chosen intention changed;
+- whether any decision differs from A, the causal-route experiment's
+  representation. Any such decision is listed as a possible regression.
+
+The explanation compared is the chosen intention's applicable routes, with
+their evidence and amounts and their satisfied conditions.
+
+#### The blind annotation
+
+**Reviewers.** Six fresh Claude Code subagents: 1 and 2 opus, 3 and 4 sonnet, 5
+and 6 haiku. They use no tools and read no files. **They are language models,
+not people.** Human reviewers were not available to this experiment. Their
+agreement is reported as legibility and reproducibility only, never as
+psychological validation. A human panel is the recommended follow-up.
+
+**Material.** Each reviewer sees the 16 items of `annotation/items.json` under
+neutral ids (`item-NN`, the position in the file), rotated left by 3 x (k - 1)
+for reviewer k. They never see the ids, sources, answer key, vocabulary or
+representations. No item says which representation produced it.
+
+**The prompt, verbatim apart from the items:**
+
+> You are helping to check whether descriptions of a person's reasons are clear.
+> Each item gives something a person might intend, one reason that could lead
+> them there with the facts it draws on, and a moment: who is present and what is
+> true of the person. Answer only from the text given. Do not use any tools and
+> do not read any files.
+>
+> For each item answer:
+>
+> - **Q1.** In this moment, does the reason apply to this person? `yes`, `no` or
+>   `unclear`.
+> - **Q2.** In at most 30 words: what makes it apply, or not?
+> - **Q3 to Q6.** For each listed fact, in order, what part does it play in the
+>   reason? `prerequisite` (it must hold for the reason to apply at all, and it is
+>   something about the person), `supporting` (the more of it, the stronger the
+>   reason), `inhibiting` (the more of it, the weaker the reason),
+>   `circumstance` (a feature of the situation that must hold for the reason to
+>   apply at all), `no_part`, or `unclear`.
+> - **Q7.** Does whether the reason applies depend on a particular person or
+>   thing being present? Answer `person:NAME` for a particular person, `anyone`
+>   if anyone at all would do, `none` if no feature of the situation matters, or
+>   `unclear`.
+> - **Q8.** If the fact named for this item changed, should the reason
+>   `disappear`, become `weaker_or_stronger`, or show `no_change`? Or `unclear`.
+> - **Q9.** Only where the item says this is the person's only reason: is the
+>   intention still causally supported for this person, in this moment? `yes`,
+>   `no` or `unclear`.
+>
+> Reply with JSON only: an array with one object per item, with the fields `id`,
+> `q1`, `q2`, `facts` (one answer per listed fact, in order), `q7`, `q8`, and
+> `q9` where it is asked.
+
+**Analysis, fixed now.**
+- For Q1, the facts, Q7, Q8 and Q9: the majority per item or slot, whether it
+  matches the key, and Fleiss' kappa over the items or slots it applies to.
+- **Is the condition/circumstance split legible?** For the belief slots against
+  the presence slots:
+  - do readers label them `prerequisite` against `circumstance`;
+  - and do they give both the same Q8 answer (`disappear`)?
+
+  Different labels with the same Q8 is evidence of two names for one behaviour.
+  Different Q8 answers is evidence of two behaviours.
+- **Target or generic:** Q7 on the `side_*`, `scene_*` and `target_daniel`
+  items.
+- **Applicability or strength:** Q8 on the support, inhibitor and prerequisite
+  items.
+- **Applying with zero support:** Q1 and Q9 on `zero_support`.
+- **Q2 and the Q4-style free text** are reported verbatim, and any coding is
+  labelled as the author's.
+- **Underspecified:** a majority of fewer than four of six, or a kappa below
+  0.4.
+
+---
+
+## results.md
+
+### Route applicability: results against the predictions
+
+The measurements are in `measurements.md`, generated by
+`RouteApplicabilityExperimentTests`. The predictions, the protocol, the cases,
+the Python prediction model and the annotation items were committed in
+`431db11`, before the fixture existed and before any reviewer was asked
+anything.
+
+#### Runs
+
+| | |
+|---|---|
+| Frozen | eight inputs sha256-checked at the start and the end, **all unchanged**, including the causal-route and reason-semantics fixtures and `IntentionSelector.cs` |
+| S against the selector | **0 of 209,952** cells differ from `IntentionSelector.Form`; every weight equal to the bit |
+| Evaluation | 16 cases x 2,187 profiles x 6 presence sets = 209,952 cells per representation, plus family A's and B's counterfactual pairs and the 3 levels of families E and F |
+| Representations | S, A (D), B, C, and the ablations C-entity, C-conditions, C-split and C-kind; selection under P0 and P1 |
+| Causal-route controls | the 18 declared pairs over 2,187 profiles; rewrites of three cases |
+| Frozen file | 30,618 cells |
+| Real mornings | 50 baseline mornings: 1,028 real pantry decisions, 25,823 live cells |
+| Annotation | 6 blind language-model reviewers (2 opus, 2 sonnet, 2 haiku), 16 items; responses verbatim in `annotation/responses/` |
+| Fixture tests | **8 of 8 pass**, 28 minutes |
+| Randomness | none |
+| Production changes | **none** |
+
+**What was changed after the predictions were committed.** Nothing that bears
+on a result. The fixture was written after the commit. Before its first run,
+reading it found two defects, which were fixed:
+- a line that did nothing;
+- a call not guaranteed in Unity's .NET profile.
+
+Its first compile then failed on a duplicated variable name, which was renamed.
+Nothing was changed after any result was seen.
+
+#### P1. The route layer (analytic)
+
+| # | Prediction | Result | |
+|---|---|---|---|
+| 1.1 | Errors in families A, B, C, D and J under all eight representations (the P1 table) | every count as predicted: 26,244 FA (A); 26,244 misreadings, and C-kind's 26,244 on the evidence counterexample (B); 10,935 FA (C); 17,496 FA (D); 6,561 FA, or C-kind's 6,561 FS (J) | **PASS** |
+| 1.2 | Per case: `side_mara` 6,561, `side_daniel` 4,374, `side_elena` 6,561, `away_mara` 4,374 FA under A, B and C-entity; `duty_mara` 0 everywhere; `scene_mara` 0 except C-kind's 6,561 FS | exactly | **PASS** |
+| 1.3 | E: no representation changes applicability; F: S changes it in all 13,122 through its discard; G: 6,561 / 6,564 / 4,368 / 0 wrong for S, and the rest as tabled; 17,496 of 39,366 evaluations applicable with strength at or below zero | exactly | **PASS** |
+| 1.4 | **H: 0 changes under every representation** | 0 everywhere **except C-kind in H.5: 6,561**. Binding every presence to the target makes the generic `scene_mara` route follow the target: swap Mara for Daniel and it changes. The over-application fails a second counterexample the prediction did not model | **FAIL** |
+| 1.5 | I: the 18 pairs reproduced by A, B, C and every ablation; restatement, reordering, renaming and regrouping change nothing; copies declared new routes change support and are flagged; A cannot flag the ambiguous declaration | exactly: **18 of 18 under all seven**, 0 changes, I.3 met, A and S fail I.4 (13,122) | **PASS** |
+| 1.6 | Families passed: S 2, A 3, B 6, C 10, C-entity 6, C-conditions 7, C-split 10, C-kind 8 | the same, **except C-kind 7** (it also fails H) | **PARTLY** |
+| 1.7 | C and C-split pass exactly the same checks; their route applicability never differs | **0 of 209,952 cells** differ in applicability; they differ only in the recorded state (no candidate against no applicable route), in 39,366 | **PASS** |
+
+#### P2. The selection layer (analytic; reported, not judged)
+
+| # | Prediction | Result | |
+|---|---|---|---|
+| 2.1 | The G outcomes under P0 and P1 (the P2 table) | exactly: under C and P0, protect forms in all 13,122 cells of `only_side_mara`, 8,748 of them with no applicable route; under C-split it forms in 4,374 and nothing forms in 8,748; under P1 both give 4,374 and 8,748 | **PASS** |
+
+#### P3. The frozen file (analytic)
+
+| # | Prediction | Result | |
+|---|---|---|---|
+| 3.1 | B P0 2,980; B P1 4,074 with 1,094 none; C P0 4,074 with 1,126 ties; C P1 = B P1; C-split = B; B+w 91 / 1,185 | exactly, including the breakdown (1,944 + 627 + 311 believers, 7 ties, 91 innocents; under C and P0, 1,094 three-way ties at zero) | **PASS** |
+
+#### P4. Real mornings (empirical)
+
+| # | Prediction | Result | |
+|---|---|---|---|
+| 4.1 | B and C change the same 99 real decisions under P0 | **99 of 1,028 (9.6 %)** under B, C and C-split, P0 and P1 alike | **PASS** |
+| 4.2 | C-split equals B | equal on every row | **PASS** |
+| 4.3 | B+w changes no real decision | 0 | **PASS** |
+| 4.4 | At least one real decision's explanation changes while its act does not | **3** under B, C and C-split; **102** under B+w (every theft it forms now lists its condition) | **PASS** |
+| 4.5 | In live cells, C under P0 ties at zero where B does not; B under P1 forms nothing there | C P0: **272 ties**; B P1 and C P1: **272 none** | **PASS** |
+| 4.6 | Every changed real decision is one A formed as a theft | all 99: Daniel in `daniel_ate_it`, matched at others' `get_food` checks, from the theft to taking responsibility | **PASS** |
+
+#### P5. The annotation (empirical)
+
+| # | Prediction | Result | |
+|---|---|---|---|
+| 5.1 | Q1 majorities match on at least 14 of 16; kappa at least 0.6 | **14 of 16; kappa 0.834** | **PASS** |
+| 5.2 | `zero_support`: readers say the reason does not apply | **no, 6 of 6** | **PASS** |
+| 5.3 | Beliefs are prerequisites, presence is a circumstance, the graded belief is support, fear inhibits | 6 of 6 on every one of these slots; all 46 fact slots match the key (kappa 0.931) | **PASS** |
+| 5.4 | Q8 `disappear` for both prerequisites and presence, at least 5 of 6 each, under different labels | labels differ as predicted and every majority is `disappear`, but **`side_nobody` has 4 of 6** | **PARTLY** |
+| 5.5 | Q8 `weaker_or_stronger` for support, inhibitor and graded belief; `no_change` for the irrelevant facts | 6 of 6 on all five | **PASS** |
+| 5.6 | Q7: `person:mara`, `person:daniel`, `anyone` where declared | 6 of 6 on all nine items | **PASS** |
+| 5.7 | Q9 `no` on the three only-reason items | 6 of 6 on all three | **PASS** |
+| 5.8 | Kappa at least 0.4 for facts, Q7 and Q8 | 0.931, 0.891, 0.727 | **PASS** |
+
+Q9's kappa is undefined: all 18 answers were the same (`no`), and Fleiss'
+kappa cannot be computed when every answer is identical. It is reported as
+unanimity.
+
+#### P6. The expected answer
+
+| Predicted | Result | |
+|---|---|---|
+| Applicability is its own layer, separate from strength; one construct over person and situation predicates, bindable to the target; roles declared, not inferred; support and inhibitors never switch a route; "no applicable route" representable; what then to do is a selection question | all of it, with one addition from readers (below) | **PASS** |
+
+#### Tally
+
+| | Predictions | Pass | Partly | Fail |
+|---|---|---|---|---|
+| P1 route layer | 7 | 5 | 1 | 1 |
+| P2 selection | 1 | 1 | 0 | 0 |
+| P3 frozen file | 1 | 1 | 0 | 0 |
+| P4 real mornings | 6 | 6 | 0 | 0 |
+| P5 annotation | 8 | 7 | 1 | 0 |
+| P6 answer | 1 | 1 | 0 | 0 |
+| **All** | **24** | **21** | **2** | **1** |
+
+#### Success criteria (committed from the brief, section 12)
+
+| Criterion | Measured | Met |
+|---|---|---|
+| C passes A, B, C, D, E, F, G and J | all eight, 0 errors | yes |
+| A or B fails at least one, for lack of information an ablation identifies | A fails A, B, C, D, G, J; B fails C, D, G, J. The ablations fail exactly the families of what they remove | yes |
+| C passes H and I | H 0 changes; I: 18 of 18 pairs, 0 rewrite changes, copies and ambiguity flagged | yes |
+| Parametric targets, no name in any route | `side_daniel` and `side_elena`: 0 errors under C | yes |
+| Nothing in production changed; the S1.4 failures unchanged | hashes unchanged; the suite, below | yes |
+
+#### Not predicted
+
+| Finding | Evidence |
+|---|---|
+| **Readers do not recognise "applies, with nothing behind it".** A reason that applies but pushes with nothing is read as not applying at all (`zero_support` 6 of 6). The graded belief at zero drew no 3, yes 2, unclear 1. And readers say such an intention is not causally supported (Q9, 6 of 6). The representation's separate state "applicable, strength zero" has no counterpart for readers | section 5 |
+| **One reader in two can read "wherever she is" as depending on Mara.** `duty_absent` Q7 split 3 and 3 between `none` and `person:mara`, though all six agreed her presence plays no part (facts: `no_part` 6 of 6) and changes nothing (Q8: `no_change` 6 of 6). The question conflated "concerns Mara" with "depends on Mara's presence" | section 5 |
+| **The applicability layer adds nothing on real mornings.** C and B change the same number of real decisions (99, all of them the theft) and, under P1, of live cells (1,388). No frozen route declares a circumstance the gates cannot say, so C's circumstance machinery has nothing to act on. Every real change comes from reading the precondition as carrying no weight | sections 3, 4 |
+| **Where "does not apply" is recorded shows up behaviourally before any selection policy is chosen.** Under P0, C forms protect with no applicable route in 8,748 cells, and turns 1,094 frozen-file cells and 272 live cells into zero-support ties. C-split, recording failed circumstances at candidacy as the shipped gate does, does neither | sections 1, 3, 4 |
+

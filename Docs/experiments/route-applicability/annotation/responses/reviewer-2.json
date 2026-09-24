@@ -1,0 +1,24 @@
+{
+  "reviewer": 2,
+  "model": "opus",
+  "order": "items.json order rotated left by 3",
+  "ids": "neutral: item-NN is the NNth item of items.json",
+  "answers": [
+    {"id":"item-04","q1":"yes","q2":"The reason needs Mara in the room, and she is there. Empathy and valuing closeness make it stronger.","facts":["supporting","supporting","circumstance"],"q7":"person:Mara","q8":"disappear"},
+    {"id":"item-05","q1":"no","q2":"The reason needs Mara in the room, and she is not there. Daniel being there does not count.","facts":["supporting","supporting","circumstance"],"q7":"person:Mara","q8":"disappear"},
+    {"id":"item-06","q1":"no","q2":"Nobody else is in the room, so Mara is not there, and staying at her side needs her there.","facts":["supporting","supporting","circumstance"],"q7":"person:Mara","q8":"disappear"},
+    {"id":"item-07","q1":"yes","q2":"The reason needs somebody there to see a scene. Daniel is there, and anyone would do. Being cautious and valuing closeness make it stronger.","facts":["supporting","supporting","circumstance"],"q7":"anyone","q8":"disappear"},
+    {"id":"item-08","q1":"no","q2":"Nobody else is in the room to see a scene, so there is nothing to avoid.","facts":["supporting","supporting","circumstance"],"q7":"anyone","q8":"disappear"},
+    {"id":"item-09","q1":"yes","q2":"The reason says 'wherever she is', so it does not need Mara in the room. Empathy and valuing closeness still drive it.","facts":["supporting","supporting","no_part"],"q7":"none","q8":"no_change"},
+    {"id":"item-10","q1":"yes","q2":"Mara is in the room, so it applies. Very little empathy and only a little closeness make it weak, but it is still there.","facts":["supporting","supporting","circumstance"],"q7":"person:Mara","q8":"weaker_or_stronger"},
+    {"id":"item-11","q1":"yes","q2":"Empathy pushes them to step in. Strong anxiety holds them back and weakens the reason, but does not remove it.","facts":["supporting","inhibiting"],"q7":"none","q8":"weaker_or_stronger"},
+    {"id":"item-12","q1":"no","q2":"Staying at Mara's side needs her in the room, and she is absent. Daniel being there does not count.","facts":["supporting","supporting","circumstance"],"q7":"person:Mara","q8":"disappear","q9":"no"},
+    {"id":"item-13","q1":"no","q2":"Believing the can was theirs to answer for is required. They do not believe it, so honesty and fairness have nothing to act on.","facts":["prerequisite","supporting","supporting"],"q7":"none","q8":"disappear","q9":"no"},
+    {"id":"item-14","q1":"no","q2":"Fairness is the reason's only ground. This person does not value it at all, so the reason has no strength.","facts":["supporting"],"q7":"none","q8":"weaker_or_stronger","q9":"no"},
+    {"id":"item-15","q1":"no","q2":"The reason needs Daniel in the room. Only Mara is there.","facts":["supporting","supporting","circumstance"],"q7":"person:Daniel","q8":"disappear"},
+    {"id":"item-16","q1":"yes","q2":"Mara is in the room, which is all the reason needs. Whether Leo is there plays no part in it.","facts":["supporting","supporting","circumstance","no_part"],"q7":"person:Mara","q8":"no_change"},
+    {"id":"item-01","q1":"no","q2":"Only someone who believes the can was theirs to answer for can take it as their theft. This person does not believe it.","facts":["prerequisite","supporting","supporting"],"q7":"none","q8":"disappear"},
+    {"id":"item-02","q1":"yes","q2":"They believe the can was theirs to answer for, so it applies. Honesty and fairness make them more ready.","facts":["prerequisite","supporting","supporting"],"q7":"none","q8":"disappear"},
+    {"id":"item-03","q1":"yes","q2":"Here belief only adds strength and does not gate the reason. With no belief it is weak, but honesty and fairness still add to it.","facts":["supporting","supporting","supporting"],"q7":"none","q8":"weaker_or_stronger"}
+  ]
+}

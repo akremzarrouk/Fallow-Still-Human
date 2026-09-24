@@ -79,6 +79,11 @@ same. No dialogue, no player, no 3D.
   situation it needs, a reference to any reason it only strengthens, and the possibility of
   forming no intention. Readers never read two reasons as competing by strength. Reading the one
   declared precondition as a condition changes 99 of 1,028 real decisions.
+- `Docs/experiments/route-applicability/review.md` — what a route must contain to decide whether it
+  applies at all. One layer, and one construct: facts about the person or the situation that must
+  hold, where a situation fact can name the want's target rather than anyone. Conditions and
+  circumstances never behaved differently; typed roles alone could not tell "Mara is here" from
+  "someone is here". The layer changed no real decision: the real rules do not yet need it.
 
 Where those documents disagree with the code, the code is right and the reviews say when
 they were written.
