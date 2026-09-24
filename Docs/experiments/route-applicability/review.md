@@ -379,4 +379,16 @@ Reproduce with `./run-tests.sh` or, for the fixture alone,
 30 minutes); the analytic predictions with
 `python Docs/experiments/route-applicability/prediction-model.py`.
 
-**Suite: pending.**
+**Suite: 456 tests, 454 pass, 2 fail.** The 2 failures are the regressions S1.4 left, unchanged:
+the pacing gate, still 7 on Model A, and the emergent-moment fading check. The 448 before
+this experiment, plus its eight, is exactly 456. The causal-route fixture (D, its 18
+families, the critical pair, its rewrite and provenance tests) and the reason-semantics
+fixture ran unchanged and passed.
+
+This experiment's measurements, regenerated inside the suite, are byte-identical to the
+fixture's own run. Every other generated document regenerated with identical content,
+apart from the wall-clock seconds in the decision-sensitivity results and one file that
+differed in line endings only.
+
+The suite took 186 minutes, run from a copy of `run-tests.sh` with its timeout raised to
+four hours; the script itself was not changed.
