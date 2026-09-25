@@ -1,0 +1,3 @@
+seed 1: replayed 7 answers from the cache, 0 API calls; story IDENTICAL, transcript IDENTICAL
+seed 2: replayed 25 answers from the cache, 0 API calls; story IDENTICAL, transcript IDENTICAL
+seed 3: replayed 11 answers from the cache, 0 API calls; story IDENTICAL, transcript IDENTICAL

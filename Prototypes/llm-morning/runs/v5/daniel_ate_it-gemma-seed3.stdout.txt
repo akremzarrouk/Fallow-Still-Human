@@ -1,0 +1,43 @@
+daniel_ate_it-gemma-seed3: model gemma-4-31b-it, fresh; cache cache\v5\gemma-4-31b-it-daniel_ate_it-gemma-seed3.json holds 0 answers
+  min 00: model asked for 4; so far 4 live, 0 cached, 4 API requests
+  min 03: model asked for 2; so far 6 live, 0 cached, 6 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+  min 15: model asked for 1; so far 7 live, 0 cached, 9 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+    [500 INTERNAL] waiting 20s, retry 3/6
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 10s, retry 2/6
+  min 18: model asked for 4; so far 11 live, 0 cached, 20 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 5s, retry 1/6
+  min 21: model asked for 3; so far 14 live, 0 cached, 25 API requests
+  min 30: model asked for 1; so far 15 live, 0 cached, 26 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 33: model asked for 1; so far 16 live, 0 cached, 28 API requests
+  min 54: model asked for 1; so far 17 live, 0 cached, 29 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+  min 63: model asked for 1; so far 18 live, 0 cached, 31 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+    [500 INTERNAL] waiting 20s, retry 3/6
+  min 66: model asked for 1; so far 19 live, 0 cached, 35 API requests
+  min 75: model asked for 1; so far 20 live, 0 cached, 36 API requests
+
+wrote runs/v5/daniel_ate_it-gemma-seed3.md
+  api_requests: 36
+  answers_live: 20
+  answers_from_cache: 0
+  model_decisions: 20
+  fallbacks: 0
+  routine_decisions: 100
+  lines_spoken: 12
+  inner_moments: 7
+  private_talks: 0
+  max_prompt_tokens_estimated: 1400
+  max_prompt_tokens_counted_by_api: 1373
+  run_seconds: 766.2
+  story_sha256: 014deaef985ba94c5b46f47556ffe656ea2d344c42b08e62430eb46b01db494b

@@ -1,0 +1,19 @@
+{
+ "model": "gemini-3.5-flash-lite",
+ "seed": 3,
+ "replay": false,
+ "api_requests": 30,
+ "answers_live": 30,
+ "answers_from_cache": 0,
+ "model_decisions": 30,
+ "fallbacks": 0,
+ "routine_decisions": 90,
+ "lines_spoken": 21,
+ "inner_moments": 8,
+ "private_talks": 0,
+ "max_prompt_tokens_estimated": 1400,
+ "max_prompt_tokens_counted_by_api": 1352,
+ "run_seconds": 131.6,
+ "story": "runs/v3/daniel_ate_it-seed3.md",
+ "story_sha256": "997635e099477daa68792990a7746600daa3b4191051035aa8b0f58105090cff"
+}

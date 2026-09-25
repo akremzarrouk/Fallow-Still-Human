@@ -1,0 +1,49 @@
+| Run | Model calls | Lines spoken | Longest stretch with no model decision (minutes) | Inner moments (what rose) | Conversations restarted by an inner moment | Private talks (accepted / refused) | Daniel confessed | Food eaten or shared |
+|---|---|---|---|---|---|---|---|---|
+| v2, seed 1 | 7 | 6 | 84 (min 06–90) | 0 (none in v2) | 0 (none in v2) | 0 / 0 (none in v2) | no | no |
+| v2, seed 2 | 25 | 13 | 63 (min 27–90) | 0 (none in v2) | 0 (none in v2) | 0 / 0 (none in v2) | no | no |
+| v2, seed 3 | 11 | 8 | 81 (min 09–90) | 0 (none in v2) | 0 (none in v2) | 0 / 0 (none in v2) | no | no |
+| v3, seed 1 | 37 | 23 | 18 (min 42–60) | 6 (hunger 5, suspicion 1, grudge 1) | 0 | 0 / 0 | yes, min 03 | Daniel ate (min 12); Daniel shared (min 15) |
+| v3, seed 2 | 36 | 19 | 15 (min 39–54) | 10 (hunger 7, suspicion 4) | 2 | 0 / 0 | yes, min 03 | Daniel ate (min 33); Mara ate (min 54) |
+| v3, seed 3 | 30 | 21 | 18 (min 36–54) | 8 (hunger 6, suspicion 2) | 0 | 0 / 0 | yes, min 03 | no |
+
+Suspicion and grudge at minute 90, and Daniel's guilt (the rules kept none of these in v2):
+
+| Run | Daniel: suspects / grudge | Elena: suspects / grudge | Leo: suspects / grudge | Mara: suspects / grudge | Daniel's guilt |
+|---|---|---|---|---|---|
+| v2, seed 1 | not tracked | not tracked | not tracked | not tracked | not tracked |
+| v2, seed 2 | not tracked | not tracked | not tracked | not tracked | not tracked |
+| v2, seed 3 | not tracked | not tracked | not tracked | not tracked | not tracked |
+| v3, seed 1 | none / none | Daniel 3/3 / none | Daniel 3/3 / Daniel 3/3 | Daniel 3/3 / Daniel 3/3 | 3/3 |
+| v3, seed 2 | none / none | Daniel 3/3 / none | Daniel 3/3 / none | none / none | 3/3 |
+| v3, seed 3 | none / none | Daniel 3/3 / none | Daniel 3/3 / none | Daniel 3/3 / Daniel 3/3 | 3/3 |
+
+Inner moments, one by one:
+- v3, seed 1, min 15, Leo: hunger, suspicion -> accuse_daniel
+- v3, seed 1, min 24, Leo: grudge -> accuse_daniel
+- v3, seed 1, min 27, Mara: hunger -> accuse_daniel
+- v3, seed 1, min 39, Leo: hunger -> silent
+- v3, seed 1, min 60, Elena: hunger -> silent
+- v3, seed 1, min 81, Mara: hunger -> accuse_daniel
+- v3, seed 2, min 12, Leo: suspicion -> silent
+- v3, seed 2, min 12, Elena: suspicion -> silent
+- v3, seed 2, min 21, Leo: hunger, suspicion -> silent
+- v3, seed 2, min 21, Elena: suspicion -> silent
+- v3, seed 2, min 30, Elena: hunger -> reassure_all
+- v3, seed 2, min 33, Daniel: hunger -> eat
+- v3, seed 2, min 54, Mara: hunger -> eat
+- v3, seed 2, min 63, Leo: hunger -> silent
+- v3, seed 2, min 75, Elena: hunger -> reassure_all
+- v3, seed 2, min 78, Daniel: hunger -> reassure_elena
+- v3, seed 3, min 12, Elena: suspicion -> reassure_all
+- v3, seed 3, min 21, Elena: suspicion -> reassure_all
+- v3, seed 3, min 30, Elena: hunger -> reassure_all
+- v3, seed 3, min 33, Daniel: hunger -> reassure_all
+- v3, seed 3, min 54, Mara: hunger -> accuse_daniel
+- v3, seed 3, min 63, Leo: hunger -> silent
+- v3, seed 3, min 66, Daniel: hunger -> reassure_mara
+- v3, seed 3, min 75, Elena: hunger -> reassure_all
+
+Conversations started by an inner moment:
+- v3, seed 2, min 33, kitchen: Daniel ate one of the portions
+- v3, seed 2, min 54, kitchen: Mara ate one of the portions

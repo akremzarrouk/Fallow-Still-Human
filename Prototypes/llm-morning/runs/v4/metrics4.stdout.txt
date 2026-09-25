@@ -1,0 +1,38 @@
+| Run | Model calls | Lines spoken | Daniel confessed | From his confession to the first reassurance of him, for each person he lied to or accused | Lines that are reassurance | Longest stretch with no model decision (minutes) |
+|---|---|---|---|---|---|---|
+| v3, seed 1 | 37 | 23 | min 03 | he lied to and accused nobody | 10/23 (43%) | 18 (min 42–60) |
+| v3, seed 2 | 36 | 19 | min 03 | Elena (lied to): 3 min; Leo (lied to): 3 min; Mara (lied to): 3 min | 12/19 (63%) | 15 (min 39–54) |
+| v3, seed 3 | 30 | 21 | min 03 | Elena (lied to): never; Leo (lied to): 0 min; Mara (lied to): never | 13/21 (62%) | 18 (min 36–54) |
+| v4, seed 1 | 36 | 24 | never | no confession | 12/24 (50%) | 18 (min 36–54) |
+| v4, seed 2 | 39 | 26 | never | no confession | 8/26 (31%) | 24 (min 57–81) |
+| v4, seed 3 | 39 | 25 | never | no confession | 5/25 (20%) | 18 (min 36–54) |
+| v4, seed 4 | 29 | 18 | min 06 | he lied to and accused nobody | 8/18 (44%) | 18 (min 36–54) |
+| v4, seed 5 | 41 | 26 | never | no confession | 8/26 (31%) | 12 (min 42–54) |
+
+Grudges at minute 90, with the events behind them (in the holder's own terms: "you" is the one holding the grudge):
+
+v3, seed 1:
+- Leo against Daniel, 3/3: named Daniel as who they were angry with at minutes 15, 18, 21, 24, 39.
+- Mara against Daniel, 3/3: named Daniel as who they were angry with at minutes 09, 12, 15, 18, 21, 27, 81.
+
+v3, seed 2:
+- nobody holds a grudge
+
+v3, seed 3:
+- Mara against Daniel, 3/3: named Daniel as who they were angry with at minutes 06, 09, 12, 15, 54.
+
+v4, seed 1:
+- nobody holds a grudge
+
+v4, seed 2:
+- nobody holds a grudge
+
+v4, seed 3:
+- nobody holds a grudge
+
+v4, seed 4:
+- Leo against Daniel, 3/3: named Daniel as who they were angry with at minutes 09, 12, 15, 18, 63.
+- Mara against Daniel, 3/3: named Daniel as who they were angry with at minutes 06, 09, 12, 15, 54.
+
+v4, seed 5:
+- Leo against Daniel, 3/3: Daniel accused you of taking the can at minute 09, and you had not; named Daniel as who they were angry with at minutes 12, 15, 18, 24, 36, 63.

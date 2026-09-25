@@ -1,0 +1,100 @@
+daniel_ate_it-gemma-seed2: model gemma-4-31b-it, fresh; cache cache\v5\gemma-4-31b-it-daniel_ate_it-gemma-seed2.json holds 0 answers
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 10s, retry 2/6
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 10s, retry 2/6
+    [500 INTERNAL] waiting 20s, retry 3/6
+  min 00: model asked for 4; so far 4 live, 0 cached, 10 API requests
+  min 03: model asked for 2; so far 6 live, 0 cached, 12 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 10s, retry 2/6
+  min 15: model asked for 1; so far 7 live, 0 cached, 15 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+  min 30: model asked for 1; so far 8 live, 0 cached, 18 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 10s, retry 2/6
+  min 33: model asked for 1; so far 9 live, 0 cached, 21 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+  min 54: model asked for 1; so far 10 live, 0 cached, 23 API requests
+  min 63: model asked for 1; so far 11 live, 0 cached, 24 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 10s, retry 2/6
+    [500 INTERNAL] waiting 20s, retry 3/6
+    [500 INTERNAL] waiting 40s, retry 4/6
+    [500 INTERNAL] waiting 80s, retry 5/6
+    [500 INTERNAL] waiting 120s, retry 6/6
+
+stopped: still refused (503 UNAVAILABLE) after 6 retries.
+Answers received so far (11) are kept in cache\v5\gemma-4-31b-it-daniel_ate_it-gemma-seed2.json.
+To resume, run the same command again once the limit has passed (the free daily quota resets at midnight Pacific time): python morning.py --model gemma --seed 2
+Cached answers are reused, so only the prompts not yet answered are sent.
+--- resumed at 14:47 UTC, after the stop above (Gemma's service still refusing after 6 retries); the 11 cached answers are reused ---
+daniel_ate_it-gemma-seed2: model gemma-4-31b-it, fresh; cache cache\v5\gemma-4-31b-it-daniel_ate_it-gemma-seed2.json holds 11 answers
+  min 00: model asked for 4; so far 0 live, 4 cached, 0 API requests
+  min 03: model asked for 2; so far 0 live, 6 cached, 0 API requests
+  min 15: model asked for 1; so far 0 live, 7 cached, 0 API requests
+  min 30: model asked for 1; so far 0 live, 8 cached, 0 API requests
+  min 33: model asked for 1; so far 0 live, 9 cached, 0 API requests
+  min 54: model asked for 1; so far 0 live, 10 cached, 0 API requests
+  min 63: model asked for 1; so far 0 live, 11 cached, 0 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 10s, retry 2/6
+    [503 UNAVAILABLE] waiting 20s, retry 3/6
+    [503 UNAVAILABLE] waiting 40s, retry 4/6
+    [500 INTERNAL] waiting 80s, retry 5/6
+    [503 UNAVAILABLE] waiting 120s, retry 6/6
+
+stopped: still refused (500 INTERNAL) after 6 retries.
+Answers received so far (11) are kept in cache\v5\gemma-4-31b-it-daniel_ate_it-gemma-seed2.json.
+To resume, run the same command again once the limit has passed (the free daily quota resets at midnight Pacific time): python morning.py --model gemma --seed 2
+Cached answers are reused, so only the prompts not yet answered are sent.
+--- resumed again at 14:56 UTC (a probe showed the same prompt is accepted now); the 11 cached answers are reused ---
+daniel_ate_it-gemma-seed2: model gemma-4-31b-it, fresh; cache cache\v5\gemma-4-31b-it-daniel_ate_it-gemma-seed2.json holds 11 answers
+  min 00: model asked for 4; so far 0 live, 4 cached, 0 API requests
+  min 03: model asked for 2; so far 0 live, 6 cached, 0 API requests
+  min 15: model asked for 1; so far 0 live, 7 cached, 0 API requests
+  min 30: model asked for 1; so far 0 live, 8 cached, 0 API requests
+  min 33: model asked for 1; so far 0 live, 9 cached, 0 API requests
+  min 54: model asked for 1; so far 0 live, 10 cached, 0 API requests
+  min 63: model asked for 1; so far 0 live, 11 cached, 0 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+    [500 INTERNAL] waiting 20s, retry 3/6
+    [503 UNAVAILABLE] waiting 40s, retry 4/6
+    [503 UNAVAILABLE] waiting 80s, retry 5/6
+    [500 INTERNAL] waiting 120s, retry 6/6
+
+stopped: still refused (503 UNAVAILABLE) after 6 retries.
+Answers received so far (11) are kept in cache\v5\gemma-4-31b-it-daniel_ate_it-gemma-seed2.json.
+To resume, run the same command again once the limit has passed (the free daily quota resets at midnight Pacific time): python morning.py --model gemma --seed 2
+Cached answers are reused, so only the prompts not yet answered are sent.
+--- resume attempt 1 at 15:03 UTC; the cached answers are reused ---
+daniel_ate_it-gemma-seed2: model gemma-4-31b-it, fresh; cache cache\v5\gemma-4-31b-it-daniel_ate_it-gemma-seed2.json holds 11 answers
+  min 00: model asked for 4; so far 0 live, 4 cached, 0 API requests
+  min 03: model asked for 2; so far 0 live, 6 cached, 0 API requests
+  min 15: model asked for 1; so far 0 live, 7 cached, 0 API requests
+  min 30: model asked for 1; so far 0 live, 8 cached, 0 API requests
+  min 33: model asked for 1; so far 0 live, 9 cached, 0 API requests
+  min 54: model asked for 1; so far 0 live, 10 cached, 0 API requests
+  min 63: model asked for 1; so far 0 live, 11 cached, 0 API requests
+  min 66: model asked for 1; so far 1 live, 11 cached, 1 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+  min 75: model asked for 1; so far 2 live, 11 cached, 4 API requests
+
+wrote runs/v5/daniel_ate_it-gemma-seed2.md
+  api_requests: 4
+  answers_live: 2
+  answers_from_cache: 11
+  model_decisions: 13
+  fallbacks: 0
+  routine_decisions: 107
+  lines_spoken: 9
+  inner_moments: 7
+  private_talks: 0
+  max_prompt_tokens_estimated: 1398
+  max_prompt_tokens_counted_by_api: 1372
+  run_seconds: 76.7
+  story_sha256: aee3cfdb71bb69b799b688e0b26a48f1d7faadb05f993407ff245177dff31425

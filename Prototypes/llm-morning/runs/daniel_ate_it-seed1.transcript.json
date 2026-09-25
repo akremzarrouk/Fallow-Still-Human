@@ -1,0 +1,3112 @@
+{
+ "seed": 1,
+ "version": 1,
+ "turns": [
+  {
+   "minute": 0,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 0,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "accuse_leo",
+     "words": "Don't look at me like that, Leo, you're the one who was going on about hoarding from the start.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      0,
+      -1
+     ],
+     "said_at": [
+      0,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 0,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "ask_who",
+     "words": "One of our cans is missing. Which of you took it?",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      0,
+      -1
+     ],
+     "said_at": [
+      0,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 0,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "search",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      0,
+      -1
+     ],
+     "said_at": [
+      0,
+      2
+     ],
+     "came_of_it": "started going through the room."
+    },
+    {
+     "minute": 0,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "ask_who",
+     "words": "Who took the can? One of us must know where it went.",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      0,
+      -1
+     ],
+     "said_at": [
+      0,
+      3
+     ],
+     "came_of_it": "said to Daniel, Elena, Leo."
+    }
+   ]
+  },
+  {
+   "minute": 3,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 3,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take it, I swear. Someone else must have moved it or it was never there.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      3,
+      -1
+     ],
+     "said_at": [
+      3,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 3,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "share",
+     "words": "There is no point in us fighting, we will divide what is left right now so everyone has a fair share.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      3,
+      -1
+     ],
+     "said_at": [
+      3,
+      1
+     ],
+     "came_of_it": "shared out the last 2 portions between Elena, Daniel, Leo, Mara."
+    },
+    {
+     "minute": 3,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take it, and looking at each other like this is a waste of time.",
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      3,
+      -1
+     ],
+     "said_at": [
+      3,
+      2
+     ],
+     "came_of_it": "said to Daniel, Elena, Mara."
+    },
+    {
+     "minute": 3,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "search",
+     "words": "I want to help look, I know I didn't touch it.",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      3,
+      -1
+     ],
+     "said_at": [
+      3,
+      3
+     ],
+     "came_of_it": "started going through the room."
+    }
+   ]
+  },
+  {
+   "minute": 6,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 6,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      6,
+      -1
+     ],
+     "said_at": [
+      6,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 6,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_all",
+     "words": "We are not going to tear each other apart over this, we will get through today together.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      6,
+      -1
+     ],
+     "said_at": [
+      6,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 6,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "search",
+     "words": "Panicking won't find it, let's just look properly.",
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      6,
+      -1
+     ],
+     "said_at": [
+      6,
+      2
+     ],
+     "came_of_it": "started going through the room."
+    },
+    {
+     "minute": 6,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "keep_searching",
+     "words": "I'm still looking, it has to be here somewhere.",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      6,
+      -1
+     ],
+     "said_at": [
+      6,
+      3
+     ],
+     "came_of_it": "went through the room and found nothing."
+    }
+   ]
+  },
+  {
+   "minute": 9,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 9,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      9,
+      -1
+     ],
+     "said_at": [
+      9,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 9,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_all",
+     "words": "Let's all just take a breath, we will figure this out without tearing ourselves apart.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      9,
+      -1
+     ],
+     "said_at": [
+      9,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 9,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "keep_searching",
+     "words": "Let's check behind the lower shelves again, it has to be somewhere in this room.",
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      9,
+      -1
+     ],
+     "said_at": [
+      9,
+      2
+     ],
+     "came_of_it": "went through the room and found nothing."
+    },
+    {
+     "minute": 9,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "accuse_daniel",
+     "words": "You emptied my bag like I was a thief, maybe you're the one who actually took it.",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      9,
+      -1
+     ],
+     "said_at": [
+      9,
+      3
+     ],
+     "came_of_it": "said to Daniel, Elena, Leo."
+    }
+   ]
+  },
+  {
+   "minute": 12,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 12,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take anything, Mara, stop looking at me like that.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      12,
+      -1
+     ],
+     "said_at": [
+      12,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 12,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_all",
+     "words": "Please, let's stop accusing each other, shouting won't bring the food back.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      12,
+      -1
+     ],
+     "said_at": [
+      12,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 12,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "ask_who",
+     "words": "Let's stop arguing and just be honest about who took it.",
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      12,
+      -1
+     ],
+     "said_at": [
+      12,
+      2
+     ],
+     "came_of_it": "said to Daniel, Elena, Mara."
+    },
+    {
+     "minute": 12,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take it, I swear I didn't touch anything!",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      12,
+      -1
+     ],
+     "said_at": [
+      12,
+      3
+     ],
+     "came_of_it": "said to Daniel, Elena, Leo."
+    }
+   ]
+  },
+  {
+   "minute": 15,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 15,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take it, I'm telling you, someone is just trying to make me look bad.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      15,
+      -1
+     ],
+     "said_at": [
+      15,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 15,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_all",
+     "words": "We are a family, and we will get through this emptiness without turning on each other.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      15,
+      -1
+     ],
+     "said_at": [
+      15,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 15,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      15,
+      -1
+     ],
+     "said_at": [
+      15,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 15,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "accuse_leo",
+     "words": "Leo, you were the one saying we should let someone else handle it, maybe you took it for yourself!",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      15,
+      -1
+     ],
+     "said_at": [
+      15,
+      3
+     ],
+     "came_of_it": "said to Daniel, Elena, Leo."
+    }
+   ]
+  },
+  {
+   "minute": 18,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 18,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I already told you, I didn't take the food, so stop staring at me.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      18,
+      -1
+     ],
+     "said_at": [
+      18,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 18,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "search",
+     "words": "I am just going to check every corner of this room once more.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      18,
+      -1
+     ],
+     "said_at": [
+      18,
+      1
+     ],
+     "came_of_it": "started going through the room."
+    },
+    {
+     "minute": 18,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take the food, and pointing fingers won't change the fact that it's gone.",
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      18,
+      -1
+     ],
+     "said_at": [
+      18,
+      2
+     ],
+     "came_of_it": "said to Daniel, Elena, Mara."
+    },
+    {
+     "minute": 18,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      18,
+      -1
+     ],
+     "said_at": [
+      18,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 21,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 21,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take it, I already said that, so stop looking at me like I'm the one who did this.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      21,
+      -1
+     ],
+     "said_at": [
+      21,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 21,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_all",
+     "words": "Please, let's calm down, shouting at each other won't bring the food back.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      21,
+      -1
+     ],
+     "said_at": [
+      21,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 21,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      21,
+      -1
+     ],
+     "said_at": [
+      21,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 21,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      21,
+      -1
+     ],
+     "said_at": [
+      21,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 24,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 24,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take it, I swear to you, and I won't sit here and let you all look at me like this.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      24,
+      -1
+     ],
+     "said_at": [
+      24,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 24,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_all",
+     "words": "Nobody is to blame here, we just need to keep our heads and trust one another.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      24,
+      -1
+     ],
+     "said_at": [
+      24,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 24,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      24,
+      -1
+     ],
+     "said_at": [
+      24,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 24,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      24,
+      -1
+     ],
+     "said_at": [
+      24,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 27,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 27,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't touch it, I'm telling you, someone else must have moved it.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      27,
+      -1
+     ],
+     "said_at": [
+      27,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 27,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_daniel",
+     "words": "Daniel, look at me, nobody thinks you did it, we just need to stay calm.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      27,
+      -1
+     ],
+     "said_at": [
+      27,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 27,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      27,
+      -1
+     ],
+     "said_at": [
+      27,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 27,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      27,
+      -1
+     ],
+     "said_at": [
+      27,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 30,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 30,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take the missing food, and I'm getting sick of everyone staring at me like I'm a thief.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      30,
+      -1
+     ],
+     "said_at": [
+      30,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 30,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_daniel",
+     "words": "Daniel, breathe, I know you didn't do it, we're going to figure this out together.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      30,
+      -1
+     ],
+     "said_at": [
+      30,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 30,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      30,
+      -1
+     ],
+     "said_at": [
+      30,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 30,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      30,
+      -1
+     ],
+     "said_at": [
+      30,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 33,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 33,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I'm telling you for the last time, I didn't take the food, and I won't stand here being accused.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      33,
+      -1
+     ],
+     "said_at": [
+      33,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 33,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_daniel",
+     "words": "Daniel, look at me, you're going to be okay, we are not going to let this tear us apart.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      33,
+      -1
+     ],
+     "said_at": [
+      33,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 33,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      33,
+      -1
+     ],
+     "said_at": [
+      33,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 33,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      33,
+      -1
+     ],
+     "said_at": [
+      33,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 36,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 36,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take the damn can, why won't anyone believe me?",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      36,
+      -1
+     ],
+     "said_at": [
+      36,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 36,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_daniel",
+     "words": "Daniel, stay with me, nobody is blaming you anymore, we just need to breathe.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      36,
+      -1
+     ],
+     "said_at": [
+      36,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 36,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      36,
+      -1
+     ],
+     "said_at": [
+      36,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 36,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      36,
+      -1
+     ],
+     "said_at": [
+      36,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 39,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 39,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't do it, I swear to you all, someone else must have taken it.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      39,
+      -1
+     ],
+     "said_at": [
+      39,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 39,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_daniel",
+     "words": "Daniel, just look at me, you're safe and we are going to get through this together.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      39,
+      -1
+     ],
+     "said_at": [
+      39,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 39,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "go_brothers_room",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      39,
+      -1
+     ],
+     "said_at": [
+      39,
+      2
+     ],
+     "came_of_it": "went to the brothers room."
+    },
+    {
+     "minute": 39,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      39,
+      -1
+     ],
+     "said_at": [
+      39,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 42,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "mara"
+    ],
+    "brothers_room": [
+     "leo"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 42,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "confess",
+     "words": "I took the can in the night, I'm sorry, I was just so hungry.",
+     "audience": [
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      42,
+      -1
+     ],
+     "said_at": [
+      42,
+      0
+     ],
+     "came_of_it": "said to Elena, Mara; heard as voices by Leo."
+    },
+    {
+     "minute": 42,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_daniel",
+     "words": "Daniel, listen to me, you're going to be okay, just stay here with us.",
+     "audience": [
+      "daniel",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      42,
+      -1
+     ],
+     "said_at": [
+      42,
+      1
+     ],
+     "came_of_it": "said to Daniel, Mara; heard as voices by Leo."
+    },
+    {
+     "minute": 42,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "search",
+     "words": "If it's in here somewhere, I'm going to find it.",
+     "audience": [],
+     "mode": "model",
+     "decided_at": [
+      42,
+      -1
+     ],
+     "said_at": [
+      42,
+      2
+     ],
+     "came_of_it": "started going through the room."
+    },
+    {
+     "minute": 42,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "model",
+     "decided_at": [
+      42,
+      -1
+     ],
+     "said_at": [
+      42,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 45,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "mara"
+    ],
+    "brothers_room": [
+     "leo"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 45,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "go_brothers_room",
+     "words": "I need to talk to Leo right now.",
+     "audience": [
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      45,
+      -1
+     ],
+     "said_at": [
+      45,
+      0
+     ],
+     "came_of_it": "went to the brothers room."
+    },
+    {
+     "minute": 45,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_daniel",
+     "words": "Daniel, look at me, you admitted it and it's alright, we aren't going to let this tear us apart.",
+     "audience": [
+      "daniel",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      45,
+      -1
+     ],
+     "said_at": [
+      45,
+      1
+     ],
+     "came_of_it": "said to Daniel, Mara; heard as voices by Leo."
+    },
+    {
+     "minute": 45,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "keep_searching",
+     "words": "If there's something hidden in here, I'm going to find it.",
+     "audience": [],
+     "mode": "model",
+     "decided_at": [
+      45,
+      -1
+     ],
+     "said_at": [
+      45,
+      2
+     ],
+     "came_of_it": "went through the room and found nothing."
+    },
+    {
+     "minute": 45,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "model",
+     "decided_at": [
+      45,
+      -1
+     ],
+     "said_at": [
+      45,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 48,
+   "rooms": {
+    "kitchen": [
+     "elena",
+     "mara"
+    ],
+    "brothers_room": [
+     "daniel",
+     "leo"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 48,
+     "who": "daniel",
+     "room": "brothers_room",
+     "option": "reassure_leo",
+     "words": "Look, Leo, I shouldn't have lied to you all, but I'm going to fix this.",
+     "audience": [
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      48,
+      -1
+     ],
+     "said_at": [
+      48,
+      0
+     ],
+     "came_of_it": "said to Leo; heard as voices by Elena, Mara."
+    },
+    {
+     "minute": 48,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "go_brothers_room",
+     "words": "Leo, Daniel, please open the door, we need to talk about this together.",
+     "audience": [
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      48,
+      -1
+     ],
+     "said_at": [
+      48,
+      1
+     ],
+     "came_of_it": "went to the brothers room."
+    },
+    {
+     "minute": 48,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "go_kitchen",
+     "words": null,
+     "audience": [
+      "daniel"
+     ],
+     "mode": "model",
+     "decided_at": [
+      48,
+      -1
+     ],
+     "said_at": [
+      48,
+      2
+     ],
+     "came_of_it": "went to the kitchen."
+    },
+    {
+     "minute": 48,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "go_brothers_room",
+     "words": null,
+     "audience": [
+      "elena"
+     ],
+     "mode": "model",
+     "decided_at": [
+      48,
+      -1
+     ],
+     "said_at": [
+      48,
+      3
+     ],
+     "came_of_it": "went to the brothers room."
+    }
+   ]
+  },
+  {
+   "minute": 51,
+   "rooms": {
+    "kitchen": [
+     "leo"
+    ],
+    "brothers_room": [
+     "daniel",
+     "elena",
+     "mara"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 51,
+     "who": "daniel",
+     "room": "brothers_room",
+     "option": "reassure_elena",
+     "words": "Don't worry, Mom, I'm going to make sure we all get through this.",
+     "audience": [
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      51,
+      -1
+     ],
+     "said_at": [
+      51,
+      0
+     ],
+     "came_of_it": "said to Elena, Mara; heard as voices by Leo."
+    },
+    {
+     "minute": 51,
+     "who": "elena",
+     "room": "brothers_room",
+     "option": "reassure_daniel",
+     "words": "Daniel, look at me, you're going to be alright, we will get through this.",
+     "audience": [
+      "daniel",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      51,
+      -1
+     ],
+     "said_at": [
+      51,
+      1
+     ],
+     "came_of_it": "said to Daniel, Mara; heard as voices by Leo."
+    },
+    {
+     "minute": 51,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "go_brothers_room",
+     "words": "I'm done tearing our rooms apart for something that isn't there.",
+     "audience": [],
+     "mode": "model",
+     "decided_at": [
+      51,
+      -1
+     ],
+     "said_at": [
+      51,
+      2
+     ],
+     "came_of_it": "went to the brothers room."
+    },
+    {
+     "minute": 51,
+     "who": "mara",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "model",
+     "decided_at": [
+      51,
+      -1
+     ],
+     "said_at": [
+      51,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 54,
+   "rooms": {
+    "kitchen": [],
+    "brothers_room": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 54,
+     "who": "daniel",
+     "room": "brothers_room",
+     "option": "reassure_leo",
+     "words": "I know I messed up earlier, Leo, but I'm going to sort things out for all of us.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      54,
+      -1
+     ],
+     "said_at": [
+      54,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 54,
+     "who": "elena",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "We are all right here together, nobody is going anywhere.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      54,
+      -1
+     ],
+     "said_at": [
+      54,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 54,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "ask_who",
+     "words": "Alright, so who actually took it?",
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      54,
+      -1
+     ],
+     "said_at": [
+      54,
+      2
+     ],
+     "came_of_it": "said to Daniel, Elena, Mara."
+    },
+    {
+     "minute": 54,
+     "who": "mara",
+     "room": "brothers_room",
+     "option": "accuse_daniel",
+     "words": "You're the one who admitted to taking it in the night, so stop acting like you're above us all.",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      54,
+      -1
+     ],
+     "said_at": [
+      54,
+      3
+     ],
+     "came_of_it": "said to Daniel, Elena, Leo."
+    }
+   ]
+  },
+  {
+   "minute": 57,
+   "rooms": {
+    "kitchen": [],
+    "brothers_room": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 57,
+     "who": "daniel",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "Just listen to me, I'm the oldest and I am going to make sure we get through this safely.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      57,
+      -1
+     ],
+     "said_at": [
+      57,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 57,
+     "who": "elena",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "Let's not turn on each other, we only have one another to rely on right now.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      57,
+      -1
+     ],
+     "said_at": [
+      57,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 57,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      57,
+      -1
+     ],
+     "said_at": [
+      57,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 57,
+     "who": "mara",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      57,
+      -1
+     ],
+     "said_at": [
+      57,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 60,
+   "rooms": {
+    "kitchen": [],
+    "brothers_room": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 60,
+     "who": "daniel",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "We are going to be fine, I promise you all, just trust me.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      60,
+      -1
+     ],
+     "said_at": [
+      60,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 60,
+     "who": "elena",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "We are not going to survive this if we keep tearing each other apart.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      60,
+      -1
+     ],
+     "said_at": [
+      60,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 60,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      60,
+      -1
+     ],
+     "said_at": [
+      60,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 60,
+     "who": "mara",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      60,
+      -1
+     ],
+     "said_at": [
+      60,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 63,
+   "rooms": {
+    "kitchen": [],
+    "brothers_room": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 63,
+     "who": "daniel",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "I know I messed up, but I am going to fix this and keep us all safe.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      63,
+      -1
+     ],
+     "said_at": [
+      63,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 63,
+     "who": "elena",
+     "room": "brothers_room",
+     "option": "reassure_daniel",
+     "words": "You don't have to carry this all by yourself, Daniel.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      63,
+      -1
+     ],
+     "said_at": [
+      63,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 63,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      63,
+      -1
+     ],
+     "said_at": [
+      63,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 63,
+     "who": "mara",
+     "room": "brothers_room",
+     "option": "accuse_daniel",
+     "words": "You can't just pretend nothing happened after admitting it, Daniel.",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      63,
+      -1
+     ],
+     "said_at": [
+      63,
+      3
+     ],
+     "came_of_it": "said to Daniel, Elena, Leo."
+    }
+   ]
+  },
+  {
+   "minute": 66,
+   "rooms": {
+    "kitchen": [],
+    "brothers_room": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 66,
+     "who": "daniel",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "I hear every one of you, and I am going to prove I can still lead us right.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      66,
+      -1
+     ],
+     "said_at": [
+      66,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 66,
+     "who": "elena",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "Please, we have to stop fighting right now or we won't make it through this.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      66,
+      -1
+     ],
+     "said_at": [
+      66,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 66,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "accuse_daniel",
+     "words": "Daniel, you're the one who keeps insisting you're in charge, so just admit you took the extra food.",
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      66,
+      -1
+     ],
+     "said_at": [
+      66,
+      2
+     ],
+     "came_of_it": "said to Daniel, Elena, Mara."
+    },
+    {
+     "minute": 66,
+     "who": "mara",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      66,
+      -1
+     ],
+     "said_at": [
+      66,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 69,
+   "rooms": {
+    "kitchen": [],
+    "brothers_room": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 69,
+     "who": "daniel",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "Just listen to me, we are going to figure this out together.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      69,
+      -1
+     ],
+     "said_at": [
+      69,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 69,
+     "who": "elena",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "Please, let's just breathe and stop turning on each other.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      69,
+      -1
+     ],
+     "said_at": [
+      69,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 69,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      69,
+      -1
+     ],
+     "said_at": [
+      69,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 69,
+     "who": "mara",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      69,
+      -1
+     ],
+     "said_at": [
+      69,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 72,
+   "rooms": {
+    "kitchen": [],
+    "brothers_room": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 72,
+     "who": "daniel",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "Just stay close to me, I promise I am going to make this right for all of us.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      72,
+      -1
+     ],
+     "said_at": [
+      72,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 72,
+     "who": "elena",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "We are still a family, and we are going to get through this together without tearing each other apart.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      72,
+      -1
+     ],
+     "said_at": [
+      72,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 72,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      72,
+      -1
+     ],
+     "said_at": [
+      72,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 72,
+     "who": "mara",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      72,
+      -1
+     ],
+     "said_at": [
+      72,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 75,
+   "rooms": {
+    "kitchen": [],
+    "brothers_room": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 75,
+     "who": "daniel",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "Just stay calm everyone, I am going to fix this and take care of us all.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      75,
+      -1
+     ],
+     "said_at": [
+      75,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 75,
+     "who": "elena",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "We are going to be alright, let's just stay calm with each other.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      75,
+      -1
+     ],
+     "said_at": [
+      75,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 75,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      75,
+      -1
+     ],
+     "said_at": [
+      75,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 75,
+     "who": "mara",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      75,
+      -1
+     ],
+     "said_at": [
+      75,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 78,
+   "rooms": {
+    "kitchen": [],
+    "brothers_room": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 78,
+     "who": "daniel",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "Just listen to me, I am going to figure this out and keep everyone safe.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      78,
+      -1
+     ],
+     "said_at": [
+      78,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 78,
+     "who": "elena",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "We are going to make it through this, just stay close to me.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      78,
+      -1
+     ],
+     "said_at": [
+      78,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 78,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      78,
+      -1
+     ],
+     "said_at": [
+      78,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 78,
+     "who": "mara",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      78,
+      -1
+     ],
+     "said_at": [
+      78,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 81,
+   "rooms": {
+    "kitchen": [],
+    "brothers_room": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 81,
+     "who": "daniel",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "We are going to be fine, I am watching over every single one of you.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      81,
+      -1
+     ],
+     "said_at": [
+      81,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 81,
+     "who": "elena",
+     "room": "brothers_room",
+     "option": "reassure_daniel",
+     "words": "It is alright Daniel, we all make mistakes when we are terrified.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      81,
+      -1
+     ],
+     "said_at": [
+      81,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 81,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      81,
+      -1
+     ],
+     "said_at": [
+      81,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 81,
+     "who": "mara",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      81,
+      -1
+     ],
+     "said_at": [
+      81,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 84,
+   "rooms": {
+    "kitchen": [],
+    "brothers_room": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 84,
+     "who": "daniel",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "I'm still here for you all, I promise I won't let anything bad happen to this family.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      84,
+      -1
+     ],
+     "said_at": [
+      84,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 84,
+     "who": "elena",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "We are still together, and that is all that matters right now.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      84,
+      -1
+     ],
+     "said_at": [
+      84,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 84,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      84,
+      -1
+     ],
+     "said_at": [
+      84,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 84,
+     "who": "mara",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      84,
+      -1
+     ],
+     "said_at": [
+      84,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 87,
+   "rooms": {
+    "kitchen": [],
+    "brothers_room": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 87,
+     "who": "daniel",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "Trust me, I am going to make sure we all get through this together.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      87,
+      -1
+     ],
+     "said_at": [
+      87,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 87,
+     "who": "elena",
+     "room": "brothers_room",
+     "option": "reassure_all",
+     "words": "We are going to be alright, we just need to hold on to each other.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      87,
+      -1
+     ],
+     "said_at": [
+      87,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 87,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      87,
+      -1
+     ],
+     "said_at": [
+      87,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 87,
+     "who": "mara",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      87,
+      -1
+     ],
+     "said_at": [
+      87,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  }
+ ],
+ "final_rooms": {
+  "kitchen": [],
+  "brothers_room": [
+   "daniel",
+   "elena",
+   "leo",
+   "mara"
+  ],
+  "back_room": [],
+  "bathroom": []
+ }
+}

@@ -48,3 +48,7 @@ crashlytics-build.properties
 
 # Test output
 /test-results.xml
+
+# Python (the LLM morning prototype)
+Prototypes/llm-morning/.venv/
+__pycache__/

@@ -1,0 +1,30 @@
+daniel_ate_it-seed1: model gemini-3.5-flash-lite, replay from cache only; cache cache\v3\gemini-3.5-flash-lite-daniel_ate_it-seed1.json holds 37 answers
+  min 00: model asked for 4; so far 0 live, 4 cached, 0 API requests
+  min 03: model asked for 4; so far 0 live, 8 cached, 0 API requests
+  min 06: model asked for 4; so far 0 live, 12 cached, 0 API requests
+  min 09: model asked for 4; so far 0 live, 16 cached, 0 API requests
+  min 12: model asked for 4; so far 0 live, 20 cached, 0 API requests
+  min 15: model asked for 4; so far 0 live, 24 cached, 0 API requests
+  min 18: model asked for 4; so far 0 live, 28 cached, 0 API requests
+  min 21: model asked for 4; so far 0 live, 32 cached, 0 API requests
+  min 24: model asked for 1; so far 0 live, 33 cached, 0 API requests
+  min 27: model asked for 1; so far 0 live, 34 cached, 0 API requests
+  min 39: model asked for 1; so far 0 live, 35 cached, 0 API requests
+  min 60: model asked for 1; so far 0 live, 36 cached, 0 API requests
+  min 81: model asked for 1; so far 0 live, 37 cached, 0 API requests
+
+wrote runs/v3/daniel_ate_it-seed1.replay.md
+  api_requests: 0
+  answers_live: 0
+  answers_from_cache: 37
+  model_decisions: 37
+  fallbacks: 0
+  routine_decisions: 83
+  lines_spoken: 23
+  inner_moments: 6
+  private_talks: 0
+  max_prompt_tokens_estimated: 1400
+  max_prompt_tokens_counted_by_api: 1359
+  run_seconds: 0.0
+  story_sha256: 265aa38cc89cd71ea0bafaf9e4f3e617d9853a352d0c50bbb518487814516c73
+  byte for byte against runs\v3\daniel_ate_it-seed1.md: IDENTICAL

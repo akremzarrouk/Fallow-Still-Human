@@ -1,0 +1,20 @@
+{
+ "model": "gemma-4-31b-it",
+ "scenario": "daniel_ate_it",
+ "seed": 5,
+ "replay": false,
+ "api_requests": 45,
+ "answers_live": 14,
+ "answers_from_cache": 0,
+ "model_decisions": 14,
+ "fallbacks": 0,
+ "routine_decisions": 106,
+ "lines_spoken": 8,
+ "inner_moments": 7,
+ "private_talks": 0,
+ "max_prompt_tokens_estimated": 1399,
+ "max_prompt_tokens_counted_by_api": 1357,
+ "run_seconds": 1272.3,
+ "story": "runs/v5/daniel_ate_it-gemma-seed5.md",
+ "story_sha256": "3c2c36bd44ba171f4b51392e428db3fbf42e4d4000f18dc35e17a5341e50a89e"
+}

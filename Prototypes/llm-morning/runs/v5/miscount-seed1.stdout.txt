@@ -1,0 +1,36 @@
+miscount-seed1: model gemini-3.5-flash-lite, fresh; cache cache\v5\gemini-3.5-flash-lite-miscount-seed1.json holds 0 answers
+  min 00: model asked for 4; so far 4 live, 0 cached, 4 API requests
+  min 03: model asked for 4; so far 8 live, 0 cached, 8 API requests
+  min 06: model asked for 4; so far 12 live, 0 cached, 12 API requests
+  min 09: model asked for 4; so far 16 live, 0 cached, 16 API requests
+  min 12: model asked for 4; so far 20 live, 0 cached, 20 API requests
+  min 15: model asked for 4; so far 24 live, 0 cached, 24 API requests
+  min 18: model asked for 3; so far 27 live, 0 cached, 27 API requests
+  min 21: model asked for 2; so far 29 live, 0 cached, 29 API requests
+  min 24: model asked for 3; so far 32 live, 0 cached, 32 API requests
+  min 27: model asked for 1; so far 33 live, 0 cached, 33 API requests
+  min 30: model asked for 4; so far 37 live, 0 cached, 37 API requests
+  min 33: model asked for 4; so far 41 live, 0 cached, 41 API requests
+  min 36: model asked for 4; so far 45 live, 0 cached, 45 API requests
+  min 39: model asked for 4; so far 49 live, 0 cached, 49 API requests
+  min 42: model asked for 2; so far 51 live, 0 cached, 51 API requests
+  min 51: model asked for 1; so far 52 live, 0 cached, 52 API requests
+  min 54: model asked for 1; so far 53 live, 0 cached, 53 API requests
+  min 63: model asked for 1; so far 54 live, 0 cached, 54 API requests
+  min 66: model asked for 1; so far 55 live, 0 cached, 55 API requests
+  min 75: model asked for 1; so far 56 live, 0 cached, 56 API requests
+
+wrote runs/v5/miscount-seed1.md
+  api_requests: 56
+  answers_live: 56
+  answers_from_cache: 0
+  model_decisions: 56
+  fallbacks: 0
+  routine_decisions: 64
+  lines_spoken: 41
+  inner_moments: 8
+  private_talks: 0
+  max_prompt_tokens_estimated: 1400
+  max_prompt_tokens_counted_by_api: 1374
+  run_seconds: 405.7
+  story_sha256: 17216513e9b2ea9017a76ec94f1f02ba93c0f85aac7c4d67f8c27295283ac4c3

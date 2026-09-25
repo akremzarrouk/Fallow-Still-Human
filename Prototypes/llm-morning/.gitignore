@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.tmp
+runs/fake/
+cache/fake-*
+runs/v2/fake/
+cache/v2/fake-*
+runs/v3/fake/
+cache/v3/fake-*
+runs/v4/fake/
+cache/v4/fake-*
+runs/v5/fake/
+cache/v5/fake-*

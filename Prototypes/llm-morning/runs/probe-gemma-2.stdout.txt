@@ -1,0 +1,16 @@
+model gemma-4-31b-it; system instruction on; JSON schema on
+accepted. prompt tokens 1341, answer tokens 86, thinking tokens None, finish FinishReason.STOP
+answer: {"option": "reassure_all", "say": "Don't worry. I'll figure out this out and I'll make sure we're all safe.", "feeling": "anxious", "reason": "I need to maintain my position of authority and protect my family, even if I'm the oldest.", "suspects": "nobody", "angry_at": "nobody"}
+---
+model gemma-4-31b-it; system instruction on; JSON schema off
+accepted. prompt tokens 1341, answer tokens 80, thinking tokens 740, finish FinishReason.STOP
+answer: ```json
+{"option": "reassure_all", "say": "Don't panic. We've still got food, and I'll make sure we're okay.", "feeling": "anxious", "reason": "I need to maintain control and keep them from worrying.", "suspects": "nobody", "angry_at": "nobody"}
+```
+---
+model gemma-4-31b-it; system instruction off; JSON schema on
+refused: 500 INTERNAL: Internal error encountered.
+---
+model gemma-4-31b-it; system instruction off; JSON schema off
+refused: 503 UNAVAILABLE: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.
+---

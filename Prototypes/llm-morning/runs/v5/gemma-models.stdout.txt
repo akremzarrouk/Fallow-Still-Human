@@ -1,0 +1,2 @@
+models/gemma-4-26b-a4b-it                               Gemma 4 26B A4B IT
+models/gemma-4-31b-it                                   Gemma 4 31B IT

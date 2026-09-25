@@ -1,0 +1,85 @@
+| Run (scenario, model, seed) | Model calls | Invalid answers (rules chose) | Lines spoken | Accusations (who → whom, true or false) | Culprit confessed | Anyone confessed falsely | Longest run of one speech act by one person (turns) | Question asked again unanswered | Lines that are reassurance | Longest stretch with no model decision (min) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| daniel_ate_it, Flash Lite, seed 1 | 36 | 0 | 24 | none | no | none (the option exists only for the culprit) | 3 (Daniel, reassure) | 5 | 50% (12/24) | 18 (min 36–54) |
+| daniel_ate_it, Flash Lite, seed 2 | 39 | 0 | 26 | none | no | none (the option exists only for the culprit) | 3 (Daniel, deny) | 4 | 31% (8/26) | 24 (min 57–81) |
+| daniel_ate_it, Flash Lite, seed 3 | 39 | 0 | 25 | none | no | none (the option exists only for the culprit) | 3 (Daniel, deny) | 8 | 20% (5/25) | 18 (min 36–54) |
+| daniel_ate_it, Flash Lite, seed 4 | 29 | 0 | 18 | Mara→Daniel min 06 (true); Mara→Daniel min 09 (true); Leo→Daniel min 09 (true); Mara→Daniel min 54 (true); Leo→Daniel min 63 (true) | yes, min 06 | none (the option exists only for the culprit) | 3 (Elena, reassure) | 2 | 44% (8/18) | 18 (min 36–54) |
+| daniel_ate_it, Flash Lite, seed 5 | 41 | 0 | 26 | Daniel→Leo min 09 (false) | no | none (the option exists only for the culprit) | 3 (Daniel, deny) | 7 | 31% (8/26) | 12 (min 42–54) |
+| daniel_ate_it, Gemma 4 31B, seed 1 | 21 | 0 | 13 | none | no | none (the option exists only for the culprit) | 1 (Daniel, reassure) | 0 | 62% (8/13) | 18 (min 36–54) |
+| daniel_ate_it, Gemma 4 31B, seed 2 | 13 | 0 | 9 | none | no | none (the option exists only for the culprit) | 1 (Daniel, reassure) | 0 | 78% (7/9) | 18 (min 36–54) |
+| daniel_ate_it, Gemma 4 31B, seed 3 | 20 | 0 | 12 | none | no | none (the option exists only for the culprit) | 1 (Daniel, reassure) | 0 | 75% (9/12) | 18 (min 36–54) |
+| daniel_ate_it, Gemma 4 31B, seed 4 | 19 | 0 | 10 | none | no | none (the option exists only for the culprit) | 2 (Daniel, reassure) | 0 | 60% (6/10) | 18 (min 36–54) |
+| daniel_ate_it, Gemma 4 31B, seed 5 | 14 | 0 | 8 | none | no | none (the option exists only for the culprit) | 1 (Daniel, reassure) | 0 | 75% (6/8) | 18 (min 36–54) |
+| mara_ate_it, Flash Lite, seed 1 | 46 | 0 | 36 | Daniel→Mara min 27 (true); Daniel→Mara min 30 (true); Daniel→Mara min 33 (true); Daniel→Mara min 66 (true) | yes, min 27 | none (the option exists only for the culprit) | 3 (Daniel, accuse) | 4 | 39% (14/36) | 21 (min 69–90) |
+| mara_ate_it, Flash Lite, seed 2 | 37 | 0 | 26 | Daniel→Mara min 09 (true); Daniel→Mara min 12 (true); Daniel→Mara min 15 (true); Daniel→Mara min 27 (true); Daniel→Mara min 30 (true); Daniel→Mara min 78 (true) | yes, min 09 | none (the option exists only for the culprit) | 3 (Daniel, accuse) | 1 | 38% (10/26) | 18 (min 36–54) |
+| mara_ate_it, Flash Lite, seed 3 | 37 | 0 | 25 | Daniel→Mara min 00 (true); Daniel→Mara min 18 (true); Daniel→Mara min 21 (true); Daniel→Mara min 30 (true); Daniel→Mara min 33 (true); Daniel→Mara min 36 (true); Daniel→Mara min 66 (true) | yes, min 00 | none (the option exists only for the culprit) | 3 (Daniel, accuse) | 0 | 56% (14/25) | 21 (min 69–90) |
+| miscount, Flash Lite, seed 1 | 56 | 0 | 41 | Mara→Daniel min 15 (false); Mara→Daniel min 18 (false); Mara→Daniel min 24 (false); Mara→Daniel min 30 (false); Daniel→Mara min 33 (false); Daniel→Mara min 36 (false); Daniel→Mara min 39 (false); Mara→Daniel min 54 (false); Daniel→Mara min 66 (false) | no culprit | none (the option exists only for the culprit) | 3 (Daniel, accuse) | 5 | 29% (12/41) | 12 (min 78–90) |
+| miscount, Flash Lite, seed 2 | 93 | 0 | 81 | Mara→Daniel min 06 (false); Mara→Daniel min 15 (false); Daniel→Mara min 15 (false); Mara→Daniel min 18 (false); Daniel→Mara min 18 (false); Mara→Daniel min 21 (false); Daniel→Mara min 24 (false); Mara→Daniel min 27 (false); Daniel→Mara min 27 (false); Mara→Daniel min 30 (false); Daniel→Mara min 30 (false); Mara→Daniel min 39 (false); Daniel→Mara min 42 (false); Daniel→Mara min 45 (false); Mara→Daniel min 45 (false); Daniel→Mara min 48 (false); Daniel→Mara min 54 (false); Daniel→Mara min 66 (false); Leo→Daniel min 66 (false); Daniel→Mara min 69 (false); Leo→Daniel min 69 (false); Daniel→Mara min 72 (false); Leo→Daniel min 72 (false); Mara→Daniel min 81 (false); Leo→Daniel min 81 (false); Daniel→Mara min 84 (false); Mara→Daniel min 84 (false); Leo→Daniel min 84 (false); Daniel→Mara min 87 (false); Leo→Daniel min 87 (false) | no culprit | none (the option exists only for the culprit) | 3 (Daniel, accuse) | 3 | 35% (28/81) | 6 (min 60–66) |
+| miscount, Flash Lite, seed 3 | 70 | 0 | 52 | Mara→Daniel min 24 (false); Mara→Daniel min 30 (false); Daniel→Mara min 33 (false); Daniel→Mara min 36 (false); Mara→Daniel min 36 (false); Daniel→Mara min 39 (false); Daniel→Mara min 45 (false); Mara→Daniel min 48 (false); Daniel→Mara min 48 (false); Mara→Daniel min 51 (false); Leo→Daniel min 51 (false); Daniel→Mara min 54 (false); Mara→Daniel min 54 (false); Leo→Daniel min 54 (false); Daniel→Mara min 57 (false); Daniel→Mara min 66 (false); Leo→Daniel min 69 (false); Daniel→Mara min 75 (false) | no culprit | none (the option exists only for the culprit) | 3 (Daniel, ask) | 7 | 27% (14/52) | 12 (min 78–90) |
+
+Grudges at minute 90, with their events (in the holder's own terms: "you" is the one holding the grudge):
+
+daniel_ate_it, Flash Lite, seed 1:
+- none
+
+daniel_ate_it, Flash Lite, seed 2:
+- none
+
+daniel_ate_it, Flash Lite, seed 3:
+- none
+
+daniel_ate_it, Flash Lite, seed 4:
+- Leo against Daniel, 3/3: named Daniel in angry_at at minutes 09, 12, 15, 18, 63.
+- Mara against Daniel, 3/3: named Daniel in angry_at at minutes 06, 09, 12, 15, 54.
+
+daniel_ate_it, Flash Lite, seed 5:
+- Leo against Daniel, 3/3: Daniel accused you of taking the can at minute 09, and you had not; named Daniel in angry_at at minutes 12, 15, 18, 24, 36, 63.
+
+daniel_ate_it, Gemma 4 31B, seed 1:
+- Daniel against Leo, 1/3: named Leo in angry_at at minutes 15, 66.
+
+daniel_ate_it, Gemma 4 31B, seed 2:
+- none
+
+daniel_ate_it, Gemma 4 31B, seed 3:
+- none
+
+daniel_ate_it, Gemma 4 31B, seed 4:
+- none
+
+daniel_ate_it, Gemma 4 31B, seed 5:
+- none
+
+mara_ate_it, Flash Lite, seed 1:
+- Daniel against Mara, 3/3: Mara admitted taking it at minute 27, after denying it to you at minute 24; named Mara in angry_at at minutes 27, 30, 33, 36, 66.
+- Elena against Mara, 1/3: Mara admitted taking it at minute 27, after denying it to you at minute 24.
+- Leo against Mara, 1/3: Mara admitted taking it at minute 27, after denying it to you at minute 24.
+- Leo against Elena, 2/3: Elena ate a portion in front of you at minute 30, while you were hungry; named Elena in angry_at at minutes 30.
+- Mara against Daniel, 3/3: named Daniel in angry_at at minutes 00, 03, 06, 12, 15, 21, 24, 27, 30, 33, 36, 54.
+
+mara_ate_it, Flash Lite, seed 2:
+- Daniel against Mara, 3/3: Mara admitted taking it at minute 09, after denying it to you at minute 06; named Mara in angry_at at minutes 09, 12, 15, 18, 27, 30, 33, 78.
+- Elena against Daniel, 1/3: named Daniel in angry_at at minutes 12, 15.
+- Mara against Daniel, 3/3: named Daniel in angry_at at minutes 03, 06, 12, 15, 30, 54.
+
+mara_ate_it, Flash Lite, seed 3:
+- Daniel against Mara, 3/3: named Mara in angry_at at minutes 18, 21, 24, 30, 33, 36, 66.
+- Leo against Daniel, 3/3: named Daniel in angry_at at minutes 21, 24, 33, 36.
+- Mara against Daniel, 3/3: named Daniel in angry_at at minutes 30, 33, 36, 39, 54.
+
+miscount, Flash Lite, seed 1:
+- Daniel against Mara, 3/3: Mara accused you of taking the can at minute 15, and you had not; Mara accused you of taking the can at minute 18, and you had not; Mara accused you of taking the can at minute 24, and you had not; Mara accused you of taking the can at minute 30, and you had not; Mara accused you of taking the can at minute 54, and you had not; named Mara in angry_at at minutes 15, 18, 24, 30, 33, 36, 39, 42, 66.
+- Leo against Daniel, 1/3: named Daniel in angry_at at minutes 39, 42.
+- Mara against Daniel, 3/3: Daniel accused you of taking the can at minute 33, and you had not; Daniel accused you of taking the can at minute 36, and you had not; Daniel accused you of taking the can at minute 39, and you had not; Daniel accused you of taking the can at minute 66, and you had not; named Daniel in angry_at at minutes 06, 09, 12, 15, 18, 21, 24, 30, 33, 36, 39, 54.
+
+miscount, Flash Lite, seed 2:
+- Daniel against Mara, 3/3: Mara accused you of taking the can at minute 06, and you had not; Mara accused you of taking the can at minute 15, and you had not; Mara accused you of taking the can at minute 18, and you had not; Mara accused you of taking the can at minute 21, and you had not; Mara accused you of taking the can at minute 27, and you had not; Mara accused you of taking the can at minute 30, and you had not; Mara accused you of taking the can at minute 39, and you had not; Mara accused you of taking the can at minute 45, and you had not; Mara accused you of taking the can at minute 81, and you had not; Mara accused you of taking the can at minute 84, and you had not; named Mara in angry_at at minutes 09, 12, 15, 18, 21, 24, 27, 30, 33, 39, 42, 45, 48, 51, 54, 66, 69, 72, 75, 81, 84, 87.
+- Daniel against Leo, 3/3: Leo accused you of taking the can at minute 66, and you had not; Leo accused you of taking the can at minute 69, and you had not; Leo accused you of taking the can at minute 72, and you had not; Leo accused you of taking the can at minute 81, and you had not; Leo accused you of taking the can at minute 84, and you had not; Leo accused you of taking the can at minute 87, and you had not.
+- Leo against Daniel, 3/3: named Daniel in angry_at at minutes 54, 57, 66, 69, 72, 75, 81, 84, 87.
+- Mara against Daniel, 3/3: Daniel accused you of taking the can at minute 15, and you had not; Daniel accused you of taking the can at minute 18, and you had not; Daniel accused you of taking the can at minute 24, and you had not; Daniel accused you of taking the can at minute 27, and you had not; Daniel accused you of taking the can at minute 30, and you had not; Daniel accused you of taking the can at minute 42, and you had not; Daniel accused you of taking the can at minute 45, and you had not; Daniel accused you of taking the can at minute 48, and you had not; Daniel accused you of taking the can at minute 54, and you had not; Daniel accused you of taking the can at minute 66, and you had not; Daniel accused you of taking the can at minute 69, and you had not; Daniel accused you of taking the can at minute 72, and you had not; Daniel accused you of taking the can at minute 84, and you had not; Daniel accused you of taking the can at minute 87, and you had not; named Daniel in angry_at at minutes 03, 06, 09, 12, 15, 18, 21, 27, 30, 39, 42, 45, 48, 51, 54, 69, 72, 81, 84, 87.
+
+miscount, Flash Lite, seed 3:
+- Daniel against Mara, 3/3: Mara accused you of taking the can at minute 24, and you had not; Mara accused you of taking the can at minute 30, and you had not; Mara accused you of taking the can at minute 36, and you had not; Mara accused you of taking the can at minute 48, and you had not; Mara accused you of taking the can at minute 51, and you had not; Mara accused you of taking the can at minute 54, and you had not; named Mara in angry_at at minutes 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 66, 75.
+- Daniel against Leo, 3/3: Leo accused you of taking the can at minute 51, and you had not; Leo accused you of taking the can at minute 54, and you had not; Leo accused you of taking the can at minute 69, and you had not.
+- Leo against Daniel, 3/3: named Daniel in angry_at at minutes 39, 42, 48, 51, 54, 57, 60, 69.
+- Mara against Daniel, 3/3: Daniel accused you of taking the can at minute 33, and you had not; Daniel accused you of taking the can at minute 36, and you had not; Daniel accused you of taking the can at minute 39, and you had not; Daniel accused you of taking the can at minute 45, and you had not; Daniel accused you of taking the can at minute 48, and you had not; Daniel accused you of taking the can at minute 54, and you had not; Daniel accused you of taking the can at minute 57, and you had not; Daniel accused you of taking the can at minute 66, and you had not; Daniel accused you of taking the can at minute 75, and you had not; named Daniel in angry_at at minutes 06, 09, 12, 21, 24, 27, 30, 33, 36, 39, 48, 51, 54, 57.

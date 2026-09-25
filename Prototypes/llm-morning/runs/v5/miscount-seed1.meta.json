@@ -1,0 +1,20 @@
+{
+ "model": "gemini-3.5-flash-lite",
+ "scenario": "miscount",
+ "seed": 1,
+ "replay": false,
+ "api_requests": 56,
+ "answers_live": 56,
+ "answers_from_cache": 0,
+ "model_decisions": 56,
+ "fallbacks": 0,
+ "routine_decisions": 64,
+ "lines_spoken": 41,
+ "inner_moments": 8,
+ "private_talks": 0,
+ "max_prompt_tokens_estimated": 1400,
+ "max_prompt_tokens_counted_by_api": 1374,
+ "run_seconds": 405.7,
+ "story": "runs/v5/miscount-seed1.md",
+ "story_sha256": "17216513e9b2ea9017a76ec94f1f02ba93c0f85aac7c4d67f8c27295283ac4c3"
+}

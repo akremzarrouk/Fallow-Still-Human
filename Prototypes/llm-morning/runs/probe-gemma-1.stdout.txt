@@ -1,0 +1,2 @@
+model gemma-4-31b-it; system instruction on; JSON schema on
+refused: 500 INTERNAL: Internal error encountered.

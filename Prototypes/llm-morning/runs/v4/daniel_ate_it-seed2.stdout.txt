@@ -1,0 +1,42 @@
+daniel_ate_it-seed2: model gemini-3.5-flash-lite, fresh; cache cache\v4\gemini-3.5-flash-lite-daniel_ate_it-seed2.json holds 0 answers
+  min 00: model asked for 4; so far 4 live, 0 cached, 4 API requests
+  min 03: model asked for 4; so far 8 live, 0 cached, 8 API requests
+  min 06: model asked for 3; so far 11 live, 0 cached, 11 API requests
+  min 09: model asked for 4; so far 15 live, 0 cached, 15 API requests
+
+stopped: the daily request quota for this model is used up.
+Answers received so far (18) are kept in cache\v4\gemini-3.5-flash-lite-daniel_ate_it-seed2.json.
+To resume, run the same command again once the limit has passed (the free daily quota resets at midnight Pacific time): python morning.py --seed 2
+Cached answers are reused, so only the prompts not yet answered are sent.
+--- resumed at 12:44 UTC, after the daily quota reset at 07:00 UTC ---
+daniel_ate_it-seed2: model gemini-3.5-flash-lite, fresh; cache cache\v4\gemini-3.5-flash-lite-daniel_ate_it-seed2.json holds 18 answers
+  min 00: model asked for 4; so far 0 live, 4 cached, 0 API requests
+  min 03: model asked for 4; so far 0 live, 8 cached, 0 API requests
+  min 06: model asked for 3; so far 0 live, 11 cached, 0 API requests
+  min 09: model asked for 4; so far 0 live, 15 cached, 0 API requests
+  min 12: model asked for 4; so far 1 live, 18 cached, 1 API requests
+  min 15: model asked for 4; so far 5 live, 18 cached, 5 API requests
+  min 18: model asked for 3; so far 8 live, 18 cached, 8 API requests
+  min 24: model asked for 3; so far 11 live, 18 cached, 11 API requests
+  min 27: model asked for 2; so far 13 live, 18 cached, 13 API requests
+  min 30: model asked for 2; so far 15 live, 18 cached, 15 API requests
+  min 33: model asked for 2; so far 17 live, 18 cached, 17 API requests
+  min 48: model asked for 1; so far 18 live, 18 cached, 18 API requests
+  min 51: model asked for 1; so far 19 live, 18 cached, 19 API requests
+  min 54: model asked for 1; so far 20 live, 18 cached, 20 API requests
+  min 81: model asked for 1; so far 21 live, 18 cached, 21 API requests
+
+wrote runs/v4/daniel_ate_it-seed2.md
+  api_requests: 21
+  answers_live: 21
+  answers_from_cache: 18
+  model_decisions: 39
+  fallbacks: 0
+  routine_decisions: 81
+  lines_spoken: 26
+  inner_moments: 4
+  private_talks: 0
+  max_prompt_tokens_estimated: 1400
+  max_prompt_tokens_counted_by_api: 1371
+  run_seconds: 91.4
+  story_sha256: bb7315feb3db3f0208e3aaba34fe24e2418ca863aa2d985c9a866598b3d8cad2

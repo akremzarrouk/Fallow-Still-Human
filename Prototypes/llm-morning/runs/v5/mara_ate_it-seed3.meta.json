@@ -1,0 +1,20 @@
+{
+ "model": "gemini-3.5-flash-lite",
+ "scenario": "mara_ate_it",
+ "seed": 3,
+ "replay": false,
+ "api_requests": 37,
+ "answers_live": 37,
+ "answers_from_cache": 0,
+ "model_decisions": 37,
+ "fallbacks": 0,
+ "routine_decisions": 83,
+ "lines_spoken": 25,
+ "inner_moments": 11,
+ "private_talks": 0,
+ "max_prompt_tokens_estimated": 1400,
+ "max_prompt_tokens_counted_by_api": 1388,
+ "run_seconds": 312.8,
+ "story": "runs/v5/mara_ate_it-seed3.md",
+ "story_sha256": "498e8f0fff9da5fd8c7b18c7deb021a8281cc90c2e98f9dccd5a2e416de713e7"
+}

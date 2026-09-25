@@ -1,0 +1,69 @@
+miscount-seed2: model gemini-3.5-flash-lite, fresh; cache cache\v5\gemini-3.5-flash-lite-miscount-seed2.json holds 0 answers
+  min 00: model asked for 4; so far 4 live, 0 cached, 4 API requests
+  min 03: model asked for 4; so far 8 live, 0 cached, 8 API requests
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\morning.py", line 146, in <module>
+    main()
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\morning.py", line 140, in main
+    _, code = run(args.seed, replay=args.replay, fake=args.fake, config_path=args.config,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\morning.py", line 66, in run
+    morning.turn(t)
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\world.py", line 678, in turn
+    d = self.decide(p, t)
+        ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\world.py", line 789, in decide
+    choice, why = self.ask_model(p, t, opts, d)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\world.py", line 739, in ask_model
+    text = self.oracle.ask(SYSTEM, prompt)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\gemini.py", line 250, in ask
+    self.cache.put(key, prompt, text, tokens)
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\gemini.py", line 209, in put
+    os.replace(tmp, self.path)
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\Akrem\\Desktop\\Projects\\Fallow\\Prototypes\\llm-morning\\cache\\v5\\gemini-3.5-flash-lite-miscount-seed2.json.tmp' -> 'C:\\Users\\Akrem\\Desktop\\Projects\\Fallow\\Prototypes\\llm-morning\\cache\\v5\\gemini-3.5-flash-lite-miscount-seed2.json'
+--- resumed at 13:53 UTC after the crash above (a Windows file lock on the cache file); the 8 cached answers are reused ---
+miscount-seed2: model gemini-3.5-flash-lite, fresh; cache cache\v5\gemini-3.5-flash-lite-miscount-seed2.json holds 9 answers
+  min 00: model asked for 4; so far 0 live, 4 cached, 0 API requests
+  min 03: model asked for 4; so far 0 live, 8 cached, 0 API requests
+  min 06: model asked for 3; so far 2 live, 9 cached, 2 API requests
+  min 09: model asked for 4; so far 6 live, 9 cached, 6 API requests
+  min 12: model asked for 3; so far 9 live, 9 cached, 9 API requests
+  min 15: model asked for 4; so far 13 live, 9 cached, 13 API requests
+  min 18: model asked for 4; so far 17 live, 9 cached, 17 API requests
+  min 21: model asked for 4; so far 21 live, 9 cached, 21 API requests
+  min 24: model asked for 2; so far 23 live, 9 cached, 23 API requests
+  min 27: model asked for 4; so far 27 live, 9 cached, 27 API requests
+  min 30: model asked for 4; so far 31 live, 9 cached, 31 API requests
+  min 33: model asked for 1; so far 32 live, 9 cached, 32 API requests
+  min 36: model asked for 2; so far 34 live, 9 cached, 34 API requests
+  min 39: model asked for 4; so far 38 live, 9 cached, 38 API requests
+  min 42: model asked for 4; so far 42 live, 9 cached, 42 API requests
+  min 45: model asked for 4; so far 46 live, 9 cached, 46 API requests
+  min 48: model asked for 4; so far 50 live, 9 cached, 50 API requests
+  min 51: model asked for 4; so far 54 live, 9 cached, 54 API requests
+  min 54: model asked for 4; so far 58 live, 9 cached, 58 API requests
+  min 57: model asked for 1; so far 59 live, 9 cached, 59 API requests
+  min 66: model asked for 2; so far 61 live, 9 cached, 61 API requests
+  min 69: model asked for 4; so far 65 live, 9 cached, 65 API requests
+  min 72: model asked for 4; so far 69 live, 9 cached, 69 API requests
+  min 75: model asked for 3; so far 72 live, 9 cached, 72 API requests
+  min 81: model asked for 4; so far 76 live, 9 cached, 76 API requests
+  min 84: model asked for 4; so far 80 live, 9 cached, 80 API requests
+  min 87: model asked for 4; so far 84 live, 9 cached, 84 API requests
+
+wrote runs/v5/miscount-seed2.md
+  api_requests: 84
+  answers_live: 84
+  answers_from_cache: 9
+  model_decisions: 93
+  fallbacks: 0
+  routine_decisions: 27
+  lines_spoken: 81
+  inner_moments: 9
+  private_talks: 0
+  max_prompt_tokens_estimated: 1400
+  max_prompt_tokens_counted_by_api: 1381
+  run_seconds: 1020.9
+  story_sha256: 776c75c9243d607aab6ce68d8c845faa294d5a86b94d15feccec14b4c4fc13ce

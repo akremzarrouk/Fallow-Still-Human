@@ -1,0 +1,45 @@
+daniel_ate_it-seed1: model gemini-3.5-flash-lite, replay from cache only; cache cache\gemini-3.5-flash-lite-daniel_ate_it-seed1.json holds 120 answers
+  min 00: model asked for 4; so far 0 live, 4 cached, 0 API requests
+  min 03: model asked for 4; so far 0 live, 8 cached, 0 API requests
+  min 06: model asked for 4; so far 0 live, 12 cached, 0 API requests
+  min 09: model asked for 4; so far 0 live, 16 cached, 0 API requests
+  min 12: model asked for 4; so far 0 live, 20 cached, 0 API requests
+  min 15: model asked for 4; so far 0 live, 24 cached, 0 API requests
+  min 18: model asked for 4; so far 0 live, 28 cached, 0 API requests
+  min 21: model asked for 4; so far 0 live, 32 cached, 0 API requests
+  min 24: model asked for 4; so far 0 live, 36 cached, 0 API requests
+  min 27: model asked for 4; so far 0 live, 40 cached, 0 API requests
+  min 30: model asked for 4; so far 0 live, 44 cached, 0 API requests
+  min 33: model asked for 4; so far 0 live, 48 cached, 0 API requests
+  min 36: model asked for 4; so far 0 live, 52 cached, 0 API requests
+  min 39: model asked for 4; so far 0 live, 56 cached, 0 API requests
+  min 42: model asked for 4; so far 0 live, 60 cached, 0 API requests
+  min 45: model asked for 4; so far 0 live, 64 cached, 0 API requests
+  min 48: model asked for 4; so far 0 live, 68 cached, 0 API requests
+  min 51: model asked for 4; so far 0 live, 72 cached, 0 API requests
+  min 54: model asked for 4; so far 0 live, 76 cached, 0 API requests
+  min 57: model asked for 4; so far 0 live, 80 cached, 0 API requests
+  min 60: model asked for 4; so far 0 live, 84 cached, 0 API requests
+  min 63: model asked for 4; so far 0 live, 88 cached, 0 API requests
+  min 66: model asked for 4; so far 0 live, 92 cached, 0 API requests
+  min 69: model asked for 4; so far 0 live, 96 cached, 0 API requests
+  min 72: model asked for 4; so far 0 live, 100 cached, 0 API requests
+  min 75: model asked for 4; so far 0 live, 104 cached, 0 API requests
+  min 78: model asked for 4; so far 0 live, 108 cached, 0 API requests
+  min 81: model asked for 4; so far 0 live, 112 cached, 0 API requests
+  min 84: model asked for 4; so far 0 live, 116 cached, 0 API requests
+  min 87: model asked for 4; so far 0 live, 120 cached, 0 API requests
+
+wrote runs/daniel_ate_it-seed1.replay.md
+  api_requests: 0
+  answers_live: 0
+  answers_from_cache: 120
+  model_decisions: 120
+  fallbacks: 0
+  routine_decisions: 0
+  lines_spoken: 76
+  max_prompt_tokens_estimated: 1250
+  max_prompt_tokens_counted_by_api: 1252
+  run_seconds: 0.1
+  story_sha256: 5531dffb1da7aa1bd487a23f9a14adb0606389037f286b029e1b4f17ece41e3b
+  byte for byte against runs\daniel_ate_it-seed1.md: IDENTICAL

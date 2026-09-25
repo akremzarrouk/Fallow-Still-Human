@@ -1,0 +1,50 @@
+daniel_ate_it-gemma-seed1: model gemma-4-31b-it, fresh; cache cache\v5\gemma-4-31b-it-daniel_ate_it-gemma-seed1.json holds 0 answers
+    [500 INTERNAL] waiting 5s, retry 1/6
+  min 00: model asked for 4; so far 4 live, 0 cached, 5 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 10s, retry 2/6
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+    [500 INTERNAL] waiting 5s, retry 1/6
+  min 15: model asked for 4; so far 8 live, 0 cached, 14 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+    [500 INTERNAL] waiting 20s, retry 3/6
+  min 18: model asked for 4; so far 12 live, 0 cached, 23 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+    [503 UNAVAILABLE] waiting 20s, retry 3/6
+  min 21: model asked for 2; so far 14 live, 0 cached, 28 API requests
+  min 30: model asked for 1; so far 15 live, 0 cached, 29 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+  min 33: model asked for 1; so far 16 live, 0 cached, 32 API requests
+  min 54: model asked for 1; so far 17 live, 0 cached, 33 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 63: model asked for 1; so far 18 live, 0 cached, 35 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 66: model asked for 1; so far 19 live, 0 cached, 37 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+    [503 UNAVAILABLE] waiting 20s, retry 3/6
+    [500 INTERNAL] waiting 40s, retry 4/6
+    [500 INTERNAL] waiting 80s, retry 5/6
+    [500 INTERNAL] waiting 5s, retry 1/6
+  min 75: model asked for 2; so far 21 live, 0 cached, 45 API requests
+
+wrote runs/v5/daniel_ate_it-gemma-seed1.md
+  api_requests: 45
+  answers_live: 21
+  answers_from_cache: 0
+  model_decisions: 21
+  fallbacks: 0
+  routine_decisions: 99
+  lines_spoken: 13
+  inner_moments: 8
+  private_talks: 0
+  max_prompt_tokens_estimated: 1397
+  max_prompt_tokens_counted_by_api: 1368
+  run_seconds: 1122.0
+  story_sha256: a564d9d71f5e6b2c2d19209e65188c5d1d3d62085428518692572901bd9c385c

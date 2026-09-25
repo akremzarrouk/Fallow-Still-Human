@@ -1,0 +1,11 @@
+**Seed 2 ran in two parts.**
+- At 02:52 UTC the free daily quota ran out at seed 2's 19th request, which was refused. The morning stopped cleanly with 18 answers cached.
+- My runner was meant to resume after the 07:00 UTC reset, but it only checked a 07:05 to 12:00 UTC window, and it never resumed (the machine appears to have been asleep through that window).
+- At 12:43 UTC I stopped it by its task ID and resumed seed 2 by hand. The run reused the 18 cached answers and asked for 21 more: 39 model calls for the morning, under the 150 cap, which counts cached answers too.
+- I then ran seeds 3 to 5.
+
+**Run times**: seed 1 159 s; seed 2 91 s after the resume; seeds 3, 4 and 5: 172, 127 and 182 s.
+
+**Requests per Pacific-time quota day**:
+- First day: 444 before this step, 36 for seed 1 and 19 for seed 2.
+- Second day: 21 + 39 + 29 + 41 = 130.

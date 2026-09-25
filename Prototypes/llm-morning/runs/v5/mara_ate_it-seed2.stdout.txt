@@ -1,0 +1,30 @@
+mara_ate_it-seed2: model gemini-3.5-flash-lite, fresh; cache cache\v5\gemini-3.5-flash-lite-mara_ate_it-seed2.json holds 0 answers
+  min 00: model asked for 4; so far 4 live, 0 cached, 4 API requests
+  min 03: model asked for 4; so far 8 live, 0 cached, 8 API requests
+  min 06: model asked for 3; so far 11 live, 0 cached, 11 API requests
+  min 09: model asked for 4; so far 15 live, 0 cached, 15 API requests
+  min 12: model asked for 4; so far 19 live, 0 cached, 19 API requests
+  min 15: model asked for 4; so far 23 live, 0 cached, 23 API requests
+  min 18: model asked for 2; so far 25 live, 0 cached, 25 API requests
+  min 24: model asked for 1; so far 26 live, 0 cached, 26 API requests
+  min 27: model asked for 3; so far 29 live, 0 cached, 29 API requests
+  min 30: model asked for 4; so far 33 live, 0 cached, 33 API requests
+  min 33: model asked for 1; so far 34 live, 0 cached, 34 API requests
+  min 54: model asked for 1; so far 35 live, 0 cached, 35 API requests
+  min 63: model asked for 1; so far 36 live, 0 cached, 36 API requests
+  min 78: model asked for 1; so far 37 live, 0 cached, 37 API requests
+
+wrote runs/v5/mara_ate_it-seed2.md
+  api_requests: 37
+  answers_live: 37
+  answers_from_cache: 0
+  model_decisions: 37
+  fallbacks: 0
+  routine_decisions: 83
+  lines_spoken: 26
+  inner_moments: 8
+  private_talks: 0
+  max_prompt_tokens_estimated: 1400
+  max_prompt_tokens_counted_by_api: 1375
+  run_seconds: 259.8
+  story_sha256: 7407c076ea13e02066f2e60938781a3bc3f03b0d0f29d9f22aba2c1eadc4d281

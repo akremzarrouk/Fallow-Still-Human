@@ -1,0 +1,40 @@
+miscount-seed3: model gemini-3.5-flash-lite, fresh; cache cache\v5\gemini-3.5-flash-lite-miscount-seed3.json holds 0 answers
+  min 00: model asked for 4; so far 4 live, 0 cached, 4 API requests
+  min 03: model asked for 4; so far 8 live, 0 cached, 8 API requests
+  min 06: model asked for 3; so far 11 live, 0 cached, 11 API requests
+  min 09: model asked for 3; so far 14 live, 0 cached, 14 API requests
+  min 12: model asked for 1; so far 15 live, 0 cached, 15 API requests
+  min 15: model asked for 1; so far 16 live, 0 cached, 16 API requests
+  min 18: model asked for 1; so far 17 live, 0 cached, 17 API requests
+  min 21: model asked for 4; so far 21 live, 0 cached, 21 API requests
+  min 24: model asked for 4; so far 25 live, 0 cached, 25 API requests
+  min 27: model asked for 4; so far 29 live, 0 cached, 29 API requests
+  min 30: model asked for 4; so far 33 live, 0 cached, 33 API requests
+  min 33: model asked for 4; so far 37 live, 0 cached, 37 API requests
+  min 36: model asked for 4; so far 41 live, 0 cached, 41 API requests
+  min 39: model asked for 4; so far 45 live, 0 cached, 45 API requests
+  min 42: model asked for 3; so far 48 live, 0 cached, 48 API requests
+  min 45: model asked for 1; so far 49 live, 0 cached, 49 API requests
+  min 48: model asked for 4; so far 53 live, 0 cached, 53 API requests
+  min 51: model asked for 4; so far 57 live, 0 cached, 57 API requests
+  min 54: model asked for 4; so far 61 live, 0 cached, 61 API requests
+  min 57: model asked for 4; so far 65 live, 0 cached, 65 API requests
+  min 60: model asked for 1; so far 66 live, 0 cached, 66 API requests
+  min 66: model asked for 1; so far 67 live, 0 cached, 67 API requests
+  min 69: model asked for 1; so far 68 live, 0 cached, 68 API requests
+  min 75: model asked for 2; so far 70 live, 0 cached, 70 API requests
+
+wrote runs/v5/miscount-seed3.md
+  api_requests: 70
+  answers_live: 70
+  answers_from_cache: 0
+  model_decisions: 70
+  fallbacks: 0
+  routine_decisions: 50
+  lines_spoken: 52
+  inner_moments: 11
+  private_talks: 0
+  max_prompt_tokens_estimated: 1400
+  max_prompt_tokens_counted_by_api: 1383
+  run_seconds: 479.1
+  story_sha256: 79e325d914431ce5f7a6949d9e925c15e448918128dd2f0cb5396d74d22ee106

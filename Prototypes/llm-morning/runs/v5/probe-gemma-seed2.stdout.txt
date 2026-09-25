@@ -1,0 +1,5 @@
+first unanswered prompt: You are Daniel, 25, the eldest son of the family (Elena, 42,... (Now, minute 66, you are in the kitchen.)
+seed 1: accepted: {"option": "reassure_all", "say": "Stay calm, everyone. I'll make sure we all get through this together.", "feeling": "anxious", "reason": "I need to maintain the appearance of being in control and protecting the family.", "suspects": "nobody", "angry_at": "nobody"}
+first unanswered prompt: You are Daniel, 25, the eldest son of the family (Elena, 42,... (Now, minute 66, you are in the kitchen.)
+seed 2: accepted: {"option": "reassure_mara", "say": "Mara, it's okay. I'll make sure you're fed.", "feeling": "protective", "reason": "Mara is feeling sick from hunger and I need to show I'm in control and caring for her.", "suspects": "nobody", "angry_at": "nobody"}
+seed 2: refused: 500 INTERNAL

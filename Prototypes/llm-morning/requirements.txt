@@ -1,0 +1,3 @@
+# Official Google Gen AI Python SDK (import: from google import genai).
+# Not the older google-generativeai package, which it replaces.
+google-genai==2.25.0

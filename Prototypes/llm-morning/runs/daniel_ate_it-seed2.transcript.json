@@ -1,0 +1,3137 @@
+{
+ "seed": 2,
+ "version": 1,
+ "turns": [
+  {
+   "minute": 0,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 0,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "accuse_leo",
+     "words": "Don't look at us like that, Leo, you're the one who keeps plotting behind our backs.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      0,
+      -1
+     ],
+     "said_at": [
+      0,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 0,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "ask_who",
+     "words": "One of these is missing. Did one of you take it?",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      0,
+      -1
+     ],
+     "said_at": [
+      0,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 0,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      0,
+      -1
+     ],
+     "said_at": [
+      0,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 0,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "ask_who",
+     "words": "Who took it? One of us must have taken it.",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      0,
+      -1
+     ],
+     "said_at": [
+      0,
+      3
+     ],
+     "came_of_it": "said to Daniel, Elena, Leo."
+    }
+   ]
+  },
+  {
+   "minute": 3,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 3,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take it, and none of us would do that to each other.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      3,
+      -1
+     ],
+     "said_at": [
+      3,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 3,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      3,
+      -1
+     ],
+     "said_at": [
+      3,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 3,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take it, and neither did anyone who actually thinks before they act.",
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      3,
+      -1
+     ],
+     "said_at": [
+      3,
+      2
+     ],
+     "came_of_it": "said to Daniel, Elena, Mara."
+    },
+    {
+     "minute": 3,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take it, I swear I didn't!",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      3,
+      -1
+     ],
+     "said_at": [
+      3,
+      3
+     ],
+     "came_of_it": "said to Daniel, Elena, Leo."
+    }
+   ]
+  },
+  {
+   "minute": 6,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 6,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "accuse_leo",
+     "words": "I'm telling you it was Leo, he's the one who's always questioning everything we do.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      6,
+      -1
+     ],
+     "said_at": [
+      6,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 6,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      6,
+      -1
+     ],
+     "said_at": [
+      6,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 6,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "search",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      6,
+      -1
+     ],
+     "said_at": [
+      6,
+      2
+     ],
+     "came_of_it": "started going through the room."
+    },
+    {
+     "minute": 6,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "search",
+     "words": "I'm going to look around, I want to prove it wasn't me.",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      6,
+      -1
+     ],
+     "said_at": [
+      6,
+      3
+     ],
+     "came_of_it": "started going through the room."
+    }
+   ]
+  },
+  {
+   "minute": 9,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 9,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "accuse_leo",
+     "words": "Check his pockets, he's the one who's been acting shady this whole time.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      9,
+      -1
+     ],
+     "said_at": [
+      9,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 9,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      9,
+      -1
+     ],
+     "said_at": [
+      9,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 9,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "keep_searching",
+     "words": "If it didn't walk off the shelf by itself, it's somewhere in this room.",
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      9,
+      -1
+     ],
+     "said_at": [
+      9,
+      2
+     ],
+     "came_of_it": "went through the room and found nothing."
+    },
+    {
+     "minute": 9,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "keep_searching",
+     "words": "I'm not stopping until I find where that can went.",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      9,
+      -1
+     ],
+     "said_at": [
+      9,
+      3
+     ],
+     "came_of_it": "went through the room and found nothing."
+    }
+   ]
+  },
+  {
+   "minute": 12,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 12,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "accuse_leo",
+     "words": "Open your jacket again Leo, you're hiding something and I know it.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      12,
+      -1
+     ],
+     "said_at": [
+      12,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 12,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      12,
+      -1
+     ],
+     "said_at": [
+      12,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 12,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "ask_who",
+     "words": "If none of us took it and it didn't walk off by itself, someone in this room needs to explain where it went.",
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      12,
+      -1
+     ],
+     "said_at": [
+      12,
+      2
+     ],
+     "came_of_it": "said to Daniel, Elena, Mara."
+    },
+    {
+     "minute": 12,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "ask_who",
+     "words": "If none of us took it, then where did it go? Who actually moved it?",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      12,
+      -1
+     ],
+     "said_at": [
+      12,
+      3
+     ],
+     "came_of_it": "said to Daniel, Elena, Leo."
+    }
+   ]
+  },
+  {
+   "minute": 15,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 15,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take anything, and I'm tired of everyone looking at me like I'm the problem.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      15,
+      -1
+     ],
+     "said_at": [
+      15,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 15,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "search",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      15,
+      -1
+     ],
+     "said_at": [
+      15,
+      1
+     ],
+     "came_of_it": "started going through the room."
+    },
+    {
+     "minute": 15,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "accuse_daniel",
+     "words": "You're the one so obsessed with being in charge, Daniel, maybe you're the one who hid it.",
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      15,
+      -1
+     ],
+     "said_at": [
+      15,
+      2
+     ],
+     "came_of_it": "said to Daniel, Elena, Mara."
+    },
+    {
+     "minute": 15,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take anything, why are you all looking at me like that?",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      15,
+      -1
+     ],
+     "said_at": [
+      15,
+      3
+     ],
+     "came_of_it": "said to Daniel, Elena, Leo."
+    }
+   ]
+  },
+  {
+   "minute": 18,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 18,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I already told you it wasn't me, stop staring at me like I'm a thief.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      18,
+      -1
+     ],
+     "said_at": [
+      18,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 18,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "share",
+     "words": "Let's not fight, we will divide what is here right now so everyone has their share.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      18,
+      -1
+     ],
+     "said_at": [
+      18,
+      1
+     ],
+     "came_of_it": "shared out the last 2 portions between Elena, Daniel, Leo, Mara."
+    },
+    {
+     "minute": 18,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      18,
+      -1
+     ],
+     "said_at": [
+      18,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 18,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "accuse_leo",
+     "words": "Leo kept telling everyone to let someone else handle it, maybe he's the one who took it to save for himself.",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      18,
+      -1
+     ],
+     "said_at": [
+      18,
+      3
+     ],
+     "came_of_it": "said to Daniel, Elena, Leo."
+    }
+   ]
+  },
+  {
+   "minute": 21,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 21,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't touch it, I swear to you, and I won't have you all looking at me like this.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      21,
+      -1
+     ],
+     "said_at": [
+      21,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 21,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_all",
+     "words": "Please, stop arguing, we are all we have left. No one is to blame.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      21,
+      -1
+     ],
+     "said_at": [
+      21,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara."
+    },
+    {
+     "minute": 21,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take it, and accusing each other isn't going to make the food come back.",
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      21,
+      -1
+     ],
+     "said_at": [
+      21,
+      2
+     ],
+     "came_of_it": "said to Daniel, Elena, Mara."
+    },
+    {
+     "minute": 21,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      21,
+      -1
+     ],
+     "said_at": [
+      21,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 24,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 24,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take the food, and I won't have you all sitting here glaring at me like I'm some kind of criminal.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      24,
+      -1
+     ],
+     "said_at": [
+      24,
+      0
+     ],
+     "came_of_it": "said to Elena, Leo, Mara."
+    },
+    {
+     "minute": 24,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      24,
+      -1
+     ],
+     "said_at": [
+      24,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 24,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      24,
+      -1
+     ],
+     "said_at": [
+      24,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 24,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      24,
+      -1
+     ],
+     "said_at": [
+      24,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 27,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 27,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      27,
+      -1
+     ],
+     "said_at": [
+      27,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 27,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      27,
+      -1
+     ],
+     "said_at": [
+      27,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 27,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      27,
+      -1
+     ],
+     "said_at": [
+      27,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 27,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      27,
+      -1
+     ],
+     "said_at": [
+      27,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 30,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 30,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      30,
+      -1
+     ],
+     "said_at": [
+      30,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 30,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      30,
+      -1
+     ],
+     "said_at": [
+      30,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 30,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      30,
+      -1
+     ],
+     "said_at": [
+      30,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 30,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      30,
+      -1
+     ],
+     "said_at": [
+      30,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 33,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 33,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      33,
+      -1
+     ],
+     "said_at": [
+      33,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 33,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      33,
+      -1
+     ],
+     "said_at": [
+      33,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 33,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      33,
+      -1
+     ],
+     "said_at": [
+      33,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 33,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      33,
+      -1
+     ],
+     "said_at": [
+      33,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 36,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 36,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      36,
+      -1
+     ],
+     "said_at": [
+      36,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 36,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      36,
+      -1
+     ],
+     "said_at": [
+      36,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 36,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      36,
+      -1
+     ],
+     "said_at": [
+      36,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 36,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      36,
+      -1
+     ],
+     "said_at": [
+      36,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 39,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 39,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      39,
+      -1
+     ],
+     "said_at": [
+      39,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 39,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      39,
+      -1
+     ],
+     "said_at": [
+      39,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 39,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      39,
+      -1
+     ],
+     "said_at": [
+      39,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 39,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      39,
+      -1
+     ],
+     "said_at": [
+      39,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 42,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 42,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      42,
+      -1
+     ],
+     "said_at": [
+      42,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 42,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      42,
+      -1
+     ],
+     "said_at": [
+      42,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 42,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      42,
+      -1
+     ],
+     "said_at": [
+      42,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 42,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      42,
+      -1
+     ],
+     "said_at": [
+      42,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 45,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 45,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      45,
+      -1
+     ],
+     "said_at": [
+      45,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 45,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      45,
+      -1
+     ],
+     "said_at": [
+      45,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 45,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      45,
+      -1
+     ],
+     "said_at": [
+      45,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 45,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      45,
+      -1
+     ],
+     "said_at": [
+      45,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 48,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 48,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      48,
+      -1
+     ],
+     "said_at": [
+      48,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 48,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      48,
+      -1
+     ],
+     "said_at": [
+      48,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 48,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      48,
+      -1
+     ],
+     "said_at": [
+      48,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 48,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      48,
+      -1
+     ],
+     "said_at": [
+      48,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 51,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 51,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      51,
+      -1
+     ],
+     "said_at": [
+      51,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 51,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      51,
+      -1
+     ],
+     "said_at": [
+      51,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 51,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      51,
+      -1
+     ],
+     "said_at": [
+      51,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 51,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      51,
+      -1
+     ],
+     "said_at": [
+      51,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 54,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 54,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      54,
+      -1
+     ],
+     "said_at": [
+      54,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 54,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      54,
+      -1
+     ],
+     "said_at": [
+      54,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 54,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      54,
+      -1
+     ],
+     "said_at": [
+      54,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 54,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      54,
+      -1
+     ],
+     "said_at": [
+      54,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 57,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 57,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      57,
+      -1
+     ],
+     "said_at": [
+      57,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 57,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      57,
+      -1
+     ],
+     "said_at": [
+      57,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 57,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      57,
+      -1
+     ],
+     "said_at": [
+      57,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 57,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      57,
+      -1
+     ],
+     "said_at": [
+      57,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 60,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 60,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      60,
+      -1
+     ],
+     "said_at": [
+      60,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 60,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      60,
+      -1
+     ],
+     "said_at": [
+      60,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 60,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      60,
+      -1
+     ],
+     "said_at": [
+      60,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 60,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      60,
+      -1
+     ],
+     "said_at": [
+      60,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 63,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 63,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      63,
+      -1
+     ],
+     "said_at": [
+      63,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 63,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      63,
+      -1
+     ],
+     "said_at": [
+      63,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 63,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      63,
+      -1
+     ],
+     "said_at": [
+      63,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 63,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      63,
+      -1
+     ],
+     "said_at": [
+      63,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 66,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 66,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      66,
+      -1
+     ],
+     "said_at": [
+      66,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 66,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      66,
+      -1
+     ],
+     "said_at": [
+      66,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 66,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      66,
+      -1
+     ],
+     "said_at": [
+      66,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 66,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      66,
+      -1
+     ],
+     "said_at": [
+      66,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 69,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 69,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      69,
+      -1
+     ],
+     "said_at": [
+      69,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 69,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      69,
+      -1
+     ],
+     "said_at": [
+      69,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 69,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      69,
+      -1
+     ],
+     "said_at": [
+      69,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 69,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      69,
+      -1
+     ],
+     "said_at": [
+      69,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 72,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 72,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      72,
+      -1
+     ],
+     "said_at": [
+      72,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 72,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      72,
+      -1
+     ],
+     "said_at": [
+      72,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 72,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      72,
+      -1
+     ],
+     "said_at": [
+      72,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 72,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      72,
+      -1
+     ],
+     "said_at": [
+      72,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 75,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 75,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      75,
+      -1
+     ],
+     "said_at": [
+      75,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 75,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      75,
+      -1
+     ],
+     "said_at": [
+      75,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 75,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      75,
+      -1
+     ],
+     "said_at": [
+      75,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 75,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      75,
+      -1
+     ],
+     "said_at": [
+      75,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 78,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 78,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      78,
+      -1
+     ],
+     "said_at": [
+      78,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 78,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      78,
+      -1
+     ],
+     "said_at": [
+      78,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 78,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      78,
+      -1
+     ],
+     "said_at": [
+      78,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 78,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      78,
+      -1
+     ],
+     "said_at": [
+      78,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 81,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 81,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      81,
+      -1
+     ],
+     "said_at": [
+      81,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 81,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      81,
+      -1
+     ],
+     "said_at": [
+      81,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 81,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      81,
+      -1
+     ],
+     "said_at": [
+      81,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 81,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      81,
+      -1
+     ],
+     "said_at": [
+      81,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 84,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 84,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      84,
+      -1
+     ],
+     "said_at": [
+      84,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 84,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      84,
+      -1
+     ],
+     "said_at": [
+      84,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 84,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      84,
+      -1
+     ],
+     "said_at": [
+      84,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 84,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      84,
+      -1
+     ],
+     "said_at": [
+      84,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  },
+  {
+   "minute": 87,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 87,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      87,
+      -1
+     ],
+     "said_at": [
+      87,
+      0
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 87,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      87,
+      -1
+     ],
+     "said_at": [
+      87,
+      1
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 87,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      87,
+      -1
+     ],
+     "said_at": [
+      87,
+      2
+     ],
+     "came_of_it": "stayed where they were."
+    },
+    {
+     "minute": 87,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      87,
+      -1
+     ],
+     "said_at": [
+      87,
+      3
+     ],
+     "came_of_it": "stayed where they were."
+    }
+   ]
+  }
+ ],
+ "final_rooms": {
+  "kitchen": [
+   "daniel",
+   "elena",
+   "leo",
+   "mara"
+  ],
+  "brothers_room": [],
+  "back_room": [],
+  "bathroom": []
+ }
+}

@@ -1,0 +1,56 @@
+daniel_ate_it-gemma-seed5: model gemma-4-31b-it, fresh; cache cache\v5\gemma-4-31b-it-daniel_ate_it-gemma-seed5.json holds 0 answers
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+    [500 INTERNAL] waiting 20s, retry 3/6
+    [503 UNAVAILABLE] waiting 40s, retry 4/6
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+    [503 UNAVAILABLE] waiting 20s, retry 3/6
+    [500 INTERNAL] waiting 40s, retry 4/6
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 5s, retry 1/6
+  min 00: model asked for 4; so far 4 live, 0 cached, 14 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+  min 03: model asked for 3; so far 7 live, 0 cached, 21 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 10s, retry 2/6
+  min 15: model asked for 1; so far 8 live, 0 cached, 24 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+    [503 UNAVAILABLE] waiting 20s, retry 3/6
+  min 30: model asked for 1; so far 9 live, 0 cached, 28 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+    [503 UNAVAILABLE] waiting 20s, retry 3/6
+    [500 INTERNAL] waiting 40s, retry 4/6
+    [500 INTERNAL] waiting 80s, retry 5/6
+  min 33: model asked for 1; so far 10 live, 0 cached, 34 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 10s, retry 2/6
+    [503 UNAVAILABLE] waiting 20s, retry 3/6
+    [503 UNAVAILABLE] waiting 40s, retry 4/6
+    [500 INTERNAL] waiting 80s, retry 5/6
+  min 54: model asked for 1; so far 11 live, 0 cached, 40 API requests
+  min 63: model asked for 1; so far 12 live, 0 cached, 41 API requests
+  min 66: model asked for 1; so far 13 live, 0 cached, 42 API requests
+    [500 INTERNAL] waiting 5s, retry 1/6
+    [500 INTERNAL] waiting 10s, retry 2/6
+  min 75: model asked for 1; so far 14 live, 0 cached, 45 API requests
+
+wrote runs/v5/daniel_ate_it-gemma-seed5.md
+  api_requests: 45
+  answers_live: 14
+  answers_from_cache: 0
+  model_decisions: 14
+  fallbacks: 0
+  routine_decisions: 106
+  lines_spoken: 8
+  inner_moments: 7
+  private_talks: 0
+  max_prompt_tokens_estimated: 1399
+  max_prompt_tokens_counted_by_api: 1357
+  run_seconds: 1272.3
+  story_sha256: 3c2c36bd44ba171f4b51392e428db3fbf42e4d4000f18dc35e17a5341e50a89e

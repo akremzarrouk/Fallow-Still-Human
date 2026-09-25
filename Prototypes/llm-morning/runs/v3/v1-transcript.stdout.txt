@@ -1,0 +1,3 @@
+seed 1: replayed 120 answers from the cache, 0 API calls; story IDENTICAL to runs/daniel_ate_it-seed1.md; wrote runs\daniel_ate_it-seed1.transcript.json
+seed 2: replayed 39 answers from the cache, 0 API calls; story IDENTICAL to runs/daniel_ate_it-seed2.md; wrote runs\daniel_ate_it-seed2.transcript.json
+seed 3: replayed 90 answers from the cache, 0 API calls; story IDENTICAL to runs/daniel_ate_it-seed3.md; wrote runs\daniel_ate_it-seed3.transcript.json
