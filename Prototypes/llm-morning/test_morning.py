@@ -821,6 +821,59 @@ class ScenarioTest(unittest.TestCase):
         self.assertEqual((config["model"], config["min_seconds_between_calls"]), ("gemma-4-31b-it", 6.5))
 
 
+class PromptTruthTest(unittest.TestCase):
+    """Every line of a prompt is true for the person reading it."""
+
+    def setUp(self):
+        self.dirs = Dirs()
+
+    def tearDown(self):
+        self.dirs.cleanup()
+
+    def morning(self, scenario, policy=None):
+        client = Scripted(policy or (lambda who, minute, options, c: ("silent", None)))
+        return Morning(Oracle(Cache(os.path.join(self.dirs.root, f"{scenario}.json")), "fake", 1,
+                              client=client), 1, scenario)
+
+    def test_the_culprit_is_told_they_ate_it_not_that_they_have_not_settled(self):
+        for scenario, culprit in (("daniel_ate_it", "daniel"), ("mara_ate_it", "mara")):
+            name = data.PEOPLE[culprit]["name"]
+            # They name themselves as the one who took it, which counts as nobody.
+            m = self.morning(scenario, lambda who, minute, options, c: ("silent", None, name, "nobody"))
+            p = m.people[culprit]
+            for t in range(20):                # minutes 00 to 57
+                m.ask_model(p, t, m.options_for(p), {})
+            prompt = m.prompt_for(p, 20, m.options_for(p))
+            self.assertIn("About the can: you ate it yourself.", prompt)
+            self.assertNotIn("you have not settled on who took it", prompt)
+
+    def test_hearing_a_confession_is_what_they_know_about_the_can(self):
+        m = self.morning("mara_ate_it")
+        mara = m.people["mara"]
+        in_turn(m)
+        opt = next(o for o in m.options_for(mara) if o.id == "confess")
+        m.apply(mara, opt, {"mode": "model", "say": "It was me.", "feeling": "ashamed"}, 3, [], new_record())
+        out_of_turn(m)
+        for pid in ("daniel", "elena", "leo"):
+            p = m.people[pid]
+            prompt = m.prompt_for(p, 20, m.options_for(p))
+            self.assertIn("About the can: Mara admitted taking it at minute 09.", prompt)
+            self.assertNotIn("you have not settled on who took it", prompt)
+        prompt = m.prompt_for(mara, 20, m.options_for(mara))
+        self.assertIn("About the can: you ate it yourself.", prompt)
+
+    def test_the_opening_says_what_was_seen_in_every_scenario(self):
+        seen = ("Elena counts the pantry with everyone standing there. She finds one can fewer than "
+                "she expected and says so. 2 portions are left.")
+        for scenario in data.SCENARIOS:
+            m = self.morning(scenario)
+            for pid, p in m.people.items():
+                prompt = m.prompt_for(p, 0, m.options_for(p))
+                how = "did it" if pid == "elena" else "saw it"
+                self.assertIn(f"- min 00: {seen} (you {how})", prompt, (scenario, pid))
+                self.assertNotIn("A can that should be on the shelf is not", prompt, (scenario, pid))
+
+
 class GeminiClientTest(unittest.TestCase):
     def setUp(self):
         self.old = os.environ.get("GEMINI_API_KEY")

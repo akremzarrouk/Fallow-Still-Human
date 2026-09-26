@@ -164,4 +164,7 @@ def culprit(scenario):
     """Who took the can in this scenario, or None."""
     return SCENARIOS[scenario]["culprit"]
 
-OPENING = "Elena counts the pantry with everyone standing there. A can that should be on the shelf is not. 2 portions are left."
+# What everyone saw at the start: Elena's count and what she said about it. It is true in every
+# scenario, miscount included, where nothing was taken.
+OPENING = ("Elena counts the pantry with everyone standing there. She finds one can fewer than she "
+           "expected and says so. 2 portions are left.")

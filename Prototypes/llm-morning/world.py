@@ -210,6 +210,7 @@ class Person:
         self.aside_lead = None      # whom they took aside last turn, if the other came
         self.searched = set()
         self.knows_culprit = culprit if pid == culprit else None
+        self.confession_heard_at = None     # minute they first heard the culprit admit it
         self.heard_question = False
         self.confessed = False
         self.eaten = 0.0
@@ -431,6 +432,11 @@ class Morning:
             out.append(f"About the can ({LEVEL_WORDS[s.strength]}): you thought {NAMES[s.target]} took it, "
                        f"at minute{'s' if len(p.suspected_at) > 1 else ''} "
                        f"{minutes_text(p.suspected_at[-EVENTS_SHOWN:])}.")
+        elif p.knows_culprit == p.id:
+            out.append("About the can: you ate it yourself.")
+        elif p.knows_culprit:
+            out.append(f"About the can: {NAMES[p.knows_culprit]} admitted taking it at minute "
+                       f"{p.confession_heard_at:02d}.")
         else:
             out.append("About the can: you have not settled on who took it.")
         held = [(t, p.grudges[t]) for t in data.ORDER if t in p.grudges and p.grudges[t].strength]
@@ -904,6 +910,8 @@ class Morning:
                 if kind in ("ask", "accuse"):
                     q.heard_question = True
                 if kind == "confess":
+                    if q.knows_culprit is None:
+                        q.confession_heard_at = minute
                     q.knows_culprit = p.id
                     q.sure.append(f"min {minute:02d}: {p.name} admitted taking the can: \"{words}\" "
                                   "(you heard it)")
