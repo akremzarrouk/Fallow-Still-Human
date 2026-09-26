@@ -862,6 +862,36 @@ class PromptTruthTest(unittest.TestCase):
         prompt = m.prompt_for(mara, 20, m.options_for(mara))
         self.assertIn("About the can: you ate it yourself.", prompt)
 
+    def test_the_culprit_who_names_someone_else_is_still_told_they_ate_it(self):
+        for scenario, culprit in (("daniel_ate_it", "daniel"), ("mara_ate_it", "mara")):
+            # Their answers name Leo, which gives them a suspicion of Leo.
+            m = self.morning(scenario, lambda who, minute, options, c: ("silent", None, "Leo", "nobody"))
+            p = m.people[culprit]
+            for t in range(20):                # minutes 00 to 57
+                m.ask_model(p, t, m.options_for(p), {})
+            self.assertEqual((p.suspicion.target, p.suspicion.strength), ("leo", 3))
+            prompt = m.prompt_for(p, 20, m.options_for(p))
+            self.assertIn("About the can: you ate it yourself.", prompt)
+            self.assertNotIn("you thought", prompt)
+
+    def test_after_hearing_a_confession_a_guess_does_not_replace_it(self):
+        # After Mara's confession their answers name someone other than Mara.
+        other = {"daniel": "Elena", "elena": "Leo", "leo": "Daniel"}
+        m = self.morning("mara_ate_it", lambda who, minute, options, c: ("silent", None, other[who], "nobody"))
+        mara = m.people["mara"]
+        in_turn(m)
+        opt = next(o for o in m.options_for(mara) if o.id == "confess")
+        m.apply(mara, opt, {"mode": "model", "say": "It was me.", "feeling": "ashamed"}, 3, [], new_record())
+        out_of_turn(m)
+        for pid in ("daniel", "elena", "leo"):
+            p = m.people[pid]
+            for t in range(4, 20):             # minutes 12 to 57
+                m.ask_model(p, t, m.options_for(p), {})
+            self.assertEqual(p.suspicion.strength, 3, pid)
+            prompt = m.prompt_for(p, 20, m.options_for(p))
+            self.assertIn("About the can: Mara admitted taking it at minute 09.", prompt)
+            self.assertNotIn("you thought", prompt)
+
     def test_the_opening_says_what_was_seen_in_every_scenario(self):
         seen = ("Elena counts the pantry with everyone standing there. She finds one can fewer than "
                 "she expected and says so. 2 portions are left.")
