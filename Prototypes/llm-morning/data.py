@@ -115,6 +115,14 @@ SCENARIOS = {
         "night": None,
     },
 }
+# Not in the shipped data: daniel_ate_it, and Leo heard the night from his bed but did not see
+# who (reports/witness_design.md). The event is Leo's alone, so its sentence names nobody he
+# did not see; it goes in right after the night.
+SCENARIOS["daniel_ate_it_leo_heard"] = {
+    **SCENARIOS["daniel_ate_it"],
+    "after_night": [(3, "In the night Leo wakes and hears someone in the kitchen open a can. "
+                        "He does not get up and does not see who.", {"leo": "heard"})],
+}
 DEFAULT_SCENARIO = "daniel_ate_it"
 
 # How the story speaks of each of them (as the shipped data's notes do).
@@ -155,9 +163,11 @@ _BACKSTORY = [
 
 
 def backstory(scenario):
-    """The days before, with this scenario's night in its place (or no night at all)."""
-    night = SCENARIOS[scenario]["night"]
-    return [night if e is NIGHT else e for e in _BACKSTORY if e is not NIGHT or night]
+    """The days before, with this scenario's night in its place (or no night at all), followed
+    by the scenario's own events of that night, if it has any."""
+    s = SCENARIOS[scenario]
+    night = ([s["night"]] if s["night"] else []) + s.get("after_night", [])
+    return [x for e in _BACKSTORY for x in (night if e is NIGHT else [e])]
 
 
 def culprit(scenario):

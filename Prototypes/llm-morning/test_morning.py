@@ -3,6 +3,7 @@
     python -m unittest -v test_morning
 """
 import contextlib
+import difflib
 import io
 import json
 import os
@@ -16,7 +17,7 @@ import metrics
 import gemini
 from gemini import Cache, FakeClient, GeminiClient, Oracle
 from morning import run
-from world import QUIET_TURNS, SYSTEM, Grudge, Morning, Track, estimate_tokens
+from world import QUIET_TURNS, SYSTEM, Grudge, Morning, Person, Track, estimate_tokens
 
 # What the third version's prompts said about guilt, suspicion and grudges: verdicts, which
 # the prompts must no longer contain.
@@ -84,6 +85,31 @@ def cached_prompts(dirs):
     for name in os.listdir(dirs.cache):
         prompts += [e["prompt"] for e in json.loads(read(os.path.join(dirs.cache, name))).values()]
     return prompts
+
+
+def assert_no_target_text(test, prompts):
+    """No sentence of target-morning.md (nor its merged copy) is in any of the prompts."""
+    target = target_text()
+    if target is None:
+        test.skipTest("neither target-morning.md nor its copy in understanding-all.md was found")
+    pieces = []
+    for line in target.splitlines():
+        line = re.sub(r"^[#\-\d. ]+", "", line).strip()
+        for piece in re.split(r"(?<=[.:;!?])\s+|\(|\)", line):
+            piece = piece.strip(" .,:;\"'*")
+            if len(piece.split()) >= 5:
+                pieces.append(piece)
+    pieces += ["nobody eats alone", "don't look at me", "look innocent", "turning point",
+               "weighed down", "believable", "Possible", "Never"]
+    # The four Never lines of the second step's brief (the merged copy predates them).
+    pieces += ["Everyone speaks at once and nobody answers the line before theirs",
+               "A person repeats the same kind of line many turns in a row with no effect",
+               "Someone who was wronged forgives within minutes, with no lasting cost",
+               "A person mentions objects or places the house does not have"]
+    test.assertGreater(len(pieces), 40)
+    for p in prompts:
+        for piece in pieces:
+            test.assertNotIn(piece.lower(), p.lower(), f"target-morning text in a prompt: {piece!r}")
 
 
 class Exploding:
@@ -198,28 +224,7 @@ class FakeMorningTest(unittest.TestCase):
 
     def test_nothing_from_target_morning_reaches_a_prompt(self):
         fake_morning(self.dirs)
-        prompts = [SYSTEM] + cached_prompts(self.dirs)
-        target = target_text()
-        if target is None:
-            self.skipTest("neither target-morning.md nor its copy in understanding-all.md was found")
-        pieces = []
-        for line in target.splitlines():
-            line = re.sub(r"^[#\-\d. ]+", "", line).strip()
-            for piece in re.split(r"(?<=[.:;!?])\s+|\(|\)", line):
-                piece = piece.strip(" .,:;\"'*")
-                if len(piece.split()) >= 5:
-                    pieces.append(piece)
-        pieces += ["nobody eats alone", "don't look at me", "look innocent", "turning point",
-                   "weighed down", "believable", "Possible", "Never"]
-        # The four Never lines of the second step's brief (the merged copy predates them).
-        pieces += ["Everyone speaks at once and nobody answers the line before theirs",
-                   "A person repeats the same kind of line many turns in a row with no effect",
-                   "Someone who was wronged forgives within minutes, with no lasting cost",
-                   "A person mentions objects or places the house does not have"]
-        self.assertGreater(len(pieces), 40)
-        for p in prompts:
-            for piece in pieces:
-                self.assertNotIn(piece.lower(), p.lower(), f"target-morning text in a prompt: {piece!r}")
+        assert_no_target_text(self, [SYSTEM] + cached_prompts(self.dirs))
 
     def test_only_daniel_knows_and_only_daniel_may_confess(self):
         m = Morning(Oracle(Cache(os.path.join(self.dirs.root, "c.json")), "fake", 1, client=FakeClient()), 1)
@@ -902,6 +907,116 @@ class PromptTruthTest(unittest.TestCase):
                 how = "did it" if pid == "elena" else "saw it"
                 self.assertIn(f"- min 00: {seen} (you {how})", prompt, (scenario, pid))
                 self.assertNotIn("A can that should be on the shelf is not", prompt, (scenario, pid))
+
+
+WITNESS = "daniel_ate_it_leo_heard"
+HEARD = ("In the night Leo wakes and hears someone in the kitchen open a can. "
+         "He does not get up and does not see who.")
+HEARD_LINE = "Day 3: " + HEARD + " (you heard it)"
+
+
+class WitnessScenarioTest(unittest.TestCase):
+    """daniel_ate_it_leo_heard: daniel_ate_it, and Leo heard the night but did not see who
+    (reports/witness_design.md, sections 1 to 3)."""
+
+    def setUp(self):
+        self.assertIn(WITNESS, data.SCENARIOS)
+        self.dirs = Dirs()
+
+    def tearDown(self):
+        self.dirs.cleanup()
+
+    def morning(self, scenario, seed):
+        return Morning(Oracle(Cache(os.path.join(self.dirs.root, f"{scenario}-{seed}.json")), "fake", seed,
+                              client=FakeClient()), seed, scenario)
+
+    def fake_prompts(self):
+        for seed in (1, 2, 3):
+            (meta, code), out = fake_morning(self.dirs, seed=seed, scenario=WITNESS)
+            self.assertEqual(code, 0, out)
+        prompts = cached_prompts(self.dirs)
+        self.assertTrue(prompts)
+        return prompts
+
+    # T1
+    def test_the_sentence_names_nobody_leo_heard(self):
+        added = [e for e in data.backstory(WITNESS) if e not in data.backstory("daniel_ate_it")]
+        self.assertEqual(added, [(3, HEARD, {"leo": "heard"})])
+        text = added[0][1]
+        for name in ("Daniel", "Elena", "Mara"):
+            self.assertNotIn(name, text)
+        self.assertEqual(set(re.findall(r"\b[A-Z]\w*", text)) - {"In", "He"}, {"Leo"})
+        self.assertNotIn("eats a can", text)
+
+    # T2
+    def test_only_leos_backstory_differs(self):
+        for pid in ("daniel", "elena", "mara"):
+            self.assertEqual(Person(pid, WITNESS).backstory, Person(pid, "daniel_ate_it").backstory, pid)
+        old, new = Person("leo", "daniel_ate_it").backstory, Person("leo", WITNESS).backstory
+        at = next(i for i, x in enumerate(old) if x.startswith("Day 3: Mara freezes")) + 1
+        self.assertEqual(new, old[:at] + [HEARD_LINE] + old[at:])
+        self.assertFalse([x for x in new if "Daniel eats" in x])
+
+    # T3
+    def test_at_minute_00_only_leos_prompt_differs_by_the_one_line(self):
+        for seed in (1, 2, 3):
+            old, new = self.morning("daniel_ate_it", seed), self.morning(WITNESS, seed)
+            for pid in data.ORDER:
+                p, q = old.people[pid], new.people[pid]
+                self.assertEqual(q.sure, p.sure, (seed, pid))
+                self.assertEqual([o.id for o in new.options_for(q)], [o.id for o in old.options_for(p)], (seed, pid))
+                a = old.prompt_for(p, 0, old.options_for(p))
+                b = new.prompt_for(q, 0, new.options_for(q))
+                if pid != "leo":
+                    self.assertEqual(b, a, (seed, pid))
+                    continue
+                diff = list(difflib.ndiff(a.splitlines(), b.splitlines()))
+                self.assertEqual([d for d in diff if d.startswith("+ ")], ["+ - " + HEARD_LINE], seed)
+                self.assertEqual([d for d in diff if d.startswith("- ")], [], seed)
+
+    # T4
+    def test_daniels_prompt_never_mentions_being_heard(self):
+        daniel = [p for p in self.fake_prompts() if p.startswith("You are Daniel,")]
+        self.assertTrue(daniel)
+        for p in daniel:
+            for words in (HEARD, "wakes and hears", "open a can", "does not see who", "heard someone"):
+                self.assertNotIn(words, p)
+            if "On your conscience" in p:
+                self.assertIn("and nobody saw", p)
+        self.assertTrue([p for p in daniel if "On your conscience" in p])
+
+    # T5
+    def test_no_prompt_says_who_leo_heard(self):
+        prompts = self.fake_prompts()
+        leo = [p for p in prompts if p.startswith("You are Leo,")]
+        self.assertTrue(leo)
+        for p in prompts:
+            if p.startswith("You are Leo,"):
+                self.assertEqual([x for x in p.splitlines() if HEARD in x], ["- " + HEARD_LINE])
+                for words in ("Daniel eats a can", "you ate it yourself", "On your conscience"):
+                    self.assertNotIn(words, p)
+            else:
+                self.assertNotIn(HEARD, p)
+            self.assertFalse([x for x in p.splitlines() if "Daniel" in x and "open a can" in x])
+
+    # T6
+    def test_nothing_from_target_morning_reaches_a_prompt_of_the_witness_morning(self):
+        assert_no_target_text(self, [SYSTEM] + self.fake_prompts())
+
+    # T7
+    def test_the_other_scenarios_do_not_have_the_sentence(self):
+        lengths = {"daniel_ate_it": 13, "mara_ate_it": 13, "miscount": 12, WITNESS: 14}
+        self.assertEqual({s: len(data.backstory(s)) for s in data.SCENARIOS}, lengths)
+        for scenario in data.SCENARIOS:
+            has = [e for e in data.backstory(scenario) if HEARD in e[1]]
+            self.assertEqual(len(has), scenario == WITNESS, scenario)
+
+    # T8
+    def test_the_witness_morning_runs_and_its_story_shows_who_heard(self):
+        (meta, code), out = fake_morning(self.dirs, seed=1, scenario=WITNESS)
+        self.assertEqual(code, 0, out)
+        story = read(os.path.join(self.dirs.runs, f"{WITNESS}-seed1.md"))
+        self.assertIn(f"| 3 | {HEARD} | not there | not there | heard it | not there |", story)
 
 
 class GeminiClientTest(unittest.TestCase):
