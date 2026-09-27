@@ -33,7 +33,8 @@ SYSTEM = (
     "doing it, or null. `feeling` names what they feel right now in one or two words. "
     "`reason` is their reason in one sentence, as they would think it. `suspects` is who they "
     "now believe took the can, and `angry_at` is who they are angry with right now: each is "
-    'one of "Daniel", "Elena", "Leo", "Mara" or "nobody". Reply with JSON only: '
+    'one of "Daniel", "Elena", "Leo", "Mara" or "nobody". `thought` is what goes through their '
+    "mind first, in two or three sentences, before they choose. Reply with JSON only: "
     '{"option": "<id>", "say": "<words>" or null, "feeling": "<word>", "reason": "<sentence>", '
     '"suspects": "<name or nobody>", "angry_at": "<name or nobody>"}'
 )
@@ -210,6 +211,7 @@ class Person:
         self.aside_lead = None      # whom they took aside last turn, if the other came
         self.searched = set()
         self.knows_culprit = culprit if pid == culprit else None
+        self.can_note = data.about_the_can(scenario, pid)  # what else they know of the night, if anything
         self.confession_heard_at = None     # minute they first heard the culprit admit it
         self.heard_question = False
         self.confessed = False
@@ -430,16 +432,17 @@ class Morning:
         s = p.suspicion
         # What they know about the can wins over what their answers guessed.
         if p.knows_culprit == p.id:
-            out.append("About the can: you ate it yourself.")
+            about = "About the can: you ate it yourself."
         elif p.knows_culprit:
-            out.append(f"About the can: {NAMES[p.knows_culprit]} admitted taking it at minute "
-                       f"{p.confession_heard_at:02d}.")
+            about = (f"About the can: {NAMES[p.knows_culprit]} admitted taking it at minute "
+                     f"{p.confession_heard_at:02d}.")
         elif s.strength:
-            out.append(f"About the can ({LEVEL_WORDS[s.strength]}): you thought {NAMES[s.target]} took it, "
-                       f"at minute{'s' if len(p.suspected_at) > 1 else ''} "
-                       f"{minutes_text(p.suspected_at[-EVENTS_SHOWN:])}.")
+            about = (f"About the can ({LEVEL_WORDS[s.strength]}): you thought {NAMES[s.target]} took it, "
+                     f"at minute{'s' if len(p.suspected_at) > 1 else ''} "
+                     f"{minutes_text(p.suspected_at[-EVENTS_SHOWN:])}.")
         else:
-            out.append("About the can: you have not settled on who took it.")
+            about = "About the can: you have not settled on who took it."
+        out.append(f"{about} {p.can_note}" if p.can_note else about)
         held = [(t, p.grudges[t]) for t in data.ORDER if t in p.grudges and p.grudges[t].strength]
         if not held:
             out.append("Against the others: nothing.")
@@ -558,7 +561,7 @@ class Morning:
             return None, "not JSON"
         if not isinstance(ans, dict):
             return None, "not a JSON object"
-        for field in ("option", "feeling", "reason"):
+        for field in ("thought", "option", "feeling", "reason"):
             if not isinstance(ans.get(field), str) or not ans[field].strip():
                 return None, f"no `{field}`"
         if "say" not in ans or not (ans["say"] is None or isinstance(ans["say"], str)):
@@ -583,7 +586,8 @@ class Morning:
         if opt.id == "silent" and say:
             say, dropped = None, True
         return {"option": opt.id, "say": say, "feeling": " ".join(ans["feeling"].split()).lower(),
-                "reason": " ".join(ans["reason"].split()), "dropped_line": dropped, **named}, None
+                "thought": " ".join(ans["thought"].split()), "reason": " ".join(ans["reason"].split()),
+                "dropped_line": dropped, **named}, None
 
     # ---------- one turn ----------
     def run(self):
@@ -666,7 +670,8 @@ class Morning:
                      "words": d.get("say"), "audience": audience, "mode": d["mode"],
                      "decided_at": [minute, d["seq"]], "said_at": [minute, d["seq"]],
                      "came_of_it": d["came_of_it"], "new": d.get("new"), "new_why": d.get("new_why"),
-                     "inner": d.get("inner_families"), "suspects": d.get("suspects"),
+                     "inner": d.get("inner_families"), "thought": d.get("thought"),
+                     "suspects": d.get("suspects"),
                      "angry_at": d.get("angry_at"),
                      "moved_to": opt.act["to"] if opt.act["kind"] in ("go", "accept_aside") else None}
             tturn["acts"].append(entry)

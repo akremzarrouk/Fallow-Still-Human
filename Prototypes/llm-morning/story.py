@@ -81,7 +81,8 @@ def decision_line(d, fold=None):
               f"Angry at: {d['angry_at']}; {d['grudge_note']}.")
     return (f"- **{name}**{order}. {because}.{held} **Chose: {d['label']}**{said}"
             f"{newness(d)} (one of {d['offered']} options). Feeling: *{d['feeling']}*. "
-            f"Reason: {quoted(d['reason'])}{inside} Came of it: {d['came_of_it']}{fact}")
+            f"Thought: {quoted(d['thought'])} Reason: {quoted(d['reason'])}{inside} "
+            f"Came of it: {d['came_of_it']}{fact}")
 
 
 def room_line(rec):
@@ -152,7 +153,8 @@ def render(morning, seed, model_name, command):
       "looks upset in the same room, or someone came in). Only then is the model asked. What "
       "happened is listed.")
     w("- **Chose**: the option the model picked from those the rules offered. Its words are in "
-      "quotes. The feeling and the one-sentence reason are the model's, as it wrote them.")
+      "quotes. The thought (written first, before the choice), the feeling and the one-sentence "
+      "reason are the model's, as it wrote them. Nobody's prompt ever shows a thought.")
     w("- **New / not new**: a line is new if it is a question, an accusation, a denial of a new "
       "accusation, or a confession, and the speaker has not taken that stance before. "
       "Reassurance, repeated stances and other remarks are not new. Something eaten, shared or "
@@ -211,14 +213,20 @@ def render(morning, seed, model_name, command):
     names = [data.PEOPLE[p]["name"] for p in data.ORDER]
     w("| | " + " | ".join(names) + " |")
     w("|---|" + "---|" * len(names))
+
+    def knows(p):
+        pid = next(q for q in data.ORDER if data.PEOPLE[q] is p)
+        if pid == culprit:
+            return "ate it in the night; nobody saw"
+        note = data.about_the_can(morning.scenario, pid)
+        return "only that it is missing" + (f"; told: {quoted(note)}" if note else "")
     rows = [
         ("Age", lambda p: str(p["age"])),
         ("Role in the family", lambda p: p["role_short"]),
         ("Where, how hungry", lambda p: f"kitchen, hunger {p['hunger']:.2f} ({hunger_words(p['hunger'])})"),
         ("Temperament", lambda p: trait_words(p["traits"])),
         ("What matters to them", lambda p: ", ".join(p["values"])),
-        ("Knows about the can", lambda p: "ate it in the night; nobody saw" if culprit and p is data.PEOPLE[culprit]
-         else "only that it is missing"),
+        ("Knows about the can", knows),
     ]
     for label, f in rows:
         w(f"| {label} | " + " | ".join(f(data.PEOPLE[p]) for p in data.ORDER) + " |")

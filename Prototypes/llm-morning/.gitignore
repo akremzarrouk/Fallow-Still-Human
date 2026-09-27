@@ -13,3 +13,5 @@ runs/v5/fake/
 cache/v5/fake-*
 runs/v6/fake/
 cache/v6/fake-*
+runs/v7/fake/
+cache/v7/fake-*

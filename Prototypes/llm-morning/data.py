@@ -116,12 +116,12 @@ SCENARIOS = {
     },
 }
 # Not in the shipped data: daniel_ate_it, and Leo heard the night from his bed but did not see
-# who (reports/witness_design.md). The event is Leo's alone, so its sentence names nobody he
-# did not see; it goes in right after the night.
+# who (reports/witness_design.md). It is told to Leo alone, at the end of his "About the can:"
+# line (reports/witness_probe.md, variant B), so it names nobody he did not see.
 SCENARIOS["daniel_ate_it_leo_heard"] = {
     **SCENARIOS["daniel_ate_it"],
-    "after_night": [(3, "In the night Leo wakes and hears someone in the kitchen open a can. "
-                        "He does not get up and does not see who.", {"leo": "heard"})],
+    "about_the_can": {"leo": "Last night you woke and heard someone in the kitchen open a can; "
+                             "you did not see who."},
 }
 DEFAULT_SCENARIO = "daniel_ate_it"
 
@@ -173,6 +173,12 @@ def backstory(scenario):
 def culprit(scenario):
     """Who took the can in this scenario, or None."""
     return SCENARIOS[scenario]["culprit"]
+
+
+def about_the_can(scenario, pid):
+    """What else this person knows of the night in this scenario, told after their "About the
+    can:" line; or None."""
+    return SCENARIOS[scenario].get("about_the_can", {}).get(pid)
 
 # What everyone saw at the start: Elena's count and what she said about it. It is true in every
 # scenario, miscount included, where nothing was taken.
