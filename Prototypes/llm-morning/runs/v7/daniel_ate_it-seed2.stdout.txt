@@ -1,0 +1,42 @@
+=== resume/run Mon Sep 28 21:03:02 WCAST 2026
+daniel_ate_it-seed2: model gemini-3.5-flash-lite, fresh; cache cache\v7\gemini-3.5-flash-lite-daniel_ate_it-seed2.json holds 0 answers
+  min 00: model asked for 4; so far 4 live, 0 cached, 4 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 10s, retry 2/6
+  min 03: model asked for 4; so far 8 live, 0 cached, 10 API requests
+  min 15: model asked for 1; so far 9 live, 0 cached, 11 API requests
+  min 18: model asked for 1; so far 10 live, 0 cached, 12 API requests
+  min 21: model asked for 2; so far 12 live, 0 cached, 14 API requests
+  min 24: model asked for 3; so far 15 live, 0 cached, 17 API requests
+  min 30: model asked for 1; so far 16 live, 0 cached, 18 API requests
+  min 33: model asked for 1; so far 17 live, 0 cached, 19 API requests
+  min 54: model asked for 1; so far 18 live, 0 cached, 20 API requests
+  min 57: model asked for 3; so far 21 live, 0 cached, 23 API requests
+  min 60: model asked for 3; so far 24 live, 0 cached, 26 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 63: model asked for 3; so far 27 live, 0 cached, 30 API requests
+  min 66: model asked for 4; so far 31 live, 0 cached, 34 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 10s, retry 2/6
+  min 69: model asked for 4; so far 35 live, 0 cached, 40 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 72: model asked for 4; so far 39 live, 0 cached, 45 API requests
+  min 75: model asked for 4; so far 43 live, 0 cached, 49 API requests
+  min 78: model asked for 4; so far 47 live, 0 cached, 53 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 81: model asked for 1; so far 48 live, 0 cached, 55 API requests
+
+wrote runs/v7/daniel_ate_it-seed2.md
+  api_requests: 55
+  answers_live: 48
+  answers_from_cache: 0
+  model_decisions: 43
+  fallbacks: 5
+  routine_decisions: 72
+  lines_spoken: 33
+  inner_moments: 6
+  private_talks: 0
+  max_prompt_tokens_estimated: 1400
+  max_prompt_tokens_counted_by_api: 1354
+  run_seconds: 1222.4
+  story_sha256: 9556820b864474efca0e29a5bbb04f6dd7f40d990c3aea42a6dc90717b081309

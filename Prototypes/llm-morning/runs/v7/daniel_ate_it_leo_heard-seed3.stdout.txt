@@ -1,0 +1,37 @@
+daniel_ate_it_leo_heard-seed3: model gemini-3.5-flash-lite, fresh; cache cache\v7\gemini-3.5-flash-lite-daniel_ate_it_leo_heard-seed3.json holds 33 answers
+  min 00: model asked for 4; so far 1 live, 3 cached, 1 API requests
+  min 03: model asked for 4; so far 5 live, 3 cached, 5 API requests
+  min 06: model asked for 4; so far 9 live, 3 cached, 9 API requests
+  min 09: model asked for 4; so far 13 live, 3 cached, 13 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 12: model asked for 4; so far 17 live, 3 cached, 18 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 15: model asked for 3; so far 20 live, 3 cached, 22 API requests
+  min 18: model asked for 2; so far 22 live, 3 cached, 24 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 21: model asked for 4; so far 26 live, 3 cached, 29 API requests
+  min 24: model asked for 4; so far 30 live, 3 cached, 33 API requests
+  min 27: model asked for 4; so far 34 live, 3 cached, 37 API requests
+  min 30: model asked for 3; so far 37 live, 3 cached, 40 API requests
+  min 33: model asked for 1; so far 38 live, 3 cached, 41 API requests
+  min 54: model asked for 1; so far 39 live, 3 cached, 42 API requests
+  min 57: model asked for 2; so far 41 live, 3 cached, 44 API requests
+  min 60: model asked for 3; so far 44 live, 3 cached, 47 API requests
+  min 63: model asked for 4; so far 48 live, 3 cached, 51 API requests
+  min 66: model asked for 1; so far 49 live, 3 cached, 52 API requests
+  min 78: model asked for 1; so far 50 live, 3 cached, 53 API requests
+
+wrote runs/v7/daniel_ate_it_leo_heard-seed3.md
+  api_requests: 53
+  answers_live: 50
+  answers_from_cache: 3
+  model_decisions: 44
+  fallbacks: 9
+  routine_decisions: 67
+  lines_spoken: 38
+  inner_moments: 8
+  private_talks: 0
+  max_prompt_tokens_estimated: 1400
+  max_prompt_tokens_counted_by_api: 1375
+  run_seconds: 908.0
+  story_sha256: 3ad12dd74819a6a873e276736c8d94f50602c52dfcf6a025570516e9438f65b0

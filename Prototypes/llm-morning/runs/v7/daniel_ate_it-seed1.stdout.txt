@@ -1,0 +1,85 @@
+daniel_ate_it-seed1: model gemini-3.5-flash-lite, fresh; cache cache\v7\gemini-3.5-flash-lite-daniel_ate_it-seed1.json holds 0 answers
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 10s, retry 2/6
+    [503 UNAVAILABLE] waiting 20s, retry 3/6
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 10s, retry 2/6
+    [503 UNAVAILABLE] waiting 20s, retry 3/6
+    [503 UNAVAILABLE] waiting 40s, retry 4/6
+    [503 UNAVAILABLE] waiting 80s, retry 5/6
+    [503 UNAVAILABLE] waiting 120s, retry 6/6
+
+stopped: still refused (503 UNAVAILABLE) after 6 retries.
+Answers received so far (1) are kept in cache\v7\gemini-3.5-flash-lite-daniel_ate_it-seed1.json.
+To resume, run the same command again once the limit has passed (the free daily quota resets at midnight Pacific time): python morning.py --seed 1
+Cached answers are reused, so only the prompts not yet answered are sent.
+=== resume/run Mon Sep 28 15:36:48 WCAST 2026
+daniel_ate_it-seed1: model gemini-3.5-flash-lite, fresh; cache cache\v7\gemini-3.5-flash-lite-daniel_ate_it-seed1.json holds 1 answers
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 10s, retry 2/6
+    [503 UNAVAILABLE] waiting 20s, retry 3/6
+    [503 UNAVAILABLE] waiting 40s, retry 4/6
+    [503 UNAVAILABLE] waiting 80s, retry 5/6
+    [503 UNAVAILABLE] waiting 120s, retry 6/6
+
+stopped: still refused (503 UNAVAILABLE) after 6 retries.
+Answers received so far (1) are kept in cache\v7\gemini-3.5-flash-lite-daniel_ate_it-seed1.json.
+To resume, run the same command again once the limit has passed (the free daily quota resets at midnight Pacific time): python morning.py --seed 1
+Cached answers are reused, so only the prompts not yet answered are sent.
+=== resume/run Mon Sep 28 16:01:52 WCAST 2026
+daniel_ate_it-seed1: model gemini-3.5-flash-lite, fresh; cache cache\v7\gemini-3.5-flash-lite-daniel_ate_it-seed1.json holds 1 answers
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 10s, retry 2/6
+    [503 UNAVAILABLE] waiting 20s, retry 3/6
+    [503 UNAVAILABLE] waiting 40s, retry 4/6
+    [503 UNAVAILABLE] waiting 80s, retry 5/6
+    [503 UNAVAILABLE] waiting 120s, retry 6/6
+
+stopped: still refused (503 UNAVAILABLE) after 6 retries.
+Answers received so far (1) are kept in cache\v7\gemini-3.5-flash-lite-daniel_ate_it-seed1.json.
+To resume, run the same command again once the limit has passed (the free daily quota resets at midnight Pacific time): python morning.py --seed 1
+Cached answers are reused, so only the prompts not yet answered are sent.
+=== resume/run Mon Sep 28 20:34:37 WCAST 2026
+daniel_ate_it-seed1: model gemini-3.5-flash-lite, fresh; cache cache\v7\gemini-3.5-flash-lite-daniel_ate_it-seed1.json holds 1 answers
+  min 00: model asked for 4; so far 3 live, 1 cached, 3 API requests
+  min 03: model asked for 2; so far 5 live, 1 cached, 5 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 06: model asked for 4; so far 9 live, 1 cached, 10 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 09: model asked for 4; so far 13 live, 1 cached, 15 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 12: model asked for 4; so far 17 live, 1 cached, 21 API requests
+  min 15: model asked for 4; so far 21 live, 1 cached, 25 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 18: model asked for 4; so far 25 live, 1 cached, 30 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 21: model asked for 3; so far 28 live, 1 cached, 34 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 10s, retry 2/6
+  min 24: model asked for 3; so far 31 live, 1 cached, 39 API requests
+  min 27: model asked for 3; so far 34 live, 1 cached, 42 API requests
+  min 30: model asked for 2; so far 36 live, 1 cached, 44 API requests
+  min 39: model asked for 1; so far 37 live, 1 cached, 45 API requests
+  min 54: model asked for 1; so far 38 live, 1 cached, 46 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 63: model asked for 1; so far 39 live, 1 cached, 48 API requests
+  min 66: model asked for 4; so far 43 live, 1 cached, 52 API requests
+  min 69: model asked for 4; so far 47 live, 1 cached, 56 API requests
+  min 72: model asked for 4; so far 51 live, 1 cached, 60 API requests
+  min 78: model asked for 1; so far 52 live, 1 cached, 61 API requests
+
+wrote runs/v7/daniel_ate_it-seed1.md
+  api_requests: 61
+  answers_live: 52
+  answers_from_cache: 1
+  model_decisions: 48
+  fallbacks: 5
+  routine_decisions: 67
+  lines_spoken: 40
+  inner_moments: 10
+  private_talks: 1
+  max_prompt_tokens_estimated: 1400
+  max_prompt_tokens_counted_by_api: 1370
+  run_seconds: 1697.2
+  story_sha256: e4931b2148e45c6a579c3b81b0926600f33c6ee3b861fb11475ad36ae488f598
