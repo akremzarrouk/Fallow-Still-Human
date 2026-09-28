@@ -44,12 +44,9 @@ def load_config(path):
         return json.load(f)
 
 
-# `thought` comes first, and the order is given explicitly, so that it is written before the
-# choice (reports/witness_probe2.md, variant C).
 RESPONSE_SCHEMA = {
     "type": "object",
     "properties": {
-        "thought": {"type": "string"},
         "option": {"type": "string"},
         "say": {"type": "string", "nullable": True},
         "feeling": {"type": "string"},
@@ -57,8 +54,7 @@ RESPONSE_SCHEMA = {
         "suspects": {"type": "string", "enum": ["Daniel", "Elena", "Leo", "Mara", "nobody"]},
         "angry_at": {"type": "string", "enum": ["Daniel", "Elena", "Leo", "Mara", "nobody"]},
     },
-    "required": ["thought", "option", "say", "feeling", "reason", "suspects", "angry_at"],
-    "property_ordering": ["thought", "option", "say", "feeling", "reason", "suspects", "angry_at"],
+    "required": ["option", "say", "feeling", "reason", "suspects", "angry_at"],
 }
 
 
@@ -164,7 +160,6 @@ class FakeClient:
         pick = options[h % len(options)] if options else "stay"
         speaking = re.search(rf"^- {pick}: \(speech\)", block, flags=re.M) is not None
         answer = {
-            "thought": f"Fake thought {self.requests}.",
             "option": pick,
             "say": f"[fake line {self.requests}]" if speaking else None,
             "feeling": ["afraid", "calm", "ashamed", "angry", "tired"][h % 5],

@@ -18,7 +18,9 @@ import metrics
 import gemini
 from gemini import Cache, FakeClient, GeminiClient, Oracle
 from morning import run
-from world import QUIET_TURNS, SYSTEM, Grudge, Morning, Option, Person, Track, estimate_tokens
+from story import render
+from world import (PROMPT_TOKEN_BUDGET, QUIET_TURNS, SYSTEM, Grudge, Morning, Option, Person, Track,
+                   estimate_tokens)
 
 # What the third version's prompts said about guilt, suspicion and grudges: verdicts, which
 # the prompts must no longer contain.
@@ -136,7 +138,6 @@ class StubApi:
 
     def generate_content(self, model, contents, config):
         self.calls += 1
-        self.config = config
         step = self.script.pop(0) if self.script else "ok"
         if isinstance(step, Exception):
             raise step
@@ -309,9 +310,8 @@ class Scripted:
         option, say = answer[:2]
         suspects, angry_at = answer[2:] if len(answer) == 4 else ("nobody", "nobody")
         self.asked.append((minute, who))
-        return json.dumps({"thought": f"Scripted thought {self.requests}.", "option": option, "say": say,
-                           "feeling": "tense", "reason": "Scripted.", "suspects": suspects,
-                           "angry_at": angry_at})
+        return json.dumps({"option": option, "say": say, "feeling": "tense", "reason": "Scripted.",
+                           "suspects": suspects, "angry_at": angry_at})
 
 
 def scripted(policy, dirs, seed=1, turns=None):
@@ -912,145 +912,135 @@ class PromptTruthTest(unittest.TestCase):
                 self.assertNotIn("A can that should be on the shelf is not", prompt, (scenario, pid))
 
 
-THOUGHT_SENTENCE = ("`thought` is what goes through their mind first, in two or three sentences, before "
-                    "they choose. ")
-FIELDS = ["thought", "option", "say", "feeling", "reason", "suspects", "angry_at"]
-# Variant C of reports/witness_probe2.md, section 3.
-THOUGHT_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "thought": {"type": "string"},
-        "option": {"type": "string"},
-        "say": {"type": "string", "nullable": True},
-        "feeling": {"type": "string"},
-        "reason": {"type": "string"},
-        "suspects": {"type": "string", "enum": ["Daniel", "Elena", "Leo", "Mara", "nobody"]},
-        "angry_at": {"type": "string", "enum": ["Daniel", "Elena", "Leo", "Mara", "nobody"]},
-    },
-    "required": FIELDS,
-    "property_ordering": FIELDS,
-}
+def frozen(version, module):
+    """vN/<module>.py, loaded on its own (what vN ran)."""
+    spec = importlib.util.spec_from_file_location(f"{version}_{module}",
+                                                  os.path.join(HERE, version, f"{module}.py"))
+    loaded = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(loaded)
+    return loaded
 
 
-def frozen_world(version):
-    """vN/world.py, loaded on its own (its SYSTEM is what vN sent)."""
-    spec = importlib.util.spec_from_file_location(f"{version}_world", os.path.join(HERE, version, "world.py"))
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
+V6_RUNS = os.path.join(HERE, "runs", "v6")
+V6_CACHE = os.path.join(HERE, "cache", "v6")
+V6_MODEL = "gemini-3.5-flash-lite"
 
 
-class ThoughtFieldTest(unittest.TestCase):
-    """Every model decision carries a `thought`, written first (reports/witness_probe2.md,
-    variant C). It is kept and told in the story, and never shown in a prompt."""
+class DecisionFormatTest(unittest.TestCase):
+    """The decision format is v6's again (reports/belief_line_impl.md): no `thought` in the
+    schema, the system instruction, the parser, the fake answers, the story or the transcript."""
 
     def setUp(self):
         self.dirs = Dirs()
+        self.v6_world, self.v6_gemini = frozen("v6", "world"), frozen("v6", "gemini")
 
     def tearDown(self):
         self.dirs.cleanup()
 
-    def answer(self, **over):
-        ans = {"thought": "  Someone   took it.\nI wonder who. ", "option": "silent", "say": None,
-               "feeling": "tense", "reason": "I wait.", "suspects": "nobody", "angry_at": "nobody"}
-        ans.update(over)
-        return json.dumps({k: v for k, v in ans.items() if v is not ...})
+    def test_the_schema_is_v6s(self):
+        self.assertEqual(gemini.RESPONSE_SCHEMA, self.v6_gemini.RESPONSE_SCHEMA)
+        self.assertNotIn("thought", json.dumps(gemini.RESPONSE_SCHEMA))
 
-    def test_the_schema_asks_for_a_thought_first(self):
-        self.assertEqual(gemini.RESPONSE_SCHEMA, THOUGHT_SCHEMA)
-        self.assertEqual(list(gemini.RESPONSE_SCHEMA["properties"])[0], "thought")
+    def test_the_system_instruction_is_v6s(self):
+        self.assertEqual(SYSTEM, self.v6_world.SYSTEM)
+        self.assertNotIn("thought", SYSTEM)
 
-    def test_the_client_sends_the_schema_with_its_order(self):
-        old = os.environ.get("GEMINI_API_KEY")
-        os.environ["GEMINI_API_KEY"] = SECRET
-        try:
-            api = StubApi([])
-            GeminiClient(gemini.load_config(CONFIG), 1, api=api, sleep=lambda s: None,
-                         clock=lambda: 0.0).generate(SYSTEM, "- silent: stay put")
-        finally:
-            if old is None:
-                os.environ.pop("GEMINI_API_KEY", None)
-            else:
-                os.environ["GEMINI_API_KEY"] = old
-        schema = api.config.response_schema
-        ordering = schema["property_ordering"] if isinstance(schema, dict) else schema.property_ordering
-        self.assertEqual(ordering, FIELDS)
+    def test_the_parser_is_v6s(self):
+        base = {"option": "deny", "say": " I  did not. ", "feeling": " Tense ", "reason": "I  wait.",
+                "suspects": "leo", "angry_at": "nobody"}
+        answers = [base, {**base, "thought": "Someone took it."}, {**base, "thought": ""},
+                   {k: v for k, v in base.items() if k != "reason"}, {**base, "option": "silent"},
+                   {**base, "say": None}, {**base, "option": "fly"}, {**base, "suspects": "the dog"}]
+        texts = ([json.dumps(a) for a in answers]
+                 + ["not json", "[1]", "```json\n" + json.dumps(base) + "\n```"])
 
-    def test_the_system_instruction_adds_one_sentence_before_the_reply_line(self):
-        old = frozen_world("v6").SYSTEM
-        self.assertEqual(old.count("Reply with JSON only"), 1)
-        self.assertEqual(SYSTEM, old.replace("Reply with JSON only", THOUGHT_SENTENCE + "Reply with JSON only"))
-        # The JSON example at its end is unchanged: it does not list `thought`.
-        self.assertEqual(SYSTEM.split("Reply with JSON only")[1], old.split("Reply with JSON only")[1])
-        self.assertNotIn("thought", SYSTEM.split("Reply with JSON only")[1])
+        def opts(option):
+            return [option("silent", "stay put", kind="silent"), option("deny", "deny taking it", True, kind="deny")]
+        for text in texts:
+            self.assertEqual(Morning.parse(text, opts(Option)),
+                             self.v6_world.Morning.parse(text, opts(self.v6_world.Option)), text)
 
-    def test_the_parser_keeps_the_thought(self):
-        opts = [Option("silent", "stay put", kind="silent")]
-        choice, why = Morning.parse(self.answer(), opts)
-        self.assertIsNone(why)
-        self.assertEqual(choice["thought"], "Someone took it. I wonder who.")
+    def test_the_fake_client_answers_as_v6s(self):
+        now, then = FakeClient(), self.v6_gemini.FakeClient()
+        for i in range(12):
+            prompt = f"Your options:\n- silent: stay put\n- deny: (speech) deny taking it\n- search: look\n{i}"
+            self.assertEqual(now.generate("", prompt), then.generate("", prompt), i)
 
-    def test_the_parser_refuses_an_answer_without_a_thought(self):
-        opts = [Option("silent", "stay put", kind="silent")]
-        for bad in (..., "", "   ", None, 3, ["a"]):
-            self.assertEqual(Morning.parse(self.answer(thought=bad), opts), (None, "no `thought`"), bad)
-
-    def test_the_fake_client_gives_a_thought_first(self):
-        text = FakeClient(invalid_every=0).generate("", "Your options:\n- silent: stay put")
-        ans = json.loads(text)
-        self.assertEqual(list(ans)[0], "thought")
-        self.assertTrue(isinstance(ans["thought"], str) and ans["thought"].strip())
-
-    def test_the_decision_and_the_transcript_keep_the_thought(self):
-        m, client = scripted(lambda who, minute, options, c: ("silent", None), self.dirs, turns=3)
-        model = [d for rec in m.log for d in rec["decisions"] if d["mode"] == "model"]
-        self.assertTrue(model)
-        thoughts = [d["thought"] for d in model]
-        self.assertEqual(sorted(thoughts), sorted(f"Scripted thought {i}." for i in range(1, client.requests + 1)))
-        acts = [a for tt in m.transcript["turns"] for a in tt["acts"]]
-        self.assertEqual([a["thought"] for a in acts if a["mode"] == "model"], thoughts)
-        self.assertEqual({a["thought"] for a in acts if a["mode"] != "model"}, {None})
-
-    def test_no_prompt_shows_a_thought(self):
-        (meta, code), out = fake_morning(self.dirs, seed=1)
-        self.assertEqual(code, 0, out)
-        entries = [e for name in os.listdir(self.dirs.cache)
-                   for e in json.loads(read(os.path.join(self.dirs.cache, name))).values()]
-        thoughts = [json.loads(e["response"])["thought"] for e in entries
-                    if e["response"].startswith("{") and "thought" in json.loads(e["response"])]
-        self.assertTrue(thoughts)
-        for e in entries:
-            self.assertNotIn("Fake thought", e["prompt"])
-            for t in thoughts:
-                self.assertNotIn(t, e["prompt"])
-        m, client = scripted(lambda who, minute, options, c: ("silent", None), self.dirs, turns=6)
-        self.assertTrue(client.prompts)
-        for _, _, prompt in client.prompts:
-            self.assertNotIn("Scripted thought", prompt)
-
-    def test_the_story_tells_the_thought_next_to_the_reason(self):
+    def test_the_story_and_the_transcript_carry_no_thought(self):
         (meta, code), out = fake_morning(self.dirs, seed=1)
         self.assertEqual(code, 0, out)
         story = read(os.path.join(self.dirs.runs, "daniel_ate_it-seed1.md"))
-        pairs = re.findall(r"Thought: “Fake thought (\d+)\.” Reason: “Fake reason (\d+)\.”", story)
-        self.assertEqual(len(pairs), meta["model_decisions"])
-        self.assertTrue(all(a == b for a, b in pairs))
-        self.assertEqual(story.count("Reason: “"), meta["model_decisions"])
+        self.assertNotIn("Thought:", story)
+
+        def legend(text):
+            return next(x for x in text.splitlines() if x.startswith("- **Chose**"))
+        self.assertEqual(legend(story), legend(read(os.path.join(V6_RUNS, "daniel_ate_it-seed1.md"))))
+
+        def keys(path):
+            tr = json.loads(read(path))
+            return {k for turn in tr["turns"] for a in turn["acts"] for k in a}
+        self.assertEqual(keys(os.path.join(self.dirs.runs, "daniel_ate_it-seed1.transcript.json")),
+                         keys(os.path.join(V6_RUNS, "daniel_ate_it-seed1.transcript.json")))
+
+    def test_the_v6_baseline_replays_byte_for_byte_with_no_requests(self):
+        for seed in (1, 2, 3):
+            name = f"daniel_ate_it-seed{seed}"
+            path = os.path.join(self.dirs.root, f"{name}.json")
+            shutil.copy(os.path.join(V6_CACHE, f"{V6_MODEL}-{name}.json"), path)
+            oracle = Oracle(Cache(path), V6_MODEL, seed, client=None, replay=True)
+            m = Morning(oracle, seed)
+            try:
+                for t in range(m.turns):
+                    m.turn(t)
+            except gemini.StopMorning as stop:
+                self.fail(f"seed {seed}: {stop}")
+            m.finish()
+            text = render(m, seed, V6_MODEL, f"python morning.py --seed {seed}")
+            self.assertTrue(text.encode("utf-8") == read(os.path.join(V6_RUNS, name + ".md"), "rb"),
+                            f"seed {seed}: the story differs from runs/v6/{name}.md")
+            self.assertTrue(json.loads(json.dumps(m.transcript))
+                            == json.loads(read(os.path.join(V6_RUNS, name + ".transcript.json"))),
+                            f"seed {seed}: the transcript differs")
+            self.assertEqual((oracle.api_requests, oracle.live), (0, 0), seed)
+
+
+class PairedOracle:
+    """Answers from a saved cache when the prompt is the same as there, as a run paired with it
+    would; keeps every prompt, and gives each one it cannot answer a silent answer."""
+
+    def __init__(self, path, model, seed):
+        self.entries = json.loads(read(path))
+        self.model, self.seed = model, seed
+        self.asked, self.missed = [], []
+
+    def ask(self, system, prompt):
+        self.asked.append(prompt)
+        entry = self.entries.get(Cache.key(self.model, self.seed, system, prompt))
+        if entry:
+            return entry["response"]
+        self.missed.append(prompt)
+        return json.dumps({"option": "silent", "say": None, "feeling": "calm", "reason": "Waiting.",
+                           "suspects": "nobody", "angry_at": "nobody"})
 
 
 WITNESS = "daniel_ate_it_leo_heard"
-# Where the line was until v6: a backstory event of Leo's (reports/witness_design.md, section 1).
+# Where the line was in v6: a backstory event of Leo's (reports/witness_design.md, section 1).
 HEARD = ("In the night Leo wakes and hears someone in the kitchen open a can. "
          "He does not get up and does not see who.")
-# Where it is now: appended to Leo's "About the can:" line (reports/witness_probe.md, variant B).
-NOTE = "Last night you woke and heard someone in the kitchen open a can; you did not see who."
+# Where it was in v7: what he heard, at the end of his "About the can:" line (witness_probe.md, B).
+OLD_NOTE = "Last night you woke and heard someone in the kitchen open a can; you did not see who."
+# Now: what he heard and what follows from it, in the same place (reports/belief_line_impl.md).
+NOTE = ("Last night you woke and heard someone open a can in the kitchen, so someone in this house "
+        "took it in the night. You did not see who.")
 CAN_LINE = "About the can: you have not settled on who took it."
+BELIEF_LINE = ("About the can: you have not settled on who took it. Last night you woke and heard someone "
+               "open a can in the kitchen, so someone in this house took it in the night. You did not see who.")
 
 
 class WitnessScenarioTest(unittest.TestCase):
     """daniel_ate_it_leo_heard: daniel_ate_it, and Leo heard the night but did not see who
-    (reports/witness_design.md, sections 1 to 3). What he heard is told in his "About the can:"
-    line, not in his backstory."""
+    (reports/witness_design.md, sections 1 to 3). What he heard, and that it means someone in
+    the house took the can, is told in his "About the can:" line, not in his backstory."""
 
     def setUp(self):
         self.assertIn(WITNESS, data.SCENARIOS)
@@ -1074,9 +1064,10 @@ class WitnessScenarioTest(unittest.TestCase):
     # T1
     def test_the_sentence_names_nobody_leo_heard(self):
         self.assertEqual(data.about_the_can(WITNESS, "leo"), NOTE)
+        self.assertEqual(CAN_LINE + " " + NOTE, BELIEF_LINE)
         for name in ("Daniel", "Elena", "Leo", "Mara"):
             self.assertNotIn(name, NOTE)
-        self.assertEqual(set(re.findall(r"\b[A-Z]\w*", NOTE)), {"Last"})
+        self.assertEqual(set(re.findall(r"\b[A-Z]\w*", NOTE)), {"Last", "You"})
         self.assertNotIn("eats a can", NOTE)
 
     # T2
@@ -1084,7 +1075,8 @@ class WitnessScenarioTest(unittest.TestCase):
         for pid in data.ORDER:
             self.assertEqual(Person(pid, WITNESS).backstory, Person(pid, "daniel_ate_it").backstory, pid)
         self.assertEqual(data.backstory(WITNESS), data.backstory("daniel_ate_it"))
-        self.assertFalse([x for x in Person("leo", WITNESS).backstory if "Daniel eats" in x or HEARD in x])
+        self.assertFalse([x for x in Person("leo", WITNESS).backstory
+                          if "Daniel eats" in x or HEARD in x or NOTE in x])
 
     # T3
     def test_at_minute_00_only_leos_prompt_differs_by_his_can_line(self):
@@ -1100,7 +1092,7 @@ class WitnessScenarioTest(unittest.TestCase):
                     self.assertEqual(b, a, (seed, pid))
                     continue
                 diff = list(difflib.ndiff(a.splitlines(), b.splitlines()))
-                self.assertEqual([d for d in diff if d.startswith("+ ")], ["+ " + CAN_LINE + " " + NOTE], seed)
+                self.assertEqual([d for d in diff if d.startswith("+ ")], ["+ " + BELIEF_LINE], seed)
                 self.assertEqual([d for d in diff if d.startswith("- ")], ["- " + CAN_LINE], seed)
 
     # T4
@@ -1108,8 +1100,9 @@ class WitnessScenarioTest(unittest.TestCase):
         daniel = [p for p in self.fake_prompts() if p.startswith("You are Daniel,")]
         self.assertTrue(daniel)
         for p in daniel:
-            for words in (NOTE, HEARD, "woke and heard", "wakes and hears", "open a can", "did not see who",
-                          "does not see who", "heard someone"):
+            for words in (NOTE, OLD_NOTE, HEARD, "woke and heard", "wakes and hears", "open a can",
+                          "did not see who", "does not see who", "heard someone",
+                          "someone in this house took it"):
                 self.assertNotIn(words, p)
             if "On your conscience" in p:
                 self.assertIn("and nobody saw", p)
@@ -1122,6 +1115,7 @@ class WitnessScenarioTest(unittest.TestCase):
         self.assertTrue(leo)
         for p in prompts:
             self.assertNotIn(HEARD, p)
+            self.assertNotIn(OLD_NOTE, p)
             if p.startswith("You are Leo,"):
                 # The note ends his one "About the can" line, whatever that line says before it.
                 lines = [x for x in p.splitlines() if NOTE in x]
@@ -1165,6 +1159,27 @@ class WitnessScenarioTest(unittest.TestCase):
         story = read(os.path.join(self.dirs.runs, "daniel_ate_it-seed1.md"))
         self.assertIn("| Knows about the can | ate it in the night; nobody saw | only that it is missing | "
                       "only that it is missing | only that it is missing |", story)
+
+    # T9
+    def test_leos_minute_00_prompt_loses_no_line_with_the_v6_answers(self):
+        """Paired with the v6 baseline answers, as a witness run would be (design §4, R3), Leo's
+        first prompt differs from his daniel_ate_it one by the can line alone and fits the budget."""
+        for seed in (1, 2, 3):
+            prompts = {}
+            for scenario in ("daniel_ate_it", WITNESS):
+                oracle = PairedOracle(os.path.join(V6_CACHE, f"{V6_MODEL}-daniel_ate_it-seed{seed}.json"),
+                                      V6_MODEL, seed)
+                Morning(oracle, seed, scenario).turn(0)
+                if scenario == "daniel_ate_it":
+                    self.assertEqual(oracle.missed, [], seed)
+                leo = [p for p in oracle.asked if p.startswith("You are Leo,")]
+                self.assertEqual(len(leo), 1, (seed, scenario))
+                prompts[scenario] = leo[0]
+            old, new = prompts["daniel_ate_it"], prompts[WITNESS]
+            diff = [d for d in difflib.ndiff(old.splitlines(), new.splitlines()) if d[:2] in ("+ ", "- ")]
+            self.assertEqual(diff, ["- " + CAN_LINE, "+ " + BELIEF_LINE], seed)
+            self.assertNotIn("(earlier things, left out here)", new, seed)
+            self.assertLessEqual(estimate_tokens(SYSTEM + new), PROMPT_TOKEN_BUDGET, seed)
 
 
 class GeminiClientTest(unittest.TestCase):

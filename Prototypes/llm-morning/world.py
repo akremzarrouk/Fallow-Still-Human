@@ -33,8 +33,7 @@ SYSTEM = (
     "doing it, or null. `feeling` names what they feel right now in one or two words. "
     "`reason` is their reason in one sentence, as they would think it. `suspects` is who they "
     "now believe took the can, and `angry_at` is who they are angry with right now: each is "
-    'one of "Daniel", "Elena", "Leo", "Mara" or "nobody". `thought` is what goes through their '
-    "mind first, in two or three sentences, before they choose. Reply with JSON only: "
+    'one of "Daniel", "Elena", "Leo", "Mara" or "nobody". Reply with JSON only: '
     '{"option": "<id>", "say": "<words>" or null, "feeling": "<word>", "reason": "<sentence>", '
     '"suspects": "<name or nobody>", "angry_at": "<name or nobody>"}'
 )
@@ -561,7 +560,7 @@ class Morning:
             return None, "not JSON"
         if not isinstance(ans, dict):
             return None, "not a JSON object"
-        for field in ("thought", "option", "feeling", "reason"):
+        for field in ("option", "feeling", "reason"):
             if not isinstance(ans.get(field), str) or not ans[field].strip():
                 return None, f"no `{field}`"
         if "say" not in ans or not (ans["say"] is None or isinstance(ans["say"], str)):
@@ -586,8 +585,7 @@ class Morning:
         if opt.id == "silent" and say:
             say, dropped = None, True
         return {"option": opt.id, "say": say, "feeling": " ".join(ans["feeling"].split()).lower(),
-                "thought": " ".join(ans["thought"].split()), "reason": " ".join(ans["reason"].split()),
-                "dropped_line": dropped, **named}, None
+                "reason": " ".join(ans["reason"].split()), "dropped_line": dropped, **named}, None
 
     # ---------- one turn ----------
     def run(self):
@@ -670,8 +668,7 @@ class Morning:
                      "words": d.get("say"), "audience": audience, "mode": d["mode"],
                      "decided_at": [minute, d["seq"]], "said_at": [minute, d["seq"]],
                      "came_of_it": d["came_of_it"], "new": d.get("new"), "new_why": d.get("new_why"),
-                     "inner": d.get("inner_families"), "thought": d.get("thought"),
-                     "suspects": d.get("suspects"),
+                     "inner": d.get("inner_families"), "suspects": d.get("suspects"),
                      "angry_at": d.get("angry_at"),
                      "moved_to": opt.act["to"] if opt.act["kind"] in ("go", "accept_aside") else None}
             tturn["acts"].append(entry)

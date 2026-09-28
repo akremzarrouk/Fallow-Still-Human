@@ -81,8 +81,7 @@ def decision_line(d, fold=None):
               f"Angry at: {d['angry_at']}; {d['grudge_note']}.")
     return (f"- **{name}**{order}. {because}.{held} **Chose: {d['label']}**{said}"
             f"{newness(d)} (one of {d['offered']} options). Feeling: *{d['feeling']}*. "
-            f"Thought: {quoted(d['thought'])} Reason: {quoted(d['reason'])}{inside} "
-            f"Came of it: {d['came_of_it']}{fact}")
+            f"Reason: {quoted(d['reason'])}{inside} Came of it: {d['came_of_it']}{fact}")
 
 
 def room_line(rec):
@@ -153,8 +152,7 @@ def render(morning, seed, model_name, command):
       "looks upset in the same room, or someone came in). Only then is the model asked. What "
       "happened is listed.")
     w("- **Chose**: the option the model picked from those the rules offered. Its words are in "
-      "quotes. The thought (written first, before the choice), the feeling and the one-sentence "
-      "reason are the model's, as it wrote them. Nobody's prompt ever shows a thought.")
+      "quotes. The feeling and the one-sentence reason are the model's, as it wrote them.")
     w("- **New / not new**: a line is new if it is a question, an accusation, a denial of a new "
       "accusation, or a confession, and the speaker has not taken that stance before. "
       "Reassurance, repeated stances and other remarks are not new. Something eaten, shared or "

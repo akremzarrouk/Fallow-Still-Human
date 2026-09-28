@@ -117,11 +117,12 @@ SCENARIOS = {
 }
 # Not in the shipped data: daniel_ate_it, and Leo heard the night from his bed but did not see
 # who (reports/witness_design.md). It is told to Leo alone, at the end of his "About the can:"
-# line (reports/witness_probe.md, variant B), so it names nobody he did not see.
+# line (reports/witness_probe.md, variant B), so it names nobody he did not see. It says what
+# follows from it too, so the model is not left to work that out (reports/belief_line_impl.md).
 SCENARIOS["daniel_ate_it_leo_heard"] = {
     **SCENARIOS["daniel_ate_it"],
-    "about_the_can": {"leo": "Last night you woke and heard someone in the kitchen open a can; "
-                             "you did not see who."},
+    "about_the_can": {"leo": "Last night you woke and heard someone open a can in the kitchen, so "
+                             "someone in this house took it in the night. You did not see who."},
 }
 DEFAULT_SCENARIO = "daniel_ate_it"
 
