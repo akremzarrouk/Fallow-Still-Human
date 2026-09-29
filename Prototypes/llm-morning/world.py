@@ -56,7 +56,8 @@ PROMPT_TOKEN_BUDGET = 1400   # estimated; the API counted 1,370 at most in the s
 QUIET_TURNS = 2              # full turns with nothing new that end a conversation
 INNER_EVERY = 9              # minutes: an inner moment at most this often per person
 FALL_EVERY = 15              # minutes: a suspicion or grudge falls at most one step this often
-LULL_QUIET = 9               # minutes a room must be still before a lull (None: no lulls)
+LULL_QUIET = None            # minutes a room must be still before a lull (None: no lulls);
+                             # off since reports/lull_v9.md, 9 in reports/lull_design.md
 LULL_EVERY = 12              # minutes since a person was last asked before a lull
 
 KIND_DONE = {   # what a run of one kind of act looks like, told to the person who did it

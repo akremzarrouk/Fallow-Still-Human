@@ -1205,6 +1205,9 @@ class WitnessScenarioTest(unittest.TestCase):
 LULL_LINE = re.compile(r"^Nothing has been said or done in the (kitchen|brothers room|back room|bathroom) "
                        r"since minute (\d\d)\.$", flags=re.M)
 HUNGRIER = "Since you last decided, you have grown hungrier."
+# Lull moments are off (world.LULL_QUIET is None, reports/lulls_off.md). The tests that switch
+# them on themselves use the design's value (reports/lull_design.md, §1).
+DESIGN_LULL_QUIET = 9
 
 
 class Recorder:
@@ -1253,7 +1256,9 @@ def longest_alone_routine(transcript):
 
 
 class LullTest(unittest.TestCase):
-    """Lull moments (reports/lull_design.md, sections 1 to 3; tests T1 to T11 of section 5)."""
+    """Lull moments (reports/lull_design.md, sections 1 to 3; tests T1 to T11 of section 5).
+    They are off (reports/lulls_off.md): the tests that do not switch them on themselves check
+    that nothing comes of them."""
 
     def setUp(self):
         self.dirs = Dirs()
@@ -1262,10 +1267,11 @@ class LullTest(unittest.TestCase):
         self.dirs.cleanup()
 
     def fake(self, seed, lulls=True):
-        """A fake-model morning; with lulls=False, lull moments are switched off."""
+        """A fake-model morning; with lulls=True, lull moments are switched on at the design's 9
+        minutes, and with lulls=False, off."""
         rec = Recorder(Oracle(Cache(os.path.join(self.dirs.root, f"f{seed}-{lulls}.json")), "fake", seed,
                               client=FakeClient()))
-        with mock.patch.object(world, "LULL_QUIET", world.LULL_QUIET if lulls else None):
+        with mock.patch.object(world, "LULL_QUIET", DESIGN_LULL_QUIET if lulls else None):
             m = Watched(rec, seed).run()
         return m, rec
 
@@ -1281,31 +1287,27 @@ class LullTest(unittest.TestCase):
 
     # T1
     def test_t1_the_numbers(self):
-        self.assertEqual((world.LULL_QUIET, world.LULL_EVERY), (9, 12))
+        self.assertEqual((world.LULL_QUIET, world.LULL_EVERY), (None, 12))
 
-    def test_t1a_the_room_must_be_still_for_9_minutes(self):
+    def test_t1a_off_a_room_still_for_9_minutes_gives_no_lull(self):
         m = self.still_kitchen()
         mara = m.people["mara"]
-        m.last_stir["kitchen"], mara.last_asked = 9, 3
-        d = m.decide(mara, 5)                                   # minute 15: still for 6
+        m.last_stir["kitchen"], mara.last_asked = 6, 3          # minute 15: still for 9, not asked for 12
+        self.assertFalse(m.lull_due(mara, 15))
+        d = m.decide(mara, 5)
         self.assertEqual(d["mode"], "routine")
         self.assertNotIn("lull", d)
         self.assertEqual(mara.last_asked, 3)
-        m.last_stir["kitchen"] = 6                              # still for 9
-        d = m.decide(mara, 5)
-        self.assertEqual((d["mode"], d["lull"], d["triggers"]), ("model", 6, []))
-        self.assertNotIn("inner", d)
-        self.assertEqual(mara.last_asked, 15)
 
-    def test_t1b_the_person_must_not_have_been_asked_for_12_minutes(self):
+    def test_t1b_off_never_asked_in_a_room_still_all_morning_gives_no_lull(self):
         m = self.still_kitchen()
         mara = m.people["mara"]
-        m.last_stir["kitchen"], mara.last_asked = 6, 6
-        d = m.decide(mara, 5)                                   # asked 9 minutes ago
+        m.last_stir["kitchen"], mara.last_asked = 0, None       # minute 87: still for 87, never asked
+        self.assertFalse(m.lull_due(mara, 87))
+        d = m.decide(mara, 29)
         self.assertEqual(d["mode"], "routine")
         self.assertNotIn("lull", d)
-        mara.last_asked = 3                                     # 12 minutes ago
-        self.assertEqual(m.decide(mara, 5)["lull"], 6)
+        self.assertIsNone(mara.last_asked)
 
     def test_t1c_a_social_trigger_comes_first(self):
         m = self.still_kitchen()
@@ -1325,27 +1327,19 @@ class LullTest(unittest.TestCase):
         self.assertEqual(d["inner_kinds"], ["hunger"])
         self.assertNotIn("lull", d)
 
-    def test_t1e_t8_t9_alone_after_leaving(self):
-        """Leo goes to the back room at minute 0 and then stays silent: routine at 3, 6 and 9,
-        a lull at 12; his leaving is no trigger for the others."""
+    def test_t1e_t9_off_alone_after_leaving_no_lull_asks_him(self):
+        """Leo goes to the back room at minute 0 and then stays silent: with lulls off, nothing
+        asks him at 12 (routine at 3, 6, 9 and 12); his leaving is no trigger for the others."""
         def policy(who, minute, options, client):
             return ("go_back_room", None) if (who, minute) == ("leo", 0) else ("silent", None)
         m, client = scripted(policy, self.dirs)
+        self.assertEqual(m.people["leo"].room, "back_room")
         leo = [(rec["minute"], d) for rec in m.log for d in rec["decisions"] if d["person"] == "leo"]
-        self.assertEqual([d["mode"] for _, d in leo[1:4]], ["routine"] * 3)
-        self.assertEqual((leo[4][0], leo[4][1]["mode"], leo[4][1]["lull"]), (12, "model", 0))
-        self.assertIn("Nothing has been said or done in the back room since minute 00.",
-                      next(p for minute, who, p in client.prompts if (minute, who) == (12, "leo")))
-        # Every lull, anyone's, comes 12 or more minutes after that person was last asked.
-        last = {}
-        for rec in m.log:
-            for d in rec["decisions"]:
-                if d.get("lull") is not None:
-                    self.assertGreaterEqual(rec["minute"] - last[d["person"]], 12, d["person"])
-                if d["mode"] != "routine":
-                    last[d["person"]] = rec["minute"]
-        # T8: P3's count.
-        self.assertEqual(longest_alone_routine(m.transcript), 3)
+        self.assertEqual([(minute, d["mode"]) for minute, d in leo[1:5]],
+                         [(3, "routine"), (6, "routine"), (9, "routine"), (12, "routine")])
+        self.assertFalse([d for rec in m.log for d in rec["decisions"] if d.get("lull") is not None])
+        self.assertFalse([p for _, _, p in client.prompts if "Nothing has been said or done in the" in p])
+        self.assertGreaterEqual(longest_alone_routine(m.transcript), 4)
         # T9: the others were told he left, and it was no trigger for them.
         for pid in ("daniel", "elena", "mara"):
             self.assertIn((0, "Leo leaves for the back room."), m.people[pid].memory)
@@ -1388,8 +1382,10 @@ class LullTest(unittest.TestCase):
         m = self.still_kitchen(client=Broken())
         mara = m.people["mara"]
         m.last_stir["kitchen"] = 0
+        mara.triggers = [("Elena asks everyone who took the can", True)]   # lulls are off: a trigger asks
         d = m.decide(mara, 5)
-        self.assertEqual((d["mode"], d["lull"]), ("fallback", 0))
+        self.assertEqual(d["mode"], "fallback")
+        self.assertNotIn("lull", d)
         self.assertEqual(mara.last_asked, 15)
 
     # T2
@@ -1459,41 +1455,27 @@ class LullTest(unittest.TestCase):
         self.assertGreater(lulls, 0)
 
     # T6
-    def test_t6_the_v6_baseline_caches_pair_up_to_the_first_lull(self):
-        """Replayed on the v6 answers with no client, the morning is v6's until the first lull,
-        whose prompt is not in the cache: seed 1 min 42 Mara, seed 2 min 51 Elena, seed 3 min 15
-        Daniel, after 41, 53 and 10 answers from the cache (reports/lull_design.md, §4)."""
-        expected = {1: (42, "mara", 41, 33), 2: (51, "elena", 53, 42), 3: (15, "daniel", 10, 3)}
-        for seed, (minute, who, served, since) in expected.items():
+    def test_t6_off_the_v6_baseline_caches_replay_to_the_end(self):
+        """With lulls off, the v6 answers carry each morning to its end, where with lulls on they
+        stopped at the first lull (seed 1 min 42, seed 2 min 51, seed 3 min 15): every answer
+        from the cache, 0 requests, v6's transcript but for the `lull` key, which is None."""
+        for seed, served in ((1, 45), (2, 66), (3, 25)):
             name = f"daniel_ate_it-seed{seed}"
             path = os.path.join(self.dirs.root, f"{name}.json")
             shutil.copy(os.path.join(V6_CACHE, f"{V6_MODEL}-{name}.json"), path)
             oracle = Oracle(Cache(path), V6_MODEL, seed, client=None, replay=True)
             rec = Recorder(oracle)
             m = Morning(rec, seed)
-            with self.assertRaises(gemini.CacheMiss):
+            try:
                 for t in range(m.turns):
                     m.turn(t)
-            last = rec.prompts[-1]
-            self.assertTrue(last.startswith(f"You are {data.PEOPLE[who]['name']},"), seed)
-            self.assertIn(f"\nNow, minute {minute:02d}, you are in the kitchen.\n", last)
-            self.assertEqual(LULL_LINE.findall(last), [("kitchen", f"{since:02d}")], seed)
+            except gemini.StopMorning as stop:
+                self.fail(f"seed {seed}: {stop}")
             self.assertEqual((oracle.from_cache, oracle.api_requests), (served, 0), seed)
-            v6 = json.loads(read(os.path.join(V6_RUNS, name + ".transcript.json")))
+            self.assertFalse([p for p in rec.prompts if "Nothing has been said or done in the" in p], seed)
+            self.assertTrue(all(a["lull"] is None for turn in m.transcript["turns"] for a in turn["acts"]))
             self.assertEqual(without_lull(m.transcript)["turns"],
-                             [turn for turn in v6["turns"] if turn["minute"] < minute], seed)
-            # In the turn it stops, whoever acted before was silent in v6 too, as the prompt says.
-            now = next(turn for turn in v6["turns"] if turn["minute"] == minute)
-            before = []
-            for a in now["acts"]:
-                if a["who"] == who:
-                    break
-                before.append(a)
-            self.assertTrue(all(a["option"] == "silent" for a in before), seed)
-            for i, a in enumerate(before, 1):
-                self.assertIn(f"\n{i}. {data.PEOPLE[a['who']]['name']} stays put and says nothing.\n", last)
-            if not before:
-                self.assertIn("\nYou are the first to act in the kitchen this turn.\n", last)
+                             json.loads(read(os.path.join(V6_RUNS, name + ".transcript.json")))["turns"], seed)
 
     # T8 on fake mornings
     def test_t8_nobody_is_alone_more_than_3_turns_without_being_asked(self):
@@ -1502,20 +1484,16 @@ class LullTest(unittest.TestCase):
             self.assertLessEqual(longest_alone_routine(m.transcript), 3, seed)
 
     # T10
-    def test_t10_lulls_are_recorded(self):
-        total = 0
+    def test_t10_off_no_lull_is_recorded(self):
         for seed in (1, 2, 3):
             (meta, code), out = fake_morning(self.dirs, seed=seed)
             self.assertEqual(code, 0, out)
             tr = json.loads(read(os.path.join(self.dirs.runs, f"daniel_ate_it-seed{seed}.transcript.json")))
-            acts = [a for turn in tr["turns"] for a in turn["acts"] if a["lull"] is not None]
-            self.assertEqual(meta["lull_moments"], len(acts), seed)
-            self.assertTrue(all(a["mode"] in ("model", "fallback") for a in acts), seed)
+            self.assertTrue(all("lull" in a and a["lull"] is None for turn in tr["turns"] for a in turn["acts"]))
+            self.assertEqual(meta["lull_moments"], 0, seed)
             story = read(os.path.join(self.dirs.runs, f"daniel_ate_it-seed{seed}.md"))
-            self.assertEqual(len(re.findall(r"\*\*Lull\*\*, nothing said or done in the ", story)), len(acts))
-            self.assertIn("lull_moments", out)
-            total += len(acts)
-        self.assertGreater(total, 0)
+            self.assertNotIn("**Lull**, nothing said or done in the ", story)
+            self.assertIn("lull_moments: 0", out)
 
     # T11
     def test_t11_v8_still_replays(self):
