@@ -4,8 +4,8 @@ Everything here comes from the morning's own record, so the same answers always 
 the same bytes: no clock, no call counts, no run time.
 """
 import data
-from world import (FALL_EVERY, FEELING_SHOWS_FOR_TURNS, INNER_EVERY, KIND_DONE, QUIET_TURNS,
-                   grudge_facts, hunger_words, trait_words)
+from world import (FALL_EVERY, FEELING_SHOWS_FOR_TURNS, INNER_EVERY, KIND_DONE, LULL_EVERY, LULL_QUIET,
+                   QUIET_TURNS, grudge_facts, hunger_words, trait_words)
 
 DAYS_KNOWN = {"did": "did it", "saw": "saw it", "heard": "heard it"}
 ORDINAL = {1: "1st", 2: "2nd", 3: "3rd", 4: "4th"}
@@ -65,6 +65,8 @@ def decision_line(d, fold=None):
     order = f" ({ORDINAL[d['place']]} to act in the {data.ROOMS[d['room']]}: {d['order_reason']})"
     if d.get("inner"):
         because = "**Inner moment**, nothing social happening: " + "; ".join(d["inner"])
+    elif d.get("lull") is not None:
+        because = f"**Lull**, nothing said or done in the {data.ROOMS[d['room']]} since minute {d['lull']:02d}"
     else:
         because = "Social moment: " + "; ".join(d["triggers"])
     held = (f" Not offered: {KIND_DONE[d['held_back']]} three turns in a row, so no more of it "
@@ -188,6 +190,10 @@ def render(morning, seed, model_name, command):
     w(f"- **Inner moment**: nothing social happened, but hunger, guilt, suspicion or grudge has "
       f"risen a level since they last decided with the model; the model is asked, at most once "
       f"every {INNER_EVERY} minutes per person. What rose is listed.")
+    w(f"- **Lull**: nothing social or inner, but nothing has been said or done in their room for at "
+      f"least {LULL_QUIET} minutes (staying put in silence and staying seated do not count), and they "
+      f"have not been asked for at least {LULL_EVERY} minutes; the model is asked, and told since when "
+      "the room has been still.")
     w("- **Take aside**: someone can ask a person in the room who has not acted yet this turn to "
       "come to an empty room. That person answers at once (their decision for the turn): go, and "
       "both move there and can talk alone; or refuse.")

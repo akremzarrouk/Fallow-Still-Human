@@ -13,6 +13,10 @@ Inside each person the rules keep hunger, a suspicion (a person and a strength f
 whoever took the can (the scenario says who, if anyone), guilt. The model is shown the
 events behind them as plain facts, with at most a
 neutral level word; the numbers themselves only decide when an inner moment comes.
+
+A lull moment asks the model for someone nothing social or inner has happened to, when the
+room they are in has been still for a while and they have not been asked for a while; their
+prompt says since when nothing has been said or done there (reports/lull_design.md).
 """
 import json
 import random
@@ -52,6 +56,8 @@ PROMPT_TOKEN_BUDGET = 1400   # estimated; the API counted 1,370 at most in the s
 QUIET_TURNS = 2              # full turns with nothing new that end a conversation
 INNER_EVERY = 9              # minutes: an inner moment at most this often per person
 FALL_EVERY = 15              # minutes: a suspicion or grudge falls at most one step this often
+LULL_QUIET = 9               # minutes a room must be still before a lull (None: no lulls)
+LULL_EVERY = 12              # minutes since a person was last asked before a lull
 
 KIND_DONE = {   # what a run of one kind of act looks like, told to the person who did it
     "ask": "asked who took the can", "deny": "denied taking it",
@@ -225,6 +231,7 @@ class Person:
         self.guilt_events = []      # (minute, fact)
         self.seen = None            # the levels they were shown when they last decided
         self.last_inner = None      # minute of their last inner moment
+        self.last_asked = None      # minute of their last model decision of any kind
 
     def grudge(self, against):
         return self.grudges.setdefault(against, Grudge())
@@ -261,6 +268,9 @@ class Morning:
         self.moved_by_inner = {}    # during a turn: person -> did an inner moment move them
         self.transcript = {"seed": seed, "scenario": scenario, "culprit": self.culprit, "turns": []}
         self.convo_told = 0         # how much of the conversation log the turn records hold
+        # room -> the minute something other than staying put in silence, or staying seated,
+        # was last done in it (the count at minute 00 was done in the kitchen)
+        self.last_stir = {"kitchen": 0}
         for p in self.people.values():
             how = "did it" if p.id == "elena" else "saw it"
             p.sure.append(f"min 00: {data.OPENING} (you {how})")
@@ -489,7 +499,8 @@ class Morning:
                 "reassure": f"reassured {target or 'everyone'}", "say": "spoke to everyone"
                 }.get(h["kind"], "spoke to everyone")
 
-    def prompt_for(self, p, t, opts):
+    def prompt_for(self, p, t, opts, lull=None):
+        """lull: for a lull moment, the minute the room was last stirred; None otherwise."""
         s = p.sheet
         minute = t * data.MINUTES_PER_TURN
         calls = "; ".join(f"{self.people[q].name} \"{word}\"" for q, word in data.ADDRESS[p.id].items())
@@ -512,6 +523,8 @@ class Morning:
             now.append(f"- {q.name} is here, {q.activity['label']}.{look}")
         if p.room == "kitchen":
             now.append(f"- {self.portions} portion{'s' if self.portions != 1 else ''} on the shelf.")
+        if lull is not None:
+            now.append(f"Nothing has been said or done in the {room} since minute {lull:02d}.")
         so_far = self.so_far[p.room] if self.so_far is not None else []
         if so_far:
             now.append(f"Said and done in the {room} this turn, before you, in order:")
@@ -669,7 +682,7 @@ class Morning:
                      "decided_at": [minute, d["seq"]], "said_at": [minute, d["seq"]],
                      "came_of_it": d["came_of_it"], "new": d.get("new"), "new_why": d.get("new_why"),
                      "inner": d.get("inner_families"), "suspects": d.get("suspects"),
-                     "angry_at": d.get("angry_at"),
+                     "angry_at": d.get("angry_at"), "lull": d.get("lull"),
                      "moved_to": opt.act["to"] if opt.act["kind"] in ("go", "accept_aside") else None}
             tturn["acts"].append(entry)
             return opt, entry
@@ -705,6 +718,7 @@ class Morning:
         for p, to, partner in self.moves:
             p.room = to
             p.activity = {"kind": "idle", "label": "just come in"}
+            self.last_stir[to] = minute         # coming in is something done in the room
         # Voices carry to everyone who did not hear the words, wherever they are at the end of
         # the turn, never into or out of the bathroom. Only a new line is a social moment for
         # someone who hears it through a wall.
@@ -744,7 +758,8 @@ class Morning:
         grudge. They have now seen the levels their prompt showed."""
         minute = t * data.MINUTES_PER_TURN
         seen = p.levels()
-        prompt = self.prompt_for(p, t, opts)
+        prompt = self.prompt_for(p, t, opts, d.get("lull"))
+        p.last_asked = minute
         text = self.oracle.ask(SYSTEM, prompt)
         p.seen = seen
         choice, why = self.parse(text, opts)
@@ -794,7 +809,9 @@ class Morning:
                 d["inner_kinds"] = rose
                 d["inner_families"] = list(dict.fromkeys(k.split(":")[0] for k in rose))
                 d["inner"] = self.rise_words(p, rose)
-        if triggers or d.get("inner_kinds"):
+        if not triggers and not d.get("inner_kinds") and self.lull_due(p, minute):
+            d["lull"] = self.last_stir[p.room]
+        if triggers or d.get("inner_kinds") or "lull" in d:
             choice, why = self.ask_model(p, t, opts, d)
             if not choice:
                 d.update(mode="fallback", invalid=why, option=self.routine(p, opts), say=None)
@@ -804,6 +821,14 @@ class Morning:
         d["label"] = opt.label
         d["_opt"] = opt
         return d
+
+    def lull_due(self, p, minute):
+        """Their room has been still for LULL_QUIET minutes, and they have not been asked for
+        LULL_EVERY minutes."""
+        if LULL_QUIET is None or p.room not in self.last_stir:
+            return False
+        return (minute - self.last_stir[p.room] >= LULL_QUIET
+                and (p.last_asked is None or minute - p.last_asked >= LULL_EVERY))
 
     def decide_aside(self, q, p, to, t):
         """q has been asked aside by p: go with them or refuse. Always a model decision."""
@@ -866,6 +891,10 @@ class Morning:
         target_id = aimed_at(opt.id) or (opt.act.get("target") if kind == "sit" else None)
         target = self.people[target_id] if target_id else None
         partner = self.people[opt.act["partner"]] if "partner" in opt.act else None
+        # Anything but staying put in silence, or staying seated with the same person, stirs the room.
+        if not (kind == "silent" or (kind == "sit" and p.activity["kind"] == "sitting"
+                                     and p.activity["with"] == target_id)):
+            self.last_stir[room] = minute
         p.history.append({"t": t, "kind": kind, "seq": self.seq})
         p.addressed = None
         p.aside_lead = None
