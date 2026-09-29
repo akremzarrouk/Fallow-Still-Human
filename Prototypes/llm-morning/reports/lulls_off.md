@@ -16,8 +16,9 @@ three times word for word, which is less human than the silence.
 
 **Another session committed in between.** `a7bffab` (CLAUDE.md and
 Docs/understanding/target-morning.md, "the inactivity Never item judges frozen silence") landed
-6 seconds after `dc3f42d`. This session did not make it. It also created an untracked
-`reports/never_item_update.md`, which this session did not touch or commit.
+6 seconds after `dc3f42d`. This session did not make it. It also created
+`reports/never_item_update.md`, which this session did not touch. That session committed it
+itself as `175670e`, while this report was being committed.
 
 ## What changed
 
@@ -142,9 +143,10 @@ exit=0
      before the v9 run's first lull.
    - Before any new run, the version needs moving on: freeze v9 and default to v10, as was
      done for v8.
-3. **Git status is not clean apart from the three replay.md files.** It also shows the other
-   session's untracked `Prototypes/llm-morning/reports/never_item_update.md`. It was left for
-   that session.
+3. **Git status.** When `79e1e8a` was made, git status also showed the other session's untracked
+   `reports/never_item_update.md`, which was left for that session. That session has since
+   committed it (`175670e`). After this report's commit, git status shows only the three old
+   `runs/v6/daniel_ate_it-seed*.replay.md`.
 
 ## Commands run
 
@@ -161,7 +163,8 @@ No command called the API. Every test and script ran with `GEMINI_API_KEY` unset
    are", item 1.
 6. `git add world.py test_morning.py && git commit` gave `79e1e8a`.
 7. `git status --short` gave the three `runs/v6/daniel_ate_it-seed*.replay.md` and
-   `reports/never_item_update.md`, which is the other session's.
+   `reports/never_item_update.md`, which is the other session's. After the other session's
+   `175670e` and this report's commit, it gave only the three replay.md files.
 
 ## The diff
 
