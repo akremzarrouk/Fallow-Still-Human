@@ -19,3 +19,5 @@ runs/v8/fake/
 cache/v8/fake-*
 runs/v9/fake/
 cache/v9/fake-*
+runs/v10/fake/
+cache/v10/fake-*
