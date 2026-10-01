@@ -209,7 +209,7 @@ class Person:
                           if (how := who.get(pid))]
         self.memory = []            # (minute, text) this morning, oldest first; trimmed to fit
         self.sure = []              # this morning's facts that are never trimmed
-        self.said_lines = []        # their own words, oldest first
+        self.said_lines = []        # their own spoken lines, oldest first, without the words
         self.triggers = []          # (text, is it new) social things since they last acted
         self.history = []           # one {"t", "kind", "seq"} per turn: what they did
         self.heard = []             # lines they heard: {"seq", "who", "kind", "target"}
@@ -983,8 +983,10 @@ class Morning:
             mine = {"ask": "asked who took it", "deny": "denied taking it",
                     "accuse": f"accused {target.name if target else ''}", "confess": "admitted taking it",
                     "reassure": f"reassured {target.name if aimed else 'everyone'}"}.get(kind, "said")
-            p.memory.append((minute, f"you {mine}: \"{words}\".{feel}"))
-            p.said_lines.append(f"min {minute:02d}, you {mine}: \"{words}\"")
+            # Their own lines reach them without the words: minute and verb only
+            # (reports/repetition_probe.md, variant B). The others hear the words.
+            p.memory.append((minute, f"you {mine}.{feel}"))
+            p.said_lines.append(f"min {minute:02d}, you {mine}.")
             if kind in ("ask", "accuse"):
                 p.heard_question = True
             if kind == "confess":

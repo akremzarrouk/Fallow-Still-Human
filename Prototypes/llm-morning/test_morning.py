@@ -934,6 +934,21 @@ def without_lull(transcript):
     return tr
 
 
+def first_ask_after_speaking(transcript):
+    """(minute, person, model answers before it) of the first decision in a saved transcript
+    that asked the model for someone who had already spoken that morning."""
+    spoke, served = set(), 0
+    for turn in transcript["turns"]:
+        for a in turn["acts"]:
+            if a["mode"] != "routine":
+                if a["who"] in spoke:
+                    return turn["minute"], a["who"], served
+                served += 1
+            if a["words"]:
+                spoke.add(a["who"])
+    return None
+
+
 V6_RUNS = os.path.join(HERE, "runs", "v6")
 V6_CACHE = os.path.join(HERE, "cache", "v6")
 V6_MODEL = "gemini-3.5-flash-lite"
@@ -997,32 +1012,34 @@ class DecisionFormatTest(unittest.TestCase):
         self.assertEqual(keys(os.path.join(self.dirs.runs, "daniel_ate_it-seed1.transcript.json")) - {"aside"},
                          keys(os.path.join(V6_RUNS, "daniel_ate_it-seed1.transcript.json")) | {"lull"})
 
-    def test_with_lulls_off_the_v6_baseline_replays_with_no_requests(self):
-        """With lull moments switched off, the v6 baseline still replays in full: the transcript
-        is v6's apart from the `lull` key on each act, and the story is v6's apart from the key's
-        one line about lulls (reports/lull_design.md, §3 and T12)."""
+    def test_v6_baseline_pairs_until_someone_who_has_spoken_is_asked(self):
+        """The v6 answers carry each morning, unchanged, up to the first prompt of someone who has
+        already spoken: from there their own lines show no words (reports/gist_words_impl.md), so
+        that prompt is not in the cache. Lulls off, as now."""
         for seed in (1, 2, 3):
             name = f"daniel_ate_it-seed{seed}"
+            v6 = json.loads(read(os.path.join(V6_RUNS, name + ".transcript.json")))
+            minute, who, served = first_ask_after_speaking(v6)
             path = os.path.join(self.dirs.root, f"{name}.json")
             shutil.copy(os.path.join(V6_CACHE, f"{V6_MODEL}-{name}.json"), path)
             oracle = Oracle(Cache(path), V6_MODEL, seed, client=None, replay=True)
+            rec = Recorder(oracle)
             with mock.patch.object(world, "LULL_QUIET", None):
-                m = Morning(oracle, seed)
-                try:
+                m = Morning(rec, seed)
+                with self.assertRaises(gemini.CacheMiss, msg=f"seed {seed}"):
                     for t in range(m.turns):
                         m.turn(t)
-                except gemini.StopMorning as stop:
-                    self.fail(f"seed {seed}: {stop}")
-            m.finish()
-            text = render(m, seed, V6_MODEL, f"python morning.py --seed {seed}")
-            old = read(os.path.join(V6_RUNS, name + ".md"))
-            extra = [x for x in text.splitlines() if x not in old.splitlines()]
-            self.assertEqual([x[:10] for x in extra], ["- **Lull**"], seed)
-            self.assertEqual([x for x in text.splitlines() if x not in extra], old.splitlines(), seed)
-            self.assertEqual(without_lull(m.transcript),
-                             json.loads(read(os.path.join(V6_RUNS, name + ".transcript.json"))), seed)
-            self.assertEqual((oracle.api_requests, oracle.live), (0, 0), seed)
-
+            last = rec.prompts[-1]
+            self.assertTrue(last.startswith(f"You are {data.PEOPLE[who]['name']},"), seed)
+            self.assertIn(f"\nNow, minute {minute:02d}, you are in the kitchen.\n", last)
+            self.assertEqual((oracle.from_cache, oracle.api_requests), (served, 0), seed)
+            self.assertEqual(without_lull(m.transcript)["turns"],
+                             [turn for turn in v6["turns"] if turn["minute"] < minute], seed)
+            spoken = [a["words"] for turn in v6["turns"] for a in turn["acts"]
+                      if a["who"] == who and a["words"] and turn["minute"] < minute]
+            self.assertTrue(spoken, seed)
+            for words in spoken:
+                self.assertNotIn(words, last, seed)
 
 class PairedOracle:
     """Answers from a saved cache when the prompt is the same as there, as a run paired with it
@@ -1455,27 +1472,17 @@ class LullTest(unittest.TestCase):
         self.assertGreater(lulls, 0)
 
     # T6
-    def test_t6_off_the_v6_baseline_caches_replay_to_the_end(self):
-        """With lulls off, the v6 answers carry each morning to its end, where with lulls on they
-        stopped at the first lull (seed 1 min 42, seed 2 min 51, seed 3 min 15): every answer
-        from the cache, 0 requests, v6's transcript but for the `lull` key, which is None."""
-        for seed, served in ((1, 45), (2, 66), (3, 25)):
-            name = f"daniel_ate_it-seed{seed}"
-            path = os.path.join(self.dirs.root, f"{name}.json")
-            shutil.copy(os.path.join(V6_CACHE, f"{V6_MODEL}-{name}.json"), path)
-            oracle = Oracle(Cache(path), V6_MODEL, seed, client=None, replay=True)
-            rec = Recorder(oracle)
-            m = Morning(rec, seed)
-            try:
-                for t in range(m.turns):
-                    m.turn(t)
-            except gemini.StopMorning as stop:
-                self.fail(f"seed {seed}: {stop}")
-            self.assertEqual((oracle.from_cache, oracle.api_requests), (served, 0), seed)
-            self.assertFalse([p for p in rec.prompts if "Nothing has been said or done in the" in p], seed)
+    def test_t6_off_no_lull_in_a_whole_morning_on_the_v6_answers(self):
+        """With lulls off, a whole morning on the v6 answers (a silent answer wherever a prompt is
+        not in the v6 cache, as own lines now show no words) has no lull line and no lull act.
+        With lulls on, the v6 answers met their first lull at min 42, 51 and 15."""
+        for seed in (1, 2, 3):
+            oracle = PairedOracle(os.path.join(V6_CACHE, f"{V6_MODEL}-daniel_ate_it-seed{seed}.json"),
+                                  V6_MODEL, seed)
+            m = Morning(oracle, seed).run()
+            self.assertEqual(len(m.transcript["turns"]), m.turns, seed)
+            self.assertFalse([p for p in oracle.asked if "Nothing has been said or done in the" in p], seed)
             self.assertTrue(all(a["lull"] is None for turn in m.transcript["turns"] for a in turn["acts"]))
-            self.assertEqual(without_lull(m.transcript)["turns"],
-                             json.loads(read(os.path.join(V6_RUNS, name + ".transcript.json")))["turns"], seed)
 
     # T8 on fake mornings
     def test_t8_nobody_is_alone_more_than_3_turns_without_being_asked(self):
@@ -1503,6 +1510,120 @@ class LullTest(unittest.TestCase):
                               capture_output=True, text=True, timeout=300)
         self.assertEqual(done.returncode, 0, done.stdout + done.stderr)
         self.assertEqual(done.stdout.count("story IDENTICAL, transcript IDENTICAL"), 3, done.stdout)
+
+
+OWN_BLOCK_LINE = re.compile(r'^(- min \d\d, you [^:"]+): ".*"$')
+OWN_MEMORY_LINE = re.compile(r'^(- min \d\d: you [^:"]+): ".*"\.(.*)$')
+
+
+def without_own_words(prompt):
+    """A prompt as the code before gist words wrote it, with the person's own lines turned into
+    what they are now: minute and verb, no words; memory keeps "You felt ..."."""
+    out = []
+    for line in prompt.splitlines():
+        line = OWN_BLOCK_LINE.sub(r"\1.", line)
+        line = OWN_MEMORY_LINE.sub(r"\1.\2", line)
+        out.append(line)
+    return out
+
+
+class OwnWordsTest(unittest.TestCase):
+    """A person's own spoken lines reach their later prompts without the words, as variant B of
+    reports/repetition_probe.md: in "Your own last words this morning:" and in memory, minute and
+    verb only (memory keeps "You felt <feeling>."). Other people's lines keep their words."""
+
+    def setUp(self):
+        self.dirs = Dirs()
+
+    def tearDown(self):
+        self.dirs.cleanup()
+
+    def fake(self, seed, module=world, tag="new"):
+        rec = Recorder(Oracle(Cache(os.path.join(self.dirs.root, f"{tag}{seed}.json")), "fake", seed,
+                              client=FakeClient()))
+        m = module.Morning(rec, seed)
+        for t in range(m.turns):
+            m.turn(t)
+        return m, rec
+
+    def test_own_words_never_appear_in_their_later_prompts(self):
+        checked = 0
+        for seed in range(1, 6):
+            m, rec = self.fake(seed)
+            decisions = [(r["minute"], d) for r in m.log for d in r["decisions"] if d["mode"] != "routine"]
+            self.assertEqual(len(decisions), len(rec.prompts), seed)
+            said = {p: [] for p in data.ORDER}
+            for (minute, d), prompt in zip(decisions, rec.prompts):
+                for words in said[d["person"]]:
+                    self.assertNotIn(words, prompt, (seed, minute, d["person"]))
+                    checked += 1
+                if d.get("say"):
+                    said[d["person"]].append(d["say"])
+        self.assertGreater(checked, 0)
+
+    def test_own_lines_keep_minute_verb_and_feeling_and_others_keep_their_words(self):
+        def policy(who, minute, options, client):
+            if minute == 0 and client.requests == 1:
+                client.first = who
+                return "reassure_all", "FIRST-WORDS"
+            if minute == 0 and client.requests == 2:
+                client.second = who
+                return f"reassure_{client.first}", "SECOND-WORDS"
+            return "silent", None
+        m, client = scripted(policy, self.dirs, turns=2)
+        second = data.PEOPLE[client.second]["name"]
+        later = [p for minute, who, p in client.prompts if (minute, who) == (3, client.first)]
+        self.assertEqual(len(later), 1)              # just reassured, so asked at minute 3
+        prompt = later[0]
+        self.assertNotIn("FIRST-WORDS", prompt)
+        self.assertIn("\nYour own last words this morning:\n- min 00, you reassured everyone.\n", prompt)
+        self.assertIn("\n- min 00: you reassured everyone. You felt tense.\n", prompt)
+        self.assertIn(f'\n- min 00: {second} reassures you: "SECOND-WORDS"\n', prompt)
+        # The second, if asked at 3, sees the first's words and not their own.
+        for minute, who, p in client.prompts:
+            if (minute, who) == (3, client.second):
+                self.assertIn('"FIRST-WORDS"', p)
+                self.assertNotIn("SECOND-WORDS", p)
+                self.assertIn(f"- min 00, you reassured {data.PEOPLE[client.first]['name']}.", p)
+
+    def test_others_words_still_reach_the_prompt(self):
+        seen = 0
+        for seed in range(1, 6):
+            m, rec = self.fake(seed)
+            decisions = [(r["minute"], d) for r in m.log for d in r["decisions"] if d["mode"] != "routine"]
+            said = []
+            for (minute, d), prompt in zip(decisions, rec.prompts):
+                seen += sum(1 for who, words in said if who != d["person"] and f'"{words}"' in prompt)
+                if d.get("say"):
+                    said.append((d["person"], d["say"]))
+        self.assertGreater(seen, 0)
+
+    def test_prompts_before_someone_has_spoken_are_unchanged(self):
+        """Against the frozen v9 code, with the same fake model: the same prompts up to the first
+        prompt of someone who has already spoken, and that one differs only in their own lines,
+        which lose their words (and, being shorter, may let the trimming keep an older memory or
+        backstory line, world.py prompt_for)."""
+        old_world = frozen("v9", "world")
+        for seed in range(1, 6):
+            old, old_rec = self.fake(seed, old_world, "old")
+            new, new_rec = self.fake(seed)
+            decisions = [d for r in old.log for d in r["decisions"] if d["mode"] != "routine"]
+            spoke = set()
+            for i, d in enumerate(decisions):
+                if d["person"] in spoke:
+                    break
+                self.assertEqual(new_rec.prompts[i], old_rec.prompts[i], (seed, i))
+                if d.get("say"):
+                    spoke.add(d["person"])
+            else:
+                self.fail(f"seed {seed}: nobody who had spoken was asked again")
+            a, b = old_rec.prompts[i], new_rec.prompts[i]
+            self.assertNotEqual(a, b, seed)
+            expected, got = without_own_words(a), b.splitlines()
+            missing = [x for x in expected if x not in got and x != "- (earlier things, left out here)"]
+            extra = [x for x in got if x not in expected]
+            self.assertEqual(missing, [], seed)
+            self.assertTrue(all(x.startswith(("- min ", "- Day ")) for x in extra), (seed, extra))
 
 
 class GeminiClientTest(unittest.TestCase):
