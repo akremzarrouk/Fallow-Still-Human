@@ -14,12 +14,14 @@ def act_of(option):
     reassuring one person or everyone is `reassure`, starting or carrying on a search is
     `search`. The target is a person for accuse, reassure, sit, back and object, a room for go.
     The trip's options (reports/trip_design.md, §3.3): proposing it, volunteering, objecting
-    to it or to one person going, backing one person to go, and declining to go."""
+    to it or to one person going, backing one person to go, and declining to go. Day 2 words them
+    anew (reports/night_design.md, §6) with the same kinds: nobody_goes, keep_<q>_home, send_<q>,
+    still_going (a restated offer) and refuse_to_go."""
     if option == "ask_who":
         return "ask", None
     if option == "propose_trip":
         return "propose", None
-    if option == "object_trip":
+    if option in ("object_trip", "nobody_goes"):
         return "object", None
     if option == "say_other":
         return "say", None
@@ -27,6 +29,14 @@ def act_of(option):
         return "reassure", None
     if option == "keep_searching":
         return "search", None
+    if option == "still_going":
+        return "volunteer", None
+    if option == "refuse_to_go":
+        return "decline", None
+    if option.startswith("keep_") and option.endswith("_home"):
+        return "object", option[len("keep_"):-len("_home")]
+    if option.startswith("send_"):
+        return "back", option[len("send_"):]
     for prefix in ("accuse", "reassure", "sit", "go", "aside", "back", "object"):
         if option.startswith(prefix + "_"):
             return prefix, option[len(prefix) + 1:]

@@ -78,6 +78,7 @@ class GeminiClient:
         self.backoff_max = config["backoff_max_seconds"]
         self.max_output_tokens = config["max_output_tokens"]
         self.requests = 0
+        self.scene_base = 0         # requests sent before the current scene
         self.last_prompt_tokens = None
         self._sleep = sleep
         self._clock = clock
@@ -103,7 +104,7 @@ class GeminiClient:
         )
         attempt = 0
         while True:
-            if self.requests >= self.max_calls:
+            if self.requests - self.scene_base >= self.max_calls:
                 raise CallCapReached(f"stopped: this morning reached {self.max_calls} API requests.")
             self._space()
             self.requests += 1
@@ -133,6 +134,9 @@ class GeminiClient:
                 self._sleep(wait)
                 attempt += 1
 
+    def new_scene(self):
+        self.scene_base = self.requests
+
 
 class FakeClient:
     """Canned answers for building and testing. Reads the option ids back out of the
@@ -146,10 +150,14 @@ class FakeClient:
         self.fail_with = fail_with or {}
         self.max_calls = max_calls
         self.requests = 0
+        self.scene_base = 0
         self.model = "fake"
 
+    def new_scene(self):
+        self.scene_base = self.requests
+
     def generate(self, system, prompt):
-        if self.requests >= self.max_calls:
+        if self.requests - self.scene_base >= self.max_calls:
             raise CallCapReached(f"stopped: this morning reached {self.max_calls} API requests.")
         self.requests += 1
         if self.requests in self.fail_with:
@@ -214,7 +222,7 @@ class Oracle:
 
     def __init__(self, cache, model_name, seed, client=None, replay=False, max_calls=None):
         self.cache = cache
-        self.max_calls = max_calls      # for the whole morning, answers already cached included
+        self.max_calls = max_calls      # for each scene, answers already cached included
         self.model_name = model_name
         self.seed = seed
         self.client = client
@@ -222,6 +230,16 @@ class Oracle:
         self.from_cache = 0
         self.live = 0
         self.prompt_tokens = []     # as counted by the API, where it said
+        # Day 1, the night and day 2 each count against max_calls apart (reports/night_design.md,
+        # §8): what was asked before the current scene began.
+        self.base = (0, 0)
+
+    def new_scene(self):
+        """The next scene starts: its asks count against max_calls from zero, and so do the
+        client's own requests."""
+        self.base = (self.from_cache, self.api_requests)
+        if self.client is not None and hasattr(self.client, "new_scene"):
+            self.client.new_scene()
 
     @property
     def api_requests(self):
@@ -239,9 +257,10 @@ class Oracle:
         if self.replay or self.client is None:
             raise CacheMiss("stopped: replay found a prompt with no cached answer, so this "
                             "morning cannot be replayed from the cache.")
-        if self.max_calls is not None and self.from_cache + self.client.requests >= self.max_calls:
+        if (self.max_calls is not None
+                and self.from_cache - self.base[0] + self.client.requests - self.base[1] >= self.max_calls):
             raise CallCapReached(f"stopped: this morning reached {self.max_calls} model calls "
-                                 f"({self.from_cache} of them answered in an earlier run).")
+                                 f"({self.from_cache - self.base[0]} of them answered in an earlier run).")
         text = self.client.generate(system, prompt)
         self.live += 1
         tokens = getattr(self.client, "last_prompt_tokens", None)

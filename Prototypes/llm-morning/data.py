@@ -93,6 +93,13 @@ HOUSE_THINGS = (
 HOUSE_THINGS_AFTER_TRIP = HOUSE_THINGS.replace("Outside, and not to be gone to:",
                                                "Outside, and not to be gone to this morning:")
 assert HOUSE_THINGS_AFTER_TRIP != HOUSE_THINGS
+# At night (reports/night_design.md, §3.2): tonight is when the plan said someone might go, so the
+# line no longer forbids it.
+HOUSE_THINGS_NIGHT = HOUSE_THINGS.replace("Outside, and not to be gone to:", "Outside:")
+assert HOUSE_THINGS_NIGHT != HOUSE_THINGS
+
+# The afternoon, skipped (reports/night_design.md, §2).
+GAP = "The afternoon and evening passed in the house. Nobody ate."
 
 # What everyone learns when the trip concern starts (reports/trip_design.md, §2.1): conclusions
 # the code draws, told after their "About the can:" line.

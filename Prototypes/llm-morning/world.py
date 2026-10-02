@@ -22,6 +22,10 @@ The trip concern (reports/trip_design.md): once the shelf is empty or someone fi
 hungry, everyone is told there is no food for tomorrow and that the neighbour's house may have
 some, and each of them may take a position on whether someone goes there tonight. The rules
 record the positions and decide nothing; nobody leaves the house.
+
+Time passing (reports/night_design.md): a Morning is day 1 (house day 4) or day 2 (house day 5).
+Day 2 starts from the people as the night left them (night.py), with what each of them carries
+in as a block of facts outside the prompt budget, and words the trip's options anew.
 """
 import json
 import random
@@ -46,6 +50,20 @@ SYSTEM = (
     '{"option": "<id>", "say": "<words>" or null, "feeling": "<word>", "reason": "<sentence>", '
     '"suspects": "<name or nobody>", "angry_at": "<name or nobody>"}'
 )
+# The night's own (reports/night_design.md, §3.2): the same answer, decided for tonight, in a low voice.
+NIGHT_SYSTEM = (
+    "You decide what one person in a family does tonight. You get who they are, what they "
+    "remember, what they know now, and the options open to them. They know only what is in their "
+    "memory. Choose exactly one option id from the list. If the option is marked (speech), `say` "
+    "must hold the exact words they say, in a low voice, in their own voice, one or two short "
+    "sentences. For any other option `say` is null. `feeling` names what they feel right now in "
+    "one or two words. `reason` is their reason in one sentence, as they would think it. "
+    "`suspects` is who they now believe took the can, and `angry_at` is who they are angry with "
+    "right now: each is one of \"Daniel\", \"Elena\", \"Leo\", \"Mara\" or \"nobody\". Reply with "
+    'JSON only: {"option": "<id>", "say": "<words>" or null, "feeling": "<word>", "reason": '
+    '"<sentence>", "suspects": "<name or nobody>", "angry_at": "<name or nobody>"}'
+)
+NIGHT_MINUTE = data.MINUTES     # the clock the night's answers keep (day 1 ends at minute 90)
 
 # Feelings that reach the face, by how strongly they show. Others in the room see them,
 # and someone who looks like this counts as upset nearby. Anything else (guilty, ashamed,
@@ -184,6 +202,16 @@ class Grudge:
         return False
 
 
+# Day 2, for whoever knows of no visit to the neighbour's house (reports/night_design.md, §5.3):
+# after a night when anyone could have gone, "nobody has been inside since" is no longer certain.
+NEIGHBOUR_UNKNOWN = ("About the neighbour's house: its people left in the first days, so there may be food "
+                     "there. Outside is dangerous.")
+
+
+def portions_text(n):
+    return f"{n} portion{'s' if n != 1 else ''}"
+
+
 def minutes_text(ms):
     ms = [f"{m:02d}" for m in ms]
     return ms[0] if len(ms) == 1 else ", ".join(ms[:-1]) + " and " + ms[-1]
@@ -191,14 +219,24 @@ def minutes_text(ms):
 
 def grudge_facts(name, events, limit=None):
     """The facts behind a grudge: each event the rules saw, then one line for the times the
-    person named them as who they were angry with."""
-    facts = [fact for _, fact, kind in events if kind == "event"]
-    angry = [m for m, _, kind in events if kind == "angry"]
+    person named them as who they were angry with. On day 2 an event carried from day 1 or the
+    night has a fourth element, "yesterday" or "last night" (reports/night_design.md, §5.3)."""
+    facts = [e[1] for e in events if e[2] == "event"]
+    angry = [e for e in events if e[2] == "angry"]
     if limit:
         facts, angry = facts[-limit:], angry[-limit:]
-    if angry:
-        facts.append(f"you were angry with {name} at minute{'s' if len(angry) > 1 else ''} "
-                     f"{minutes_text(angry)}")
+    if angry and all(len(e) == 3 for e in events):
+        ms = [e[0] for e in angry]
+        facts.append(f"you were angry with {name} at minute{'s' if len(ms) > 1 else ''} {minutes_text(ms)}")
+    elif angry:
+        parts = []
+        for when in ("yesterday", "last night", "this morning"):
+            ms = [e[0] for e in angry if (e[3] if len(e) > 3 else "this morning") == when]
+            if not ms:
+                continue
+            parts.append(when if when == "last night" else
+                         f"{when} at minute{'s' if len(ms) > 1 else ''} {minutes_text(ms)}")
+        facts.append(f"you were angry with {name} " + "; and ".join(parts))
     return facts
 
 
@@ -261,6 +299,10 @@ class Person:
         self.trip_raised = False
         self.trip_memories = {x for x in self.backstory
                               if any(x.startswith(f"Day 2: {m} (") for m in data.TRIP_MEMORIES)}
+        # Time passing (reports/night_design.md): what they did tonight, for the night's later
+        # prompts; and on day 2, what of day 1 still counts as yesterday's (None on day 1).
+        self.tonight = []
+        self.yesterday = None
 
     def grudge(self, against):
         return self.grudges.setdefault(against, Grudge())
@@ -274,13 +316,22 @@ class Person:
 
 
 class Morning:
-    def __init__(self, oracle, seed=0, scenario=data.DEFAULT_SCENARIO):
+    def __init__(self, oracle, seed=0, scenario=data.DEFAULT_SCENARIO, day=4):
+        """day 4: the morning of the count (day 1). day 5: the next morning (day 2), which
+        `Morning.next_day` sets up from day 1 and the night."""
         self.oracle = oracle
+        self.day = day
+        self.away = set()           # day 2: who did not come back in the night
+        self.carry = {}             # day 2: person -> the carry-in block (reports/night_design.md, §5.2)
+        self.neighbour = {}         # day 2: person -> their "About the neighbour's house:" line
+        self.carried = {}           # day 2: person -> their opening, food and neighbour lines at minute 00
+        self.trip_ids = []          # day 2: the option id of each trip act, in order
         self.seed = seed
         self.scenario = scenario
         self.culprit = data.culprit(scenario)       # who took the can, or None
         self.people = {p: Person(p, scenario) for p in data.ORDER}
         self.portions = data.PORTIONS
+        self.start_portions = self.portions     # day 2 starts from the night's shelf
         self.turns = data.MINUTES // data.MINUTES_PER_TURN
         self.log = []               # one record per turn
         self.said = []              # every line spoken, in order
@@ -303,6 +354,8 @@ class Morning:
         self.trip = None            # the trip concern once started: {"minute", "why", "asked"}
         self.trip_acts = []         # (minute, who, kind, target, words), every position taken
         self.trip_now = set()       # during the turn it starts: who is asked because of it
+        if day != 4:
+            return                  # day 2's opening is set up by next_day
         for p in self.people.values():
             how = "did it" if p.id == "elena" else "saw it"
             p.sure.append(f"min 00: {data.OPENING} (you {how})")
@@ -311,6 +364,12 @@ class Morning:
             p.triggers.append(("the count came up short in front of everyone", True))
             p.seen = p.levels()
         self.started("kitchen", 0, "the count came up short", False)
+
+    @classmethod
+    def next_day(cls, day1, night, oracle):
+        """Day 2, from day 1 and the night that followed it (reports/night_design.md, §5)."""
+        import night as night_mod
+        return night_mod.next_day(day1, night, oracle)
 
     def started(self, room, minute, why, by_inner):
         if self.convos.new_thing(room, minute, why):
@@ -422,6 +481,8 @@ class Morning:
         has started; never the position they already hold."""
         if self.trip is None:
             return []
+        if self.day != 4:
+            return self.trip_options_day2(p, others)
         pos = p.trip_heard.get(p.id)
         own = pos[1:3] if pos else None
         out = []
@@ -443,6 +504,36 @@ class Morning:
         backed = any(v[1:3] == ("back", p.id) for w, v in p.trip_heard.items() if w != p.id)
         if (backed or own == ("volunteer", None)) and own != ("decline", None):
             out.append(Option("decline", "say you will not be the one to go", True, kind="decline"))
+        return out
+
+    def trip_options_day2(self, p, others):
+        """Day 2's wording of the same positions (reports/night_design.md, §6): ids that carry
+        their meaning, labels that share no verb, for going first and against after, and
+        `still_going` in place of `volunteer` while the offer is their position. When each is
+        offered is as on day 1."""
+        pos = p.trip_heard.get(p.id)
+        own = pos[1:3] if pos else None
+        out = []
+        if not p.proposed:
+            out.append(Option("propose_trip", "say someone should go to the neighbour's house tonight", True,
+                              kind="propose"))
+        if own != ("volunteer", None):
+            out.append(Option("volunteer", "offer to go there tonight yourself", True, kind="volunteer"))
+        else:
+            out.append(Option("still_going", "say you still mean to go there tonight", True, kind="volunteer"))
+        for q in others:
+            if own != ("back", q.id):
+                out.append(Option(f"send_{q.id}", f"say {q.name} is the one who should go there tonight", True,
+                                  kind="back", target=q.id))
+        if p.trip_raised and own != ("object", None):
+            out.append(Option("nobody_goes", "say nobody should go out tonight", True, kind="object"))
+        for q in others:
+            if self.named_to_go(p, q.id) and own != ("object", q.id):
+                out.append(Option(f"keep_{q.id}_home", f"say {q.name} must stay home tonight", True,
+                                  kind="object", target=q.id))
+        backed = any(v[1:3] == ("back", p.id) for w, v in p.trip_heard.items() if w != p.id)
+        if (backed or own == ("volunteer", None)) and own != ("decline", None):
+            out.append(Option("refuse_to_go", "say you yourself will not go", True, kind="decline"))
         return out
 
     @staticmethod
@@ -479,28 +570,51 @@ class Morning:
         if not p.trip_heard:
             return None
         parts = []
-        for who, (minute, kind, target, _) in sorted(p.trip_heard.items(), key=lambda kv: kv[1][3]):
+        for who, heard in sorted(p.trip_heard.items(), key=lambda kv: kv[1][3]):
+            minute, kind, target = heard[:3]
+            option = heard[4] if len(heard) > 4 else None       # day 2 keeps the option id
             x = "you" if who == p.id else NAMES[who]
+            he = "you" if who == p.id else data.PRONOUNS[who]["he"]
             q = None if target is None else "you" if target == p.id else NAMES[target]
             if kind == "propose":
                 said = f"{x} said someone should go"
+            elif option == "still_going":
+                said = f"{x} said {he} still {'mean' if who == p.id else 'means'} to go"
             elif kind == "volunteer":
                 said = f"{x} offered to go"
             elif kind == "object":
-                said = f"{x} said nobody should go" if q is None else f"{x} said {q} should not go"
+                said = (f"{x} said nobody should go" if q is None else f"{x} said {q} must stay home"
+                        if option else f"{x} said {q} should not go")
             elif kind == "back":
-                said = f"{x} said {q} should go"
+                said = f"{x} said {q} is the one who should go" if option else f"{x} said {q} should go"
             else:
-                said = f"{x} said {'you' if who == p.id else data.PRONOUNS[who]['he']} will not go"
+                said = f"{x} said {he} will not go"
             parts.append(f"{said} (min {minute:02d})")
         return "About going there tonight: " + "; ".join(parts) + "."
 
     def trip_lines(self, p):
-        """What the trip concern adds after their "About the can:" line."""
+        """What the trip concern adds after their "About the can:" line. On day 2 the food and
+        the neighbour's house are as the night left them (reports/night_design.md, §5.3)."""
         if self.trip is None:
             return []
         plan = self.heard_plan(p)
+        if self.day != 4:
+            return [self.food_line(), self.neighbour.get(p.id, NEIGHBOUR_UNKNOWN)] + ([plan] if plan else [])
         return [data.ABOUT_FOOD, data.ABOUT_NEIGHBOUR] + ([plan] if plan else [])
+
+    def food_line(self):
+        """Day 2's "About food:" line: what the shelf holds, and what that means for those here."""
+        n = self.portions
+        k = sum(q.room is not None for q in self.people.values())
+        if n == 0:
+            so = "there is nothing to eat today"
+        elif n < k:
+            so = "there is not one portion each"
+        elif n // k == 1:
+            so = "there is one portion each, and nothing after that"
+        else:
+            so = f"there are {n // k} portions each, and nothing after that"
+        return f"About food: the shelf holds {portions_text(n)}, and there is no other food in the house, so {so}."
 
     def plan_text(self):
         """The state of the plan for tonight, from every position taken (reports/trip_design.md,
@@ -588,12 +702,28 @@ class Morning:
         if "hunger" in self.risen(p):
             out.append("Since you last decided, you have grown hungrier.")
         s = p.suspicion
+        y = p.yesterday             # day 2 only (reports/night_design.md, §5.3)
         # What they know about the can wins over what their answers guessed.
         if p.knows_culprit == p.id:
-            about = "About the can: you ate it yourself."
+            about = ("About the can: you ate it yourself, and you admitted it yesterday." if y and y["confessed"]
+                     else "About the can: you ate it yourself.")
+        elif p.knows_culprit and y and y["confession_heard"]:
+            about = (f"About the can: {NAMES[p.knows_culprit]} admitted taking it yesterday, at minute "
+                     f"{p.confession_heard_at:02d}.")
         elif p.knows_culprit:
             about = (f"About the can: {NAMES[p.knows_culprit]} admitted taking it at minute "
                      f"{p.confession_heard_at:02d}.")
+        elif s.strength and y is not None:
+            when = []
+            for word, ms in (("yesterday", y["suspected_at"]), ("last night", y["suspected_last_night"]),
+                             ("this morning", p.suspected_at)):
+                if ms is True:
+                    when.append(word)
+                elif ms:
+                    ms = ms[-EVENTS_SHOWN:]
+                    when.append(f"{word} at minute{'s' if len(ms) > 1 else ''} {minutes_text(ms)}")
+            about = (f"About the can ({LEVEL_WORDS[s.strength]}): you thought {NAMES[s.target]} took it"
+                     + (", " + ", and ".join(when) if when else "") + ".")
         elif s.strength:
             about = (f"About the can ({LEVEL_WORDS[s.strength]}): you thought {NAMES[s.target]} took it, "
                      f"at minute{'s' if len(p.suspected_at) > 1 else ''} "
@@ -653,10 +783,13 @@ class Morning:
                 "back": "said you should be the one to go", "decline": "said they will not be the one to go",
                 }.get(h["kind"], "spoke to everyone")
 
-    def prompt_for(self, p, t, opts, lull=None):
-        """lull: for a lull moment, the minute the room was last stirred; None otherwise."""
+    def prompt_for(self, p, t, opts, lull=None, night=None):
+        """lull: for a lull moment, the minute the room was last stirred; None otherwise.
+        night: the night's `Now` lines (reports/night_design.md, §3.2), which take the place of the
+        room, the turn and the pattern block; None by day."""
         s = p.sheet
-        minute = t * data.MINUTES_PER_TURN
+        minute = None if night is not None else t * data.MINUTES_PER_TURN
+        system = SYSTEM if night is None else NIGHT_SYSTEM
         calls = "; ".join(f"{self.people[q].name} \"{word}\"" for q, word in data.ADDRESS[p.id].items())
         inside = self.inside_lines(p)
         head = [
@@ -666,8 +799,12 @@ class Morning:
             f"Who you are: {s['note']}",
             f"Temperament: {trait_words(s['traits'])}.",
             f"What matters to you: {', '.join(s['values'])}.",
-        ] + inside + [f"The house: {data.HOUSE} "
-                      f"{data.HOUSE_THINGS_AFTER_TRIP if self.trip else data.HOUSE_THINGS}"]
+        ] + inside
+        house = (data.HOUSE_THINGS_NIGHT if night is not None
+                 else data.HOUSE_THINGS_AFTER_TRIP if self.trip else data.HOUSE_THINGS)
+        head += [f"The house: {data.HOUSE} {house}"]
+        if night is not None:
+            return self.prompt_parts(p, opts, head, list(night), system, "today", minute)
         room = data.ROOMS[p.room]
         now = [f"Now, minute {minute:02d}, you are in the {room}."]
         others = self.others_here(p)
@@ -687,33 +824,43 @@ class Morning:
         elif others:
             now.append(f"You are the first to act in the {room} this turn.")
         now += self.pattern(p)
+        return self.prompt_parts(p, opts, head, now, system, "this morning", minute)
+
+    def prompt_parts(self, p, opts, head, now, system, when, minute):
+        """The rest of the prompt, trimmed to the budget. when: "this morning", or "today" at
+        night (reports/night_design.md, §3.2)."""
         tail = ["Your options:"] + [f"- {o.id}: {'(speech) ' if o.speech else ''}{o.label}" for o in opts]
 
         back = list(p.backstory)
         morning = [f"min {m:02d}: {x}" for m, x in p.memory if m != minute]  # this turn is above
-        pinned = ["What you are sure of this morning:"] + [f"- {x}" for x in p.sure]
+        morning += [f"tonight: {x}" for x in p.tonight]
+        pinned = [f"What you are sure of {'from today' if when == 'today' else when}:"] + [f"- {x}" for x in p.sure]
         if p.said_lines:
-            pinned += ["Your own last words this morning:"] + [f"- {x}" for x in p.said_lines[-3:]]
+            pinned += [f"Your own last words {when}:"] + [f"- {x}" for x in p.said_lines[-3:]]
+        carry = self.carry.get(p.id, [])
         # Once the trip concern has started, its block sits outside the budget
         # (reports/trip_design.md, §2.5): its lines, its options, the day-2 memories it keeps from
-        # trimming, and "this morning" in the house line. `block` counts its characters.
+        # trimming, and "this morning" in the house line. `block` counts its characters. On day 2
+        # the carry-in block sits outside the budget too (reports/night_design.md, §5.4).
         keep = p.trip_memories if self.trip else set()
         block = 0
         if self.trip:
+            house = head[-1][len(f"The house: {data.HOUSE} "):]
             block += sum(len(x) + 1 for x in self.trip_lines(p))
             block += sum(len(x) + 1 for o, x in zip(opts, tail[1:]) if act_of(o.id)[0] in TRIP_KINDS)
             block += sum(len(f"- {x}") + 1 for x in keep)
-            block += len(data.HOUSE_THINGS_AFTER_TRIP) - len(data.HOUSE_THINGS)
+            block += max(0, len(house) - len(data.HOUSE_THINGS))
+        block += sum(len(x) + 1 for x in carry)
         cut = False
         while True:
             parts = head + ["What you remember from the days before:"] + [f"- {x}" for x in back]
-            parts += pinned + ["What else happened this morning, most recent last:"]
+            parts += carry + pinned + [f"What else happened {when}, most recent last:"]
             parts += (["- (earlier things, left out here)"] if cut else [])
             parts += [f"- {x}" for x in morning] or ([] if cut else ["- nothing else yet"])
             parts += now + tail
             text = "\n".join(parts)
             loose = [x for x in back if x not in keep]      # all of them, before the trip
-            if estimate_tokens(SYSTEM + text, block) <= PROMPT_TOKEN_BUDGET or (not morning and not loose):
+            if estimate_tokens(system + text, block) <= PROMPT_TOKEN_BUDGET or (not morning and not loose):
                 break
             cut = True
             if len(morning) > 8:
@@ -724,7 +871,7 @@ class Morning:
                 morning.pop(0)
             else:
                 back.remove(loose[0])
-        self.max_prompt_tokens = max(self.max_prompt_tokens, estimate_tokens(SYSTEM + text))
+        self.max_prompt_tokens = max(self.max_prompt_tokens, estimate_tokens(system + text))
         return text
 
     # ---------- reading the answer ----------
@@ -789,10 +936,16 @@ class Morning:
              "by_inner": next(by_inner) if what == "started" else None}
             for m, r, what, why in self.convos.log]
         # The trip concern (reports/trip_design.md, §4.1), or None if it never started.
+        ids = (self.trip_ids if self.day != 4 else
+               [trip_option(kind, target) for _, _, kind, target, _ in self.trip_acts])
         self.transcript["trip"] = None if self.trip is None else {
             **self.trip,
-            "acts": [[m, who, trip_option(kind, target), words] for m, who, kind, target, words in self.trip_acts],
+            "acts": [[m, who, i, words] for (m, who, _, _, words), i in zip(self.trip_acts, ids)],
             "plan": self.plan_text()}
+        if self.day != 4:
+            # Day 2 (reports/night_design.md, §8): who is away, and what each person carried in.
+            self.transcript["away"] = [q for q in data.ORDER if q in self.away]
+            self.transcript["carry_in"] = {q: list(lines) for q, lines in self.carry.items()}
 
     def social_triggers(self, p, t):
         """What counts now: anything new; anything else only while the room is talking."""
@@ -897,7 +1050,7 @@ class Morning:
         # someone who hears it through a wall.
         for room, new, heard_it in voices:
             for q in self.people.values():
-                if q.id in heard_it or q.room == room or data.SOUNDPROOF & {room, q.room}:
+                if q.id in heard_it or q.room == room or q.room is None or data.SOUNDPROOF & {room, q.room}:
                     continue
                 line = f"Voices from the {data.ROOMS[room]}"
                 if (minute, line + ".") not in q.memory:
@@ -922,6 +1075,8 @@ class Morning:
         self.moved_by_inner = {}
         self.trip_now = set()
         for p in self.people.values():
+            if p.room is None:      # day 2: not back from the night, so not in the house
+                continue
             p.hunger = min(1.0, p.hunger + 0.004 * data.MINUTES_PER_TURN * p.sheet["hunger_rate"])
         record["portions"] = self.portions
         self.log.append(record)
@@ -940,7 +1095,12 @@ class Morning:
         if not choice:
             return None, why
         d.update(mode="model", **choice)
+        self.take_answer(p, choice, minute, d)
+        return choice, None
 
+    def take_answer(self, p, choice, minute, d):
+        """What an answer does to their suspicion and grudges (the night's answers too, at
+        NIGHT_MINUTE)."""
         def named(field):
             who = next((q for q in data.ORDER if NAMES[q] == choice[field]), None)
             return None if who == p.id else who     # naming yourself counts as nobody
@@ -949,6 +1109,8 @@ class Morning:
         d["suspects_result"] = p.suspicion.report(suspect, minute)
         if p.suspicion.target != before:
             p.suspected_at = []
+            if p.yesterday is not None:
+                p.yesterday["suspected_at"], p.yesterday["suspected_last_night"] = [], False
         if suspect is not None and suspect == p.suspicion.target:
             p.suspected_at.append(minute)
         d["suspects_now"] = p.suspicion.short("suspicion")
@@ -966,7 +1128,6 @@ class Morning:
         if kept:
             changes.append("kept: " + ", ".join(f"{NAMES[t]} {p.grudges[t].strength}/3" for t in kept))
         d["grudge_note"] = "; ".join(changes) or "no grudges"
-        return choice, None
 
     def decide(self, p, t):
         minute = t * data.MINUTES_PER_TURN
@@ -1034,9 +1195,11 @@ class Morning:
         if trigger:
             q.triggers.append(trigger)
 
-    def line_text(self, p, kind, target, words, listener, while_doing=None):
+    def line_text(self, p, kind, target, words, listener, while_doing=None, option=None):
         aimed = ("you" if listener is not None and target is listener else target.name) if target else None
-        if kind == "ask":
+        if self.day != 4 and kind in TRIP_KINDS:
+            gist = self.trip_gist(p, kind, aimed, option)
+        elif kind == "ask":
             gist = f"{p.name} asks everyone who took the can"
         elif kind == "deny":
             gist = f"{p.name} denies taking it, to everyone"
@@ -1062,6 +1225,22 @@ class Morning:
         else:
             gist = f"{p.name} says to everyone"
         return f"{gist}: \"{words}\""
+
+    @staticmethod
+    def trip_gist(p, kind, aimed, option):
+        """What others hear of a position on day 2 (reports/night_design.md, §6)."""
+        he = data.PRONOUNS[p.id]["he"]
+        if kind == "propose":
+            return f"{p.name} says someone should go to the neighbour's house tonight"
+        if option == "still_going":
+            return f"{p.name} says {he} still means to go tonight"
+        if kind == "volunteer":
+            return f"{p.name} offers to go to the neighbour's house tonight"
+        if kind == "object":
+            return f"{p.name} says {aimed} must stay home tonight" if aimed else f"{p.name} says nobody should go out tonight"
+        if kind == "back":
+            return f"{p.name} says {aimed} {'are' if aimed == 'you' else 'is'} the one who should go"
+        return f"{p.name} says {he} will not go"
 
     def started_by(self, room, minute, why, d):
         self.started(room, minute, why, bool(d.get("inner_kinds")))
@@ -1116,14 +1295,14 @@ class Morning:
             if new:
                 self.started_by(room, minute, f"{p.name}: {why}", d)
             text = self.line_text(p, spoken_kind, target if aimed else None, words, None,
-                                  None if opt.speech else doing)
+                                  None if opt.speech else doing, opt.id)
             self.said.append({"minute": minute, "room": data.ROOMS[room], "who": p.name,
                               "to": target.name if aimed else "everyone", "text": text,
                               "words": words, "new": new, "why": why})
             so_far.append(text)
             for q in seen:
                 heard = self.line_text(p, spoken_kind, target if aimed else None, words, q,
-                                       None if opt.speech else doing)
+                                       None if opt.speech else doing, opt.id)
                 self.perceive(q, minute, heard, trigger=(heard, new))
                 q.heard.append({"seq": self.seq, "who": p.id, "kind": spoken_kind,
                                 "target": target_id if aimed else None})
@@ -1138,19 +1317,27 @@ class Morning:
                     q.sure.append(f"min {minute:02d}: {p.name} admitted taking the can: \"{words}\" "
                                   "(you heard it)")
                     # Grudges: it was admitted after being denied to them, or after accusing them.
+                    # On day 2 a denial or accusation of day 1 is yesterday's (reports/night_design.md, §5.1).
+                    y = q.yesterday or {"denials": (), "accused_by": ()}
                     if p.id in q.denials_heard:
+                        when = "yesterday at" if p.id in y["denials"] else "at"
                         self.add_grudge(q, p, minute,
                                         f"{p.name} admitted taking it at minute {minute:02d}, after "
-                                        f"denying it to you at minute {q.denials_heard[p.id]:02d}",
+                                        f"denying it to you {when} minute {q.denials_heard[p.id]:02d}",
                                         f"{p.name} admitted it after denying it to {q.name}", record)
                     if p.id in q.accused_by:
+                        when = "yesterday at" if p.id in y["accused_by"] else "at"
                         self.add_grudge(q, p, minute,
-                                        f"{p.name} had accused you of it at minute {q.accused_by[p.id]:02d}",
+                                        f"{p.name} had accused you of it {when} minute {q.accused_by[p.id]:02d}",
                                         f"{p.name} had accused {q.name} of it", record)
                 if kind == "deny":
                     q.denials_heard[p.id] = minute
+                    if q.yesterday:
+                        q.yesterday["denials"].discard(p.id)
                 if kind == "accuse" and q is target:
                     q.accused_by[p.id] = minute
+                    if q.yesterday:
+                        q.yesterday["accused_by"].discard(p.id)
                     if q.id != self.culprit:        # a false accusation
                         self.add_grudge(q, p, minute,
                                         f"{p.name} accused you of taking the can at minute {minute:02d}, "
@@ -1178,13 +1365,26 @@ class Morning:
                                else "said nobody should go out tonight"),
                     "back": f"said {target.name if target else ''} should be the one to go",
                     "decline": "said you will not be the one to go"}.get(kind, "said")
+            if self.day != 4 and kind in TRIP_KINDS:
+                # Day 2's wording (reports/night_design.md, §6), for the speaker's own line.
+                mine = {"still_going": "said you still mean to go there tonight",
+                        "nobody_goes": "said nobody should go out tonight",
+                        "refuse_to_go": "said you will not go"}.get(opt.id, mine)
+                if target and kind == "back":
+                    mine = f"said {target.name} is the one who should go"
+                elif target and kind == "object":
+                    mine = f"said {target.name} must stay home tonight"
             if kind in TRIP_KINDS:
                 # The plan record (reports/trip_design.md, §4.1): every position taken, and each
-                # speaker's latest one for everyone who heard it, the speaker included.
+                # speaker's latest one for everyone who heard it, the speaker included. Day 2 also
+                # keeps the option id (reports/night_design.md, §6).
                 aim = target_id if aimed else None
                 self.trip_acts.append((minute, p.id, kind, aim, words))
+                heard = (minute, kind, aim, self.seq) + ((opt.id,) if self.day != 4 else ())
+                if self.day != 4:
+                    self.trip_ids.append(opt.id)
                 for x in [p] + seen:
-                    x.trip_heard[p.id] = (minute, kind, aim, self.seq)
+                    x.trip_heard[p.id] = heard
                     if kind in ("propose", "volunteer", "back"):
                         x.trip_raised = True
                 if kind == "propose":

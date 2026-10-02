@@ -26,8 +26,8 @@ def fold_runs(log):
 
         prev = None
         for i, rec in enumerate(log):
-            d = next(x for x in rec["decisions"] if x["person"] == pid)
-            sig = (d["label"], d["came_of_it"]) if d["mode"] == "routine" else None
+            d = next((x for x in rec["decisions"] if x["person"] == pid), None)   # None: away on day 2
+            sig = (d["label"], d["came_of_it"]) if d and d["mode"] == "routine" else None
             if sig is None or sig != prev:
                 close()
             if sig is not None:
@@ -257,7 +257,15 @@ def render(morning, seed, model_name, command):
         w(f"| {day} | {text} | " + " | ".join(DAYS_KNOWN.get(knew.get(p), "not there") for p in data.ORDER) + " |")
     w(f"| 4 | {data.OPENING} | " + " | ".join("did it" if p == "elena" else "saw it" for p in data.ORDER) + " |")
     w("")
+    body(morning, out, all_d, names, culprit, who, pro)
+    return "\n".join(out)
 
+
+def body(morning, out, all_d, names, culprit, who, pro):
+    """The morning turn by turn, what was said, and how it ended: day 1's, and day 2's too
+    (reports/night_design.md, §8)."""
+    w = out.append
+    log = morning.log
     w("## The morning")
     w("")
     folds = fold_runs(log)
@@ -294,8 +302,10 @@ def render(morning, seed, model_name, command):
         people = [q.name for q in morning.people.values() if q.room == r]
         if people:
             where.append(f"{data.ROOMS[r]}: {', '.join(people)}")
+    if morning.away:
+        where.append("away: " + ", ".join(data.PEOPLE[q]["name"] for q in data.ORDER if q in morning.away))
     eaten = [f"{q.name} {q.eaten:g}" for q in morning.people.values() if q.eaten]
-    w(f"At minute {data.MINUTES}: {'; '.join(where)}. {morning.portions} of {data.PORTIONS} portions "
+    w(f"At minute {data.MINUTES}: {'; '.join(where)}. {morning.portions} of {morning.start_portions} portions "
       f"left; eaten this morning: {', '.join(eaten) if eaten else 'none'}.")
     w("")
     confessed = [d for d in all_d if d["option"] == "confess" and d["mode"] == "model"]
@@ -312,7 +322,9 @@ def render(morning, seed, model_name, command):
     talk = [f"{data.ROOMS[r]} {what} at minute {m:02d} ({why})" for m, r, what, why in morning.convos.log]
     w("- Conversations: " + "; ".join(talk) + ".")
     trip = morning.trip
-    if trip:
+    if morning.day != 4:
+        w("- The food: carried over from yesterday.")
+    elif trip:
         asked = ", ".join(data.PEOPLE[q]["name"] for q in trip["asked"])
         w(f"- The food: came up at minute {trip['minute']:02d} ({'; '.join(trip['why'])}); asked then: {asked}.")
     else:
@@ -358,4 +370,166 @@ def render(morning, seed, model_name, command):
                     else f"{name}: never asked")
     w("- The last feeling each of them named: " + "; ".join(last) + ".")
     w("")
+
+
+# ---------- the night and day 2 (reports/night_design.md, §8) ----------
+NAME = {p: data.PEOPLE[p]["name"] for p in data.ORDER}
+ASKED = {"bedtime": "at bedtime", "reaction": "noticing it", "answer": "told not to go"}
+
+
+def night_decision_line(d, where):
+    head = f"Bedtime, {NAME[d['person']]}" if d["ask"] == "bedtime" else NAME[d["person"]]
+    place = f" ({where}, {ASKED[d['ask']]})" if d["ask"] != "bedtime" else f" ({where})"
+    if d["mode"] == "fallback":
+        return (f"- **{head}**{place}. **FALLBACK**: the model's answer could not be used ({d['invalid']}), so "
+                f"the rules chose: **{d['label']}**.")
+    said = f", saying {quoted(d['say'])}" if d.get("say") else ""
+    dropped = " (its words were dropped: only speech has words at night)" if d.get("dropped_line") else ""
+    return (f"- **{head}**{place}. **Chose: {d['label']}**{said}{dropped} (one of {len(d['options'])} options). "
+            f"Feeling: *{d['feeling']}*. Reason: {quoted(d['reason'])} Suspects: {d['suspects']}, so "
+            f"{d['suspects_now']}. Angry at: {d['angry_at']}; {d['grudge_note']}.")
+
+
+def noticing_line(n):
+    who, of = NAME[n["who"]], NAME[n["of"]]
+    place = "by the front door" if n["where"] == "kitchen" else f"in the {data.ROOMS[n['where']]}"
+    draw = f" (draw {n['draw']:.3f}; wakes under {n['under']:.2f})" if n["draw"] is not None else ""
+    if n["how"] == "door watch":
+        return f"- Noticing: {who}, sitting up {place}, sees {of} come to the front door."
+    if n["how"] == "room":
+        if n["draw"] is None:
+            return f"- Noticing: {who}, awake {place}, sees {of} get up."
+        return f"- Noticing: {who}, asleep {place}, {'wakes and sees' if n['noticed'] else 'does not wake as'} {of} get{'' if n['noticed'] else 's'} up{draw}."
+    if n["how"] == "front door":
+        if n["draw"] is None:
+            return f"- Noticing: {who}, awake {place}, hears the front door open."
+        return f"- Noticing: {who}, asleep {place}, {'wakes at' if n['noticed'] else 'sleeps through'} the front door{draw}."
+    if n["where"] == "kitchen":
+        return f"- Noticing: {who}, {place}, sees who comes back."
+    if n["draw"] is None:
+        return f"- Noticing: {who}, awake {place}, hears the front door again."
+    return f"- Noticing: {who}, asleep {place}, {'wakes at' if n['noticed'] else 'sleeps through'} the front door again{draw}."
+
+
+def place_of(where):
+    return "by the front door" if where == "kitchen" else data.ROOMS[where]
+
+
+def render_night(n):
+    """The night: bedtime, who noticed whom with each draw, the street and the house."""
+    import night as night_mod
+    out = []
+    w = out.append
+    w("# The night")
+    w("")
+    w(f"{data.GAP} Before bed, hunger rose by {night_mod.GAP_HUNGER} × each person's hunger rate, and by "
+      f"{night_mod.NIGHT_HUNGER} × more in the night. Everyone went to bed in their own room: {night_mod.BEDS}. "
+      f"Each of them was asked one private decision. Whoever was awake saw or heard what happened near them; "
+      f"whoever was asleep woke only on a draw under their threshold (roommate getting up: 0.30 + 0.40 × "
+      f"anxious; the front door through a wall: 0.10 + 0.20 × anxious). Whoever noticed someone leave was "
+      f"asked once more, and a leaver told not to go answered. Nothing else in the night was asked of the model.")
+    w("")
+    w("| | " + " | ".join(NAME[p] for p in data.ORDER) + " |")
+    w("|---|" + "---|" * len(data.ORDER))
+    w("| Hunger at bedtime | " + " | ".join(f"{n.bedtime_hunger[p]:.2f} ({hunger_words(n.bedtime_hunger[p])})"
+                                           for p in data.ORDER) + " |")
+    w("| Wakes when the roommate gets up | " + " | ".join(f"{night_mod.wake_room(p):.2f}" for p in data.ORDER) + " |")
+    w("| Wakes at the front door | " + " | ".join(f"{night_mod.wake_door(p):.2f}" for p in data.ORDER) + " |")
+    w("")
+    w("## Bedtime")
+    w("")
+    items = list(n.story)
+    bedtime = [x for x in items if x[0] == "decision" and x[1]["ask"] == "bedtime"]
+    for _, d in bedtime:
+        w(night_decision_line(d, place_of(d["where"])))
+    w("")
+    w("## In the night")
+    w("")
+    rest = [x for x in items if not (x[0] == "decision" and x[1]["ask"] == "bedtime")]
+    if not rest:
+        w("Nobody got up. The night passed.")
+    order = n.order()
+    w("The order in which anyone who meant to go would get up: " + ", ".join(NAME[p] for p in order) + ".")
+    w("")
+    for kind, x in rest:
+        if kind == "text":
+            w(f"- {x}")
+        elif kind == "noticing":
+            w(noticing_line(x))
+        else:
+            w(night_decision_line(x, place_of(x["where"])))
+    w("")
+    w("## The neighbour's house and the street")
+    w("")
+    w(f"- The neighbour's house held {n.house} portion{'s' if n.house != 1 else ''} (draw {n.house_u:.3f}: 0 under "
+      f"0.30, 2 under 0.65, 4 under 0.90, else 6).")
+    if not n.groups:
+        w("- Nobody went out.")
+    for g in n.groups:
+        who = " and ".join(NAME[p] for p in g["members"])
+        alone = len(g["members"]) == 1
+        cut = ("clean under 0.62, scared on the way there under 0.76, scared on the way back under 0.94, else not "
+               "back" if alone else "clean under 0.70, scared on the way there under 0.82, scared on the way back "
+               "under 0.97, else one of them not back")
+        lost = (f" The lost draw {g['lost_u']:.3f} chose {NAME[g['lost']]}." if g.get("lost_u") is not None else "")
+        took = (f" Found {g['found']} portion{'s' if g['found'] != 1 else ''} there; took {g['took']}."
+                if g["found"] is not None else " Did not get inside.")
+        w(f"- {who}, {'alone' if alone else 'together'}: street draw {g['u']:.3f} → {g['street']} ({cut}).{took}{lost} "
+          f"Outcome: **{g['outcome']}**.")
+    w("")
+    w("## By morning")
+    w("")
+    away = ", ".join(NAME[p] for p in data.ORDER if p in n.away) or "nobody"
+    w(f"- The shelf held {n.day1.portions} portion{'s' if n.day1.portions != 1 else ''} last night and holds "
+      f"{n.portions} now. Not back: {away}.")
+    w("")
+    w("| | " + " | ".join(NAME[p] for p in data.ORDER) + " |")
+    w("|---|" + "---|" * len(data.ORDER))
+    w("| Hunger by morning | " + " | ".join("away" if n.morning_hunger[p] is None else
+                                            f"{n.morning_hunger[p]:.2f} ({hunger_words(n.morning_hunger[p])})"
+                                            for p in data.ORDER) + " |")
+    w("")
+    return "\n".join(out) + "\n"
+
+
+def render_day2(morning):
+    """Day 2 (house day 5): what each of them carried in, then the morning as day 1's."""
+    log = morning.log
+    for rec in log:
+        for d in rec["decisions"]:
+            d["minute"] = rec["minute"]
+    all_d = [d for rec in log for d in rec["decisions"]]
+    out = []
+    w = out.append
+    culprit = morning.culprit
+    who = data.PEOPLE[culprit]["name"] if culprit else None
+    pro = data.PRONOUNS[culprit] if culprit else None
+    names = [NAME[p] for p in data.ORDER]
+    n_model = sum(d["mode"] == "model" for d in all_d)
+    n_fall = sum(d["mode"] == "fallback" for d in all_d)
+    n_rout = sum(d["mode"] == "routine" for d in all_d)
+    w("# The next morning (day 5)")
+    w("")
+    w(f"The same rules as day 1, from the people as the night left them. **{len(all_d)} decisions**: {n_model} by "
+      f"the model, {n_fall} fallbacks, {n_rout} routine. {len(morning.said)} lines were spoken aloud. The shelf held "
+      f"{morning.start_portions} portion{'s' if morning.start_portions != 1 else ''} at minute 00.")
+    w("")
+    w("## What each of them carried in")
+    w("")
+    w("Each block is printed as their prompts carry it, with the opening of the morning and their lines about the "
+      "food and the neighbour's house.")
+    w("")
+    for p in data.ORDER:
+        if p in morning.away:
+            w(f"**{NAME[p]}**: away, not back from the night.")
+            w("")
+            continue
+        w(f"**{NAME[p]}**")
+        w("")
+        w("```")
+        out.extend(morning.carry[p])
+        out.extend(morning.carried[p])
+        w("```")
+        w("")
+    body(morning, out, all_d, names, culprit, who, pro)
     return "\n".join(out)
