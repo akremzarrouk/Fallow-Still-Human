@@ -8,9 +8,9 @@
 
     --scenario NAME   daniel_ate_it (default), mara_ate_it or miscount (data.SCENARIOS)
     --model KEY       another model from config.json `models` (default: config.json `model`)
-    --out DIR         where runs and answers go: runs/DIR and cache/DIR (default v11; v4 replays
-                      the fourth version's runs; v5/check.py to v10/check.py replay the
-                      fifth's to tenth's)
+    --out DIR         where runs and answers go: runs/DIR and cache/DIR (default v12; v4 replays
+                      the fourth version's runs; v5/check.py to v11/check.py replay the
+                      fifth's to eleventh's)
 
 The model names and call limits are in config.json. The key is read from GEMINI_API_KEY.
 
@@ -33,13 +33,13 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 
 
 def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_dir=None,
-        client=None, quiet=False, scenario=data.DEFAULT_SCENARIO, model_key=None, out="v11"):
+        client=None, quiet=False, scenario=data.DEFAULT_SCENARIO, model_key=None, out="v12"):
     config = load_config(config_path or os.path.join(HERE, "config.json"))
     if model_key:
         config = {**config, **config["models"][model_key]}
     model_name = "fake" if fake else config["model"]
     # Each version's runs and answers live apart (runs/ and cache/ for the first, runs/vN and
-    # cache/vN after), which v1/ to v10/ can still replay.
+    # cache/vN after), which v1/ to v11/ can still replay.
     runs_dir = runs_dir or os.path.join(HERE, "runs", out, "fake" if fake else "")
     cache_dir = cache_dir or os.path.join(HERE, "cache", out)
     os.makedirs(runs_dir, exist_ok=True)
@@ -140,7 +140,7 @@ def main():
     ap.add_argument("--config", default=None)
     ap.add_argument("--scenario", default=data.DEFAULT_SCENARIO, choices=sorted(data.SCENARIOS))
     ap.add_argument("--model", default=None, help="a key of config.json `models`")
-    ap.add_argument("--out", default="v11")
+    ap.add_argument("--out", default="v12")
     args = ap.parse_args()
     _, code = run(args.seed, replay=args.replay, fake=args.fake, config_path=args.config,
                   scenario=args.scenario, model_key=args.model, out=args.out)
