@@ -94,6 +94,39 @@ def cached_prompts(dirs):
     return prompts
 
 
+# The trip concern (reports/trip_design.md): its two lines, the day-2 memories it keeps from
+# trimming, and the most its block can add to a prompt (§2.5: 374 estimated tokens at most).
+TRIP_FOOD = "About food: there is no food in the house for tomorrow."
+TRIP_HOUSE = ("About the neighbour's house: its people left in the first days and nobody has been "
+              "inside since, so there may be food there. Outside is dangerous.")
+TRIP_DAY2 = ["Daniel says they should cross to the neighbour's house tonight and see what is left there.",
+             "Leo lays out, evenly and in front of everyone, why crossing at night gets someone killed. "
+             "Daniel drops it.",
+             "Later, louder than he meant to be, Daniel tells Leo that he is the oldest and the decisions are his."]
+TRIP_BLOCK_MAX = 380
+TRIP_IDS = re.compile(r"^(propose_trip|volunteer|object_trip|object_\w+|back_\w+|decline)$")
+TRIP_OPTION_LINE = re.compile(r"^- (propose_trip|volunteer|object_\w+|back_\w+|decline): ")
+
+
+def trip_ids(opts):
+    return [o.id for o in opts if TRIP_IDS.match(o.id)]
+
+
+def without_trip_block(prompt):
+    """A prompt without what the trip concern adds to it after the trigger (§2.5): its lines,
+    its options, the day-2 memories it keeps, and "this morning" in the house line."""
+    if TRIP_FOOD not in prompt:
+        return prompt
+    out = []
+    for line in prompt.split("\n"):
+        if line.startswith(("About food:", "About the neighbour's house:", "About going there tonight:")):
+            continue
+        if TRIP_OPTION_LINE.match(line) or any(line.startswith(f"- Day 2: {s} (") for s in TRIP_DAY2):
+            continue
+        out.append(line.replace("Outside, and not to be gone to this morning:", "Outside, and not to be gone to:"))
+    return "\n".join(out)
+
+
 def assert_no_target_text(test, prompts):
     """No sentence of target-morning.md (nor its merged copy) is in any of the prompts."""
     target = target_text()
@@ -226,8 +259,10 @@ class FakeMorningTest(unittest.TestCase):
         self.assertTrue(prompts)
         for p in prompts:
             # The estimate tracked the API's own count closely in the first runs (1,250 against
-            # 1,252); the real counts of the real runs are reported with them.
-            self.assertLess(estimate_tokens(SYSTEM + p), 1450)
+            # 1,252); the real counts of the real runs are reported with them. The trip block
+            # sits outside the budget (reports/trip_design.md, §2.5).
+            self.assertLess(estimate_tokens(SYSTEM + without_trip_block(p)), 1450)
+            self.assertLess(estimate_tokens(SYSTEM + p), 1450 + TRIP_BLOCK_MAX)
 
     def test_nothing_from_target_morning_reaches_a_prompt(self):
         fake_morning(self.dirs)
@@ -274,7 +309,8 @@ class FakeMorningTest(unittest.TestCase):
         for q in (daniel, leo):
             prompt = m.prompt_for(q, 20, m.options_for(q))
             self.assertIn("admitted", prompt)
-            self.assertLess(estimate_tokens(SYSTEM + prompt), 1450)
+            self.assertLess(estimate_tokens(SYSTEM + without_trip_block(prompt)), 1450)
+            self.assertLess(estimate_tokens(SYSTEM + prompt), 1450 + TRIP_BLOCK_MAX)
         self.assertIn("you admitted aloud that you took the can",
                       m.prompt_for(daniel, 20, m.options_for(daniel)))
 
@@ -926,11 +962,13 @@ def frozen(version, module):
 
 
 def without_lull(transcript):
-    """A transcript as JSON would hold it, without the `lull` key that every act has since v9."""
+    """A transcript as JSON would hold it, without the `lull` key that every act has since v9
+    and the `trip_moment` key that every act has since v11."""
     tr = json.loads(json.dumps(transcript))
     for turn in tr["turns"]:
         for a in turn["acts"]:
             a.pop("lull", None)
+            a.pop("trip_moment", None)
     return tr
 
 
@@ -1007,10 +1045,11 @@ class DecisionFormatTest(unittest.TestCase):
         def keys(path):
             tr = json.loads(read(path))
             return {k for turn in tr["turns"] for a in turn["acts"] for k in a}
-        # v9 adds one key to every act, `lull` (reports/lull_design.md, §3). `aside` is an older
-        # key, on acts that take someone aside only (world.py, act()); the v6 story had none.
+        # v9 adds one key to every act, `lull` (reports/lull_design.md, §3), and v11 another,
+        # `trip_moment` (reports/trip_design.md, §4.1). `aside` is an older key, on acts that take
+        # someone aside only (world.py, act()); the v6 story had none.
         self.assertEqual(keys(os.path.join(self.dirs.runs, "daniel_ate_it-seed1.transcript.json")) - {"aside"},
-                         keys(os.path.join(V6_RUNS, "daniel_ate_it-seed1.transcript.json")) | {"lull"})
+                         keys(os.path.join(V6_RUNS, "daniel_ate_it-seed1.transcript.json")) | {"lull", "trip_moment"})
 
     def test_v6_baseline_pairs_until_someone_who_has_spoken_is_asked(self):
         """The v6 answers carry each morning, unchanged, up to the first prompt of someone who has
@@ -1602,11 +1641,13 @@ class OwnWordsTest(unittest.TestCase):
         """Against the frozen v9 code, with the same fake model: the same prompts up to the first
         prompt of someone who has already spoken, and that one differs only in their own lines,
         which lose their words (and, being shorter, may let the trimming keep an older memory or
-        backstory line, world.py prompt_for)."""
+        backstory line, world.py prompt_for). The trip concern is off on the new side: v9 has
+        none, and in seed 5 it starts at minute 03, the turn compared (reports/trip_impl.md)."""
         old_world = frozen("v9", "world")
         for seed in range(1, 6):
             old, old_rec = self.fake(seed, old_world, "old")
-            new, new_rec = self.fake(seed)
+            with mock.patch.object(world, "TRIP_ON", False):
+                new, new_rec = self.fake(seed)
             decisions = [d for r in old.log for d in r["decisions"] if d["mode"] != "routine"]
             spoke = set()
             for i, d in enumerate(decisions):
@@ -1624,6 +1665,536 @@ class OwnWordsTest(unittest.TestCase):
             extra = [x for x in got if x not in expected]
             self.assertEqual(missing, [], seed)
             self.assertTrue(all(x.startswith(("- min ", "- Day ")) for x in extra), (seed, extra))
+
+
+V10_RUNS = os.path.join(HERE, "runs", "v10")
+V10_CACHE = os.path.join(HERE, "cache", "v10")
+
+
+def silent(*a):
+    return "silent", None
+
+
+def run_check(version):
+    env = {k: v for k, v in os.environ.items() if k != "GEMINI_API_KEY"}
+    env["PYTHONDONTWRITEBYTECODE"] = "1"
+    return subprocess.run([sys.executable, os.path.join(HERE, version, "check.py")], cwd=HERE, env=env,
+                          capture_output=True, text=True, timeout=600)
+
+
+def strip_trip_moment(acts):
+    return [{k: v for k, v in a.items() if k != "trip_moment"} for a in acts]
+
+
+class TripTest(unittest.TestCase):
+    """The second concern: whether someone goes to the neighbour's house tonight
+    (reports/trip_design.md, sections 1 to 4; tests T1 to T13 of section 8)."""
+
+    def setUp(self):
+        self.dirs = Dirs()
+
+    def tearDown(self):
+        self.dirs.cleanup()
+
+    def still(self, policy=silent, seed=1):
+        """A morning after its first turn, everyone silent at minute 00."""
+        m, client = scripted(policy, self.dirs, seed=seed, turns=1)
+        return m, client
+
+    def triggered(self, seed=1):
+        """A morning whose concern started at minute 03, from the empty shelf."""
+        m, client = self.still(seed=seed)
+        m.portions = 0
+        m.turn(1)
+        self.assertIsNotNone(m.trip)
+        return m, client
+
+    def act(self, m, p, option, words, t=2):
+        in_turn(m)
+        opt = next((o for o in m.options_for(p) if o.id == option), None)
+        self.assertIsNotNone(opt, f"{option} not offered to {p.id}: {[o.id for o in m.options_for(p)]}")
+        out = m.apply(p, opt, {"mode": "model", "say": words, "feeling": "tense"}, t, [], new_record())
+        out_of_turn(m)
+        return out
+
+    def fake(self, seed, on=True):
+        rec = Recorder(Oracle(Cache(os.path.join(self.dirs.root, f"trip{seed}-{on}.json")), "fake", seed,
+                              client=FakeClient()))
+        with mock.patch.object(world, "TRIP_ON", on):
+            m = Morning(rec, seed).run()
+        return m, rec
+
+    # T1
+    def test_t1_the_numbers(self):
+        self.assertEqual((world.TRIP_HUNGER, world.TRIP_ON), (2, True))
+        self.assertEqual(data.TRIP_MEMORIES, tuple(TRIP_DAY2))
+
+    def test_t1a_an_empty_shelf_at_a_turns_start_asks_everyone_in_the_kitchen(self):
+        m, _ = self.still()
+        self.assertIsNone(m.trip)
+        m.portions = 0
+        m.turn(1)
+        self.assertEqual(m.trip, {"minute": 3, "why": ["the shelf is empty"], "asked": list(data.ORDER)})
+        moments = {d["person"]: d for d in m.log[1]["decisions"] if d.get("trip_moment") is not None}
+        self.assertEqual(set(moments), set(data.ORDER))
+        for d in moments.values():
+            self.assertEqual((d["trip_moment"], d["mode"]), (3, "model"))
+
+    def test_t1b_one_person_very_hungry_asks_only_them(self):
+        m, _ = self.still()
+        m.people["mara"].hunger = 0.72
+        m.turn(1)
+        self.assertEqual(m.trip, {"minute": 3, "why": ["Mara is very hungry"], "asked": ["mara"]})
+        self.assertEqual([d["person"] for d in m.log[1]["decisions"] if d.get("trip_moment") is not None],
+                         ["mara"])
+
+    def test_t1c_both_at_once(self):
+        m, _ = self.still()
+        m.portions = 0
+        m.people["leo"].room = "back_room"
+        m.people["leo"].hunger = 0.75
+        m.turn(1)
+        self.assertEqual(m.trip, {"minute": 3, "why": ["the shelf is empty", "Leo is very hungry"],
+                                  "asked": ["daniel", "elena", "leo", "mara"]})
+
+    def test_t1d_a_shelf_emptied_during_a_turn_fires_at_the_next(self):
+        def policy(who, minute, options, client):
+            return ("eat", None) if minute == 0 and who in ("daniel", "leo") and "eat" in options else ("silent", None)
+        m, _ = scripted(policy, self.dirs, turns=1)
+        self.assertEqual(m.portions, 0)
+        self.assertIsNone(m.trip)
+        m.turn(1)
+        self.assertEqual((m.trip["minute"], m.trip["why"]), (3, ["the shelf is empty"]))
+
+    def test_t1e_hungry_is_not_enough(self):
+        m, _ = scripted(silent, self.dirs, turns=6)               # minutes 00 to 15
+        self.assertEqual(world.hunger_level(m.people["daniel"].hunger), 1)
+        self.assertIsNone(m.trip)
+        self.assertFalse([p for _, _, p in m.oracle.client.prompts if TRIP_FOOD in p])
+
+    def test_t1f_it_fires_once(self):
+        m, _ = self.still()
+        m.people["mara"].hunger = 0.72
+        m.turn(1)
+        before = json.loads(json.dumps(m.trip))
+        m.portions = 0
+        for p in m.people.values():
+            p.hunger = 0.9
+        m.turn(2)
+        m.turn(3)
+        self.assertEqual(m.trip, before)
+        self.assertFalse([d for rec in m.log[2:] for d in rec["decisions"] if d.get("trip_moment") is not None])
+
+    def test_t1g_the_can_neither_brings_it_on_nor_holds_it_back(self):
+        def policy(who, minute, options, client):
+            if minute == 0 and who == "daniel":
+                return "confess", "It was me."
+            for o in options:
+                if o.startswith("accuse_"):
+                    return o, "You did it.", "Daniel", "Daniel"
+            return "silent", None
+        m, _ = scripted(policy, self.dirs, turns=5)
+        self.assertTrue(m.people["daniel"].confessed)
+        self.assertIsNone(m.trip)
+        m.people["leo"].hunger = 0.72
+        m.turn(5)
+        self.assertEqual(m.trip, {"minute": 15, "why": ["Leo is very hungry"], "asked": ["leo"]})
+
+    # T2
+    def test_t2_nothing_changes_before_the_trigger(self):
+        for seed in range(1, 6):
+            off, rec_off = self.fake(seed, on=False)
+            on, rec_on = self.fake(seed)
+            self.assertIsNone(off.trip, seed)
+            self.assertIsNotNone(on.trip, seed)
+            first = next(i for i, p in enumerate(rec_on.prompts) if TRIP_FOOD in p)
+            self.assertEqual(rec_on.prompts[:first], rec_off.prompts[:first], seed)
+            T = on.trip["minute"]
+            before = lambda m: [a for turn in m.transcript["turns"] if turn["minute"] < T for a in turn["acts"]]
+            self.assertEqual(strip_trip_moment(before(on)), strip_trip_moment(before(off)), seed)
+            self.assertTrue(all(a["trip_moment"] is None for a in before(on)), seed)
+
+    # T3
+    def test_t3_the_v10_caches_pair_up_to_the_trigger(self):
+        expected = {1: (24, None, 22), 2: (30, "Elena", 20), 3: (30, "Elena", 23)}
+        for seed, (minute, who, served) in expected.items():
+            name = f"daniel_ate_it-seed{seed}"
+            path = os.path.join(self.dirs.root, f"{name}.json")
+            shutil.copy(os.path.join(V10_CACHE, f"{V6_MODEL}-{name}.json"), path)
+            oracle = Oracle(Cache(path), V6_MODEL, seed, client=None, replay=True)
+            rec = Recorder(oracle)
+            m = Morning(rec, seed)
+            with self.assertRaises(gemini.CacheMiss, msg=f"seed {seed}"):
+                for t in range(m.turns):
+                    m.turn(t)
+            last = rec.prompts[-1]
+            self.assertIn(f"\nNow, minute {minute:02d}, you are in the kitchen.\n", last, seed)
+            self.assertIn(TRIP_FOOD, last, seed)
+            if who:
+                self.assertTrue(last.startswith(f"You are {who},"), seed)
+            self.assertEqual(m.trip["minute"], minute, seed)
+            self.assertEqual((oracle.from_cache, oracle.api_requests), (served, 0), seed)
+            v10 = json.loads(read(os.path.join(V10_RUNS, name + ".transcript.json")))
+            self.assertEqual(without_lull(m.transcript)["turns"],
+                             without_lull({"turns": [t for t in v10["turns"] if t["minute"] < minute]})["turns"],
+                             seed)
+
+    # T4
+    def test_t4_the_lines_exactly_and_only_after_the_trigger(self):
+        post = 0
+        for seed in (1, 2, 3):
+            m, rec = self.fake(seed)
+            minutes = [rec_["minute"] for rec_ in m.log for d in rec_["decisions"] if d["mode"] != "routine"]
+            self.assertEqual(len(minutes), len(rec.prompts), seed)
+            for minute, prompt in zip(minutes, rec.prompts):
+                if minute < m.trip["minute"]:
+                    for words in ("About food:", "neighbour's house:", "About going there tonight:",
+                                  "to be gone to this morning:"):
+                        self.assertNotIn(words, prompt, (seed, minute))
+                    continue
+                post += 1
+                lines = prompt.split("\n")
+                self.assertEqual(lines.count(TRIP_FOOD), 1)
+                self.assertEqual(lines.count(TRIP_HOUSE), 1)
+                i = lines.index(TRIP_FOOD)
+                self.assertTrue(lines[i - 1].startswith("About the can"), lines[i - 1])
+                self.assertEqual(lines[i + 1], TRIP_HOUSE)
+                self.assertIn("Outside, and not to be gone to this morning: the street and the neighbour's house.",
+                              prompt)
+                self.assertNotIn("Outside, and not to be gone to: ", prompt)
+        self.assertGreater(post, 0)
+
+    def test_t4_the_plan_line_as_each_person_heard_it(self):
+        m, _ = self.triggered()
+        dan, ele, leo, mara = (m.people[p] for p in data.ORDER)
+        for p in m.people.values():
+            self.assertNotIn("About going there tonight:", m.prompt_for(p, 2, m.options_for(p)))
+        mara.room = "back_room"
+        self.act(m, dan, "volunteer", "I'll go.", t=2)
+        self.act(m, leo, "object_trip", "Nobody goes.", t=3)
+        self.act(m, ele, "back_leo", "Leo should go.", t=4)
+        self.act(m, dan, "object_leo", "Not Leo.", t=5)
+        self.act(m, leo, "decline", "Not me.", t=6)
+        self.act(m, dan, "propose_trip", "Someone must go.", t=7)
+
+        def line(p):
+            return next((x for x in m.prompt_for(p, 8, m.options_for(p)).split("\n")
+                         if x.startswith("About going there tonight:")), None)
+        self.assertEqual(line(leo), "About going there tonight: Elena said you should go (min 12); "
+                                    "you said you will not go (min 18); Daniel said someone should go (min 21).")
+        self.assertEqual(line(ele), "About going there tonight: you said Leo should go (min 12); "
+                                    "Leo said he will not go (min 18); Daniel said someone should go (min 21).")
+        self.assertIsNone(line(mara))           # in the back room: heard nothing of it
+        self.act(m, ele, "volunteer", "Then I will.", t=8)
+        self.assertEqual(line(dan), "About going there tonight: Leo said he will not go (min 18); "
+                                    "you said someone should go (min 21); Elena offered to go (min 24).")
+        self.act(m, dan, "object_elena", "Not you, Mom.", t=9)
+        self.act(m, leo, "object_trip", "Nobody.", t=10)
+        self.assertEqual(line(ele), "About going there tonight: you offered to go (min 24); "
+                                    "Daniel said you should not go (min 27); Leo said nobody should go (min 30).")
+
+    # T5
+    def test_t5_the_day2_memories_are_kept_after_the_trigger(self):
+        filler = [(0, f"filler line number {i} " + "about nothing much at all " * 12) for i in range(200)]
+        fresh, _ = self.still()
+        fresh.people["elena"].memory += filler
+        before = fresh.prompt_for(fresh.people["elena"], 2, fresh.options_for(fresh.people["elena"]))
+        self.assertIn("(earlier things, left out here)", before)
+        days = [x for x in before.split("\n") if x.startswith("- Day ")]
+        self.assertEqual(len(days), 4)
+        self.assertFalse([x for x in days if x.startswith("- Day 2:")])
+        m, _ = self.triggered()
+        m.people["elena"].memory += filler
+        after = m.prompt_for(m.people["elena"], 2, m.options_for(m.people["elena"]))
+        self.assertIn("(earlier things, left out here)", after)
+        days = [x for x in after.split("\n") if x.startswith("- Day ")]
+        self.assertEqual(days[:3], [f"- Day 2: {s} (you saw it)" for s in TRIP_DAY2])
+        self.assertEqual(days[3:], [x for x in before.split("\n") if x.startswith("- Day ")])
+        # Daniel and Leo keep them too, with what they did.
+        dan = m.people["daniel"]
+        dan.memory += filler
+        days = [x for x in m.prompt_for(dan, 2, m.options_for(dan)).split("\n") if x.startswith("- Day 2:")]
+        self.assertEqual(days, [f"- Day 2: {TRIP_DAY2[0]} (you did it)", f"- Day 2: {TRIP_DAY2[1]} (you saw it)",
+                                f"- Day 2: {TRIP_DAY2[2]} (you did it)"])
+
+    # T6
+    def test_t6_when_each_option_is_offered(self):
+        fresh, _ = self.still()
+        for p in fresh.people.values():
+            self.assertEqual(trip_ids(fresh.options_for(p)), [], p.id)
+        m, _ = self.triggered()
+        dan, ele, leo, mara = (m.people[p] for p in data.ORDER)
+        ids = [o.id for o in m.options_for(dan)]
+        self.assertEqual(trip_ids(m.options_for(dan)),
+                         ["propose_trip", "volunteer", "back_elena", "back_leo", "back_mara"])
+        start = ids.index("propose_trip")
+        self.assertEqual(ids[start - 1], "reassure_all")
+        self.assertEqual(ids[start + 5], "say_other")
+        # Alone: none.
+        ele.room = "back_room"
+        self.assertEqual(trip_ids(m.options_for(ele)), [])
+        ele.room = "kitchen"
+        self.act(m, dan, "propose_trip", "Someone has to go.")
+        self.assertNotIn("propose_trip", trip_ids(m.options_for(dan)))
+        self.assertIn("object_trip", trip_ids(m.options_for(dan)))        # made a proposal: may now object
+        self.assertEqual(trip_ids(m.options_for(leo)),
+                         ["propose_trip", "volunteer", "object_trip", "back_daniel", "back_elena", "back_mara"])
+        self.act(m, dan, "volunteer", "I'll go.", t=3)
+        self.assertEqual(trip_ids(m.options_for(dan)),
+                         ["object_trip", "back_elena", "back_leo", "back_mara", "decline"])
+        self.assertEqual(trip_ids(m.options_for(leo)),
+                         ["propose_trip", "volunteer", "object_trip", "back_daniel", "back_elena", "back_mara",
+                          "object_daniel"])
+        self.act(m, dan, "decline", "No, not me.", t=4)
+        self.assertEqual(trip_ids(m.options_for(dan)),
+                         ["volunteer", "object_trip", "back_elena", "back_leo", "back_mara"])
+        self.assertNotIn("object_daniel", trip_ids(m.options_for(leo)))
+        self.act(m, mara, "back_daniel", "Daniel should go.", t=5)
+        self.assertIn("object_daniel", trip_ids(m.options_for(leo)))
+        self.assertNotIn("back_daniel", trip_ids(m.options_for(mara)))
+        self.assertIn("back_leo", trip_ids(m.options_for(mara)))
+        self.assertNotIn("decline", trip_ids(m.options_for(dan)))         # already his position
+        self.act(m, leo, "object_daniel", "Not Daniel.", t=6)
+        self.assertNotIn("object_daniel", trip_ids(m.options_for(leo)))
+        self.act(m, ele, "back_mara", "Mara should go.", t=7)
+        self.assertIn("decline", trip_ids(m.options_for(mara)))           # backed in her hearing
+        # No option is ever the person's current position.
+        for p in m.people.values():
+            pos = p.trip_heard.get(p.id)
+            if pos:
+                kind, target = pos[1], pos[2]
+                current = {"propose": "propose_trip", "volunteer": "volunteer", "decline": "decline",
+                           "object": f"object_{target}" if target else "object_trip",
+                           "back": f"back_{target}"}[kind]
+                self.assertNotIn(current, trip_ids(m.options_for(p)), p.id)
+
+    # T7
+    def test_t7_what_each_option_does(self):
+        m, _ = self.triggered()
+        dan, ele, leo, mara = (m.people[p] for p in data.ORDER)
+        mara.room = "back_room"
+        state = lambda: json.dumps({p.id: [p.hunger, p.guilt, p.suspicion.state(), p.heard_question,
+                                           p.knows_culprit, p.room, {t: g.strength for t, g in p.grudges.items()}]
+                                    for p in m.people.values()} | {"portions": m.portions})
+        before = state()
+        said = [
+            (dan, "propose_trip", "W1", "Daniel says someone should go to the neighbour's house tonight",
+             "you said someone should go to the neighbour's house tonight.", ("propose", None), True, "a proposal"),
+            (leo, "volunteer", "W2", "Leo offers to go to the neighbour's house tonight",
+             "you offered to go there tonight.", ("volunteer", None), True, "an offer to go"),
+            (ele, "object_trip", "W3", "Elena says nobody should go out tonight",
+             "you said nobody should go out tonight.", ("object", None), True, "an objection"),
+            (ele, "object_leo", "W4", "Elena says {Leo} should not be the one to go",
+             "you said Leo should not be the one to go.", ("object", "leo"), True, "an objection"),
+            (dan, "back_leo", "W5", "Daniel says {Leo} should be the one to go",
+             "you said Leo should be the one to go.", ("back", "leo"), True, "backing someone to go"),
+            (leo, "decline", "W6", "Leo says he will not be the one to go",
+             "you said you will not be the one to go.", ("decline", None), True, "a refusal to go"),
+            (leo, "volunteer", "W7", "Leo offers to go to the neighbour's house tonight",
+             "you offered to go there tonight.", ("volunteer", None), False, "an offer to go they had made before"),
+        ]
+        for t, (p, option, words, gist, own, pos, new, why) in enumerate(said, start=2):
+            minute = t * 3
+            self.act(m, p, option, words, t=t)
+            for q in (dan, ele, leo):
+                if q is p:
+                    continue
+                g = gist.replace("{Leo}", "you" if q is leo else "Leo")
+                self.assertIn((minute, f'{g}: "{words}"'), q.memory, (option, q.id))
+                self.assertEqual(q.trip_heard[p.id][:3], (minute,) + pos, (option, q.id))
+            self.assertIn(f"min {minute:02d}, {own}", p.said_lines)
+            self.assertIn((minute, f"{own[:-1]}. You felt tense."), p.memory)
+            self.assertNotIn(words, "\n".join(x for _, x in p.memory))
+            self.assertEqual(m.trip_acts[-1], (minute, p.id, pos[0], pos[1], words))
+            self.assertEqual(p.trip_heard[p.id][:3], (minute,) + pos)
+            self.assertEqual((m.said[-1]["new"], m.said[-1]["why"]), (new, why), option)
+            self.assertNotIn(p.id, mara.trip_heard)                   # the back room heard no words
+            if pos[1]:
+                self.assertEqual(m.people[pos[1]].addressed["who"], p.id)
+        self.assertEqual(state(), before)
+        self.assertTrue(dan.proposed)
+        self.assertFalse(ele.proposed)
+        # Nobody ever leaves the house.
+        for seed in range(1, 6):
+            mm, _ = self.fake(seed)
+            for turn in mm.transcript["turns"]:
+                for a in turn["acts"]:
+                    self.assertIn(a["moved_to"], [None] + list(data.ROOMS), (seed, a))
+
+    def test_t7_talk_kinds(self):
+        from talk import SPEECH, Newness, act_of, aimed_at
+        self.assertTrue({"propose", "volunteer", "object", "back", "decline"} <= set(SPEECH))
+        self.assertEqual([act_of(x) for x in ("propose_trip", "volunteer", "object_trip", "object_leo",
+                                              "back_mara", "decline")],
+                         [("propose", None), ("volunteer", None), ("object", None), ("object", "leo"),
+                          ("back", "mara"), ("decline", None)])
+        self.assertEqual([aimed_at(x) for x in ("propose_trip", "object_trip", "object_leo", "back_mara", "decline")],
+                         [None, None, "leo", "mara", None])
+        n = Newness()
+        self.assertEqual(n.line("leo", "object_daniel", []), (True, "an objection"))
+        self.assertEqual(n.line("leo", "object_mara", []), (True, "an objection"))
+        self.assertEqual(n.line("leo", "object_daniel", []), (False, "an objection they had made before"))
+        self.assertEqual(n.line("leo", "back_mara", []), (True, "backing someone to go"))
+        self.assertEqual(n.line("leo", "back_mara", []), (False, "backing someone to go they had made before"))
+        self.assertEqual(n.line("mara", "propose_trip", []), (True, "a proposal"))
+        self.assertEqual(n.line("mara", "propose_trip", []), (False, "a proposal they had made before"))
+        self.assertEqual(n.line("mara", "decline", []), (True, "a refusal to go"))
+        self.assertEqual(n.line("mara", "decline", []), (False, "a refusal to go they had made before"))
+        for kind, done in (("propose", "said someone should go to the neighbour's house tonight"),
+                           ("volunteer", "offered to go there tonight"), ("object", "said someone should not go"),
+                           ("back", "said someone should be the one to go"),
+                           ("decline", "said you will not be the one to go")):
+            self.assertEqual(world.KIND_DONE[kind], done)
+
+    def test_t7_heard_verbs_in_the_pattern_block(self):
+        m, _ = self.triggered()
+        dan, leo = m.people["daniel"], m.people["leo"]
+        verbs = [m.heard_verb({"kind": k, "target": tgt}, dan) for k, tgt in
+                 (("propose", None), ("volunteer", None), ("object", None), ("object", "daniel"),
+                  ("back", "daniel"), ("decline", None))]
+        self.assertEqual(verbs, ["said someone should go to the neighbour's house tonight", "offered to go there tonight",
+                                 "said nobody should go", "said you should not be the one to go",
+                                 "said you should be the one to go", "said they will not be the one to go"])
+
+    # T8
+    def test_t8_no_link_in_code(self):
+        m, _ = self.triggered()
+        dan, ele, leo, mara = (m.people[p] for p in data.ORDER)
+
+        def can_ids(p):
+            return [o.id for o in m.options_for(p) if not TRIP_IDS.match(o.id)]
+        before = {p.id: can_ids(p) for p in m.people.values()}
+        self.act(m, dan, "volunteer", "I'll go.")
+        self.act(m, leo, "back_daniel", "Daniel goes.", t=3)
+        self.act(m, ele, "object_daniel", "Not Daniel.", t=4)
+        self.act(m, mara, "object_trip", "Nobody goes.", t=5)
+        self.assertEqual({p.id: can_ids(p) for p in m.people.values()}, before)
+        trip_before = {p.id: trip_ids(m.options_for(p)) for p in m.people.values()}
+        dan.confessed = True
+        for p in m.people.values():
+            p.heard_question = True
+            p.knows_culprit, p.confession_heard_at = "daniel", 15
+            p.suspicion.target, p.suspicion.strength = "daniel", 3
+            if p is not dan:
+                p.grudge("daniel").rise(15, "something", "event")
+        self.assertEqual({p.id: trip_ids(m.options_for(p)) for p in m.people.values()}, trip_before)
+        texts = [TRIP_FOOD, TRIP_HOUSE, m.plan_text()] + [world.KIND_DONE[k] for k in
+                                                          ("propose", "volunteer", "object", "back", "decline")]
+        texts += [o.label for p in m.people.values() for o in m.options_for(p) if TRIP_IDS.match(o.id)]
+        texts += [x for p in m.people.values() for x in m.prompt_for(p, 6, m.options_for(p)).split("\n")
+                  if x.startswith("About going there tonight:")]
+        for text in texts:
+            self.assertFalse(re.search(r"\b(can|took|guilt)\b", text), text)
+
+    # T9
+    def test_t9_the_plan_line(self):
+        m, _ = self.still()
+        self.assertEqual(m.plan_text(), "no plan")
+        m.trip = {"minute": 30, "why": ["Elena is very hungry"], "asked": ["elena"]}
+        self.assertEqual(m.plan_text(), "no plan")
+        cases = [
+            ([(33, "daniel", "volunteer", None), (36, "mara", "back", "daniel"), (39, "elena", "object", None)],
+             "Daniel will go; Mara wants Daniel to go; Elena is against anyone going"),
+            ([(33, "leo", "propose", None), (36, "mara", "object", "leo")],
+             "nobody has offered to go; Leo said someone should go; Mara is against Leo going"),
+            ([(33, "daniel", "volunteer", None), (36, "leo", "volunteer", None)],
+             "Daniel and Leo have both offered to go"),
+            ([(33, "daniel", "volunteer", None), (36, "leo", "volunteer", None), (39, "mara", "volunteer", None)],
+             "Daniel, Leo and Mara have all offered to go"),
+            ([(33, "elena", "back", "leo"), (36, "leo", "decline", None)],
+             "nobody has offered to go; Elena wants Leo to go; Leo will not go"),
+            ([(33, "daniel", "volunteer", None), (39, "daniel", "object", None)],
+             "nobody has offered to go; Daniel is against anyone going"),
+        ]
+        for acts, plan in cases:
+            m.trip_acts = [(minute, who, kind, target, "words") for minute, who, kind, target in acts]
+            self.assertEqual(m.plan_text(), plan, acts)
+
+    def test_t9_the_story_ends_with_the_food_and_the_plan(self):
+        m, _ = self.still()
+        m.finish()
+        story = render(m, 1, "fake", "python morning.py --seed 1")
+        self.assertIn("\n- The food: never came up.\n- The plan for tonight: no plan.\n", story)
+        m, _ = self.still()
+        m.people["elena"].hunger = 0.72
+        m.turn(1)
+        self.act(m, m.people["daniel"], "volunteer", "I'll go.")
+        m.finish()
+        story = render(m, 1, "fake", "python morning.py --seed 1")
+        self.assertIn("\n- The food: came up at minute 03 (Elena is very hungry); asked then: Elena.\n"
+                      "- The plan for tonight: Daniel will go.\n", story)
+        m, _ = self.triggered()
+        m.finish()
+        story = render(m, 1, "fake", "python morning.py --seed 1")
+        self.assertIn("\n- The food: came up at minute 03 (the shelf is empty); asked then: Daniel, Elena, Leo, "
+                      "Mara.\n", story)
+
+    # T10
+    def test_t10_recording(self):
+        acts_seen = 0
+        for seed in (1, 2, 3):
+            (meta, code), out = fake_morning(self.dirs, seed=seed)
+            self.assertEqual(code, 0, out)
+            tr = json.loads(read(os.path.join(self.dirs.runs, f"daniel_ate_it-seed{seed}.transcript.json")))
+            story = read(os.path.join(self.dirs.runs, f"daniel_ate_it-seed{seed}.md"))
+            self.assertEqual(meta["trip_minute"], tr["trip"]["minute"])
+            acts = [a for turn in tr["turns"] for a in turn["acts"]]
+            trips = [a for a in acts if TRIP_IDS.match(a["option"])]
+            self.assertEqual(meta["trip_acts"], len(trips))
+            self.assertEqual(tr["trip"]["acts"], [[a["minute"], a["who"], a["option"], a["words"]] for a in trips])
+            acts_seen += len(trips)
+            moments = [(turn["minute"], a) for turn in tr["turns"] for a in turn["acts"]
+                       if a.get("trip_moment") is not None]
+            self.assertTrue(moments, seed)
+            for minute, a in moments:
+                self.assertEqual((minute, a["trip_moment"]), (tr["trip"]["minute"],) * 2)
+                self.assertIn(a["mode"], ("model", "fallback"))
+                self.assertIn(a["who"], tr["trip"]["asked"])
+            self.assertEqual(story.count("**The food**: "), len(moments), seed)
+            self.assertIn(f"- The plan for tonight: {tr['trip']['plan']}.", story)
+            self.assertIn(f"trip_minute: {meta['trip_minute']}", out)
+            self.assertIn(f"trip_acts: {meta['trip_acts']}", out)
+        self.assertGreater(acts_seen, 0)
+
+    # T11
+    def test_t11_nothing_from_target_morning_reaches_a_prompt_after_the_trigger(self):
+        prompts = []
+        for seed in (1, 2, 3):
+            _, rec = self.fake(seed)
+            prompts += [p for p in rec.prompts if TRIP_FOOD in p]
+        self.assertTrue(prompts)
+        assert_no_target_text(self, prompts)
+
+    # T12
+    def test_t12_the_block_sits_outside_the_budget(self):
+        filler = [(0, f"filler line number {i} " + "about nothing much at all " * 12) for i in range(200)]
+        m, _ = self.triggered()
+        self.act(m, m.people["daniel"], "volunteer", "I'll go.")
+        ele = m.people["elena"]
+        ele.memory += filler
+        with_trip = m.prompt_for(ele, 3, m.options_for(ele))
+        trip, m.trip = m.trip, None
+        plain = m.prompt_for(ele, 3, m.options_for(ele))
+        m.trip = trip
+
+        def morning_lines(prompt):
+            lines = prompt.split("\n")
+            return lines[lines.index("What else happened this morning, most recent last:"):
+                         next(i for i, x in enumerate(lines) if x.startswith("Now, minute"))]
+        self.assertIn("- (earlier things, left out here)", morning_lines(plain))
+        self.assertEqual(morning_lines(with_trip), morning_lines(plain))
+        self.assertEqual(without_trip_block(with_trip), plain)
+        self.assertLessEqual(estimate_tokens(SYSTEM + without_trip_block(with_trip)), PROMPT_TOKEN_BUDGET)
+        self.assertGreater(estimate_tokens(SYSTEM + with_trip), PROMPT_TOKEN_BUDGET)
+        self.assertLess(estimate_tokens(SYSTEM + with_trip), 1450 + TRIP_BLOCK_MAX)
+
+    # T13
+    def test_t13_v10_and_v9_still_replay(self):
+        for version in ("v10", "v9"):
+            done = run_check(version)
+            self.assertEqual(done.returncode, 0, done.stdout + done.stderr)
+            self.assertEqual(done.stdout.count("story IDENTICAL, transcript IDENTICAL"), 3, done.stdout)
+            self.assertIn("0 API calls", done.stdout)
 
 
 class GeminiClientTest(unittest.TestCase):

@@ -63,7 +63,13 @@ def decision_line(d, fold=None):
         return (f"- **{name}.** Rules: nothing social happened to them. **{cap(d['label'])}**. "
                 f"Came of it: {d['came_of_it']}{fact}")
     order = f" ({ORDINAL[d['place']]} to act in the {data.ROOMS[d['room']]}: {d['order_reason']})"
-    if d.get("inner"):
+    if d.get("trip_moment") is not None:
+        because = f"**The food**: {d['trip_why']}"
+        if d.get("inner"):
+            because += "; also an inner moment: " + "; ".join(d["inner"])
+        elif d["triggers"]:
+            because += "; also a social moment: " + "; ".join(d["triggers"])
+    elif d.get("inner"):
         because = "**Inner moment**, nothing social happening: " + "; ".join(d["inner"])
     elif d.get("lull") is not None:
         because = f"**Lull**, nothing said or done in the {data.ROOMS[d['room']]} since minute {d['lull']:02d}"
@@ -190,6 +196,11 @@ def render(morning, seed, model_name, command):
     w(f"- **Inner moment**: nothing social happened, but hunger, guilt, suspicion or grudge has "
       f"risen a level since they last decided with the model; the model is asked, at most once "
       f"every {INNER_EVERY} minutes per person. What rose is listed.")
+    w("- **The food** (once per morning): at the start of the first turn when the shelf is empty or "
+      "someone is very hungry, everyone learns that there is no food for tomorrow and that the "
+      "neighbour's house may have some, and may then say whether someone should go there tonight. "
+      "Whoever is in the kitchen at the empty shelf, or whoever became very hungry, is asked the "
+      "model that turn. What brought it on is listed.")
     w(f"- **Lull**: nothing social or inner, but nothing has been said or done in their room for at "
       f"least {LULL_QUIET} minutes (staying put in silence and staying seated do not count), and they "
       f"have not been asked for at least {LULL_EVERY} minutes; the model is asked, and told since when "
@@ -300,6 +311,13 @@ def render(morning, seed, model_name, command):
         w("- Nobody took the can: the count was wrong from the start.")
     talk = [f"{data.ROOMS[r]} {what} at minute {m:02d} ({why})" for m, r, what, why in morning.convos.log]
     w("- Conversations: " + "; ".join(talk) + ".")
+    trip = morning.trip
+    if trip:
+        asked = ", ".join(data.PEOPLE[q]["name"] for q in trip["asked"])
+        w(f"- The food: came up at minute {trip['minute']:02d} ({'; '.join(trip['why'])}); asked then: {asked}.")
+    else:
+        w("- The food: never came up.")
+    w(f"- The plan for tonight: {morning.plan_text()}.")
     w("")
     w("What is inside each of them at minute 90:")
     w("")

@@ -97,6 +97,8 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
         "inner_moments": sum(1 for d in all_d if d.get("inner")),
         "lull_moments": sum(1 for d in all_d if d.get("lull") is not None),
         "private_talks": sum(1 for d in all_d if d["option"] in ("accept_aside", "refuse_aside")),
+        "trip_minute": morning.trip["minute"] if morning.trip else None,
+        "trip_acts": len(morning.trip_acts),
         "max_prompt_tokens_estimated": morning.max_prompt_tokens,
         "max_prompt_tokens_counted_by_api": max(oracle.prompt_tokens, default=None),
         "run_seconds": round(seconds, 1),
@@ -106,6 +108,7 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
     say(f"\nwrote {meta['story']}")
     for k in ("api_requests", "answers_live", "answers_from_cache", "model_decisions", "fallbacks",
               "routine_decisions", "lines_spoken", "inner_moments", "lull_moments", "private_talks",
+              "trip_minute", "trip_acts",
               "max_prompt_tokens_estimated",
               "max_prompt_tokens_counted_by_api", "run_seconds",
               "story_sha256"):

@@ -88,6 +88,17 @@ HOUSE_THINGS = (
     "between the rooms; the front door and the front windows, boarded up. Outside, and not "
     "to be gone to: the street and the neighbour's house. Do not mention any other object "
     "or place.")
+# After the trip concern starts (reports/trip_design.md, §2.2): the trip the options speak of is
+# tonight, and nobody goes out this morning.
+HOUSE_THINGS_AFTER_TRIP = HOUSE_THINGS.replace("Outside, and not to be gone to:",
+                                               "Outside, and not to be gone to this morning:")
+assert HOUSE_THINGS_AFTER_TRIP != HOUSE_THINGS
+
+# What everyone learns when the trip concern starts (reports/trip_design.md, §2.1): conclusions
+# the code draws, told after their "About the can:" line.
+ABOUT_FOOD = "About food: there is no food in the house for tomorrow."
+ABOUT_NEIGHBOUR = ("About the neighbour's house: its people left in the first days and nobody has been "
+                   "inside since, so there may be food there. Outside is dangerous.")
 
 # How each of them speaks to the others.
 ADDRESS = {
@@ -161,6 +172,9 @@ _BACKSTORY = [
     (4, "Elena says she is quite sure nobody in this house would take food from the others.",
      {**EVERYONE_SAW, "elena": "did"}),
 ]
+# Day 2's argument about crossing to the neighbour's house. Once the trip concern has started,
+# trimming a prompt never drops these (reports/trip_design.md, §2.3).
+TRIP_MEMORIES = tuple(e[1] for e in _BACKSTORY[3:6])
 
 
 def backstory(scenario):

@@ -17,13 +17,18 @@ neutral level word; the numbers themselves only decide when an inner moment come
 A lull moment asks the model for someone nothing social or inner has happened to, when the
 room they are in has been still for a while and they have not been asked for a while; their
 prompt says since when nothing has been said or done there (reports/lull_design.md).
+
+The trip concern (reports/trip_design.md): once the shelf is empty or someone first becomes very
+hungry, everyone is told there is no food for tomorrow and that the neighbour's house may have
+some, and each of them may take a position on whether someone goes there tonight. The rules
+record the positions and decide nothing; nobody leaves the house.
 """
 import json
 import random
 import re
 
 import data
-from talk import SPEECH, Conversations, Newness, act_of, aimed_at
+from talk import SPEECH, TRIP_WHY, Conversations, Newness, act_of, aimed_at
 
 NAMES = {p: data.PEOPLE[p]["name"] for p in data.ORDER}
 CHOICES = [NAMES[p] for p in data.ORDER] + ["nobody"]
@@ -59,6 +64,9 @@ FALL_EVERY = 15              # minutes: a suspicion or grudge falls at most one 
 LULL_QUIET = None            # minutes a room must be still before a lull (None: no lulls);
                              # off since reports/lull_v9.md, 9 in reports/lull_design.md
 LULL_EVERY = 12              # minutes since a person was last asked before a lull
+TRIP_HUNGER = 2              # the hunger level ("very hungry") that starts the trip concern
+TRIP_ON = True               # the trip concern (reports/trip_design.md); off only in tests
+TRIP_KINDS = tuple(TRIP_WHY)  # propose, volunteer, object, back, decline
 
 KIND_DONE = {   # what a run of one kind of act looks like, told to the person who did it
     "ask": "asked who took the can", "deny": "denied taking it",
@@ -68,6 +76,9 @@ KIND_DONE = {   # what a run of one kind of act looks like, told to the person w
     "sit": "sat with someone", "eat": "eaten", "share": "shared out the food",
     "aside": "taken someone aside", "accept_aside": "gone aside with someone",
     "refuse_aside": "refused to go aside",
+    "propose": "said someone should go to the neighbour's house tonight",
+    "volunteer": "offered to go there tonight", "object": "said someone should not go",
+    "back": "said someone should be the one to go", "decline": "said you will not be the one to go",
 }
 
 HUNGER_WORDS = ["a little hungry", "hungry", "very hungry", "starving"]
@@ -75,8 +86,9 @@ LEVEL_WORDS = {1: "a little", 2: "some", 3: "a lot"}   # the only words a level 
 EVENTS_SHOWN = 4             # most recent events shown per grudge and for guilt
 
 
-def estimate_tokens(text):
-    return int(len(text) / 3.6) + 1
+def estimate_tokens(text, less=0):
+    """less: characters of `text` that do not count (the trip block, reports/trip_design.md §2.5)."""
+    return int((len(text) - less) / 3.6) + 1
 
 
 def strength(feeling):
@@ -190,6 +202,13 @@ def grudge_facts(name, events, limit=None):
     return facts
 
 
+def trip_option(kind, target):
+    """The option id of a position on the trip."""
+    if kind in ("propose", "volunteer", "decline"):
+        return {"propose": "propose_trip"}.get(kind, kind)
+    return f"{kind}_{target}" if target else "object_trip"
+
+
 class Option:
     def __init__(self, id, label, speech=False, **act):
         self.id, self.label, self.speech, self.act = id, label, speech, act
@@ -233,6 +252,15 @@ class Person:
         self.seen = None            # the levels they were shown when they last decided
         self.last_inner = None      # minute of their last inner moment
         self.last_asked = None      # minute of their last model decision of any kind
+        # The trip: each speaker's latest position they heard (their own included), as
+        # (minute, kind, target, seq); whether they have proposed it; whether they have heard or
+        # made a proposal, an offer or a backing; and the day-2 memories never trimmed once it
+        # has started.
+        self.trip_heard = {}
+        self.proposed = False
+        self.trip_raised = False
+        self.trip_memories = {x for x in self.backstory
+                              if any(x.startswith(f"Day 2: {m} (") for m in data.TRIP_MEMORIES)}
 
     def grudge(self, against):
         return self.grudges.setdefault(against, Grudge())
@@ -272,6 +300,9 @@ class Morning:
         # room -> the minute something other than staying put in silence, or staying seated,
         # was last done in it (the count at minute 00 was done in the kitchen)
         self.last_stir = {"kitchen": 0}
+        self.trip = None            # the trip concern once started: {"minute", "why", "asked"}
+        self.trip_acts = []         # (minute, who, kind, target, words), every position taken
+        self.trip_now = set()       # during the turn it starts: who is asked because of it
         for p in self.people.values():
             how = "did it" if p.id == "elena" else "saw it"
             p.sure.append(f"min 00: {data.OPENING} (you {how})")
@@ -351,6 +382,7 @@ class Morning:
                                    kind="reassure", target=q.id))
             if len(others) > 1:
                 opts.append(Option("reassure_all", "reassure everyone here", True, kind="reassure_all"))
+            opts += self.trip_options(p, others)
             opts.append(Option("say_other", "say something else", True, kind="say"))
             for q in others:
                 if q.activity["kind"] in ("searching", "walking"):
@@ -384,6 +416,122 @@ class Morning:
         if kind in SPEECH and n >= 3:
             opts = [o for o in opts if act_of(o.id)[0] != kind]
         return opts
+
+    def trip_options(self, p, others):
+        """The positions on the trip open to them (reports/trip_design.md, §3.1): none before it
+        has started; never the position they already hold."""
+        if self.trip is None:
+            return []
+        pos = p.trip_heard.get(p.id)
+        own = pos[1:3] if pos else None
+        out = []
+        if not p.proposed:
+            out.append(Option("propose_trip", "say someone should go to the neighbour's house tonight", True,
+                              kind="propose"))
+        if own != ("volunteer", None):
+            out.append(Option("volunteer", "offer to go there tonight yourself", True, kind="volunteer"))
+        if p.trip_raised and own != ("object", None):
+            out.append(Option("object_trip", "say nobody should go out tonight", True, kind="object"))
+        for q in others:
+            if own != ("back", q.id):
+                out.append(Option(f"back_{q.id}", f"say {q.name} should be the one to go", True,
+                                  kind="back", target=q.id))
+        for q in others:
+            if self.named_to_go(p, q.id) and own != ("object", q.id):
+                out.append(Option(f"object_{q.id}", f"say {q.name} should not be the one to go", True,
+                                  kind="object", target=q.id))
+        backed = any(v[1:3] == ("back", p.id) for w, v in p.trip_heard.items() if w != p.id)
+        if (backed or own == ("volunteer", None)) and own != ("decline", None):
+            out.append(Option("decline", "say you will not be the one to go", True, kind="decline"))
+        return out
+
+    @staticmethod
+    def named_to_go(p, q):
+        """As far as p has heard: q offered to go, or someone backed q since q last said they
+        will not go."""
+        pos = p.trip_heard.get(q)
+        if pos and pos[1] == "volunteer":
+            return True
+        declined = pos[3] if pos and pos[1] == "decline" else -1
+        return any(v[1:3] == ("back", q) and v[3] > declined for w, v in p.trip_heard.items() if w != q)
+
+    def start_trip(self, minute):
+        """At the start of a turn: the trip concern starts if the shelf is empty or someone is
+        very hungry, once per morning. Returns who is asked because of it this turn."""
+        if not TRIP_ON or self.trip is not None:
+            return set()
+        why, asked = [], set()
+        if self.portions == 0:
+            why.append("the shelf is empty")
+            asked |= {q for q in data.ORDER if self.people[q].room == "kitchen"}
+        for q in data.ORDER:
+            if hunger_level(self.people[q].hunger) >= TRIP_HUNGER:
+                why.append(f"{NAMES[q]} is {HUNGER_WORDS[TRIP_HUNGER]}")
+                asked.add(q)
+        if not why:
+            return set()
+        self.trip = {"minute": minute, "why": why, "asked": [q for q in data.ORDER if q in asked]}
+        return asked
+
+    def heard_plan(self, p):
+        """The positions on the trip they heard, each speaker's latest, oldest first; None if
+        they have heard none (reports/trip_design.md, §4.2)."""
+        if not p.trip_heard:
+            return None
+        parts = []
+        for who, (minute, kind, target, _) in sorted(p.trip_heard.items(), key=lambda kv: kv[1][3]):
+            x = "you" if who == p.id else NAMES[who]
+            q = None if target is None else "you" if target == p.id else NAMES[target]
+            if kind == "propose":
+                said = f"{x} said someone should go"
+            elif kind == "volunteer":
+                said = f"{x} offered to go"
+            elif kind == "object":
+                said = f"{x} said nobody should go" if q is None else f"{x} said {q} should not go"
+            elif kind == "back":
+                said = f"{x} said {q} should go"
+            else:
+                said = f"{x} said {'you' if who == p.id else data.PRONOUNS[who]['he']} will not go"
+            parts.append(f"{said} (min {minute:02d})")
+        return "About going there tonight: " + "; ".join(parts) + "."
+
+    def trip_lines(self, p):
+        """What the trip concern adds after their "About the can:" line."""
+        if self.trip is None:
+            return []
+        plan = self.heard_plan(p)
+        return [data.ABOUT_FOOD, data.ABOUT_NEIGHBOUR] + ([plan] if plan else [])
+
+    def plan_text(self):
+        """The state of the plan for tonight, from every position taken (reports/trip_design.md,
+        §4.3): who has offered to go, then each other person's latest position."""
+        if not self.trip_acts:
+            return "no plan"
+        latest = {}
+        for _, who, kind, target, _ in self.trip_acts:
+            latest.pop(who, None)
+            latest[who] = (kind, target)
+        going = [NAMES[w] for w, (kind, _) in latest.items() if kind == "volunteer"]
+        if len(going) == 1:
+            parts = [f"{going[0]} will go"]
+        elif len(going) == 2:
+            parts = [f"{going[0]} and {going[1]} have both offered to go"]
+        elif going:
+            parts = [f"{', '.join(going[:-1])} and {going[-1]} have all offered to go"]
+        else:
+            parts = ["nobody has offered to go"]
+        for who, (kind, target) in latest.items():
+            x = NAMES[who]
+            if kind == "propose":
+                parts.append(f"{x} said someone should go")
+            elif kind == "back":
+                parts.append(f"{x} wants {NAMES[target]} to go")
+            elif kind == "object":
+                parts.append(f"{x} is against anyone going" if target is None else
+                             f"{x} is against {NAMES[target]} going")
+            elif kind == "decline":
+                parts.append(f"{x} will not go")
+        return "; ".join(parts)
 
     def routine(self, p, opts):
         """No model: carry on with what they were doing, or stay put."""
@@ -453,6 +601,7 @@ class Morning:
         else:
             about = "About the can: you have not settled on who took it."
         out.append(f"{about} {p.can_note}" if p.can_note else about)
+        out += self.trip_lines(p)
         held = [(t, p.grudges[t]) for t in data.ORDER if t in p.grudges and p.grudges[t].strength]
         if not held:
             out.append("Against the others: nothing.")
@@ -497,7 +646,11 @@ class Morning:
         target = "you" if h["target"] == listener.id else None
         return {"ask": "asked who took the can", "deny": "denied taking it",
                 "accuse": f"accused {target or 'someone'}", "confess": "admitted taking it",
-                "reassure": f"reassured {target or 'everyone'}", "say": "spoke to everyone"
+                "reassure": f"reassured {target or 'everyone'}", "say": "spoke to everyone",
+                "propose": "said someone should go to the neighbour's house tonight",
+                "volunteer": "offered to go there tonight",
+                "object": "said you should not be the one to go" if target else "said nobody should go",
+                "back": "said you should be the one to go", "decline": "said they will not be the one to go",
                 }.get(h["kind"], "spoke to everyone")
 
     def prompt_for(self, p, t, opts, lull=None):
@@ -513,7 +666,8 @@ class Morning:
             f"Who you are: {s['note']}",
             f"Temperament: {trait_words(s['traits'])}.",
             f"What matters to you: {', '.join(s['values'])}.",
-        ] + inside + [f"The house: {data.HOUSE} {data.HOUSE_THINGS}"]
+        ] + inside + [f"The house: {data.HOUSE} "
+                      f"{data.HOUSE_THINGS_AFTER_TRIP if self.trip else data.HOUSE_THINGS}"]
         room = data.ROOMS[p.room]
         now = [f"Now, minute {minute:02d}, you are in the {room}."]
         others = self.others_here(p)
@@ -540,6 +694,16 @@ class Morning:
         pinned = ["What you are sure of this morning:"] + [f"- {x}" for x in p.sure]
         if p.said_lines:
             pinned += ["Your own last words this morning:"] + [f"- {x}" for x in p.said_lines[-3:]]
+        # Once the trip concern has started, its block sits outside the budget
+        # (reports/trip_design.md, §2.5): its lines, its options, the day-2 memories it keeps from
+        # trimming, and "this morning" in the house line. `block` counts its characters.
+        keep = p.trip_memories if self.trip else set()
+        block = 0
+        if self.trip:
+            block += sum(len(x) + 1 for x in self.trip_lines(p))
+            block += sum(len(x) + 1 for o, x in zip(opts, tail[1:]) if act_of(o.id)[0] in TRIP_KINDS)
+            block += sum(len(f"- {x}") + 1 for x in keep)
+            block += len(data.HOUSE_THINGS_AFTER_TRIP) - len(data.HOUSE_THINGS)
         cut = False
         while True:
             parts = head + ["What you remember from the days before:"] + [f"- {x}" for x in back]
@@ -548,17 +712,18 @@ class Morning:
             parts += [f"- {x}" for x in morning] or ([] if cut else ["- nothing else yet"])
             parts += now + tail
             text = "\n".join(parts)
-            if estimate_tokens(SYSTEM + text) <= PROMPT_TOKEN_BUDGET or (not morning and not back):
+            loose = [x for x in back if x not in keep]      # all of them, before the trip
+            if estimate_tokens(SYSTEM + text, block) <= PROMPT_TOKEN_BUDGET or (not morning and not loose):
                 break
             cut = True
             if len(morning) > 8:
                 morning.pop(0)
-            elif len(back) > 4:
-                back.pop(0)
+            elif len(loose) > 4:
+                back.remove(loose[0])
             elif morning:
                 morning.pop(0)
             else:
-                back.pop(0)
+                back.remove(loose[0])
         self.max_prompt_tokens = max(self.max_prompt_tokens, estimate_tokens(SYSTEM + text))
         return text
 
@@ -623,6 +788,11 @@ class Morning:
             {"minute": m, "room": r, "what": what, "why": why,
              "by_inner": next(by_inner) if what == "started" else None}
             for m, r, what, why in self.convos.log]
+        # The trip concern (reports/trip_design.md, §4.1), or None if it never started.
+        self.transcript["trip"] = None if self.trip is None else {
+            **self.trip,
+            "acts": [[m, who, trip_option(kind, target), words] for m, who, kind, target, words in self.trip_acts],
+            "plan": self.plan_text()}
 
     def social_triggers(self, p, t):
         """What counts now: anything new; anything else only while the room is talking."""
@@ -660,6 +830,7 @@ class Morning:
         minute = t * data.MINUTES_PER_TURN
         record = {"minute": minute, "decisions": [], "events": [], "convo": [], "guilt": [],
                   "grudges": []}
+        self.trip_now = self.start_trip(minute)     # before anyone acts (reports/trip_design.md, §1)
         for room, name, by_inner in self.arrivals:
             self.started(room, minute, f"{name} came in", by_inner)
         self.arrivals = []
@@ -684,6 +855,7 @@ class Morning:
                      "came_of_it": d["came_of_it"], "new": d.get("new"), "new_why": d.get("new_why"),
                      "inner": d.get("inner_families"), "suspects": d.get("suspects"),
                      "angry_at": d.get("angry_at"), "lull": d.get("lull"),
+                     "trip_moment": d.get("trip_moment"),
                      "moved_to": opt.act["to"] if opt.act["kind"] in ("go", "accept_aside") else None}
             tturn["acts"].append(entry)
             return opt, entry
@@ -748,6 +920,7 @@ class Morning:
         self.convo_told = len(self.convos.log)
         self.present, self.so_far, self.acted, self.moves = None, None, None, None
         self.moved_by_inner = {}
+        self.trip_now = set()
         for p in self.people.values():
             p.hunger = min(1.0, p.hunger + 0.004 * data.MINUTES_PER_TURN * p.sheet["hunger_rate"])
         record["portions"] = self.portions
@@ -810,9 +983,14 @@ class Morning:
                 d["inner_kinds"] = rose
                 d["inner_families"] = list(dict.fromkeys(k.split(":")[0] for k in rose))
                 d["inner"] = self.rise_words(p, rose)
-        if not triggers and not d.get("inner_kinds") and self.lull_due(p, minute):
+        # The turn the trip concern starts, whoever it names is asked (reports/trip_design.md, §1),
+        # whatever the inner-moment spacing; an inner moment is still recorded if it is due.
+        if p.id in self.trip_now:
+            d["trip_moment"] = self.trip["minute"]
+            d["trip_why"] = "; ".join(self.trip["why"])
+        if not triggers and not d.get("inner_kinds") and "trip_moment" not in d and self.lull_due(p, minute):
             d["lull"] = self.last_stir[p.room]
-        if triggers or d.get("inner_kinds") or "lull" in d:
+        if triggers or d.get("inner_kinds") or "trip_moment" in d or "lull" in d:
             choice, why = self.ask_model(p, t, opts, d)
             if not choice:
                 d.update(mode="fallback", invalid=why, option=self.routine(p, opts), say=None)
@@ -868,6 +1046,17 @@ class Morning:
             gist = f"{p.name} admits taking it, to everyone"
         elif kind == "reassure":
             gist = f"{p.name} reassures {aimed or 'everyone'}"
+        elif kind == "propose":
+            gist = f"{p.name} says someone should go to the neighbour's house tonight"
+        elif kind == "volunteer":
+            gist = f"{p.name} offers to go to the neighbour's house tonight"
+        elif kind == "object":
+            gist = (f"{p.name} says {aimed} should not be the one to go" if aimed
+                    else f"{p.name} says nobody should go out tonight")
+        elif kind == "back":
+            gist = f"{p.name} says {aimed} should be the one to go"
+        elif kind == "decline":
+            gist = f"{p.name} says {data.PRONOUNS[p.id]['he']} will not be the one to go"
         elif while_doing:
             gist = f"{p.name} says to {aimed or 'everyone'}, while {while_doing}"
         else:
@@ -982,7 +1171,24 @@ class Morning:
             voices.append((room, new, {p.id} | {q.id for q in seen}))
             mine = {"ask": "asked who took it", "deny": "denied taking it",
                     "accuse": f"accused {target.name if target else ''}", "confess": "admitted taking it",
-                    "reassure": f"reassured {target.name if aimed else 'everyone'}"}.get(kind, "said")
+                    "reassure": f"reassured {target.name if aimed else 'everyone'}",
+                    "propose": "said someone should go to the neighbour's house tonight",
+                    "volunteer": "offered to go there tonight",
+                    "object": (f"said {target.name} should not be the one to go" if target
+                               else "said nobody should go out tonight"),
+                    "back": f"said {target.name if target else ''} should be the one to go",
+                    "decline": "said you will not be the one to go"}.get(kind, "said")
+            if kind in TRIP_KINDS:
+                # The plan record (reports/trip_design.md, §4.1): every position taken, and each
+                # speaker's latest one for everyone who heard it, the speaker included.
+                aim = target_id if aimed else None
+                self.trip_acts.append((minute, p.id, kind, aim, words))
+                for x in [p] + seen:
+                    x.trip_heard[p.id] = (minute, kind, aim, self.seq)
+                    if kind in ("propose", "volunteer", "back"):
+                        x.trip_raised = True
+                if kind == "propose":
+                    p.proposed = True
             # Their own lines reach them without the words: minute and verb only
             # (reports/repetition_probe.md, variant B). The others hear the words.
             p.memory.append((minute, f"you {mine}.{feel}"))
