@@ -365,6 +365,7 @@ class Morning:
         self.trip_acts = []         # (minute, who, kind, target, words), every position taken
         self.trip_now = set()       # during the turn it starts: who is asked because of it
         self.food_turn = None       # day 2: the turn of the house's last food moment
+        self.holding = None         # day 2: (who, from whom) while someone decides about a handed portion
         if day != 4:
             return                  # day 2's opening is set up by next_day
         for p in self.people.values():
@@ -610,13 +611,18 @@ class Morning:
             return []
         plan = self.heard_plan(p)
         if self.day != 4:
-            return [self.food_line(), self.neighbour.get(p.id, NEIGHBOUR_UNKNOWN)] + ([plan] if plan else [])
+            return [self.food_line(p), self.neighbour.get(p.id, NEIGHBOUR_UNKNOWN)] + ([plan] if plan else [])
         return [data.ABOUT_FOOD, data.ABOUT_NEIGHBOUR] + ([plan] if plan else [])
 
-    def food_line(self):
-        """Day 2's "About food:" line: what the shelf holds, and what that means for those here."""
+    def food_line(self, p=None):
+        """Day 2's "About food:" line: what the shelf holds, and what that means for those here. For
+        whoever is deciding about a portion just handed to them (reports/body_fix.md), the line also
+        says they hold it and who handed it, and what it means counts that portion too."""
         n = self.portions
         k = sum(q.room is not None for q in self.people.values())
+        held = p is not None and self.holding is not None and self.holding[0] == p.id
+        if held:
+            n += 1
         if n == 0:
             so = "there is nothing to eat today"
         elif n < k:
@@ -625,6 +631,9 @@ class Morning:
             so = "there is one portion each, and nothing after that"
         else:
             so = f"there are {n // k} portions each, and nothing after that"
+        if held:
+            return (f"About food: the shelf holds {portions_text(self.portions)}, and you hold the portion "
+                    f"{NAMES[self.holding[1]]} has just handed you; there is no other food in the house, so {so}.")
         return f"About food: the shelf holds {portions_text(n)}, and there is no other food in the house, so {so}."
 
     def plan_text(self):
@@ -746,7 +755,9 @@ class Morning:
         q.triggers = []
         d = {"person": q.id, "triggers": list(dict.fromkeys(triggers)), "offered": len(opts),
              "held_back": None, "given_by": p.id}
+        self.holding = (q.id, p.id)             # while q decides, the portion is in q's hand
         choice, why = self.ask_model(q, t, opts, d, f"{p.name} has just handed you one of the portions.")
+        self.holding = None
         if not choice:
             d.update(mode="fallback", invalid=why, option="refuse_given", say=None)
         opt = next(o for o in opts if o.id == d["option"])

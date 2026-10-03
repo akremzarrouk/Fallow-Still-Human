@@ -3461,6 +3461,29 @@ class BodyTest(unittest.TestCase):
         self.assertEqual(story.count("**Food moment**"), len(moments))
         self.assertEqual(meta["day2_asks"], sum(a["mode"] != "routine" for a in acts))
 
+    # body_fix.md
+    def test_the_food_line_counts_the_portion_in_the_hand_of_whoever_was_handed_it(self):
+        o = self.order_at_0(2)                                   # seed 2: 1 portion on the shelf
+        giver, q, w1, w2 = o[0], o[3], o[1], o[2]
+        G = data.PEOPLE[giver]["name"]
+        day2, client = self.day2_of(2, {giver: [f"give_{q}"], q: ["eat_given"]}, only(giver, 0))
+        day2.turn(0)
+
+        def food(who):
+            prompt = next(x for w, p, x in client.prompts if p == who and w == 0)
+            return prompt, next(x for x in prompt.split("\n") if x.startswith("About food:"))
+        held, line = food(q)
+        self.assertEqual(line, f"About food: the shelf holds 0 portions, and you hold the portion {G} has just handed "
+                               f"you; there is no other food in the house, so there is not one portion each.")
+        self.assertNotIn("nothing to eat today", held)
+        # Everyone else's line is the shelf's, as before: the giver's before the gift, the others' after it.
+        self.assertEqual(food(giver)[1], "About food: the shelf holds 1 portion, and there is no other food in the "
+                                         "house, so there is not one portion each.")
+        for w in (w1, w2):
+            self.assertEqual(food(w)[1], "About food: the shelf holds 0 portions, and there is no other food in the "
+                                         "house, so there is nothing to eat today.")
+        self.assertEqual(day2.food_line(), food(w1)[1])
+
     # B-T12
     def test_b_t12_v12_still_replays(self):
         done = run_check("v12")
