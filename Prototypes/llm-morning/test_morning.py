@@ -3052,10 +3052,9 @@ class NightTest(unittest.TestCase):
 
 V12_CACHE = os.path.join(HERE, "cache", "v12")
 PROMISE = "You said you would go to the neighbour's house tonight. If you are going, it is now."
-FOOD_BEFORE = ("Your hunger has the better of you: you have not eaten since before yesterday, and the food is on the "
-               "shelf in front of you. You cannot leave it there any longer.")
-FOOD_YESTERDAY = ("Your hunger has the better of you: you last ate yesterday, at minute {mm}, and the food is on the "
-                  "shelf in front of you. You cannot leave it there any longer.")
+# The food moment's line: food_wording_probe.md's variant B, the same for everyone (food_confront_impl.md).
+# body_design §2.4's line, which named when they last ate, was replaced by it.
+NEUTRAL_FOOD = "You are starving, and there is food on the shelf in front of everyone."
 # The design's table (reports/body_design.md, §2.2): (not since before yesterday, ate yesterday).
 FOOD_CHANCES = {"daniel": (0.077, 0.0385), "elena": (0.0525, 0.0263), "leo": (0.049, 0.0245), "mara": (0.084, 0.042)}
 
@@ -3284,19 +3283,19 @@ class BodyTest(unittest.TestCase):
                          + [f"- give_{q}: give one of the portions to {data.PEOPLE[q]['name']}" for q in others]
                          + ["- share: share out what is left among everyone here"])
         head = prompt.split("\nYour options:\n")[0]
-        self.assertEqual(head, ordinary[who].split("\nYour options:\n")[0] + "\n" + FOOD_BEFORE)
-        self.assertEqual(head.split("\n")[-1], FOOD_BEFORE)
+        self.assertEqual(head, ordinary[who].split("\nYour options:\n")[0] + "\n" + NEUTRAL_FOOD)
+        self.assertEqual(head.split("\n")[-1], NEUTRAL_FOOD)
         d = next(x for x in day2.log[0]["decisions"] if x["person"] == who)
         self.assertEqual(d["offered"], 5)
         self.assertEqual(d["food_moment"]["band"], "before yesterday")
-        # The yesterday form, with the minute of the meal: seed 2's Mara ate at minute 54.
+        # Seed 2's Mara ate yesterday, at minute 54: the line is the same.
         day2, client = self.day2_of(2, draws=only("mara", 0))
         day2.people["mara"].hunger = 1.0
         day2.turn(0)
         prompt = next(x for w, q, x in client.prompts if q == "mara" and w == 0)
-        self.assertEqual(prompt.split("\nYour options:\n")[0].split("\n")[-1], FOOD_YESTERDAY.format(mm=54))
+        self.assertEqual(prompt.split("\nYour options:\n")[0].split("\n")[-1], NEUTRAL_FOOD)
         # Nobody else's prompt holds the line.
-        self.assertEqual([q for w, q, x in client.prompts if "Your hunger has the better of you" in x], ["mara"])
+        self.assertEqual([q for w, q, x in client.prompts if NEUTRAL_FOOD in x], ["mara"])
 
     # B-T7
     def test_b_t7_giving_and_the_answer(self):
@@ -3359,7 +3358,7 @@ class BodyTest(unittest.TestCase):
         # Nobody perceives the moment itself.
         for who, p in day2.people.items():
             self.assertFalse([x for x in p.memory + p.sure if "hunger" in str(x).lower()], who)
-        self.assertEqual([who for w, who, x in client.prompts if "Your hunger has the better of you" in x], [giver])
+        self.assertEqual([who for w, who, x in client.prompts if NEUTRAL_FOOD in x], [giver])
         # A gift refused: back on the shelf, no grudge.
         day2, client = self.day2_of(3, {giver: [f"give_{q}"], q: ["refuse_given"]}, only(giver, 0))
         day2.turn(0)
@@ -3391,7 +3390,7 @@ class BodyTest(unittest.TestCase):
         o = self.order_at_0(3)
         giver, q = o[0], o[3]
         day2, _ = self.day2_of(3, draws=only(giver, 0))
-        day2.oracle.client = BrokenFor("Your hunger has the better of you")
+        day2.oracle.client = BrokenFor(NEUTRAL_FOOD)
         day2.turn(0)
         d = day2.log[0]["decisions"][0]
         self.assertEqual((d["person"], d["mode"], d["option"]), (giver, "fallback", "silent"))
@@ -3431,8 +3430,11 @@ class BodyTest(unittest.TestCase):
             self.assertEqual(first[1]["food_moment"]["chance"], chance)
             self.assertLess(first[1]["food_moment"]["draw"], chance)
             self.assertEqual(missed_at_night, 0, seed)
+            # Since food_confront_impl.md every day-2 prompt offers confront_*, so day 2 no longer pairs with
+            # the v12 cache: its first prompt is already a miss. The moment still falls where its draws put it.
             day2_missed = paired.missed[missed_at_night:]
-            self.assertTrue(day2_missed and "Your hunger has the better of you" in day2_missed[0], seed)
+            self.assertTrue(day2_missed and "\n- confront_" in day2_missed[0], seed)
+            self.assertEqual(sum(NEUTRAL_FOOD in p for p in day2_missed), 1, seed)
 
     # B-T11
     def test_b_t11_records_and_the_story(self):
@@ -3490,6 +3492,110 @@ class BodyTest(unittest.TestCase):
         self.assertEqual(done.returncode, 0, done.stdout + done.stderr)
         self.assertEqual(done.stdout.count("story IDENTICAL, transcript IDENTICAL"), 3, done.stdout)
         self.assertIn("0 API calls", done.stdout)
+
+
+CONFRONT_IDS = re.compile(r"^confront_\w+$")
+
+
+class FoodConfrontTest(unittest.TestCase):
+    """The neutral food moment line (food_wording_probe.md, variant B) and confront_<q> from the night on
+    (reports/food_confront_impl.md)."""
+
+    setUp = NightTest.setUp
+    tearDown = NightTest.tearDown
+    path = NightTest.path
+    v11_day1 = NightTest.v11_day1
+    short_day1 = NightTest.short_day1
+    day2_of = BodyTest.day2_of
+    order_at_0 = BodyTest.order_at_0
+
+    def last_now_line(self, prompt):
+        return prompt.split("\nYour options:\n")[0].split("\n")[-1]
+
+    def test_the_food_moment_line_is_the_neutral_one(self):
+        who = self.order_at_0(3)[0]
+        day2, client = self.day2_of(3, draws=only(who, 0))
+        day2.turn(0)
+        prompt = next(x for w, q, x in client.prompts if q == who and w == 0)
+        self.assertEqual(self.last_now_line(prompt), NEUTRAL_FOOD)
+        self.assertNotIn("Your hunger has the better of you", prompt)
+        others = [q for q in data.ORDER if q != who]
+        self.assertEqual(option_lines(prompt), ["- eat: eat one of the portions"]          # the order is kept
+                         + [f"- give_{q}: give one of the portions to {data.PEOPLE[q]['name']}" for q in others]
+                         + ["- share: share out what is left among everyone here"])
+        # The same line whoever it is and whenever they last ate: seed 2's Mara ate yesterday.
+        day2, client = self.day2_of(2, draws=only("mara", 0))
+        day2.people["mara"].hunger = 1.0
+        day2.turn(0)
+        prompt = next(x for w, q, x in client.prompts if q == "mara" and w == 0)
+        self.assertEqual(self.last_now_line(prompt), NEUTRAL_FOOD)
+        self.assertEqual([q for w, q, x in client.prompts if NEUTRAL_FOOD in x], ["mara"])
+
+    def test_day1_prompts_are_unchanged_and_replay_from_the_v11_caches(self):
+        for seed, served in V11_SERVED.items():
+            name = f"daniel_ate_it-seed{seed}"
+            oracle = Oracle(Cache(os.path.join(V11_CACHE, f"{V6_MODEL}-{name}.json")), V6_MODEL, seed, replay=True)
+            day1 = Morning(oracle, seed).run()          # replay mode: any changed prompt is a cache miss
+            text = render(day1, seed, V6_MODEL, f"python morning.py --seed {seed}")
+            self.assertEqual(text.encode("utf-8"), read(os.path.join(V11_RUNS, name + ".md"), "rb"), seed)
+            self.assertEqual((oracle.from_cache, oracle.api_requests), (served, 0), seed)
+            for p in day1.people.values():
+                self.assertFalse([o.id for o in day1.options_for(p) if CONFRONT_IDS.match(o.id)], (seed, p.id))
+
+    def test_confront_is_offered_on_day2_and_not_on_day1(self):
+        day2, _ = self.day2_of(3)
+        in_turn(day2)
+        for p in day2.people.values():
+            opts = {o.id: o for o in day2.options_for(p)}
+            others = [q for q in data.ORDER if q != p.id]
+            self.assertEqual([i for i in opts if CONFRONT_IDS.match(i)], [f"confront_{q}" for q in others], p.id)
+            for q in others:
+                o = opts[f"confront_{q}"]
+                self.assertEqual((o.label, o.speech), (f"confront {data.PEOPLE[q]['name']} about something they did",
+                                                       True))
+        out_of_turn(day2)
+        m, _ = scripted(silent, self.dirs, turns=1)
+        m.portions = 0
+        m.turn(1)                                           # day 1, with the trip open too
+        for p in m.people.values():
+            self.assertFalse([o.id for o in m.options_for(p) if CONFRONT_IDS.match(o.id)], p.id)
+
+    def test_a_confrontation_is_recorded_and_remembered_as_one(self):
+        day2, client = self.day2_of(1, {"mara": ["confront_daniel"]})
+        dan, mara, leo = day2.people["daniel"], day2.people["mara"], day2.people["leo"]
+        accused_before, guilt_before = dict(dan.accused_by), list(dan.guilt_events)
+        grudges_before = {t: g.strength for t, g in dan.grudges.items()}
+        day2.turn(0)
+        day2.finish()
+        act = next(a for a in day2.transcript["turns"][0]["acts"] if a["who"] == "mara")
+        words = act["words"]
+        self.assertEqual(act["option"], "confront_daniel")
+        self.assertTrue(words)
+        self.assertIn((0, f'Mara confronts you: "{words}"'), dan.memory)
+        self.assertIn((0, f'Mara confronts Daniel: "{words}"'), leo.memory)
+        self.assertIn((0, "you confronted Daniel. You felt tense."), mara.memory)
+        self.assertIn("min 00, you confronted Daniel.", mara.said_lines)
+        said = next(s for s in day2.said if s["who"] == "Mara")
+        self.assertEqual((said["to"], said["text"]), ("Daniel", f'Mara confronts Daniel: "{words}"'))
+        # Never an accusation about the can.
+        for p in day2.people.values():
+            self.assertFalse([x for x in p.memory if "accuses" in x[1] or "accused" in x[1]], p.id)
+        self.assertEqual(dan.accused_by, accused_before)
+        self.assertEqual(dan.guilt_events, guilt_before)
+        self.assertEqual({t: g.strength for t, g in dan.grudges.items()}, grudges_before)
+        self.assertNotIn("accus", day2.said[0]["text"])
+        story = render_day2_text(day2)
+        self.assertIn("- Accusations: none.", story)
+        self.assertIn('Mara confronts Daniel: "', story)
+        # The one confronted acts next, spoken to, not accused.
+        d = next(x for x in day2.log[0]["decisions"] if x["person"] == "daniel")
+        if d["place"] > [x for x in day2.log[0]["decisions"] if x["person"] == "mara"][0]["place"]:
+            self.assertEqual(d["order_reason"], "just spoken to by Mara")
+
+
+def render_day2_text(day2):
+    from story import render_day2
+    return render_day2(day2)
 
 
 class GeminiClientTest(unittest.TestCase):

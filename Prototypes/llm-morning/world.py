@@ -89,6 +89,7 @@ TRIP_KINDS = tuple(TRIP_WHY)  # propose, volunteer, object, back, decline
 # by when they last ate; and the minutes between one person's moments.
 FOOD_RATE = {"before yesterday": 0.07, "yesterday": 0.035}
 FOOD_EVERY = 30
+FOOD_MOMENT_LINE = "You are starving, and there is food on the shelf in front of everyone."
 
 KIND_DONE = {   # what a run of one kind of act looks like, told to the person who did it
     "ask": "asked who took the can", "deny": "denied taking it",
@@ -102,6 +103,7 @@ KIND_DONE = {   # what a run of one kind of act looks like, told to the person w
     "volunteer": "offered to go there tonight", "object": "said someone should not go",
     "back": "said someone should be the one to go", "decline": "said you will not be the one to go",
     "give": "given someone a portion", "eat_given": "eaten", "refuse_given": "refused a portion",
+    "confront": "confronted someone",
 }
 
 HUNGER_WORDS = ["a little hungry", "hungry", "very hungry", "starving"]
@@ -446,6 +448,12 @@ class Morning:
                                    kind="accuse", target=q.id))
             if p.id == self.culprit and not p.confessed:
                 opts.append(Option("confess", "admit taking it", True, kind="confess"))
+            # From the night on, something someone did other than taking the can can be put to them
+            # (reports/food_confront_impl.md); day 1 keeps its options, so it replays.
+            if self.day != 4:
+                for q in others:
+                    opts.append(Option(f"confront_{q.id}", f"confront {q.name} about something they did", True,
+                                       kind="confront", target=q.id))
             for q in others:
                 if q.id in p.grudges and p.grudges[q.id].strength >= 3:
                     continue
@@ -718,11 +726,9 @@ class Morning:
 
     @staticmethod
     def food_moment_line(p):
-        """The moment's last `Now` line (§2.4)."""
-        when = (f"you last ate yesterday, at minute {p.ate_yesterday:02d}" if p.ate_yesterday is not None
-                else "you have not eaten since before yesterday")
-        return (f"Your hunger has the better of you: {when}, and the food is on the shelf in front of you. "
-                "You cannot leave it there any longer.")
+        """The moment's last `Now` line: only the situation, so the choice stays the person's
+        (reports/food_wording_probe.md, variant B; reports/food_confront_impl.md)."""
+        return FOOD_MOMENT_LINE
 
     def decide_food(self, p, t):
         """A food moment: it takes the place of their decision this turn. An answer that cannot be used
@@ -885,6 +891,7 @@ class Morning:
         target = "you" if h["target"] == listener.id else None
         return {"ask": "asked who took the can", "deny": "denied taking it",
                 "accuse": f"accused {target or 'someone'}", "confess": "admitted taking it",
+                "confront": f"confronted {target or 'someone'}",
                 "reassure": f"reassured {target or 'everyone'}", "say": "spoke to everyone",
                 "propose": "said someone should go to the neighbour's house tonight",
                 "volunteer": "offered to go there tonight",
@@ -1334,6 +1341,8 @@ class Morning:
             gist = f"{p.name} denies taking it, to everyone"
         elif kind == "accuse":
             gist = f"{p.name} accuses {aimed} of taking it"
+        elif kind == "confront":
+            gist = f"{p.name} confronts {aimed}"
         elif kind == "confess":
             gist = f"{p.name} admits taking it, to everyone"
         elif kind == "reassure":
@@ -1490,6 +1499,7 @@ class Morning:
             voices.append((room, new, {p.id} | {q.id for q in seen}))
             mine = {"ask": "asked who took it", "deny": "denied taking it",
                     "accuse": f"accused {target.name if target else ''}", "confess": "admitted taking it",
+                    "confront": f"confronted {target.name if target else ''}",
                     "reassure": f"reassured {target.name if aimed else 'everyone'}",
                     "propose": "said someone should go to the neighbour's house tonight",
                     "volunteer": "offered to go there tonight",

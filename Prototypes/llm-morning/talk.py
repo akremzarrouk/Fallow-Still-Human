@@ -6,7 +6,8 @@ Knows nothing about the house beyond room names and option ids.
 """
 
 SPEECH = ("ask", "deny", "accuse", "confess", "reassure", "say",
-          "propose", "volunteer", "object", "back", "decline")     # the last five: the trip
+          "propose", "volunteer", "object", "back", "decline",     # these five: the trip
+          "confront")       # from the night on (reports/food_confront_impl.md)
 
 
 def act_of(option):
@@ -17,7 +18,8 @@ def act_of(option):
     to it or to one person going, backing one person to go, and declining to go. Day 2 words them
     anew (reports/night_design.md, §6) with the same kinds: nobody_goes, keep_<q>_home, send_<q>,
     still_going (a restated offer) and refuse_to_go. Giving a portion to one person at a food
-    moment (reports/body_design.md, §2.4) is `give`, aimed at nobody."""
+    moment (reports/body_design.md, §2.4) is `give`, aimed at nobody. Confronting one person about
+    something they did, other than taking the can, is `confront` (reports/food_confront_impl.md)."""
     if option == "ask_who":
         return "ask", None
     if option == "propose_trip":
@@ -38,7 +40,7 @@ def act_of(option):
         return "object", option[len("keep_"):-len("_home")]
     if option.startswith("send_"):
         return "back", option[len("send_"):]
-    for prefix in ("accuse", "reassure", "sit", "go", "aside", "back", "object", "give"):
+    for prefix in ("accuse", "reassure", "sit", "go", "aside", "back", "object", "give", "confront"):
         if option.startswith(prefix + "_"):
             return prefix, option[len(prefix) + 1:]
     return option, None     # silent, deny, confess, search, eat, share, volunteer, decline
@@ -47,7 +49,7 @@ def act_of(option):
 def aimed_at(option):
     """The person a line is aimed at, or None for a line to everyone in the room."""
     kind, target = act_of(option)
-    return target if kind in ("accuse", "reassure", "aside", "back", "object") else None
+    return target if kind in ("accuse", "reassure", "aside", "back", "object", "confront") else None
 
 
 # What a position on the trip is, for the story (reports/trip_design.md, §3.3).
@@ -58,8 +60,8 @@ TRIP_WHY = {"propose": "a proposal", "volunteer": "an offer to go", "object": "a
 class Newness:
     """Decides whether a spoken line adds something. New: a question, an accusation, a
     denial of a new accusation, a confession, a position on the trip the speaker has not
-    taken before. Not new: reassurance, a stance the speaker has taken before this morning,
-    and any other remark (the rules cannot read what free words add). New facts and people coming in are handled by the caller."""
+    taken before, a confrontation of someone they had not confronted before. Not new:
+    reassurance, a stance the speaker has taken before this morning, and any other remark (the rules cannot read what free words add). New facts and people coming in are handled by the caller."""
 
     def __init__(self):
         self.stances = {}        # speaker -> stances already taken this morning
@@ -84,6 +86,10 @@ class Newness:
             pending = self.unanswered.pop(speaker, set())
             return (bool(pending), "a denial of a new accusation" if pending
                     else "a denial with no new accusation to answer")
+        if kind == "confront":          # new the first time toward that person, as an accusation
+            new = ("confront", target) not in taken
+            taken.add(("confront", target))
+            return new, "a confrontation" if new else "a confrontation they had made before"
         if kind == "reassure":
             return False, "reassurance"
         if kind in TRIP_WHY:
