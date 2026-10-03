@@ -2421,7 +2421,9 @@ class NightTest(unittest.TestCase):
             "\nNow it is night. " + GAP + "\n"
             "Everyone has gone to bed in their own room: Daniel and Leo in the brothers room, Elena and Mara in the "
             "back room.\nYou are in the brothers room, in your bed. Leo is in his bed.\n"
-            "The kitchen is dark. The shelf holds 0 portions.\n" + BEDTIME_OPTIONS), bedtime["daniel"])
+            "The kitchen is dark. The shelf holds 0 portions.\n"
+            # Seed 1's Daniel last said he would go (min 36), so the promise line comes last (body_design §1).
+            + PROMISE + "\n" + BEDTIME_OPTIONS), bedtime["daniel"])
         self.assertIn("\nYou are in the back room, in your bed. Mara is in her bed.\n", bedtime["elena"])
         self.assertIn("\nYou are in the back room, in your bed. Elena is in her bed.\n", bedtime["mara"])
         for p in bedtime.values():
@@ -3046,6 +3048,425 @@ class NightTest(unittest.TestCase):
             self.assertEqual(done.returncode, 0, done.stdout + done.stderr)
             self.assertEqual(done.stdout.count("story IDENTICAL, transcript IDENTICAL"), 3, done.stdout)
             self.assertIn("0 API calls", done.stdout)
+
+
+V12_CACHE = os.path.join(HERE, "cache", "v12")
+PROMISE = "You said you would go to the neighbour's house tonight. If you are going, it is now."
+FOOD_BEFORE = ("Your hunger has the better of you: you have not eaten since before yesterday, and the food is on the "
+               "shelf in front of you. You cannot leave it there any longer.")
+FOOD_YESTERDAY = ("Your hunger has the better of you: you last ate yesterday, at minute {mm}, and the food is on the "
+                  "shelf in front of you. You cannot leave it there any longer.")
+# The design's table (reports/body_design.md, §2.2): (not since before yesterday, ate yesterday).
+FOOD_CHANCES = {"daniel": (0.077, 0.0385), "elena": (0.0525, 0.0263), "leo": (0.049, 0.0245), "mara": (0.084, 0.042)}
+
+
+def never(t, pid):
+    return 0.99
+
+
+def only(who, at=None):
+    """A food draw that fires for `who` (at turn `at`, or any turn) and for nobody else."""
+    return lambda t, pid: 0.0 if pid == who and (at is None or t == at) else 0.99
+
+
+class BrokenFor(NightScripted):
+    """NightScripted, but the answers to prompts that hold `marker` are not JSON."""
+
+    def __init__(self, marker, prefs=None):
+        super().__init__(prefs)
+        self.marker = marker
+
+    def generate(self, system, prompt):
+        text = super().generate(system, prompt)
+        return "not json" if self.marker in prompt else text
+
+
+class BodyTest(unittest.TestCase):
+    """The promise line at bedtime and the body's food moment on day 2 (reports/body_design.md;
+    tests B-T1 to B-T12 of §4)."""
+
+    setUp = NightTest.setUp
+    tearDown = NightTest.tearDown
+    path = NightTest.path
+    v11_day1 = NightTest.v11_day1
+    short_day1 = NightTest.short_day1
+    night_of = NightTest.night_of
+    act = NightTest.act
+
+    def day2_of(self, seed, prefs=None, draws=never):
+        """Day 2 of seed N after v11's day 1 and a scripted night (everyone sleeps), its food draws forced."""
+        client = NightScripted(prefs)
+        day1, oracle = self.v11_day1(seed, client)
+        n = self.night.Night(day1, oracle).run()
+        day2 = Morning.next_day(day1, n, oracle)
+        day2.food_draw = draws
+        return day2, client
+
+    def bedtime_prompt(self, trip_heard, who="daniel"):
+        """The bedtime prompt of `who` when their trip record is `trip_heard`."""
+        client = NightScripted()
+        day1, oracle = self.short_day1(client)
+        day1.people[who].trip_heard = dict(trip_heard)
+        self.night.Night(day1, oracle).run()
+        return client.night_prompts(who)[0]
+
+    def order_at_0(self, seed):
+        day2, _ = self.day2_of(seed)
+        day2.turn(0)
+        return [d["person"] for d in day2.log[0]["decisions"]]
+
+    # B-T1
+    def test_b_t1_day1_replays_from_a_copy_of_the_v12_cache(self):
+        for seed, served in V11_SERVED.items():
+            name = f"daniel_ate_it-seed{seed}"
+            path = self.path(f"v12-{seed}")
+            shutil.copy(os.path.join(V12_CACHE, f"{V6_MODEL}-{name}.json"), path)
+            oracle = Oracle(Cache(path), V6_MODEL, seed, replay=True)
+            day1 = Morning(oracle, seed).run()
+            text = render(day1, seed, V6_MODEL, f"python morning.py --seed {seed}")
+            self.assertEqual(text.encode("utf-8"), read(os.path.join(V11_RUNS, name + ".md"), "rb"), seed)
+            self.assertEqual((oracle.from_cache, oracle.api_requests), (served, 0), seed)
+
+    # B-T2
+    def test_b_t2_the_promise_line_goes_to_whoever_last_said_they_would_go(self):
+        cases = [
+            ({"daniel": (36, "volunteer", None, 1)}, True),                         # day 1's offer
+            ({"daniel": (9, "volunteer", None, 4, "still_going")}, True),           # day 2's restatement
+            ({"daniel": (6, "volunteer", None, 3, "volunteer")}, True),             # day 2's offer
+            ({"daniel": (39, "decline", None, 7)}, False),                          # offered, then declined
+            ({"daniel": (39, "object", None, 7)}, False),                           # offered, then objected
+            ({"leo": (30, "back", "daniel", 2)}, False),                            # only named by others
+            ({}, False),                                                            # no position
+        ]
+        for heard, gets in cases:
+            prompt = self.bedtime_prompt(heard)
+            self.assertEqual(now_lines(prompt)[-1] == PROMISE, gets, heard)
+            self.assertEqual(prompt.count(PROMISE), int(gets), heard)
+        # Never in a reaction or an answer, and never to anyone but the one who said it.
+        client = NightScripted({"daniel": ["go_next_door", "go_anyway"], "leo": ["lie_awake", "stop_daniel"]})
+        day1, oracle = self.short_day1(client)
+        day1.people["daniel"].trip_heard = {"daniel": (36, "volunteer", None, 1)}
+        n = self.night.Night(day1, oracle, draws=QUIET).run()
+        self.assertIn(("leo", "reaction"), [(d["person"], d["ask"]) for d in n.decisions])
+        self.assertIn(("daniel", "answer"), [(d["person"], d["ask"]) for d in n.decisions])
+        prompts = client.night_prompts()
+        self.assertEqual(sum(PROMISE in p for p in prompts), 1)
+        self.assertIn(PROMISE, client.night_prompts("daniel")[0])
+
+    # B-T3
+    def test_b_t3_only_seed_1_daniels_bedtime_prompt_changes_by_the_one_line(self):
+        for seed in (1, 2, 3):
+            day1, _ = self.v11_day1(seed)
+            paired = PairedOracle(os.path.join(V12_CACHE, f"{V6_MODEL}-daniel_ate_it-seed{seed}.json"), V6_MODEL, seed)
+            self.night.Night(day1, paired).run()
+            bedtime = [p for p in paired.asked if "\nNow it is night. " in p][:4]
+            self.assertEqual(len(bedtime), 4)
+            if seed != 1:
+                self.assertEqual(paired.missed, [], seed)
+                continue
+            self.assertEqual(paired.missed, [bedtime[0]])
+            new = bedtime[0]
+            self.assertTrue(new.startswith("You are Daniel,"))
+            old = next(e["prompt"] for e in paired.entries.values()
+                       if e["prompt"].startswith("You are Daniel,") and "\nNow it is night. " in e["prompt"])
+            self.assertEqual(new, old.replace("\nYour options:\n", f"\n{PROMISE}\nYour options:\n", 1))
+            self.assertEqual(now_lines(new)[-2:], ["The kitchen is dark. The shelf holds 0 portions.", PROMISE])
+
+    # B-T4
+    def test_b_t4_when_a_food_moment_can_fire(self):
+        day2, _ = self.day2_of(3, draws=lambda t, pid: 0.0)
+        mara = day2.people["mara"]
+        in_turn(day2)
+
+        def due(t=0):
+            return day2.food_due(mara, t)
+        self.assertTrue(due())                                       # all of F1-F9 hold
+        mara.room = "back_room"
+        self.assertFalse(due())                                      # F2: not in the kitchen
+        mara.room = "kitchen"
+        day2.portions = 0
+        self.assertFalse(due())                                      # F2: empty shelf
+        day2.portions = 2
+        day2.present["kitchen"] = ["mara"]
+        self.assertFalse(due())                                      # F3: alone
+        in_turn(day2)
+        mara.hunger = 0.849
+        self.assertFalse(due())                                      # F4: very hungry
+        mara.hunger = 0.85
+        self.assertTrue(due())
+        for eaten in (1.0, 0.25):                                    # F5: a portion, or a part of a share
+            mara.eaten = eaten
+            self.assertFalse(due())
+        mara.eaten = 0.0
+        mara.last_food = 0
+        self.assertFalse(due(9))                                     # F6: 27 minutes after her last
+        self.assertTrue(due(10))                                     # 30 minutes after
+        mara.last_food = None
+        day2.food_turn = 0
+        self.assertFalse(due(0))                                     # F7: one a turn in the house
+        self.assertTrue(due(1))
+        day2.food_turn = None
+        chance = day2.food_chance(mara)
+        day2.food_draw = lambda t, pid: chance
+        self.assertFalse(due())                                      # F9: at the chance
+        day2.food_draw = lambda t, pid: chance - 1e-9
+        self.assertTrue(due())
+        out_of_turn(day2)
+        # F1: never on day 1, whatever the body and the draw.
+        day1, _ = self.v11_day1(3)
+        day1.food_draw = lambda t, pid: 0.0
+        in_turn(day1)
+        for p in day1.people.values():
+            p.hunger = 1.0
+            self.assertFalse(day1.food_due(p, 0), p.id)
+        out_of_turn(day1)
+        # F1: never in the night; F8: an aside's answer is not a moment.
+        _, n, client, _ = self.night_of({"daniel": ["go_next_door"], "leo": ["lie_awake"]}, QUIET)
+        for p in client.night_prompts():
+            self.assertNotIn("\n- eat:", p)
+        day2, client = self.day2_of(3, draws=lambda t, pid: 0.0)
+        in_turn(day2)
+        d = day2.decide_aside(mara, day2.people["leo"], "back_room", 0)
+        self.assertNotIn("food_moment", d)
+        self.assertEqual(d["option"], "accept_aside" if d["mode"] == "model" else "refuse_aside")
+        out_of_turn(day2)
+
+    # B-T5
+    def test_b_t5_the_chance_and_the_draw(self):
+        self.assertEqual((world.FOOD_RATE, world.FOOD_EVERY), ({"before yesterday": 0.07, "yesterday": 0.035}, 30))
+        day2, _ = self.day2_of(2)
+        self.assertEqual({p: q.ate_yesterday for p, q in day2.people.items()},
+                         {"daniel": None, "elena": None, "leo": None, "mara": 54})
+        for pid, (before, yesterday) in FOOD_CHANCES.items():
+            p = day2.people[pid]
+            p.ate_yesterday = None
+            self.assertEqual((day2.food_band(p), day2.food_chance(p)), ("before yesterday", before), pid)
+            p.ate_yesterday = 54
+            self.assertEqual((day2.food_band(p), day2.food_chance(p)), ("yesterday", yesterday), pid)
+            p.eaten = 0.25
+            self.assertEqual((day2.food_band(p), day2.food_chance(p)), ("this morning", 0), pid)
+        day2, _ = self.day2_of(1)                                    # Leo and Mara ate at minute 21
+        self.assertEqual({p: q.ate_yesterday for p, q in day2.people.items()},
+                         {"daniel": None, "elena": None, "leo": 21, "mara": 21})
+        day2, _ = self.day2_of(3)
+        self.assertEqual({q.ate_yesterday for q in day2.people.values()}, {None})
+        # A share's part on day 1 counts as eating yesterday.
+        day1, oracle = self.short_day1(NightScripted())
+        self.act(day1, day1.people["elena"], "share", None, t=1)
+        n = self.night.Night(day1, oracle).run()
+        day2 = Morning.next_day(day1, n, oracle)
+        self.assertEqual({q.ate_yesterday for q in day2.people.values()}, {3})
+        # The draw string, and the frequency over 100,000 draws.
+        day2, _ = self.day2_of(3)
+        del day2.food_draw
+        self.assertEqual(day2.food_draw(7, "leo"), random.Random("3:day2:food:7:leo").random())
+        for chance in (0.077, 0.0245):
+            hits = sum(random.Random(f"{s}:day2:food:4:daniel").random() < chance for s in range(100000))
+            self.assertLess(abs(hits / 100000 - chance), 0.003, chance)
+
+    # B-T6
+    def test_b_t6_the_moments_prompt_exactly(self):
+        order = self.order_at_0(3)
+        who = order[0]
+        day2, client = self.day2_of(3, draws=only(who, 0))
+        p = day2.people[who]
+        ordinary, orig = {}, day2.ask_model
+
+        def spy(q, t, opts, d, extra=None):
+            if d.get("food_moment"):
+                ordinary[q.id] = day2.prompt_for(q, t, day2.options_for(q), d.get("lull"))
+            return orig(q, t, opts, d, extra)
+        day2.ask_model = spy
+        day2.turn(0)
+        prompt = next(x for w, q, x in client.prompts if q == who and w == 0)
+        others = [q for q in data.ORDER if q != who]
+        self.assertEqual(option_lines(prompt), ["- eat: eat one of the portions"]
+                         + [f"- give_{q}: give one of the portions to {data.PEOPLE[q]['name']}" for q in others]
+                         + ["- share: share out what is left among everyone here"])
+        head = prompt.split("\nYour options:\n")[0]
+        self.assertEqual(head, ordinary[who].split("\nYour options:\n")[0] + "\n" + FOOD_BEFORE)
+        self.assertEqual(head.split("\n")[-1], FOOD_BEFORE)
+        d = next(x for x in day2.log[0]["decisions"] if x["person"] == who)
+        self.assertEqual(d["offered"], 5)
+        self.assertEqual(d["food_moment"]["band"], "before yesterday")
+        # The yesterday form, with the minute of the meal: seed 2's Mara ate at minute 54.
+        day2, client = self.day2_of(2, draws=only("mara", 0))
+        day2.people["mara"].hunger = 1.0
+        day2.turn(0)
+        prompt = next(x for w, q, x in client.prompts if q == "mara" and w == 0)
+        self.assertEqual(prompt.split("\nYour options:\n")[0].split("\n")[-1], FOOD_YESTERDAY.format(mm=54))
+        # Nobody else's prompt holds the line.
+        self.assertEqual([q for w, q, x in client.prompts if "Your hunger has the better of you" in x], ["mara"])
+
+    # B-T7
+    def test_b_t7_giving_and_the_answer(self):
+        o = self.order_at_0(3)
+        # Q had not acted yet: the answer is Q's turn.
+        giver, q = o[0], o[3]
+        day2, client = self.day2_of(3, {giver: [f"give_{q}"], q: ["eat_given"]}, only(giver, 0))
+        day2.turn(0)
+        ds = day2.log[0]["decisions"]
+        self.assertEqual([d["person"] for d in ds], [giver, q, o[1], o[2]])
+        self.assertEqual((ds[1]["option"], ds[1]["given_by"]), ("eat_given", giver))
+        name = data.PEOPLE[giver]["name"]
+        prompt = next(x for w, w2, x in client.prompts if w2 == q and w == 0)
+        self.assertEqual(prompt.split("\nYour options:\n")[0].split("\n")[-1],
+                         f"{name} has just handed you one of the portions.")
+        self.assertEqual(option_lines(prompt), [f"- eat_given: eat the portion {name} gave you",
+                                                "- refuse_given: refuse it, and put it back on the shelf"])
+        self.assertIn(f"{name} hands you one of the portions", ds[1]["triggers"])
+        Q = day2.people[q]
+        self.assertEqual(day2.portions, 1)
+        self.assertAlmostEqual(Q.hunger, 0.6 + 0.012 * data.PEOPLE[q]["hunger_rate"], places=9)
+        self.assertEqual(Q.eaten, 1)
+        self.assertEqual(day2.food_band(Q), "this morning")
+        # Q had already acted: an extra answer, and Q does not act again.
+        giver, q = o[3], o[0]
+        day2, client = self.day2_of(3, {giver: [f"give_{q}"], q: ["refuse_given"]}, only(giver, 0))
+        day2.turn(0)
+        ds = day2.log[0]["decisions"]
+        self.assertEqual([d["person"] for d in ds], [o[0], o[1], o[2], giver, q])
+        self.assertEqual(ds[4]["option"], "refuse_given")
+        self.assertEqual(day2.portions, 2)
+        self.assertEqual(day2.people[q].eaten, 0)
+        self.assertIn((f"{data.PEOPLE[q]['name']} puts the portion you gave back on the shelf", True),
+                      day2.people[giver].triggers)
+
+    # B-T8
+    def test_b_t8_what_the_others_perceive(self):
+        o = self.order_at_0(3)
+        names = {p: data.PEOPLE[p]["name"] for p in data.ORDER}
+        # A gift eaten.
+        giver, q, w1, w2 = o[0], o[3], o[1], o[2]
+        G, Q = names[giver], names[q]
+        day2, client = self.day2_of(3, {giver: [f"give_{q}"], q: ["eat_given"]}, only(giver, 0))
+        day2.turn(0)
+        line = f"{G} gives one of the portions to {Q}, and {Q} eats it"
+        later = next(x for w, who, x in client.prompts if who == w1 and w == 0)
+        self.assertIn(f"Said and done in the kitchen this turn, before you, in order:\n1. {line}.\n", later)
+        ds = {d["person"]: d for d in day2.log[0]["decisions"]}
+        for w in (w1, w2):
+            self.assertIn(line, ds[w]["triggers"])
+            self.assertIn(f"min 00: {G} gave one of the portions to {Q}, and {Q} ate it (you saw it).",
+                          day2.people[w].sure)
+            g = day2.people[w].grudges[q]
+            him = data.PRONOUNS[q]["him"]
+            self.assertEqual(g.events[-1][1], f"{Q} ate a portion {G} gave {him}, in front of you at minute 00, "
+                                              f"while you were hungry")
+        self.assertNotIn(q, day2.people[giver].grudges)
+        self.assertIn(f"min 00: you gave one of the portions to {Q}, and {Q} ate it. 1 left.", day2.people[giver].sure)
+        self.assertIn(f"min 00: {G} gave you one of the portions, and you ate it. 1 left.", day2.people[q].sure)
+        # Nobody perceives the moment itself.
+        for who, p in day2.people.items():
+            self.assertFalse([x for x in p.memory + p.sure if "hunger" in str(x).lower()], who)
+        self.assertEqual([who for w, who, x in client.prompts if "Your hunger has the better of you" in x], [giver])
+        # A gift refused: back on the shelf, no grudge.
+        day2, client = self.day2_of(3, {giver: [f"give_{q}"], q: ["refuse_given"]}, only(giver, 0))
+        day2.turn(0)
+        for w in (w1, w2):
+            self.assertIn(f"min 00: {G} gave one of the portions to {Q}, and {Q} put it back on the shelf (you saw it).",
+                          day2.people[w].sure)
+            self.assertNotIn(q, day2.people[w].grudges)
+        self.assertIn(f"min 00: you gave one of the portions to {Q}, and {Q} put it back on the shelf.",
+                      day2.people[giver].sure)
+        later = next(x for w, who, x in client.prompts if who == w1 and w == 0)
+        self.assertIn(f"1. {G} gives one of the portions to {Q}; {Q} puts it back on the shelf.\n", later)
+        # Eating at a moment is eating as now; through a wall, nothing.
+        day2, client = self.day2_of(3, {giver: ["eat"]}, only(giver, 0))
+        day2.people[w2].room = "back_room"
+        day2.turn(0)
+        self.assertIn(f"min 00: {G} ate one of the portions (you saw it).", day2.people[w1].sure)
+        self.assertIn(giver, day2.people[w1].grudges)
+        self.assertFalse([x for x in day2.people[w2].memory if "kitchen" in x[1]])
+        self.assertNotIn(giver, day2.people[w2].grudges)
+        # A share at a moment is a share as now.
+        day2, client = self.day2_of(3, {giver: ["share"]}, only(giver, 0))
+        day2.turn(0)
+        self.assertEqual(day2.portions, 0)
+        self.assertIn(f"min 00: {G} shares out the last 2 portions between {', '.join(names[x] for x in [giver] + [y for y in data.ORDER if y != giver])}; "
+                      "you had your part.", day2.people[w1].sure)
+
+    # B-T9
+    def test_b_t9_fallbacks_never_eat_for_anyone(self):
+        o = self.order_at_0(3)
+        giver, q = o[0], o[3]
+        day2, _ = self.day2_of(3, draws=only(giver, 0))
+        day2.oracle.client = BrokenFor("Your hunger has the better of you")
+        day2.turn(0)
+        d = day2.log[0]["decisions"][0]
+        self.assertEqual((d["person"], d["mode"], d["option"]), (giver, "fallback", "silent"))
+        self.assertIn("food_moment", d)
+        self.assertEqual(day2.portions, 2)
+        self.assertEqual(day2.people[giver].last_food, 0)
+        G = data.PEOPLE[giver]["name"]
+        day2, _ = self.day2_of(3, draws=only(giver, 0))
+        day2.oracle.client = BrokenFor(f"{G} has just handed you one of the portions.", {giver: [f"give_{q}"]})
+        day2.turn(0)
+        dq = day2.log[0]["decisions"][1]
+        self.assertEqual((dq["person"], dq["mode"], dq["option"]), (q, "fallback", "refuse_given"))
+        self.assertEqual(day2.portions, 2)
+        self.assertEqual(day2.people[q].eaten, 0)
+
+    # B-T10
+    def test_b_t10_the_paired_day2_reaches_the_first_moment_from_the_v12_cache(self):
+        expected = {2: (0, "daniel", 3, 0.077), 3: (9, "mara", 3, 0.084)}
+        for seed in (1, 2, 3):
+            day1, _ = self.v11_day1(seed)
+            paired = PairedOracle(os.path.join(V12_CACHE, f"{V6_MODEL}-daniel_ate_it-seed{seed}.json"), V6_MODEL, seed)
+            n = self.night.Night(day1, paired).run()
+            missed_at_night = len(paired.missed)
+            day2 = Morning.next_day(day1, n, paired)
+            first = None
+            for t in range(day2.turns):
+                day2.turn(t)
+                moments = [d for d in day2.log[-1]["decisions"] if d.get("food_moment")]
+                if moments:
+                    first = (t * 3, moments[0], day2.log[-1]["decisions"].index(moments[0]) + 1)
+                    break
+            if seed == 1:
+                self.assertIsNone(first)                                  # an empty shelf all morning
+                continue
+            minute, who, place, chance = expected[seed]
+            self.assertEqual((first[0], first[1]["person"], first[2]), (minute, who, place), seed)
+            self.assertEqual(first[1]["food_moment"]["chance"], chance)
+            self.assertLess(first[1]["food_moment"]["draw"], chance)
+            self.assertEqual(missed_at_night, 0, seed)
+            day2_missed = paired.missed[missed_at_night:]
+            self.assertTrue(day2_missed and "Your hunger has the better of you" in day2_missed[0], seed)
+
+    # B-T11
+    def test_b_t11_records_and_the_story(self):
+        prefs = {p: ["give_leo", "give_mara", "eat_given"] for p in data.ORDER}
+        with mock.patch.object(world.Morning, "food_draw", lambda self, t, pid: 0.0):
+            (meta, code), out = quiet_run(2, fake=True, config_path=CONFIG, runs_dir=self.dirs.runs,
+                                          cache_dir=self.dirs.cache, client=NightScripted(prefs))
+        self.assertEqual(code, 0, out)
+        tr = json.loads(read(os.path.join(self.dirs.runs, "daniel_ate_it-seed2.transcript.json")))
+        story = read(os.path.join(self.dirs.runs, "daniel_ate_it-seed2.md"))
+        acts = [a for t in tr["day2"]["turns"] for a in t["acts"]]
+        moments = [a for a in acts if a.get("food_moment")]
+        self.assertTrue(moments)
+        self.assertEqual(meta["day2"]["food_moments"], len(moments))
+        self.assertEqual(meta["day2"]["give_answers"], sum(a["option"] in ("eat_given", "refuse_given") for a in acts))
+        self.assertGreater(meta["day2"]["give_answers"], 0)
+        self.assertEqual(set(moments[0]["food_moment"]), {"band", "chance", "draw", "portions"})
+        self.assertIn(f"day2 food_moments: {len(moments)}", out)
+        self.assertIn(f"day2 give_answers: {meta['day2']['give_answers']}", out)
+        self.assertFalse([a for t in tr["day1"]["turns"] for a in t["acts"] if "food_moment" in a])
+        m = moments[0]["food_moment"]
+        n = m["portions"]
+        self.assertIn(f"**Food moment**, starving in the kitchen with {n} portion{'s' if n != 1 else ''} on the shelf; "
+                      f"last ate: not since before yesterday (chance {m['chance']:g} a turn, draw {m['draw']:.4f}).",
+                      story)
+        self.assertEqual(story.count("**Food moment**"), len(moments))
+        self.assertEqual(meta["day2_asks"], sum(a["mode"] != "routine" for a in acts))
+
+    # B-T12
+    def test_b_t12_v12_still_replays(self):
+        done = run_check("v12")
+        self.assertEqual(done.returncode, 0, done.stdout + done.stderr)
+        self.assertEqual(done.stdout.count("story IDENTICAL, transcript IDENTICAL"), 3, done.stdout)
+        self.assertIn("0 API calls", done.stdout)
 
 
 class GeminiClientTest(unittest.TestCase):

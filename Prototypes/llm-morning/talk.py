@@ -16,7 +16,8 @@ def act_of(option):
     The trip's options (reports/trip_design.md, §3.3): proposing it, volunteering, objecting
     to it or to one person going, backing one person to go, and declining to go. Day 2 words them
     anew (reports/night_design.md, §6) with the same kinds: nobody_goes, keep_<q>_home, send_<q>,
-    still_going (a restated offer) and refuse_to_go."""
+    still_going (a restated offer) and refuse_to_go. Giving a portion to one person at a food
+    moment (reports/body_design.md, §2.4) is `give`, aimed at nobody."""
     if option == "ask_who":
         return "ask", None
     if option == "propose_trip":
@@ -37,7 +38,7 @@ def act_of(option):
         return "object", option[len("keep_"):-len("_home")]
     if option.startswith("send_"):
         return "back", option[len("send_"):]
-    for prefix in ("accuse", "reassure", "sit", "go", "aside", "back", "object"):
+    for prefix in ("accuse", "reassure", "sit", "go", "aside", "back", "object", "give"):
         if option.startswith(prefix + "_"):
             return prefix, option[len(prefix) + 1:]
     return option, None     # silent, deny, confess, search, eat, share, volunteer, decline

@@ -167,7 +167,10 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
                   "max_prompt_tokens_estimated": night.m.max_prompt_tokens},
         "day2_asks": day2_counts["answers_live"] + day2_counts["answers_from_cache"],
         "day2_api_requests": day2_counts["api_requests"],
-        "day2": day_meta(day2, scenes["day2"]),
+        # The body's food moments, and the answers of those handed a portion (reports/body_design.md, §2.7).
+        "day2": {**day_meta(day2, scenes["day2"]),
+                 "food_moments": sum(1 for rec in day2.log for d in rec["decisions"] if d.get("food_moment")),
+                 "give_answers": sum(1 for rec in day2.log for d in rec["decisions"] if d.get("given_by"))},
         "max_prompt_tokens_estimated": max(morning.max_prompt_tokens, night.m.max_prompt_tokens,
                                            day2.max_prompt_tokens),
         "max_prompt_tokens_counted_by_api": max(oracle.prompt_tokens, default=None),
@@ -183,7 +186,7 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
     for k in ("night_asks", "night_api_requests", "leavers", "outcome"):
         say(f"  {k}: {meta[k]}")
     say(f"  night house: {night.house}; away: {meta['night']['away']}")
-    for k in DAY_KEYS:
+    for k in DAY_KEYS + ("food_moments", "give_answers"):
         say(f"  day2 {k}: {meta['day2'][k]}")
     for k in ("day2_asks", "day2_api_requests", "max_prompt_tokens_estimated", "max_prompt_tokens_counted_by_api",
               "run_seconds", "story_sha256"):

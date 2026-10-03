@@ -43,6 +43,8 @@ BEDTIME = [("sleep", "go to sleep"),
 BED_LINE = {"sleep": "You went to sleep.", "lie_awake": "You lay awake and listened.",
             "watch_door": "You sat up in the kitchen by the front door.",
             "go_next_door": "You meant to go to the neighbour's house once the others were asleep."}
+# At bedtime, for whoever's latest word on the trip was that they would go (reports/body_design.md, §1).
+PROMISE = "You said you would go to the neighbour's house tonight. If you are going, it is now."
 TONIGHT = {"sleep": "you went to sleep.", "lie_awake": "you lay awake and listened.",
            "watch_door": "you sat up in the kitchen by the front door.",
            "go_next_door": "you meant to go to the neighbour's house once the others were asleep."}
@@ -201,6 +203,9 @@ class Night:
                    f"Everyone has gone to bed in their own room: {BEDS}.",
                    f"You are in the {data.ROOMS[room]}, in your bed. {NAMES[r]} is in {data.PRONOUNS[r]['his']} bed.",
                    f"The kitchen is dark. The shelf holds {portions_text(self.portions)}."]
+            own = self.people[q].trip_heard.get(q)
+            if own and own[1] == "volunteer":           # `volunteer`, or day 2's `still_going`
+                now.append(PROMISE)
             opts = [Option(i, label) for i, label in BEDTIME]
             choice, _ = self.ask(q, "bedtime", now, opts, "sleep")
             self.choices[q] = choice
@@ -630,6 +635,8 @@ def next_day(day1, n, oracle):
         p.trip_heard, p.proposed, p.trip_raised = {}, False, False
         p.addressed = p.aside_lead = None
         p.eaten = 0.0
+        # The food moment's band (reports/body_design.md, §2.2): yesterday's last meal, if any.
+        p.ate_yesterday, p.last_meal, p.last_food = p.last_meal, None, None
         p.last_inner = p.last_asked = None
         p.feeling, p.feeling_until = (("shaken", world.FEELING_SHOWS_FOR_TURNS - 1) if q in shaken else (None, -1))
         p.activity = {"kind": "idle", "label": "just got up"}

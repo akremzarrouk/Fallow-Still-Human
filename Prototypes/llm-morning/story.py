@@ -8,7 +8,7 @@ from world import (FALL_EVERY, FEELING_SHOWS_FOR_TURNS, INNER_EVERY, KIND_DONE, 
                    QUIET_TURNS, grudge_facts, hunger_words, trait_words)
 
 DAYS_KNOWN = {"did": "did it", "saw": "saw it", "heard": "heard it"}
-ORDINAL = {1: "1st", 2: "2nd", 3: "3rd", 4: "4th"}
+ORDINAL = {1: "1st", 2: "2nd", 3: "3rd", 4: "4th", 5: "5th"}   # 5th: an extra answer to a give (body_design §2.5)
 
 
 def fold_runs(log):
@@ -63,7 +63,13 @@ def decision_line(d, fold=None):
         return (f"- **{name}.** Rules: nothing social happened to them. **{cap(d['label'])}**. "
                 f"Came of it: {d['came_of_it']}{fact}")
     order = f" ({ORDINAL[d['place']]} to act in the {data.ROOMS[d['room']]}: {d['order_reason']})"
-    if d.get("trip_moment") is not None:
+    if d.get("food_moment"):
+        f = d["food_moment"]
+        last = "not since before yesterday" if f["band"] == "before yesterday" else f["band"]
+        because = (f"**Food moment**, starving in the kitchen with {f['portions']} portion"
+                   f"{'s' if f['portions'] != 1 else ''} on the shelf; last ate: {last} (chance {f['chance']:g} a "
+                   f"turn, draw {f['draw']:.4f})")
+    elif d.get("trip_moment") is not None:
         because = f"**The food**: {d['trip_why']}"
         if d.get("inner"):
             because += "; also an inner moment: " + "; ".join(d["inner"])

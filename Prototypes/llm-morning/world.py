@@ -85,6 +85,10 @@ LULL_EVERY = 12              # minutes since a person was last asked before a lu
 TRIP_HUNGER = 2              # the hunger level ("very hungry") that starts the trip concern
 TRIP_ON = True               # the trip concern (reports/trip_design.md); off only in tests
 TRIP_KINDS = tuple(TRIP_WHY)  # propose, volunteer, object, back, decline
+# The body's food moment on day 2 (reports/body_design.md, §2): the chance a turn, at impulsive 0.5,
+# by when they last ate; and the minutes between one person's moments.
+FOOD_RATE = {"before yesterday": 0.07, "yesterday": 0.035}
+FOOD_EVERY = 30
 
 KIND_DONE = {   # what a run of one kind of act looks like, told to the person who did it
     "ask": "asked who took the can", "deny": "denied taking it",
@@ -97,6 +101,7 @@ KIND_DONE = {   # what a run of one kind of act looks like, told to the person w
     "propose": "said someone should go to the neighbour's house tonight",
     "volunteer": "offered to go there tonight", "object": "said someone should not go",
     "back": "said someone should be the one to go", "decline": "said you will not be the one to go",
+    "give": "given someone a portion", "eat_given": "eaten", "refuse_given": "refused a portion",
 }
 
 HUNGER_WORDS = ["a little hungry", "hungry", "very hungry", "starving"]
@@ -303,6 +308,11 @@ class Person:
         # prompts; and on day 2, what of day 1 still counts as yesterday's (None on day 1).
         self.tonight = []
         self.yesterday = None
+        # The food moment (reports/body_design.md, §2): the minute they last ate this morning; on day 2,
+        # the minute of yesterday's last meal (None: not since before yesterday); their last moment.
+        self.last_meal = None
+        self.ate_yesterday = None
+        self.last_food = None
 
     def grudge(self, against):
         return self.grudges.setdefault(against, Grudge())
@@ -354,6 +364,7 @@ class Morning:
         self.trip = None            # the trip concern once started: {"minute", "why", "asked"}
         self.trip_acts = []         # (minute, who, kind, target, words), every position taken
         self.trip_now = set()       # during the turn it starts: who is asked because of it
+        self.food_turn = None       # day 2: the turn of the house's last food moment
         if day != 4:
             return                  # day 2's opening is set up by next_day
         for p in self.people.values():
@@ -656,6 +667,93 @@ class Morning:
             return f"sit_{p.activity['with']}"
         return "silent"
 
+    # ---------- the body's food moment (reports/body_design.md, §2) ----------
+    def food_band(self, p):
+        """When they last ate, from their own records: "this morning", "yesterday" or "before yesterday"."""
+        if p.eaten > 0:
+            return "this morning"
+        return "yesterday" if p.ate_yesterday is not None else "before yesterday"
+
+    def food_chance(self, p):
+        """The chance a turn: the band's rate × (0.5 + impulsive) (§2.2); 0 once they have eaten this morning."""
+        band = self.food_band(p)
+        if band == "this morning":
+            return 0
+        return round(FOOD_RATE[band] * (0.5 + p.sheet["traits"]["impulsive"]), 4)
+
+    def food_draw(self, t, pid):
+        """This person's draw for this turn (F9): a string of its own, so no draw depends on order."""
+        return random.Random(f"{self.seed}:day2:food:{t}:{pid}").random()
+
+    def food_due(self, p, t):
+        """F1-F9 (§2.1): day 2, in the kitchen with food on the shelf and someone else there, starving,
+        nothing eaten this morning, no moment of theirs in FOOD_EVERY minutes or of anyone's this turn,
+        and their draw under their chance. Answers to an aside or a give never come here (F8)."""
+        if self.day == 4 or p.room != "kitchen" or self.portions <= 0 or not self.others_here(p):
+            return False
+        if hunger_level(p.hunger) < 3 or p.eaten > 0:
+            return False
+        minute = t * data.MINUTES_PER_TURN
+        if p.last_food is not None and minute - p.last_food < FOOD_EVERY:
+            return False
+        if self.food_turn == t:
+            return False
+        return self.food_draw(t, p.id) < self.food_chance(p)
+
+    def food_options(self, p):
+        """Food only (§2.4): eat, give a portion to each person here in the family's order, share."""
+        return ([Option("eat", "eat one of the portions", kind="eat")]
+                + [Option(f"give_{q.id}", f"give one of the portions to {q.name}", kind="give", target=q.id)
+                   for q in self.others_here(p)]
+                + [Option("share", "share out what is left among everyone here", kind="share")])
+
+    @staticmethod
+    def food_moment_line(p):
+        """The moment's last `Now` line (§2.4)."""
+        when = (f"you last ate yesterday, at minute {p.ate_yesterday:02d}" if p.ate_yesterday is not None
+                else "you have not eaten since before yesterday")
+        return (f"Your hunger has the better of you: {when}, and the food is on the shelf in front of you. "
+                "You cannot leave it there any longer.")
+
+    def decide_food(self, p, t):
+        """A food moment: it takes the place of their decision this turn. An answer that cannot be used
+        leaves them where they are and the food on the shelf (§2.7)."""
+        minute = t * data.MINUTES_PER_TURN
+        opts = self.food_options(p)
+        triggers = self.social_triggers(p, t)
+        p.triggers = []
+        d = {"person": p.id, "triggers": triggers, "offered": len(opts), "held_back": None,
+             "food_moment": {"band": self.food_band(p), "chance": self.food_chance(p),
+                             "draw": self.food_draw(t, p.id), "portions": self.portions}}
+        p.last_food = minute
+        self.food_turn = t
+        choice, why = self.ask_model(p, t, opts, d, self.food_moment_line(p))
+        if not choice:
+            opts = opts + [Option("silent", "stay put and say nothing", kind="silent")]
+            d.update(mode="fallback", invalid=why, option="silent", say=None)
+        opt = next(o for o in opts if o.id == d["option"])
+        d["label"] = opt.label
+        d["_opt"] = opt
+        return d
+
+    def decide_given(self, q, p, t):
+        """q has just been handed a portion by p: eat it, or put it back (§2.5). Always a model decision;
+        an answer that cannot be used puts it back."""
+        opts = [Option("eat_given", f"eat the portion {p.name} gave you", kind="eat_given", partner=p.id),
+                Option("refuse_given", "refuse it, and put it back on the shelf", kind="refuse_given", partner=p.id)]
+        handed = f"{p.name} hands you one of the portions"
+        triggers = [handed] + [text for text, new in q.triggers if text != handed]
+        q.triggers = []
+        d = {"person": q.id, "triggers": list(dict.fromkeys(triggers)), "offered": len(opts),
+             "held_back": None, "given_by": p.id}
+        choice, why = self.ask_model(q, t, opts, d, f"{p.name} has just handed you one of the portions.")
+        if not choice:
+            d.update(mode="fallback", invalid=why, option="refuse_given", say=None)
+        opt = next(o for o in opts if o.id == d["option"])
+        d["label"] = opt.label
+        d["_opt"] = opt
+        return d
+
     # ---------- what is inside them ----------
     def risen(self, p):
         """What has risen a level since they last decided with the model: "hunger", "guilt",
@@ -783,10 +881,12 @@ class Morning:
                 "back": "said you should be the one to go", "decline": "said they will not be the one to go",
                 }.get(h["kind"], "spoke to everyone")
 
-    def prompt_for(self, p, t, opts, lull=None, night=None):
+    def prompt_for(self, p, t, opts, lull=None, night=None, extra=None):
         """lull: for a lull moment, the minute the room was last stirred; None otherwise.
         night: the night's `Now` lines (reports/night_design.md, §3.2), which take the place of the
-        room, the turn and the pattern block; None by day."""
+        room, the turn and the pattern block; None by day.
+        extra: by day, a last `Now` line (a food moment's, or a handed portion's: reports/body_design.md,
+        §2.4-§2.5); None otherwise."""
         s = p.sheet
         minute = None if night is not None else t * data.MINUTES_PER_TURN
         system = SYSTEM if night is None else NIGHT_SYSTEM
@@ -824,6 +924,8 @@ class Morning:
         elif others:
             now.append(f"You are the first to act in the {room} this turn.")
         now += self.pattern(p)
+        if extra:
+            now.append(extra)
         return self.prompt_parts(p, opts, head, now, system, "this morning", minute)
 
     def prompt_parts(self, p, opts, head, now, system, when, minute):
@@ -1010,6 +1112,8 @@ class Morning:
                      "angry_at": d.get("angry_at"), "lull": d.get("lull"),
                      "trip_moment": d.get("trip_moment"),
                      "moved_to": opt.act["to"] if opt.act["kind"] in ("go", "accept_aside") else None}
+            if d.get("food_moment"):
+                entry["food_moment"] = d["food_moment"]
             tturn["acts"].append(entry)
             return opt, entry
 
@@ -1038,6 +1142,17 @@ class Morning:
                     entry["aside"] = {"with": q.id, "accepted": went}
                     if went:
                         entry["moved_to"] = opt.act["to"]
+                elif opt.act["kind"] == "give":
+                    # The one handed a portion answers now (reports/body_design.md, §2.5): their decision
+                    # for this turn if they had not acted yet, otherwise an extra answer.
+                    q = self.people[opt.act["target"]]
+                    if q.id in remaining:
+                        remaining.remove(q.id)
+                    place += 1
+                    dq = self.decide_given(q, p, t)
+                    qopt, _ = act(q, dq, room, place, f"handed a portion by {p.name}")
+                    d["came_of_it"] += f" {q.name} {'ate it' if qopt.id == 'eat_given' else 'put it back on the shelf'}."
+                    entry["came_of_it"] = d["came_of_it"]
         record["rooms"] = {r: [(q.name, q.activity["label"]) for q in self.people.values()
                                if start_room[q.id] == r] for r in data.ROOMS}
 
@@ -1082,12 +1197,12 @@ class Morning:
         self.log.append(record)
         self.transcript["turns"].append(tturn)
 
-    def ask_model(self, p, t, opts, d):
+    def ask_model(self, p, t, opts, d, extra=None):
         """One model decision: the prompt, the answer, and what it does to their suspicion and
-        grudge. They have now seen the levels their prompt showed."""
+        grudge. They have now seen the levels their prompt showed. extra: a last `Now` line."""
         minute = t * data.MINUTES_PER_TURN
         seen = p.levels()
-        prompt = self.prompt_for(p, t, opts, d.get("lull"))
+        prompt = self.prompt_for(p, t, opts, d.get("lull"), extra=extra)
         p.last_asked = minute
         text = self.oracle.ask(SYSTEM, prompt)
         p.seen = seen
@@ -1131,6 +1246,9 @@ class Morning:
 
     def decide(self, p, t):
         minute = t * data.MINUTES_PER_TURN
+        # The body's food moment comes before anything else (reports/body_design.md, §2.1).
+        if self.food_due(p, t):
+            return self.decide_food(p, t)
         opts = self.options_for(p)
         triggers = self.social_triggers(p, t)
         p.triggers = []
@@ -1260,6 +1378,7 @@ class Morning:
         target_id = aimed_at(opt.id) or (opt.act.get("target") if kind == "sit" else None)
         target = self.people[target_id] if target_id else None
         partner = self.people[opt.act["partner"]] if "partner" in opt.act else None
+        given_to = self.people[opt.act["target"]] if kind == "give" else None
         # Anything but staying put in silence, or staying seated with the same person, stirs the room.
         if not (kind == "silent" or (kind == "sit" and p.activity["kind"] == "sitting"
                                      and p.activity["with"] == target_id)):
@@ -1287,7 +1406,9 @@ class Morning:
                      "eat": "eating", "share": "sharing out the food",
                      "aside": f"asking {target.name if target else ''} to come aside",
                      "accept_aside": f"going aside with {partner.name if partner else ''}",
-                     "refuse_aside": "refusing to go aside"}.get(kind)
+                     "refuse_aside": "refusing to go aside",
+                     "give": f"handing {given_to.name if given_to else ''} a portion",
+                     "eat_given": "eating", "refuse_given": "putting the portion back on the shelf"}.get(kind)
             spoken_kind = kind if kind in SPEECH else "say"
             aimed = aimed_at(opt.id)
             new, why = self.newness.line(p.id, opt.id, [q.id for q in seen])
@@ -1513,6 +1634,7 @@ class Morning:
             self.portions -= 1
             p.hunger = max(0.0, p.hunger - 0.4)
             p.eaten += 1
+            p.last_meal = minute
             so_far.append(f"{p.name} eats one of the portions.")
             for q in seen:
                 q.sure.append(f"min {minute:02d}: {p.name} ate one of the portions (you saw it).")
@@ -1537,6 +1659,7 @@ class Morning:
             for q in eaters:
                 q.hunger = max(0.0, q.hunger - 0.4 * each)
                 q.eaten += each
+                q.last_meal = minute
             n, self.portions = self.portions, 0
             trig = f"{p.name} shares out the last {n} portion{'s' if n != 1 else ''} between {names}"
             so_far.append(trig + ".")
@@ -1546,4 +1669,61 @@ class Morning:
             p.sure.append(f"min {minute:02d}: you shared out the last {n} portions between {names}.")
             record["events"].append(f"{p.name} shared out {n} portions between {names}")
             return f"shared out the last {n} portions between {names}."
+        # A food moment's gift (reports/body_design.md, §2.5-§2.6): the portion leaves the shelf for
+        # the hands of the one it is given to, who answers at once; what the room sees is written then.
+        if kind == "give":
+            p.activity = {"kind": "idle", "label": f"handing {given_to.name} a portion"}
+            self.portions -= 1
+            record["events"].append(f"{p.name} gave a portion to {given_to.name}")
+            return f"gave one of the portions to {given_to.name}."
+        if kind == "eat_given":
+            giver, him = partner, data.PRONOUNS[p.id]["him"]
+            p.activity = {"kind": "idle", "label": "eating"}
+            p.hunger = max(0.0, p.hunger - 0.4)
+            p.eaten += 1
+            p.last_meal = minute
+            line = f"{giver.name} gives one of the portions to {p.name}, and {p.name} eats it"
+            so_far.append(line + ".")
+            for q in seen:
+                if q is giver:
+                    q.sure.append(f"min {minute:02d}: you gave one of the portions to {p.name}, and {p.name} ate it. "
+                                  f"{self.portions} left.")
+                    continue
+                q.sure.append(f"min {minute:02d}: {giver.name} gave one of the portions to {p.name}, and {p.name} "
+                              f"ate it (you saw it).")
+                # Watching someone eat while hungry, as for `eat`; not the giver, who chose it.
+                if hunger_level(q.hunger) >= 1:
+                    self.add_grudge(q, p, minute,
+                                    f"{p.name} ate a portion {giver.name} gave {him}, in front of you at minute "
+                                    f"{minute:02d}, while you were hungry",
+                                    f"{p.name} ate the portion {giver.name} gave {him} in front of {q.name}, "
+                                    f"who was hungry", record)
+            fact(f"{p.name} ate the portion {giver.name} gave {him}", line)
+            p.sure.append(f"min {minute:02d}: {giver.name} gave you one of the portions, and you ate it. "
+                          f"{self.portions} left.")
+            record["events"].append(f"{p.name} ate the portion {giver.name} gave {him}")
+            return f"ate the portion {giver.name} gave {him}; {self.portions} left."
+        if kind == "refuse_given":
+            giver, him = partner, data.PRONOUNS[p.id]["him"]
+            p.activity = {"kind": "idle", "label": "standing"}
+            self.portions += 1
+            line = f"{giver.name} gives one of the portions to {p.name}; {p.name} puts it back on the shelf"
+            so_far.append(line + ".")
+            why = f"{p.name} put back the portion {giver.name} gave {him}"
+            self.started_by(room, minute, why, d)
+            d["new_fact"] = why
+            for q in seen:
+                if q is giver:
+                    q.sure.append(f"min {minute:02d}: you gave one of the portions to {p.name}, and {p.name} put it "
+                                  f"back on the shelf.")
+                    self.perceive(q, minute, None, remember=False,
+                                  trigger=(f"{p.name} puts the portion you gave back on the shelf", True))
+                else:
+                    q.sure.append(f"min {minute:02d}: {giver.name} gave one of the portions to {p.name}, and "
+                                  f"{p.name} put it back on the shelf (you saw it).")
+                    self.perceive(q, minute, None, remember=False, trigger=(line, True))
+            p.sure.append(f"min {minute:02d}: {giver.name} gave you one of the portions, and you put it back on "
+                          f"the shelf.")
+            record["events"].append(f"{p.name} put back the portion {giver.name} gave {him}")
+            return f"put the portion {giver.name} gave {him} back on the shelf; {self.portions} left."
         return ""
