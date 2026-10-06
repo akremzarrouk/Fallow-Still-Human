@@ -124,6 +124,10 @@ UNRESOLVED = {"he", "she", "they", "we", "you", "it", "everyone", "everybody", "
               "sister", "son", "daughter", "mother", "father", "family", "people"}
 EXEMPT = {"would", "could", "should", "might", "may", "if", "wish", "want", "wanted", "tried", "meant", "going", "will"}
 NEGATION = {"not", "never", "nothing"}
+# reports/check_errors.md: "found" claims a find (food at the neighbour's) only when food, or nothing, is what was found
+# ("found Daniel's bed empty" is not one); "took" is not taking food in "took risks".
+FOUND = {"food", "portion", "portions", "can", "cans", "nothing", "anything", "something"}
+NOT_TAKEN = {"risk", "risks", "chance", "chances"}
 FAMILIES = [("eat", [("ate",), ("eaten",), ("eats",), ("eating",)]),
             ("take", [("took",), ("taken",), ("stole",), ("stolen",)]),
             ("admit", [("admitted",), ("confessed",), ("owned", "up")]),
@@ -184,11 +188,12 @@ def matching(chron, pid, family, subject, can):
     return sum(1 for e in seen if e["kind"] in kinds and by(e))
 
 
-def claims(meaning, pid, chron):
+def claims(meaning, pid, chron, plan=False):
     """S8 (§2.7): every claim of fact with a named subject, read clause by clause, against what `pid` perceived.
-    A clause with no subject of its own takes the subject of the clause before it. Returns the false claims."""
+    A clause with no subject of its own takes the subject of the clause before it. Returns the false claims.
+    plan (an intent): a clause with no subject of its own after a clause with a plan word is part of that plan."""
     false = []
-    subject, nobody, resolved = None, False, False
+    subject, nobody, resolved, planned = None, False, False, False
     for clause in re.split(r"[.;,!?]| and | but | because | so | while ", meaning):
         toks = tokens(clause)
         if not toks:
@@ -204,12 +209,17 @@ def claims(meaning, pid, chron):
             if w in UNRESOLVED:                   # he, she, they...: not checked here (M2's reading is)
                 si, resolved = i, False
                 break
-        if not resolved:
+        if si >= 0:
+            planned = any(w in EXEMPT or w.endswith("'ll") for w in toks)
+        if not resolved or (plan and si < 0 and planned):
             continue
         for j in range(si + 1, min(len(toks), si + 5)):
             family = verb_at(toks, j)
             if family is None:
                 continue
+            if (family == "find" and not FOUND & set(toks[j + 1:j + 4])) or \
+                    (family == "take" and NOT_TAKEN & set(toks[j + 1:j + 3])):
+                break                             # not a find or a theft of food: no claim the chronicle can check
             if any(w in EXEMPT or w.endswith("'ll") for w in toks[:j]):
                 break                             # a wish, a plan, a counterfactual: meaning, not a claim
             negative = nobody or any(w in NEGATION or w.endswith("n't") for w in toks[si + 1:j])
@@ -249,6 +259,7 @@ def check_memory(m, pid, shown, chron, carried):
     for i in ids:
         e = chron.event(i)
         allowed |= {e["actor"], e["target"], *(e["members"] or [])}
+        allowed |= {"elena" if n == "Mom" else n.lower() for n in NAME.findall(shown[i])}     # named in the record
     for n in NAME.findall(meaning):
         who = "elena" if n == "Mom" else n.lower()
         if who not in allowed:
@@ -318,7 +329,7 @@ def intent_verdict(intent, pid, shown, chron):
     d = DENY.search(intent)
     if d:
         return f"rejected: S7 {d.group(0)}"
-    false = claims(intent, pid, chron)
+    false = claims(intent, pid, chron, plan=True)
     if false:
         return "rejected: S8 " + "; ".join(false)
     return "kept"

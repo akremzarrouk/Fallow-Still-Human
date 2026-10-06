@@ -17,6 +17,12 @@ KIND_ACTS = ("reassure", "sit")
 WEIGHT = {"confess": 5, "eat": 4, "went_out": 4, "accuse": 3, "give": 3, "share": 3, "reassure": 3, "sit": 3,
           "stop": 2, "confront": 2, "accuse_other": 2}
 COUNTED = ("accuse", "accuse_other", "confront", "reassure", "sit")     # repeats are counted, not "again"
+# The pattern rule (reports/c_patterns.md): an act of a kind the table leaves out, done PATTERN_MIN or more times by
+# one person in one day, is a line for that person and that day, at the weight of an accusation. Each by the option
+# that starts it: a search carried on (`keep_searching`) is the same search.
+PATTERNS = {"deny": "deny", "ask": "ask_who", "search": "search"}
+PATTERN_MIN = 3
+WEIGHT.update({k: WEIGHT["accuse"] for k in PATTERNS})
 TIMES = {1: "", 2: " twice", 3: " three times"}
 
 
@@ -115,8 +121,11 @@ def block_c(chron, pid, day, away=()):
             key = (kind, target)
         elif kind == "stop" and target and (a == pid or target == pid):
             key = ("stop", target)
+        elif kind in PATTERNS and e["option"] == PATTERNS[kind]:
+            key = (kind, e["scene"])
         if key and a not in away:
             groups.setdefault((a, *key), []).append(e)
+    groups = {g: evs for g, evs in groups.items() if g[1] not in PATTERNS or len(evs) >= PATTERN_MIN}
     order = {e["id"]: i for i, e in enumerate(chron.events)}
     best = {}
     for (q, key, other), evs in groups.items():
@@ -200,6 +209,9 @@ def person_line(chron, pid, q, key, other, evs, day):
     if key == "stop":
         return (f"{when}, you told {T}, low, not to go{again}." if me else
                 f"{when}, {Q} told you, low, not to go{again}.")
+    if key in PATTERNS:
+        did = {"deny": "denied taking the can", "ask": "asked who took the can", "search": "searched for the can"}[key]
+        return f"{when}, {'you' if me else Q} {did}{times(n)}."
     raise ValueError(key)
 
 

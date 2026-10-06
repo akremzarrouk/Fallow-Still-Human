@@ -4266,6 +4266,162 @@ class DaysTest(unittest.TestCase):
         # line comes from reassure_all.
         self.assertFalse([x for p in data.ORDER for x in M.block_c(c, p, 6) if "D1-001" in x["ids"]])
 
+    # The pattern rule (reports/c_patterns.md): the same act, 3 or more times in one day, is a C line.
+    def test_c_pattern_seed3_day1_denials_and_questions(self):
+        """v15 seed 3's day 1 was Daniel's denials and Mara's "who took it?", none in the table: on day 3 every C
+        keeps both, with the counts of the chronicle."""
+        M = self.memory
+        tr = json.loads(read(os.path.join(HERE, "runs", "v15", "daniel_ate_it-seed3.transcript.json")))
+        c = self.chron.Chronicle(3, tr["chronicle"]["fixed"]["culprit"]["value"])
+        for e in tr["chronicle"]["events"]:
+            c.add(e)
+        count = lambda who, option: sum(e["scene"] == "D1" and e["actor"] == who and e["option"] == option
+                                        for e in c.events)
+        denied, asked, elena_asked = count("daniel", "deny"), count("mara", "ask_who"), count("elena", "ask_who")
+        self.assertEqual((denied, asked, elena_asked), (6, 6, 3))
+        n = lambda k: M.times(k).strip()
+        for pid in data.ORDER:
+            lines = [x[2:] for x in M.render_c(M.block_c(c, pid, 6))[1:]]
+            d = "you denied" if pid == "daniel" else "Daniel denied"
+            a = "you asked" if pid == "mara" else "Mara asked"
+            e = "you asked" if pid == "elena" else "Elena asked"
+            self.assertIn(f"Two days ago, {d} taking the can {n(denied)}.", lines, pid)
+            self.assertIn(f"Two days ago, {a} who took the can {n(asked)}.", lines, pid)
+            self.assertIn(f"Two days ago, {e} who took the can {n(elena_asked)}.", lines, pid)
+        self.assertEqual({M.WEIGHT[k] for k in M.PATTERNS}, {M.WEIGHT["accuse"]})
+
+    def test_c_pattern_not_at_two_repeats(self):
+        from talk import act_of
+        M = self.memory
+        everyone = {p: "saw" for p in data.ORDER}
+        acts = [("D1", "daniel", "deny"), ("D1", "mara", "ask_who"), ("D1", "mara", "search"),
+                ("D1", "daniel", "deny"), ("D1", "mara", "ask_who"), ("D1", "mara", "search"),
+                ("D1", "leo", "search"), ("D1", "leo", "keep_searching"), ("D1", "leo", "keep_searching"),
+                ("D2", "daniel", "deny"), ("D2", "mara", "ask_who"), ("D2", "mara", "search")]
+        c = self.handmade([{"id": f"{scene}-{i:03d}", "scene": scene, "minute": 3 * i, "kind": act_of(option)[0],
+                            "option": option, "actor": who, "witnesses": everyone | {who: "did"}}
+                           for i, (scene, who, option) in enumerate(acts, 1)])
+        # Day 1: Daniel denied twice, Mara asked twice and started two searches, Leo started one search and carried
+        # it on twice. Day 2: one more of each, so three in all over two days, never three in one day.
+        people = lambda day: [x["line"] for p in data.ORDER for x in M.block_c(c, p, day) if not x["standing"]]
+        self.assertEqual(people(6), [])
+        self.assertEqual(people(7), [])
+
+
+class CheckErrorsTest(unittest.TestCase):
+    """The night-mind checks on v15's own answers (reports/check_errors.md): each answer is checked again on the input
+    it had, i.e. the records its prompt showed (from cache/v15, read only), the chronicle up to that night and the
+    meanings it already carried. The four check errors of reports/days_v15.md §4 now keep a true thought; every other
+    verdict stays as v15 gave it."""
+    FIXED = {(1, 1, "elena", 1), (3, 2, "elena", 1), (1, 2, "daniel", 2), (1, 1, "mara", "intent")}
+
+    @classmethod
+    def setUpClass(cls):
+        cls.mind = importlib.import_module("mind")
+        cls.chron = importlib.import_module("chronicle")
+        cls.v15 = {}
+        for seed in (1, 2, 3):
+            tr = json.loads(read(os.path.join(HERE, "runs", "v15", f"daniel_ate_it-seed{seed}.transcript.json")))
+            cache = json.loads(read(os.path.join(HERE, "cache", "v15",
+                                                 f"gemini-3.5-flash-lite-daniel_ate_it-seed{seed}.json")))
+            cls.v15[seed] = (tr, cache)
+
+    def inputs(self, seed, k, pid):
+        """(v15's record of this night mind, the records its prompt showed, the chronicle up to that night, the
+        meanings it already carried)."""
+        tr, cache = self.v15[seed]
+        rec = tr[f"mind{k}"][pid]
+        prompts = [e["prompt"] for e in cache.values()
+                   if e["response"] == rec["answer"] and e["prompt"].startswith(f"You are {world.NAMES[pid]},")]
+        self.assertEqual(len(prompts), 1, (seed, k, pid))
+        shown = {}
+        for line in prompts[0].split("\n"):
+            m = re.match(r"^(?:- )?\[([A-Z0-9, -]+)\] (.*)$", line)
+            if m:
+                for i in m.group(1).split(", "):
+                    shown.setdefault(i, m.group(2))
+        c = self.chron.Chronicle(seed, tr["chronicle"]["fixed"]["culprit"]["value"])
+        for e in tr["chronicle"]["events"]:
+            if int(e["scene"][1:]) <= k:
+                c.add(e)
+        carried = [m["meaning"] for j in range(1, k) for m in tr[f"mind{j}"][pid]["memories"] if m["verdict"] == "kept"]
+        return rec, shown, c, carried
+
+    def checked(self, seed, k, pid):
+        """(v15's record of this night mind, its answer checked again now)."""
+        rec, shown, c, carried = self.inputs(seed, k, pid)
+        return rec, self.mind.check_answer(rec["answer"], pid, shown, c, carried)
+
+    def memory(self, seed, k, pid, i, meaning, v15_verdict):
+        rec, r = self.checked(seed, k, pid)
+        self.assertEqual((rec["memories"][i]["meaning"], rec["memories"][i]["verdict"]), (meaning, v15_verdict))
+        return r["memories"][i]["verdict"]
+
+    # 1. Seed 1, mind 1, Elena: "found Daniel's bed empty" (N1-08) is not finding food.
+    def test_found_is_not_finding_food(self):
+        self.assertEqual(self.memory(1, 1, "elena", 1, "I heard the front door open in the night and found Daniel's "
+                                     "bed empty before he returned with nothing in his hands.",
+                                     "rejected: S8 elena find: no such event"), "kept")
+
+    # 2. Seed 3, mind 2, Elena: "my children took risks" is not taking food.
+    def test_took_risks_is_not_taking_food(self):
+        self.assertEqual(self.memory(3, 2, "elena", 1, "Someone went out into the dark and came back before dawn and "
+                                     "I stayed in bed while my children took risks.",
+                                     "rejected: S8 elena take: no such event"), "kept")
+
+    # 3. Seed 1, mind 2, Daniel: N2-01 reads "You went to bed in the brothers room with Leo".
+    def test_a_name_in_the_cited_record_counts(self):
+        self.assertEqual(self.memory(1, 2, "daniel", 2, "I lay awake in the dark with Leo, listening and starving, "
+                                     "knowing the responsibility is mine alone.", "rejected: S4 Leo"), "kept")
+
+    # 4. Seed 1, mind 1, Mara's intent: "came back with nothing" is part of what she means to ask, not an event.
+    def test_coming_back_in_an_intent_is_not_an_event(self):
+        rec, r = self.checked(1, 1, "mara")
+        intent = json.loads(re.sub(r"^```(?:json)?\s*|\s*```$", "", rec["answer"].strip()))["intent"]
+        self.assertEqual((intent, rec["intent_verdict"]),
+                         ("I am going to ask Daniel why he went out into the night and came back with nothing.",
+                          "rejected: S8 mara come back: no such event"))
+        self.assertEqual(r["intent_verdict"], "kept")
+
+    # The narrowed rules still catch what they are for, on the same input: seed 1, night 1, Elena. Leo did not go out
+    # and found nothing; he did not take the can (Daniel did, and confessed).
+    def test_false_finds_thefts_and_events_in_intents_are_still_rejected(self):
+        rec, shown, c, carried = self.inputs(1, 1, "elena")
+        leo = next(i for i, t in shown.items() if "Leo" in t)
+        verdict = lambda meaning: self.mind.check_memory({"ids": [leo], "meaning": meaning}, "elena", shown, c, carried)
+        self.assertEqual(verdict("Leo found food at the neighbour's house."), "rejected: S8 leo find: no such event")
+        self.assertEqual(verdict("Leo found nothing there."), "rejected: S8 leo find: no such event")
+        self.assertEqual(verdict("Leo took the can."), "rejected: S8 leo take: no such event")
+        self.assertEqual(verdict("Leo took risks and took the can."), "rejected: S8 leo take: no such event")
+        intent = lambda text: self.mind.intent_verdict(text, "elena", shown, c)
+        self.assertEqual(intent("I will ask Leo why, because Leo took the can."), "rejected: S8 leo take: no such event")
+        # "came back" has no subject of its own, but the clause before it is no plan: it is still read as Leo's act.
+        self.assertEqual(intent("Leo went out and came back, so I will thank him."),
+                         "rejected: S8 leo go out: no such event; leo come back: no such event")
+
+    # Every other v15 verdict, the six right rejections included, is what v15 gave.
+    def test_every_other_v15_verdict_stands(self):
+        rejected = []
+        for seed in (1, 2, 3):
+            for k in (1, 2):
+                for pid in self.v15[seed][0][f"mind{k}"]:
+                    rec, r = self.checked(seed, k, pid)
+                    pairs = [(i, m["verdict"], g["verdict"]) for i, (m, g) in enumerate(zip(rec["memories"],
+                                                                                            r["memories"]))]
+                    pairs.append(("intent", rec["intent_verdict"], r["intent_verdict"]))
+                    for i, was, now in pairs:
+                        if (seed, k, pid, i) in self.FIXED:
+                            continue
+                        self.assertEqual(now, was, (seed, k, pid, i))
+                        if was != "kept":
+                            rejected.append((seed, k, pid, i, now))
+        self.assertEqual(rejected, [(1, 2, "mara", 0, "rejected: S9 a repeat"),
+                                    (2, 1, "daniel", 1, "rejected: S5 tonight"),
+                                    (2, 2, "daniel", 1, "rejected: S5 tonight"),
+                                    (2, 2, "elena", 1, "rejected: S5 tonight"),
+                                    (2, 2, "leo", 0, "rejected: S5 yesterday"),
+                                    (3, 1, "elena", 0, "rejected: S3 one")])
+
 
 class GeminiClientTest(unittest.TestCase):
     def setUp(self):
