@@ -1,5 +1,5 @@
-"""Runs a morning, the night after it and the next morning, with rules plus a language model, and
-writes them as one story (reports/night_design.md).
+"""Runs a morning, the night after it, the next morning, a second night and a third morning, with rules plus a
+language model, and writes them as one story (reports/night_design.md; reports/days_design.md).
 
     python morning.py --seed 1              a fresh run; answers not in the cache are asked of Gemini
     python morning.py --seed 1 --replay     the same run from the cache only, with no API calls;
@@ -13,9 +13,9 @@ writes them as one story (reports/night_design.md).
                       the fourth version's runs; v5/check.py to v14/check.py replay the
                       fifth's to fourteenth's)
 
-Day 1 is the morning of the count; then the night; then day 2. The model names and call limits
-are in config.json; the call limit counts each of the three apart. The key is read from
-GEMINI_API_KEY.
+Day 1 is the morning of the count; then the night, the night mind, day 2, the second night, its night
+mind and day 3. The model names and call limits are in config.json; the call limit counts each scene
+apart. The key is read from GEMINI_API_KEY.
 
 Exit codes: 0 done (and, for --replay, identical); 1 replay differs; 3 stopped cleanly part way
 (quota, rate limit, call cap, or a replay cache miss): see the message.
@@ -29,8 +29,10 @@ import time
 
 import data
 from gemini import Cache, FakeClient, GeminiClient, Oracle, StopMorning, load_config
+from chronicle import Chronicle
+from mind import NightMind
 from night import Night
-from story import render, render_day2, render_night
+from story import render, render_day2, render_mind, render_night
 from world import Morning
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -119,24 +121,52 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
         m.finish()
 
     scenes = {}
+
+    def scene(name, step):
+        """One scene, counted on its own against the call cap (reports/night_design.md, §8)."""
+        if scenes:
+            oracle.new_scene()
+        scenes[name] = Scene(oracle)
+        out = step()
+        scenes[name].close()
+        return out
+
+    def night_of(day, number):
+        n = Night(day, oracle, number=number, house=chron.house_state()).run()
+        say(f"  night {number}: model asked for {len(n.decisions)}; so far {oracle.live} live, "
+            f"{oracle.from_cache} cached, {oracle.api_requests} API requests")
+        chron.add_night(n)
+        return n
+
+    def mind_of(n):
+        mind = NightMind(n, chron, oracle).run()
+        say(f"  night {n.number}, the night mind: model asked for {len(mind.results)}; so far {oracle.live} live, "
+            f"{oracle.from_cache} cached, {oracle.api_requests} API requests")
+        return mind
+
+    def day_after(day, n, tag):
+        m = Morning.next_day(day, n, oracle, chronicle=chron)
+        morning_turns(m, tag)
+        chron.add_day(m)
+        return m
+    # Days that follow one another (reports/days_design.md, §1): day 1, night 1 and its night mind, day 2, night 2
+    # and its night mind, day 3; and the chronicle of all of it.
+    chron = Chronicle(seed, data.culprit(scenario))
     try:
-        scenes["day1"] = Scene(oracle)
-        morning = Morning(oracle, seed, scenario)
-        morning_turns(morning, "")
+        def day_one():
+            m = Morning(oracle, seed, scenario)
+            morning_turns(m, "")
+            chron.add_day(m)
+            return m
+        morning = scene("day1", day_one)
         # Day 1's story is written as it ended, before the night touches anything.
         day1_text = render(morning, seed, model_name, command)
-        scenes["day1"].close()
-        oracle.new_scene()
-        scenes["night"] = Scene(oracle)
-        night = Night(morning, oracle).run()
-        scenes["night"].close()
-        say(f"  night: model asked for {len(night.decisions)}; so far {oracle.live} live, "
-            f"{oracle.from_cache} cached, {oracle.api_requests} API requests")
-        oracle.new_scene()
-        scenes["day2"] = Scene(oracle)
-        day2 = Morning.next_day(morning, night, oracle)
-        morning_turns(day2, "day 2 ")
-        scenes["day2"].close()
+        night = scene("night", lambda: night_of(morning, 1))
+        mind1 = scene("mind1", lambda: mind_of(night))
+        day2 = scene("day2", lambda: day_after(morning, night, "day 2 "))
+        night2 = scene("night2", lambda: night_of(day2, 2))
+        mind2 = scene("mind2", lambda: mind_of(night2))
+        day3 = scene("day3", lambda: day_after(day2, night2, "day 3 "))
     except StopMorning as stop:
         say(f"\n{stop}")
         say(f"Answers received so far ({len(cache.entries)}) are kept in {os.path.relpath(cache_path, HERE)}.")
@@ -147,13 +177,18 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
         return {"stopped": str(stop), "api_requests": oracle.api_requests}, 3
     seconds = time.monotonic() - started
 
-    text = day1_text + render_night(night) + render_day2(day2)
+    text = (day1_text + render_night(night) + render_mind(mind1) + render_day2(day2)
+            + render_night(night2) + render_mind(mind2) + render_day2(day3))
     story_path = os.path.join(runs_dir, f"{name}.md")
     out_path = os.path.join(runs_dir, f"{name}.replay.md") if replay else story_path
     with open(out_path, "w", encoding="utf-8", newline="\n") as f:
         f.write(text)
     night_counts = scenes["night"].counts()
     day2_counts = scenes["day2"].counts()
+    later = {k: scenes[k].counts() for k in ("mind1", "night2", "mind2", "day3")}
+
+    def asks(k):
+        return later[k]["answers_live"] + later[k]["answers_from_cache"]
     meta = {
         "model": model_name, "scenario": scenario, "seed": seed, "replay": replay,
         "api_requests": oracle.api_requests, "answers_live": oracle.live,
@@ -171,8 +206,24 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
         "day2": {**day_meta(day2, scenes["day2"]),
                  "food_moments": sum(1 for rec in day2.log for d in rec["decisions"] if d.get("food_moment")),
                  "give_answers": sum(1 for rec in day2.log for d in rec["decisions"] if d.get("given_by"))},
+        # Days that follow one another (reports/days_design.md, §2.8, §7.1 N-T13).
+        "night1_asks": night_counts["answers_live"] + night_counts["answers_from_cache"],
+        "mind1_asks": asks("mind1"), "mind1_api_requests": later["mind1"]["api_requests"],
+        "mind1": {**later["mind1"], **mind1.counts()},
+        "night2_asks": asks("night2"), "night2_api_requests": later["night2"]["api_requests"],
+        "leavers2": night2.leavers, "outcome2": [g["outcome"] for g in night2.groups],
+        "night2": {**later["night2"], "house_left": night2.house_left,
+                   "away": [q for q in data.ORDER if q in night2.away],
+                   "max_prompt_tokens_estimated": night2.m.max_prompt_tokens},
+        "mind2_asks": asks("mind2"), "mind2_api_requests": later["mind2"]["api_requests"],
+        "mind2": {**later["mind2"], **mind2.counts()},
+        "day3_asks": asks("day3"), "day3_api_requests": later["day3"]["api_requests"],
+        "day3": {**day_meta(day3, scenes["day3"]),
+                 "food_moments": sum(1 for rec in day3.log for d in rec["decisions"] if d.get("food_moment")),
+                 "give_answers": sum(1 for rec in day3.log for d in rec["decisions"] if d.get("given_by"))},
         "max_prompt_tokens_estimated": max(morning.max_prompt_tokens, night.m.max_prompt_tokens,
-                                           day2.max_prompt_tokens),
+                                           day2.max_prompt_tokens, night2.m.max_prompt_tokens,
+                                           day3.max_prompt_tokens),
         "max_prompt_tokens_counted_by_api": max(oracle.prompt_tokens, default=None),
         "run_seconds": round(seconds, 1),
         "story": os.path.relpath(out_path, HERE).replace("\\", "/"),
@@ -188,7 +239,16 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
     say(f"  night house: {night.house}; away: {meta['night']['away']}")
     for k in DAY_KEYS + ("food_moments", "give_answers"):
         say(f"  day2 {k}: {meta['day2'][k]}")
-    for k in ("day2_asks", "day2_api_requests", "max_prompt_tokens_estimated", "max_prompt_tokens_counted_by_api",
+    for k in ("day2_asks", "day2_api_requests"):
+        say(f"  {k}: {meta[k]}")
+    for k in ("night1_asks", "mind1_asks", "mind1_api_requests", "night2_asks", "night2_api_requests", "leavers2",
+              "outcome2", "mind2_asks", "mind2_api_requests"):
+        say(f"  {k}: {meta[k]}")
+    for k in ("memories_proposed", "memories_kept", "memories_rejected"):
+        say(f"  mind1 {k}: {meta['mind1'][k]}; mind2 {k}: {meta['mind2'][k]}")
+    for k in DAY_KEYS + ("food_moments", "give_answers"):
+        say(f"  day3 {k}: {meta['day3'][k]}")
+    for k in ("day3_asks", "day3_api_requests", "max_prompt_tokens_estimated", "max_prompt_tokens_counted_by_api",
               "run_seconds", "story_sha256"):
         say(f"  {k}: {meta[k]}")
     if replay:
@@ -201,7 +261,9 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
         say(f"  byte for byte against {os.path.relpath(story_path, HERE)}: "
             f"{'IDENTICAL' if same else 'DIFFERS'}")
         return meta, 0 if same else 1
-    transcript = {"day1": morning.transcript, "night": night.transcript(), "day2": day2.transcript}
+    transcript = {"day1": morning.transcript, "night": night.transcript(), "mind1": mind1.transcript(),
+                  "day2": day2.transcript, "night2": night2.transcript(), "mind2": mind2.transcript(),
+                  "day3": day3.transcript, "chronicle": chron.to_json()}
     with open(os.path.join(runs_dir, f"{name}.transcript.json"), "w", encoding="utf-8", newline="\n") as f:
         json.dump(transcript, f, ensure_ascii=False, indent=1)
         f.write("\n")

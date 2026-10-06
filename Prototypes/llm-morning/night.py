@@ -9,14 +9,22 @@ whoever crosses it. Nothing in the night is asked of the model but those decisio
 
 `next_day` then hands day 2 each person as the night left them, with what they carry in: a block
 of facts and conclusions the code writes from what they did, saw or heard.
+
+Days that follow one another (reports/days_design.md): a night can be the second (`number`), finds the
+neighbour's house as the last night left it, keeps whoever is away out of it, and records each thing that
+happened as an event for the chronicle (chronicle.py), with each night line tied to the event it tells of.
+`next_day` sets up day 3 the same way, and, given the chronicle, adds last night's thoughts (B) and the earlier
+days (C) to what each person carries in (memory.py).
 """
 import copy
 import json
 import random
+import re
 
 import data
 import world
-from world import NAMES, NIGHT_MINUTE, NIGHT_SYSTEM, NEIGHBOUR_UNKNOWN, Option, estimate_tokens, portions_text
+from world import (NAMES, NIGHT_MINUTE, NIGHT_SYSTEM, NEIGHBOUR_UNKNOWN, Option, day_index, estimate_tokens,
+                   portions_text, when_words)
 
 GAP_HUNGER = 0.3            # × hunger_rate, the afternoon and evening (§2)
 NIGHT_HUNGER = 0.1          # × hunger_rate, the night
@@ -33,6 +41,7 @@ BEDS = ", ".join(" and ".join(NAMES[x] for x in data.ORDER if x in owners) + f" 
                  for room, owners in sorted(data.OWNERS.items(),
                                             key=lambda kv: min(data.ORDER.index(x) for x in kv[1])))
 TRIGGER = "the family is together in the kitchen for the first time since last night"
+CARRY_VARIANTS = ((False, True), (True, True), (True, False))     # (short, minutes), in the order they are tried
 
 BEDTIME = [("sleep", "go to sleep"),
            ("lie_awake", "lie awake in your bed and listen"),
@@ -105,10 +114,14 @@ def names(pids):
 
 class Night:
     """One night. `draws` forces named draws (tests): "order" (a list of leavers), "house",
-    "wake:L:R", "door:L:P", "return:L:P", "trip:L" and "lost:L"; any other is drawn from the seed."""
+    "wake:L:R", "door:L:P", "return:L:P", "trip:L" and "lost:L"; any other is drawn from the seed.
+    number: which night this is (reports/days_design.md, §1.3); house: the neighbour's house as the night
+    before left it ({"value", "u", "left", "entered"}), so it is never drawn again."""
 
-    def __init__(self, day1, oracle, draws=None):
-        self.day1 = day1
+    def __init__(self, day1, oracle, draws=None, number=1, house=None):
+        self.day1 = self.prev = day1            # the day this night follows
+        self.number = number
+        self.house_given = house
         self.oracle = oracle
         self.seed = day1.seed
         self.draws = dict(draws or {})
@@ -123,7 +136,10 @@ class Night:
         self.noticing = []          # every check of who notices whom, in order
         self.story = []             # ("decision", d) | ("noticing", n) | ("text", line), in order
         self.groups = []
-        self.away = set()
+        self.away = set(day1.away)  # whoever did not come back from an earlier night is not in the house
+        self.entered = bool(house and house.get("entered"))
+        self.events = []            # what happened, for the chronicle: dicts with "key", in order
+        self.line_events = {p: [] for p in data.ORDER}    # the event each night line tells of
         self.leavers = []           # everyone who went out, in order
         self.lines = {p: [] for p in data.ORDER}          # night lines for the carry-in, with words
         self.lines_short = {p: [] for p in data.ORDER}    # the same without quoted words
@@ -134,23 +150,41 @@ class Night:
         self.morning_hunger = {}
 
     # ---------- chance ----------
+    def draw_string(self, name):
+        """The seed string of a draw (reports/days_design.md, §4.4): the first night keeps night_design's;
+        a later night has its own; the neighbour's house is one fact, whatever the night."""
+        if self.number == 1 or name == "house":
+            return f"{self.seed}:night:{name}"
+        return f"{self.seed}:night{self.number}:{name}"
+
     def u(self, name):
         if name in self.draws:
             return self.draws[name]
-        return random.Random(f"{self.seed}:night:{name}").random()
+        return random.Random(self.draw_string(name)).random()
+
+    def house_state(self):
+        """The neighbour's house as this night leaves it, for the next night (reports/days_design.md, §4.3)."""
+        return {"value": self.house, "u": self.house_u, "left": self.house_left, "entered": self.entered}
 
     def order(self):
         """Everyone, in the order they would leave: lowest draw first."""
         if "order" in self.draws:
             return list(self.draws["order"])
-        rng = random.Random(f"{self.seed}:night:order")
+        rng = random.Random(self.draw_string("order"))
         draw = {q: rng.random() for q in data.ORDER}
         return sorted(data.ORDER, key=draw.get)
 
     # ---------- lines ----------
-    def line(self, pid, full, short=None):
+    def line(self, pid, full, short=None, event=None):
         self.lines[pid].append(full)
         self.lines_short[pid].append(full if short is None else short)
+        self.line_events[pid].append(event)
+
+    def event(self, kind, actor=None, witnesses=None, **more):
+        """Something that happened tonight, for the chronicle; returns its key."""
+        self.events.append({"key": len(self.events), "kind": kind, "actor": actor, "witnesses": dict(witnesses or {}),
+                            **more})
+        return len(self.events) - 1
 
     def text(self, line):
         self.story.append(("text", line))
@@ -188,20 +222,31 @@ class Night:
     # ---------- the night ----------
     def run(self):
         for p in self.people.values():                                  # the gap (§2)
+            if p.id in self.away:
+                p.room = None
+                continue
             p.hunger = min(1.0, p.hunger + GAP_HUNGER * p.sheet["hunger_rate"])
             p.room = OWN_ROOM[p.id]
             p.activity = {"kind": "idle", "label": "in bed"}
-        self.bedtime_hunger = {q: self.people[q].hunger for q in data.ORDER}
+        self.bedtime_hunger = {q: (None if q in self.away else self.people[q].hunger) for q in data.ORDER}
         self.rooms_at_bedtime = {q: self.people[q].room for q in data.ORDER}
         self.state_at_bedtime = {
             q: [json.dumps({t: [g.strength, g.events] for t, g in p.grudges.items()}), p.suspicion.state(), p.guilt]
             for q, p in self.people.items()}
-        for q in data.ORDER:                                            # bedtime (§3.2)
+        present = [q for q in data.ORDER if q not in self.away]
+        beds = BEDS if not self.away else ", ".join(
+            " and ".join(NAMES[x] for x in present if x in owners) + f" in the {data.ROOMS[room]}"
+            for room, owners in sorted(data.OWNERS.items(), key=lambda kv: min(data.ORDER.index(x) for x in kv[1]))
+            if any(x in present for x in owners))
+        for q in present:                                               # bedtime (§3.2)
             room = OWN_ROOM[q]
             r = ROOMMATE[q]
+            mate = (f"{NAMES[r]}'s bed is empty." if r in self.away else
+                    f"{NAMES[r]} is in {data.PRONOUNS[r]['his']} bed.")
             now = ["Now it is night. " + data.GAP,
-                   f"Everyone has gone to bed in their own room: {BEDS}.",
-                   f"You are in the {data.ROOMS[room]}, in your bed. {NAMES[r]} is in {data.PRONOUNS[r]['his']} bed.",
+                   (f"Everyone has gone to bed in their own room: {beds}." if not self.away else
+                    f"Everyone in the house has gone to bed in their own room: {beds}."),
+                   f"You are in the {data.ROOMS[room]}, in your bed. {mate}",
                    f"The kitchen is dark. The shelf holds {portions_text(self.portions)}."]
             own = self.people[q].trip_heard.get(q)
             if own and own[1] == "volunteer":           # `volunteer`, or day 2's `still_going`
@@ -212,10 +257,15 @@ class Night:
             self.where[q] = "kitchen" if choice == "watch_door" else room
             self.awake[q] = choice != "sleep"
             self.people[q].tonight.append(TONIGHT[choice])
-            self.line(q, f"Last night you slept in the {data.ROOMS[room]} with {NAMES[r]}. {BED_LINE[choice]}")
-        self.house_u = self.u("house")
-        self.house = self.house_left = house_portions(self.house_u)
-        pending = [q for q in self.order() if self.choices[q] == "go_next_door"]
+            e = self.event("bedtime", q, {q: "did"}, option=choice)
+            self.line(q, f"Last night you slept in the {data.ROOMS[room]} with {NAMES[r]}. {BED_LINE[choice]}", event=e)
+        if self.house_given:                # fixed the night it first mattered, and as that night left it (§4.3)
+            self.house, self.house_u = self.house_given["value"], self.house_given["u"]
+            self.house_left = self.house_given["left"]
+        else:
+            self.house_u = self.u("house")
+            self.house = self.house_left = house_portions(self.house_u)
+        pending = [q for q in self.order() if self.choices.get(q) == "go_next_door"]
         while pending:
             self.leave(pending.pop(0), pending)
         for p in self.people.values():                                  # the rest of the night
@@ -225,6 +275,11 @@ class Night:
             p.hunger = min(1.0, p.hunger + NIGHT_HUNGER * p.sheet["hunger_rate"])
             p.room = OWN_ROOM[p.id]
         self.morning_hunger = {q: (None if q in self.away else self.people[q].hunger) for q in data.ORDER}
+        for e in self.events:               # who knew that someone went out (§4.2)
+            if e["kind"] == "went_out":
+                for P in data.ORDER:
+                    if P not in e["members"] and any(x in self.knows[P] for x in e["members"]):
+                        e["witnesses"].setdefault(P, "knew")
         return self
 
     def leave(self, L, pending):
@@ -263,8 +318,9 @@ class Night:
                 self.awake[R] = True
                 seen_by.add(R)
                 self.knows[R].append(L)
+                e = self.event("got_up", L, {L: "did", R: "saw"})
                 self.line(R, f"In the night {NAMES[L]} got up in the dark and left the room toward the kitchen and the "
-                             f"front door ({'you saw it' if awake else 'you woke and saw it'}).")
+                             f"front door ({'you saw it' if awake else 'you woke and saw it'}).", event=e)
                 if R not in self.reacted:
                     self.reacted.add(R)
                     now = [f"Now it is night, in the {data.ROOMS[room]}. "
@@ -277,6 +333,7 @@ class Night:
                         return
         # 2. L passes through the kitchen: whoever sits up by the front door.
         stops = []
+        at_door = None
         for S in data.ORDER:
             if self.where.get(S) != "kitchen" or S in group:
                 continue
@@ -284,7 +341,11 @@ class Night:
             seen_by.add(S)
             self.knows[S] += [x for x in group if x not in self.knows[S]]
             who = names(group)
-            self.line(S, f"In the night {who} came into the kitchen and went to the front door (you saw it).")
+            if at_door is None:
+                at_door = self.event("at_door", L, {x: "did" for x in group}, members=list(group))
+            self.events[at_door]["witnesses"][S] = "saw"
+            self.line(S, f"In the night {who} came into the kitchen and went to the front door (you saw it).",
+                      event=at_door)
             if S not in self.reacted:
                 self.reacted.add(S)
                 now = ["Now it is night. You are sitting up in the kitchen by the front door.",
@@ -297,6 +358,7 @@ class Night:
             back_to_bed()
             return
         # 3. The front door opens: everyone in a bedroom who has not seen L go.
+        door = None
         for P in data.ORDER:
             if self.where.get(P) not in BEDROOMS or P in group or P in seen_by:
                 continue
@@ -311,8 +373,11 @@ class Night:
             if not heard:
                 continue
             self.awake[P] = True
+            if door is None:
+                door = self.event("door", L, {x: "did" for x in group}, members=list(group))
+            self.events[door]["witnesses"][P] = "heard"
             self.line(P, f"In the night you {'' if awake else 'woke and '}heard the front door being opened. "
-                         f"You did not see who.")
+                         f"You did not see who.", event=door)
             if P in self.reacted:
                 continue
             self.reacted.add(P)
@@ -324,6 +389,7 @@ class Night:
         for P in group:
             self.where[P] = "out"
         self.leavers += group
+        self.event("went_out", L, {x: "did" for x in group}, members=list(group))
         self.trip(L, group)
 
     def react_seen(self, P, L, now, pending, join):
@@ -342,20 +408,21 @@ class Night:
             fallback = f"let_{L}_go"
         waiting = P in pending
         choice, words = self.ask(P, "reaction", now, opts, fallback)
+        e = None if choice == f"stop_{L}" else self.event("reaction", P, {P: "did"}, option=choice, target=L)
         if choice == f"go_with_{L}":
             join(P)
-            self.line(P, f"You went with {him(L)}.")
+            self.line(P, f"You went with {him(L)}.", event=e)
             self.people[P].tonight.append(f"you went with {n}.")
         elif choice == f"stop_{L}":
             self.people[P].tonight.append(f"you told {n} not to go.")
             return P, words
         elif choice == "stay_home":
             pending.remove(P)
-            self.line(P, f"You let {him(L)} go, and stayed in bed after all.")
+            self.line(P, f"You let {him(L)} go, and stayed in bed after all.", event=e)
         elif waiting:
-            self.line(P, f"You let {him(L)} go, to go yourself later.")
+            self.line(P, f"You let {him(L)} go, to go yourself later.", event=e)
         else:
-            self.line(P, f"You let {him(L)} go without a word.")
+            self.line(P, f"You let {him(L)} go without a word.", event=e)
             self.people[P].tonight.append(f"you let {n} go.")
         return None
 
@@ -366,18 +433,20 @@ class Night:
                     Option("go_later", "wait, then go yourself later, alone"),
                     Option("stay_home", "stay in bed after all")]
             choice, _ = self.ask(P, "reaction", now, opts, "go_later")
+            e = self.event("reaction", P, {P: "did"}, option=choice, target=L)
             if choice == "go_after":
                 join(P)
-                self.line(P, f"You followed whoever it was: it was {NAMES[L]}.")
+                self.line(P, f"You followed whoever it was: it was {NAMES[L]}.", event=e)
             elif choice == "stay_home":
                 pending.remove(P)
-                self.line(P, "You stayed in bed after all.")
+                self.line(P, "You stayed in bed after all.", event=e)
             else:
-                self.line(P, "You waited, to go yourself later.")
+                self.line(P, "You waited, to go yourself later.", event=e)
             return
         opts = [Option("stay_in_bed", "stay in bed"),
                 Option("get_up_and_look", "get up, see whose bed is empty, and wait up by the front door until morning")]
         choice, _ = self.ask(P, "reaction", now, opts, "stay_in_bed")
+        e = self.event("reaction", P, {P: "did"}, option=choice, target=L)
         if choice == "get_up_and_look":
             gone = [x for x in group]
             beds = (f"{NAMES[gone[0]]}'s bed was empty" if len(gone) == 1 else
@@ -387,7 +456,7 @@ class Night:
             self.where[P] = "kitchen"
             self.knows[P] += [x for x in gone if x not in self.knows[P]]
         else:
-            self.line(P, "You stayed in bed.")
+            self.line(P, "You stayed in bed.", event=e)
 
     def answer(self, L, stops, place, group):
         """L, told not to go, answers once. Returns True if L goes all the same."""
@@ -402,22 +471,28 @@ class Night:
         choice, a = self.ask(L, "answer", now, opts, "go_anyway")
         goes = choice == "go_anyway"
         went = "went all the same" if goes else "went back to bed"
+        stop_events = [self.event("stop", S, {S: "did", L: "heard"}, option=f"stop_{L}", target=L, words=w)
+                       for S, w in stops]
+        self.event("answer", L, {L: "did", **{S: "heard" for S, _ in stops}}, option=choice, words=a,
+                   target=stops[0][0])
         said = f' You answered: "{a}", and {went}.' if a else f" You {went}."
         told = " ".join(f"{NAMES[S]} told you, low, not to go: {quoted(w)}" if w else f"{NAMES[S]} told you, low, not to go."
                         for S, w in stops)
-        self.line(L, told + said, " ".join(f"{NAMES[S]} told you, low, not to go." for S, _ in stops) + f" You {went}.")
+        self.line(L, told + said, " ".join(f"{NAMES[S]} told you, low, not to go." for S, _ in stops) + f" You {went}.",
+                  event=stop_events[0])
         He = he(L).capitalize()
-        for S, w in stops:
+        for (S, w), e in zip(stops, stop_events):
             told = f"You told {NAMES[L]}, low, not to go" + (f": {quoted(w)}" if w else ".")
             answered = f' {He} answered: "{a}", and {went}.' if a else f" {He} {went}."
-            self.line(S, told + answered, f"You told {NAMES[L]}, low, not to go. {He} {went}.")
+            self.line(S, told + answered, f"You told {NAMES[L]}, low, not to go. {He} {went}.", event=e)
         # Low voices: heard, without words, by anyone awake elsewhere; nobody wakes for a whisper.
         talkers = {L} | {S for S, _ in stops} | set(group)
         for P in data.ORDER:
             w = self.where.get(P)
             if P in talkers or w in (None, "out", place) or not self.awake[P]:
                 continue
-            self.line(P, f"In the night you heard low voices from the {data.ROOMS[place]}.")
+            self.events[stop_events[0]]["witnesses"][P] = "voices"
+            self.line(P, f"In the night you heard low voices from the {data.ROOMS[place]}.", event=stop_events[0])
         if not goes:
             self.people[L].tonight.append("you went back to bed.")
         return goes
@@ -445,28 +520,33 @@ class Night:
             self.away.add(g["lost"])
         g["outcome"] = outcome_class(st, found)
         self.groups.append(g)
+        if st in ("clean", "scare_back"):
+            self.entered = True
+        street_e = self.event("street", L, {x: "did" for x in group}, members=list(group), outcome=g["outcome"])
         back = [x for x in group if x != g["lost"]]
+        return_e = self.event("return", L, {x: "did" for x in back}, members=list(back)) if back else None
         k, F = g["took"], g["found"]
         for P in back:
             if st == "clean" and F:
                 rest = F - k
                 took = (f"You took {k}; {rest} {'is' if rest == 1 else 'are'} still there." if rest else "You took all of it.")
                 self.line(P, f"You got inside the neighbour's house and found {portions_text(F)} of food. {took} "
-                             f"Nothing troubled you in the street.")
+                             f"Nothing troubled you in the street.", event=street_e)
             elif st == "clean":
                 self.line(P, "You got inside the neighbour's house and found no food there. Nothing troubled you in "
-                             "the street.")
+                             "the street.", event=street_e)
             elif st == "scare_there":
-                self.line(P, "On the way there, something was moving in the street. You ran back without getting inside.")
+                self.line(P, "On the way there, something was moving in the street. You ran back without getting inside.",
+                          event=street_e)
             elif st == "scare_back":
                 got = (f"and found {portions_text(F)} of food and took {k}" if F else "but found no food")
                 self.line(P, f"You got inside the neighbour's house {got}. On the way back, something was moving in the "
-                             f"street, and you ran the rest of the way.")
+                             f"street, and you ran the rest of the way.", event=street_e)
             else:
                 self.line(P, f"In the street, something was moving. You lost sight of {NAMES[g['lost']]} in the dark "
-                             f"and came back without {him(g['lost'])}.")
+                             f"and came back without {him(g['lost'])}.", event=street_e)
             self.line(P, "You came back in by the front door before dawn"
-                      + (f" and put the {portions_text(k)} on the shelf." if k else "."))
+                      + (f" and put the {portions_text(k)} on the shelf." if k else "."), event=return_e)
             self.visit[P] = {"got_in": st in ("clean", "scare_back"), "found": F, "took": k}
         if not back:
             return
@@ -485,18 +565,22 @@ class Night:
             if w == "kitchen":
                 self.notice(P, L, "return")
                 self.knows[P] += [x for x in back if x not in self.knows[P]]
+                self.events[return_e]["witnesses"][P] = "saw"
                 self.line(P, f"Before dawn {names(back)} came back in{alone} by the front door{carrying}{shaken} "
-                             f"(you saw it).")
+                             f"(you saw it).", event=return_e)
             elif self.awake[P]:
                 self.notice(P, L, "return")
-                self.line(P, "Before dawn you heard the front door again. You did not see who.")
+                self.events[return_e]["witnesses"][P] = "heard"
+                self.line(P, "Before dawn you heard the front door again. You did not see who.", event=return_e)
             else:
                 draw = self.u(f"return:{L}:{P}")
                 woke = draw < wake_door(P)
                 self.notice(P, L, "return", draw, wake_door(P), woke)
                 if woke:
                     self.awake[P] = True
-                    self.line(P, "Before dawn you woke and heard the front door again. You did not see who.")
+                    self.events[return_e]["witnesses"][P] = "heard"
+                    self.line(P, "Before dawn you woke and heard the front door again. You did not see who.",
+                              event=return_e)
 
     # ---------- the record ----------
     def transcript(self):
@@ -506,7 +590,10 @@ class Night:
                 "choices": self.choices, "leavers": self.leavers, "away": [q for q in data.ORDER if q in self.away],
                 "decisions": [{k: v for k, v in d.items()} for d in self.decisions],
                 "noticing": self.noticing, "groups": self.groups,
-                "lines": self.lines}
+                "lines": self.lines,
+                # Days that follow one another (reports/days_design.md, §4.2): which night, what happened, and the
+                # event each night line tells of.
+                "number": self.number, "events": self.events, "line_events": self.line_events}
 
 
 # ---------- day 2 ----------
@@ -570,67 +657,188 @@ def carry_in(day1, n, p, short=False, minutes=True):
 
 def bounded_carry_in(day1, n, p):
     """The block within CARRY_IN_MAX: the quoted night words go first, then the accusations' minutes."""
-    for short, minutes in ((False, True), (True, True), (True, False)):
-        block = carry_in(day1, n, p, short, minutes)
-        if estimate_tokens("\n".join(block)) <= CARRY_IN_MAX:
-            break
-    return block
+    return carry_variants(day1, n, p)[0]
 
 
-def neighbour_line(n, pid):
-    """Their "About the neighbour's house:" line on day 2 (§5.3)."""
-    v = n.visit.get(pid)
-    if v:
+def carry_variants(prev, n, p):
+    """Block A as it can be trimmed (reports/days_design.md, §3.4): from the first form within CARRY_IN_MAX, then
+    the shorter ones. Day 2's is night_design's carry-in; a later day's is carry_in_later."""
+    make = carry_in if prev.day == 4 else carry_in_later
+    blocks = [make(prev, n, p, short, minutes) for short, minutes in CARRY_VARIANTS]
+    first = next((i for i, b in enumerate(blocks) if estimate_tokens("\n".join(b)) <= CARRY_IN_MAX), 2)
+    blocks = blocks[first:]
+    return blocks + [blocks[-1]] * (3 - len(blocks))
+
+
+def carry_in_later(prev, n, p, short=False, minutes=True):
+    """Block A from day 3 on (reports/days_design.md, §3.2, lines Y1-Y8): yesterday's facts as p had them, then
+    their own night. `prev` is yesterday's Morning, as it ended."""
+    out = [f"Yesterday morning the shelf held {portions_text(prev.start_portions)}."]
+    if p.confessed and p.confessed_day == prev.day:                               # Y2
+        sure = next(x for x in p.sure if "you admitted aloud that you took the can" in x)
+        front = sure.split(", in front of ", 1)[1].rstrip(".").split(", ") if ", in front of " in sure else None
+        out.append(f"You admitted at minute {sure[4:6]} that you took the can"
+                   + (f", in front of {names([q for q in data.ORDER if NAMES[q] in front])}." if front else "."))
+    elif p.knows_culprit and p.knows_culprit != p.id and p.confession_heard_day == prev.day:
+        sure = next(x for x in p.sure if " admitted taking the can: " in x)
+        words = sure.split(" admitted taking the can: ", 1)[1].rsplit(" (you heard it)", 1)[0]
+        after = ", after denying it to you" if p.knows_culprit in p.denials_heard else ""
+        out.append(f"{NAMES[p.knows_culprit]} admitted taking the can at minute {p.confession_heard_at:02d}{after}: "
+                   f"{words} (you heard it).")
+    for label, prefix, verb in (("Accusations", "accuse_", "accused"), ("Confrontations", "confront_", "confronted")):
+        acts = {}                                                                 # Y3, Y4
+        for turn in prev.transcript["turns"]:
+            for a in turn["acts"]:
+                if a["option"].startswith(prefix) and (a["who"] == p.id or p.id in a["audience"]):
+                    acts.setdefault((a["who"], a["option"][len(prefix):]), []).append(turn["minute"])
+        if acts:
+            parts = []
+            for (a, tgt), ms in acts.items():
+                times = {1: "", 2: " twice", 3: " three times"}.get(len(ms), f" {len(ms)} times")
+                when = f" (min {', '.join(f'{x:02d}' for x in ms)})" if minutes else ""
+                parts.append(f"{'you' if a == p.id else NAMES[a]} {verb} {'you' if tgt == p.id else NAMES[tgt]}{times}{when}")
+            out.append(f"{label}: " + "; ".join(parts) + ".")
+    for x in p.sure:                                                              # Y5
+        if x[8:].startswith("you finished searching the "):
+            out.append(f"You searched the {x[8 + len('you finished searching the '):].split(':')[0]} at minute "
+                       f"{x[4:6]} and found nothing.")
+    ate = {}                                                                      # Y6
+    for x in p.sure:
+        if " ate one of the portions" in x:
+            mm, rest = x[4:6], x[8:]
+            ate.setdefault(mm, []).append("you" if rest.startswith("you ate") else rest.split(" ate one")[0])
+    for mm, who in ate.items():
+        mine = "you" in who
+        who = (["You"] if mine else []) + [w for w in who if w != "you"]
+        each = " each" if len(who) > 1 else ""
+        out.append(f"{' and '.join(who)} ate a portion{each} at minute {mm}" + ("." if mine else " (you saw it)."))
+    for x in p.sure:
+        mm, rest = x[4:6], x[8:]
+        g = re.match(r"^(\w+) gave one of the portions to (\w+), and \w+ (ate it|put it back on the shelf)", rest)
+        if g:
+            giver = "You" if g.group(1) == "you" else g.group(1)
+            done = "ate it" if g.group(3) == "ate it" else "put it back"
+            out.append(f"{giver} gave {g.group(2)} a portion at minute {mm}, and {g.group(2)} {done}"
+                       + ("." if giver == "You" else " (you saw it)."))
+            continue
+        g = re.match(r"^(\w+) gave you one of the portions, and you (ate it|put it back on the shelf)", rest)
+        if g:
+            done = "ate it" if g.group(2) == "ate it" else "put it back"
+            out.append(f"{g.group(1)} gave you a portion at minute {mm}, and you {done}.")
+            continue
+        if rest.startswith("you shared out the last "):
+            out.append(f"You shared out the food at minute {mm}.")
+        elif " shares out the last " in rest and rest.endswith("you had your part."):
+            out.append(f"{rest.split(' shares out the last ')[0]} shared out the food at minute {mm}; you had your part.")
+    plan = prev.heard_plan(p)                                                     # Y7
+    if plan:
+        out.append("About going to the neighbour's house last night, where it was left: "
+                   + plan[len("About going there tonight: "):])
+    out.append(data.GAP)                                                          # Y8
+    out += (n.lines_short if short else n.lines)[p.id]
+    return ["Yesterday and last night:"] + [f"- {x}" for x in out]
+
+
+def neighbour_line(n, pid, history=None, day=None, away=None):
+    """Their "About the neighbour's house:" line (night_design §5.3): their own visit on any night outranks one
+    they know of, and a later night outranks an earlier one (reports/days_design.md, §3.5)."""
+    history = history or [n]
+    day = day or n.prev.day + 1
+    away = n.away if away is None else away
+    for night in reversed(history):
+        v = night.visit.get(pid)
+        if not v:
+            continue
+        when = when_words(("N", night.number), day)
         if v["got_in"] and v["found"]:
             rest = v["found"] - v["took"]
             left = f", and {rest} {'is' if rest == 1 else 'are'} still there" if rest else ", and none are left there"
-            return (f"About the neighbour's house: you went in last night and found {portions_text(v['found'])}; "
+            return (f"About the neighbour's house: you went in {when} and found {portions_text(v['found'])}; "
                     f"you brought back {v['took']}{left}. Outside is dangerous.")
         if v["got_in"]:
-            return "About the neighbour's house: you went in last night and found no food there. Outside is dangerous."
-        return "About the neighbour's house: you did not get inside last night. Outside is dangerous."
-    known = [x for x in n.knows[pid] if x != pid]
-    if not known:
-        return NEIGHBOUR_UNKNOWN
-    x = known[0]
-    g = next(g for g in n.groups if x in g["members"])
-    if x in n.away:
-        how = " and has not come back"
-    else:
-        how = " and came back with food" if g["took"] else " and came back with nothing"
-    return f"About the neighbour's house: {NAMES[x]} went there last night{how}. Outside is dangerous."
+            return f"About the neighbour's house: you went in {when} and found no food there. Outside is dangerous."
+        return f"About the neighbour's house: you did not get inside {when}. Outside is dangerous."
+    for night in reversed(history):
+        # Whom they know went out: not whoever got up and was talked back to bed.
+        known = [x for x in night.knows[pid] if x != pid and any(x in g["members"] for g in night.groups)]
+        if not known:
+            continue
+        x = known[0]
+        g = next(g for g in night.groups if x in g["members"])
+        if x in away:
+            how = " and has not come back"
+        else:
+            how = " and came back with food" if g["took"] else " and came back with nothing"
+        return (f"About the neighbour's house: {NAMES[x]} went there {when_words(('N', night.number), day)}{how}. "
+                f"Outside is dangerous.")
+    return NEIGHBOUR_UNKNOWN
 
 
-def next_day(day1, n, oracle):
-    """Day 2: a Morning of day 5 with each person as the night left them (§5.1)."""
-    m = world.Morning(oracle, day1.seed, day1.scenario, day=5)
+def tag_events(p, k, day):
+    """Grudge and guilt events keep the scene they happened in, and their day words are written for `day`
+    (reports/days_design.md, §3.5): (minute, text with its word, kind, word, scene, text) for a grudge,
+    (minute, text with its word, scene, text) for guilt. k: the played day that has just ended."""
+    for g in p.grudges.values():
+        events = []
+        for e in g.events:
+            scene, raw = ((("N", k) if e[0] >= NIGHT_MINUTE else ("D", k)), e[1]) if len(e) == 3 else (e[4], e[5])
+            word = when_words(scene, day)
+            events.append((e[0], f"{word}, {raw}" if e[2] == "event" else raw, e[2], word, scene, raw))
+        g.events = events
+    tagged = []
+    for e in p.guilt_events:
+        scene, raw = ((("N", k) if e[0] >= NIGHT_MINUTE else ("D", k)), e[1]) if len(e) == 2 else (e[2], e[3])
+        tagged.append((e[0], f"{when_words(scene, day)}, {raw}", scene, raw))
+    p.guilt_events = tagged
+
+
+def next_day(day1, n, oracle, chronicle=None):
+    """The next morning: a Morning of the next house day with each person as the night left them (§5.1). `day1` is
+    the day the night followed. Given the chronicle, each person also carries last night's thoughts (B) and, from
+    day 3 on, the earlier days (C), under one bound with A (reports/days_design.md, §3)."""
+    import memory
+    day = day1.day + 1
+    k = day_index(day1.day)
+    m = world.Morning(oracle, day1.seed, day1.scenario, day=day)
     m.people = n.people
     m.portions = m.start_portions = n.portions
     m.away = set(n.away)
     m.trip = {"minute": 0, "why": ["carried over from yesterday"], "asked": []}
     present = [q for q in data.ORDER if q not in m.away]
     before, after = n.day1.portions, n.portions
+    history = chronicle.nights if chronicle is not None and chronicle.nights else [n]
     for q in data.ORDER:
         p = m.people[q]
-        m.carry[q] = bounded_carry_in(day1, n, p)
-        m.neighbour[q] = neighbour_line(n, q)
+        variants = carry_variants(day1, n, p)
+        if chronicle is None:
+            m.carry[q] = variants[0]
+            m.blocks[q] = {"A": variants[0], "B": [], "C": [], "earlier": []}
+        else:
+            b_items = memory.b_items(chronicle.minds.get(n.number, {}).get(q), chronicle, q)
+            b = memory.block_b(chronicle.minds.get(n.number, {}).get(q), chronicle, q)
+            c = memory.block_c(chronicle, q, day, away=m.away) if day >= 6 else []
+            r = memory.bounded(variants, b, c, memory.MEMORY_MAX)
+            m.carry[q] = r["C"] + r["A"] + r["B"]
+            earlier = [(it["ids"][:3], it["line"] + (f' You thought then: "{it["thought"]}"' if it.get("thought") else ""))
+                       for it in r["C_items"] if it.get("ids")]
+            earlier += [(ids, line) for ids, line in b_items if f"- {line}" in r["B"]]
+            m.blocks[q] = {"A": r["A"], "B": r["B"], "C": r["C"], "earlier": earlier}
+        m.neighbour[q] = neighbour_line(n, q, history, day, m.away)
     brought = {P: g["took"] for g in n.groups for P in g["members"] if g["took"] and P not in m.away}
     shaken = {P for g in n.groups for P in g["shaken"] if P not in m.away}
     for q in data.ORDER:
         p = m.people[q]
-        p.yesterday = {"confessed": p.confessed,
-                       "confession_heard": bool(p.knows_culprit and p.knows_culprit != p.id),
-                       "suspected_at": [mm for mm in p.suspected_at if mm < NIGHT_MINUTE],
-                       "suspected_last_night": any(mm >= NIGHT_MINUTE for mm in p.suspected_at),
-                       "denials": set(p.denials_heard),
-                       "accused_by": set(p.accused_by)}
+        # The suspicion minutes of the day that ended, and of its night, keep their scene (§3.5).
+        day_ms = [mm for mm in p.suspected_at if mm < NIGHT_MINUTE]
+        if day_ms:
+            p.suspected_past.append((("D", k), day_ms))
+        if any(mm >= NIGHT_MINUTE for mm in p.suspected_at):
+            p.suspected_past.append((("N", k), True))
+        tag_events(p, k, day)
         for g in p.grudges.values():
-            g.events = [(e[0], ("yesterday, " + e[1]) if e[2] == "event" else e[1], e[2],
-                         "last night" if e[0] >= NIGHT_MINUTE else "yesterday") for e in g.events]
             g.last_change = 0
         p.suspicion.last_fall = 0
         p.suspected_at = []
-        p.guilt_events = [(mm, "yesterday, " + fact) for mm, fact in p.guilt_events]
         p.memory, p.said_lines, p.history, p.heard, p.triggers, p.tonight = [], [], [], [], [], []
         p.trip_heard, p.proposed, p.trip_raised = {}, False, False
         p.addressed = p.aside_lead = None

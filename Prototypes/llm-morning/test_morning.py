@@ -208,7 +208,9 @@ class FakeMorningTest(unittest.TestCase):
         story = read(os.path.join(self.dirs.runs, "daniel_ate_it-seed7.md"))
         self.assertIn("## The morning", story)
         self.assertIn("## What was said", story)
-        self.assertLessEqual(meta["api_requests"], 150)
+        # The call cap counts each scene apart (reports/night_design.md, §8; days_design.md, §2.1).
+        for scene in ("day1", "night", "mind1", "day2", "night2", "mind2", "day3"):
+            self.assertLessEqual(meta[scene]["api_requests"], 150, scene)
         self.assertGreater(meta["day1"]["model_decisions"], 0)
         self.assertGreater(meta["day1"]["routine_decisions"], 0)
 
@@ -1181,6 +1183,9 @@ class WitnessScenarioTest(unittest.TestCase):
         daniel = [p for p in self.fake_prompts() if p.startswith("You are Daniel,")]
         self.assertTrue(daniel)
         for p in daniel:
+            # From the second night on, Daniel can himself wake at the front door (reports/days_design.md): those
+            # lines are the night's, not Leo's can.
+            p = "\n".join(x for x in p.split("\n") if "the front door" not in x)
             for words in (NOTE, OLD_NOTE, HEARD, "woke and heard", "wakes and hears", "open a can",
                           "did not see who", "does not see who", "heard someone",
                           "someone in this house took it"):
@@ -1203,13 +1208,16 @@ class WitnessScenarioTest(unittest.TestCase):
                 self.assertEqual(len(lines), 1)
                 self.assertTrue(lines[0].endswith(" " + NOTE), lines[0])
                 self.assertEqual([x for x in p.splitlines() if x.startswith("About the can")], lines)
-                # Day 2's forms say "yesterday", "last night" or "this morning" (reports/night_design.md, §5.3).
+                # Day 2's forms say "yesterday", "last night" or "this morning" (reports/night_design.md, §5.3); day 3's
+                # also "two days ago" and "the night before last" (reports/days_design.md, §3.5).
+                day = r"(yesterday|two days ago|\w+ days ago)"
+                night = r"(last night|the night before last|\w+ nights ago)"
                 self.assertRegex(lines[0][:-len(" " + NOTE)],
                                  r"^About the can(: you have not settled on who took it\."
                                  r"| \([a-z ]+\): you thought \w+ took it, at minutes? [\d, and]+\."
-                                 r"| \([a-z ]+\): you thought \w+ took it(, (and )?(yesterday at minutes? [\d, and]+"
-                                 r"|last night|this morning at minutes? [\d, and]+))*\."
-                                 r"|: \w+ admitted taking it( yesterday,)? at minute \d\d\.)$")
+                                 rf"| \([a-z ]+\): you thought \w+ took it(, (and )?({day} at minutes? [\d, and]+"
+                                 rf"|{night}|this morning at minutes? [\d, and]+))*\."
+                                 rf"|: \w+ admitted taking it( {day},)? at minute \d\d\.)$")
                 for words in ("Daniel eats a can", "you ate it yourself", "On your conscience"):
                     self.assertNotIn(words, p)
             else:
@@ -2230,6 +2238,7 @@ BEDTIME_OPTIONS = ("Your options:\n"
 GAP = "The afternoon and evening passed in the house. Nobody ate."
 CARRY_HEAD = "Yesterday and last night:"
 CARRY_MAX = 360
+MEMORY_HARD = 610           # blocks A, B and C at most, once trimmed (reports/days_design.md, §3.4)
 DAY2_TRIP_IDS = re.compile(r"^(propose_trip|volunteer|still_going|send_\w+|nobody_goes|keep_\w+_home|refuse_to_go)$")
 FATE = re.compile(r"\b(dead|die[sd]?|dying|kill\w*|hurt|wound\w*|blood\w*|corpse|injur\w*|bit(e|ten)|attack\w*|"
                   r"taken)\b", flags=re.I)
@@ -2244,14 +2253,25 @@ class NightScripted:
     first one offered is chosen, with words if it is speech. Otherwise the first option of the
     night (sleep, let them go, stay in bed, go anyway), or `silent` by day."""
 
-    def __init__(self, prefs=None, angry=None):
+    def __init__(self, prefs=None, angry=None, minds=None):
         self.prefs, self.angry = prefs or {}, angry or {}
+        self.minds = minds or {}    # who -> answers to their night-mind prompts, in turn (reports/days_design.md, §2)
         self.requests = 0
         self.prompts = []           # (minute or "night", who, prompt)
+        self.mind_prompts = []      # (who, system, prompt, schema)
 
-    def generate(self, system, prompt):
+    def generate(self, system, prompt, schema=None):
         self.requests += 1
         who = re.match(r"You are (\w+),", prompt).group(1).lower()
+        if schema is not None:      # a night mind: the queued answer, or one memory citing the first record
+            self.mind_prompts.append((who, system, prompt, schema))
+            queue = self.minds.get(who)
+            if queue:
+                answer = queue.pop(0)
+                return answer if isinstance(answer, str) else json.dumps(answer)
+            ids = re.findall(r"^\[([DN]\d+-\d+)\] ", prompt, flags=re.M)
+            return json.dumps({"memories": [{"ids": ids[:1], "meaning": f"A thought of {who}, {self.requests}."}],
+                               "feeling": "tired", "intent": f"Get through it, {who}."})
         m = re.search(r"^Now, minute (\d+)", prompt, flags=re.M)
         where = int(m.group(1)) if m else "night"
         block = prompt.split("Your options:")[-1]
@@ -2281,10 +2301,11 @@ def option_lines(prompt):
 
 
 def without_blocks(prompt):
-    """A day-2 or night prompt without its trip block and its carry-in block."""
+    """A day-2 or night prompt without its trip block and its carry-in block (from day 3 on, the memory blocks A, B
+    and C: reports/days_design.md, §3)."""
     out, skipping = [], False
     for line in prompt.split("\n"):
-        if line == CARRY_HEAD:
+        if line in (CARRY_HEAD, B_HEAD, EARLIER):
             skipping = True
             continue
         if skipping and line.startswith("- "):
@@ -2383,7 +2404,7 @@ class NightTest(unittest.TestCase):
         self.assertIn("\n# The next morning (day 5)\n", story)
         tr = json.loads(read(os.path.join(self.dirs.runs, "daniel_ate_it-seed2.transcript.json")))
         self.assertEqual(tr["day1"], json.loads(json.dumps(day1.transcript)))
-        self.assertEqual(set(tr), {"day1", "night", "day2"})
+        self.assertEqual(set(tr), {"day1", "night", "mind1", "day2", "night2", "mind2", "day3", "chronicle"})
 
     # T2
     def test_t2_the_gap(self):
@@ -2960,14 +2981,17 @@ class NightTest(unittest.TestCase):
             (_, code), out = fake_morning(self.dirs, seed=seed)
             self.assertEqual(code, 0, out)
         for p in cached_prompts(self.dirs):
+            # A second night's prompts carry day 2's blocks; every morning's blocks are bounded together at most at
+            # MEMORY_HARD (reports/days_design.md, §3.4).
             if "\nNow it is night" in p:
                 night_n += 1
                 self.assertLess(estimate_tokens(world.NIGHT_SYSTEM + without_blocks(p)), 1450)
-                self.assertLess(estimate_tokens(world.NIGHT_SYSTEM + p), 1450 + TRIP_BLOCK_MAX)
+                self.assertLess(estimate_tokens(world.NIGHT_SYSTEM + p),
+                                1450 + TRIP_BLOCK_MAX + (MEMORY_HARD if CARRY_HEAD in p else 0))
             elif CARRY_HEAD in p:
                 day2_n += 1
                 self.assertLess(estimate_tokens(SYSTEM + without_blocks(p)), 1450)
-                self.assertLess(estimate_tokens(SYSTEM + p), 1450 + TRIP_BLOCK_MAX + CARRY_MAX)
+                self.assertLess(estimate_tokens(SYSTEM + p), 1450 + TRIP_BLOCK_MAX + MEMORY_HARD)
         self.assertGreater(night_n, 0)
         self.assertGreater(day2_n, 0)
         # The carry-in costs this morning no line.
@@ -2998,7 +3022,8 @@ class NightTest(unittest.TestCase):
         self.assertEqual(meta["night_asks"], len(tr["night"]["decisions"]))
         self.assertEqual(meta["day2_asks"], sum(a["mode"] != "routine" for t in tr["day2"]["turns"] for a in t["acts"]))
         self.assertEqual(meta["day1"]["model_decisions"] + meta["day1"]["fallbacks"] + meta["night_asks"]
-                         + meta["day2_asks"], meta["answers_live"] + meta["answers_from_cache"])
+                         + meta["day2_asks"] + meta["mind1_asks"] + meta["night2_asks"] + meta["mind2_asks"]
+                         + meta["day3_asks"], meta["answers_live"] + meta["answers_from_cache"])
         self.assertEqual(meta["leavers"], tr["night"]["leavers"])
         for key in ("night_asks", "day2_asks", "night_api_requests", "day2_api_requests"):
             self.assertIn(f"{key}: {meta[key]}", out)
@@ -3596,6 +3621,650 @@ class FoodConfrontTest(unittest.TestCase):
 def render_day2_text(day2):
     from story import render_day2
     return render_day2(day2)
+
+
+NIGHT_MIND_TEXT = (
+    "You write the private thoughts of one person in a family at the end of a day, once the night is over. You get who "
+    "they are, what they hold against the others, what stayed with them from earlier days, and every thing they did, "
+    "saw or heard today and tonight, each with an id. Nothing else happened. `memories` holds one to three things from "
+    "these that they will carry: for each, `ids` lists the one to three ids it is about, and `meaning` is one sentence "
+    "of their own thought about it, as they see it, in their own voice. A meaning may judge, excuse, blame, forgive or "
+    "doubt, as this person would, but it must not add anything that happened beyond the records: no other event, no "
+    "number, no quotation that is not in the records, and no word for when (today, tonight, yesterday, tomorrow). "
+    "`feeling` names how the day leaves them, in one to three words. `intent` is what they mean to do tomorrow, in one "
+    "sentence, as they would think it. Reply with JSON only: {\"memories\": [{\"ids\": [\"<id>\"], \"meaning\": "
+    "\"<sentence>\"}], \"feeling\": \"<words>\", \"intent\": \"<sentence>\"}")
+MIND_END = "The night is over. What does today leave in you?"
+MIND_RECORDS = "What you did, saw and heard today and tonight, in order (each with its id):"
+EARLIER = "What stays with you from earlier days:"
+B_HEAD = "What yesterday left in you (your own thoughts, last night):"
+RECORD_LINE = re.compile(r"^\[([DN]\d+-\d+)\] (min \d\d|tonight): ")
+WITNESS_MODES = {"did", "saw", "heard", "voices", "knew"}
+EVENT_KEYS = {"id", "scene", "minute", "kind", "option", "actor", "target", "members", "words", "room", "witnesses",
+              "text", "gist", "group", "effects", "views", "outcome"}
+
+
+def mind_answer(ids, meaning, feeling="tired", intent="Keep watch over them."):
+    return json.dumps({"memories": [{"ids": ids, "meaning": meaning}], "feeling": feeling, "intent": intent})
+
+
+class DaysTest(unittest.TestCase):
+    """Days that follow one another: the night mind, the chronicle, the memory blocks and the second night and third
+    morning (reports/days_design.md, tests N-T1 to N-T14 of §7.1, and the amendment to §3.3's table)."""
+
+    setUp_ = NightTest.setUp
+    tearDown = NightTest.tearDown
+    path = NightTest.path
+    v11_day1 = NightTest.v11_day1
+    short_day1 = NightTest.short_day1
+    night_of = NightTest.night_of
+    act = NightTest.act
+
+    def setUp(self):
+        self.setUp_()
+        self.chron = importlib.import_module("chronicle")
+        self.mind = importlib.import_module("mind")
+        self.memory = importlib.import_module("memory")
+
+    def three_days(self, seed=2, client=None, draws1=None, draws2=None, day2_turns=1, day2_food=never, prefs2=None):
+        """Day 1 of seed N from v11's answers, then night 1, mind 1, a short day 2, night 2, mind 2 and day 3 (not
+        played), all answered by `client`. prefs2 replaces the client's preferences before night 2."""
+        client = client or NightScripted()
+        day1, oracle = self.v11_day1(seed, client)
+        chron = self.chron.Chronicle(seed, day1.culprit)
+        chron.add_day(day1)
+        n1 = self.night.Night(day1, oracle, draws=draws1 or {}).run()
+        chron.add_night(n1)
+        self.mind.NightMind(n1, chron, oracle).run()
+        day2 = Morning.next_day(day1, n1, oracle, chronicle=chron)
+        day2.food_draw = day2_food
+        for t in range(day2_turns):
+            day2.turn(t)
+        day2.finish()
+        chron.add_day(day2)
+        if prefs2 is not None:
+            client.prefs = prefs2
+        n2 = self.night.Night(day2, oracle, draws=draws2 or {}, number=2, house=chron.house_state()).run()
+        chron.add_night(n2)
+        self.mind.NightMind(n2, chron, oracle).run()
+        day3 = Morning.next_day(day2, n2, oracle, chronicle=chron)
+        return type("Days", (), dict(day1=day1, n1=n1, day2=day2, n2=n2, day3=day3, chron=chron, client=client,
+                                     oracle=oracle))
+
+    def handmade(self, events, culprit="daniel"):
+        """A chronicle written by hand: each event a dict, with defaults filled by Chronicle.add."""
+        c = self.chron.Chronicle(1, culprit)
+        for e in events:
+            c.add(e)
+        return c
+
+    # N-T1
+    def test_n_t1_day1_replays_and_the_chronicle_leaves_it_alone(self):
+        for seed, served in V11_SERVED.items():
+            name = f"daniel_ate_it-seed{seed}"
+            day1, oracle = self.v11_day1(seed)
+            chron = self.chron.Chronicle(seed, day1.culprit)
+            chron.add_day(day1)
+            text = render(day1, seed, V6_MODEL, f"python morning.py --seed {seed}")
+            self.assertEqual(text.encode("utf-8"), read(os.path.join(V11_RUNS, name + ".md"), "rb"), seed)
+            self.assertEqual(json.loads(json.dumps(day1.transcript)),
+                             json.loads(read(os.path.join(V11_RUNS, name + ".transcript.json"))), seed)
+            self.assertEqual((oracle.from_cache, oracle.api_requests), (served, 0), seed)
+            self.assertTrue(chron.events and all(e["scene"] == "D1" for e in chron.events), seed)
+
+    # N-T2
+    def test_n_t2_the_cycle(self):
+        (meta, code), out = fake_morning(self.dirs, seed=1)
+        self.assertEqual(code, 0, out)
+        tr = json.loads(read(os.path.join(self.dirs.runs, "daniel_ate_it-seed1.transcript.json")))
+        self.assertEqual(set(tr), {"day1", "night", "mind1", "day2", "night2", "mind2", "day3", "chronicle"})
+        self.assertEqual([s["id"] for s in tr["chronicle"]["scenes"]], ["D1", "G1", "N1", "D2", "G2", "N2", "D3"])
+        self.assertEqual(len(tr["day3"]["turns"]), 30)
+        story = read(os.path.join(self.dirs.runs, "daniel_ate_it-seed1.md"))
+        heads = ["# The night\n", "## What the night left in them\n", "# The next morning (day 5)\n",
+                 "# The second night\n", "## What the night left in them\n", "# The third morning (day 6)\n"]
+        at = 0
+        for h in heads:
+            at = story.index(h, at) + 1
+        self.assertNotIn("# The third night", story)
+        for key in ("night1_asks", "mind1_asks", "day2_asks", "night2_asks", "mind2_asks", "day3_asks"):
+            self.assertIn(key, meta)
+        # Hunger over gap 2 and night 2; day 3 is a Morning of day 6 with the trip open from minute 00.
+        d = self.three_days(seed=2)
+        for pid in data.ORDER:
+            rate = data.PEOPLE[pid]["hunger_rate"]
+            bed = min(1.0, d.day2.people[pid].hunger + 0.3 * rate)
+            self.assertAlmostEqual(d.n2.bedtime_hunger[pid], bed, places=9, msg=pid)
+            self.assertAlmostEqual(d.day3.people[pid].hunger, min(1.0, bed + 0.1 * rate), places=9, msg=pid)
+        self.assertEqual(d.day3.day, 6)
+        self.assertEqual(d.day3.trip, {"minute": 0, "why": ["carried over from yesterday"], "asked": []})
+        self.assertEqual(d.n2.number, 2)
+
+    # N-T3
+    def test_n_t3_the_night_minds_prompt_exactly(self):
+        self.assertEqual(self.mind.NIGHT_MIND_SYSTEM, NIGHT_MIND_TEXT)
+        d = self.three_days(seed=2)
+        night1 = [x for x in d.client.mind_prompts if "[N1-" in x[2] and "[N2-" not in x[2]]
+        self.assertEqual([w for w, *_ in night1], data.ORDER)
+        who, system, prompt, schema = next(x for x in night1 if x[0] == "leo")
+        self.assertEqual(system, NIGHT_MIND_TEXT)
+        lines = prompt.split("\n")
+        self.assertEqual(lines[0], "You are Leo, 21, the younger son of the family (Elena, 42, the mother; Daniel, 25; "
+                                   "Leo, 21; Mara, 17).")
+        for i, start in enumerate(("How you address them: ", "Who you are: ", "Temperament: ", "What matters to you: ",
+                                   "Your body: ", "About the can: Daniel admitted taking it at minute 33.")):
+            self.assertTrue(lines[1 + i].startswith(start), lines[1 + i])
+        for gone in ("About food:", "About the neighbour's house:", "About going there tonight:"):
+            self.assertFalse([x for x in lines if x.startswith(gone)], gone)
+        at = lines.index(EARLIER + " nothing yet.")
+        self.assertEqual(lines[at + 1], MIND_RECORDS)
+        self.assertEqual(lines[-1], MIND_END)
+        records = lines[at + 2:-1]
+        self.assertTrue(records and all(RECORD_LINE.match(x) for x in records), records)
+        ids = [RECORD_LINE.match(x).group(1) for x in records]
+        self.assertEqual(ids, sorted(ids, key=lambda i: (i[0] == "N", int(i[1:].split("-")[0]), int(i.split("-")[1]))))
+        self.assertEqual(records[0], "[D1-001] min 00: Elena counts the pantry with everyone standing there. She finds one "
+                                     "can fewer than she expected and says so. 2 portions are left. (you saw it)")
+        # R1 and R7: Daniel's three accusations of Leo, folded into the first.
+        self.assertTrue([x for x in records if re.match(r'^\[D1-\d{3}\] min 03: Daniel accuses you of taking it: ".+" '
+                                                        r'Then 2 more times, to min 12; last: ".+"$', x)], records)
+        # R2: Leo's own words, with the feeling he gave.
+        self.assertTrue([x for x in records if re.match(r'^\[D1-\d{3}\] min \d\d: you [^"]+, saying: ".+"', x)], records)
+        # R3: an act seen, one record, from the pinned line; a confession heard, with its words.
+        self.assertTrue([x for x in records if "min 54: Mara ate one of the portions (you saw it)" in x])
+        self.assertEqual(sum("Mara ate one of the portions" in x or "Mara says to everyone, while eating" in x
+                             for x in records), 1)
+        self.assertIn("min 33: Daniel admitted taking the can: \"I took it in the night, I'm sorry.\" (you heard it)",
+                      "\n".join(records))
+        # R5: the night, in the night's own words.
+        self.assertRegex(records[-1], r"^\[N1-\d\d\] tonight: You went to bed in the brothers room with Daniel\. "
+                                      r"You went to sleep\.$")
+        enum = schema["properties"]["memories"]["items"]["properties"]["ids"]["items"]["enum"]
+        self.assertEqual(enum, ids)
+        # Night 2: the earlier days are B of day 2, each line with its ids.
+        who, _, prompt2, schema2 = next(x for x in d.client.mind_prompts if x[0] == "leo" and "[N2-" in x[2])
+        lines2 = prompt2.split("\n")
+        at = lines2.index(EARLIER)
+        self.assertTrue(lines2[at + 1].startswith("- [D1-"), lines2[at + 1])
+        self.assertIn('A thought of leo', lines2[at + 1])
+        shown = re.findall(r"\[([DN]\d+-\d+)", "\n".join(lines2[at:]))
+        self.assertEqual(schema2["properties"]["memories"]["items"]["properties"]["ids"]["items"]["enum"],
+                         list(dict.fromkeys(shown)))
+        # R8: at most 1,600 tokens of records; reassurances lose their words first, never the night's or a confession.
+        many = [(f"D1-{i:03d}", f'min 03: Elena reassures you: "{"so very long words " * 12}"') for i in range(1, 60)]
+        many += [("D1-060", 'min 33: Daniel admitted taking the can: "I took it in the night." (you heard it)'),
+                 ("N1-01", 'tonight: Leo told you, low, not to go: "Do not go." You answered: "I must.", and went all '
+                           'the same.')]
+        bounded = self.mind.bound_records(many)
+        self.assertLessEqual(estimate_tokens("\n".join(f"[{i}] {x}" for i, x in bounded)), self.mind.RECORDS_MAX)
+        self.assertEqual(bounded[-2:], many[-2:])
+        self.assertEqual(bounded[0][1], "min 03: Elena reassures you.")
+
+    # N-T4
+    def test_n_t4_records_hold_only_what_was_perceived(self):
+        (meta, code), out = fake_morning(self.dirs, seed=3)
+        self.assertEqual(code, 0, out)
+        tr = json.loads(read(os.path.join(self.dirs.runs, "daniel_ate_it-seed3.transcript.json")))
+        events = {e["id"]: e for e in tr["chronicle"]["events"]}
+        minds = [p for p in cached_prompts(self.dirs) if p.endswith(MIND_END)]
+        self.assertTrue(minds)
+        for prompt in minds:
+            who = re.match(r"You are (\w+),", prompt).group(1).lower()
+            for line in prompt.split("\n"):
+                m = re.match(r"^\[([DN]\d+-\d+)\] ", line)
+                if m:
+                    self.assertIn(who, events[m.group(1)]["witnesses"], line)
+                if "Voices from the" in line:
+                    self.assertNotIn('"', line)
+        # By day: whoever saw an act was in its room when the turn began; nobody hears into or out of the bathroom.
+        for scene in ("day1", "day2", "day3"):
+            k = scene[-1]
+            for turn in tr[scene]["turns"]:
+                for a in turn["acts"]:
+                    e = next((e for e in events.values() if e["scene"] == f"D{k}" and e["minute"] == turn["minute"]
+                              and e["actor"] == a["who"] and e["option"] == a["option"]), None)
+                    if e is None:
+                        continue
+                    for w, how in e["witnesses"].items():
+                        self.assertIn(how, WITNESS_MODES)
+                        if how == "saw" and e["kind"] not in ("go", "aside", "accept_aside"):   # arrivals are seen
+                            self.assertIn(w, turn["rooms"][a["room"]] + [a["who"]], (scene, e["id"]))
+                        if how == "voices":
+                            self.assertNotEqual(a["room"], "bathroom", e["id"])
+
+    # N-T5
+    def test_n_t5_the_checks(self):
+        c = self.handmade([
+            {"id": "D1-001", "scene": "D1", "minute": 3, "kind": "accuse", "option": "accuse_leo", "actor": "daniel",
+             "target": "leo", "words": "You took it, Leo.", "witnesses": {p: "saw" for p in data.ORDER} | {"daniel": "did"}},
+            {"id": "D1-002", "scene": "D1", "minute": 9, "kind": "accuse", "option": "accuse_leo", "actor": "daniel",
+             "target": "leo", "words": "It was you.", "witnesses": {p: "saw" for p in data.ORDER} | {"daniel": "did"}},
+            {"id": "D1-003", "scene": "D1", "minute": 21, "kind": "eat", "option": "eat", "actor": "mara",
+             "witnesses": {p: "saw" for p in data.ORDER} | {"mara": "did"}},
+            {"id": "D1-004", "scene": "D1", "minute": 30, "kind": "eat", "option": "eat", "actor": "leo",
+             "witnesses": {p: "saw" for p in data.ORDER} | {"leo": "did"}},
+            {"id": "D1-005", "scene": "D1", "minute": 30, "kind": "deny", "option": "deny", "actor": "leo",
+             "words": "I did not.", "witnesses": {p: "saw" for p in data.ORDER} | {"leo": "did"}},
+            {"id": "D1-006", "scene": "D1", "minute": 33, "kind": "confess", "option": "confess", "actor": "daniel",
+             "words": "I took it in the night, I'm sorry.", "witnesses": {p: "saw" for p in data.ORDER} | {"daniel": "did"}},
+            {"id": "N1-01", "scene": "N1", "minute": 90, "kind": "bedtime", "option": "go_next_door", "actor": "daniel",
+             "witnesses": {"daniel": "did"}},
+            {"id": "N1-02", "scene": "N1", "minute": 90, "kind": "stop", "option": "stop_daniel", "actor": "leo",
+             "target": "daniel", "words": "Daniel, stop, you are not going out there tonight.",
+             "witnesses": {"leo": "did", "daniel": "heard"}},
+            {"id": "N1-03", "scene": "N1", "minute": 90, "kind": "went_out", "actor": "daniel", "members": ["daniel"],
+             "witnesses": {"daniel": "did", "leo": "knew"}},
+        ])
+        shown = {i: f"text of {i}" for i in ("D1-001", "D1-002", "D1-003", "D1-004", "D1-005", "D1-006", "N1-02", "N1-03")}
+        shown["D1-006"] = "min 33: Daniel admitted taking the can: \"I took it in the night, I'm sorry.\" (you heard it)"
+
+        def verdict(pid, ids, meaning, carried=(), shown_ids=shown):
+            r = self.mind.check_answer(mind_answer(ids, meaning), pid, shown_ids, c, carried)
+            return r["memories"][0]["verdict"]
+        # §2.7's five examples.
+        self.assertEqual(verdict("daniel", ["N1-02"], "Leo had no right to stop me when I was the only one willing to "
+                                                     "act."), "kept")
+        self.assertTrue(verdict("mara", ["D1-004", "D1-005"], "Leo ate mine too and lied to my face about it.")
+                        .startswith("rejected: S8"))
+        self.assertTrue(verdict("leo", ["D1-006"], "Daniel never admitted anything until he was cornered.")
+                        .startswith("rejected: S8"))
+        self.assertEqual(verdict("mara", ["D1-006"], "If Daniel had gone out instead of eating, we might have food."),
+                         "kept")
+        self.assertEqual(verdict("mara", ["D1-003"], "He hid food in his bag."), "kept")
+        # One failing case for each check.
+        cases = [
+            ([], "He blamed me.", "S1"),
+            (["D1-001", "D1-002", "D1-003", "D1-004"], "He blamed me.", "S1"),
+            (["D1-001"], " ".join(["word"] * 31) + ".", "S1"),
+            (["D1-001"], "He lied. He knew.", "S1"),
+            (["D1-999"], "He blamed me.", "S2"),
+            (["N1-01"], "He went to bed.", "S2"),
+            (["D1-003"], "Mara ate two portions.", "S3"),
+            (["D1-001"], "Mom never trusted me.", "S4"),
+            (["D1-001"], "Tonight I saw who he really is.", "S5"),
+            (["D1-006"], 'Daniel said "I will fix everything" and smiled.', "S6"),
+            (["D1-006"], "Daniel probably hid bread somewhere.", "S7"),
+            (["D1-003"], "Mara stole the can.", "S8"),
+            (["D1-003"], "Mara ate again.", "S8"),
+        ]
+        for ids, meaning, check in cases:
+            got = verdict("leo", ids, meaning, shown_ids={**shown, "N1-01": "x"} if "N1-01" in ids else shown)
+            self.assertTrue(got.startswith(f"rejected: {check}"), (meaning, got))
+        self.assertEqual(verdict("leo", ["D1-001", "D1-002"], "Daniel accused me again."), "kept")
+        self.assertEqual(verdict("leo", ["D1-001"], "Daniel would have let me take the blame."), "kept")
+        self.assertEqual(verdict("leo", ["D1-006"], 'Daniel said "I took it in the night" at last.'), "kept")
+        self.assertTrue(verdict("leo", ["D1-001"], "Daniel let me take the blame.",
+                                carried=["Daniel let me take the blame."]).startswith("rejected: S9"))
+        # Feeling and intent; a fourth memory is dropped unread; an answer that is not usable carries nothing.
+        r = self.mind.check_answer(json.dumps({"memories": [{"ids": ["D1-001"], "meaning": "He blamed me."}] * 4,
+                                               "feeling": "very very tired and sad", "intent": "Find bread for Mara."}),
+                                   "leo", shown, c, ())
+        self.assertEqual(len(r["memories"]), 3)
+        self.assertEqual(r["memories"][0]["verdict"], "kept")
+        self.assertTrue(r["memories"][1]["verdict"].startswith("rejected: S9"))
+        self.assertTrue(r["feeling_verdict"].startswith("rejected"))
+        self.assertTrue(r["intent_verdict"].startswith("rejected: S7"))
+        self.assertEqual([m["meaning"] for m in r["kept"]], ["He blamed me."])
+        r = self.mind.check_answer("not json", "leo", shown, c, ())
+        self.assertEqual((r["mode"], r["kept"], r["feeling"], r["intent"]), ("fallback", [], None, None))
+
+    # N-T6
+    def test_n_t6_the_blocks_exactly(self):
+        # A on day 2 is v13's carry-in, byte for byte; B follows it.
+        client = NightScripted()
+        day1, oracle = self.v11_day1(3, client)
+        n = self.night.Night(day1, oracle).run()
+        plain = Morning.next_day(day1, n, oracle)
+        d = self.three_days(seed=3)
+        for p in data.ORDER:
+            self.assertEqual(d.day2.carry[p][:len(plain.carry[p])], plain.carry[p], p)
+            self.assertEqual(d.day2.carry[p][len(plain.carry[p])], B_HEAD, p)
+        # A on day 3: yesterday's facts by the Y lines, then the night.
+        d = self.three_days(seed=2, client=NightScripted({"mara": ["confront_daniel"], "leo": ["eat"]}))
+        a = d.day3.blocks["mara"]["A"]
+        self.assertEqual(a, [CARRY_HEAD,
+                             "- Yesterday morning the shelf held 1 portion.",
+                             "- Confrontations: you confronted Daniel (min 00).",
+                             "- Leo ate a portion at minute 00 (you saw it).",
+                             "- " + GAP,
+                             "- Last night you slept in the back room with Elena. You went to sleep."])
+        # B, written around the night mind's words.
+        c = self.handmade([{"id": "D1-001", "scene": "D1", "minute": 33, "kind": "confess", "option": "confess",
+                            "actor": "daniel", "witnesses": {"daniel": "did", "leo": "saw"}}])
+        b = self.memory.block_b({"kept": [{"ids": ["D1-001"], "meaning": "He let me take the blame."}],
+                                 "feeling": "bitter", "intent": "Make him answer for it."}, c, "leo")
+        self.assertEqual(b, [B_HEAD, '- About Daniel admitting taking the can: "He let me take the blame."',
+                             '- You meant to: "Make him answer for it."', "- How it left you: bitter."])
+        # C: one line per person by weight, older on a tie, the night's words, one older thought per line.
+        everyone = {p: "saw" for p in data.ORDER}
+        events = [
+            {"id": "D1-001", "scene": "D1", "minute": 3, "kind": "accuse", "option": "accuse_leo", "actor": "daniel",
+             "target": "leo", "witnesses": everyone | {"daniel": "did"}},
+            {"id": "D1-002", "scene": "D1", "minute": 3, "kind": "reassure", "option": "reassure_leo", "actor": "elena",
+             "target": "leo", "witnesses": everyone | {"elena": "did"}},
+            {"id": "D1-003", "scene": "D1", "minute": 9, "kind": "accuse", "option": "accuse_leo", "actor": "daniel",
+             "target": "leo", "witnesses": everyone | {"daniel": "did"}},
+            {"id": "D1-004", "scene": "D1", "minute": 21, "kind": "eat", "option": "eat", "actor": "mara",
+             "witnesses": everyone | {"mara": "did"}},
+            {"id": "D1-005", "scene": "D1", "minute": 30, "kind": "give", "option": "give_leo", "actor": "elena",
+             "target": "leo", "witnesses": everyone | {"elena": "did"}},
+            {"id": "D1-006", "scene": "D1", "minute": 33, "kind": "confess", "option": "confess", "actor": "daniel",
+             "witnesses": everyone | {"daniel": "did"}},
+            {"id": "D1-007", "scene": "D1", "minute": 36, "kind": "accuse", "option": "accuse_mara", "actor": "elena",
+             "target": "mara", "witnesses": everyone | {"elena": "did"}},
+            {"id": "N1-01", "scene": "N1", "minute": 90, "kind": "stop", "option": "stop_daniel", "actor": "leo",
+             "target": "daniel", "witnesses": {"leo": "did", "daniel": "heard"}},
+            {"id": "D2-001", "scene": "D2", "minute": 0, "kind": "eat", "option": "eat", "actor": "daniel",
+             "witnesses": everyone | {"daniel": "did"}},
+        ]
+        c = self.handmade(events)
+        c.minds[1] = {"leo": {"kept": [{"ids": ["D1-006"], "meaning": "He let me take the blame."},
+                                        {"ids": ["D1-006"], "meaning": "He only spoke when cornered."}]}}
+        lines = [x[2:] for x in self.memory.render_c(self.memory.block_c(c, "leo", 6))[1:]]
+        self.assertEqual(lines, ['Two days ago, Daniel admitted taking the can, after accusing you of it. You thought '
+                                 'then: "He only spoke when cornered."',
+                                 "Two days ago, Elena reassured you.",
+                                 "The night before last, you told Daniel, low, not to go.",
+                                 "Two days ago, Mara ate a portion in front of you."])
+        # Without the confession: the can is a standing line, and the accusations are counted.
+        c = self.handmade([e for e in events if e["id"] != "D1-006"])
+        lines = [x["line"] for x in self.memory.block_c(c, "leo", 6)]
+        self.assertEqual(lines[:2], ["Two days ago Elena counted the pantry and found one can fewer than she expected. "
+                                     "Nobody has admitted taking it.",
+                                     "Two days ago, Daniel accused you of taking the can twice, and you had not."])
+        # Someone not back is a standing line.
+        c = self.handmade(events + [{"id": "N1-02", "scene": "N1", "minute": 90, "kind": "went_out", "actor": "mara",
+                                     "members": ["mara"], "witnesses": {"mara": "did", "leo": "knew"}}])
+        lines = [x["line"] for x in self.memory.block_c(c, "leo", 6, away={"mara"})]
+        self.assertEqual(lines[0], "Mara went out the night before last and has not come back.")
+        self.assertFalse([x for x in lines[1:] if x.startswith("Two days ago, Mara")])
+
+    # N-T7
+    def test_n_t7_the_bound(self):
+        M = self.memory
+        self.assertEqual(M.MEMORY_MAX, 560)
+        a = [[CARRY_HEAD] + [f'- line {i}: "{"quoted words " * 6}" (min 01, 02, 03)' for i in range(9)],
+             [CARRY_HEAD] + [f"- line {i}. (min 01, 02, 03)" for i in range(9)],
+             [CARRY_HEAD] + [f"- line {i}." for i in range(9)]]
+        b = [B_HEAD, '- About Daniel eating a portion: "' + "word " * 25 + '"', '- You meant to: "' + "word " * 25 + '"',
+             "- How it left you: bitter."]
+        c = [{"line": "Two days ago Elena counted the pantry. Nobody has admitted taking it.", "weight": 9,
+              "standing": True, "thought": None, "self": False, "order": 0},
+             {"line": "Two days ago, Daniel admitted taking the can.", "weight": 5, "standing": False,
+              "thought": "He only spoke when cornered and never once said sorry to any of us at all.",
+              "self": False, "order": 1},
+             {"line": "Two days ago, Elena reassured you.", "weight": 3, "standing": False, "thought": None,
+              "self": False, "order": 2},
+             {"line": "Two days ago, you ate a portion in front of the others.", "weight": 4, "standing": False,
+              "thought": None, "self": True, "order": 3}]
+        full = M.bounded(a, b, c, 10 ** 6)
+        size = lambda r: estimate_tokens("\n".join(r["C"] + r["A"] + r["B"]))
+        steps = []
+        cap = size(full)
+        while True:
+            r = M.bounded(a, b, c, cap - 1)
+            if size(r) >= cap:
+                break
+            steps.append(r)
+            cap = size(r)
+        trail = [(r["A"] == a[0], r["A"] == a[1], r["A"] == a[2], any("You thought then" in x for x in r["C"]),
+                  len(r["C"]), "- How it left you: bitter." in r["B"], any("You meant to" in x for x in r["B"]))
+                 for r in steps]
+        self.assertEqual(trail, [(False, True, False, True, 5, True, True),        # 1. A's quoted words
+                                 (False, False, True, True, 5, True, True),        # 2. A's minutes
+                                 (False, False, True, False, 5, True, True),       # 3. the older thought
+                                 (False, False, True, False, 4, True, True),       # 4. lowest weight: Elena's line
+                                 (False, False, True, False, 3, True, True),       # 5. then the self line (weight 4)
+                                 (False, False, True, False, 2, True, True),       # 6. then Daniel's (weight 5)
+                                 (False, False, True, False, 2, False, True),      # 7. B's feeling
+                                 (False, False, True, False, 2, False, False)])    # 8. B's intent
+        last = M.bounded(a, b, c, 0)
+        self.assertIn("- Two days ago Elena counted the pantry. Nobody has admitted taking it.", last["C"])
+        self.assertIn(b[1], last["B"])
+        # Thirty days of everything: C keeps at most 6 lines, the blocks at most 610, the prompt at most 2,420.
+        events, kinds = [], [("accuse", "accuse_leo", "leo"), ("eat", "eat", None), ("reassure", "reassure_leo", "leo"),
+                             ("sit", "sit_leo", "leo"), ("confront", "confront_leo", "leo"), ("give", "give_leo", "leo")]
+        for day in range(1, 31):
+            for i, (kind, option, target) in enumerate(kinds):
+                for actor in ("daniel", "elena", "mara", "leo"):
+                    if actor == target:
+                        continue
+                    events.append({"id": f"D{day}-{len(events) + 1:03d}", "scene": f"D{day}", "minute": 3 * i,
+                                   "kind": kind, "option": option, "actor": actor, "target": target,
+                                   "witnesses": {p: "saw" for p in data.ORDER} | {actor: "did"}})
+            events.append({"id": f"N{day}-01", "scene": f"N{day}", "minute": 90, "kind": "went_out", "actor": "daniel",
+                           "members": ["daniel"], "witnesses": {"daniel": "did", "leo": "knew"}})
+        c = self.handmade(events)
+        items = M.block_c(c, "leo", 3 + 33)
+        self.assertLessEqual(len(items), 6)
+        big_a = [CARRY_HEAD] + [f"- {'fact ' * 20}{i}." for i in range(12)]
+        big_a = [big_a[:1 + 11]] * 3
+        self.assertGreater(estimate_tokens("\n".join(big_a[0])), 300)
+        big_b = [B_HEAD] + [f'- About Daniel eating a portion: "{"word " * 29}end."'] * 3 + \
+                [f'- You meant to: "{"word " * 29}end."', "- How it left you: very tired."]
+        r = M.bounded(big_a, big_b, items, M.MEMORY_MAX)
+        self.assertLessEqual(estimate_tokens("\n".join(r["C"] + r["A"] + r["B"])), 610)
+        d = self.three_days(seed=2)
+        leo = d.day3.people["leo"]
+        d.day3.carry["leo"] = r["C"] + r["A"] + r["B"]
+        leo.memory += [(0, f"filler line number {i} " + "about nothing much at all " * 12) for i in range(200)]
+        self.assertLessEqual(estimate_tokens(SYSTEM + d.day3.prompt_for(leo, 0, d.day3.options_for(leo))), 2420)
+
+    # N-T8
+    def test_n_t8_day_words(self):
+        w = world.when_words
+        self.assertEqual([w(s, 6) for s in (("D", 2), ("N", 2), ("D", 1), ("N", 1))],
+                         ["yesterday", "last night", "two days ago", "the night before last"])
+        self.assertEqual([w(s, 7) for s in (("D", 1), ("N", 1), ("D", 2), ("N", 2))],
+                         ["three days ago", "three nights ago", "two days ago", "the night before last"])
+        d = self.three_days(seed=2, client=NightScripted({"daniel": ["go_next_door"]}, angry={"leo": "Daniel"}),
+                            draws1={**QUIET, "house": 0.1}, prefs2={})
+        leo, dan = d.day3.people["leo"], d.day3.people["daniel"]
+        text = d.day3.prompt_for(leo, 0, d.day3.options_for(leo))
+        self.assertIn("About the can: Daniel admitted taking it two days ago, at minute 33.", text)
+        self.assertIn("Against Daniel (a lot): two days ago, Daniel accused you of taking the can at minute", text)
+        self.assertRegex(text, r"you were angry with Daniel two days ago at minutes? ")
+        self.assertNotIn("yesterday, yesterday", text)
+        for p in d.day3.people.values():
+            for g in p.grudges.values():
+                for e in g.events:
+                    self.assertFalse(e[1].startswith(("yesterday, yesterday", "two days ago, yesterday")), e)
+        lines = d.day3.inside_lines(dan)
+        self.assertIn("About the can: you ate it yourself, and you admitted it two days ago.", lines)
+        self.assertIn("About the neighbour's house: you went in the night before last and found no food there. Outside is "
+                      "dangerous.", lines)
+        conscience = next(x for x in lines if x.startswith("On your conscience"))
+        self.assertIn("two days ago, you accused Leo of what you did, at minute 03", conscience)
+        # Suspicion minutes keep the day they were named on.
+        mara = d.day3.people["mara"]
+        mara.knows_culprit, mara.confessed = None, False
+        mara.suspicion.target, mara.suspicion.strength = "leo", 1
+        mara.suspected_past = [(("D", 1), [3]), (("N", 2), True)]
+        mara.suspected_at = [3]
+        about = next(x for x in d.day3.inside_lines(mara) if x.startswith("About the can"))
+        self.assertEqual(about, "About the can (a little): you thought Leo took it, two days ago at minute 03, and last "
+                                "night, and this morning at minute 03.")
+
+    # N-T9
+    def test_n_t9_the_chronicle(self):
+        (meta, code), out = fake_morning(self.dirs, seed=1)
+        self.assertEqual(code, 0, out)
+        tr = json.loads(read(os.path.join(self.dirs.runs, "daniel_ate_it-seed1.transcript.json")))
+        ch = tr["chronicle"]
+        for e in ch["events"]:
+            self.assertLessEqual(set(e), EVENT_KEYS, e)
+            self.assertTrue(set(e["witnesses"].values()) <= WITNESS_MODES, e)
+        ids = [e["id"] for e in ch["events"]]
+        self.assertEqual(len(ids), len(set(ids)))
+        # Every model act that is not silence is an event of its day, with its actor as `did`.
+        for k, scene in ((1, "day1"), (2, "day2"), (3, "day3")):
+            for turn in tr[scene]["turns"]:
+                for a in turn["acts"]:
+                    if a["mode"] != "model" or a["option"] == "silent":
+                        continue
+                    e = [e for e in ch["events"] if e["scene"] == f"D{k}" and e["minute"] == turn["minute"]
+                         and e["actor"] == a["who"] and e["option"] == a["option"]]
+                    self.assertEqual(len(e), 1, (scene, turn["minute"], a["who"], a["option"]))
+                    self.assertEqual(e[0]["witnesses"][a["who"]], "did")
+        # Run again: the same chronicle, byte for byte.
+        dirs = Dirs()
+        try:
+            (meta2, code2), out2 = fake_morning(dirs, seed=1)
+            self.assertEqual(code2, 0, out2)
+            tr2 = json.loads(read(os.path.join(dirs.runs, "daniel_ate_it-seed1.transcript.json")))
+            self.assertEqual(json.dumps(tr2["chronicle"]), json.dumps(ch))
+        finally:
+            dirs.cleanup()
+        # The neighbour's house is fixed once, at the first entry, and night 2 finds what night 1 left.
+        draws = {**QUIET, "house": 0.95, "trip:daniel": 0.1}
+        d = self.three_days(seed=2, client=NightScripted({"daniel": ["go_next_door"]}), draws1=draws, draws2=draws)
+        self.assertEqual((d.n1.house, d.n1.house_left), (6, 3))
+        self.assertEqual(d.chron.fixed["neighbour_house"]["scene"], "N1")
+        self.assertEqual(d.chron.fixed["neighbour_house"]["value"], 6)
+        self.assertEqual(d.chron.fixed["neighbour_house"]["string"], "2:night:house")
+        self.assertEqual((d.n2.groups[0]["found"], d.n2.groups[0]["took"], d.n2.house_left), (3, 3, 0))
+        # The draw strings (§4.4).
+        self.assertEqual((d.n1.draw_string("trip:daniel"), d.n2.draw_string("trip:daniel"), d.n2.draw_string("house")),
+                         ("2:night:trip:daniel", "2:night2:trip:daniel", "2:night:house"))
+        self.assertEqual((d.day1.order_string(4, "kitchen"), d.day2.order_string(4, "kitchen"),
+                          d.day3.order_string(4, "kitchen")), ("2:4:kitchen", "2:4:kitchen", "2:day3:4:kitchen"))
+        self.assertEqual((d.day2.food_string(4, "leo"), d.day3.food_string(4, "leo")),
+                         ("2:day2:food:4:leo", "2:day3:food:4:leo"))
+        self.assertIn("culprit", d.chron.fixed)
+
+    # N-T10
+    def test_n_t10_thoughts_stay_private(self):
+        (meta, code), out = fake_morning(self.dirs, seed=2)
+        self.assertEqual(code, 0, out)
+        tr = json.loads(read(os.path.join(self.dirs.runs, "daniel_ate_it-seed2.transcript.json")))
+        prompts = cached_prompts(self.dirs)
+        kept = [(pid, m["meaning"]) for night in ("mind1", "mind2") for pid, r in tr[night].items()
+                for m in r["memories"] if m["verdict"] == "kept"]
+        self.assertTrue(kept)
+        for pid, meaning in kept:
+            holders = {re.match(r"You are (\w+),", p).group(1).lower() for p in prompts if f'"{meaning}"' in p}
+            self.assertLessEqual(holders, {pid}, meaning)
+
+    # N-T11
+    def test_n_t11_the_plan_line_says_you_are(self):
+        client = NightScripted()
+        day1, oracle = self.v11_day1(3, client)
+        n = self.night.Night(day1, oracle).run()
+        day2 = Morning.next_day(day1, n, oracle)
+        ele, leo = day2.people["elena"], day2.people["leo"]
+        self.act(day2, ele, "send_leo", "Leo should.")
+        plan = next(x for x in day2.inside_lines(leo) if x.startswith("About going there tonight:"))
+        self.assertEqual(plan, "About going there tonight: Elena said you are the one who should go (min 00).")
+        plan = next(x for x in day2.inside_lines(day2.people["mara"]) if x.startswith("About going there tonight:"))
+        self.assertEqual(plan, "About going there tonight: Elena said Leo is the one who should go (min 00).")
+
+    # N-T12
+    def test_n_t12_schema_plumbing(self):
+        class Spy:
+            requests = 0
+
+            def __init__(self):
+                self.calls = []
+
+            def generate(self, system, prompt, schema=None):
+                self.calls.append(schema)
+                self.requests += 1
+                return "{}"
+        spy = Spy()
+        oracle = Oracle(Cache(self.path("spy")), "fake", 1, client=spy)
+        oracle.ask("s", "p1")
+        oracle.ask("s", "p2", schema={"type": "object"})
+        self.assertEqual(spy.calls, [None, {"type": "object"}])
+        self.assertEqual(Cache.key("m", 1, "s", "p"), frozen("v13", "gemini").Cache.key("m", 1, "s", "p"))
+        # The API gets RESPONSE_SCHEMA for decisions and the night mind's own for a night mind.
+        seen = []
+
+        class Api(StubApi):
+            def generate_content(self, model, contents, config):
+                seen.append(config.response_schema)
+                return super().generate_content(model, contents, config)
+        with mock.patch.dict(os.environ, {"GEMINI_API_KEY": SECRET}):
+            client = GeminiClient({**json.loads(read(CONFIG)), "min_seconds_between_calls": 0}, 1, api=Api([]),
+                                  sleep=lambda s: None)
+            client.generate("s", "You are Leo, 21\nYour options:\n- silent: stay put")
+            schema = self.mind.schema(["D1-001", "N1-01"])
+            client.generate("s", "You are Leo, 21\n[D1-001] min 00: x\n" + MIND_END, schema=schema)
+        self.assertEqual(seen, [gemini.RESPONSE_SCHEMA, schema])
+        self.assertEqual(schema["properties"]["memories"]["items"]["properties"]["ids"]["items"]["enum"],
+                         ["D1-001", "N1-01"])
+        self.assertEqual(set(schema["required"]), {"memories", "feeling", "intent"})
+        # The fake answers a night mind in shape, citing ids of the prompt, and breaks every n-th answer.
+        fake = FakeClient(invalid_every=2)
+        prompt = "You are Leo, 21\n[D1-001] min 00: x\n[N1-01] tonight: y\n" + MIND_END
+        good = json.loads(fake.generate("s", prompt, schema=schema))
+        self.assertTrue(good["memories"] and set(good["memories"][0]["ids"]) <= {"D1-001", "N1-01"})
+        self.assertTrue(good["feeling"] and good["intent"])
+        bad = fake.generate("s", prompt, schema=schema)
+        c = self.handmade([{"id": "D1-001", "scene": "D1", "minute": 0, "kind": "opening", "actor": "elena",
+                            "witnesses": {"leo": "saw", "elena": "did"}},
+                           {"id": "N1-01", "scene": "N1", "minute": 90, "kind": "bedtime", "actor": "leo",
+                            "witnesses": {"leo": "did"}}])
+        r = self.mind.check_answer(bad, "leo", {"D1-001": "x", "N1-01": "y"}, c, ())
+        self.assertTrue(r["mode"] == "fallback" or not r["kept"], r)
+
+    # N-T13
+    def test_n_t13_counting(self):
+        (meta, code), out = fake_morning(self.dirs, seed=1)
+        self.assertEqual(code, 0, out)
+        tr = json.loads(read(os.path.join(self.dirs.runs, "daniel_ate_it-seed1.transcript.json")))
+        self.assertEqual(meta["night1_asks"], len(tr["night"]["decisions"]))
+        self.assertEqual(meta["night2_asks"], len(tr["night2"]["decisions"]))
+        self.assertEqual(meta["mind1_asks"], len(tr["mind1"]))
+        self.assertEqual(meta["mind2_asks"], len(tr["mind2"]))
+        for k in ("day2", "day3"):
+            self.assertEqual(meta[f"{k}_asks"], sum(a["mode"] != "routine" for t in tr[k]["turns"] for a in t["acts"]))
+        total = (meta["day1"]["model_decisions"] + meta["day1"]["fallbacks"] + meta["night1_asks"] + meta["mind1_asks"]
+                 + meta["day2_asks"] + meta["night2_asks"] + meta["mind2_asks"] + meta["day3_asks"])
+        self.assertEqual(total, meta["answers_live"] + meta["answers_from_cache"])
+        for k in ("mind1", "mind2"):
+            m = meta[k]
+            self.assertEqual(m["memories_proposed"], m["memories_kept"] + m["memories_rejected"])
+            self.assertEqual(m["memories_proposed"], sum(len(r["memories"]) for r in tr[k].values()))
+        for key in ("night2_asks", "mind1_asks", "mind2_asks", "day3_asks"):
+            self.assertIn(f"{key}: {meta[key]}", out)
+
+    # N-T14
+    def test_n_t14_frozen_versions_still_replay(self):
+        for version in ("v14", "v13", "v12", "v11", "v10", "v9"):
+            done = run_check(version)
+            self.assertEqual(done.returncode, 0, done.stdout + done.stderr)
+            self.assertEqual(done.stdout.count("story IDENTICAL, transcript IDENTICAL"), 3, done.stdout)
+            self.assertIn("0 API calls", done.stdout)
+
+    # The amendment to §3.3's table C2: the kind acts between two people, at weight 3.
+    def test_amendment_kind_acts_between_two_people(self):
+        M = self.memory
+        self.assertEqual(M.KIND_ACTS, ("reassure", "sit"))
+        self.assertEqual({k: M.WEIGHT[k] for k in M.KIND_ACTS}, {"reassure": 3, "sit": 3})
+        everyone = {p: "saw" for p in data.ORDER}
+        c = self.handmade([
+            {"id": "D1-001", "scene": "D1", "minute": 3, "kind": "reassure", "option": "reassure_all", "actor": "daniel",
+             "witnesses": everyone | {"daniel": "did"}},
+            {"id": "D1-002", "scene": "D1", "minute": 6, "kind": "sit", "option": "sit_leo", "actor": "elena",
+             "target": "leo", "witnesses": everyone | {"elena": "did"}},
+            {"id": "D1-003", "scene": "D1", "minute": 9, "kind": "reassure", "option": "reassure_leo", "actor": "elena",
+             "target": "leo", "witnesses": everyone | {"elena": "did"}},
+            {"id": "D1-004", "scene": "D1", "minute": 12, "kind": "reassure", "option": "reassure_mara", "actor": "leo",
+             "target": "mara", "witnesses": everyone | {"leo": "did"}},
+            {"id": "D1-005", "scene": "D1", "minute": 15, "kind": "reassure", "option": "reassure_mara", "actor": "leo",
+             "target": "mara", "witnesses": everyone | {"leo": "did"}},
+            {"id": "D1-006", "scene": "D1", "minute": 18, "kind": "confess", "option": "confess", "actor": "daniel",
+             "witnesses": everyone | {"daniel": "did"}},
+        ])
+        lines = [x["line"] for x in M.block_c(c, "leo", 6)]
+        self.assertEqual(lines, ["Two days ago, Daniel admitted taking the can.",
+                                 "Two days ago, Elena sat with you.",              # a tie at 3 keeps the older
+                                 "Two days ago, you reassured Mara twice."])
+        lines = [x["line"] for x in M.block_c(c, "mara", 6)]
+        self.assertIn("Two days ago, Leo reassured you twice.", lines)
+        # Reassuring everyone is not an act between two people: Daniel's line is his confession, and nobody's
+        # line comes from reassure_all.
+        self.assertFalse([x for p in data.ORDER for x in M.block_c(c, p, 6) if "D1-001" in x["ids"]])
 
 
 class GeminiClientTest(unittest.TestCase):

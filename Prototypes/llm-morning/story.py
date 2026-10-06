@@ -365,7 +365,7 @@ def body(morning, out, all_d, names, culprit, who, pro):
         w("- Nobody holds a grudge at minute 90.")
     if culprit:
         guilty = morning.people[culprit]
-        facts = "; ".join(fact for m, fact in guilty.guilt_events) or "nothing since"
+        facts = "; ".join(e[1] for e in guilty.guilt_events) or "nothing since"
         w(f"- {who}'s guilt ({guilty.guilt}/3): {pro['he']} ate the can in the night, and nobody saw; {facts}.")
     w("")
     last = []
@@ -380,6 +380,8 @@ def body(morning, out, all_d, names, culprit, who, pro):
 
 # ---------- the night and day 2 (reports/night_design.md, §8) ----------
 NAME = {p: data.PEOPLE[p]["name"] for p in data.ORDER}
+NIGHT_TITLE = {1: "# The night", 2: "# The second night", 3: "# The third night"}
+DAY_TITLE = {5: "# The next morning (day 5)", 6: "# The third morning (day 6)"}
 ASKED = {"bedtime": "at bedtime", "reaction": "noticing it", "answer": "told not to go"}
 
 
@@ -426,7 +428,7 @@ def render_night(n):
     import night as night_mod
     out = []
     w = out.append
-    w("# The night")
+    w(NIGHT_TITLE.get(n.number, f"# Night {n.number}"))
     w("")
     w(f"{data.GAP} Before bed, hunger rose by {night_mod.GAP_HUNGER} × each person's hunger rate, and by "
       f"{night_mod.NIGHT_HUNGER} × more in the night. Everyone went to bed in their own room: {night_mod.BEDS}. "
@@ -437,7 +439,8 @@ def render_night(n):
     w("")
     w("| | " + " | ".join(NAME[p] for p in data.ORDER) + " |")
     w("|---|" + "---|" * len(data.ORDER))
-    w("| Hunger at bedtime | " + " | ".join(f"{n.bedtime_hunger[p]:.2f} ({hunger_words(n.bedtime_hunger[p])})"
+    w("| Hunger at bedtime | " + " | ".join("away" if n.bedtime_hunger[p] is None else
+                                           f"{n.bedtime_hunger[p]:.2f} ({hunger_words(n.bedtime_hunger[p])})"
                                            for p in data.ORDER) + " |")
     w("| Wakes when the roommate gets up | " + " | ".join(f"{night_mod.wake_room(p):.2f}" for p in data.ORDER) + " |")
     w("| Wakes at the front door | " + " | ".join(f"{night_mod.wake_door(p):.2f}" for p in data.ORDER) + " |")
@@ -514,7 +517,7 @@ def render_day2(morning):
     n_model = sum(d["mode"] == "model" for d in all_d)
     n_fall = sum(d["mode"] == "fallback" for d in all_d)
     n_rout = sum(d["mode"] == "routine" for d in all_d)
-    w("# The next morning (day 5)")
+    w(DAY_TITLE.get(morning.day, f"# The morning of day {morning.day}"))
     w("")
     w(f"The same rules as day 1, from the people as the night left them. **{len(all_d)} decisions**: {n_model} by "
       f"the model, {n_fall} fallbacks, {n_rout} routine. {len(morning.said)} lines were spoken aloud. The shelf held "
@@ -539,3 +542,36 @@ def render_day2(morning):
         w("")
     body(morning, out, all_d, names, culprit, who, pro)
     return "\n".join(out)
+
+
+def render_mind(mind):
+    """What the night left in them (reports/days_design.md, §2.8): each person's night mind, every memory it
+    proposed with the records it cites and its verdict, the feeling and the intent."""
+    out = []
+    w = out.append
+    w("## What the night left in them")
+    w("")
+    w("Once the night was over, each person in the house was asked once what the day leaves in them. Each memory "
+      "cites the records it is about; one that fails a check (reports/days_design.md, §2.6) never reaches a prompt.")
+    w("")
+    for pid in data.ORDER:
+        r = mind.results.get(pid)
+        if r is None:
+            w(f"- **{NAME[pid]}**: away, not asked.")
+            continue
+        if r["mode"] == "fallback":
+            w(f"- **{NAME[pid]}** ({r['prompt_tokens']} estimated tokens). **FALLBACK**: the answer could not be used "
+              f"({r['invalid']}), so {NAME[pid]} carries nothing from this night.")
+            continue
+        feeling = r["feeling"] if r["feeling"] else f"({r['feeling_verdict']})"
+        intent = quoted(r["intent"]) if r["intent"] else f"({r['intent_verdict']})"
+        w(f"- **{NAME[pid]}** ({r['prompt_tokens']} estimated tokens). Feeling: *{feeling}*. Intent: {intent}")
+        for m in r["memories"]:
+            ids = m["ids"] if isinstance(m["ids"], list) else []
+            w(f"  - {', '.join(str(i) for i in ids) or '(no ids)'}: {quoted(m['meaning'])} **{m['verdict']}**")
+            for i in ids:
+                e = mind.chron.event(i)
+                if e is not None and e["views"].get(pid):
+                    w(f"    - {i}: {e['views'][pid]}")
+    w("")
+    return "\n".join(out) + "\n"

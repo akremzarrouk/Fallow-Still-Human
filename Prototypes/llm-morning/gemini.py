@@ -91,14 +91,16 @@ class GeminiClient:
                 self._sleep(wait)
         self._last = self._clock()
 
-    def generate(self, system, prompt):
+    def generate(self, system, prompt, schema=None):
+        """schema: the response schema; RESPONSE_SCHEMA (a decision) unless given (a night mind,
+        reports/days_design.md, §2.5)."""
         from google.genai import errors
         config = self._types.GenerateContentConfig(
             system_instruction=system,
             temperature=self.temperature,
             seed=self.seed,
             response_mime_type="application/json",
-            response_schema=RESPONSE_SCHEMA,
+            response_schema=schema or RESPONSE_SCHEMA,
             max_output_tokens=self.max_output_tokens,
             automatic_function_calling=self._types.AutomaticFunctionCallingConfig(disable=True),
         )
@@ -144,6 +146,8 @@ class FakeClient:
     broken in one of several ways, in turn, so the fallback path is exercised."""
 
     BROKEN = ["not json", "unknown option", "missing field", "speech without words"]
+    # A night mind's broken answers: each fails one of the checks of reports/days_design.md, §2.6.
+    BROKEN_MIND = ["not json", "unknown id", "number", "time word"]
 
     def __init__(self, invalid_every=5, fail_with=None, max_calls=150):
         self.invalid_every = invalid_every
@@ -156,12 +160,14 @@ class FakeClient:
     def new_scene(self):
         self.scene_base = self.requests
 
-    def generate(self, system, prompt):
+    def generate(self, system, prompt, schema=None):
         if self.requests - self.scene_base >= self.max_calls:
             raise CallCapReached(f"stopped: this morning reached {self.max_calls} API requests.")
         self.requests += 1
         if self.requests in self.fail_with:
             raise self.fail_with[self.requests]
+        if schema is not None:
+            return self.mind(prompt)
         block = prompt.split("Your options:")[-1]
         options = re.findall(r"^- (\w+):", block, flags=re.M)
         h = int(hashlib.sha256(prompt.encode("utf-8")).hexdigest(), 16)
@@ -188,6 +194,24 @@ class FakeClient:
                     rf"^- {o}: \(speech\)", block, flags=re.M)), "fly_away")
                 answer["say"] = None
         return json.dumps(answer)
+
+    def mind(self, prompt):
+        """A night mind's answer: one memory citing an id of the prompt, a feeling and an intent."""
+        ids = re.findall(r"^\[([DN]\d+-\d+)\] ", prompt, flags=re.M)
+        h = int(hashlib.sha256(prompt.encode("utf-8")).hexdigest(), 16)
+        memory = {"ids": [ids[h % len(ids)]] if ids else [], "meaning": f"Fake thought {self.requests}."}
+        if self.invalid_every and self.requests % self.invalid_every == 0:
+            kind = self.BROKEN_MIND[(self.requests // self.invalid_every - 1) % len(self.BROKEN_MIND)]
+            if kind == "not json":
+                return "I would rather not think about it."
+            if kind == "unknown id":
+                memory["ids"] = ["X9-999"]
+            elif kind == "number":
+                memory["meaning"] = "Two portions were eaten."
+            else:
+                memory["meaning"] = "Today was long."
+        return json.dumps({"memories": [memory], "feeling": ["tired", "afraid", "numb"][h % 3],
+                           "intent": f"Fake intent {self.requests}."})
 
 
 class Cache:
@@ -245,7 +269,9 @@ class Oracle:
     def api_requests(self):
         return self.client.requests if self.client else 0
 
-    def ask(self, system, prompt):
+    def ask(self, system, prompt, schema=None):
+        """schema: passed to the client only when given (a night mind); the cache key does not hold it,
+        since the prompt decides it (reports/days_design.md, §2.5)."""
         key = Cache.key(self.model_name, self.seed, system, prompt)
         cached = self.cache.get(key)
         if cached is not None:
@@ -261,7 +287,8 @@ class Oracle:
                 and self.from_cache - self.base[0] + self.client.requests - self.base[1] >= self.max_calls):
             raise CallCapReached(f"stopped: this morning reached {self.max_calls} model calls "
                                  f"({self.from_cache - self.base[0]} of them answered in an earlier run).")
-        text = self.client.generate(system, prompt)
+        text = (self.client.generate(system, prompt) if schema is None
+                else self.client.generate(system, prompt, schema=schema))
         self.live += 1
         tokens = getattr(self.client, "last_prompt_tokens", None)
         if tokens:
