@@ -1,0 +1,4 @@
+2 {'answers_live': 136, 'api_requests': 141, 'answers_from_cache': 96} {'day3': (40, 45), 'night3': (4, 4), 'mind3': (4, 4), 'day4': (40, 40), 'night4': (4, 4), 'mind4': (4, 4), 'day5': (40, 40), 'day4_day_asks': 40, 'day5_day_asks': 40}
+  day3 quiet {'q1_fired': 2, 'q2_fired': 2, 'stretches': 4, 'morning_end': 12} day4 {'q1_fired': 2, 'q2_fired': 2, 'stretches': 4} day5 {'q1_fired': 0, 'q2_fired': 2, 'stretches': 3}
+3 {'answers_live': 132, 'api_requests': 132, 'answers_from_cache': 135} {'day3': (32, 32), 'night3': (8, 8), 'mind3': (4, 4), 'day4': (40, 40), 'night4': (4, 4), 'mind4': (4, 4), 'day5': (40, 40), 'day4_day_asks': 40, 'day5_day_asks': 40}
+  day3 quiet {'q1_fired': 0, 'q2_fired': 2, 'stretches': 2, 'morning_end': 18} day4 {'q1_fired': 0, 'q2_fired': 3, 'stretches': 3} day5 {'q1_fired': 1, 'q2_fired': 2, 'stretches': 4}

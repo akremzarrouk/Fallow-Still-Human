@@ -1,0 +1,17 @@
+seed 2 day 4 min 15 Daniel [volunteer]: I will go out further along the street to find food for us tonight.
+seed 2 day 4 min 15 Mara [propose_far]: We should go to the houses further along the street instead of just the neighbour's house.
+seed 2 day 4 11:06 Daniel [volunteer_far]: I told you I would go further down the street, and I am the one who is going.
+seed 2 day 4 19:00 Daniel [propose_far]: We can't just sit here and wait, someone has to try the houses further along the street tonight.
+seed 2 day 5 min 03 Daniel [propose_far]: We cannot stay here doing nothing, someone has to try the houses further along the street.
+seed 2 day 5 min 06 Daniel [volunteer_far]: I told you I'll go further along the street myself, and that's final.
+seed 2 day 5 min 06 Mara [propose_far]: If nobody is going next door, someone should try the houses further along the street.
+seed 2 day 5 min 09 Daniel [propose_far]: I am telling you, we have to look further down the street if we want to survive this.
+seed 2 day 5 min 09 Mara [volunteer_far]: If no one else will do it, I will go look at the houses further down the street myself.
+seed 2 day 5 min 15 Daniel [volunteer_far]: I told you, I am going further down the street to find us something, and that is final.
+seed 3 day 3 min 06 Daniel [volunteer_far]: I'll go further down the street tonight. We need to find something.
+seed 3 day 3 min 09 Daniel [volunteer]: I already went last night, so I'm the one who should go out further today.
+seed 3 day 3 10:48 Leo [confront_daniel]: You went out into the dark last night and came back empty handed, Daniel. Doing it again won't change the empty houses.
+seed 3 day 4 min 00 Daniel [volunteer_far]: I went out past the neighbour's house last night to look further down the street, and I will go again tonight if we need to.
+seed 3 day 4 min 12 Daniel [volunteer_far]: I already went out there and I'm going back tonight to find something for us.
+seed 3 day 4 09:57 Daniel [volunteer_far]: I went out last night and I am telling you I can find something further down the street.
+seed 3 day 4 10:57 Daniel [volunteer_far]: I went out last night and I am going to check the houses further down the street again tonight.

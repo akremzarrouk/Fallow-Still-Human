@@ -1,0 +1,26 @@
+seed 2:
+  G1 []
+  G2 [[4, "min 15", "Mara", "propose_far", "We should go to the houses further along the street instead of just the neighbour's house."], [4, "11:06", "Daniel", "volunteer_far", "I told you I would go further down the street, and I am the one who is going."], [4, "19:00", "Daniel", "propose_far", "We can't just sit here and wait, someone has to try the houses further along the street tonight."], [5, "min 03", "Daniel", "propose_far", "We cannot stay here doing nothing, someone has to try the houses further along the street."], [5, "min 06", "Daniel", "volunteer_far", "I told you I'll go further along the street myself, and that's final."], [5, "min 06", "Mara", "propose_far", "If nobody is going next door, someone should try the houses further along the street."], [5, "min 09", "Daniel", "propose_far", "I am telling you, we have to look further down the street if we want to survive this."], [5, "min 09", "Mara", "volunteer_far", "If no one else will do it, I will go look at the houses further down the street myself."], [5, "min 15", "Daniel", "volunteer_far", "I told you, I am going further down the street to find us something, and that is final."]]
+  G3 []
+  G4 []
+  G5 null
+  G6 {"knower_bedtimes": [[3, "Daniel", "lie_awake"], [3, "Leo", "lie_awake"], [3, "Mara", "lie_awake"], [4, "Daniel", "lie_awake"], [4, "Leo", "lie_awake"], [4, "Mara", "lie_awake"]], "violations": []}
+  G7 {"answers_live": 136, "api_requests": 141, "day_asks": {"3": 40, "4": 40, "5": 40}}
+seed 3:
+  G1 [[3, "Daniel", "model"]]
+  G2 [[3, "min 06", "Daniel", "volunteer_far", "I'll go further down the street tonight. We need to find something."], [4, "min 00", "Daniel", "volunteer_far", "I went out past the neighbour's house last night to look further down the street, and I will go again tonight if we need to."], [4, "min 12", "Daniel", "volunteer_far", "I already went out there and I'm going back tonight to find something for us."], [4, "09:57", "Daniel", "volunteer_far", "I went out last night and I am telling you I can find something further down the street."], [4, "10:57", "Daniel", "volunteer_far", "I went out last night and I am going to check the houses further down the street again tonight."]]
+  G3 []
+  G4 []
+  G5 {"day3_pairs": ["('accuse', 'daniel')", "('confront', 'daniel')", "('object', 'daniel')", "('object', None)", "('propose', None)", "('reassure', 'daniel')", "('volunteer', None)", "('volunteer_far', None)"], "of": 24, "fresh": 0, "holds": false, "acts": [["min 00", "Daniel", "volunteer_far", "('volunteer_far', None)", false], ["min 00", "Elena", "keep_daniel_home", "('object', 'daniel')", false], ["min 00", "Leo", "confront_daniel", "('confront', 'daniel')", false], ["min 00", "Mara", "confront_daniel", "('confront', 'daniel')", false], ["min 03", "Daniel", "volunteer", "('volunteer', None)", false], ["min 03", "Mara", "confront_daniel", "('confront', 'daniel')", false], ["min 03", "Elena", "nobody_goes", "('object', None)", false], ["min 03", "Leo", "keep_daniel_home", "('object', 'daniel')", false], ["min 06", "Daniel", "still_going", "('volunteer', None)", false], ["min 06", "Mara", "confront_daniel", "('confront', 'daniel')", false], ["min 06", "Elena", "keep_daniel_home", "('object', 'daniel')", false], ["min 06", "Leo", "confront_daniel", "('confront', 'daniel')", false], ["min 09", "Daniel", "still_going", "('volunteer', None)", false], ["min 09", "Mara", "accuse_daniel", "('accuse', 'daniel')", false], ["min 09", "Elena", "confront_daniel", "('confront', 'daniel')", false], ["min 09", "Leo", "confront_daniel", "('confront', 'daniel')", false], ["min 12", "Daniel", "volunteer_far", "('volunteer_far', None)", false], ["min 12", "Leo", "confront_daniel", "('confront', 'daniel')", false], ["min 12", "Mara", "confront_daniel", "('confront', 'daniel')", false], ["min 12", "Elena", "confront_daniel", "('confront', 'daniel')", false], ["min 15", "Daniel", "volunteer", "('volunteer', None)", false], ["min 15", "Elena", "nobody_goes", "('object', None)", false], ["min 15", "Leo", "nobody_goes", "('object', None)", false], ["min 15", "Mara", "confront_daniel", "('confront', 'daniel')", false]]}
+  G6 {"knower_bedtimes": [[3, "Daniel", "go_further"], [3, "Leo", "lie_awake"], [3, "Mara", "lie_awake"], [4, "Daniel", "sleep"], [4, "Leo", "lie_awake"], [4, "Mara", "watch_door"]], "violations": []}
+  G7 {"answers_live": 132, "api_requests": 132, "day_asks": {"3": 32, "4": 40, "5": 40}}
+
+SUMMARY runs/v19
+G1 PASS
+G2 PASS
+G3 NOT TESTED
+G4 NOT TESTED
+G5 FAIL
+G6 PASS
+G7 PASS
+live asks in total 268

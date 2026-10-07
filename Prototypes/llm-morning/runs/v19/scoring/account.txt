@@ -1,0 +1,259 @@
+######## seed 2
+== day 3: morning_end min 12; stretches [('min 00', 'min 12', 'the morning'), ('10:21', '10:27', 'Q2'), ('10:27', '10:33', 'Q1'), ('20:09', '20:15', 'Q1')]; away []
+  min 00 Leo [accuse_daniel] -: Daniel went out in the night and came back with nothing, just like before.
+  min 00 Daniel [confront_leo] -: Leo, I went out for us and there was nothing there, you know I tried.
+  min 00 Mara [accuse_daniel] -: You went out into the dark and came back with nothing while we have nothing left here.
+  min 00 Elena [reassure_all] -: We have nothing left to fight about. We will stay together and get through this.
+  min 03 Daniel [reassure_all] food: We have no food left here, but I went out into the dark and we are still alive.
+  min 03 Leo [confront_daniel] food: You came back empty-handed and waking us up doesn't change that we are starving.
+  min 03 Mara [confront_daniel] -: Daniel, you sneaking out in the middle of the night didn't help us at all, it just made everything worse.
+  min 03 Elena [reassure_all] food: We are all hungry and tired, but we must stay together and keep each other safe.
+  min 06 Daniel [reassure_all] -: We are going to make it through this, I promise you all.
+  min 06 Mara [confront_daniel] -: Daniel, you went out into the dark last night and came back with nothing to show for it.
+  min 06 Leo [confront_daniel] food: Daniel, you snuck out last night and brought nothing back, just like you always do.
+  min 06 Elena [reassure_all] -: We must not turn on each other now, we will find a way through this together.
+  min 09 Daniel [reassure_all] -: We are going to be fine, I promise you we will get through this.
+  min 09 Mara [confront_daniel] food: Daniel, you sneaked out into the dark and came back with nothing while we are starving.
+  min 09 Leo [confront_daniel] -: Daniel, you snuck out last night after ignoring what I said, and now there is still nothing.
+  10:21 Daniel [reassure_all] -: Don't worry, I am going to figure this out and keep us all safe.
+  10:21 Elena [reassure_all] -: We are going to stay together and we will be fine, nobody is going anywhere.
+  10:21 Mara [confront_daniel] -: You went out into the night and came back with nothing, Daniel. Why did you even go?
+  10:21 Leo [confront_daniel] -: You went out into the dark alone and came back empty-handed, Daniel. That wasn't a plan, that was just reckless.
+  10:24 Daniel [reassure_all] -: I went out so we wouldn't have to guess what was there, and I'll keep trying to find a way through this.
+  10:24 Leo [confront_daniel] -: Trying and coming back empty-handed doesn't help anyone when we have nothing left.
+  10:24 Mara [confront_daniel] food: Daniel, you went out into the dark and came back with nothing, and we still have no food.
+  10:24 Elena [reassure_all] food: We are all hungry and afraid, but fighting among ourselves will only tear us apart.
+  10:27 Daniel [reassure_all] -: We are going to figure this out, I promise you. Just trust me.
+  10:27 Mara [confront_daniel] -: You went out into the night and came back with nothing, Daniel. Why did you even go?
+  10:27 Leo [confront_daniel] food: Promises don't fill a stomach, Daniel. You went out and failed, and now we are starving.
+  10:27 Elena [reassure_all] -: We must not turn on each other, children. We will stay together and find a way through this.
+  10:30 Daniel [reassure_all] -: We are going to make it through this together, I promise you. Just trust me.
+  10:30 Mara [confront_daniel] food: You went out into the dark and came back with nothing while we are starving.
+  10:30 Elena [reassure_all] -: We must stay calm and keep together, everything will be all right.
+  10:30 Leo [confront_daniel] food: Daniel, you snuck out last night and came back with nothing while we are starving.
+  20:09 Daniel [reassure_all] -: Listen to me, I'm going to figure this out and keep us safe.
+  20:09 Leo [accuse_daniel] food: You always say you will keep us safe, Daniel, while we starve.
+  20:09 Mara [accuse_daniel] -: You went out into the night and came back with nothing, Daniel. Why do you pretend you are helping?
+  20:09 Elena [reassure_all] -: We are not going anywhere and we will stay together. Let's keep our heads.
+  20:12 Daniel [reassure_all] -: We are going to get through this together, just trust me.
+  20:12 Elena [reassure_all] -: We are safe inside this house, let us not fight among ourselves.
+  20:12 Mara [accuse_daniel] -: You always promise to fix things, Daniel, but you only make everything worse.
+  20:12 Leo [accuse_daniel] -: You went out there last night and came back with nothing, Daniel. Stop pretending you have any idea how to fix this.
+== night 3: portions 0 -> 0; away []; far None; dozed None
+  bedtime Daniel: lie_awake (offered go_further: True; mode model); reason 'I am too weak and dizzy to go out again tonight, so I will lie here and listen to make sure everyone stays safe.'
+  bedtime Elena: lie_awake (offered go_further: False; mode model); reason 'I need to lie here and listen to make sure no one tries to sneak out into the dangerous night.'
+  bedtime Leo: lie_awake (offered go_further: True; mode model); reason 'I cannot sleep while Daniel pretends nothing is wrong and our safety is at risk.'
+  bedtime Mara: lie_awake (offered go_further: True; mode model); reason 'I am too weak and dizzy to stand, so I will lie here in the dark and listen for anyone moving.'
+== day 4: morning_end min 21; stretches [('min 00', 'min 21', 'the morning'), ('11:00', '11:09', 'Q2'), ('15:30', '15:36', 'Q1'), ('19:00', '19:03', 'Q1')]; away []
+  min 00 Elena [reassure_all] -: Nobody needs to fight anymore, we are all together and we will get through this.
+  min 00 Mara [accuse_daniel] food: Easy for you to say everything is fine when you were the one who took the food.
+  min 00 Daniel [confront_mara] -: Mara, stop saying that, I already told you I didn't take anything.
+  min 00 Leo [accuse_daniel] -: Daniel, you admitted taking it three days ago, so stop lying to her.
+  min 03 Daniel [confront_leo] -: Leo, stop turning everyone against me when I'm the one trying to keep us alive.
+  min 03 Leo [confront_daniel] food: Daniel, trying to keep us alive doesn't mean lying about what happened to the food.
+  min 03 Mara [accuse_daniel] -: Daniel, you admitted it three days ago so don't pretend you didn't.
+  min 03 Elena [reassure_all] -: Please stop fighting, we will figure this out together.
+  min 06 Daniel [reassure_all] -: Please listen to me, we are going to get through this if we just stick together.
+  min 06 Leo [confront_daniel] food: Daniel, your empty reassurances don't put food on the shelf or change what you did.
+  min 06 Mara [accuse_daniel] -: Daniel, your words mean nothing after what you stole from us.
+  min 09 Daniel [confront_mara] -: Mara, watch your tongue, I am trying to keep us all alive.
+  min 09 Mara [confront_daniel] food: You keep acting like you are in charge, Daniel, but you are the one who lied and took our food.
+  min 09 Leo [confront_daniel] -: Your justifications don't fill our stomachs, Daniel, so stop pretending you're protecting anyone.
+  min 09 Elena [reassure_all] -: Please stop fighting, we need to stay calm and look after one another.
+  min 12 Daniel [confront_mara] -: Mara, stop looking at me like that, you know I am trying my best to keep us all alive.
+  min 12 Mara [confront_daniel] food: Your best isn't good enough when we are starving and you lied to us.
+  min 12 Elena [reassure_all] -: We must not turn on each other, children, we are all we have left.
+  min 15 Daniel [volunteer] far,food: I will go out further along the street to find food for us tonight.
+  min 15 Mara [propose_far] far: We should go to the houses further along the street instead of just the neighbour's house.
+  min 15 Elena [reassure_all] -: We must stay calm and keep together, no one is going out into the danger tonight.
+  min 18 Mara [accuse_daniel] food: Daniel is the one who took the food from us, and now he pretends he wants to fix it.
+  11:00 Mara [accuse_daniel] food: You think we can just sit here while you pretend none of this is your fault, Daniel. You took it, and now we are starving.
+  11:00 Leo [accuse_daniel] -: Mara is right, Daniel. You took it and lied to us about it, and we are paying the price.
+  11:03 Daniel [confront_leo] -: Stop talking like you know what is best for us, Leo. I am the eldest and I carry this weight.
+  11:03 Leo [confront_daniel] -: Being the eldest doesn't give you the right to lecture us when you're the one who messed everything up, Daniel.
+  11:03 Mara [accuse_daniel] -: You always act like you're in charge, Daniel, but you're the one who lied and stole from us.
+  11:03 Elena [reassure_all] -: We must not turn on each other now, my children. We will stay together and find a way through this.
+  11:06 Daniel [volunteer_far] far: I told you I would go further down the street, and I am the one who is going.
+  11:06 Elena [reassure_all] -: We will get through this day together without anyone leaving the house.
+  15:30 Elena [reassure_mara] -: We are going to stay right here and look after each other, Mara.
+  15:30 Mara [confront_elena] food: Mom, staying here and waiting isn't keeping us safe, it's just making us starve.
+  15:33 Elena [reassure_mara] -: We are going to stay right here together, Mara, and I won't let anything happen to you.
+  15:33 Daniel [confront_leo] -: You think you can just lie there while I'm the one trying to fix this?
+  15:33 Leo [confront_daniel] food: You went out and brought back nothing, Daniel, and lying here does not fix that.
+  19:00 Daniel [propose_far] far: We can't just sit here and wait, someone has to try the houses further along the street tonight.
+  19:00 Elena [nobody_goes] far: Nobody is going out into the street tonight, it is far too dangerous for us.
+== night 4: portions 0 -> 0; away []; far None; dozed None
+  bedtime Daniel: lie_awake (offered go_further: True; mode model); reason 'I cannot rest while there is no food and Mom forbids us from going out, so I must stay awake and protect them.'
+  bedtime Elena: lie_awake (offered go_further: False; mode model); reason 'I need to listen through the night to make sure no one tries to slip out into the dangerous street.'
+  bedtime Leo: lie_awake (offered go_further: True; mode model); reason 'I am too weak to stand and going out into the dark is suicide, so I will stay here and listen.'
+  bedtime Mara: lie_awake (offered go_further: True; mode model); reason 'My head is spinning from hunger and I am too awake and angry to sleep while everyone else gives up.'
+== day 5: morning_end min 18; stretches [('min 00', 'min 18', 'the morning'), ('10:21', '10:30', 'Q2'), ('11:06', '11:12', 'Q2')]; away []
+  min 00 Elena [reassure_all] -: We are all together and we will figure this out, so let's stay calm.
+  min 00 Mara [accuse_daniel] food: Daniel took the food from the pantry and he keeps lying to us about it.
+  min 00 Daniel [confront_mara] -: Mara, stop accusing me when I am the one trying to keep us all alive.
+  min 00 Leo [accuse_daniel] -: Daniel, you took the can days ago and you are still lying about it.
+  min 03 Daniel [propose_far] far: We cannot stay here doing nothing, someone has to try the houses further along the street.
+  min 03 Mara [accuse_daniel] food: Daniel, you are just saying we need to go out because you already stole our food and want to distract us.
+  min 03 Elena [reassure_all] -: We must not turn on each other, children, because we only have ourselves.
+  min 03 Leo [send_daniel] -: Daniel, since you are the one so keen on going out, you should be the one to go.
+  min 06 Daniel [volunteer_far] far: I told you I'll go further along the street myself, and that's final.
+  min 06 Leo [keep_daniel_home] -: You are not going anywhere if it means making things worse for all of us.
+  min 06 Elena [keep_daniel_home] -: Daniel, please listen to your brother and stay here with us.
+  min 06 Mara [propose_far] far: If nobody is going next door, someone should try the houses further along the street.
+  min 09 Daniel [propose_far] far: I am telling you, we have to look further down the street if we want to survive this.
+  min 09 Mara [volunteer_far] far: If no one else will do it, I will go look at the houses further down the street myself.
+  min 09 Elena [keep_mara_home] -: Mara, you cannot go out there, it is far too dangerous for you.
+  min 09 Leo [keep_mara_home] -: Mom is right, Mara, you cannot go out there.
+  min 12 Mara [accuse_daniel] food: You are the one who took the food, Daniel, so do not pretend you care about what happens to us.
+  min 12 Daniel [confront_mara] -: Stop accusing me, Mara, I am doing everything I can to keep this family alive.
+  min 12 Leo [confront_daniel] food: Daniel, stop deflecting with talk of going out when you are the one who already stole our food.
+  min 12 Elena [reassure_all] food: We must not fight among ourselves when there is no food left to argue over. Please, everyone calm down.
+  min 15 Daniel [volunteer_far] far: I told you, I am going further down the street to find us something, and that is final.
+  min 15 Mara [accuse_daniel] food: You always lie to us, Daniel, and you are the one who stole our food in the first place.
+  min 15 Leo [keep_daniel_home] far: You are not going anywhere down the street, Daniel, because staying alive here is hard enough without your reckless plans.
+  min 15 Elena [keep_daniel_home] far: Daniel, you must stay home tonight and not risk going out into the street.
+  10:21 Daniel [confront_mara] -: You have no right to talk to me that way, Mara, when I am only trying to keep this family alive.
+  10:21 Mara [confront_daniel] food: You think you can lecture us about keeping us alive when you are the one who stole our food?
+  10:24 Daniel [confront_mara] food: Mara, do not sit there judging me when you think you can take whatever you want without anyone saying a word.
+  10:24 Mara [accuse_daniel] food: You are the one who took the food, Daniel, and you have no right to blame me.
+  10:24 Elena [go_kitchen] -: I am coming in, let us not fight anymore.
+  10:27 Daniel [confront_mara] -: Mara, stop lying about what I did and watch your tongue in front of Mom.
+  10:27 Mara [accuse_daniel] food: Daniel is the one who took the food from the shelf, and everyone knows it.
+  11:06 Daniel [confront_mara] -: Mara, stop lying about what happened and blaming me for everything.
+  11:06 Mara [accuse_daniel] -: You took it and you know you did, Daniel. Stop pretending you didn't.
+  11:06 Leo [confront_daniel] -: Daniel, stop deflecting. You already admitted to taking the can four days ago.
+  11:06 Elena [reassure_all] -: Please stop arguing, we will get through this together without turning on each other.
+  11:09 Daniel [confront_leo] -: Leo, you have no right to lecture me when you refuse to lift a finger to help us survive.
+  11:09 Leo [confront_daniel] -: Daniel, you are the last person who has any right to talk about helping us survive.
+  11:09 Mara [accuse_daniel] -: Daniel, you took it and you know it, so stop acting like you care about any of us.
+  11:09 Elena [reassure_all] -: Please stop fighting, we will find a way through this together.
+######## seed 3
+== day 3: morning_end min 18; stretches [('min 00', 'min 18', 'the morning'), ('10:48', '10:54', 'Q2')]; away []
+  min 00 Daniel [propose_trip] -: I checked the neighbour's house last night and found nothing, but we need to figure out our next move.
+  min 00 Mara [confront_daniel] -: Daniel, why did you sneak out to the neighbour's house last night and come back with nothing?
+  min 00 Leo [confront_daniel] food: Daniel, you went out there last night after I told you not to, and you brought nothing back.
+  min 00 Elena [reassure_daniel] -: Daniel, you went out to help us, and I am just so relieved you came back safe.
+  min 03 Daniel [volunteer] -: I will go back out there tonight to find something for us.
+  min 03 Elena [nobody_goes] -: Nobody is going out there into the dark, we stay together here where it is safe.
+  min 03 Mara [confront_daniel] -: Daniel, why did you go out there last night when you knew it was too dangerous for nothing?
+  min 03 Leo [keep_daniel_home] -: Daniel, you went out last night and came back with nothing, you are not going out there again.
+  min 06 Daniel [volunteer_far] far: I'll go further down the street tonight. We need to find something.
+  min 06 Elena [keep_daniel_home] far: Daniel, you are not going out into the street tonight, we cannot lose you.
+  min 06 Mara [confront_daniel] far: Daniel, why did you sneak out into the street last night if you knew you would just come back with nothing?
+  min 06 Leo [confront_daniel] -: Daniel, you went out last night and came back with nothing, risking everything for no reason.
+  min 09 Daniel [volunteer] far: I already went last night, so I'm the one who should go out further today.
+  min 09 Elena [nobody_goes] -: Nobody is going out there tonight, we stay together.
+  min 09 Mara [accuse_daniel] -: Daniel, you went out there last night and came back with nothing, how can you think of going out again?
+  min 09 Leo [confront_daniel] -: Daniel, you came back empty-handed last night and putting yourself out there again is just reckless.
+  min 12 Daniel [still_going] -: I already made up my mind, I am going back out there tonight to find something for us.
+  min 12 Elena [confront_daniel] -: Daniel, you went out into the dark last night and risked your life, you cannot keep doing this.
+  min 12 Leo [confront_daniel] -: Daniel, you went out last night and came back with nothing, going out again is just throwing your life away.
+  min 12 Mara [confront_daniel] -: Daniel, you went out there last night and came back with nothing, you can't just keep doing this.
+  min 15 Daniel [still_going] -: I already told you, I am going out there tonight regardless.
+  min 15 Mara [confront_daniel] -: Daniel, you can't just go out there again after coming back with nothing last night!
+  min 15 Elena [keep_daniel_home] -: Daniel, you are not going out into that dark again, we keep each other safe right here.
+  10:48 Daniel [still_going] -: I already told you all, I am going out there again tonight to find something.
+  10:48 Leo [confront_daniel] far: You went out into the dark last night and came back empty handed, Daniel. Doing it again won't change the empty houses.
+  10:48 Mara [confront_daniel] far: Daniel, why did you go out into the street last night when you knew it was too dangerous?
+  10:48 Elena [confront_daniel] -: Daniel, you cannot risk your life out there again after what happened last night.
+  10:51 Daniel [still_going] -: I have to keep trying, Mom. I am the oldest and I will find a way.
+  10:51 Leo [confront_daniel] -: You went out into the night alone and risked everything without listening to anyone, Daniel.
+  10:51 Elena [confront_daniel] -: Daniel, you cannot risk your life out there again tonight. We stay together.
+  10:51 Mara [confront_daniel] food: Daniel, you can't just sneak out and pretend nothing happened when we are all starving.
+== night 3: portions 0 -> 0; away []; far {'houses': [0], 'us': [0.20264767407799777], 'searched': 1}; dozed None
+  bedtime Daniel: go_further (offered go_further: True; mode model); reason "I have to find food for my family further down the street since the neighbour's house had nothing."
+  bedtime Elena: lie_awake (offered go_further: False; mode model); reason 'I need to lie here and listen to make sure none of them try to slip out into the dark again.'
+  bedtime Leo: lie_awake (offered go_further: True; mode model); reason 'I cannot rest while Daniel continues to put us all at risk by sneaking out into the street.'
+  bedtime Mara: lie_awake (offered go_further: True; mode model); reason 'I cannot sleep knowing Daniel might try to sneak out into the street again tonight.'
+  reaction Leo: stop_daniel say "Don't go out there, Daniel. It's suicide."
+  answer Daniel: go_anyway say 'I have to do this, Leo, stay back.'
+  reaction Elena: stay_in_bed say None
+  reaction Mara: get_up_and_look say None
+  group ['daniel'] far=True house=0 street clean found 0 took 0 lost None: back with nothing
+== day 4: morning_end min 18; stretches [('min 00', 'min 18', 'the morning'), ('09:57', '10:06', 'Q2'), ('10:57', '11:03', 'Q2')]; away []
+  min 00 Daniel [volunteer_far] far: I went out past the neighbour's house last night to look further down the street, and I will go again tonight if we need to.
+  min 00 Elena [keep_daniel_home] -: Daniel, you cannot go out there again tonight, it is far too dangerous.
+  min 00 Leo [confront_daniel] -: You went out last night behind our backs, Daniel, and it accomplished nothing except putting us all at risk.
+  min 00 Mara [confront_daniel] far: You sneaked out into the dark street last night while we were sleeping, Daniel, and you came back with nothing.
+  min 03 Daniel [volunteer] -: I have to be the one to go out there and find something for us.
+  min 03 Mara [confront_daniel] far: Daniel, you snuck out into the dark street last night behind our backs and you are just putting us all in danger again.
+  min 03 Elena [nobody_goes] far: Nobody is going out into that street tonight, we stay together here.
+  min 03 Leo [keep_daniel_home] -: You stayed home last night because it was suicide, Daniel, and nothing has changed tonight.
+  min 06 Daniel [still_going] -: I have to keep trying for all of us, so I am still going.
+  min 06 Mara [confront_daniel] -: Daniel, you snuck out last night and came back with nothing, you cannot just go out there again.
+  min 06 Elena [keep_daniel_home] far: Daniel, you cannot go back out there into the street, we cannot lose you.
+  min 06 Leo [confront_daniel] -: Daniel, sneaking out in the middle of the night solved nothing and only puts us all at risk.
+  min 09 Daniel [still_going] -: I already went out and I'll go again if I have to. Someone has to do something.
+  min 09 Mara [accuse_daniel] -: Daniel, you snuck out last night and you still think you can just decide everything for us?
+  min 09 Elena [confront_daniel] -: Daniel, you cannot keep risking everything like this.
+  min 09 Leo [confront_daniel] -: Daniel, sneaking out in the middle of the night doesn't make you a leader, it just makes you reckless.
+  min 12 Daniel [volunteer_far] far: I already went out there and I'm going back tonight to find something for us.
+  min 12 Leo [confront_daniel] -: You went out there last night and came back with nothing, Daniel. Doing it again won't change anything.
+  min 12 Mara [confront_daniel] far: You went out into the dark street behind our backs and you came back with nothing, Daniel.
+  min 12 Elena [confront_daniel] -: Daniel, sneaking out into the dark like that puts us all in danger.
+  min 15 Daniel [volunteer] -: I survived out there twice, and I'll do it again to keep us alive.
+  min 15 Elena [nobody_goes] -: Nobody is going out into the dark again, we stay together.
+  min 15 Leo [nobody_goes] -: Mom is right, nobody is going anywhere tonight.
+  min 15 Mara [confront_daniel] food: Daniel, you snuck out last night and brought back nothing, and you're just risking everything for no reason.
+  09:57 Daniel [volunteer_far] far: I went out last night and I am telling you I can find something further down the street.
+  09:57 Leo [keep_daniel_home] -: You are not going out there again, Daniel. It's suicide.
+  09:57 Elena [keep_daniel_home] -: Daniel, you cannot go out there again, we need you here safe.
+  10:00 Daniel [volunteer] -: I am the eldest, and I have to go out there and find something for us.
+  10:00 Leo [confront_daniel] -: You went out last night and came back with nothing, Daniel. Going back out is just throwing your life away.
+  10:00 Elena [nobody_goes] -: Nobody is going out there tonight, we stay safe together here.
+  10:03 Daniel [still_going] -: I have to keep trying for all of us, and I am still going out there tonight.
+  10:03 Elena [keep_daniel_home] -: Daniel, please, you cannot go out there again tonight. We need to stay together here.
+  10:57 Daniel [volunteer_far] far: I went out last night and I am going to check the houses further down the street again tonight.
+  10:57 Elena [nobody_goes] -: Nobody is going out there tonight, we stay safe inside together.
+  10:57 Leo [nobody_goes] -: Nobody is going anywhere. We agreed on this.
+  10:57 Mara [confront_daniel] -: Daniel, you went out last night and came back with nothing, you cannot keep risking everything like this.
+  11:00 Daniel [volunteer] food: I am the oldest, and I will go out there again to find us something to eat.
+  11:00 Mara [keep_daniel_home] far: Daniel, you cannot just sneak out into the dark street again. You have to stay home.
+  11:00 Leo [keep_daniel_home] -: You're not going anywhere, Daniel. We are not doing this again.
+  11:00 Elena [keep_daniel_home] -: Daniel, you must stay home tonight.
+== night 4: portions 0 -> 0; away []; far {'houses': [0], 'us': [0.20264767407799777], 'searched': 1}; dozed None
+  bedtime Daniel: sleep (offered go_further: True; mode model); reason 'My legs cannot carry me any further tonight and I have nothing left to give.'
+  bedtime Elena: lie_awake (offered go_further: False; mode model); reason 'I need to lie here and listen to make sure nobody sneaks out into the dark again.'
+  bedtime Leo: lie_awake (offered go_further: True; mode model); reason 'I am too weak to stop him if he sneaks out again, so I will listen in the dark.'
+  bedtime Mara: watch_door (offered go_further: True; mode model); reason 'I will not let Daniel sneak out into the dark again while we starve.'
+== day 5: morning_end min 18; stretches [('min 00', 'min 18', 'the morning'), ('09:57', '10:06', 'Q2'), ('10:33', '10:39', 'Q2'), ('11:57', '12:00', 'Q1')]; away []
+  min 00 Daniel [volunteer] -: I am the oldest, so I will go out to the neighbour's house tonight and find us something.
+  min 00 Elena [keep_daniel_home] -: Daniel, you are not going out there tonight, we stay together.
+  min 00 Leo [keep_daniel_home] -: Daniel, you aren't going anywhere. We agreed last night.
+  min 00 Mara [keep_daniel_home] -: Daniel, you have to stay home tonight.
+  min 03 Daniel [still_going] -: I'm the oldest, and I'm going out tonight to find something for us.
+  min 03 Elena [nobody_goes] far: Nobody is going out into that street tonight, we stay together here.
+  min 03 Leo [confront_daniel] -: Daniel, you went three days ago and came back empty-handed, and you're not going again tonight.
+  min 03 Mara [confront_daniel] -: Daniel, you can't just ignore Mom and Leo when they say nobody is going out.
+  min 06 Daniel [still_going] -: I am the oldest, and I am the one who has to go out for us.
+  min 06 Leo [confront_daniel] -: Daniel, being the oldest doesn't mean you get to put us all at risk by sneaking out.
+  min 06 Mara [confront_daniel] -: Daniel, you're not the only one who decides things here, and you can't just ignore us.
+  min 06 Elena [keep_daniel_home] far: Daniel, you must stay home, nobody is going out into that street.
+  min 09 Daniel [propose_trip] -: I am the eldest, and I will go to the neighbour's house tonight to find what we need.
+  min 09 Mara [confront_daniel] food: Daniel, you already lied about the food once and you are not going anywhere tonight.
+  min 09 Elena [confront_daniel] far: Daniel, you are not going out into that street.
+  min 09 Leo [nobody_goes] far: Nobody is going anywhere into the street tonight, Daniel.
+  min 12 Daniel [volunteer] -: I am the oldest, and I am the one who will go out to find something for us.
+  min 12 Leo [keep_daniel_home] -: Daniel, you are not going out there, it is far too dangerous.
+  min 12 Mara [accuse_daniel] -: You took the can yourself, Daniel, so why are you pretending you are doing us a favor by going out?
+  min 12 Elena [nobody_goes] far: Nobody is going out into the street tonight, we stay together.
+  min 15 Daniel [still_going] -: I am the oldest, and I am going whether you want me to or not.
+  min 15 Mara [confront_daniel] food: You think you can just decide everything for us, Daniel, but you are the one who lied and took the food!
+  min 15 Leo [confront_daniel] -: Daniel, you nearly got Mara killed last time, and staying here is the only safe choice.
+  min 15 Elena [keep_daniel_home] -: Daniel, you are not stepping foot out of this house, I will not allow it.
+  09:57 Daniel [still_going] -: I told you, I am going out tonight whether you like it or not.
+  09:57 Leo [confront_daniel] -: You went out once and came back with nothing, Daniel, and going again is just throwing your life away.
+  10:00 Daniel [still_going] -: I have to do this, Leo, I am the oldest and I am going.
+  10:00 Leo [confront_daniel] -: You are not going anywhere tonight, Daniel, you are just putting us all in danger.
+  10:03 Daniel [still_going] -: I am the oldest, and it is my job to keep us safe out there.
+  10:03 Leo [confront_daniel] -: Going out there alone at night is suicide, Daniel, and you know it.
+  10:33 Daniel [still_going] -: I am the oldest, and I will go out there tonight whether you like it or not.
+  10:33 Elena [nobody_goes] far: Daniel, nobody is going out into that street tonight, we stay together.
+  10:33 Leo [nobody_goes] -: Daniel, staying put is the only rational choice we have.
+  10:33 Mara [confront_daniel] far: Daniel, you cannot just decide for everyone and sneak out into the dark street.
+  10:36 Daniel [still_going] -: I have to do this, Mara, because someone has to make sure we survive.
+  10:36 Elena [keep_daniel_home] far: Daniel, you are not going out into that street tonight, I won't allow it.
+  10:36 Mara [confront_daniel] -: Daniel, you can't just ignore what Mom and everyone else said and sneak out anyway.
+  10:36 Leo [keep_daniel_home] -: Daniel, staying home is not a suggestion, you are simply not going out.
+  11:57 Elena [nobody_goes] far: Nobody is going out into that street, we stay together right here.
+  11:57 Mara [nobody_goes] -: Mom is right, nobody is going out there tonight.
