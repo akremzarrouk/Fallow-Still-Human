@@ -361,7 +361,8 @@ def body(morning, out, all_d, names, culprit, who, pro):
         for t, g in person.grudges.items():
             if g.strength:
                 any_held = True
-                facts = "; ".join(grudge_facts(data.PEOPLE[t]["name"], g.events))
+                facts = "; ".join(grudge_facts(data.PEOPLE[t]["name"], g.events,
+                                               clock_from=morning.clock_from()))
                 w(f"- {person.name} against {data.PEOPLE[t]['name']} ({g.strength}/3): {facts}.")
     if not any_held:
         w(f"- Nobody holds a grudge at {end}.")
@@ -551,7 +552,8 @@ def render_day2(morning):
 ROUTINE_STORY = {"rest": "lies on {his} bed in the {room}", "withdraw": "keeps to {his} own room, the {room}",
                  "sit": "sits in the kitchen"}
 ENDED = {"time": "up when its time was out", "rested": "up once rested", "acted": "until {he} spoke or moved",
-         "woken": "woken", "someone came in": "until someone came in", "withdrew": "until {he} walked out",
+         "woken": "woken", "asked": "until {he} was asked", "two hours": "until two hours had passed",
+         "withdrew": "until {he} walked out",
          "went to rest": "until {he} went to rest", "bedtime": "until bedtime"}
 NEED_WORD = {("fast", 1): "weak", ("fast", 2): "very weak", ("debt", 1): "tired", ("debt", 2): "exhausted"}
 
@@ -581,6 +583,9 @@ def after_the_morning(morning, out):
         need = "fasting" if n["need"] == "fast" else "sleep debt"
         rows.append((n["minute"], 1, f"- {clock(n['minute'])}: {NAME[n['who']]}'s {need} reaches {n['value']:g}: "
                                      f"{NEED_WORD[(n['need'], n['stage'])]}."))
+    for c in tr["cooled"]:
+        rows.append((c["minute"], 1, f"- {clock(c['minute'])}: {NAME[c['who']]}'s grudge against {NAME[c['against']]} "
+                                     f"cools from 3 to 2 (after a rest of an hour or more)."))
     for x in tr["withdrawals"]:
         rows.append((x["minute"], 1, f"- {clock(x['minute'])}: {NAME[x['who']]} goes off to the "
                                      f"{data.ROOMS[x['room']]} (silent, after speaking at {clock(x['why']['spoke_at'])}; "
@@ -601,7 +606,7 @@ def after_the_morning(morning, out):
                                          f"{how}."))
     for st in tr["stretches"]:
         rows.append((st["start"], 3, f"- {clock(st['start'])} to {clock(st['end'])}: played turns ({st['trigger']}, "
-                                     f"in the {data.ROOMS[st['room']]})."))
+                                     f"in the {data.ROOMS[st['room']]}; {st['asks']} asks)."))
     out.extend(x for _, _, x in sorted(rows, key=lambda r: (r[0], r[1])))
     w("")
     w("| | " + " | ".join(NAME[p] for p in data.ORDER) + " |")

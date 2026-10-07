@@ -13,7 +13,7 @@ from world import NAMES, day_index
 KEYS = ("id", "scene", "minute", "kind", "option", "actor", "target", "members", "words", "room", "witnesses",
         "text", "gist", "group", "effects", "views", "outcome")
 # A routine span and a need crossing a line (quiet.py) keep these too, after KEYS; no other event has them.
-QUIET_KEYS = ("routine", "until", "need", "stage")
+QUIET_KEYS = ("routine", "until", "seen_at", "need", "stage")
 ROUTINE_GIST = {"rest": "lying down to rest", "withdraw": "going off to their own room", "sit": "sitting in the kitchen"}
 
 

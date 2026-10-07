@@ -10,6 +10,7 @@ Copied by hand from the shipped data so the prototype never reads Assets/:
 Ages and family roles match Docs/understanding/target-morning.md. Nothing else from that
 file is used anywhere in the prototype.
 """
+import re
 
 ORDER = ["daniel", "elena", "leo", "mara"]
 
@@ -75,6 +76,56 @@ SOUNDPROOF = {"bathroom"}
 PORTIONS = 2
 MINUTES = 90
 MINUTES_PER_TURN = 3
+
+# How a minute of the day is written (reports/quiet_day_fixes.md, fix 3): before minute 90 as it always was; from
+# minute 90 on (the quiet day's, from day 3) as the clock, minute 00 being 07:00. Days 1 and 2 end before minute 90.
+CLOCK_FROM = 90
+DAY_START = 7 * 60
+
+
+def clock(minute):
+    """The stamp of a record, a memory line or a fact: "min 18", or "10:21" from minute 90 on."""
+    if minute < CLOCK_FROM:
+        return f"min {minute:02d}"
+    h, m = divmod(DAY_START + minute, 60)
+    return f"{h:02d}:{m:02d}"
+
+
+def minute_words(minute):
+    """A minute in a sentence: "minute 18", or "10:21" from minute 90 on ("at " + it, "since " + it)."""
+    return f"minute {minute:02d}" if minute < CLOCK_FROM else clock(minute)
+
+
+def _and(xs):
+    return xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " and " + xs[-1]
+
+
+def minutes_words(ms, clock_from=CLOCK_FROM):
+    """"at minute 03", "at minutes 03 and 06", "at 10:21", "at minute 03, and at 10:21 and 10:24". clock_from=None
+    for a list of days 1 and 2, whose minute 90 is the night's answers' (world.NIGHT_MINUTE), not a time of day."""
+    if clock_from is None:
+        return f"at minute{'s' if len(ms) > 1 else ''} {_and([f'{m:02d}' for m in ms])}"
+    before = [f"{m:02d}" for m in ms if m < CLOCK_FROM]
+    after = [clock(m) for m in ms if m >= CLOCK_FROM]
+    parts = ([f"at minute{'s' if len(before) > 1 else ''} {_and(before)}"] if before else []) + \
+            ([f"at {_and(after)}"] if after else [])
+    return ", and ".join(parts)
+
+
+def minutes_list(ms):
+    """A list in brackets: "min 03, 06", "min 03, 10:21", "10:21, 10:24"."""
+    before = [f"{m:02d}" for m in ms if m < CLOCK_FROM]
+    after = [clock(m) for m in ms if m >= CLOCK_FROM]
+    return ", ".join((["min " + ", ".join(before)] if before else []) + after)
+
+
+def unstamp(line):
+    """(minute, the rest) of a line stamped by clock(); (None, line) if it has no stamp."""
+    m = re.match(r"^(?:min (\d+)|(\d\d):(\d\d)): (.*)$", line, flags=re.S)
+    if not m:
+        return None, line
+    minute = int(m.group(1)) if m.group(1) else int(m.group(2)) * 60 + int(m.group(3)) - DAY_START
+    return minute, m.group(4)
 
 HOUSE = ("The family has shut itself in the house. The water has stopped. Food is short. "
          "Rooms: " + "; ".join(f"{ROOMS[r]} ({ROOM_NOTES[r]})" for r in ROOMS) + ".")

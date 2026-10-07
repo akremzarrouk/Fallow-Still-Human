@@ -608,13 +608,13 @@ def carry_in(day1, n, p, short=False, minutes=True):
     if p.confessed:
         sure = next(x for x in p.sure if "you admitted aloud that you took the can" in x)
         front = sure.split(", in front of ", 1)[1].rstrip(".").split(", ") if ", in front of " in sure else None
-        out.append(f"You admitted at minute {sure[4:6]} that you took the can"
+        out.append(f"You admitted at {data.minute_words(data.unstamp(sure)[0])} that you took the can"
                    + (f", in front of {names([q for q in data.ORDER if NAMES[q] in front])}." if front else "."))
     elif p.knows_culprit and p.knows_culprit != p.id:
         sure = next(x for x in p.sure if " admitted taking the can: " in x)
         words = sure.split(" admitted taking the can: ", 1)[1].rsplit(" (you heard it)", 1)[0]
         after = ", after denying it to you" if p.knows_culprit in p.denials_heard else ""
-        out.append(f"{NAMES[p.knows_culprit]} admitted taking the can at minute {p.confession_heard_at:02d}{after}: "
+        out.append(f"{NAMES[p.knows_culprit]} admitted taking the can at {data.minute_words(p.confession_heard_at)}{after}: "
                    f"{words} (you heard it).")
     elif c is not None and p.id == c:
         accusers = [q for q in data.ORDER if q in p.accused_by]
@@ -622,10 +622,10 @@ def carry_in(day1, n, p, short=False, minutes=True):
                                                               else ", and nobody named you."))
     else:
         out.append("Nobody admitted taking the can, and it was not found.")
-    for x in p.sure:
-        if x[8:].startswith("you finished searching the "):
-            out.append(f"You searched the {x[8 + len('you finished searching the '):].split(':')[0]} at minute "
-                       f"{x[4:6]} and found nothing.")
+    for mm, rest in map(data.unstamp, p.sure):
+        if rest.startswith("you finished searching the "):
+            out.append(f"You searched the {rest[len('you finished searching the '):].split(':')[0]} at "
+                       f"{data.minute_words(mm)} and found nothing.")
     acc = {}
     for turn in day1.transcript["turns"]:
         for a in turn["acts"]:
@@ -635,20 +635,20 @@ def carry_in(day1, n, p, short=False, minutes=True):
         parts = []
         for (a, t), ms in acc.items():
             times = {1: "", 2: " twice", 3: " three times"}.get(len(ms), f" {len(ms)} times")
-            when = f" (min {', '.join(f'{x:02d}' for x in ms)})" if minutes else ""
+            when = f" ({data.minutes_list(ms)})" if minutes else ""
             parts.append(f"{'you' if a == p.id else NAMES[a]} accused {'you' if t == p.id else NAMES[t]}{times}{when}")
         text = "; ".join(parts)
         out.append(f"Accusations: {text}.")
     ate = {}
     for x in p.sure:
         if " ate one of the portions" in x:
-            mm, rest = x[4:6], x[8:]
+            mm, rest = data.unstamp(x)
             ate.setdefault(mm, []).append("you" if rest.startswith("you ate") else rest.split(" ate one")[0])
     for mm, who in ate.items():
         mine = "you" in who
         who = (["You"] if mine else []) + [w for w in who if w != "you"]
         each = " each" if len(who) > 1 else ""
-        out.append(f"{' and '.join(who)} ate a portion{each} at minute {mm}" + ("." if mine else " (you saw it)."))
+        out.append(f"{' and '.join(who)} ate a portion{each} at {data.minute_words(mm)}" + ("." if mine else " (you saw it)."))
     plan = day1.heard_plan(p)
     if plan:
         out.append("About going to the neighbour's house last night, where it was left: "
@@ -680,13 +680,13 @@ def carry_in_later(prev, n, p, short=False, minutes=True):
     if p.confessed and p.confessed_day == prev.day:                               # Y2
         sure = next(x for x in p.sure if "you admitted aloud that you took the can" in x)
         front = sure.split(", in front of ", 1)[1].rstrip(".").split(", ") if ", in front of " in sure else None
-        out.append(f"You admitted at minute {sure[4:6]} that you took the can"
+        out.append(f"You admitted at {data.minute_words(data.unstamp(sure)[0])} that you took the can"
                    + (f", in front of {names([q for q in data.ORDER if NAMES[q] in front])}." if front else "."))
     elif p.knows_culprit and p.knows_culprit != p.id and p.confession_heard_day == prev.day:
         sure = next(x for x in p.sure if " admitted taking the can: " in x)
         words = sure.split(" admitted taking the can: ", 1)[1].rsplit(" (you heard it)", 1)[0]
         after = ", after denying it to you" if p.knows_culprit in p.denials_heard else ""
-        out.append(f"{NAMES[p.knows_culprit]} admitted taking the can at minute {p.confession_heard_at:02d}{after}: "
+        out.append(f"{NAMES[p.knows_culprit]} admitted taking the can at {data.minute_words(p.confession_heard_at)}{after}: "
                    f"{words} (you heard it).")
     for label, prefix, verb in (("Accusations", "accuse_", "accused"), ("Confrontations", "confront_", "confronted")):
         acts = {}                                                                 # Y3, Y4
@@ -698,41 +698,41 @@ def carry_in_later(prev, n, p, short=False, minutes=True):
             parts = []
             for (a, tgt), ms in acts.items():
                 times = {1: "", 2: " twice", 3: " three times"}.get(len(ms), f" {len(ms)} times")
-                when = f" (min {', '.join(f'{x:02d}' for x in ms)})" if minutes else ""
+                when = f" ({data.minutes_list(ms)})" if minutes else ""
                 parts.append(f"{'you' if a == p.id else NAMES[a]} {verb} {'you' if tgt == p.id else NAMES[tgt]}{times}{when}")
             out.append(f"{label}: " + "; ".join(parts) + ".")
-    for x in p.sure:                                                              # Y5
-        if x[8:].startswith("you finished searching the "):
-            out.append(f"You searched the {x[8 + len('you finished searching the '):].split(':')[0]} at minute "
-                       f"{x[4:6]} and found nothing.")
+    for mm, rest in map(data.unstamp, p.sure):                                   # Y5
+        if rest.startswith("you finished searching the "):
+            out.append(f"You searched the {rest[len('you finished searching the '):].split(':')[0]} at "
+                       f"{data.minute_words(mm)} and found nothing.")
     ate = {}                                                                      # Y6
     for x in p.sure:
         if " ate one of the portions" in x:
-            mm, rest = x[4:6], x[8:]
+            mm, rest = data.unstamp(x)
             ate.setdefault(mm, []).append("you" if rest.startswith("you ate") else rest.split(" ate one")[0])
     for mm, who in ate.items():
         mine = "you" in who
         who = (["You"] if mine else []) + [w for w in who if w != "you"]
         each = " each" if len(who) > 1 else ""
-        out.append(f"{' and '.join(who)} ate a portion{each} at minute {mm}" + ("." if mine else " (you saw it)."))
+        out.append(f"{' and '.join(who)} ate a portion{each} at {data.minute_words(mm)}" + ("." if mine else " (you saw it)."))
     for x in p.sure:
-        mm, rest = x[4:6], x[8:]
+        mm, rest = data.unstamp(x)
         g = re.match(r"^(\w+) gave one of the portions to (\w+), and \w+ (ate it|put it back on the shelf)", rest)
         if g:
             giver = "You" if g.group(1) == "you" else g.group(1)
             done = "ate it" if g.group(3) == "ate it" else "put it back"
-            out.append(f"{giver} gave {g.group(2)} a portion at minute {mm}, and {g.group(2)} {done}"
+            out.append(f"{giver} gave {g.group(2)} a portion at {data.minute_words(mm)}, and {g.group(2)} {done}"
                        + ("." if giver == "You" else " (you saw it)."))
             continue
         g = re.match(r"^(\w+) gave you one of the portions, and you (ate it|put it back on the shelf)", rest)
         if g:
             done = "ate it" if g.group(2) == "ate it" else "put it back"
-            out.append(f"{g.group(1)} gave you a portion at minute {mm}, and you {done}.")
+            out.append(f"{g.group(1)} gave you a portion at {data.minute_words(mm)}, and you {done}.")
             continue
         if rest.startswith("you shared out the last "):
-            out.append(f"You shared out the food at minute {mm}.")
+            out.append(f"You shared out the food at {data.minute_words(mm)}.")
         elif " shares out the last " in rest and rest.endswith("you had your part."):
-            out.append(f"{rest.split(' shares out the last ')[0]} shared out the food at minute {mm}; you had your part.")
+            out.append(f"{rest.split(' shares out the last ')[0]} shared out the food at {data.minute_words(mm)}; you had your part.")
     plan = prev.heard_plan(p)                                                     # Y7
     if plan:
         out.append("About going to the neighbour's house last night, where it was left: "

@@ -21,8 +21,6 @@ import data
 from world import NAMES, day_index
 
 DAY_END = 840               # 21:00, bedtime (§3)
-CLOCK_FROM = 90             # from this minute on, records and summaries say the clock (amendment 3)
-START = 7 * 60              # minute 00 is 07:00
 WEAK, VERY_WEAK = 48, 96    # fasting (§1.1)
 TIRED, EXHAUSTED = 16, 24   # sleep debt (§1.2)
 DAY_HOURS = 14              # a day not played to bedtime: awake from 07:00 to 21:00
@@ -36,8 +34,12 @@ BEFORE_DAY_1 = -720         # house day 3, 19:00: when each of them last ate bef
 THE_CAN = -240              # house day 4, 03:00: the can, for whoever took it
 STAYS = {"dominant": 0.8, "empathetic": 0.85}   # §2.1: Daniel (dominant 0.85) and Elena (empathetic 0.9) stay
 WITHDRAW_GRUDGE = 3
+WITHDRAW_FOR = 120          # fix 2: a withdraw lasts 2 hours (to the end of a rest taken inside it)
 Q2_GRUDGE, Q2_APART, Q2_EVERY = 2, 60, 120
 QUIET_ASKS, QUIET_ASKS_EACH, DAY_ASKS = 12, 4, 40
+MORNING_ASKS, STRETCH_ASKS = 24, 8      # fix 1: the morning's played turns, and a stretch a trigger starts
+FULL_REST = 60              # reports/meeting_fixes.md: a rest this long cools a grudge of 3, and counts as one of two
+MEETING_APART = 60          # reports/meeting_fixes.md: not spoken with for this long, a meeting gets its own line
 HUNGER_A_MINUTE = 0.004     # × hunger rate, as a played turn adds it (world.py)
 OWN_ROOM = {p: room for room, owners in data.OWNERS.items() for p in owners}
 
@@ -52,11 +54,9 @@ NEED_VIEWS = {("fast", 1): "You had grown weak from hunger: standing up made you
 
 
 def clock(minute):
-    """A minute of the day as records and summaries say it: "min 18" before minute 90, the clock from then on."""
-    if minute < CLOCK_FROM:
-        return f"min {minute:02d}"
-    h, m = divmod(START + minute, 60)
-    return f"{h:02d}:{m:02d}"
+    """A minute of the day as records, summaries and prompts say it: "min 18" before minute 90, the clock from then
+    on (data.clock)."""
+    return data.clock(minute)
 
 
 def grid(minute):
@@ -162,6 +162,10 @@ class Quiet:
         self.withdrawals = []
         self.stretches = []         # each run of played turns: {"start", "end", "room", "trigger"}
         self.asks = 0               # the model's answers asked today
+        self.cap, self.cap_why = None, None     # the asks the played stretch under way may reach, and why it stops
+        self.withdrawn = {}         # pid -> the minute their withdraw is over, whether in its span or resting in it
+        self.came_in = {}           # pid -> (minute, room) of the last time they came into a room
+        self.cooled = []            # each grudge of 3 that a rest brought down to 2
         self.morning_end = None
         self.seq = 0                # orders spans and need events that share a minute
         self.left = None            # the last move: (pid, the room they left, who saw them go)
@@ -209,12 +213,28 @@ class Quiet:
 
     # ---------- the budget (§4) ----------
     def spent(self):
-        return self.asks >= DAY_ASKS
+        """No more asks now: the day's 40, or the played stretch's own (fix 1)."""
+        return self.asks >= DAY_ASKS or (self.cap is not None and self.asks >= self.cap)
+
+    def spent_why(self):
+        return "the day's asks are spent" if self.asks >= DAY_ASKS else self.cap_why
+
+    def begin(self, stretch, n, why):
+        """A played stretch begins: it may ask the model at most n times more (fix 1)."""
+        stretch["asks_at"] = self.asks
+        self.cap, self.cap_why = self.asks + n, why
+
+    def close(self, stretch, end):
+        stretch["end"], stretch["asks"] = end, self.asks - stretch.pop("asks_at")
+        self.cap = self.cap_why = None
+        self.stretches.append(stretch)
 
     def budget(self, pid):
         """Why a quiet ask of pid cannot be made now, or None."""
-        if self.spent():
+        if self.asks >= DAY_ASKS:
             return f"the day's {DAY_ASKS} asks are spent"
+        if self.spent():
+            return self.cap_why
         if len(self.quiet_asked) >= QUIET_ASKS:
             return f"{QUIET_ASKS} quiet asks today"
         if sum(1 for a in self.quiet_asked if a["who"] == pid) >= QUIET_ASKS_EACH:
@@ -229,6 +249,8 @@ class Quiet:
             return
         self.pending[p.id] = {"kind": kind, "minute": minute, "texts": [text] if text else []}
         self.quiet_asked.append({"minute": minute, "who": p.id, "kind": kind, "done": False})
+        if self.withdrawn.pop(p.id, None) is not None and self.open.get(p.id, {}).get("routine") == "withdraw":
+            self.end(p, minute, "asked")
         if self.resting(p.id):
             self.end(p, minute, "woken")
             if text:
@@ -292,12 +314,26 @@ class Quiet:
             return None
         if span["routine"] == "rest":
             his = data.PRONOUNS[p.id]["his"]
+            if minute - span["start"] < FULL_REST:
+                p.needs["rests"] -= 1
+            else:
+                self.cool(p, minute)
+            if p.id in self.withdrawn:
+                self.withdrawn[p.id] = max(self.withdrawn[p.id], minute)
             p.needs["last_rest_end"] = minute
             p.activity = {"kind": "idle", "label": "just got up"}
             p.memory.append((minute, "you got up from your bed."))
             for q in self.awake_with(p):
                 q.memory.append((minute, f"{p.name} gets up from {his} bed."))
         return span
+
+    def cool(self, p, minute):
+        """A rest of an hour or more has ended: each grudge of 3 drops to 2. An answer can raise it again."""
+        for t in data.ORDER:
+            g = p.grudges.get(t)
+            if g is not None and g.strength >= 3:
+                g.strength, g.last_change = 2, minute
+                self.cooled.append({"minute": minute, "who": p.id, "against": t})
 
     def rest_end(self, p, start, length):
         """When a rest begun at `start` ends: after its seeded length, or once debt is below 12 (§2.2). A rest begun
@@ -318,22 +354,20 @@ class Quiet:
         return self.debt(p, minute) >= TIRED or self.fast(p, minute) >= VERY_WEAK
 
     def arrive(self, p, room, minute):
-        """A routine brings p into `room`: who sees them go and come, a withdrawal it interrupts, and Q2. Returns the
-        Q2 asks it fired."""
+        """A routine brings p into `room`: who sees them go and come, and Q2. Someone coming in does not end a
+        withdraw (fix 2). Returns the Q2 asks it fired."""
         left = p.room
         gone_from = self.awake_with(p, left)
         for q in gone_from:
             q.memory.append((minute, f"{p.name} goes to the {data.ROOMS[room]}."))
         p.memory.append((minute, f"you went to the {data.ROOMS[room]}."))
         p.room = room
+        self.came_in[p.id] = (minute, room)
         self.left = (p.id, left, [q.id for q in gone_from])
         there = [q for q in self.people() if q.room == room and q.id != p.id]
         for q in there:
             if not self.resting(q.id):
                 q.memory.append((minute, f"{p.name} comes into the {data.ROOMS[room]}."))
-        for q in there:
-            if self.open.get(q.id, {}).get("routine") == "withdraw":
-                self.end(q, minute, "someone came in")
         return self.meet(p, there, minute)
 
     def meet(self, a, there, minute):
@@ -405,16 +439,22 @@ class Quiet:
     def routine_for(self, p, minute):
         if self.rest_due(p, minute):
             return "rest", OWN_ROOM[p.id]
+        until = self.withdrawn.get(p.id)
+        if until is not None:
+            if minute < until:
+                return "withdraw", OWN_ROOM[p.id]
+            del self.withdrawn[p.id]
         return "sit", "kitchen"
 
     def assign(self, minute):
         """Everyone without a routine (and not about to be asked) takes one, in the family's order: rest if it is due,
-        else sit in the kitchen (§2). A sitter whose rest falls due goes to rest; whoever keeps to their room stays."""
+        else the rest of a withdraw, else sit in the kitchen (§2). A sitter whose rest falls due goes to rest; so does
+        whoever keeps to their room, there (fix 2)."""
         for _ in range(len(data.ORDER) + 1):
             changed = False
             for p in sorted(self.people(), key=lambda x: data.ORDER.index(x.id)):
                 span = self.open.get(p.id)
-                if span and span["routine"] == "sit" and self.rest_due(p, minute):
+                if span and span["routine"] in ("sit", "withdraw") and self.rest_due(p, minute):
                     self.end(p, minute, "went to rest")
                     span = None
                 if span or p.id in self.pending or self.m.convos.active[p.room]:
@@ -432,6 +472,8 @@ class Quiet:
                     length = rest_length(self.m.seed, self.k, p.id, p.needs["rests"] + 1)
                     until = self.rest_end(p, minute, length)
                     span = self.start(p, "rest", minute, planned=length, until=until, leave=leave)
+                elif routine == "withdraw":
+                    span = self.start(p, "withdraw", minute, until=self.withdrawn[p.id], leave=leave)
                 else:
                     span = self.start(p, "sit", minute, leave=leave)
                 span["left"] = left
@@ -440,10 +482,15 @@ class Quiet:
                 break
 
     def run_out(self, minute):
-        """Rests whose time is up end: after their seeded length ("time") or once debt is below 12 ("rested")."""
+        """Rests whose time is up end: after their seeded length ("time") or once debt is below 12 ("rested"). A
+        withdraw ends 2 hours after it began, or at the end of a rest taken inside it ("two hours")."""
         for p in self.people():
             span = self.open.get(p.id)
             if span and span["until"] is not None and span["until"] <= minute:
+                if span["routine"] == "withdraw":
+                    self.withdrawn.pop(p.id, None)
+                    self.end(p, minute, "two hours")
+                    continue
                 self.end(p, minute, "time" if span["until"] - span["start"] == span["planned"] else "rested")
 
     def step(self, minute):
@@ -461,8 +508,8 @@ class Quiet:
         return bool(self.pending)
 
     def next_event(self, minute):
-        """The next minute anything changes: a rest running out, a need crossing a line, a rest falling due for a
-        sitter, or bedtime. Never past bedtime."""
+        """The next minute anything changes: a rest or a withdraw running out, a need crossing a line, a rest falling
+        due for a sitter or for whoever keeps to their room, or bedtime. Never past bedtime."""
         out = [DAY_END]
         for p in self.people():
             span = self.open.get(p.id)
@@ -475,7 +522,7 @@ class Quiet:
                 d = self.debt(p, minute)
                 out += [grid(minute + (th - d) * 60) for th in (TIRED, EXHAUSTED) if d < th]
                 n = p.needs
-                if span and span["routine"] == "sit" and n["rests"] < RESTS_A_DAY:
+                if span and span["routine"] in ("sit", "withdraw") and n["rests"] < RESTS_A_DAY:
                     allowed = minute if n["last_rest_end"] is None else n["last_rest_end"] + REST_APART
                     due = min(minute + max(0.0, TIRED - d) * 60, minute + max(0.0, VERY_WEAK - f) / rate * 60)
                     out.append(grid(max(allowed, due)))
@@ -494,11 +541,10 @@ class Quiet:
         for pid, need, stage in self.tick(minute):
             self.q1_done.add((pid, need, stage))
         self.run_out(minute)            # a rest out of the played room ends on time; the next routine waits
-        rooms = {p.id: p.room for p in self.m.people.values()}
         self.m.turn(t)
-        self.after_turn(t, rooms)
+        self.after_turn(t)
 
-    def after_turn(self, t, rooms):
+    def after_turn(self, t):
         m = self.m
         minute = t * data.MINUTES_PER_TURN
         after = minute + data.MINUTES_PER_TURN
@@ -508,16 +554,16 @@ class Quiet:
             if a["words"]:
                 for q in a["audience"]:
                     self.exchanged[tuple(sorted((a["who"], q)))] = minute
-        # A routine ends when its person does anything but stay put; whoever keeps to their room is interrupted by
-        # anyone coming in.
+        # A routine ends when its person does anything but stay put. Someone coming in does not end a withdraw; its
+        # person leaving their own room does, as they chose to (fix 2).
         for a in acts:
             if a["option"] != "silent":
                 self.end(m.people[a["who"]], minute, "acted")
-        for p in self.people():
-            if p.room != rooms.get(p.id):
-                for q in self.people():
-                    if q.room == p.room and q.id != p.id and self.open.get(q.id, {}).get("routine") == "withdraw":
-                        self.end(q, after, "someone came in")
+            if a["moved_to"]:
+                self.came_in[a["who"]] = (after, a["moved_to"])
+        for pid in list(self.withdrawn):
+            if m.people[pid].room != OWN_ROOM[pid]:
+                del self.withdrawn[pid]
         for a in acts:
             why = self.withdraw_why(m.people[a["who"]], a, minute)
             if why:
@@ -526,7 +572,7 @@ class Quiet:
             for r in data.ROOMS:
                 if m.convos.active[r]:
                     m.convos.active[r] = False
-                    m.convos.log.append((after, r, "ended", "the day's asks are spent"))
+                    m.convos.log.append((after, r, "ended", self.spent_why()))
 
     def withdraw_why(self, p, a, minute):
         """§2.1: they chose `silent`; they spoke earlier in this conversation; they hold a grudge of 3 against someone
@@ -548,13 +594,17 @@ class Quiet:
         return {"chose": "silent", "spoke_at": spoke[-1], "grudge_against": held}
 
     def withdraw(self, p, minute, why):
+        """p goes off to their own room and keeps to it for 2 hours, unless a trigger asks them (fix 2)."""
         room = OWN_ROOM[p.id]
         self.end(p, minute, "withdrew")
         left = p.room
+        self.withdrawn[p.id] = minute + WITHDRAW_FOR
         self.arrive(p, room, minute)
-        span = self.start(p, "withdraw", minute, leave=self.left[2])
-        span["left"] = left
         self.withdrawals.append({"who": p.id, "minute": minute, "room": room, "why": why})
+        if p.id not in self.withdrawn:          # a trigger asked them as they came in: over as it began
+            return
+        span = self.start(p, "withdraw", minute, until=self.withdrawn[p.id], leave=self.left[2])
+        span["left"] = left
 
     def bedtime(self):
         self.tick(DAY_END)
@@ -562,6 +612,44 @@ class Quiet:
             self.end(p, DAY_END, "bedtime")
             self.settle(p, DAY_END)
         self.pending.clear()
+        self.withdrawn.clear()
+
+    # ---------- a meeting after hours apart (reports/meeting_fixes.md) ----------
+    def meeting_lines(self, p, minute):
+        """For each person here whom p has not exchanged a line with for an hour or more: when they last spoke, what
+        p did since (their own spans), and who has just come in. One line each, just before "Now"."""
+        out = []
+        for q in self.m.others_here(p):
+            last = self.exchanged.get(tuple(sorted((p.id, q.id))))
+            if last is not None and minute - last < MEETING_APART:
+                continue
+            since = self.since(p, -1 if last is None else last, minute)
+            if last is not None:
+                words = [f"You last spoke with {q.name} at {clock(last)}."]
+                words += [f"Since then you {since}."] if since else []
+            else:
+                words = [f"You have not spoken with {q.name} today."]
+                words += [f"So far today you {since}."] if since else []
+            room = data.ROOMS[p.room]
+            if self.came_in.get(q.id) == (minute, p.room):
+                words.append(f"{q.name} has just come into the {room}.")
+            elif self.came_in.get(p.id) == (minute, p.room):
+                words.append(f"You have just come into the {room}, where {q.name} is.")
+            out.append(" ".join(words))
+        return out
+
+    def since(self, p, after, minute):
+        """What p did between `after` and `minute`, from their spans that ended in between: "lay on your bed until
+        10:36, then sat in the kitchen until 11:42"."""
+        mine = []
+        for s in sorted((s for s in self.spans if s["who"] == p.id and s["end"] is not None
+                         and after < s["end"] <= minute), key=lambda s: s["start"]):
+            if mine and (mine[-1]["routine"], mine[-1]["room"]) == (s["routine"], s["room"]):
+                mine[-1] = {**mine[-1], "end": s["end"]}
+            else:
+                mine.append(s)
+        did = {"rest": "lay on your bed", "withdraw": "kept to your own room", "sit": "sat in the kitchen"}
+        return ", then ".join(f"{did[s['routine']]} until {clock(s['end'])}" for s in mine)
 
     # ---------- the record ----------
     def views(self, span):
@@ -606,7 +694,10 @@ class Quiet:
                 "minute": s["start"], "kind": "routine", "routine": s["routine"], "until": s["end"], "actor": s["who"],
                 "room": s["room"], "witnesses": {q: ("did" if q == s["who"] else "saw") for q in views},
                 "views": views, "text": f"{NAMES[s['who']]}: {s['routine']} in the {data.ROOMS[s['room']]}, "
-                                        f"{clock(s['start'])} to {clock(s['end'])}"}))
+                                        f"{clock(s['start'])} to {clock(s['end'])}",
+                # Fix 4: whoever saw only its end perceived it then, and their record is stamped at that minute.
+                "seen_at": {q: s["end"] for q in views if q != s["who"] and q not in s["seen_start"]
+                            and q not in s["seen_leave"]}}))
         for n in self.need_events:
             out.append((n["minute"], n["seq"], {
                 "minute": n["minute"], "kind": "need", "need": n["need"], "stage": n["stage"], "actor": n["who"],
@@ -622,7 +713,7 @@ class Quiet:
                 "spans": [{k: s[k] for k in keys} for s in self.spans if s["end"] is not None],
                 "needs": self.needs_log,
                 "need_events": [{k: v for k, v in n.items() if k not in ("seq", "view")} for n in self.need_events],
-                "withdrawals": self.withdrawals, "log": self.log, "stretches": self.stretches,
+                "withdrawals": self.withdrawals, "log": self.log, "stretches": self.stretches, "cooled": self.cooled,
                 "asks": {"day": self.asks, "quiet": len(done),
                          "quiet_by_person": {q: sum(1 for a in done if a["who"] == q) for q in data.ORDER},
                          "quiet_let_through": len(self.quiet_asked)}}
@@ -633,6 +724,7 @@ def play(m, told=None):
     q = m.quiet
     t = 0
     stretch = {"start": 0, "end": None, "room": "kitchen", "trigger": "the morning"}
+    q.begin(stretch, MORNING_ASKS, f"the morning's {MORNING_ASKS} asks are spent")
     while t * data.MINUTES_PER_TURN < DAY_END:
         minute = t * data.MINUTES_PER_TURN
         if stretch is not None:
@@ -641,8 +733,7 @@ def play(m, told=None):
                 told(t)
             t += 1
             if not any(m.convos.active.values()) and not m.arrivals:
-                stretch["end"] = t * data.MINUTES_PER_TURN
-                q.stretches.append(stretch)
+                q.close(stretch, t * data.MINUTES_PER_TURN)
                 stretch = None
                 if q.morning_end is None:
                     q.morning_end = t * data.MINUTES_PER_TURN
@@ -650,13 +741,13 @@ def play(m, told=None):
         if q.step(minute):
             first = next(e for e in q.log if e["minute"] == minute and e["fired"])
             stretch = {"start": minute, "end": None, "room": first["room"], "trigger": first["kind"]}
+            q.begin(stretch, STRETCH_ASKS, f"this stretch's {STRETCH_ASKS} asks are spent")
             continue
         nxt = q.next_event(minute)
         q.advance(minute, nxt)
         t = nxt // data.MINUTES_PER_TURN
     if stretch is not None:
-        stretch["end"] = DAY_END
-        q.stretches.append(stretch)
+        q.close(stretch, DAY_END)
     q.bedtime()
     m.finish()
     return m

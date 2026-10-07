@@ -1213,12 +1213,14 @@ class WitnessScenarioTest(unittest.TestCase):
                 # also "two days ago" and "the night before last" (reports/days_design.md, §3.5).
                 day = r"(yesterday|two days ago|\w+ days ago)"
                 night = r"(last night|the night before last|\w+ nights ago)"
+                # Day 3 runs to 21:00: its minutes from 90 on are the clock (reports/quiet_day_fixes.md, fix 3).
+                at = r"(at minutes? [\d, and]+(, and at [\d:, and]+)?|at \d\d:\d\d[\d:, and]*)"
                 self.assertRegex(lines[0][:-len(" " + NOTE)],
                                  r"^About the can(: you have not settled on who took it\."
-                                 r"| \([a-z ]+\): you thought \w+ took it, at minutes? [\d, and]+\."
-                                 rf"| \([a-z ]+\): you thought \w+ took it(, (and )?({day} at minutes? [\d, and]+"
-                                 rf"|{night}|this morning at minutes? [\d, and]+))*\."
-                                 rf"|: \w+ admitted taking it( {day},)? at minute \d{{2,3}}\.)$")   # day 3 runs to 840
+                                 rf"| \([a-z ]+\): you thought \w+ took it, {at}\."
+                                 rf"| \([a-z ]+\): you thought \w+ took it(, (and )?({day} {at}"
+                                 rf"|{night}|this morning {at}))*\."
+                                 rf"|: \w+ admitted taking it( {day},)? at (minute \d\d|\d\d:\d\d)\.)$")
                 for words in ("Daniel eats a can", "you ate it yourself", "On your conscience"):
                     self.assertNotIn(words, p)
             else:
@@ -4661,10 +4663,24 @@ V16_RUNS = os.path.join(HERE, "runs", "v16")
 def asked_where(prompt):
     """(who, minute or None at night, option ids, speech option ids) of a decision prompt."""
     who = re.match(r"You are (\w+),", prompt).group(1).lower()
-    m = re.search(r"^Now, minute (\d+)", prompt, flags=re.M)
-    block = prompt.split("Your options:")[-1]
-    return (who, int(m.group(1)) if m else None, re.findall(r"^- (\w+):", block, flags=re.M),
+    return (who, now_minute(prompt), re.findall(r"^- (\w+):", block := prompt.split("Your options:")[-1], flags=re.M),
             set(re.findall(r"^- (\w+): \(speech\)", block, flags=re.M)))
+
+
+def now_minute(prompt):
+    """The minute of a day prompt's "Now," line, "Now, minute 54" or "Now, 10:21"; None at night."""
+    m = re.search(r"^Now, (?:minute (\d+)|(\d\d):(\d\d)),", prompt, flags=re.M)
+    if not m:
+        return None
+    return int(m.group(1)) if m.group(1) else int(m.group(2)) * 60 + int(m.group(3)) - 7 * 60
+
+
+def minute_numbers(prompt):
+    """Every number a prompt writes after "min", "minute" or "minutes", lists included ("at minutes 03, 06 and 21")."""
+    out = []
+    for g in re.findall(r"\bmin(?:ute)?s? (\d+(?:(?:, | and )\d+)*)\b", prompt):
+        out += [int(x) for x in re.findall(r"\d+", g)]
+    return out
 
 
 class HushFake(FakeClient):
@@ -4734,6 +4750,18 @@ class PolicyFake(HushFake):
             option = "silent" if "silent" in options else options[0]
         return json.dumps({"option": option, "say": f"Words of {who} at {minute}." if option in speech else None,
                            "feeling": "tense", "reason": "Policy.", "suspects": "nobody", "angry_at": angry})
+
+
+class RecordingTalkFake(TalkFake):
+    """TalkFake that keeps every prompt it is sent, the day's and the night's."""
+
+    def __init__(self, talk_from=0):
+        super().__init__(talk_from)
+        self.prompts = []
+
+    def generate(self, system, prompt, schema=None):
+        self.prompts.append(prompt)
+        return super().generate(system, prompt, schema)
 
 
 class QuietDayTest(unittest.TestCase):
@@ -5190,6 +5218,344 @@ class QuietDayTest(unittest.TestCase):
         text = importlib.import_module("story").render_day2(d.day3)
         self.assertIn("## After the morning", text)
         self.assertIn("lies on his bed in the brothers room", text)
+
+    # ---------- the fixes before the first live run (reports/quiet_day_fixes.md) ----------
+    @staticmethod
+    def asks_in(m, s):
+        """The model's answers asked in a stretch, counted from the turn log: every model decision, and every one that
+        fell back after asking (an answer refused because the asks were spent asked nothing)."""
+        return sum(1 for rec in m.log if s["start"] <= rec["minute"] < s["end"] for x in rec["decisions"]
+                   if x["mode"] == "model" or (x.get("invalid") and "spent" not in x["invalid"]))
+
+    def test_the_morning_stops_at_24_asks_and_a_triggered_stretch_at_8(self):
+        """Fix 1, DONE 1: with TalkFake on v16 seed 2, the morning stops at 24 asks, no triggered stretch passes 8, and
+        at least 2 triggered stretches happen after the morning."""
+        d = self.played(client=TalkFake())
+        m = d.day3
+        tr = m.transcript["quiet"]
+        stretches = tr["stretches"]
+        counted = [self.asks_in(m, s) for s in stretches]
+        self.assertEqual(stretches[0]["trigger"], "the morning")
+        self.assertEqual(counted[0], 24, counted)
+        self.assertIn((stretches[0]["end"], "kitchen", "ended", "the morning's 24 asks are spent"), m.convos.log)
+        self.assertEqual(tr["morning_end"], stretches[0]["end"])
+        self.assertGreaterEqual(len(stretches[1:]), 2, stretches)
+        self.assertTrue(all(n <= 8 for n in counted[1:]), counted)
+        self.assertEqual([s["asks"] for s in stretches], counted)
+        self.assertLessEqual(tr["asks"]["day"], 40)
+        self.assertEqual(tr["asks"]["day"], sum(counted))
+        self.assertLessEqual(tr["asks"]["quiet"], 12)
+
+    def test_a_triggered_stretch_ends_as_when_the_budget_is_spent(self):
+        d = self.played(client=TalkFake())
+        m = d.day3
+        for s in m.transcript["quiet"]["stretches"][1:]:
+            if s["asks"] == 8:
+                self.assertTrue(any(mm == s["end"] and why == "this stretch's 8 asks are spent"
+                                    for mm, r, what, why in m.convos.log if what == "ended"), s)
+                break
+        else:
+            self.fail("no triggered stretch reached 8 asks")
+
+    def quiet_mode(self, q, start, stop):
+        """Quiet mode from `start`, as quiet.play runs it between stretches, until `stop` or a trigger fires. Returns
+        the minute it stopped."""
+        minute = start
+        while minute < stop:
+            if q.step(minute):
+                return minute
+            nxt = q.next_event(minute)
+            q.advance(minute, nxt)
+            minute = nxt
+        return minute
+
+    def bounce(self):
+        """§5 of reports/quiet_day_impl.md: Mara walks out on Daniel at 10:36 (a grudge of 3); Elena comes into the back
+        room to lie down at 11:33. Daniel and Leo have had their rests; Mara's next rest is allowed from 11:42."""
+        d = self.v16()
+        m, q = d.day3, d.day3.quiet
+        for r in data.ROOMS:
+            m.convos.active[r] = False
+        for p in m.people.values():
+            p.room = "kitchen"
+        for pid in ("daniel", "leo"):
+            m.people[pid].needs["rests"] = 2
+        m.people["elena"].needs.update(rests=1, last_rest_end=153)
+        m.people["mara"].needs.update(rests=1, last_rest_end=162)
+        q.tick(216)             # what the needs crossed since 07:00 is behind them
+        q.withdraw(m.people["mara"], 216, {"chose": "silent", "spoke_at": 213, "grudge_against": ["daniel"]})
+        return m, q
+
+    def test_someone_coming_in_does_not_end_a_withdraw(self):
+        """Fix 2, DONE 2: Elena comes into the back room to rest; Mara keeps to it. Her rest falls due at 11:42 and she
+        takes it there, and the withdraw lasts to that rest's end."""
+        m, q = self.bounce()
+        mara = m.people["mara"]
+        stop = self.quiet_mode(q, 216, 840)
+        mine = [s for s in q.spans if s["who"] == "mara"]
+        self.assertIn((273, "Elena comes into the back room."), mara.memory)
+        self.assertEqual([(s["routine"], s["room"], s["start"], s["end"], s["ended"]) for s in mine[:2]],
+                         [("withdraw", "back_room", 216, 282, "went to rest"),
+                          ("rest", "back_room", 282, mine[1]["end"], "time")])
+        # Free at her rest's end, she goes to sit in the kitchen, where Daniel is: Q2 asks her, and the talk is played.
+        self.assertEqual(len(mine), 2)
+        self.assertEqual(stop, mine[1]["end"])
+        self.assertEqual((mara.room, q.pending["mara"]["kind"]), ("kitchen", "Q2"))
+        self.assertEqual([s for s in q.spans if s["ended"] == "someone came in"], [])
+        elena = [s for s in q.spans if s["who"] == "elena" and s["routine"] == "rest"]
+        self.assertEqual((elena[0]["start"], elena[0]["room"]), (273, "back_room"))
+
+    def test_a_withdraw_ends_two_hours_after_it_began(self):
+        m, q = self.bounce()
+        m.people["mara"].needs["rests"] = 2            # no rest of hers falls due today
+        stop = self.quiet_mode(q, 216, 840)
+        mine = [s for s in q.spans if s["who"] == "mara"]
+        self.assertEqual([(s["routine"], s["room"], s["start"], s["end"], s["ended"]) for s in mine],
+                         [("withdraw", "back_room", 216, 336, "two hours")])
+        # Then she goes to sit in the kitchen, where Daniel is: Q2 asks her.
+        self.assertEqual(stop, 336)
+        self.assertEqual((m.people["mara"].room, q.pending["mara"]["kind"]), ("kitchen", "Q2"))
+        self.assertNotIn("mara", q.withdrawn)
+
+    def test_a_trigger_ask_ends_a_withdraw(self):
+        m, q = self.bounce()
+        mara = m.people["mara"]
+        q.ask(mara, "Q2", 240, "Daniel comes into the back room", "test")
+        self.assertNotIn("mara", q.open)
+        self.assertEqual((q.spans[-1]["who"], q.spans[-1]["end"], q.spans[-1]["ended"]), ("mara", 240, "asked"))
+        self.assertNotIn("mara", q.withdrawn)
+        # Asked while resting inside it: woken, and the withdraw is over too.
+        m, q = self.bounce()
+        mara = m.people["mara"]
+        self.quiet_mode(q, 216, 300)
+        self.assertEqual(q.open["mara"]["routine"], "rest")
+        q.ask(mara, "Q2", 300, "Daniel comes into the back room", "test")
+        self.assertNotIn("mara", q.withdrawn)
+        self.assertEqual(next(s for s in reversed(q.spans) if s["who"] == "mara")["ended"], "woken")
+
+    def test_someone_coming_in_during_played_turns_does_not_end_a_withdraw(self):
+        def policy(who, minute, options):
+            if who == "leo":
+                return ("confront_daniel" if minute == 0 else "silent"), "Daniel"
+            if who == "daniel":
+                return "confront_leo" if minute <= 3 else "go_brothers_room"
+            return None
+        m, q = self.withdraw_case(policy)
+        self.assertEqual(q.open["leo"]["routine"], "withdraw")
+        q.pending["daniel"] = {"kind": "Q2", "minute": 6, "texts": []}     # Daniel is asked, and goes after him
+        q.turn(2)
+        self.assertEqual(m.people["daniel"].room, "brothers_room")
+        self.assertEqual(q.open["leo"]["routine"], "withdraw")
+
+    def test_prompts_say_the_clock_from_minute_90(self):
+        """Fix 3: the "Now" line, memory lines, facts and the lull line say the clock from minute 90 on; below, as
+        before."""
+        d = self.v16()
+        m = d.day3
+        leo = m.people["leo"]
+        leo.memory += [(54, "Mara sits down."), (201, "Daniel comes into the kitchen.")]
+        leo.grudges["daniel"].rise(207, "you were angry with Daniel", kind="angry")
+        early = m.prompt_for(leo, 29, m.options_for(leo))
+        self.assertRegex(early, r"(?m)^Now, minute 87, you are in the kitchen\.")
+        self.assertIn("\n- min 54: Mara sits down.", early)
+        late = m.prompt_for(leo, 70, m.options_for(leo), lull=201)
+        self.assertRegex(late, r"(?m)^Now, 10:30, you are in the kitchen\.")
+        self.assertIn("\n- min 54: Mara sits down.", late)
+        self.assertIn("\n- 10:21: Daniel comes into the kitchen.", late)
+        self.assertIn("since 10:21.", late)
+        self.assertIn("at 10:27", late)
+        self.assertEqual([x for x in minute_numbers(late) if x >= 90], [])
+        self.assertEqual([data.minutes_words(ms) for ms in ([3], [3, 6], [201], [3, 201, 204])],
+                         ["at minute 03", "at minutes 03 and 06", "at 10:21", "at minute 03, and at 10:21 and 10:24"])
+        self.assertEqual([data.minutes_list(ms) for ms in ([3, 6], [3, 201], [201, 204])],
+                         ["min 03, 06", "min 03, 10:21", "10:21, 10:24"])
+        self.assertEqual([data.unstamp(x) for x in ("min 03: a: b", "10:21: c", "tonight: d")],
+                         [(3, "a: b"), (201, "c"), (None, "tonight: d")])
+
+    def test_no_prompt_says_a_minute_of_90_or_later(self):
+        """Fix 3, DONE 3: day 3 played with TalkFake and night 3 after it: every prompt from minute 90 on says the clock,
+        and no prompt says "minute" or "min" with a number of 90 or more."""
+        client = RecordingTalkFake(talk_from=60)     # its accusations and confrontations come after 08:30
+        d = self.v16(client=client)
+        m = d.day3
+        self.quiet.play(m)
+        d.chron.add_day(m)
+        day = list(client.prompts)
+        n3 = self.night.Night(m, d.oracle, number=3, house=d.chron.house_state()).run()
+        self.assertTrue(n3.decisions)
+        night = client.prompts[len(day):]
+        late = [p for p in day if now_minute(p) is not None and now_minute(p) >= 90]
+        self.assertTrue(late, "no day prompt from minute 90 on")
+        for p in late:
+            self.assertRegex(p, r"(?m)^Now, \d\d:\d\d, you are in the ")
+        for p in day + night:
+            self.assertEqual([x for x in minute_numbers(p) if x >= 90], [], p)
+        # Block A of the next morning (its Y3/Y4 lists say the clock for acts from minute 90 on).
+        for pid in data.ORDER:
+            a = "\n".join(self.night.carry_in_later(m, n3, n3.people[pid]))
+            self.assertEqual([x for x in minute_numbers(a) if x >= 90], [], a)
+        acts = [(a["who"], turn["minute"]) for turn in m.transcript["turns"] for a in turn["acts"]
+                if a["option"].startswith(("accuse_", "confront_")) and turn["minute"] >= 90]
+        self.assertTrue(acts, "no accusation or confrontation from minute 90 on")
+        who, minute = acts[0]
+        self.assertIn(self.quiet.clock(minute), "\n".join(self.night.carry_in_later(m, n3, n3.people[who])))
+
+    def test_block_a_reads_the_clock_from_what_they_are_sure_of(self):
+        """Fix 3: what someone is sure of from minute 90 on reaches block A as the clock."""
+        d = self.played()
+        m, chron = d.day3, d.chron
+        chron.add_day(m)
+        n3 = self.night.Night(m, d.oracle, number=3, house=chron.house_state()).run()
+        mara = n3.people["mara"]
+        mara.sure += [f"{self.quiet.clock(201)}: you ate one of the portions. 0 left.",
+                      f"{self.quiet.clock(204)}: you finished searching the back room: nothing.",
+                      f"{self.quiet.clock(54)}: Leo ate one of the portions (you saw it)."]
+        a = self.night.carry_in_later(m, n3, n3.people["mara"])
+        self.assertIn("- You ate a portion at 10:21.", a)
+        self.assertIn("- You searched the back room at 10:24 and found nothing.", a)
+        self.assertIn("- Leo ate a portion at minute 54 (you saw it).", a)
+
+    def test_a_record_of_only_a_spans_end_is_stamped_at_its_end(self):
+        """Fix 4: a witness who saw only a span's end has its record stamped at the end minute, in time order."""
+        d = self.played()
+        m, chron = d.day3, d.chron
+        chron.add_day(m)
+        found = 0
+        for e in (x for x in chron.events if x["kind"] == "routine"):
+            s = next(x for x in m.transcript["quiet"]["spans"]
+                     if (x["who"], x["start"], x["routine"]) == (e["actor"], e["minute"], e["routine"]))
+            for q in set(s["seen_end"]) - set(s["seen_start"]) - set(s["seen_leave"]):
+                recs = dict(self.mind.records(chron, q, 3))
+                self.assertTrue(recs[e["id"]].startswith(self.quiet.clock(s["end"]) + ": "), recs[e["id"]])
+                found += 1
+            for q in set(s["seen_start"]) | set(s["seen_leave"]):
+                recs = dict(self.mind.records(chron, q, 3))
+                self.assertTrue(recs[e["id"]].startswith(self.quiet.clock(s["start"]) + ": "), recs[e["id"]])
+        self.assertTrue(found, "no witness saw only a span's end")
+
+        def at(text):
+            mm = re.match(r"^(?:min (\d+)|(\d\d):(\d\d)): ", text)
+            return int(mm.group(1)) if mm.group(1) else int(mm.group(2)) * 60 + int(mm.group(3)) - 420
+        for pid in data.ORDER:
+            stamps = [at(t) for _, t in self.mind.records(chron, pid, 3) if not t.startswith("tonight: ")]
+            self.assertEqual(stamps, sorted(stamps), pid)
+
+    # ---------- a meeting after hours apart, and anger cooling with rest (reports/meeting_fixes.md) ----------
+    def apart(self):
+        """v17 seed 1's first Q2, rebuilt: the morning's last line between Mara, Daniel and Elena at min 15; Mara and
+        Daniel lie down at min 18; Elena gets up at 10:03 and sits in the kitchen; Mara joins her at 10:36; Daniel
+        comes in at 10:39."""
+        d = self.v16()
+        m, q = d.day3, d.day3.quiet
+        for r in data.ROOMS:
+            m.convos.active[r] = False
+        dan, ele, mara, leo = (m.people[x] for x in ("daniel", "elena", "mara", "leo"))
+        leo.room = "brothers_room"
+        q.start(leo, "rest", 18)
+        for a, b in (("daniel", "mara"), ("daniel", "elena"), ("elena", "mara")):
+            q.exchanged[(a, b)] = 15
+        dan.room, ele.room, mara.room = "brothers_room", "back_room", "back_room"
+        for p in (dan, ele, mara):
+            q.start(p, "rest", 18)
+        q.end(ele, 183, "time")
+        q.arrive(ele, "kitchen", 183)
+        q.start(ele, "sit", 183)
+        q.end(mara, 216, "time")
+        q.arrive(mara, "kitchen", 216)
+        q.start(mara, "sit", 216)
+        q.end(dan, 219, "time")
+        q.arrive(dan, "kitchen", 219)
+        return m, q
+
+    @staticmethod
+    def before_now(prompt):
+        lines = prompt.splitlines()
+        i = next(i for i, x in enumerate(lines) if x.startswith("Now, "))
+        return lines[:i]
+
+    def test_a_meeting_line_says_when_they_last_spoke_what_came_between_and_who_came_in(self):
+        """Fix 1: just before "Now", one line for each person present not spoken with for 60 minutes or more."""
+        m, q = self.apart()
+        mara, dan = m.people["mara"], m.people["daniel"]
+        before = self.before_now(m.prompt_for(mara, 73, m.options_for(mara)))
+        self.assertEqual(before[-2:], [
+            "You last spoke with Daniel at min 15. Since then you lay on your bed until 10:36. Daniel has just come "
+            "into the kitchen.",
+            "You last spoke with Elena at min 15. Since then you lay on your bed until 10:36."])
+        # The one who came in: their own arrival, and a line they spoke within the hour leaves no line.
+        q.exchanged[("daniel", "elena")] = 190
+        before = self.before_now(m.prompt_for(dan, 73, m.options_for(dan)))
+        self.assertEqual(before[-1], "You last spoke with Mara at min 15. Since then you lay on your bed until 10:39. "
+                                     "You have just come into the kitchen, where Mara is.")
+        self.assertFalse(any(x.startswith("You last spoke with Elena") for x in before))
+        # Someone not spoken with all day.
+        del q.exchanged[("daniel", "mara")]
+        before = self.before_now(m.prompt_for(mara, 73, m.options_for(mara)))
+        self.assertIn("You have not spoken with Daniel today. So far today you lay on your bed until 10:36. Daniel has "
+                      "just come into the kitchen.", before)
+
+    def test_no_meeting_line_before_minute_90(self):
+        m, q = self.apart()
+        mara = m.people["mara"]
+        q.exchanged = {}
+        prompt = m.prompt_for(mara, 29, m.options_for(mara))
+        self.assertFalse(any(x.startswith(("You last spoke with", "You have not spoken with"))
+                             for x in prompt.splitlines()), prompt)
+
+    def test_a_rest_of_an_hour_cools_a_grudge_of_3_to_2(self):
+        """Fix 2: a rest of 60 minutes or more ends, and each grudge at 3 drops to 2; shorter, nothing changes."""
+        d = self.v16()
+        m, q = d.day3, d.day3.quiet
+        leo, mara = m.people["leo"], m.people["mara"]
+        self.assertEqual((leo.grudges["daniel"].strength, mara.grudges["daniel"].strength), (3, 3))
+        mara.grudge("leo").strength = 2
+        leo.room, mara.room = "brothers_room", "back_room"
+        q.start(leo, "rest", 30)
+        q.start(mara, "rest", 30)
+        q.end(leo, 90, "time")
+        q.end(mara, 87, "acted")
+        self.assertEqual(leo.grudges["daniel"].strength, 2)
+        self.assertEqual((mara.grudges["daniel"].strength, mara.grudges["leo"].strength), (3, 2))
+        self.assertEqual([(c["minute"], c["who"], c["against"]) for c in q.cooled], [(90, "leo", "daniel")])
+        self.assertIn([90, "leo", "daniel"], [[c["minute"], c["who"], c["against"]]
+                                               for c in q.transcript()["cooled"]])
+        # An answer can raise it again, as before.
+        leo.grudges["daniel"].rise(93, "you were angry with Daniel", kind="angry")
+        self.assertEqual(leo.grudges["daniel"].strength, 3)
+        # The story says it.
+        self.assertIn("- 08:30: Leo's grudge against Daniel cools from 3 to 2 (after a rest of an hour or more).",
+                      importlib.import_module("story").render_day2(m))
+
+    def test_prompt_headings_say_today_from_minute_90(self):
+        """Fix 3: from minute 90 on, "this morning" in the headings is "today"; before, as it was."""
+        d = self.v16()
+        m = d.day3
+        leo = m.people["leo"]
+        leo.said_lines.append("min 03, you confronted Daniel.")
+        early = m.prompt_for(leo, 29, m.options_for(leo))
+        for heading in ("What you are sure of this morning:", "Your own last words this morning:",
+                        "What else happened this morning, most recent last:"):
+            self.assertIn("\n" + heading + "\n", early)
+        late = m.prompt_for(leo, 30, m.options_for(leo))
+        for heading in ("What you are sure of today:", "Your own last words today:",
+                        "What else happened today, most recent last:"):
+            self.assertIn("\n" + heading + "\n", late)
+        # Every heading, that is: the house line's "not to be gone to this morning" is not one.
+        self.assertEqual([x for x in late.splitlines() if "this morning" in x and x.endswith(":")], [])
+
+    def test_a_rest_under_an_hour_does_not_count_toward_the_two(self):
+        """Fix 4: v17 seed 1's Daniel lay down at 12:39 and was up at 13:00; that was not one of his two rests."""
+        d = self.v16()
+        m, q = d.day3, d.day3.quiet
+        dan = m.people["daniel"]
+        dan.room = "brothers_room"
+        dan.needs["rests"] = 1
+        q.start(dan, "rest", 339)
+        q.end(dan, 360, "acted")
+        self.assertEqual(dan.needs["rests"], 1)
+        q.start(dan, "rest", 480)
+        q.end(dan, 540, "time")
+        self.assertEqual(dan.needs["rests"], 2)
 
     # ---------- nothing before day 3 changes ----------
     def test_v16_through_night_2_is_unchanged(self):

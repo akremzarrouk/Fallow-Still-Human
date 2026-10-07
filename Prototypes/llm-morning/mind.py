@@ -50,7 +50,9 @@ def schema(ids):
 # ---------- the records (§2.3) ----------
 def records(chron, pid, k):
     """(id, text) for every event of day k and night k that pid took part in or perceived, in order: R1-R5, folded by
-    R7 (the same speaker and option again), and voices through a wall once per room and minute."""
+    R7 (the same speaker and option again), and voices through a wall once per room and minute. A record is stamped
+    at the minute pid perceived it: a routine span's end, for whoever saw only that (reports/quiet_day_fixes.md, fix
+    4); the day's records run in that order, then the night's."""
     out, folds, voices = [], {}, set()
     for e in chron.events:
         if e["scene"] not in (f"D{k}", f"N{k}") or pid not in e["witnesses"]:
@@ -58,13 +60,13 @@ def records(chron, pid, k):
         text = e["views"].get(pid)
         if e["scene"][0] == "N":
             if text:
-                out.append({"id": e["id"], "text": f"tonight: {text}", "n": 1})
+                out.append({"id": e["id"], "text": f"tonight: {text}", "n": 1, "at": None})
             continue
         if e["witnesses"][pid] == "voices":
             key = (e["minute"], e["room"])
             if key not in voices:
                 voices.add(key)
-                out.append({"id": e["id"], "text": f"{clock(e['minute'])}: {text}", "n": 1})
+                out.append({"id": e["id"], "text": f"{clock(e['minute'])}: {text}", "n": 1, "at": e["minute"]})
             continue
         if not text:
             continue
@@ -74,10 +76,12 @@ def records(chron, pid, k):
             r["n"] += 1
             r["to"], r["last"] = e["minute"], e["words"]
             continue
-        r = {"id": e["id"], "text": f"{clock(e['minute'])}: {text}", "n": 1}
+        at = e.get("seen_at", {}).get(pid, e["minute"])
+        r = {"id": e["id"], "text": f"{clock(at)}: {text}", "n": 1, "at": at}
         out.append(r)
         if fold:
             folds[fold] = r
+    out.sort(key=lambda r: (r["at"] is None, r["at"] or 0))
     return [(r["id"], r["text"] + (f' Then {r["n"] - 1} more time{"s" if r["n"] > 2 else ""}, to {clock(r["to"])}; '
                                    f'last: "{r["last"]}"' if r["n"] > 1 else "")) for r in out]
 

@@ -241,30 +241,26 @@ def portions_text(n):
     return f"{n} portion{'s' if n != 1 else ''}"
 
 
-def minutes_text(ms):
-    ms = [f"{m:02d}" for m in ms]
-    return ms[0] if len(ms) == 1 else ", ".join(ms[:-1]) + " and " + ms[-1]
-
-
-def grudge_facts(name, events, limit=None):
+def grudge_facts(name, events, limit=None, clock_from=None):
     """The facts behind a grudge: each event the rules saw, then one line for the times the
     person named them as who they were angry with. An event carried from an earlier day or night
     is (minute, text with its day word, kind, day word, scene, text) (reports/night_design.md, §5.3;
-    reports/days_design.md, §3.5): its words are written when the next morning is set up."""
+    reports/days_design.md, §3.5): its words are written when the next morning is set up. clock_from: data.CLOCK_FROM
+    on a quiet day, whose minutes from 90 on are written as the clock (reports/quiet_day_fixes.md, fix 3)."""
     facts = [e[1] for e in events if e[2] == "event"]
     angry = [e for e in events if e[2] == "angry"]
     if limit:
         facts, angry = facts[-limit:], angry[-limit:]
     if angry and all(len(e) == 3 for e in events):
         ms = [e[0] for e in angry]
-        facts.append(f"you were angry with {name} at minute{'s' if len(ms) > 1 else ''} {minutes_text(ms)}")
+        facts.append(f"you were angry with {name} {data.minutes_words(ms, clock_from)}")
     elif angry:
         groups = {}             # day word -> (a night?, minutes), oldest first
         for e in angry:
             when = e[3] if len(e) > 3 else "this morning"
             night = e[4][0] == "N" if len(e) > 4 else when == "last night"
             groups.setdefault(when, (night, []))[1].append(e[0])
-        parts = [when if night else f"{when} at minute{'s' if len(ms) > 1 else ''} {minutes_text(ms)}"
+        parts = [when if night else f"{when} {data.minutes_words(ms, clock_from)}"
                  for when, (night, ms) in groups.items()]
         facts.append(f"you were angry with {name} " + "; and ".join(parts))
     return facts
@@ -450,6 +446,11 @@ class Morning:
         else:
             ids = [q for q in data.ORDER if self.people[q].room == p.room]
         return [self.people[q] for q in ids if q != p.id]
+
+    def clock_from(self):
+        """From what minute a list of this day's minutes says the clock: from 90 on a quiet day (quiet.py); never on
+        days 1 and 2, whose night answers keep minute 90 (NIGHT_MINUTE)."""
+        return data.CLOCK_FROM if self.quiet is not None else None
 
     def talking(self, room):
         count = len(self.present[room]) if self.present is not None else \
@@ -664,7 +665,7 @@ class Morning:
                         else f"{x} said {q} should go")
             else:
                 said = f"{x} said {he} will not go"
-            parts.append(f"{said} (min {minute:02d})")
+            parts.append(f"{said} ({data.clock(minute)})")
         return "About going there tonight: " + "; ".join(parts) + "."
 
     def trip_lines(self, p):
@@ -894,11 +895,11 @@ class Morning:
                      else "About the can: you ate it yourself.")
         elif p.knows_culprit and p.confession_heard_day not in (None, self.day):
             about = (f"About the can: {NAMES[p.knows_culprit]} admitted taking it "
-                     f"{when_words(('D', day_index(p.confession_heard_day)), self.day)}, at minute "
-                     f"{p.confession_heard_at:02d}.")
+                     f"{when_words(('D', day_index(p.confession_heard_day)), self.day)}, at "
+                     f"{data.minute_words(p.confession_heard_at)}.")
         elif p.knows_culprit:
-            about = (f"About the can: {NAMES[p.knows_culprit]} admitted taking it at minute "
-                     f"{p.confession_heard_at:02d}.")
+            about = (f"About the can: {NAMES[p.knows_culprit]} admitted taking it at "
+                     f"{data.minute_words(p.confession_heard_at)}.")
         elif s.strength and self.day != 4:
             when = []
             past = [(when_words(scene, self.day), ms) for scene, ms in p.suspected_past]
@@ -907,13 +908,12 @@ class Morning:
                     when.append(word)
                 elif ms:
                     ms = ms[-EVENTS_SHOWN:]
-                    when.append(f"{word} at minute{'s' if len(ms) > 1 else ''} {minutes_text(ms)}")
+                    when.append(f"{word} {data.minutes_words(ms, self.clock_from())}")
             about = (f"About the can ({LEVEL_WORDS[s.strength]}): you thought {NAMES[s.target]} took it"
                      + (", " + ", and ".join(when) if when else "") + ".")
         elif s.strength:
             about = (f"About the can ({LEVEL_WORDS[s.strength]}): you thought {NAMES[s.target]} took it, "
-                     f"at minute{'s' if len(p.suspected_at) > 1 else ''} "
-                     f"{minutes_text(p.suspected_at[-EVENTS_SHOWN:])}.")
+                     f"{data.minutes_words(p.suspected_at[-EVENTS_SHOWN:], self.clock_from())}.")
         else:
             about = "About the can: you have not settled on who took it."
         out.append(f"{about} {p.can_note}" if p.can_note else about)
@@ -922,7 +922,7 @@ class Morning:
         if not held:
             out.append("Against the others: nothing.")
         for t, g in held:
-            facts = "; ".join(grudge_facts(NAMES[t], g.events, EVENTS_SHOWN))
+            facts = "; ".join(grudge_facts(NAMES[t], g.events, EVENTS_SHOWN, self.clock_from()))
             out.append(f"Against {NAMES[t]} ({LEVEL_WORDS[g.strength]}): {facts}.")
         if p.guilt is not None:
             facts = ["you ate the can in the night, and nobody saw"]
@@ -995,7 +995,11 @@ class Morning:
         if night is not None:
             return self.prompt_parts(p, opts, head, list(night), system, "today", minute)
         room = data.ROOMS[p.room]
-        now = [f"Now, minute {minute:02d}, you are in the {room}."]
+        # A quiet day from minute 90 on (reports/meeting_fixes.md): a meeting after an hour apart gets its own lines,
+        # just before "Now", and the headings say "today".
+        late = self.quiet is not None and minute >= data.CLOCK_FROM
+        now = self.quiet.meeting_lines(p, minute) if late else []
+        now += [f"Now, {data.minute_words(minute)}, you are in the {room}."]
         others = self.others_here(p)
         if not others:
             now.append("- Nobody else is here.")
@@ -1005,7 +1009,7 @@ class Morning:
         if p.room == "kitchen":
             now.append(f"- {self.portions} portion{'s' if self.portions != 1 else ''} on the shelf.")
         if lull is not None:
-            now.append(f"Nothing has been said or done in the {room} since minute {lull:02d}.")
+            now.append(f"Nothing has been said or done in the {room} since {data.minute_words(lull)}.")
         so_far = self.so_far[p.room] if self.so_far is not None else []
         if so_far:
             now.append(f"Said and done in the {room} this turn, before you, in order:")
@@ -1015,17 +1019,18 @@ class Morning:
         now += self.pattern(p)
         if extra:
             now.append(extra)
-        return self.prompt_parts(p, opts, head, now, system, "this morning", minute)
+        return self.prompt_parts(p, opts, head, now, system, "today" if late else "this morning", minute)
 
     def prompt_parts(self, p, opts, head, now, system, when, minute):
         """The rest of the prompt, trimmed to the budget. when: "this morning", or "today" at
-        night (reports/night_design.md, §3.2)."""
+        night (reports/night_design.md, §3.2) and on a quiet day from minute 90 on (minute is None at night)."""
         tail = ["Your options:"] + [f"- {o.id}: {'(speech) ' if o.speech else ''}{o.label}" for o in opts]
 
         back = list(p.backstory)
-        morning = [f"min {m:02d}: {x}" for m, x in p.memory if m != minute]  # this turn is above
+        morning = [f"{data.clock(m)}: {x}" for m, x in p.memory if m != minute]  # this turn is above
         morning += [f"tonight: {x}" for x in p.tonight]
-        pinned = [f"What you are sure of {'from today' if when == 'today' else when}:"] + [f"- {x}" for x in p.sure]
+        sure = "from today" if when == "today" and minute is None else when     # "from today" at night only
+        pinned = [f"What you are sure of {sure}:"] + [f"- {x}" for x in p.sure]
         if p.said_lines:
             pinned += [f"Your own last words {when}:"] + [f"- {x}" for x in p.said_lines[-3:]]
         carry = self.carry.get(p.id, [])
@@ -1200,7 +1205,7 @@ class Morning:
             for q in self.people.values():
                 m0, s0 = before[q.id]
                 memory = [x for _, x in q.memory[m0:]]
-                sure = [x[8:] if x.startswith("min ") else x for x in q.sure[s0:]]
+                sure = [data.unstamp(x)[1] for x in q.sure[s0:]]
                 if memory or sure:
                     got[q.id] = {"memory": memory, "sure": sure}
             self.views[d["seq"]] = got
@@ -1309,7 +1314,7 @@ class Morning:
         minute = t * data.MINUTES_PER_TURN
         if self.quiet is not None:
             if self.quiet.spent():
-                return None, "the day's asks are spent"
+                return None, self.quiet.spent_why()
             self.quiet.asks += 1
         seen = p.levels()
         prompt = self.prompt_for(p, t, opts, d.get("lull"), extra=extra)
@@ -1520,7 +1525,7 @@ class Morning:
         # hearing.
         if culprit is not None and p is culprit and kind == "accuse":
             he = data.PRONOUNS[p.id]["he"]
-            self.add_guilt(minute, f"you accused {target.name} of what you did, at minute {minute:02d}",
+            self.add_guilt(minute, f"you accused {target.name} of what you did, at {data.minute_words(minute)}",
                            f"{he} accused {target.name} of what {he} did", record)
 
         words = d.get("say")
@@ -1560,7 +1565,7 @@ class Morning:
                         q.confession_heard_at = minute
                         q.confession_heard_day = self.day
                     q.knows_culprit = p.id
-                    q.sure.append(f"min {minute:02d}: {p.name} admitted taking the can: \"{words}\" "
+                    q.sure.append(f"{data.clock(minute)}: {p.name} admitted taking the can: \"{words}\" "
                                   "(you heard it)")
                     # Grudges: it was admitted after being denied to them, or after accusing them. A denial or
                     # accusation of an earlier day says when (reports/night_design.md, §5.1; days_design.md, §3.5).
@@ -1569,13 +1574,13 @@ class Morning:
                     if p.id in q.denials_heard:
                         when = at(q.denial_day.get(p.id))
                         self.add_grudge(q, p, minute,
-                                        f"{p.name} admitted taking it at minute {minute:02d}, after "
-                                        f"denying it to you {when} minute {q.denials_heard[p.id]:02d}",
+                                        f"{p.name} admitted taking it at {data.minute_words(minute)}, after "
+                                        f"denying it to you {when} {data.minute_words(q.denials_heard[p.id])}",
                                         f"{p.name} admitted it after denying it to {q.name}", record)
                     if p.id in q.accused_by:
                         when = at(q.accused_day.get(p.id))
                         self.add_grudge(q, p, minute,
-                                        f"{p.name} had accused you of it {when} minute {q.accused_by[p.id]:02d}",
+                                        f"{p.name} had accused you of it {when} {data.minute_words(q.accused_by[p.id])}",
                                         f"{p.name} had accused {q.name} of it", record)
                 if kind == "deny":
                     q.denials_heard[p.id] = minute
@@ -1585,7 +1590,7 @@ class Morning:
                     q.accused_day[p.id] = self.day
                     if q.id != self.culprit:        # a false accusation
                         self.add_grudge(q, p, minute,
-                                        f"{p.name} accused you of taking the can at minute {minute:02d}, "
+                                        f"{p.name} accused you of taking the can at {data.minute_words(minute)}, "
                                         f"and you had not",
                                         f"{p.name} accused {q.name} falsely", record)
                 # The culprit's guilt: someone else accused of what they did in their hearing, or
@@ -1595,10 +1600,10 @@ class Morning:
                     pro = data.PRONOUNS[q.id]
                     if kind == "accuse" and target is not culprit:
                         self.add_guilt(minute, f"{p.name} accused {target.name} of what you did, "
-                                               f"at minute {minute:02d}",
+                                               f"at {data.minute_words(minute)}",
                                        f"{p.name} accused {target.name} of what {pro['he']} did", record)
                     elif kind == "reassure" and target is culprit:
-                        self.add_guilt(minute, f"{p.name} reassured you, at minute {minute:02d}",
+                        self.add_guilt(minute, f"{p.name} reassured you, at {data.minute_words(minute)}",
                                        f"{p.name} reassured {pro['him']}", record)
             voices.append((room, new, {p.id} | {q.id for q in seen}, self.seq))
             mine = {"ask": "asked who took it", "deny": "denied taking it",
@@ -1638,13 +1643,13 @@ class Morning:
             # Their own lines reach them without the words: minute and verb only
             # (reports/repetition_probe.md, variant B). The others hear the words.
             p.memory.append((minute, f"you {mine}.{feel}"))
-            p.said_lines.append(f"min {minute:02d}, you {mine}.")
+            p.said_lines.append(f"{data.clock(minute)}, you {mine}.")
             if kind in ("ask", "accuse"):
                 p.heard_question = True
             if kind == "confess":
                 p.confessed = True
                 p.confessed_day = self.day
-                p.sure.append(f"min {minute:02d}: you admitted aloud that you took the can"
+                p.sure.append(f"{data.clock(minute)}: you admitted aloud that you took the can"
                               + (f", in front of {', '.join(q.name for q in seen)}." if seen else "."))
             names = ", ".join(q.name for q in seen)
             out.append(f"said to {names}" if names else "said it to nobody")
@@ -1692,7 +1697,7 @@ class Morning:
             if p.activity["until"] <= t:
                 p.searched.add(room)
                 p.activity = {"kind": "idle", "label": "standing"}
-                p.sure.append(f"min {minute:02d}: you finished searching the {data.ROOMS[room]}: "
+                p.sure.append(f"{data.clock(minute)}: you finished searching the {data.ROOMS[room]}: "
                               "no can, nothing out of place.")
                 fact(f"{p.name} finished searching the {data.ROOMS[room]} and found nothing",
                      f"{p.name} finishes going through the {data.ROOMS[room]}: no can, nothing out of place")
@@ -1766,15 +1771,15 @@ class Morning:
             p.last_meal = minute
             so_far.append(f"{p.name} eats one of the portions.")
             for q in seen:
-                q.sure.append(f"min {minute:02d}: {p.name} ate one of the portions (you saw it).")
+                q.sure.append(f"{data.clock(minute)}: {p.name} ate one of the portions (you saw it).")
                 # A grudge toward someone who eats in front of you while you are hungry.
                 if hunger_level(q.hunger) >= 1:
                     self.add_grudge(q, p, minute,
-                                    f"{p.name} ate a portion in front of you at minute {minute:02d}, "
+                                    f"{p.name} ate a portion in front of you at {data.minute_words(minute)}, "
                                     f"while you were hungry",
                                     f"{p.name} ate in front of {q.name}, who was hungry", record)
             fact(f"{p.name} ate one of the portions", f"{p.name} eats one of the portions")
-            p.sure.append(f"min {minute:02d}: you ate one of the portions. {self.portions} left.")
+            p.sure.append(f"{data.clock(minute)}: you ate one of the portions. {self.portions} left.")
             record["events"].append(f"{p.name} ate a portion")
             return f"ate a portion; {self.portions} left."
         if kind == "share":
@@ -1793,9 +1798,9 @@ class Morning:
             trig = f"{p.name} shares out the last {n} portion{'s' if n != 1 else ''} between {names}"
             so_far.append(trig + ".")
             for q in seen:
-                q.sure.append(f"min {minute:02d}: {trig}; you had your part.")
+                q.sure.append(f"{data.clock(minute)}: {trig}; you had your part.")
             fact(f"{p.name} shared out the food", trig)
-            p.sure.append(f"min {minute:02d}: you shared out the last {n} portions between {names}.")
+            p.sure.append(f"{data.clock(minute)}: you shared out the last {n} portions between {names}.")
             record["events"].append(f"{p.name} shared out {n} portions between {names}")
             return f"shared out the last {n} portions between {names}."
         # A food moment's gift (reports/body_design.md, §2.5-§2.6): the portion leaves the shelf for
@@ -1815,20 +1820,20 @@ class Morning:
             so_far.append(line + ".")
             for q in seen:
                 if q is giver:
-                    q.sure.append(f"min {minute:02d}: you gave one of the portions to {p.name}, and {p.name} ate it. "
+                    q.sure.append(f"{data.clock(minute)}: you gave one of the portions to {p.name}, and {p.name} ate it. "
                                   f"{self.portions} left.")
                     continue
-                q.sure.append(f"min {minute:02d}: {giver.name} gave one of the portions to {p.name}, and {p.name} "
+                q.sure.append(f"{data.clock(minute)}: {giver.name} gave one of the portions to {p.name}, and {p.name} "
                               f"ate it (you saw it).")
                 # Watching someone eat while hungry, as for `eat`; not the giver, who chose it.
                 if hunger_level(q.hunger) >= 1:
                     self.add_grudge(q, p, minute,
-                                    f"{p.name} ate a portion {giver.name} gave {him}, in front of you at minute "
-                                    f"{minute:02d}, while you were hungry",
+                                    f"{p.name} ate a portion {giver.name} gave {him}, in front of you at "
+                                    f"{data.minute_words(minute)}, while you were hungry",
                                     f"{p.name} ate the portion {giver.name} gave {him} in front of {q.name}, "
                                     f"who was hungry", record)
             fact(f"{p.name} ate the portion {giver.name} gave {him}", line)
-            p.sure.append(f"min {minute:02d}: {giver.name} gave you one of the portions, and you ate it. "
+            p.sure.append(f"{data.clock(minute)}: {giver.name} gave you one of the portions, and you ate it. "
                           f"{self.portions} left.")
             record["events"].append(f"{p.name} ate the portion {giver.name} gave {him}")
             return f"ate the portion {giver.name} gave {him}; {self.portions} left."
@@ -1843,15 +1848,15 @@ class Morning:
             d["new_fact"] = why
             for q in seen:
                 if q is giver:
-                    q.sure.append(f"min {minute:02d}: you gave one of the portions to {p.name}, and {p.name} put it "
+                    q.sure.append(f"{data.clock(minute)}: you gave one of the portions to {p.name}, and {p.name} put it "
                                   f"back on the shelf.")
                     self.perceive(q, minute, None, remember=False,
                                   trigger=(f"{p.name} puts the portion you gave back on the shelf", True))
                 else:
-                    q.sure.append(f"min {minute:02d}: {giver.name} gave one of the portions to {p.name}, and "
+                    q.sure.append(f"{data.clock(minute)}: {giver.name} gave one of the portions to {p.name}, and "
                                   f"{p.name} put it back on the shelf (you saw it).")
                     self.perceive(q, minute, None, remember=False, trigger=(line, True))
-            p.sure.append(f"min {minute:02d}: {giver.name} gave you one of the portions, and you put it back on "
+            p.sure.append(f"{data.clock(minute)}: {giver.name} gave you one of the portions, and you put it back on "
                           f"the shelf.")
             record["events"].append(f"{p.name} put back the portion {giver.name} gave {him}")
             return f"put the portion {giver.name} gave {him} back on the shelf; {self.portions} left."
