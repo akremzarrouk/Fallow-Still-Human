@@ -362,7 +362,7 @@ def body(morning, out, all_d, names, culprit, who, pro):
             if g.strength:
                 any_held = True
                 facts = "; ".join(grudge_facts(data.PEOPLE[t]["name"], g.events,
-                                               clock_from=morning.clock_from()))
+                                               clock_from=morning.clock_from(), night_from=morning.night_from()))
                 w(f"- {person.name} against {data.PEOPLE[t]['name']} ({g.strength}/3): {facts}.")
     if not any_held:
         w(f"- Nobody holds a grudge at {end}.")
@@ -483,6 +483,12 @@ def render_night(n):
         cut = ("clean under 0.62, scared on the way there under 0.76, scared on the way back under 0.94, else not "
                "back" if alone else "clean under 0.70, scared on the way there under 0.82, scared on the way back "
                "under 0.97, else one of them not back")
+        if "table" in g:            # stage B: far, or shifted by the bodies (W2)
+            c = [sum(g["table"][:i + 1]) for i in range(3)]
+            cut = (f"clean under {c[0]:.2f}, scared on the way there under {c[1]:.2f}, scared on the way back under "
+                   f"{c[2]:.2f}, else {'not back' if alone else 'one of them not back'}")
+        if g.get("far"):
+            who += f", further along the street (house {g['house'] + 1})"
         lost = (f" The lost draw {g['lost_u']:.3f} chose {NAME[g['lost']]}." if g.get("lost_u") is not None else "")
         took = (f" Found {g['found']} portion{'s' if g['found'] != 1 else ''} there; took {g['took']}."
                 if g["found"] is not None else " Did not get inside.")

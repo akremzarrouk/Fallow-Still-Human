@@ -12,6 +12,9 @@ language model, and writes them as one story (reports/night_design.md; reports/d
     --out DIR         where runs and answers go: runs/DIR and cache/DIR (default v15; v4 replays
                       the fourth version's runs; v5/check.py to v14/check.py replay the
                       fifth's to fourteenth's)
+    --days N          the last day to play (default 3). Days 3 to N are quiet days, played to
+                      bedtime; each but the last is followed by its night and night mind
+                      (reports/multiday.md)
 
 Day 1 is the morning of the count; then the night, the night mind, day 2, the second night, its night
 mind and day 3. The model names and call limits are in config.json; the call limit counts each scene
@@ -97,7 +100,9 @@ def quiet_meta(m):
 
 
 def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_dir=None,
-        client=None, quiet=False, scenario=data.DEFAULT_SCENARIO, model_key=None, out="v15"):
+        client=None, quiet=False, scenario=data.DEFAULT_SCENARIO, model_key=None, out="v15", days=3):
+    """days: the last day played. From day 3 on each day is a quiet day; each one before the last is followed by its
+    night and night mind (reports/multiday.md). 3, the default, ends at day 3 as before."""
     config = load_config(config_path or os.path.join(HERE, "config.json"))
     if model_key:
         config = {**config, **config["models"][model_key]}
@@ -212,6 +217,14 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
         night2 = scene("night2", lambda: night_of(day2, 2))
         mind2 = scene("mind2", lambda: mind_of(night2))
         day3 = scene("day3", lambda: day_after(day2, night2, "day 3 "))
+        more_days = []          # (k, night k - 1, its mind, day k) for days 4 to `days`
+        prev = day3
+        for k in range(4, days + 1):
+            n_k = scene(f"night{k - 1}", lambda prev=prev, k=k: night_of(prev, k - 1))
+            mind_k = scene(f"mind{k - 1}", lambda n_k=n_k: mind_of(n_k))
+            day_k = scene(f"day{k}", lambda prev=prev, n_k=n_k, k=k: day_after(prev, n_k, f"day {k} "))
+            more_days.append((k, n_k, mind_k, day_k))
+            prev = day_k
     except StopMorning as stop:
         say(f"\n{stop}")
         say(f"Answers received so far ({len(cache.entries)}) are kept in {os.path.relpath(cache_path, HERE)}.")
@@ -223,7 +236,9 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
     seconds = time.monotonic() - started
 
     text = (day1_text + render_night(night) + render_mind(mind1) + render_day2(day2)
-            + render_night(night2) + render_mind(mind2) + render_day2(day3))
+            + render_night(night2) + render_mind(mind2) + render_day2(day3)
+            + "".join(render_night(n_k) + render_mind(mind_k) + render_day2(day_k)
+                      for _, n_k, mind_k, day_k in more_days))
     story_path = os.path.join(runs_dir, f"{name}.md")
     out_path = os.path.join(runs_dir, f"{name}.replay.md") if replay else story_path
     with open(out_path, "w", encoding="utf-8", newline="\n") as f:
@@ -272,6 +287,7 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
                                            day2.max_prompt_tokens, night2.m.max_prompt_tokens,
                                            day3.max_prompt_tokens),
         "max_prompt_tokens_counted_by_api": max(oracle.prompt_tokens, default=None),
+        **later_meta(scenes, more_days),
         "run_seconds": round(seconds, 1),
         "story": os.path.relpath(out_path, HERE).replace("\\", "/"),
         "story_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
@@ -298,6 +314,11 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
     if meta["day3_quiet"]:
         for k, v in meta["day3_quiet"].items():
             say(f"  day3 {k}: {v}")
+    for k, _, _, _ in more_days:
+        say(f"  night{k - 1} asks: {meta[f'night{k - 1}']['asks']}; mind{k - 1} asks: {meta[f'mind{k - 1}']['asks']}; "
+            f"mind{k - 1} memories kept {meta[f'mind{k - 1}']['memories_kept']}")
+        for key, v in meta[f"day{k}_quiet"].items():
+            say(f"  day{k} {key}: {v}")
     for k in ("day3_asks", "day3_api_requests", "max_prompt_tokens_estimated", "max_prompt_tokens_counted_by_api",
               "run_seconds", "story_sha256"):
         say(f"  {k}: {meta[k]}")
@@ -313,7 +334,11 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
         return meta, 0 if same else 1
     transcript = {"day1": morning.transcript, "night": night.transcript(), "mind1": mind1.transcript(),
                   "day2": day2.transcript, "night2": night2.transcript(), "mind2": mind2.transcript(),
-                  "day3": day3.transcript, "chronicle": chron.to_json()}
+                  "day3": day3.transcript}
+    for k, n_k, mind_k, day_k in more_days:
+        transcript.update({f"night{k - 1}": n_k.transcript(), f"mind{k - 1}": mind_k.transcript(),
+                           f"day{k}": day_k.transcript})
+    transcript["chronicle"] = chron.to_json()
     with open(os.path.join(runs_dir, f"{name}.transcript.json"), "w", encoding="utf-8", newline="\n") as f:
         json.dump(transcript, f, ensure_ascii=False, indent=1)
         f.write("\n")
@@ -321,6 +346,24 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
         json.dump(meta, f, indent=1)
         f.write("\n")
     return meta, 0
+
+
+def later_meta(scenes, more_days):
+    """Days 4 to N (reports/multiday.md): each night, night mind and quiet day after day 3; nothing for a run that
+    ends at day 3, whose meta stays as it was."""
+    if not more_days:
+        return {}
+    out = {"days": more_days[-1][0]}
+    for k, n_k, mind_k, day_k in more_days:
+        def asks(c):
+            return c["answers_live"] + c["answers_from_cache"]
+        nc, mc = scenes[f"night{k - 1}"].counts(), scenes[f"mind{k - 1}"].counts()
+        out[f"night{k - 1}"] = {**nc, "asks": asks(nc), "house_left": n_k.house_left, "leavers": n_k.leavers,
+                                "away": [q for q in data.ORDER if q in n_k.away]}
+        out[f"mind{k - 1}"] = {**mc, "asks": asks(mc), **mind_k.counts()}
+        out[f"day{k}"] = day_meta(day_k, scenes[f"day{k}"])
+        out[f"day{k}_quiet"] = quiet_meta(day_k)
+    return out
 
 
 def main():
@@ -332,9 +375,12 @@ def main():
     ap.add_argument("--scenario", default=data.DEFAULT_SCENARIO, choices=sorted(data.SCENARIOS))
     ap.add_argument("--model", default=None, help="a key of config.json `models`")
     ap.add_argument("--out", default="v15")
+    ap.add_argument("--days", type=int, default=3, help="the last day to play (3 to N, each a quiet day)")
     args = ap.parse_args()
+    if args.days < 3:
+        ap.error("--days must be 3 or more")
     _, code = run(args.seed, replay=args.replay, fake=args.fake, config_path=args.config,
-                  scenario=args.scenario, model_key=args.model, out=args.out)
+                  scenario=args.scenario, model_key=args.model, out=args.out, days=args.days)
     sys.exit(code)
 
 

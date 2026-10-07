@@ -44,7 +44,11 @@ def gist(e, pid):
         "bedtime": "going to bed", "got_up": "getting up in the night", "at_door": "going to the front door in the night",
         "door": "the front door opening in the night", "reaction": "what you did in the night",
         "stop": f"telling {t}, low, not to go", "answer": "answering, low, in the night",
-        "went_out": "going out to the neighbour's house", "street": "the neighbour's house and the street",
+        "went_out": ("going out to the houses further along the street" if option == "go_further"
+                     else "going out to the neighbour's house"),
+        "street": "the neighbour's house and the street",
+        "propose_far": "saying someone should try the houses further along the street",
+        "volunteer_far": "offering to go further along the street",
         "return": "coming back in before dawn",
         "routine": ROUTINE_GIST.get(e.get("routine"), "a routine"), "need": "how the body was"}
     phrase = phrases.get(kind, kind)
@@ -231,10 +235,15 @@ class Chronicle:
                       "views": views.get(e["key"], {})})
         self.scenes.append({"id": f"N{k}", "kind": "night", "end": self.state(n.m) | {"shelf": n.portions,
                                                                                       "away": sorted(n.away)}})
-        got_in = [g for g in n.groups if g["street"] in ("clean", "scare_back")]
+        got_in = [g for g in n.groups if g["street"] in ("clean", "scare_back") and not g.get("far")]
         if got_in and "neighbour_house" not in self.fixed:
             self.fixed["neighbour_house"] = {"value": n.house, "draw": n.house_u, "string": n.draw_string("house"),
                                              "scene": f"N{k}", "why": "someone got inside for the first time"}
+        for i, value in enumerate(n.far["houses"]):         # stage B, W5: each house further along, once
+            if f"far_house_{i}" not in self.fixed:
+                self.fixed[f"far_house_{i}"] = {"value": value, "draw": n.far["us"][i],
+                                                "string": n.draw_string(f"far_house:{i}"), "scene": f"N{k}",
+                                                "why": "someone got inside it for the first time"}
         if k == 1:
             self.open.append({"name": "the street", "since": "N1",
                               "what": "beyond 'something was moving', nothing about the street is fixed"})

@@ -35,7 +35,7 @@ THE_CAN = -240              # house day 4, 03:00: the can, for whoever took it
 STAYS = {"dominant": 0.8, "empathetic": 0.85}   # §2.1: Daniel (dominant 0.85) and Elena (empathetic 0.9) stay
 WITHDRAW_GRUDGE = 3
 WITHDRAW_FOR = 120          # fix 2: a withdraw lasts 2 hours (to the end of a rest taken inside it)
-Q2_GRUDGE, Q2_APART, Q2_EVERY = 2, 60, 120
+Q2_GRUDGE, Q2_APART = 2, 60
 QUIET_ASKS, QUIET_ASKS_EACH, DAY_ASKS = 12, 4, 40
 MORNING_ASKS, STRETCH_ASKS = 24, 8      # fix 1: the morning's played turns, and a stretch a trigger starts
 FULL_REST = 60              # reports/meeting_fixes.md: a rest this long cools a grudge of 3, and counts as one of two
@@ -154,7 +154,7 @@ class Quiet:
         self.quiet_asked = []       # every quiet ask let through: {"minute", "who", "kind", "done"}
         self.log = []               # every Q1 and Q2 checked, fired or not, and why
         self.exchanged = {}         # (a, b) sorted -> the minute of the last line between them
-        self.q2_last = {}           # (a, b) -> the minute Q2 last fired for them
+        self.q2_met = {}            # (a, b) -> the minute Q2 fired for them today: once per pair per day
         self.q1_done = set()        # (pid, need, stage)
         self.stages = {}            # pid -> (fasting stage, debt stage) at the last tick
         self.needs_log = {}         # pid -> [[minute, fasting, debt]] at every event
@@ -372,8 +372,8 @@ class Quiet:
 
     def meet(self, a, there, minute):
         """Q2 (§4): a routine brings A into a room where B is; one of them holds a grudge of 2 or more against the
-        other; no line between them for 60 minutes; not in the 2 hours since they last met this way. The holder of
-        the higher grudge is asked, B on a tie."""
+        other; no line between them for 60 minutes; they have not met this way yet today (reports/multiday.md). The
+        holder of the higher grudge is asked, B on a tie."""
         fired = []
         for b in sorted(there, key=lambda x: data.ORDER.index(x.id)):
             ga = a.grudges[b.id].strength if b.id in a.grudges else 0
@@ -382,24 +382,24 @@ class Quiet:
                 continue
             pair = tuple(sorted((a.id, b.id)))
             last = self.exchanged.get(pair)
-            within = pair in self.q2_last and minute - self.q2_last[pair] < Q2_EVERY
+            met = self.q2_met.get(pair)
             asked = a if ga > gb else b
             entry = {"kind": "Q2", "minute": minute, "room": a.room, "pair": list(pair), "arrived": a.id,
-                     "there": b.id, "grudges": {a.id: ga, b.id: gb}, "last_line": last, "within_2h": within,
+                     "there": b.id, "grudges": {a.id: ga, b.id: gb}, "last_line": last, "met_today": met is not None,
                      "fired": False, "asked": None, "why": None}
             self.log.append(entry)
             if last is not None and minute - last < Q2_APART:
                 entry["why"] = f"a line between them {minute - last} minutes before"
                 continue
-            if within:
-                entry["why"] = f"they met this way {minute - self.q2_last[pair]} minutes before"
+            if met is not None:
+                entry["why"] = f"they met this way at {clock(met)} already today"
                 continue
             budget = self.budget(asked.id)
             if budget and asked.id not in self.pending:
                 entry["budget"] = entry["why"] = budget
                 continue
             entry.update(fired=True, asked=asked.id)
-            self.q2_last[pair] = minute
+            self.q2_met[pair] = minute
             text = (f"{a.name} comes into the {data.ROOMS[a.room]}" if asked is b
                     else f"you come into the {data.ROOMS[a.room]}, where {b.name} is")
             self.ask(asked, "Q2", minute, text,

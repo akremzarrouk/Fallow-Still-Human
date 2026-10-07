@@ -1,0 +1,11 @@
+mind3: [D3-058] 21:00: Daniel was sitting in the kitchen at 21:00.
+mind3: [D3-059] 20:33: Elena left the back room for the kitchen at 20:33. Elena was sitting in the kitchen at 21:00.
+mind3: [D3-058] 21:00: Daniel was sitting in the kitchen at 21:00.
+mind3: [D3-060] 21:00: Leo was sitting in the kitchen at 21:00.
+mind4: [D4-055] 21:00: Mara was sitting in the kitchen at 21:00.
+mind4: [D4-057] 21:00: Elena was sitting in the kitchen at 21:00.
+mind4: [D4-058] 21:00: Leo was sitting in the kitchen at 21:00.
+mind4: [D4-055] 21:00: Mara was sitting in the kitchen at 21:00.
+mind4: [D4-055] 21:00: Mara was sitting in the kitchen at 21:00.
+mind4: [D4-057] 21:00: Elena was sitting in the kitchen at 21:00.
+total 10

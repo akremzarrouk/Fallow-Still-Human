@@ -7,6 +7,7 @@ Knows nothing about the house beyond room names and option ids.
 
 SPEECH = ("ask", "deny", "accuse", "confess", "reassure", "say",
           "propose", "volunteer", "object", "back", "decline",     # these five: the trip
+          "propose_far", "volunteer_far",                           # and further along the street (stage B, W5)
           "confront")       # from the night on (reports/food_confront_impl.md)
 
 
@@ -54,7 +55,9 @@ def aimed_at(option):
 
 # What a position on the trip is, for the story (reports/trip_design.md, §3.3).
 TRIP_WHY = {"propose": "a proposal", "volunteer": "an offer to go", "object": "an objection",
-            "back": "backing someone to go", "decline": "a refusal to go"}
+            "back": "backing someone to go", "decline": "a refusal to go",
+            "propose_far": "a proposal to go further along the street",
+            "volunteer_far": "an offer to go further along the street"}
 
 
 class Newness:

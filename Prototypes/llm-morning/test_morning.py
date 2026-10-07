@@ -2314,13 +2314,17 @@ def without_blocks(prompt):
         if skipping and line.startswith("- "):
             continue
         skipping = False
-        if line.startswith(("About food:", "About the neighbour's house:", "About going there tonight:")):
+        if line.startswith(("About food:", "About the neighbour's house:", "About going there tonight:",
+                            "About the street:")):         # stage B's W5 line is in the trip block too
             continue
         if (TRIP_OPTION_LINE.match(line)
-                or re.match(r"^- (still_going|send_\w+|nobody_goes|keep_\w+_home|refuse_to_go): ", line)
+                or re.match(r"^- (still_going|send_\w+|nobody_goes|keep_\w+_home|refuse_to_go|propose_far|"
+                            r"volunteer_far): ", line)
                 or any(line.startswith(f"- Day 2: {s} (") for s in TRIP_DAY2)):
             continue
-        out.append(line.replace("Outside, and not to be gone to this morning:", "Outside, and not to be gone to:"))
+        out.append(line.replace("Outside, and not to be gone to this morning:", "Outside, and not to be gone to:")
+                   .replace("the street, the neighbour's house and the houses further along the street",
+                            "the street and the neighbour's house"))
     return "\n".join(out)
 
 
@@ -2873,8 +2877,8 @@ class NightTest(unittest.TestCase):
         self.assertNotIn("- Daniel is here", text)
         self.assertEqual(leo.sure, ["min 00: Everyone else gets up and comes into the kitchen. Last night the shelf held "
                                     "2 portions; this morning it holds 2 portions. Daniel is not here: his bed is empty "
-                                    "and he is nowhere in the house, so he went out in the night and has not come back. "
-                                    "(you saw it)"])
+                                    "and he is nowhere in the house, and you do not know where he went. "
+                                    "(you saw it)"])        # Leo slept through it (stage B, amendment 4)
         self.assertIn("About food: the shelf holds 2 portions, and there is no other food in the house, so there is "
                       "not one portion each.", day2.inside_lines(leo))
         for t in range(3):
@@ -5067,14 +5071,20 @@ class QuietDayTest(unittest.TestCase):
         self.assertEqual(q.pending["leo"]["kind"], "Q2")
         self.assertTrue(m.convos.active["kitchen"])
 
-    def test_q2_once_per_pair_in_2_hours(self):
+    def test_q2_once_per_pair_per_day(self):
+        """reports/multiday.md, fix 3 (it was once per pair in 2 hours): a pair that met this way today is not asked
+        again that day, however long after."""
         m, q = self.meeting()
         dan = m.people["daniel"]
         self.assertEqual(len(q.arrive(dan, "kitchen", 260)), 1)
         q.pending.clear()
-        for minute, n in ((377, 0), (380, 1)):
+        got = []
+        for minute in (377, 380, 700):
             dan.room = "brothers_room"
-            self.assertEqual(len(q.arrive(dan, "kitchen", minute)), n, minute)
+            got.append(len(q.arrive(dan, "kitchen", minute)))
+        self.assertEqual(got, [0, 0, 0])
+        for e in q.log[-3:]:
+            self.assertEqual((e["met_today"], e["why"]), (True, "they met this way at 11:20 already today"))
 
     def test_q2_asks_the_higher_grudge_and_the_one_already_there_on_a_tie(self):
         for dan_holds, asked in ((3, "leo"), (2, "leo")):
@@ -5096,8 +5106,10 @@ class QuietDayTest(unittest.TestCase):
         self.assertTrue(checked, "no grievance pair met all day")
         for e in checked:
             apart = e["minute"] - e["last_line"] if e["last_line"] is not None else None
-            self.assertEqual(e["fired"], (apart is None or apart >= 60) and not e["within_2h"]
+            self.assertEqual(e["fired"], (apart is None or apart >= 60) and not e["met_today"]
                              and not e.get("budget"), e)
+        fired = [tuple(e["pair"]) for e in checked if e["fired"]]
+        self.assertEqual(len(fired), len(set(fired)), fired)          # once per pair per day
 
     # ---------- §4 Q1: a need crosses a line with company ----------
     def test_q1_asks_only_with_someone_awake_there_and_once(self):
@@ -5557,10 +5569,276 @@ class QuietDayTest(unittest.TestCase):
         q.end(dan, 540, "time")
         self.assertEqual(dan.needs["rests"], 2)
 
+    # ---------- runs past day 3 (reports/multiday.md) ----------
+    def test_a_run_goes_on_to_day_5(self):
+        """Fix 1: --days 5 plays days 3 to 5 as quiet days, each but the last followed by its night and night mind."""
+        runs_dir, cache_dir = os.path.join(self.dirs.root, "runs"), os.path.join(self.dirs.root, "cache")
+        os.makedirs(cache_dir)
+        name = "daniel_ate_it-seed2"
+        shutil.copyfile(os.path.join(V16_CACHE, f"{self.MODEL}-{name}.json"),
+                        os.path.join(cache_dir, f"{self.MODEL}-{name}.json"))
+        meta, code = run(2, client=HushFake(), runs_dir=runs_dir, cache_dir=cache_dir, quiet=True, days=5)
+        self.assertEqual(code, 0, meta)
+        tr = json.load(open(os.path.join(runs_dir, f"{name}.transcript.json"), encoding="utf-8"))
+        for k in ("day3", "night3", "mind3", "day4", "night4", "mind4", "day5"):
+            self.assertIn(k, tr)
+        self.assertNotIn("night5", tr)
+        for k in ("day3", "day4", "day5"):
+            self.assertEqual(max(s["end"] for s in tr[k]["quiet"]["spans"]), 840, k)
+            self.assertLessEqual(meta[f"{k}_quiet"]["day_asks"], 40, k)
+        self.assertEqual(meta["days"], 5)
+        story = open(os.path.join(runs_dir, f"{name}.md"), encoding="utf-8").read()
+        for title in ("# The third morning (day 6)", "# The third night", "# The morning of day 7", "# Night 4",
+                      "# The morning of day 8"):
+            self.assertIn("\n" + title + "\n", story)
+        self.assertLess(story.index("# The morning of day 7"), story.index("# Night 4"))
+
+    def test_a_run_stops_after_day_3_by_default(self):
+        runs_dir, cache_dir = os.path.join(self.dirs.root, "runs"), os.path.join(self.dirs.root, "cache")
+        os.makedirs(cache_dir)
+        name = "daniel_ate_it-seed2"
+        shutil.copyfile(os.path.join(V16_CACHE, f"{self.MODEL}-{name}.json"),
+                        os.path.join(cache_dir, f"{self.MODEL}-{name}.json"))
+        meta, code = run(2, client=HushFake(), runs_dir=runs_dir, cache_dir=cache_dir, quiet=True)
+        self.assertEqual(code, 0, meta)
+        tr = json.load(open(os.path.join(runs_dir, f"{name}.transcript.json"), encoding="utf-8"))
+        self.assertEqual(list(tr), ["day1", "night", "mind1", "day2", "night2", "mind2", "day3", "chronicle"])
+        self.assertNotIn("days", meta)
+
+    def test_a_day_3_afternoon_act_is_yesterday_and_a_night_event_has_no_clock(self):
+        """Fix 2: a quiet day's minutes from 90 on are the day's, not the night's; the night keeps a minute after the
+        day's last (21:00), and a night event is never written as a clock time."""
+        def policy(who, minute, options):            # at night, Leo is angry with Daniel; by day, nobody acts
+            return (options[0], "Daniel") if minute is None and who == "leo" else None
+        d = self.v16(client=PolicyFake(policy))
+        m, chron = d.day3, d.chron
+        self.quiet.play(m)
+        chron.add_day(m)
+        leo, dan = m.people["leo"], m.people["daniel"]
+        leo.grudge("daniel").rise(600, "you were angry with Daniel", kind="angry")       # 17:00, an afternoon answer
+        leo.suspected_at = [600]
+        dan.guilt_events.append((600, "you let them blame Leo, at 17:00"))
+        n3 = self.night.Night(m, d.oracle, number=3, house=chron.house_state()).run()
+        nleo = n3.people["leo"]
+        self.assertTrue([e for e in nleo.grudges["daniel"].events if e[2] == "angry" and e[0] >= 840],
+                        "the night's answers keep a minute after the day")
+        line = next(x for x in n3.m.inside_lines(nleo) if x.startswith("Against Daniel"))
+        self.assertIn("17:00", line)
+        self.assertIn("; and tonight", line)
+        for clock in ("08:30", "21:00", "21:"):
+            self.assertNotIn(clock, line)
+        chron.add_night(n3)
+        day4 = Morning.next_day(m, n3, d.oracle, chronicle=chron)
+        p4 = day4.people["leo"]
+        line = next(x for x in day4.inside_lines(p4) if x.startswith("Against Daniel"))
+        self.assertRegex(line, r"yesterday at [^;]*17:00")
+        self.assertIn("; and last night", line)
+        self.assertNotIn("last night at", line)
+        self.assertNotIn("21:00", line)
+        self.assertEqual([e[4] for e in p4.grudges["daniel"].events if e[0] == 600], [("D", 3)])
+        self.assertTrue(all(e[4] == ("N", 3) for e in p4.grudges["daniel"].events if e[0] >= 840))
+        self.assertIn((("D", 3), [600]), p4.suspected_past)
+        self.assertEqual([e[2] for e in day4.people["daniel"].guilt_events if e[0] == 600], [("D", 3)])
+        self.assertEqual((m.night_minute(), d.day2.night_minute()), (840, 90))
+
+    def test_a_night_suspicion_is_tonight_not_a_clock(self):
+        """Fix 2: on a quiet day's night, a suspicion answered at night reads "tonight", never 21:00."""
+        d = self.v16()
+        m = d.day3
+        self.quiet.play(m)
+        leo = m.people["leo"]
+        leo.knows_culprit = None
+        leo.suspicion.target, leo.suspicion.strength = "daniel", 2
+        leo.suspected_past, leo.suspected_at = [], [600, 840]
+        line = next(x for x in m.inside_lines(leo) if x.startswith("About the can"))
+        self.assertIn("you thought Daniel took it, this morning at 17:00, and tonight", line)
+        self.assertNotIn("21:00", line)
+
+    # ---------- stage B: further along the street, weakness, dozing (reports/stage_b.md) ----------
+    STILL = {"wake:daniel:leo": 0.99, "door:daniel:leo": 0.99, "door:daniel:elena": 0.99, "door:daniel:mara": 0.99,
+             "return:daniel:leo": 0.99, "return:daniel:elena": 0.99, "return:daniel:mara": 0.99,
+             "doze:leo": 0.99, "doze:elena": 0.99, "doze:mara": 0.99, "doze:daniel": 0.99}
+
+    def night3(self, bed, draws, setup=None, react=None):
+        """v16 seed 2's day 3 played (HushFake), then night 3: bed[who] is their bedtime choice (sleep if absent),
+        react(who, options) their other night answers; every prompt the night asks is kept."""
+        class Nights(HushFake):
+            def __init__(self):
+                super().__init__()
+                self.prompts = []
+
+            def generate(self, system, prompt, schema=None):
+                if schema is None and "Now, " not in prompt:        # a night decision
+                    self.prompts.append(prompt)
+                    self.requests += 1
+                    who = re.match(r"You are (\w+),", prompt).group(1).lower()
+                    opts = re.findall(r"^- (\w+):", prompt.split("Your options:")[-1], flags=re.M)
+                    want = bed.get(who) if "- sleep:" in prompt else (react(who, opts) if react else None)
+                    pick = want if want in opts else opts[0]
+                    return json.dumps({"option": pick, "say": None, "feeling": "tense", "reason": "Night.",
+                                       "suspects": "nobody", "angry_at": "nobody"})
+                return super().generate(system, prompt, schema)
+        client = Nights()
+        d = self.v16(client=client)
+        m, chron = d.day3, d.chron
+        self.quiet.play(m)
+        chron.add_day(m)
+        if setup:
+            setup(m)
+        n3 = self.night.Night(m, d.oracle, draws=draws, number=3, house=chron.house_state()).run()
+        return d, m, n3, client
+
+    def test_w5_is_offered_once_someone_knows_next_door_is_empty(self):
+        """1: v16 seed 2's Daniel got inside the neighbour's house on night 2 and found nothing. From day 3 he, and
+        only he, has the far street: a fact line, the house line's places, two day options and a bedtime choice."""
+        night = self.night
+        d = self.v16()
+        m = d.day3
+        self.assertEqual({q: p.knows_empty for q, p in m.people.items()},
+                         {"daniel": True, "elena": False, "leo": False, "mara": False})
+        self.assertFalse(any(p.knows_empty for p in d.day2.people.values()))
+        dan, mara = m.people["daniel"], m.people["mara"]
+        late = m.prompt_for(dan, 70, m.options_for(dan))
+        self.assertIn("\n" + night.STREET_UNSEARCHED + "\n", late)
+        self.assertIn("Outside, and not to be gone to this morning: the street, the neighbour's house and the houses "
+                      "further along the street.", late)
+        self.assertIn("\n- propose_far: (speech) say someone should try the houses further along the street tonight\n",
+                      late)
+        self.assertIn("\n- volunteer_far: (speech) offer to go further along the street tonight yourself\n", late)
+        other = m.prompt_for(mara, 70, m.options_for(mara))
+        for x in ("further along", "propose_far", "volunteer_far"):
+            self.assertNotIn(x, other)
+        d, m, n3, client = self.night3({}, self.STILL)
+        beds = {re.match(r"You are (\w+),", p).group(1): p for p in client.prompts if "- sleep:" in p}
+        self.assertIn("\n- go_further: wait until the others are asleep, then go out by the front door, past the "
+                      "neighbour's house, to the houses further along the street", beds["Daniel"])
+        self.assertIn("Outside: the street, the neighbour's house and the houses further along the street.",
+                      beds["Daniel"])
+        self.assertNotIn("go_further", beds["Mara"])
+
+    def test_far_houses_are_drawn_once_and_a_searched_house_is_empty(self):
+        """2: each further house's food is drawn once, when first entered (45% none, 30% 2, 18% 4, 7% 6); a searched
+        house is empty afterwards, and the next trip reaches the next house."""
+        night = self.night
+        self.assertEqual([night.far_house_portions(u) for u in (0.0, 0.449, 0.45, 0.749, 0.75, 0.929, 0.93, 0.999)],
+                         [0, 0, 2, 2, 4, 4, 6, 6])
+        d, m, n3, _ = self.night3({"daniel": "go_further"}, {**self.STILL, "trip_far:daniel": 0.0, "far_house:0": 0.8})
+        g = n3.groups[0]
+        self.assertEqual((g["far"], g["street"], g["found"], g["took"]), (True, "clean", 4, 4))
+        self.assertEqual(n3.portions, m.portions + 4)
+        self.assertEqual(n3.house_state()["far"], {"houses": [4], "us": [0.8], "searched": 1})
+        self.assertIn("past the neighbour's house", " ".join(n3.lines["daniel"]))
+        self.assertIn("found 4 portions of food", " ".join(n3.lines["daniel"]))
+        # The next trip reaches the next house, drawn when first entered; the first is not drawn again.
+        n4 = self.night.Night(m, d.oracle, number=4, house=n3.house_state(),
+                              draws={**self.STILL, "trip_far:daniel": 0.0, "far_house:1": 0.1}).run()
+        self.assertEqual((n4.groups[0]["found"], n4.house_state()["far"]),
+                         (0, {"houses": [4, 0], "us": [0.8, 0.1], "searched": 2}))
+        # Scared off before getting inside: no house is searched.
+        n5 = self.night.Night(m, d.oracle, number=5, house=n3.house_state(),
+                              draws={**self.STILL, "trip_far:daniel": 0.5}).run()
+        self.assertEqual((n5.groups[0]["street"], n5.groups[0]["found"], n5.house_state()["far"]["searched"]),
+                         ("scare_there", None, 1))
+
+    def test_weakness_shifts_the_street_tables(self):
+        """3: W2's shifts, on the near and the far tables; a group takes its weakest member's shift at half size."""
+        night = self.night
+
+        def r(t):
+            return tuple(round(x, 4) for x in t)
+        self.assertEqual(r(night.street_table(1)), (0.62, 0.14, 0.18, 0.06))
+        self.assertEqual(r(night.street_table(1, shift=night.body_shift(1, 0))), (0.58, 0.14, 0.18, 0.10))
+        self.assertEqual(r(night.street_table(1, shift=night.body_shift(2, 0))), (0.50, 0.14, 0.20, 0.16))
+        self.assertEqual(r(night.street_table(1, shift=night.body_shift(0, 2))), (0.60, 0.14, 0.18, 0.08))
+        self.assertEqual(r(night.street_table(1, far=True)), (0.45, 0.17, 0.23, 0.15))
+        self.assertEqual(r(night.street_table(2, far=True)), (0.55, 0.15, 0.22, 0.08))
+        self.assertEqual(r(night.street_table(1, far=True, shift=night.body_shift(1, 0))), (0.41, 0.17, 0.23, 0.19))
+        weakest = night.group_shift([night.body_shift(2, 0), night.body_shift(0, 0)])
+        self.assertEqual(r(night.street_table(2, shift=weakest)), (0.64, 0.12, 0.16, 0.08))
+        # Night 3 follows a quiet day: Daniel's own shift, from his fasting and debt at bedtime, sets his table.
+        d, m, n3, _ = self.night3({"daniel": "go_next_door"}, {**self.STILL, "trip:daniel": 0.6})
+        dan = m.people["daniel"]
+        shift = night.body_shift(self.quiet.fast_stage(m.quiet.fast(dan, 840)), self.quiet.debt_stage(dan.needs["debt"]))
+        self.assertNotEqual(shift, night.body_shift(0, 0))
+        g = n3.groups[0]
+        self.assertEqual(r(g["table"]), r(night.street_table(1, shift=shift)))
+        self.assertEqual(g["street"], night.pick_street(0.6, g["table"]))
+        self.assertNotEqual(g["street"], "clean")           # 0.6 is clean on the plain table (under 0.62)
+        # Nights 1 and 2 have no needs, so no shift, and their groups are as they were.
+        self.assertNotIn("table", d.n2.groups[0])
+
+    def test_an_exhausted_watcher_may_doze_and_then_notices_nothing(self):
+        """3: the doze draw, 0.3 + 0.05 × (debt − 24), at most 0.7, for an exhausted watcher or listener."""
+        night = self.night
+        self.assertEqual([night.doze_chance(x) for x in (23.9, 24, 30, 40)], [0.0, 0.3, 0.6, 0.7])
+
+        def tired(m):
+            m.people["elena"].needs["debt"] = 30.0
+        bed = {"daniel": "go_next_door", "elena": "watch_door"}
+        d, m, n3, _ = self.night3(bed, {**self.STILL, "doze:elena": 0.5, "trip:daniel": 0.1}, setup=tired)
+        self.assertEqual(n3.dozed, {"elena"})
+        self.assertFalse([x for x in n3.noticing if x["who"] == "elena" and x["noticed"]])
+        self.assertIn("You dozed off in the night, and woke by the door at dawn.", " ".join(n3.lines["elena"]))
+        self.assertNotIn("daniel", n3.knows["elena"])
+        d, m, n3, _ = self.night3(bed, {**self.STILL, "doze:elena": 0.65, "trip:daniel": 0.1}, setup=tired)
+        self.assertEqual(n3.dozed, set())
+        self.assertIn("daniel", n3.knows["elena"])
+        # Not exhausted: no doze, whatever the draw.
+        d, m, n3, _ = self.night3(bed, {**self.STILL, "doze:elena": 0.0, "trip:daniel": 0.1})
+        self.assertEqual(n3.dozed, set())
+
+    def test_someone_who_does_not_come_back_is_gone_and_each_knows_it_their_way(self):
+        """4: Daniel goes further along alone and is lost. Leo saw him go, Elena heard the door, Mara slept. From
+        then on he is in no room and never asked; each one's prompts say what they know."""
+        bed = {"daniel": "go_further", "leo": "lie_awake", "elena": "lie_awake", "mara": "sleep"}
+
+        def react(who, opts):
+            return "let_daniel_go" if who == "leo" else "stay_in_bed"
+        d, m, n3, _ = self.night3(bed, {**self.STILL, "trip_far:daniel": 0.99}, react=react)
+        self.assertEqual(n3.away, {"daniel"})
+        d.chron.add_night(n3)
+        day4 = Morning.next_day(m, n3, d.oracle, chronicle=d.chron)
+        self.assertIsNone(day4.people["daniel"].room)
+        sure = {q: day4.people[q].sure[0] for q in ("leo", "elena", "mara")}
+        self.assertIn("Daniel is not here: you saw him go out in the night, and he has not come back.", sure["leo"])
+        self.assertIn("Daniel is not here: his bed is empty and he is nowhere in the house. In the night you heard the "
+                      "front door; he has not come back.", sure["elena"])
+        self.assertIn("Daniel is not here: his bed is empty and he is nowhere in the house, and you do not know where "
+                      "he went.", sure["mara"])
+        facts = {q: next(x for x in day4.inside_lines(day4.people[q]) if x.startswith("About Daniel:"))
+                 for q in ("leo", "elena", "mara")}
+        self.assertEqual(facts, {
+            "leo": "About Daniel: you saw him go out last night, and he has not come back.",
+            "elena": "About Daniel: last night you heard the front door, and by morning he was gone; he has not come "
+                     "back.",
+            "mara": "About Daniel: he has been gone since last night; you do not know where he went."})
+        self.quiet.play(day4)
+        self.assertFalse([x for rec in day4.log for x in rec["decisions"] if x["person"] == "daniel"])
+        self.assertTrue(all("daniel" not in rec for rec in day4.transcript["quiet"]["needs"]))
+
+    def test_grudge_lines_say_today_from_minute_90(self):
+        """5: on a quiet day from minute 90 on, and at its night, a grudge line's own day reads "today at"."""
+        d = self.v16()
+        m = d.day3
+        leo = m.people["leo"]
+        leo.grudges["daniel"].rise(60, "you were angry with Daniel", kind="angry")
+
+        def line(text):
+            return next(x for x in text.splitlines() if x.startswith("Against Daniel"))
+        self.assertIn("this morning at minute 60", line(m.prompt_for(leo, 29, m.options_for(leo))))
+        late = line(m.prompt_for(leo, 30, m.options_for(leo)))
+        self.assertIn("today at minute 60", late)
+        self.assertNotIn("this morning", late)
+        night = line(m.prompt_for(leo, None, [Option("sleep", "go to sleep")], night=["Now it is night."]))
+        self.assertIn("today at minute 60", night)
+
     # ---------- nothing before day 3 changes ----------
     def test_v16_through_night_2_is_unchanged(self):
+        """Seeds 2 and 3, through night 2. Seed 1's Daniel got inside the neighbour's house on night 1 and found it
+        empty, so from day 2 he has the far street (stage B, W5): seed 1 replays until his first day-2 prompt, the
+        first prompt of anyone who knows next door is empty, and no further (test_v16_seed_1_until_w5)."""
         story = importlib.import_module("story")
-        for seed in (1, 2, 3):
+        for seed in (2, 3):
             d = self.v16(seed=seed)
             text = (render(d.day1, seed, self.MODEL, f"python morning.py --seed {seed}") + story.render_night(d.n1)
                     + story.render_mind(d.mind1) + story.render_day2(d.day2) + story.render_night(d.n2)
@@ -5571,6 +5849,42 @@ class QuietDayTest(unittest.TestCase):
                 orig = (orig.replace("**rejected: S8 elena stop: not twice**", "**kept**")
                         .replace("**rejected: S8 daniel give: no such event**", "**kept**"))
             self.assertEqual(text, orig, seed)
+
+    def test_v16_seed_1_until_w5(self):
+        """Seed 1 from its own answers: day 1, night 1 and mind 1 are as in v16; the first prompt with no cached answer
+        is Daniel's first on day 2, the first of anyone who knows next door is empty."""
+        name = "daniel_ate_it-seed1"
+        copy = os.path.join(self.dirs.root, f"{self.MODEL}-{name}.json")
+        shutil.copyfile(os.path.join(V16_CACHE, f"{self.MODEL}-{name}.json"), copy)
+        oracle = Oracle(Cache(copy), self.MODEL, 1, client=None, replay=True)
+        missed = []
+        real = oracle.ask
+
+        def ask(system, prompt, schema=None):
+            try:
+                return real(system, prompt, schema)
+            except importlib.import_module("gemini").CacheMiss:
+                missed.append(prompt)
+                raise
+        oracle.ask = ask
+        chron = self.chron.Chronicle(1, "daniel")
+        day1 = Morning(oracle, 1)
+        for t in range(day1.turns):
+            day1.turn(t)
+        day1.finish()
+        chron.add_day(day1)
+        n1 = self.night.Night(day1, oracle, number=1).run()
+        chron.add_night(n1)
+        self.mind.NightMind(n1, chron, oracle).run()
+        self.assertEqual(missed, [])
+        day2 = Morning.next_day(day1, n1, oracle, chronicle=chron)
+        self.assertEqual({q: p.knows_empty for q, p in day2.people.items()},
+                         {"daniel": True, "elena": False, "leo": False, "mara": False})
+        with self.assertRaises(importlib.import_module("gemini").CacheMiss):
+            day2.turn(0)
+        self.assertTrue(missed[0].startswith("You are Daniel,"), missed[0][:40])
+        self.assertRegex(missed[0], r"(?m)^Now, minute 00, ")
+        self.assertIn("\n" + self.night.STREET_UNSEARCHED + "\n", missed[0])
 
 
 if __name__ == "__main__":

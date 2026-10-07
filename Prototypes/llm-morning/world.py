@@ -84,7 +84,7 @@ LULL_QUIET = None            # minutes a room must be still before a lull (None:
 LULL_EVERY = 12              # minutes since a person was last asked before a lull
 TRIP_HUNGER = 2              # the hunger level ("very hungry") that starts the trip concern
 TRIP_ON = True               # the trip concern (reports/trip_design.md); off only in tests
-TRIP_KINDS = tuple(TRIP_WHY)  # propose, volunteer, object, back, decline
+TRIP_KINDS = tuple(TRIP_WHY)  # propose, volunteer, object, back, decline; propose_far, volunteer_far (stage B)
 # The body's food moment on day 2 (reports/body_design.md, §2): the chance a turn, at impulsive 0.5,
 # by when they last ate; and the minutes between one person's moments.
 FOOD_RATE = {"before yesterday": 0.07, "yesterday": 0.035}
@@ -102,6 +102,8 @@ KIND_DONE = {   # what a run of one kind of act looks like, told to the person w
     "propose": "said someone should go to the neighbour's house tonight",
     "volunteer": "offered to go there tonight", "object": "said someone should not go",
     "back": "said someone should be the one to go", "decline": "said you will not be the one to go",
+    "propose_far": "said someone should try the houses further along the street tonight",      # stage B, W5
+    "volunteer_far": "offered to go further along the street tonight",
     "give": "given someone a portion", "eat_given": "eaten", "refuse_given": "refused a portion",
     "confront": "confronted someone",
 }
@@ -241,24 +243,30 @@ def portions_text(n):
     return f"{n} portion{'s' if n != 1 else ''}"
 
 
-def grudge_facts(name, events, limit=None, clock_from=None):
+def grudge_facts(name, events, limit=None, clock_from=None, night_from=None, today=None):
     """The facts behind a grudge: each event the rules saw, then one line for the times the
     person named them as who they were angry with. An event carried from an earlier day or night
     is (minute, text with its day word, kind, day word, scene, text) (reports/night_design.md, §5.3;
     reports/days_design.md, §3.5): its words are written when the next morning is set up. clock_from: data.CLOCK_FROM
-    on a quiet day, whose minutes from 90 on are written as the clock (reports/quiet_day_fixes.md, fix 3)."""
+    on a quiet day, whose minutes from 90 on are written as the clock (reports/quiet_day_fixes.md, fix 3).
+    night_from: on a quiet day, the minute its night's answers keep (Morning.night_minute): those are "tonight",
+    never a minute (reports/multiday.md)."""
     facts = [e[1] for e in events if e[2] == "event"]
     angry = [e for e in events if e[2] == "angry"]
     if limit:
         facts, angry = facts[-limit:], angry[-limit:]
     if angry and all(len(e) == 3 for e in events):
-        ms = [e[0] for e in angry]
-        facts.append(f"you were angry with {name} {data.minutes_words(ms, clock_from)}")
+        ms = [e[0] for e in angry if night_from is None or e[0] < night_from]
+        tonight = len(ms) < len(angry)
+        parts = ([data.minutes_words(ms, clock_from)] if ms else []) + (["tonight"] if tonight else [])
+        facts.append(f"you were angry with {name} " + "; and ".join(parts))
     elif angry:
         groups = {}             # day word -> (a night?, minutes), oldest first
         for e in angry:
-            when = e[3] if len(e) > 3 else "this morning"
+            when = e[3] if len(e) > 3 else (today or "this morning")      # today: amendment 5, stage B
             night = e[4][0] == "N" if len(e) > 4 else when == "last night"
+            if len(e) == 3 and night_from is not None and e[0] >= night_from:
+                when, night = "tonight", True
             groups.setdefault(when, (night, []))[1].append(e[0])
         parts = [when if night else f"{when} {data.minutes_words(ms, clock_from)}"
                  for when, (night, ms) in groups.items()]
@@ -294,6 +302,8 @@ class Person:
         self.sure = []              # this morning's facts that are never trimmed
         self.said_lines = []        # their own spoken lines, oldest first, without the words
         self.triggers = []          # (text, is it new) social things since they last acted
+        self.knows_empty = False    # stage B, W5: they got inside the neighbour's house and left nothing there
+        self.missing = {}           # stage B: someone who did not come back -> (how they know it, the night)
         self.history = []           # one {"t", "kind", "seq"} per turn: what they did
         self.heard = []             # lines they heard: {"seq", "who", "kind", "target"}
         self.addressed = None       # the last line aimed at them since they last acted
@@ -367,6 +377,7 @@ class Morning:
         self.oracle = oracle
         self.day = day
         self.away = set()           # day 2: who did not come back in the night
+        self.street = {}            # stage B, W5: person -> their "About the street:" line, once next door is empty
         self.carry = {}             # day 2: person -> the carry-in block (reports/night_design.md, §5.2)
         self.neighbour = {}         # day 2: person -> their "About the neighbour's house:" line
         self.carried = {}           # day 2: person -> their opening, food and neighbour lines at minute 00
@@ -446,6 +457,18 @@ class Morning:
         else:
             ids = [q for q in data.ORDER if self.people[q].room == p.room]
         return [self.people[q] for q in ids if q != p.id]
+
+    def night_minute(self):
+        """The minute the night's answers keep: 90 after days 1 and 2 (NIGHT_MINUTE), when the day ends at minute 90;
+        after a quiet day, its bedtime, 21:00, so that no minute of the day is read as the night's
+        (reports/multiday.md)."""
+        import quiet
+        return quiet.DAY_END if self.quiet is not None else NIGHT_MINUTE
+
+    def night_from(self):
+        """On a quiet day, the minute from which an answer is the night's, for the facts that list minutes; None on
+        days 1 and 2, whose prompts stay as they were."""
+        return self.night_minute() if self.quiet is not None else None
 
     def clock_from(self):
         """From what minute a list of this day's minutes says the clock: from 90 on a quiet day (quiet.py); never on
@@ -609,6 +632,14 @@ class Morning:
         backed = any(v[1:3] == ("back", p.id) for w, v in p.trip_heard.items() if w != p.id)
         if (backed or own == ("volunteer", None)) and own != ("decline", None):
             out.append(Option("refuse_to_go", "say you yourself will not go", True, kind="decline"))
+        if p.knows_empty:           # stage B, W5: further along the street, once next door is known empty
+            mine = pos[4] if pos and len(pos) > 4 else None
+            if mine != "propose_far":
+                out.append(Option("propose_far", "say someone should try the houses further along the street tonight",
+                                  True, kind="propose_far"))
+            if mine != "volunteer_far":
+                out.append(Option("volunteer_far", "offer to go further along the street tonight yourself", True,
+                                  kind="volunteer_far"))
         return out
 
     @staticmethod
@@ -616,7 +647,7 @@ class Morning:
         """As far as p has heard: q offered to go, or someone backed q since q last said they
         will not go."""
         pos = p.trip_heard.get(q)
-        if pos and pos[1] == "volunteer":
+        if pos and pos[1] in ("volunteer", "volunteer_far"):
             return True
         declined = pos[3] if pos and pos[1] == "decline" else -1
         return any(v[1:3] == ("back", q) and v[3] > declined for w, v in p.trip_heard.items() if w != q)
@@ -651,7 +682,11 @@ class Morning:
             x = "you" if who == p.id else NAMES[who]
             he = "you" if who == p.id else data.PRONOUNS[who]["he"]
             q = None if target is None else "you" if target == p.id else NAMES[target]
-            if kind == "propose":
+            if kind == "propose_far":
+                said = f"{x} said someone should try the houses further along the street"
+            elif kind == "volunteer_far":
+                said = f"{x} offered to go further along the street"
+            elif kind == "propose":
                 said = f"{x} said someone should go"
             elif option == "still_going":
                 said = f"{x} said {he} still {'mean' if who == p.id else 'means'} to go"
@@ -675,8 +710,25 @@ class Morning:
             return []
         plan = self.heard_plan(p)
         if self.day != 4:
-            return [self.food_line(p), self.neighbour.get(p.id, NEIGHBOUR_UNKNOWN)] + ([plan] if plan else [])
+            street = [self.street[p.id]] if p.id in self.street else []        # stage B, W5
+            return [self.food_line(p), self.neighbour.get(p.id, NEIGHBOUR_UNKNOWN)] + street + ([plan] if plan else [])
         return [data.ABOUT_FOOD, data.ABOUT_NEIGHBOUR] + ([plan] if plan else [])
+
+    def missing_lines(self, p):
+        """Stage B, amendment 4: for each one who did not come back, what p knows of it."""
+        out = []
+        for x, (how, k) in p.missing.items():
+            pro = data.PRONOUNS[x]
+            when = when_words(("N", k), self.day)
+            out.append({"with": f"About {NAMES[x]}: {pro['he']} was with you in the street {when}; you lost sight of "
+                                f"{pro['him']} in the dark, and {pro['he']} has not come back.",
+                        "saw": f"About {NAMES[x]}: you saw {pro['him']} go out {when}, and {pro['he']} has not come "
+                               f"back.",
+                        "heard": f"About {NAMES[x]}: {when} you heard the front door, and by morning {pro['he']} was "
+                                 f"gone; {pro['he']} has not come back.",
+                        "gone": f"About {NAMES[x]}: {pro['he']} has been gone since {when}; you do not know where "
+                                f"{pro['he']} went."}[how])
+        return out
 
     def food_line(self, p=None):
         """Day 2's "About food:" line: what the shelf holds, and what that means for those here. For
@@ -871,7 +923,7 @@ class Morning:
         record["grudges"].append((minute, holder.id, against.id, holder.grudges[against.id].strength, story))
 
     # ---------- what is inside them, as the prompt says it ----------
-    def inside_lines(self, p):
+    def inside_lines(self, p, today=False):
         """Hunger in words; suspicion, grudges and guilt as the events behind them."""
         rose = self.risen(p)
         if p.needs is None:
@@ -903,7 +955,11 @@ class Morning:
         elif s.strength and self.day != 4:
             when = []
             past = [(when_words(scene, self.day), ms) for scene, ms in p.suspected_past]
-            for word, ms in past + [("this morning", p.suspected_at)]:
+            now = [("this morning", p.suspected_at)]
+            if self.night_from() is not None:       # a quiet day's night: its answers are "tonight", never a minute
+                day_ms = [mm for mm in p.suspected_at if mm < self.night_from()]
+                now = [("this morning", day_ms)] + ([("tonight", True)] if len(day_ms) < len(p.suspected_at) else [])
+            for word, ms in past + now:
                 if ms is True:
                     when.append(word)
                 elif ms:
@@ -918,11 +974,13 @@ class Morning:
             about = "About the can: you have not settled on who took it."
         out.append(f"{about} {p.can_note}" if p.can_note else about)
         out += self.trip_lines(p)
+        out += self.missing_lines(p)
         held = [(t, p.grudges[t]) for t in data.ORDER if t in p.grudges and p.grudges[t].strength]
         if not held:
             out.append("Against the others: nothing.")
         for t, g in held:
-            facts = "; ".join(grudge_facts(NAMES[t], g.events, EVENTS_SHOWN, self.clock_from()))
+            facts = "; ".join(grudge_facts(NAMES[t], g.events, EVENTS_SHOWN, self.clock_from(), self.night_from(),
+                                           "today" if today else None))
             out.append(f"Against {NAMES[t]} ({LEVEL_WORDS[g.strength]}): {facts}.")
         if p.guilt is not None:
             facts = ["you ate the can in the night, and nobody saw"]
@@ -980,7 +1038,9 @@ class Morning:
         minute = None if night is not None else t * data.MINUTES_PER_TURN
         system = SYSTEM if night is None else NIGHT_SYSTEM
         calls = "; ".join(f"{self.people[q].name} \"{word}\"" for q, word in data.ADDRESS[p.id].items())
-        inside = self.inside_lines(p)
+        # Amendment 5 (reports/stage_b.md): a quiet day's own events, from minute 90 on and at its night, are "today".
+        today = self.quiet is not None and (night is not None or minute >= data.CLOCK_FROM)
+        inside = self.inside_lines(p, today)
         head = [
             f"You are {p.name}, {s['age']}, {s['role']} of the family (Elena, 42, the mother; "
             f"Daniel, 25; Leo, 21; Mara, 17).",
@@ -991,6 +1051,9 @@ class Morning:
         ] + inside
         house = (data.HOUSE_THINGS_NIGHT if night is not None
                  else data.HOUSE_THINGS_AFTER_TRIP if self.trip else data.HOUSE_THINGS)
+        if p.knows_empty:           # stage B, W5: their places include the houses further along
+            house = house.replace("the street and the neighbour's house",
+                                  "the street, the neighbour's house and the houses further along the street")
         head += [f"The house: {data.HOUSE} {house}"]
         if night is not None:
             return self.prompt_parts(p, opts, head, list(night), system, "today", minute)
@@ -1615,7 +1678,9 @@ class Morning:
                     "object": (f"said {target.name} should not be the one to go" if target
                                else "said nobody should go out tonight"),
                     "back": f"said {target.name if target else ''} should be the one to go",
-                    "decline": "said you will not be the one to go"}.get(kind, "said")
+                    "decline": "said you will not be the one to go",
+                    "propose_far": "said someone should try the houses further along the street tonight",
+                    "volunteer_far": "offered to go further along the street tonight"}.get(kind, "said")
             if self.day != 4 and kind in TRIP_KINDS:
                 # Day 2's wording (reports/night_design.md, §6), for the speaker's own line.
                 mine = {"still_going": "said you still mean to go there tonight",
@@ -1636,7 +1701,7 @@ class Morning:
                     self.trip_ids.append(opt.id)
                 for x in [p] + seen:
                     x.trip_heard[p.id] = heard
-                    if kind in ("propose", "volunteer", "back"):
+                    if kind in ("propose", "volunteer", "back", "propose_far", "volunteer_far"):
                         x.trip_raised = True
                 if kind == "propose":
                     p.proposed = True

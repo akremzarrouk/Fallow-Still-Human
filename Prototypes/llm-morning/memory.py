@@ -89,7 +89,10 @@ def block_c(chron, pid, day, away=()):
             went = next((e for e in reversed(chron.events) if e["kind"] == "went_out" and x in (e["members"] or [])),
                         None)
             when = scene_when(went["scene"], day) if went else "in the night"
-            items.append({"line": f"{NAMES[x]} went out {when} and has not come back.",
+            # Stage B, amendment 4: whoever only found them gone does not know they went out.
+            line = (f"{NAMES[x]} went out {when} and has not come back." if went is None or pid in went["witnesses"]
+                    else f"{NAMES[x]} has been gone since {when} and has not come back.")
+            items.append({"line": line,
                           "ids": [went["id"]] if went else [], "weight": 6, "standing": True, "self": False,
                           "order": -1, "thought": None})
     # C2: people. Each event of the past, as a candidate line for the person it is about.
