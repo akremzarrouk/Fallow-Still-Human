@@ -1,0 +1,10 @@
+{
+ "case": "seed2_mara",
+ "arm": "control",
+ "sample": 3,
+ "seed": 103,
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 1.0,
+ "api_requests": 1,
+ "raw": "{\n  \"option\": \"accuse_daniel\",\n  \"say\": \"You went out into the night and came back with nothing, just like you always do.\",\n  \"feeling\": \"resentful\",\n  \"reason\": \"I am furious that Daniel thinks he can lecture us after sneaking out into the danger alone and failing to bring back any food.\",\n  \"suspects\": \"Daniel\",\n  \"angry_at\": \"Daniel\"\n}"
+}

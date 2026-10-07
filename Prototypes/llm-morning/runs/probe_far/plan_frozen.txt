@@ -1,0 +1,17 @@
+plan: runs/probe_far/plan.md
+recorded_utc: 2026-10-07T19:20:27Z
+889b4ebc2935073f5c0c510b1f0f7e3c8401149122bdf7f4161db1fb7e12346a *runs/probe_far/plan.md
+4c0401a9950333eb58453a0d8b92745badae500ce2293a7309bd86706ffe1e07 *runs/probe_far/probe.py
+972ceed9dc4264532c3b44d1d5b63c0c3711497dbfcc85fe1d1c123df227864a *runs/probe_far/cases/seed1_mara_control.txt
+6c384a7c85ffbdeca9f60781fe957240cd90f3afee0f245829f809211ce5056b *runs/probe_far/cases/seed1_mara_probe.txt
+fc55b863413af5b44769ae9b5cb429492c0bb9879ed72a050792938a29146cbd *runs/probe_far/cases/seed2_mara_control.txt
+8f8b3d0fe0f29d14a0fd1610c32fb5e36c76c95151347bdcf1abe59fd29bba2e *runs/probe_far/cases/seed2_mara_probe.txt
+9976354f1a9bcada6b0b283553f1b40df97f9319f01748f2cd3eccfdb5818c61 *runs/probe_far/cases/seed3_leo_control.txt
+4e6551868e8b5d2e2321c7e998b9b1b3a8dc83dcf649870b0b459e84806c38f6 *runs/probe_far/cases/seed3_leo_probe.txt
+4fd0ecd53d2033d4a0a4cc11165ce7d929c8ad18a6a12558ce09103ba8261e39 *runs/probe_far/cases/system.txt
+$ git rev-parse HEAD
+7da3d674da23ee87c7a3d4cd81f7668dbf63202f
+$ git status --short
+?? runs/probe_far/
+$ ls runs/probe_far/answers
+ls: cannot access 'runs/probe_far/answers': No such file or directory

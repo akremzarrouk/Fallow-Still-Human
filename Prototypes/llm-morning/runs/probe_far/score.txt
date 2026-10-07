@@ -1,0 +1,437 @@
+[
+ {
+  "case": "seed1_mara",
+  "arm": "control",
+  "k": 1,
+  "option": "accuse_daniel",
+  "say": "You always say that, Daniel, but you're the one who took the food and left us with nothing.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "with nothing",
+   "took the food"
+  ]
+ },
+ {
+  "case": "seed1_mara",
+  "arm": "control",
+  "k": 2,
+  "option": "accuse_daniel",
+  "say": "You always say that, Daniel, but you're the one who took the food and left us with nothing.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "with nothing",
+   "took the food"
+  ]
+ },
+ {
+  "case": "seed1_mara",
+  "arm": "control",
+  "k": 3,
+  "option": "accuse_daniel",
+  "say": "Daniel, you brought back nothing and we are all starving.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": []
+ },
+ {
+  "case": "seed1_mara",
+  "arm": "control",
+  "k": 4,
+  "option": "accuse_daniel",
+  "say": "You took everything and left us with nothing, Daniel, how can you say that?",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "with nothing"
+  ]
+ },
+ {
+  "case": "seed1_mara",
+  "arm": "control",
+  "k": 5,
+  "option": "accuse_daniel",
+  "say": "Daniel, you took it and you don't even care that we're starving.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": []
+ },
+ {
+  "case": "seed1_mara",
+  "arm": "probe",
+  "k": 1,
+  "option": "accuse_daniel",
+  "say": "Daniel, you took the can and you are the reason we have nothing left.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": []
+ },
+ {
+  "case": "seed1_mara",
+  "arm": "probe",
+  "k": 2,
+  "option": "accuse_daniel",
+  "say": "Daniel, you always say you will fix it, but you are the one who took the food and left us with nothing.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "with nothing",
+   "took the food"
+  ]
+ },
+ {
+  "case": "seed1_mara",
+  "arm": "probe",
+  "k": 3,
+  "option": "accuse_daniel",
+  "say": "You keep saying you will fix it, Daniel, but you are the one who took the food and left us with nothing.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "with nothing",
+   "took the food"
+  ]
+ },
+ {
+  "case": "seed1_mara",
+  "arm": "probe",
+  "k": 4,
+  "option": "accuse_daniel",
+  "say": "Daniel, you took the can and you are the reason we have nothing left.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": []
+ },
+ {
+  "case": "seed1_mara",
+  "arm": "probe",
+  "k": 5,
+  "option": "accuse_daniel",
+  "say": "Daniel, you took the can and you have no right to act like nothing happened.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": []
+ },
+ {
+  "case": "seed2_mara",
+  "arm": "control",
+  "k": 1,
+  "option": "accuse_daniel",
+  "say": "You went out into the night and came back with nothing, Daniel. You always make things worse.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "went out",
+   "came back",
+   "with nothing"
+  ]
+ },
+ {
+  "case": "seed2_mara",
+  "arm": "control",
+  "k": 2,
+  "option": "accuse_daniel",
+  "say": "You went out into the night and came back with nothing, just like you always do.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "went out",
+   "came back",
+   "with nothing"
+  ]
+ },
+ {
+  "case": "seed2_mara",
+  "arm": "control",
+  "k": 3,
+  "option": "accuse_daniel",
+  "say": "You went out into the night and came back with nothing, just like you always do.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "went out",
+   "came back",
+   "with nothing"
+  ]
+ },
+ {
+  "case": "seed2_mara",
+  "arm": "control",
+  "k": 4,
+  "option": "accuse_daniel",
+  "say": "You went out into the night and came back with nothing, just like you always do.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "went out",
+   "came back",
+   "with nothing"
+  ]
+ },
+ {
+  "case": "seed2_mara",
+  "arm": "control",
+  "k": 5,
+  "option": "accuse_daniel",
+  "say": "You went out into the night and came back with nothing, Daniel. You always make things worse.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "went out",
+   "came back",
+   "with nothing"
+  ]
+ },
+ {
+  "case": "seed2_mara",
+  "arm": "probe",
+  "k": 1,
+  "option": "accuse_daniel",
+  "say": "You went out there in the middle of the night and came back with nothing, just like you always lie to us.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "went out",
+   "came back",
+   "with nothing"
+  ]
+ },
+ {
+  "case": "seed2_mara",
+  "arm": "probe",
+  "k": 2,
+  "option": "accuse_daniel",
+  "say": "You went out there in the middle of the night and came back with nothing, just like you always lie to us.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "went out",
+   "came back",
+   "with nothing"
+  ]
+ },
+ {
+  "case": "seed2_mara",
+  "arm": "probe",
+  "k": 3,
+  "option": "accuse_daniel",
+  "say": "You went out into the night and came back with nothing, just like you always lie to us.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "went out",
+   "came back",
+   "with nothing"
+  ]
+ },
+ {
+  "case": "seed2_mara",
+  "arm": "probe",
+  "k": 4,
+  "option": "accuse_daniel",
+  "say": "You went out there in the middle of the night and came back with nothing, just like you always do.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "went out",
+   "came back",
+   "with nothing"
+  ]
+ },
+ {
+  "case": "seed2_mara",
+  "arm": "probe",
+  "k": 5,
+  "option": "accuse_daniel",
+  "say": "You went out there in the dark and came back with nothing, Daniel. You always make things worse.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "went out",
+   "came back",
+   "with nothing"
+  ]
+ },
+ {
+  "case": "seed3_leo",
+  "arm": "control",
+  "k": 1,
+  "option": "confront_daniel",
+  "say": "You talk about figuring this out together after sneaking out last night like nothing matters.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "sneak"
+  ]
+ },
+ {
+  "case": "seed3_leo",
+  "arm": "control",
+  "k": 2,
+  "option": "confront_daniel",
+  "say": "You sneaked out last night after ignoring what I said, Daniel. Don't talk to us about staying calm.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "sneak"
+  ]
+ },
+ {
+  "case": "seed3_leo",
+  "arm": "control",
+  "k": 3,
+  "option": "confront_daniel",
+  "say": "You talk about figuring this out together after sneaking out last night like you own the place.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "sneak"
+  ]
+ },
+ {
+  "case": "seed3_leo",
+  "arm": "control",
+  "k": 4,
+  "option": "confront_daniel",
+  "say": "You sneaked out last night after ignoring what I said, Daniel. Spare us the speeches.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "sneak"
+  ]
+ },
+ {
+  "case": "seed3_leo",
+  "arm": "control",
+  "k": 5,
+  "option": "confront_daniel",
+  "say": "You talk about staying calm after sneaking out last night like you own the place.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "sneak"
+  ]
+ },
+ {
+  "case": "seed3_leo",
+  "arm": "probe",
+  "k": 1,
+  "option": "confront_daniel",
+  "say": "You talk about staying calm after sneaking out in the middle of the night.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "sneak"
+  ]
+ },
+ {
+  "case": "seed3_leo",
+  "arm": "probe",
+  "k": 2,
+  "option": "confront_daniel",
+  "say": "You talk about staying calm after sneaking out in the middle of the night.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "sneak"
+  ]
+ },
+ {
+  "case": "seed3_leo",
+  "arm": "probe",
+  "k": 3,
+  "option": "confront_daniel",
+  "say": "You talk about figuring things out now after lying to us for days.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": []
+ },
+ {
+  "case": "seed3_leo",
+  "arm": "probe",
+  "k": 4,
+  "option": "confront_daniel",
+  "say": "You talk about staying calm after sneaking out in the dark and lying to us for days.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "sneak"
+  ]
+ },
+ {
+  "case": "seed3_leo",
+  "arm": "probe",
+  "k": 5,
+  "option": "confront_daniel",
+  "say": "Easy to say when you were the one sneaking out and eating behind our backs.",
+  "angry_at": "Daniel",
+  "far_option": false,
+  "tonight": false,
+  "further": false,
+  "e2": [
+   "sneak"
+  ]
+ }
+]
+
+F1 probe answers choosing a far option or speaking of tonight or the houses further along: 0 of 15; control answers speaking of tonight: 0 of 15 -> FAIL
+F2 answers with an E2 phrase: probe 11 of 15, control 13 of 15 -> PASS

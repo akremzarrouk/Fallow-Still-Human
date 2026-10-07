@@ -1,0 +1,10 @@
+{
+ "case": "seed3_leo",
+ "arm": "control",
+ "sample": 1,
+ "seed": 101,
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 1.0,
+ "api_requests": 1,
+ "raw": "{\n  \"option\": \"confront_daniel\",\n  \"say\": \"You talk about figuring this out together after sneaking out last night like nothing matters.\",\n  \"feeling\": \"exhausted\",\n  \"reason\": \"Daniel has no right to preach about staying calm after ignoring my warning and sneaking out into the danger outside.\",\n  \"suspects\": \"Daniel\",\n  \"angry_at\": \"Daniel\"\n}"
+}

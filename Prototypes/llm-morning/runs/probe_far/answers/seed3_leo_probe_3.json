@@ -1,0 +1,10 @@
+{
+ "case": "seed3_leo",
+ "arm": "probe",
+ "sample": 3,
+ "seed": 103,
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 1.0,
+ "api_requests": 1,
+ "raw": "{\n  \"option\": \"confront_daniel\",\n  \"say\": \"You talk about figuring things out now after lying to us for days.\",\n  \"feeling\": \"exhausted\",\n  \"reason\": \"Daniel has no right to offer calm reassurance when he caused this mess.\",\n  \"suspects\": \"Daniel\",\n  \"angry_at\": \"Daniel\"\n}"
+}

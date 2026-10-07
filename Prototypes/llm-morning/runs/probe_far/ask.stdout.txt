@@ -1,0 +1,32 @@
+seed1_mara control 1 (seed 101): 1 API request(s); live asks so far 1
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+seed1_mara control 2 (seed 102): 2 API request(s); live asks so far 2
+seed1_mara control 3 (seed 103): 1 API request(s); live asks so far 3
+seed1_mara control 4 (seed 104): 1 API request(s); live asks so far 4
+seed1_mara control 5 (seed 105): 1 API request(s); live asks so far 5
+seed1_mara probe 1 (seed 101): 1 API request(s); live asks so far 6
+seed1_mara probe 2 (seed 102): 1 API request(s); live asks so far 7
+seed1_mara probe 3 (seed 103): 1 API request(s); live asks so far 8
+seed1_mara probe 4 (seed 104): 1 API request(s); live asks so far 9
+seed1_mara probe 5 (seed 105): 1 API request(s); live asks so far 10
+seed2_mara control 1 (seed 101): 1 API request(s); live asks so far 11
+seed2_mara control 2 (seed 102): 1 API request(s); live asks so far 12
+seed2_mara control 3 (seed 103): 1 API request(s); live asks so far 13
+seed2_mara control 4 (seed 104): 1 API request(s); live asks so far 14
+seed2_mara control 5 (seed 105): 1 API request(s); live asks so far 15
+seed2_mara probe 1 (seed 101): 1 API request(s); live asks so far 16
+seed2_mara probe 2 (seed 102): 1 API request(s); live asks so far 17
+seed2_mara probe 3 (seed 103): 1 API request(s); live asks so far 18
+seed2_mara probe 4 (seed 104): 1 API request(s); live asks so far 19
+seed2_mara probe 5 (seed 105): 1 API request(s); live asks so far 20
+seed3_leo control 1 (seed 101): 1 API request(s); live asks so far 21
+seed3_leo control 2 (seed 102): 1 API request(s); live asks so far 22
+seed3_leo control 3 (seed 103): 1 API request(s); live asks so far 23
+seed3_leo control 4 (seed 104): 1 API request(s); live asks so far 24
+seed3_leo control 5 (seed 105): 1 API request(s); live asks so far 25
+seed3_leo probe 1 (seed 101): 1 API request(s); live asks so far 26
+seed3_leo probe 2 (seed 102): 1 API request(s); live asks so far 27
+seed3_leo probe 3 (seed 103): 1 API request(s); live asks so far 28
+seed3_leo probe 4 (seed 104): 1 API request(s); live asks so far 29
+seed3_leo probe 5 (seed 105): 1 API request(s); live asks so far 30
+exit 0

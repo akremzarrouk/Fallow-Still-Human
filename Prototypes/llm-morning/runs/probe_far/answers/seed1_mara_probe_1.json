@@ -1,0 +1,10 @@
+{
+ "case": "seed1_mara",
+ "arm": "probe",
+ "sample": 1,
+ "seed": 101,
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 1.0,
+ "api_requests": 1,
+ "raw": "{\n  \"option\": \"accuse_daniel\",\n  \"say\": \"Daniel, you took the can and you are the reason we have nothing left.\",\n  \"feeling\": \"resentful\",\n  \"reason\": \"I cannot stand there listening to him pretend he is protecting us when he is the one who stole our food.\",\n  \"suspects\": \"Daniel\",\n  \"angry_at\": \"Daniel\"\n}"
+}

@@ -1,0 +1,10 @@
+{
+ "case": "seed2_mara",
+ "arm": "control",
+ "sample": 2,
+ "seed": 102,
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 1.0,
+ "api_requests": 1,
+ "raw": "{\n  \"option\": \"accuse_daniel\",\n  \"say\": \"You went out into the night and came back with nothing, just like you always do.\",\n  \"feeling\": \"resentful\",\n  \"reason\": \"I need to call him out for sneaking out last night and acting like he can just fix everything by talking.\",\n  \"suspects\": \"Daniel\",\n  \"angry_at\": \"Daniel\"\n}"
+}

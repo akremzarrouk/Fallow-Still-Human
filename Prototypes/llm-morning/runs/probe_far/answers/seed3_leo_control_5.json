@@ -1,0 +1,10 @@
+{
+ "case": "seed3_leo",
+ "arm": "control",
+ "sample": 5,
+ "seed": 105,
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 1.0,
+ "api_requests": 1,
+ "raw": "{\"option\": \"confront_daniel\", \"say\": \"You talk about staying calm after sneaking out last night like you own the place.\", \"feeling\": \"annoyed\", \"reason\": \"Daniel tries to play the peacekeeper after putting us all at risk in the dark.\", \"suspects\": \"Daniel\", \"angry_at\": \"Daniel\"}"
+}

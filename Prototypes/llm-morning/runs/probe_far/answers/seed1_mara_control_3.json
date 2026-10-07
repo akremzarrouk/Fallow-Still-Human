@@ -1,0 +1,10 @@
+{
+ "case": "seed1_mara",
+ "arm": "control",
+ "sample": 3,
+ "seed": 103,
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 1.0,
+ "api_requests": 1,
+ "raw": "{\"option\": \"accuse_daniel\", \"say\": \"Daniel, you brought back nothing and we are all starving.\", \"feeling\": \"resentful\", \"reason\": \"Daniel keeps acting like our protector when he's the one who made everything worse.\", \"suspects\": \"Daniel\", \"angry_at\": \"Daniel\"}"
+}
