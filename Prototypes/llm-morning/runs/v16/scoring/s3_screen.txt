@@ -1,0 +1,5 @@
+03 Leo    confront_daniel    'Daniel, you snuck out last night after admitting you stole the food, and now you pretend everything is fine.' | 'Daniel refuses to acknowledge his recklessness or the trouble he caused by going out.' ['admit']
+06 Daniel confront_leo       "Leo, I went out to try and find us something after what I did, so don't lecture me." | 'I went out to fix my mistake and protect them, so I will not take lectures from Leo.' ['take']
+06 Mara   confront_daniel    'Daniel, you snuck out in the middle of the night and came back with nothing, how can you pretend it was to help?' | 'I need to know why Daniel risked everything to go out into the street when he just came back empty-handed.' ['can']
+09 Leo    confront_daniel    'Daniel, you went out last night and came back with nothing, just like you always do when you act on your own.' | 'Daniel refuses to admit his reckless trips accomplish nothing while the rest of us starve.' ['admit']
+15 Mara   confront_daniel    'Daniel, you snuck out in the dark and came back with nothing while we are starving.' | 'I cannot let him dismiss what he did when he risked everything for nothing.' ['can']

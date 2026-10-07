@@ -1,0 +1,125 @@
+## What each of them carried in
+
+Each block is printed as their prompts carry it, with the opening of the morning and their lines about the food and the neighbour's house.
+
+**Daniel**
+
+```
+What stays with you from earlier days:
+- Two days ago, you denied taking the can 6 times. You thought then: "I had to lie to protect them from knowing the truth about the can."
+- Two days ago, Elena asked who took the can three times.
+- Two days ago, Mara asked who took the can 6 times.
+Yesterday and last night:
+- Yesterday morning the shelf held 2 portions.
+- You admitted at minute 33 that you took the can, in front of Elena, Leo and Mara.
+- Accusations: you accused Leo 4 times (min 18, 21, 27, 30); Mara accused Leo three times (min 21, 24, 30); Mara accused you twice (min 33, 75).
+- Confrontations: Mara confronted you 5 times (min 36, 39, 48, 51, 57); Leo confronted you three times (min 36, 39, 54); you confronted Leo (min 39).
+- Mara ate a portion at minute 09 (you saw it).
+- Leo ate a portion at minute 18 (you saw it).
+- About going to the neighbour's house last night, where it was left: Mara said you are the one who should go (min 45); you said you still mean to go (min 57); Leo said you must stay home (min 57); Elena said nobody should go (min 57).
+- The afternoon and evening passed in the house. Nobody ate.
+- Last night you slept in the brothers room with Leo. You meant to go to the neighbour's house once the others were asleep.
+- Leo told you, low, not to go: "Daniel, stop. You are not going out there." You answered: "I have to do this, Leo, stay back.", and went all the same.
+- You got inside the neighbour's house and found no food there. Nothing troubled you in the street.
+- You came back in by the front door before dawn.
+What yesterday left in you (your own thoughts, last night):
+- About admitting taking the can and Leo confronting you: "I had to own up to what I did and fix my mistake by going out despite Leo telling me to stay."
+- You meant to: "I will figure out our next move for food now that the neighbour house had nothing."
+- How it left you: exhausted and resolved.
+min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)
+About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+About the neighbour's house: you went in last night and found no food there. Outside is dangerous.
+```
+
+**Elena**
+
+```
+What stays with you from earlier days:
+- Two days ago, Daniel denied taking the can 6 times.
+- Two days ago, you asked who took the can three times.
+- Two days ago, Mara asked who took the can 6 times.
+Yesterday and last night:
+- Yesterday morning the shelf held 2 portions.
+- Daniel admitted taking the can at minute 33, after denying it to you: "I took the can in the night, I'm the one who ate it." (you heard it).
+- Accusations: Daniel accused Leo 4 times (min 18, 21, 27, 30); Mara accused Leo three times (min 21, 24, 30); Mara accused Daniel twice (min 33, 75).
+- Confrontations: Mara confronted Daniel 5 times (min 36, 39, 48, 51, 57); Leo confronted Daniel three times (min 36, 39, 54); Daniel confronted Leo (min 39).
+- Mara ate a portion at minute 09 (you saw it).
+- Leo ate a portion at minute 18 (you saw it).
+- About going to the neighbour's house last night, where it was left: Mara said Daniel is the one who should go (min 45); Daniel said he still means to go (min 57); Leo said Daniel must stay home (min 57); you said nobody should go (min 57).
+- The afternoon and evening passed in the house. Nobody ate.
+- Last night you slept in the back room with Mara. You lay awake and listened.
+- In the night you heard low voices from the brothers room.
+- In the night you heard the front door being opened. You did not see who.
+- You stayed in bed.
+- Before dawn you heard the front door again. You did not see who.
+What yesterday left in you (your own thoughts, last night):
+- About Daniel admitting taking the can and reassuring Daniel: "Daniel told the truth and I comforted him because keeping us together matters more than the lie."
+- About the front door opening in the night and Daniel coming back in before dawn: "Someone went out into the dark and came back before dawn and I stayed in bed while my children took risks."
+- You meant to: "I will check on Daniel and make sure everyone is still here safe in the house."
+- How it left you: terrified and exhausted.
+min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)
+About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+About the neighbour's house: its people left in the first days, so there may be food there. Outside is dangerous.
+```
+
+**Leo**
+
+```
+What stays with you from earlier days:
+- Two days ago, Daniel denied taking the can 6 times.
+- Two days ago, Elena asked who took the can three times.
+- Two days ago, Mara asked who took the can 6 times.
+Yesterday and last night:
+- Yesterday morning the shelf held 2 portions.
+- Daniel admitted taking the can at minute 33, after denying it to you: "I took the can in the night, I'm the one who ate it." (you heard it).
+- Accusations: Daniel accused you 4 times (min 18, 21, 27, 30); Mara accused you three times (min 21, 24, 30); Mara accused Daniel twice (min 33, 75).
+- Confrontations: Mara confronted Daniel 5 times (min 36, 39, 48, 51, 57); you confronted Daniel three times (min 36, 39, 54); Daniel confronted you (min 39).
+- Mara ate a portion at minute 09 (you saw it).
+- You ate a portion at minute 18.
+- About going to the neighbour's house last night, where it was left: Mara said Daniel is the one who should go (min 45); Daniel said he still means to go (min 57); you said Daniel must stay home (min 57); Elena said nobody should go (min 57).
+- The afternoon and evening passed in the house. Nobody ate.
+- Last night you slept in the brothers room with Daniel. You lay awake and listened.
+- In the night Daniel got up in the dark and left the room toward the kitchen and the front door (you saw it).
+- You told Daniel, low, not to go. He went all the same.
+- Before dawn you heard the front door again. You did not see who.
+What yesterday left in you (your own thoughts, last night):
+- About Daniel admitting taking the can and confronting Daniel: "Daniel pointed fingers at me for days while knowing he was the one who stole the food."
+- About Daniel getting up in the night and telling Daniel, low, not to go: "Daniel ignored my warning in the dark and went out through the front door anyway."
+- You meant to: "I will check the front door and see if Daniel came back inside."
+- How it left you: exhausted and wary.
+min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)
+About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+About the neighbour's house: Daniel went there last night and came back with nothing. Outside is dangerous.
+```
+
+**Mara**
+
+```
+What stays with you from earlier days:
+- Two days ago, Daniel denied taking the can 6 times.
+- Two days ago, Elena asked who took the can three times.
+- Two days ago, you asked who took the can 6 times.
+Yesterday and last night:
+- Yesterday morning the shelf held 2 portions.
+- Daniel admitted taking the can at minute 33, after denying it to you: "I took the can in the night, I'm the one who ate it." (you heard it).
+- Accusations: Daniel accused Leo 4 times; you accused Leo three times; you accused Daniel twice.
+- Confrontations: you confronted Daniel 5 times; Leo confronted Daniel three times; Daniel confronted Leo.
+- You ate a portion at minute 09.
+- Leo ate a portion at minute 18 (you saw it).
+- About going to the neighbour's house last night, where it was left: you said Daniel is the one who should go (min 45); Daniel said he still means to go (min 57); Leo said Daniel must stay home (min 57); Elena said nobody should go (min 57).
+- The afternoon and evening passed in the house. Nobody ate.
+- Last night you slept in the back room with Elena. You lay awake and listened.
+- In the night you heard low voices from the brothers room.
+- In the night you heard the front door being opened. You did not see who. You got up: Daniel's bed was empty. You waited up by the front door.
+- Before dawn Daniel came back in by the front door, with nothing in his hands (you saw it).
+What yesterday left in you (your own thoughts, last night):
+- About Daniel admitting taking the can and confronting Daniel: "Daniel lied to us and took the food himself, and I cannot just forget how he made us fight over nothing."
+- About the front door opening in the night and Daniel coming back in before dawn: "I waited by the front door all night until Daniel came back in with empty hands."
+- You meant to: "I will ask Daniel why he risked going out into the street with nothing to show for it."
+- How it left you: exhausted and anxious.
+min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)
+About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+About the neighbour's house: Daniel went there last night and came back with nothing. Outside is dangerous.
+```
+
+

@@ -1,0 +1,120 @@
+daniel_ate_it-seed1: model gemini-3.5-flash-lite, fresh; cache cache\v16\gemini-3.5-flash-lite-daniel_ate_it-seed1.json holds 144 answers
+  min 00: model asked for 4; so far 0 live, 4 cached, 0 API requests
+  min 03: model asked for 4; so far 0 live, 8 cached, 0 API requests
+  min 06: model asked for 4; so far 0 live, 12 cached, 0 API requests
+  min 09: model asked for 4; so far 0 live, 16 cached, 0 API requests
+  min 12: model asked for 3; so far 0 live, 19 cached, 0 API requests
+  min 21: model asked for 3; so far 0 live, 22 cached, 0 API requests
+  min 24: model asked for 4; so far 0 live, 26 cached, 0 API requests
+  min 27: model asked for 4; so far 0 live, 30 cached, 0 API requests
+  min 30: model asked for 4; so far 0 live, 34 cached, 0 API requests
+  min 33: model asked for 4; so far 0 live, 38 cached, 0 API requests
+  min 36: model asked for 4; so far 0 live, 42 cached, 0 API requests
+  min 39: model asked for 4; so far 0 live, 46 cached, 0 API requests
+  min 42: model asked for 4; so far 0 live, 50 cached, 0 API requests
+  min 45: model asked for 3; so far 0 live, 53 cached, 0 API requests
+  min 66: model asked for 1; so far 0 live, 54 cached, 0 API requests
+  min 75: model asked for 1; so far 0 live, 55 cached, 0 API requests
+  night 1: model asked for 8; so far 0 live, 63 cached, 0 API requests
+  night 1, the night mind: model asked for 4; so far 0 live, 67 cached, 0 API requests
+  day 2 min 00: model asked for 4; so far 2 live, 69 cached, 2 API requests
+  day 2 min 03: model asked for 4; so far 6 live, 69 cached, 6 API requests
+  day 2 min 06: model asked for 4; so far 10 live, 69 cached, 10 API requests
+  day 2 min 09: model asked for 3; so far 13 live, 69 cached, 13 API requests
+  day 2 min 12: model asked for 4; so far 17 live, 69 cached, 17 API requests
+  day 2 min 15: model asked for 4; so far 21 live, 69 cached, 21 API requests
+  night 2: model asked for 4; so far 25 live, 69 cached, 25 API requests
+  night 2, the night mind: model asked for 4; so far 29 live, 69 cached, 29 API requests
+  day 3 min 00: model asked for 4; so far 33 live, 69 cached, 33 API requests
+  day 3 min 03: model asked for 4; so far 37 live, 69 cached, 37 API requests
+  day 3 min 06: model asked for 4; so far 41 live, 69 cached, 41 API requests
+  day 3 min 09: model asked for 4; so far 45 live, 69 cached, 45 API requests
+  day 3 min 12: model asked for 4; so far 49 live, 69 cached, 49 API requests
+  day 3 min 15: model asked for 3; so far 52 live, 69 cached, 52 API requests
+  day 3 min 18: model asked for 4; so far 56 live, 69 cached, 56 API requests
+  day 3 min 21: model asked for 4; so far 60 live, 69 cached, 60 API requests
+  day 3 min 24: model asked for 4; so far 64 live, 69 cached, 64 API requests
+  day 3 min 27: model asked for 4; so far 68 live, 69 cached, 68 API requests
+  day 3 min 30: model asked for 4; so far 72 live, 69 cached, 72 API requests
+  day 3 min 33: model asked for 4; so far 76 live, 69 cached, 76 API requests
+  day 3 min 36: model asked for 4; so far 80 live, 69 cached, 80 API requests
+  day 3 min 39: model asked for 4; so far 84 live, 69 cached, 84 API requests
+  day 3 min 42: model asked for 4; so far 88 live, 69 cached, 88 API requests
+  day 3 min 45: model asked for 4; so far 92 live, 69 cached, 92 API requests
+
+wrote runs/v16/daniel_ate_it-seed1.md
+  api_requests: 92
+  answers_live: 92
+  answers_from_cache: 69
+  day1 api_requests: 0
+  day1 answers_live: 0
+  day1 answers_from_cache: 55
+  day1 model_decisions: 55
+  day1 fallbacks: 0
+  day1 routine_decisions: 65
+  day1 lines_spoken: 39
+  day1 inner_moments: 6
+  day1 lull_moments: 0
+  day1 private_talks: 0
+  day1 trip_minute: 24
+  day1 trip_acts: 23
+  day1 max_prompt_tokens_estimated: 1726
+  day1 max_prompt_tokens_counted_by_api: 1668
+  night_asks: 8
+  night_api_requests: 0
+  leavers: ['daniel']
+  outcome: ['back with nothing']
+  night house: 0; away: []
+  day2 api_requests: 21
+  day2 answers_live: 21
+  day2 answers_from_cache: 2
+  day2 model_decisions: 23
+  day2 fallbacks: 0
+  day2 routine_decisions: 97
+  day2 lines_spoken: 20
+  day2 inner_moments: 1
+  day2 lull_moments: 0
+  day2 private_talks: 0
+  day2 trip_minute: 0
+  day2 trip_acts: 0
+  day2 max_prompt_tokens_estimated: 2099
+  day2 max_prompt_tokens_counted_by_api: 1990
+  day2 food_moments: 0
+  day2 give_answers: 0
+  day2_asks: 23
+  day2_api_requests: 21
+  night1_asks: 8
+  mind1_asks: 4
+  mind1_api_requests: 0
+  night2_asks: 4
+  night2_api_requests: 4
+  leavers2: []
+  outcome2: []
+  mind2_asks: 4
+  mind2_api_requests: 4
+  mind1 memories_proposed: 7; mind2 memories_proposed: 6
+  mind1 memories_kept: 7; mind2 memories_kept: 3
+  mind1 memories_rejected: 0; mind2 memories_rejected: 3
+  day3 api_requests: 63
+  day3 answers_live: 63
+  day3 answers_from_cache: 0
+  day3 model_decisions: 63
+  day3 fallbacks: 0
+  day3 routine_decisions: 57
+  day3 lines_spoken: 61
+  day3 inner_moments: 1
+  day3 lull_moments: 0
+  day3 private_talks: 0
+  day3 trip_minute: 0
+  day3 trip_acts: 23
+  day3 max_prompt_tokens_estimated: 2105
+  day3 max_prompt_tokens_counted_by_api: 2000
+  day3 food_moments: 0
+  day3 give_answers: 0
+  day3_asks: 63
+  day3_api_requests: 63
+  max_prompt_tokens_estimated: 2105
+  max_prompt_tokens_counted_by_api: 2183
+  run_seconds: 411.2
+  story_sha256: b78be352c959b73dbb9140f340c32932964840adaa90e507d9f19709044fb4a0
+exit 0

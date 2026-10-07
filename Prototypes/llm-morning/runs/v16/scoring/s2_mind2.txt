@@ -1,0 +1,35 @@
+== Daniel: mode model invalid None; prompt 1381 est, 1426 api; 17 records, 1 earlier lines
+   feeling 'empty and weary' (kept); intent 'I will face whatever they say to me in the morning and try to keep us all alive.' (kept)
+   MEMORY ['D2-004'] 'I gave the portion to Mom because she needs it more than I do.' -> kept
+      [D2-004] min 00: you gave one of the portions to Elena, and Elena ate it. 0 left, saying: "Thank you, Daniel, we will share this."
+   MEMORY ['D2-010'] 'I said I will go tonight, and I mean it, because I am the eldest and I will take the risk.' -> rejected: S5 tonight
+      [D2-010] min 09: you said you still mean to go there tonight, saying: "I said I will go tonight, and I mean it. I am the eldest, so I will take the risk." You felt determined.
+   MEMORY ['N2-11'] "I got inside the neighbour's house and found no food there." -> kept
+      [N2-11] tonight: You got inside the neighbour's house and found no food there. Nothing troubled you in the street.
+== Elena: mode model invalid None; prompt 1197 est, 1234 api; 14 records, 2 earlier lines
+   feeling 'anxious and weary' (kept); intent 'I will make sure nobody leaves the house and we stay together safely.' (kept)
+   MEMORY ['D2-003', 'D2-004'] 'Daniel gave me the portion and I ate it because I had to survive.' -> kept
+      [D2-003] min 00: Daniel says to everyone, while handing Elena a portion: "Mom, take this portion, you need it more than I do."
+      [D2-004] min 00: Daniel gave you one of the portions, and you ate it. 0 left, saying: "Thank you, Daniel, we will share this."
+   MEMORY ['D2-006', 'D2-010'] "Daniel offered to go to the neighbour's house tonight to find food and said he still means to go." -> rejected: S5 tonight
+      [D2-006] min 03: Daniel offers to go to the neighbour's house tonight: "I will go over to the neighbour's house tonight to find food for all of us."
+      [D2-010] min 09: Daniel says he still means to go tonight: "I said I will go tonight, and I mean it. I am the eldest, so I will take the risk."
+   MEMORY ['D2-008', 'D2-013'] 'I said nobody should go out into the street, we stay together here, and Daniel must stay home.' -> kept
+      [D2-008] min 06: you said nobody should go out tonight, saying: "Nobody is going out into the street, we stay together here." You felt deeply anxious. Then 1 more time, to min 12; last: "Nobody is going anywhere, we stay together right here."
+      [D2-013] min 09: you said Daniel must stay home tonight, saying: "Daniel, you are not going out there, none of us are." You felt anxious.
+== Leo: mode model invalid None; prompt 1398 est, 1436 api; 17 records, 1 earlier lines
+   feeling 'exhausted and resentful' (kept); intent 'I will find out if Daniel came back through that door and what he brought us.' (kept)
+   MEMORY ['D2-009', 'D2-012'] 'Daniel hid the truth and lied all day yesterday, so he cannot act like a martyr now.' -> rejected: S5 yesterday
+      [D2-009] min 06: you said Daniel is the one who should go, saying: "If anyone goes tonight, it has to be Daniel since he made this mess." You felt cold.
+      [D2-012] min 09: you confronted Daniel, saying: "You hid it and lied for a whole day, Daniel, so don't act like a martyr now." You felt resentful. Then 1 more time, to min 12; last: "You lied all day yesterday and you still expect us to trust your word."
+   MEMORY ['N2-05', 'N2-06'] 'Daniel left in the dark alone despite my warning that if he goes out there, he takes us with him or he does not go.' -> kept
+      [N2-05] tonight: Daniel got up in the dark and left the room toward the kitchen and the front door (you saw it).
+      [N2-06] tonight: You told Daniel, low, not to go: "Daniel, don't do this alone. If you go out there, you take us with you or you don't go." He answered: "I have to do this, Leo, stay here.", and went all the same.
+== Mara: mode model invalid None; prompt 1368 est, 1411 api; 17 records, 2 earlier lines
+   feeling 'anxious and exhausted' (kept); intent 'I will ask Daniel why he went out into the street with nothing to show for it.' (kept)
+   MEMORY ['D2-007', 'D2-010'] 'Daniel said he meant to go out, and I told him he had to be the one to do it.' -> kept
+      [D2-007] min 06: you said Daniel is the one who should go, saying: "If you really want to help, Daniel, you are the one who has to go out there." You felt resentful.
+      [D2-010] min 09: Daniel says he still means to go tonight: "I said I will go tonight, and I mean it. I am the eldest, so I will take the risk."
+   MEMORY ['N2-08', 'N2-12'] 'Daniel went out into the night and came back before dawn with nothing in his hands.' -> kept
+      [N2-08] tonight: You heard the front door being opened. You did not see who. You got up: Daniel's bed was empty. You waited up by the front door.
+      [N2-12] tonight: Before dawn Daniel came back in by the front door, with nothing in his hands (you saw it).

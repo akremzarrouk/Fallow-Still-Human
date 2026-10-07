@@ -1,0 +1,65 @@
+## seed 1
+**Daniel**
+What stays with you from earlier days:
+- Two days ago, you admitted taking the can, in front of everyone.
+- Two days ago, Elena reassured you twice.
+- Two days ago, Leo ate a portion in front of you.
+- Two days ago, Mara ate a portion in front of you.
+**Elena**
+What stays with you from earlier days:
+- Two days ago, Daniel admitted taking the can. You thought then: "Daniel confessed to taking the can and I told him we would get through this together."
+- Two days ago, you reassured Daniel twice. You thought then: "Daniel confessed to taking the can and I told him we would get through this together."
+- Two days ago, Leo ate a portion in front of you.
+- Two days ago, Mara ate a portion in front of you.
+**Leo**
+What stays with you from earlier days:
+- Two days ago, Daniel admitted taking the can. You thought then: "Daniel took the food in the night because he was starving, but there is no use in punishing him now that it is done."
+- Two days ago, you ate a portion in front of the others.
+- Two days ago, Mara ate a portion in front of you.
+**Mara**
+What stays with you from earlier days:
+- Two days ago, Daniel admitted taking the can.
+- Two days ago, Leo ate a portion in front of you. You thought then: "Leo ate a portion right in front of me while I was starving."
+- Two days ago, you ate a portion in front of the others.
+## seed 2
+**Daniel**
+What stays with you from earlier days:
+- Two days ago, you admitted taking the can, in front of everyone. You thought then: "I accused Leo when I was the one who ate the can in the night, and my false pride made me lie to them for too long."
+- Two days ago, Leo denied taking the can 4 times.
+- Two days ago, Mara ate a portion in front of you.
+**Elena**
+What stays with you from earlier days:
+- Two days ago, Daniel admitted taking the can, after denying it to you. You thought then: "Daniel took the can in the night and had to confess to us all."
+- Two days ago, Leo denied taking the can 4 times.
+- Two days ago, Mara ate a portion in front of you.
+**Leo**
+What stays with you from earlier days:
+- Two days ago, Daniel admitted taking the can, after denying it to you, after accusing you of it. You thought then: "Daniel spent hours accusing me of taking the can before finally admitting he took it himself."
+- Two days ago, you denied taking the can 4 times.
+- Two days ago, Mara ate a portion in front of you.
+**Mara**
+What stays with you from earlier days:
+- Two days ago, Daniel admitted taking the can, after denying it to you. You thought then: "Daniel lied to us all morning and only confessed because he had no other choice."
+- Two days ago, Leo denied taking the can 4 times.
+- Two days ago, you ate a portion in front of the others.
+## seed 3
+**Daniel**
+What stays with you from earlier days:
+- Two days ago, you denied taking the can 6 times. You thought then: "I had to lie to protect them from knowing the truth about the can."
+- Two days ago, Elena asked who took the can three times.
+- Two days ago, Mara asked who took the can 6 times.
+**Elena**
+What stays with you from earlier days:
+- Two days ago, Daniel denied taking the can 6 times.
+- Two days ago, you asked who took the can three times.
+- Two days ago, Mara asked who took the can 6 times.
+**Leo**
+What stays with you from earlier days:
+- Two days ago, Daniel denied taking the can 6 times.
+- Two days ago, Elena asked who took the can three times.
+- Two days ago, Mara asked who took the can 6 times.
+**Mara**
+What stays with you from earlier days:
+- Two days ago, Daniel denied taking the can 6 times.
+- Two days ago, Elena asked who took the can three times.
+- Two days ago, you asked who took the can 6 times.

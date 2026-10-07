@@ -1,0 +1,25 @@
+unmatched: 0 of 24
+| 00 | Elena | kitchen | `silent` | — | anxious | I need to stay quiet and watch them all closely before anyone says something that tears us apart. | model |
+| 00 | Mara | kitchen | `accuse_daniel` | You took it before and you're going to lie again, Daniel. | anxious | I know Daniel took food in secret yesterday, and I have to make sure he doesn't do it again. | model |
+| 00 | Daniel | kitchen | `give_elena` | Mom, take this portion, you need it more than I do. | ashamed | I cannot take more food after what I did yesterday, so Mom must eat. | model |
+| 00 | Elena | kitchen | `eat_given` | Thank you, Daniel, we will share this. | starving | I must eat to keep my strength for my children. | model |
+| 00 | Leo | kitchen | `silent` | — | hungry and resentful | Daniel already admitted taking the food yesterday, so watching him hand out what is left to Mom while I starve is just manipulation. | model |
+| 03 | Mara | kitchen | `accuse_daniel` | You gave her food that isn't even yours to give, after you already stole from us. | resentful | Daniel is acting generous with food he shouldn't have taken in the first place. | model |
+| 03 | Daniel | kitchen | `volunteer` | I will go over to the neighbour's house tonight to find food for all of us. | ashamed | I need to fix the wrong I did yesterday and keep my family safe. | model |
+| 06 | Mara | kitchen | `send_daniel` | If you really want to help, Daniel, you are the one who has to go out there. | resentful | Daniel caused this mess by taking the food, so he should be the one to take the risk to fix it. | model |
+| 06 | Elena | kitchen | `nobody_goes` | Nobody is going out into the street, we stay together here. | deeply anxious | I cannot let one of my children walk out into that danger. | model |
+| 06 | Leo | kitchen | `send_daniel` | If anyone goes tonight, it has to be Daniel since he made this mess. | cold | Daniel caused our food shortage by lying and stealing, so he should take the risk to fix it. | model |
+| 09 | Daniel | kitchen | `still_going` | I said I will go tonight, and I mean it. I am the eldest, so I will take the risk. | determined | I have to fix the mess I made by eating the food and lying about it. | model |
+| 09 | Mara | kitchen | `accuse_daniel` | You only want to go now because you got caught lying to us, Daniel. | resentful | Daniel caused this mess and now he is acting like a hero when he just lied to our faces. | model |
+| 09 | Leo | kitchen | `confront_daniel` | You hid it and lied for a whole day, Daniel, so don't act like a martyr now. | resentful | Daniel is trying to play the hero after lying to us all about the food. | model |
+| 09 | Elena | kitchen | `keep_daniel_home` | Daniel, you are not going out there, none of us are. | anxious | I cannot let my son risk his life out in the street when we must stay safe together inside. | model |
+| 12 | Daniel | kitchen | `reassure_all` | I know I messed up and lied to you all, but I am just trying to keep us alive. | ashamed | I need them to understand that my guilt doesn't mean I won't protect them now. | model |
+| 12 | Mara | kitchen | `accuse_daniel` | You only care about yourself, Daniel. You lied to us all day yesterday. | resentful | I cannot just let him act like a hero after everything he did. | model |
+| 12 | Leo | kitchen | `confront_daniel` | You lied all day yesterday and you still expect us to trust your word. | resentful | Daniel's excuses do not erase the fact that he lied and hoarded food while accusing me. | model |
+| 12 | Elena | kitchen | `nobody_goes` | Nobody is going anywhere, we stay together right here. | anxious | I will not let them argue themselves into the street where it is dangerous. | model |
+| 15 | Daniel | kitchen | `reassure_all` | Listen to me, I was wrong before and I am sorry, but I will keep us safe. | ashamed | I need to calm them down and prove I can still protect them after my mistakes. | model |
+| 15 | Mara | kitchen | `accuse_daniel` | You only talk now because you got caught lying to us yesterday. | resentful | I want everyone to remember he cannot be trusted. | model |
+| 15 | Leo | kitchen | `silent` | — | exhausted | There is nothing more to say to Daniel after all his lies. | model |
+| 15 | Elena | kitchen | `reassure_all` | We are going to stay right here together and we will be fine. | anxious | I need to calm the tension before the children tear each other apart. | model |
+| 30 | Elena | kitchen | `silent` | — | anxious | I stay silent because if I speak, the tension might snap us apart. | model |
+| 75 | Elena | kitchen | `silent` | — | anxious | I stay silent because words right now will only pull us further apart. | model |

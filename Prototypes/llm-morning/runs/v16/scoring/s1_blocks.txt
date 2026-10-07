@@ -1,0 +1,94 @@
+## What each of them carried in
+
+Each block is printed as their prompts carry it, with the opening of the morning and their lines about the food and the neighbour's house.
+
+**Daniel**
+
+```
+What stays with you from earlier days:
+- Two days ago, you admitted taking the can, in front of everyone.
+- Two days ago, Elena reassured you twice.
+- Two days ago, Leo ate a portion in front of you.
+- Two days ago, Mara ate a portion in front of you.
+Yesterday and last night:
+- Yesterday morning the shelf held 0 portions.
+- Accusations: Leo accused you twice (min 09, 12); Mara accused you (min 09).
+- Confrontations: Leo confronted you twice (min 00, 03); Mara confronted you 4 times (min 00, 03, 12, 15); Elena confronted you (min 09).
+- The afternoon and evening passed in the house. Nobody ate.
+- Last night you slept in the brothers room with Leo. You lay awake and listened.
+What yesterday left in you (your own thoughts, last night):
+- You meant to: "I will find a way to provide food and prove I can keep my family safe."
+- How it left you: anxious and exposed.
+min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)
+About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+About the neighbour's house: you went in the night before last and found no food there. Outside is dangerous.
+```
+
+**Elena**
+
+```
+What stays with you from earlier days:
+- Two days ago, Daniel admitted taking the can. You thought then: "Daniel confessed to taking the can and I told him we would get through this together."
+- Two days ago, you reassured Daniel twice. You thought then: "Daniel confessed to taking the can and I told him we would get through this together."
+- Two days ago, Leo ate a portion in front of you.
+- Two days ago, Mara ate a portion in front of you.
+Yesterday and last night:
+- Yesterday morning the shelf held 0 portions.
+- Accusations: Leo accused Daniel twice (min 09, 12); Mara accused Daniel (min 09).
+- Confrontations: Leo confronted Daniel twice (min 00, 03); Mara confronted Daniel 4 times (min 00, 03, 12, 15); you confronted Daniel (min 09).
+- The afternoon and evening passed in the house. Nobody ate.
+- Last night you slept in the back room with Mara. You lay awake and listened.
+What yesterday left in you (your own thoughts, last night):
+- About Daniel reassuring everyone and reassuring Daniel: "Daniel tried to reassure everyone after sneaking into the dark, but I told him he should not have gone out and we would get through this together inside."
+- You meant to: "I will keep a close eye on Daniel to ensure he stays safe inside with us."
+- How it left you: anxious and exhausted.
+min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)
+About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+About the neighbour's house: Daniel went there the night before last and came back with nothing. Outside is dangerous.
+```
+
+**Leo**
+
+```
+What stays with you from earlier days:
+- Two days ago, Daniel admitted taking the can. You thought then: "Daniel took the food in the night because he was starving, but there is no use in punishing him now that it is done."
+- Two days ago, you ate a portion in front of the others.
+- Two days ago, Mara ate a portion in front of you.
+Yesterday and last night:
+- Yesterday morning the shelf held 0 portions.
+- Accusations: you accused Daniel twice (min 09, 12); Mara accused Daniel (min 09).
+- Confrontations: you confronted Daniel twice (min 00, 03); Mara confronted Daniel 4 times (min 00, 03, 12, 15); Elena confronted Daniel (min 09).
+- The afternoon and evening passed in the house. Nobody ate.
+- Last night you slept in the brothers room with Daniel. You lay awake and listened.
+What yesterday left in you (your own thoughts, last night):
+- You meant to: "I will keep watch on Daniel to ensure he does not sneak out into the dark again."
+- How it left you: exhausted and wary.
+min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)
+About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+About the neighbour's house: Daniel went there the night before last and came back with nothing. Outside is dangerous.
+```
+
+**Mara**
+
+```
+What stays with you from earlier days:
+- Two days ago, Daniel admitted taking the can.
+- Two days ago, Leo ate a portion in front of you. You thought then: "Leo ate a portion right in front of me while I was starving."
+- Two days ago, you ate a portion in front of the others.
+Yesterday and last night:
+- Yesterday morning the shelf held 0 portions.
+- Accusations: Leo accused Daniel twice (min 09, 12); you accused Daniel (min 09).
+- Confrontations: Leo confronted Daniel twice (min 00, 03); you confronted Daniel 4 times (min 00, 03, 12, 15); Elena confronted Daniel (min 09).
+- The afternoon and evening passed in the house. Nobody ate.
+- Last night you slept in the back room with Elena. You lay awake and listened.
+What yesterday left in you (your own thoughts, last night):
+- About confronting Daniel and accusing Daniel of taking the can: "Daniel went out into the dark and came back with nothing while we are all starving."
+- About going to bed: "I lay awake in the back room with Mom and listened to the silence."
+- You meant to: "I will find out how we are going to survive this hunger."
+- How it left you: anxious and resentful.
+min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)
+About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+About the neighbour's house: Daniel went there the night before last and came back with nothing. Outside is dangerous.
+```
+
+

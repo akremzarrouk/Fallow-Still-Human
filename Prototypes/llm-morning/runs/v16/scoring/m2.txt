@@ -1,0 +1,63 @@
+seed 1 mind1 Daniel ids ['N1-06', 'N1-12'] witnessed by them: yes; in their later prompts: 10 day, 2 night, 2 mind; in anyone else's: 0
+seed 1 mind1 Daniel intent in their later prompts: 12
+seed 1 mind1 Elena  ids ['D1-006', 'D1-009'] witnessed by them: yes; in their later prompts: 36 day, 2 night, 2 mind; in anyone else's: 0
+seed 1 mind1 Elena  ids ['N1-08', 'N1-13'] witnessed by them: yes; in their later prompts: 6 day, 1 night, 1 mind; in anyone else's: 0
+seed 1 mind1 Elena  intent in their later prompts: 14
+seed 1 mind1 Leo    ids ['D1-006', 'D1-007'] witnessed by them: yes; in their later prompts: 36 day, 2 night, 2 mind; in anyone else's: 0
+seed 1 mind1 Leo    ids ['N1-05', 'N1-06', 'N1-13'] witnessed by them: yes; in their later prompts: 11 day, 2 night, 2 mind; in anyone else's: 0
+seed 1 mind1 Leo    intent in their later prompts: 13
+seed 1 mind1 Mara   ids ['D1-012'] witnessed by them: yes; in their later prompts: 39 day, 2 night, 2 mind; in anyone else's: 0
+seed 1 mind1 Mara   ids ['N1-13'] witnessed by them: yes; in their later prompts: 12 day, 2 night, 2 mind; in anyone else's: 0
+seed 1 mind1 Mara   intent in their later prompts: 7
+seed 1 mind2 Daniel intent in their later prompts: 16
+seed 1 mind2 Elena  ids ['D2-002', 'D2-004', 'D2-014'] witnessed by them: yes; in their later prompts: 15 day, 0 night, 0 mind; in anyone else's: 0
+seed 1 mind2 Elena  intent in their later prompts: 15
+seed 1 mind2 Leo    intent in their later prompts: 16
+seed 1 mind2 Mara   ids ['D2-005', 'D2-013'] witnessed by them: yes; in their later prompts: 16 day, 0 night, 0 mind; in anyone else's: 0
+seed 1 mind2 Mara   ids ['N2-04'] witnessed by them: yes; in their later prompts: 16 day, 0 night, 0 mind; in anyone else's: 0
+seed 1 mind2 Mara   intent in their later prompts: 16
+seed 1: kept memories 10, citing an unwitnessed event: 0
+seed 2 mind1 Daniel ids ['D1-008', 'D1-022'] witnessed by them: yes; in their later prompts: 15 day, 2 night, 1 mind; in anyone else's: 0
+seed 2 mind1 Daniel intent in their later prompts: 7
+seed 2 mind1 Elena  ids ['D1-022'] witnessed by them: yes; in their later prompts: 17 day, 1 night, 1 mind; in anyone else's: 0
+seed 2 mind1 Elena  ids ['D1-042'] witnessed by them: yes; in their later prompts: 8 day, 1 night, 1 mind; in anyone else's: 0
+seed 2 mind1 Elena  intent in their later prompts: 9
+seed 2 mind1 Leo    ids ['D1-008', 'D1-022'] witnessed by them: yes; in their later prompts: 14 day, 2 night, 1 mind; in anyone else's: 0
+seed 2 mind1 Leo    intent in their later prompts: 7
+seed 2 mind1 Mara   ids ['D1-004', 'D1-022'] witnessed by them: yes; in their later prompts: 15 day, 2 night, 1 mind; in anyone else's: 0
+seed 2 mind1 Mara   ids ['D1-030', 'D1-040'] witnessed by them: yes; in their later prompts: 6 day, 2 night, 1 mind; in anyone else's: 0
+seed 2 mind1 Mara   intent in their later prompts: 8
+seed 2 mind2 Daniel ids ['D2-004'] witnessed by them: yes; in their later prompts: 10 day, 0 night, 0 mind; in anyone else's: 0
+seed 2 mind2 Daniel ids ['N2-11'] witnessed by them: yes; in their later prompts: 10 day, 0 night, 0 mind; in anyone else's: 0
+seed 2 mind2 Daniel intent in their later prompts: 10
+seed 2 mind2 Elena  ids ['D2-003', 'D2-004'] witnessed by them: yes; in their later prompts: 9 day, 0 night, 0 mind; in anyone else's: 0
+seed 2 mind2 Elena  ids ['D2-008', 'D2-013'] witnessed by them: yes; in their later prompts: 9 day, 0 night, 0 mind; in anyone else's: 0
+seed 2 mind2 Elena  intent in their later prompts: 9
+seed 2 mind2 Leo    ids ['N2-05', 'N2-06'] witnessed by them: yes; in their later prompts: 9 day, 0 night, 0 mind; in anyone else's: 0
+seed 2 mind2 Leo    intent in their later prompts: 9
+seed 2 mind2 Mara   ids ['D2-007', 'D2-010'] witnessed by them: yes; in their later prompts: 9 day, 0 night, 0 mind; in anyone else's: 0
+seed 2 mind2 Mara   ids ['N2-08', 'N2-12'] witnessed by them: yes; in their later prompts: 9 day, 0 night, 0 mind; in anyone else's: 0
+seed 2 mind2 Mara   intent in their later prompts: 9
+seed 2: kept memories 13, citing an unwitnessed event: 0
+seed 3 mind1 Daniel ids ['D1-004'] witnessed by them: yes; in their later prompts: 24 day, 2 night, 1 mind; in anyone else's: 0
+seed 3 mind1 Daniel ids ['D1-024'] witnessed by them: yes; in their later prompts: 17 day, 2 night, 1 mind; in anyone else's: 0
+seed 3 mind1 Daniel intent in their later prompts: 19
+seed 3 mind1 Elena  intent in their later prompts: 19
+seed 3 mind1 Leo    ids ['D1-001', 'D1-007'] witnessed by them: yes; in their later prompts: 18 day, 2 night, 1 mind; in anyone else's: 0
+seed 3 mind1 Leo    ids ['D1-023', 'D1-025'] witnessed by them: yes; in their later prompts: 18 day, 2 night, 1 mind; in anyone else's: 0
+seed 3 mind1 Leo    intent in their later prompts: 20
+seed 3 mind1 Mara   ids ['D1-002'] witnessed by them: yes; in their later prompts: 18 day, 2 night, 1 mind; in anyone else's: 0
+seed 3 mind1 Mara   ids ['D1-022'] witnessed by them: yes; in their later prompts: 18 day, 2 night, 1 mind; in anyone else's: 0
+seed 3 mind1 Mara   intent in their later prompts: 20
+seed 3 mind2 Daniel ids ['D2-022', 'D2-027', 'N2-06'] witnessed by them: yes; in their later prompts: 12 day, 0 night, 0 mind; in anyone else's: 0
+seed 3 mind2 Daniel intent in their later prompts: 12
+seed 3 mind2 Elena  ids ['D2-022', 'D2-023'] witnessed by them: yes; in their later prompts: 11 day, 0 night, 0 mind; in anyone else's: 0
+seed 3 mind2 Elena  ids ['N2-08', 'N2-13'] witnessed by them: yes; in their later prompts: 6 day, 0 night, 0 mind; in anyone else's: 0
+seed 3 mind2 Elena  intent in their later prompts: 11
+seed 3 mind2 Leo    ids ['D2-022', 'D2-027'] witnessed by them: yes; in their later prompts: 10 day, 0 night, 0 mind; in anyone else's: 0
+seed 3 mind2 Leo    ids ['N2-05', 'N2-06'] witnessed by them: yes; in their later prompts: 10 day, 0 night, 0 mind; in anyone else's: 0
+seed 3 mind2 Leo    intent in their later prompts: 10
+seed 3 mind2 Mara   ids ['D2-022', 'D2-026'] witnessed by them: yes; in their later prompts: 10 day, 0 night, 0 mind; in anyone else's: 0
+seed 3 mind2 Mara   ids ['N2-08', 'N2-13'] witnessed by them: yes; in their later prompts: 10 day, 0 night, 0 mind; in anyone else's: 0
+seed 3 mind2 Mara   intent in their later prompts: 10
+seed 3: kept memories 13, citing an unwitnessed event: 0

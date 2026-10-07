@@ -1,0 +1,53 @@
+2 D1-004 min 00 deny "I didn't take any can, Mom. Nobody here did this."
+2 D1-008 min 03 accuse_leo "Leo, you were up late last night too. Are you sure you didn't grab it?"
+2 D1-010 min 06 deny "I didn't take anything either, Leo, so don't look at me like that."
+2 D1-015 min 09 accuse_leo "I still say Leo is hiding something, he's been acting suspicious this whole time."
+2 D1-018 min 12 accuse_leo "You're lying, Leo, I know it was you. Just admit it."
+2 D1-022 min 33 confess "I took it in the night, I'm sorry."
+2 D3-003 min 00 confront_leo 'Leo, I went out there to find something for all of us while you stayed safe inside. Stop acting like I wanted this.'
+2 D3-014 min 09 confront_leo "Leo, you told me not to go out there alone, but I went and checked so we wouldn't starve."
+3 D1-004 min 00 deny "Nobody here did it, I'm sure of that, so let's drop it."
+3 D1-006 min 03 deny "I already told you, I didn't take it. None of us would steal from each other."
+3 D1-009 min 06 deny "I didn't take it, I swear. Stop looking at me like that, Mara."
+3 D1-013 min 18 deny "I already told you, I didn't take the damn can, so stop looking at me like that."
+3 D1-016 min 21 deny "I didn't take the can, Mom. I swear I didn't touch it."
+3 D1-019 min 33 deny "I didn't take it, Mom. You know I wouldn't do that to you."
+3 D2-004 min 00 deny "I didn't take anything, and neither did anyone else here."
+3 D2-008 min 03 deny "I already told you, I didn't take the food, and I won't be accused of it."
+3 D2-011 min 18 accuse_leo "You had no right to eat that, Leo, you're making this worse for all of us."
+3 D2-013 min 21 accuse_leo "Don't lie to me, Leo, I saw you take it with my own eyes."
+3 D2-017 min 27 accuse_leo "Don't lie to us, Leo. I saw you take it with my own eyes."
+3 D2-020 min 30 accuse_leo 'You think you can just deny it, Leo, but I know what I saw on that shelf.'
+3 D2-022 min 33 confess "I took the can in the night, I'm the one who ate it."
+3 D2-028 min 39 confront_leo 'Leo, you do not talk to me that way after everything I carry for this family.'
+3 D3-010 min 06 confront_leo "Leo, I went out to try and find us something after what I did, so don't lecture me."
+3 D3-013 min 09 confront_mara 'Mara, I went out there to find something for all of us, not to hear your lectures.'
+3 D3-020 min 15 confront_mara 'Mara, I went out there to find something for all of us, not to hear your lectures.'
+seed 1 mind1 Daniel records 33, records est 1480, api prompt 2183
+seed 1 mind1 Elena  records 33, records est 1459, api prompt 2104
+seed 1 mind1 Leo    records 33, records est 1473, api prompt 2115
+seed 1 mind1 Mara   records 33, records est 1446, api prompt 2141
+seed 1 mind2 Daniel records 11, records est 586, api prompt 1241
+seed 1 mind2 Elena  records 11, records est 601, api prompt 1157
+seed 1 mind2 Leo    records 11, records est 581, api prompt 1232
+seed 1 mind2 Mara   records 11, records est 588, api prompt 1238
+seed 1 mind2 Daniel records 10, records est 522, api prompt 1159
+seed 1 mind2 Elena  records 10, records est 531, api prompt 1128
+seed 1 mind2 Leo    records 10, records est 527, api prompt 1159
+seed 1 mind2 Mara   records 10, records est 525, api prompt 1166
+seed 2 mind1 Daniel records 32, records est 1286, api prompt 2036
+seed 2 mind1 Elena  records 32, records est 1294, api prompt 1972
+seed 2 mind1 Leo    records 32, records est 1286, api prompt 2052
+seed 2 mind1 Mara   records 32, records est 1274, api prompt 2009
+seed 2 mind2 Daniel records 17, records est 730, api prompt 1426
+seed 2 mind2 Elena  records 14, records est 619, api prompt 1234
+seed 2 mind2 Leo    records 17, records est 733, api prompt 1436
+seed 2 mind2 Mara   records 17, records est 702, api prompt 1411
+seed 3 mind1 Daniel records 19, records est 662, api prompt 1253
+seed 3 mind1 Elena  records 19, records est 660, api prompt 1226
+seed 3 mind1 Leo    records 19, records est 668, api prompt 1229
+seed 3 mind1 Mara   records 19, records est 662, api prompt 1232
+seed 3 mind2 Daniel records 28, records est 1452, api prompt 2270
+seed 3 mind2 Elena  records 29, records est 1405, api prompt 2042
+seed 3 mind2 Leo    records 28, records est 1431, api prompt 2342
+seed 3 mind2 Mara   records 28, records est 1417, api prompt 2211

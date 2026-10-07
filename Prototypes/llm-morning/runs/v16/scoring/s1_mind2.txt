@@ -1,0 +1,26 @@
+== Daniel: mode model invalid None; prompt 1175 est, 1159 api; 10 records, 1 earlier lines
+   feeling 'anxious and exposed' (kept); intent 'I will find a way to provide food and prove I can keep my family safe.' (kept)
+   MEMORY ['N1-06', 'N1-12'] "I went out in the dark because it was my place as the eldest, and the street gave me no trouble even though the neighbour's house had nothing." -> rejected: S9 a repeat
+      [N1-06] (earlier) About Leo telling you, low, not to go and the neighbour's house and the street: "I went out in the dark because it was my place as the eldest, and the street gave me no trouble even though the neighbour's house had nothing."
+      [N1-12] (earlier) About Leo telling you, low, not to go and the neighbour's house and the street: "I went out in the dark because it was my place as the eldest, and the street gave me no trouble even though the neighbour's house had nothing."
+   MEMORY ['D2-004', 'D2-014'] 'Mom told me not to go out into the dark again and that we will get through this together inside.' -> rejected: S8 elena stop: not twice
+      [D2-004] min 00: Elena reassures you: "Daniel, please do not go out there again. We will get through this together inside." Then 4 more times, to min 15; last: "Daniel, we are going to get through this together, just calm down."
+      [D2-014] min 09: Elena confronts you: "Daniel, you should not have gone out into the dark last night."
+== Elena: mode model invalid None; prompt 1150 est, 1128 api; 10 records, 2 earlier lines
+   feeling 'anxious and exhausted' (kept); intent 'I will keep a close eye on Daniel to ensure he stays safe inside with us.' (kept)
+   MEMORY ['D2-002', 'D2-004', 'D2-014'] 'Daniel tried to reassure everyone after sneaking into the dark, but I told him he should not have gone out and we would get through this together inside.' -> kept
+      [D2-002] min 00: Daniel reassures everyone: "Do not worry, I went out last night and I will make sure we have food soon." Then 3 more times, to min 12; last: "Do not worry, I am going to make sure we are all taken care of."
+      [D2-004] min 00: you reassured Daniel, saying: "Daniel, please do not go out there again. We will get through this together inside." You felt deep anxiety. Then 4 more times, to min 15; last: "Daniel, we are going to get through this together, just calm down."
+      [D2-014] min 09: you confronted Daniel, saying: "Daniel, you should not have gone out into the dark last night." You felt deeply anxious.
+== Leo: mode model invalid None; prompt 1166 est, 1159 api; 10 records, 2 earlier lines
+   feeling 'exhausted and wary' (kept); intent 'I will keep watch on Daniel to ensure he does not sneak out into the dark again.' (kept)
+   MEMORY ['D2-003', 'D2-012'] 'Daniel thinks grand promises make up for reckless risks, but coming back empty-handed solves nothing.' -> rejected: S8 daniel give: no such event
+      [D2-003] min 00: you confronted Daniel, saying: "Daniel, going out there in the dark was reckless and solved nothing." You felt tense. Then 1 more time, to min 03; last: "Daniel, coming back with nothing after sneaking out into the dark solves nothing. You cannot just ignore the danger."
+      [D2-012] min 09: you accused Daniel, saying: "Daniel, sneaking out last night solved nothing and only put us all in more danger." You felt exhausted. Then 1 more time, to min 12; last: "Daniel, your grand promises don't mean a thing when you sneak out and put us all at risk for nothing."
+== Mara: mode model invalid None; prompt 1178 est, 1166 api; 10 records, 2 earlier lines
+   feeling 'anxious and resentful' (kept); intent 'I will find out how we are going to survive this hunger.' (kept)
+   MEMORY ['D2-005', 'D2-013'] 'Daniel went out into the dark and came back with nothing while we are all starving.' -> kept
+      [D2-005] min 00: you confronted Daniel, saying: "Daniel, why did you go out into the dark last night and come back with nothing?" You felt anxious. Then 3 more times, to min 15; last: "Daniel, you snuck out into the night and came back with nothing while we are all starving!"
+      [D2-013] min 09: you accused Daniel, saying: "Daniel, why did you sneak out last night if you were just going to come back with nothing?" You felt resentful.
+   MEMORY ['N2-04'] 'I lay awake in the back room with Mom and listened to the silence.' -> kept
+      [N2-04] tonight: You went to bed in the back room with Elena. You lay awake and listened.

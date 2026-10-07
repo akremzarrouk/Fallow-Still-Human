@@ -1,0 +1,71 @@
+unmatched: 0 of 70
+| 00 | Mara | kitchen | `ask_who` | Can someone just tell the truth so we can stop guessing? | anxious | I only wanted someone to tell us the truth so we could stop guessing. | model |
+| 00 | Elena | kitchen | `reassure_all` | Nobody in this house would take food from the others, let us not accuse each other. | anxious | I must keep the peace between them before this family tears itself apart. | model |
+| 00 | Daniel | kitchen | `deny` | I didn't take anything, and neither did anyone else here. | anxious | I have to keep up the lie so they don't lose faith in me. | model |
+| 00 | Leo | kitchen | `deny` | I didn't take the can, and arguing about it won't put food on the shelf. | hungry | I need to clear my name so we can focus on actual survival. | model |
+| 03 | Elena | kitchen | `reassure_all` | Let's all take a breath, we are going to get through this together. | deeply anxious | I need to keep the family calm and prevent them from tearing each other apart. | model |
+| 03 | Mara | kitchen | `ask_who` | Please just tell us the truth, someone has to know where it went. | anxious | I only wanted someone to tell us the truth so we could stop guessing. | model |
+| 03 | Daniel | kitchen | `deny` | I already told you, I didn't take the food, and I won't be accused of it. | anxious | I must hold my ground and deny it so they never find out I ate the can. | model |
+| 03 | Leo | kitchen | `silent` | — | starving | Arguing in circles about the missing can solves nothing while we have no food. | model |
+| 06 | Mara | kitchen | `silent` | — | anxious and trapped | I cannot keep asking the same question when nobody is going to answer me honestly. | model |
+| 06 | Elena | kitchen | `silent` | — | deeply anxious | I cannot keep reassuring them when the silence itself is becoming a heavy weight between us all. | model |
+| 09 | Mara | kitchen | `eat` | I'm sorry, I can't wait anymore. | starving | I am so hungry I cannot think straight, and we need to eat something. | model |
+| 09 | Elena | kitchen | `silent` | — | anxious | I watch Mara eat while the rest of us starve, and I cannot bring myself to speak. | model |
+| 12 | Leo | kitchen | `silent` | — | starving | There is no point in arguing about the missing food when we are all just worn down and hungry. | model |
+| 12 | Daniel | kitchen | `silent` | — | anxious | I cannot bring myself to confess, so I will stay silent while Mara eats. | model |
+| 18 | Leo | kitchen | `eat` | I need this just as much as anyone else. | starving | I cannot stay silent while my body fails me. | model |
+| 18 | Daniel | kitchen | `accuse_leo` | You had no right to eat that, Leo, you're making this worse for all of us. | angry | Leo is eating right in front of us while we starve, and someone needs to check him. | model |
+| 21 | Leo | kitchen | `deny` | I didn't take anything that wasn't already sitting right there on the shelf. | starving | I won't let Daniel pin this missing can business on me when I just took my share. | model |
+| 21 | Daniel | kitchen | `accuse_leo` | Don't lie to me, Leo, I saw you take it with my own eyes. | defensive | I have to stand my ground so nobody suspects me. | model |
+| 21 | Elena | kitchen | `silent` | — | deeply anxious | I cannot bear to watch them tear each other apart over food when there is nothing left to fight about. | model |
+| 21 | Mara | kitchen | `accuse_leo` | You ate right in front of us, Leo, and there's nothing left now. | starving | Leo just ate the last portion while I am still hungry and won't admit anything. | model |
+| 24 | Leo | kitchen | `silent` | — | hungry | There is no point arguing further when everyone has already made up their minds. | model |
+| 24 | Elena | kitchen | `silent` | — | starving | If I speak now, the anger in this room will only tear us apart further. | model |
+| 24 | Daniel | kitchen | `silent` | — | guilty | I cannot keep accusing Leo when I know deep down I took the food myself, but the shame keeps me silent. | model |
+| 24 | Mara | kitchen | `accuse_leo` | You ate it right in front of us, Leo, how can you pretend you didn't? | starving | I saw him eat it and I want him to stop lying to us. | model |
+| 27 | Leo | kitchen | `deny` | I ate my own share just now, Mara, exactly when I was supposed to. | annoyed | I need to correct Mara's false accusation plainly before this argument goes any further. | model |
+| 27 | Daniel | kitchen | `accuse_leo` | Don't lie to us, Leo. I saw you take it with my own eyes. | guilty and defensive | I cannot admit I ate it myself, so I have to keep pushing the blame onto Leo. | model |
+| 27 | Elena | kitchen | `silent` | — | deeply anxious | I cannot bear to watch them tear each other apart over a missing can when we are all starving. | model |
+| 27 | Mara | kitchen | `silent` | — | overwhelmed | I cannot stop shaking from the hunger and the shouting, so I just stay quiet and watch them all. | model |
+| 30 | Leo | kitchen | `deny` | I didn't take anything else, and repeating it won't change the truth. | annoyed | I have already answered this and there is no point in arguing further. | model |
+| 30 | Elena | kitchen | `reassure_all` | Please stop fighting, we will figure this out together without tearing each other apart. | deeply anxious | I need to stop this argument before the family completely tears itself apart. | model |
+| 30 | Daniel | kitchen | `accuse_leo` | You think you can just deny it, Leo, but I know what I saw on that shelf. | anxious | I have to keep pushing the blame away from myself so nobody ever finds out I took it. | model |
+| 30 | Mara | kitchen | `accuse_leo` | You ate one right in front of me while I was starving, Leo, don't pretend you didn't. | anxious | I cannot stay quiet when Leo keeps lying about what he did after eating right in front of me. | model |
+| 33 | Leo | kitchen | `silent` | — | exhausted | There is no point in arguing in circles about the missing can when we are all just hungry and tired. | model |
+| 33 | Daniel | kitchen | `confess` | I took the can in the night, I'm the one who ate it. | ashamed | I cannot keep lying to them while they tear each other apart over my fault. | model |
+| 33 | Elena | kitchen | `reassure_daniel` | It's all right, Daniel, thank you for telling the truth. | anxious | I need to keep him from crumbling now that he has confessed. | model |
+| 33 | Mara | kitchen | `accuse_daniel` | You said you didn't touch it! Why did you lie to me before? | shocked | I am stunned that Daniel actually took the can after swearing he didn't. | model |
+| 36 | Daniel | kitchen | `reassure_mara` | I'm sorry I lied, Mara, I was just scared and didn't want you all to worry. | ashamed | I need to make things right with Mara and show her I am sorry for lying about the food. | model |
+| 36 | Mara | kitchen | `confront_daniel` | You lied to us for days and now you just say sorry like it is nothing? | resentful | I cannot believe he just expects us to forgive him after lying straight to my face. | model |
+| 36 | Elena | kitchen | `silent` | — | anxious | I need to stay quiet and let them work through their anger before things boil over entirely. | model |
+| 36 | Leo | kitchen | `confront_daniel` | You accused me of taking it multiple times while knowing full well you were the one who stole it. | resentful | Daniel let me take the blame for days despite knowing the truth, and a simple apology doesn't erase that. | model |
+| 39 | Daniel | kitchen | `confront_leo` | Leo, you do not talk to me that way after everything I carry for this family. | defensive | I cannot let him undermine my authority when I am doing everything I can to keep us alive. | model |
+| 39 | Leo | kitchen | `confront_daniel` | You carried nothing except the food you hid from us, Daniel. Spare me the theater. | annoyed | Daniel is deflecting his guilt onto me by playing the martyr, and I won't let him rewrite what he admitted. | model |
+| 39 | Elena | kitchen | `reassure_all` | Stop fighting right now, we are going to get through this together without tearing each other apart. | deeply anxious | I cannot let my children tear each other apart when we are already starving and falling apart inside. | model |
+| 39 | Mara | kitchen | `confront_daniel` | You think admitting it fixes everything, Daniel, but you lied to us the whole time. | resentful | Daniel admitted taking the can after lying about it, and he still acts like he did nothing wrong. | model |
+| 42 | Daniel | kitchen | `volunteer` | I will go to the neighbour's house tonight myself since this is my mistake to fix. | guilty | I have to take responsibility for eating the food and keep everyone else safe. | model |
+| 42 | Leo | kitchen | `send_daniel` | Daniel is the one who should go, since he caused this mess. | cold | Daniel offered to go fix his own mistake, and he should take responsibility for it. | model |
+| 42 | Elena | kitchen | `nobody_goes` | Nobody is going out there tonight, we will find another way. | terrified | I cannot let my son risk his life outside, even if he made a mistake. | model |
+| 42 | Mara | kitchen | `silent` | — | terrified | I cannot bear hearing them argue about going out into that deadly street. | model |
+| 45 | Daniel | kitchen | `still_going` | I already said I am going tonight, and I mean it. We cannot just sit here and starve. | anxious | I have to follow through on my word to keep them safe, even if Mom is terrified. | model |
+| 45 | Elena | kitchen | `keep_daniel_home` | Daniel, you are not going out there tonight. We stay together. | terrified | I cannot let him risk his life outside when we must keep the family together. | model |
+| 45 | Mara | kitchen | `send_daniel` | Daniel is the one who should go tonight since he caused all of this. | resentful | Daniel caused this mess by taking the food, so he should be the one to risk going outside. | model |
+| 45 | Leo | kitchen | `silent` | — | numb | There is nothing left to argue about when everyone just talks in circles. | model |
+| 48 | Daniel | kitchen | `still_going` | I already told you, I am going to the neighbour's house tonight whether you like it or not. | anxious | I have to prove I can handle this and keep everyone safe. | model |
+| 48 | Elena | kitchen | `nobody_goes` | Nobody is going anywhere, we stay together. | terrified | I cannot let him walk out into the street where it is too dangerous. | model |
+| 48 | Leo | kitchen | `keep_daniel_home` | Daniel, you aren't going anywhere tonight. We settle this here. | firm | Daniel going out alone is reckless and unnecessary when we need to stay rational. | model |
+| 48 | Mara | kitchen | `confront_daniel` | You can't just act like nothing happened after admitting you took the food. | resentful | Daniel thinks he can just decide everything and walk out, but he is the one who stole from us. | model |
+| 51 | Daniel | kitchen | `propose_trip` | I told you I am going tonight, and I mean it. We cannot stay here with nothing. | anxious | I have to prove I can protect my family by going out there myself. | model |
+| 51 | Elena | kitchen | `silent` | — | deeply anxious | I cannot let anyone go out there into the danger, but I am too drained to argue again right now. | model |
+| 51 | Leo | kitchen | `send_daniel` | You caused this mess by stealing the food, so you are the one who has to go out. | cold | Daniel created the danger by taking the food, so he must be the one to face it. | model |
+| 51 | Mara | kitchen | `confront_daniel` | You think acting brave fixes what you stole? You are the one who has to go. | resentful | Daniel caused this entire situation by taking the food, so he has to face the danger outside. | model |
+| 54 | Daniel | kitchen | `volunteer` | I am the eldest and I will be the one to go tonight. | anxious | I have to fix the mess I made and keep everyone else safe inside. | model |
+| 54 | Leo | kitchen | `confront_daniel` | You caused all this argument over nothing, Daniel. | annoyed | Daniel is acting noble now after hiding that he ate the food himself. | model |
+| 54 | Elena | kitchen | `keep_daniel_home` | Daniel, you are not going out there tonight, we stay together. | deeply anxious | I cannot let him risk his life outside when keeping the family together is all that matters. | model |
+| 54 | Mara | kitchen | `silent` | — | exhausted | I am too tired of all the fighting and hunger to say anything more right now. | model |
+| 57 | Daniel | kitchen | `still_going` | I am the oldest, and I am the one who is going tonight. | stubborn | I have to protect them, so I will go out tonight no matter what Mom says. | model |
+| 57 | Mara | kitchen | `confront_daniel` | You can't just decide this on your own like you own everything, Daniel. | resentful | I hate the way he just assumes he makes all the rules for us now. | model |
+| 57 | Leo | kitchen | `keep_daniel_home` | You don't just get to endanger yourself to prove a point, Daniel. Stay home. | annoyed | Daniel is acting rashly again instead of thinking things through logically. | model |
+| 57 | Elena | kitchen | `nobody_goes` | Nobody is going anywhere, we stay safe right here together. | deeply anxious | I cannot let one of my children risk their lives out there when we must stay together. | model |
+| 75 | Mara | kitchen | `accuse_daniel` | You think you can just take everything and act like it's fine, Daniel? | starving | I cannot stand him pretending none of this matters while we are starving. | model |
+| 81 | Leo | kitchen | `silent` | — | exhausted | There is nothing left to argue about after Daniel admitted taking the food. | model |
