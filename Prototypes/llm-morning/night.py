@@ -78,6 +78,7 @@ STREETS = ("clean", "scare_there", "scare_back", "not_back")
 NEAR_ALONE, NEAR_GROUP = (0.62, 0.14, 0.18, 0.06), (0.70, 0.12, 0.15, 0.03)
 FAR_ALONE, FAR_GROUP = (0.45, 0.17, 0.23, 0.15), (0.55, 0.15, 0.22, 0.08)
 SHIFTS = {"weak": (-0.04, 0.0, 0.0, 0.04), "very weak": (-0.12, 0.0, 0.02, 0.10), "exhausted": (-0.02, 0.0, 0.0, 0.02)}
+NEAR_SHIFT = 0.5        # next door, a body shifts the street by half as much as further along
 # §1.2: someone exhausted who watches the door or lies awake may doze, and then notices nothing.
 DOZE_FROM, DOZE_BASE, DOZE_STEP, DOZE_MAX = 24, 0.3, 0.05, 0.7
 DOZED = {"watch_door": "You dozed off in the night, and woke by the door at dawn.",
@@ -115,9 +116,12 @@ def group_shift(shifts):
 
 
 def street_table(size, far=False, shift=None):
-    """The street's probabilities for a group of `size`, near or far, shifted by the body."""
+    """The street's probabilities for a group of `size`, near or far, shifted by the body: next door by half the
+    shift (reports/stage_b_fixes.md, fix 2)."""
     table = (FAR_ALONE if size == 1 else FAR_GROUP) if far else (NEAR_ALONE if size == 1 else NEAR_GROUP)
-    return table if shift is None else tuple(a + b for a, b in zip(table, shift))
+    if shift is None:
+        return table
+    return tuple(a + (b if far else b * NEAR_SHIFT) for a, b in zip(table, shift))
 
 
 def pick_street(u, table):
@@ -136,9 +140,15 @@ def doze_chance(debt):
     return round(min(DOZE_MAX, DOZE_BASE + DOZE_STEP * (debt - DOZE_FROM)), 4)
 
 
-def knows_next_door_empty(history, pid):
-    """W5 (amendment 1): they got inside the neighbour's house on some night and left nothing there."""
-    return any(v and v["got_in"] and v["found"] - v["took"] == 0 for v in (night.visit.get(pid) for night in history))
+def knows_next_door_empty(history, pid, away):
+    """W5 (amendment 1): they got inside the neighbour's house on some night and left nothing there, or their own
+    neighbour's-house line says a trip there came back with nothing (reports/stage_b_fixes.md, fix 1)."""
+    if any(v and v["got_in"] and v["found"] - v["took"] == 0 for v in (night.visit.get(pid) for night in history)):
+        return True
+    if any(night.visit.get(pid) for night in history):         # their own visit is their line
+        return False
+    heard = heard_trip(history, pid)
+    return heard is not None and heard[1] not in away and not heard[2]["took"]
 
 
 def how_known(n, q, x):
@@ -951,21 +961,27 @@ def neighbour_line(n, pid, history=None, day=None, away=None):
         if v["got_in"]:
             return f"About the neighbour's house: you went in {when} and found no food there. Outside is dangerous."
         return f"About the neighbour's house: you did not get inside {when}. Outside is dangerous."
+    heard = heard_trip(history, pid)
+    if heard is None:
+        return NEIGHBOUR_UNKNOWN
+    night, x, g = heard
+    if x in away:
+        how = " and has not come back"
+    else:
+        how = " and came back with food" if g["took"] else " and came back with nothing"
+    return (f"About the neighbour's house: {NAMES[x]} went there {when_words(('N', night.number), day)}{how}. "
+            f"Outside is dangerous.")
+
+
+def heard_trip(history, pid):
+    """The latest trip next door they know someone else went on, as (night, who, group), or None: not whoever got up
+    and was talked back to bed."""
     for night in reversed(history):
-        # Whom they know went out: not whoever got up and was talked back to bed.
         near = [g for g in night.groups if not g.get("far")]
         known = [x for x in night.knows[pid] if x != pid and any(x in g["members"] for g in near)]
-        if not known:
-            continue
-        x = known[0]
-        g = next(g for g in near if x in g["members"])
-        if x in away:
-            how = " and has not come back"
-        else:
-            how = " and came back with food" if g["took"] else " and came back with nothing"
-        return (f"About the neighbour's house: {NAMES[x]} went there {when_words(('N', night.number), day)}{how}. "
-                f"Outside is dangerous.")
-    return NEIGHBOUR_UNKNOWN
+        if known:
+            return night, known[0], next(g for g in near if known[0] in g["members"])
+    return None
 
 
 def tag_events(p, k, day, night_from=NIGHT_MINUTE):
@@ -1006,7 +1022,7 @@ def next_day(day1, n, oracle, chronicle=None):
         quiet.setup(m, chronicle)
     for q in present:
         p = m.people[q]
-        p.knows_empty = knows_next_door_empty(history, q)                   # W5 (amendment 1)
+        p.knows_empty = knows_next_door_empty(history, q, m.away)           # W5 (amendment 1; fix 1)
         if p.knows_empty:
             m.street[q] = street_line(history, q, day)
         for x in data.ORDER:                                                # amendment 4

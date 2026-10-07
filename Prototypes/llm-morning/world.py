@@ -955,10 +955,11 @@ class Morning:
         elif s.strength and self.day != 4:
             when = []
             past = [(when_words(scene, self.day), ms) for scene, ms in p.suspected_past]
-            now = [("this morning", p.suspected_at)]
+            own = "today" if today else "this morning"      # reports/stage_b_fixes.md, fix 3: as the grudge lines
+            now = [(own, p.suspected_at)]
             if self.night_from() is not None:       # a quiet day's night: its answers are "tonight", never a minute
                 day_ms = [mm for mm in p.suspected_at if mm < self.night_from()]
-                now = [("this morning", day_ms)] + ([("tonight", True)] if len(day_ms) < len(p.suspected_at) else [])
+                now = [(own, day_ms)] + ([("tonight", True)] if len(day_ms) < len(p.suspected_at) else [])
             for word, ms in past + now:
                 if ms is True:
                     when.append(word)
