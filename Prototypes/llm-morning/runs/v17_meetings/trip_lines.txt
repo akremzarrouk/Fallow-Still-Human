@@ -1,0 +1,19 @@
+[62 asks: s1#22 … s3#39] About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+[6 asks: s1#22 … s1#38] About the neighbour's house: you went in the night before last and found no food there. Outside is dangerous.
+[62 asks: s1#22 … s3#39] Outside, and not to be gone to this morning: the street and the neighbour's house.
+[21 asks: s1#22 … s3#39] - Day 2: Daniel says they should cross to the neighbour's house tonight and see what is left there. (you did it)
+[12 asks: s1#23 … s1#39] About the neighbour's house: Daniel went there the night before last and came back with nothing. Outside is dangerous.
+[41 asks: s1#23 … s3#38] - Day 2: Daniel says they should cross to the neighbour's house tonight and see what is left there. (you saw it)
+[5 asks: s1#24 … s1#35] - About going to bed: "I lay awake in the back room with Mom and listened to the silence."
+[15 asks: s2#12 … s3#39] About the neighbour's house: you went in last night and found no food there. Outside is dangerous.
+[9 asks: s2#12 … s2#37] - About going to the neighbour's house last night, where it was left: Mara said you are the one who should go (min 06); Leo said you are the one who should go (min 06); you said you still mean to go (min 09); Elena said nobody should go (min 12).
+[9 asks: s2#12 … s2#37] - About the neighbour's house and the street: "I got inside the neighbour's house and found no food there."
+[23 asks: s2#13 … s3#38] About the neighbour's house: Daniel went there last night and came back with nothing. Outside is dangerous.
+[6 asks: s2#13 … s2#39] - About going to the neighbour's house last night, where it was left: you said Daniel is the one who should go (min 06); Leo said Daniel is the one who should go (min 06); Daniel said he still means to go (min 09); Elena said nobody should go (min 12).
+[6 asks: s2#14 … s3#30] About the neighbour's house: its people left in the first days, so there may be food there. Outside is dangerous.
+[4 asks: s2#14 … s2#26] - About going to the neighbour's house last night, where it was left: Mara said Daniel is the one who should go (min 06); Leo said Daniel is the one who should go (min 06); Daniel said he still means to go (min 09); you said nobody should go (min 12).
+[9 asks: s2#15 … s2#38] - About going to the neighbour's house last night, where it was left: Mara said Daniel is the one who should go (min 06); you said Daniel is the one who should go (min 06); Daniel said he still means to go (min 09); Elena said nobody should go (min 12).
+[6 asks: s3#24 … s3#39] - About going to the neighbour's house last night, where it was left: Mara said you are the one who should go (min 45); you said you still mean to go (min 57); Leo said you must stay home (min 57); Elena said nobody should go (min 57).
+[5 asks: s3#25 … s3#37] - About going to the neighbour's house last night, where it was left: Mara said Daniel is the one who should go (min 45); Daniel said he still means to go (min 57); you said Daniel must stay home (min 57); Elena said nobody should go (min 57).
+[3 asks: s3#26 … s3#38] - About going to the neighbour's house last night, where it was left: you said Daniel is the one who should go (min 45); Daniel said he still means to go (min 57); Leo said Daniel must stay home (min 57); Elena said nobody should go (min 57).
+[2 asks: s3#27 … s3#30] - About going to the neighbour's house last night, where it was left: Mara said Daniel is the one who should go (min 45); Daniel said he still means to go (min 57); Leo said Daniel must stay home (min 57); you said nobody should go (min 57).

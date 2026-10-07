@@ -1,0 +1,15 @@
+| kind | asks offering it (of 62) | options offered | times chosen |
+|---|---|---|---|
+| confront | 61 | 149 | 27 |
+| reassure | 54 | 165 | 23 |
+| accuse | 40 | 40 | 8 |
+| silent | 62 | 62 | 3 |
+| go | 62 | 186 | 1 |
+| back (send_<q>) | 61 | 149 | 0 |
+| propose (propose_trip) | 61 | 61 | 0 |
+| say | 61 | 61 | 0 |
+| sit | 61 | 149 | 0 |
+| volunteer | 61 | 61 | 0 |
+| aside | 44 | 76 | 0 |
+| deny | 40 | 40 | 0 |
+chosen options, by seed: {(1, 'accuse_daniel'): 5, (1, 'confront_daniel'): 2, (1, 'confront_mara'): 2, (1, 'go_kitchen'): 1, (1, 'reassure_all'): 6, (1, 'reassure_mara'): 1, (1, 'silent'): 1, (2, 'accuse_daniel'): 3, (2, 'confront_daniel'): 11, (2, 'confront_leo'): 1, (2, 'reassure_all'): 6, (2, 'reassure_leo'): 6, (2, 'silent'): 1, (3, 'confront_daniel'): 7, (3, 'confront_leo'): 3, (3, 'confront_mara'): 1, (3, 'reassure_all'): 2, (3, 'reassure_daniel'): 2, (3, 'silent'): 1}

@@ -1,0 +1,48 @@
+## seed 1
+| holder → target | 07:00 | 10:39 Q2 | 11:00 Q2 | 13:00 Q2 | 21:00 |
+|---|---|---|---|---|---|
+| Daniel → Leo | 0 | 1 | 0 | 0 | 0 |
+| Daniel → Mara | 0 | 1 | 1 | 3 | 3 |
+| Leo → Daniel | 3 | 3 | 3 | 3 | 3 |
+| Mara → Daniel | 3 | 3 | 3 | 3 | 3 |
+| Mara → Leo | 2 | 1 | 0 | 0 | 0 |
+changes:
+  min 03: Daniel → Leo 0 → 1 (angry: you were angry with Leo)
+  min 06: Daniel → Mara 0 → 1 (angry: you were angry with Mara)
+  min 15: Mara → Leo 2 → 1 (fell (an answer of theirs not naming them))
+  10:39: Daniel → Leo 1 → 0 (fell (an answer of theirs not naming them))
+  10:39: Daniel → Mara 1 → 0 (fell (an answer of theirs not naming them))
+  10:39: Mara → Leo 1 → 0 (fell (an answer of theirs not naming them))
+  10:45: Daniel → Mara 0 → 1 (angry: you were angry with Mara)
+  11:00: Daniel → Mara 1 → 2 (angry: you were angry with Mara)
+  11:03: Daniel → Mara 2 → 3 (angry: you were angry with Mara)
+Q2 entries (grudges as quiet.py read them): min 18 Daniel→Leo {'daniel': 1, 'leo': 3} not: a line between them 12 minutes before; 10:39 Daniel→Mara {'daniel': 1, 'mara': 3} fired; 11:00 Leo→Daniel {'leo': 3, 'daniel': 0} fired; 13:00 Leo→Daniel {'leo': 3, 'daniel': 0} fired; 15:45 Leo→Daniel {'leo': 3, 'daniel': 0} not: the day's 40 asks are spent; 16:00 Mara→Daniel {'mara': 3, 'daniel': 3} not: the day's 40 asks are spent
+## seed 2
+| holder → target | 07:00 | 10:18 Q2 | 10:27 Q1 | 12:18 Q2 | 15:24 Q2 | 21:00 |
+|---|---|---|---|---|---|---|
+| Daniel → Leo | 0 | 0 | 0 | 0 | 1 | 0 |
+| Leo → Daniel | 3 | 3 | 3 | 3 | 3 | 3 |
+| Mara → Daniel | 3 | 3 | 3 | 3 | 3 | 3 |
+changes:
+  12:24: Daniel → Leo 0 → 1 (angry: you were angry with Leo)
+  15:24: Daniel → Leo 1 → 0 (fell (an answer of theirs not naming them))
+Q2 entries (grudges as quiet.py read them): min 09 Daniel→Leo {'daniel': 0, 'leo': 3} not: a line between them 3 minutes before; 10:18 Daniel→Leo {'daniel': 0, 'leo': 3} fired; 10:18 Daniel→Mara {'daniel': 0, 'mara': 3} fired; 12:18 Daniel→Leo {'daniel': 0, 'leo': 3} fired; 15:24 Daniel→Leo {'daniel': 1, 'leo': 3} fired; 15:24 Daniel→Mara {'daniel': 0, 'mara': 3} fired
+## seed 3
+| holder → target | 07:00 | 10:48 Q2 | 12:48 Q2 | 16:54 Q2 | 21:00 |
+|---|---|---|---|---|---|
+| Daniel → Leo | 1 | 2 | 1 | 3 | 2 |
+| Daniel → Mara | 0 | 0 | 0 | 0 | 1 |
+| Leo → Daniel | 3 | 3 | 3 | 3 | 3 |
+| Leo → Mara | 1 | 0 | 0 | 0 | 0 |
+| Mara → Daniel | 3 | 3 | 3 | 3 | 3 |
+| Mara → Leo | 1 | 0 | 0 | 0 | 0 |
+changes:
+  min 06: Daniel → Leo 1 → 2 (angry: you were angry with Leo)
+  min 15: Leo → Mara 1 → 0 (fell (an answer of theirs not naming them))
+  min 15: Mara → Leo 1 → 0 (fell (an answer of theirs not naming them))
+  10:48: Daniel → Leo 2 → 1 (fell (an answer of theirs not naming them))
+  12:48: Daniel → Leo 1 → 2 (angry: you were angry with Leo)
+  12:51: Daniel → Leo 2 → 3 (angry: you were angry with Leo)
+  16:54: Daniel → Leo 3 → 2 (fell (an answer of theirs not naming them))
+  16:54: Daniel → Mara 0 → 1 (angry: you were angry with Mara)
+Q2 entries (grudges as quiet.py read them): min 18 Leo→Daniel {'leo': 3, 'daniel': 2} not: a line between them 3 minutes before; 10:48 Daniel→Leo {'daniel': 2, 'leo': 3} fired; 10:48 Daniel→Mara {'daniel': 0, 'mara': 3} fired; 12:48 Daniel→Leo {'daniel': 1, 'leo': 3} fired; 16:54 Daniel→Leo {'daniel': 3, 'leo': 3} fired; 16:54 Daniel→Mara {'daniel': 0, 'mara': 3} fired
