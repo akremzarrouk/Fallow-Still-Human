@@ -1,0 +1,466 @@
+[
+ {
+  "seed": 1,
+  "d1": [
+   [
+    "Q2",
+    "10:39",
+    8
+   ],
+   [
+    "Q2",
+    "11:00",
+    8
+   ],
+   [
+    "Q2",
+    "13:00",
+    0
+   ]
+  ],
+  "d2": {
+   "stretch": [
+    "Q2",
+    "10:39",
+    "10:48"
+   ],
+   "speech": [
+    [
+     "Daniel",
+     "10:39",
+     "reassure_all",
+     false
+    ],
+    [
+     "Elena",
+     "10:39",
+     "reassure_all",
+     false
+    ],
+    [
+     "Mara",
+     "10:39",
+     "accuse_daniel",
+     false
+    ],
+    [
+     "Daniel",
+     "10:42",
+     "reassure_mara",
+     true
+    ],
+    [
+     "Mara",
+     "10:42",
+     "accuse_daniel",
+     false
+    ],
+    [
+     "Elena",
+     "10:42",
+     "reassure_all",
+     false
+    ],
+    [
+     "Daniel",
+     "10:45",
+     "confront_mara",
+     false
+    ],
+    [
+     "Mara",
+     "10:45",
+     "accuse_daniel",
+     false
+    ]
+   ],
+   "fresh": 1,
+   "of": 8,
+   "holds": false
+  },
+  "morning_pairs": [
+   "accuse:daniel",
+   "confront:daniel",
+   "confront:leo",
+   "confront:mara",
+   "reassure:None",
+   "reassure:daniel"
+  ],
+  "d3": {
+   "last_model_act": "13:00",
+   "at_or_after_1600": []
+  },
+  "d4": {
+   "hits": [
+    {
+     "who": "Daniel",
+     "minute": "10:39",
+     "words": [
+      "weak"
+     ],
+     "fasting": 64.0,
+     "ok": true,
+     "feeling": "anxious",
+     "reason": "I need to keep them calm and show I am in control despite how weak I feel.",
+     "said": "We are going to be fine, I promise you both that I am looking after us."
+    },
+    {
+     "who": "Leo",
+     "minute": "13:00",
+     "words": [
+      "weak"
+     ],
+     "fasting": 53.65,
+     "ok": true,
+     "feeling": "weary",
+     "reason": "I am too weak to follow him right now and arguing won't help the hunger.",
+     "said": null
+    }
+   ],
+   "model_acts": 40,
+   "answers_new": 40,
+   "unmatched": 0
+  },
+  "d5": {
+   "longest_run": {
+    "Daniel": 0,
+    "Elena": 0,
+    "Leo": 0,
+    "Mara": 0
+   },
+   "acts_with_words": []
+  },
+  "d6": [
+   [
+    "Daniel",
+    "reassure",
+    "everyone",
+    [
+     "min 09",
+     "min 12",
+     "min 15"
+    ]
+   ],
+   [
+    "Mara",
+    "accuse",
+    "Daniel",
+    [
+     "min 00",
+     "min 03",
+     "min 06"
+    ]
+   ]
+  ],
+  "d7": {
+   "day3_asks": 40,
+   "answers_live": 40,
+   "api_requests": 40
+  }
+ },
+ {
+  "seed": 2,
+  "d1": [
+   [
+    "Q2",
+    "10:18",
+    8
+   ],
+   [
+    "Q1",
+    "10:27",
+    8
+   ],
+   [
+    "Q2",
+    "12:18",
+    5
+   ],
+   [
+    "Q2",
+    "15:24",
+    6
+   ]
+  ],
+  "d2": {
+   "stretch": [
+    "Q2",
+    "10:18",
+    "10:24"
+   ],
+   "speech": [
+    [
+     "Daniel",
+     "10:18",
+     "reassure_all",
+     false
+    ],
+    [
+     "Mara",
+     "10:18",
+     "accuse_daniel",
+     true
+    ],
+    [
+     "Elena",
+     "10:18",
+     "reassure_all",
+     false
+    ],
+    [
+     "Leo",
+     "10:18",
+     "accuse_daniel",
+     true
+    ],
+    [
+     "Daniel",
+     "10:21",
+     "reassure_leo",
+     false
+    ],
+    [
+     "Leo",
+     "10:21",
+     "confront_daniel",
+     false
+    ],
+    [
+     "Elena",
+     "10:21",
+     "reassure_leo",
+     false
+    ],
+    [
+     "Mara",
+     "10:21",
+     "confront_daniel",
+     false
+    ]
+   ],
+   "fresh": 2,
+   "of": 8,
+   "holds": false
+  },
+  "morning_pairs": [
+   "confront:daniel",
+   "confront:leo",
+   "reassure:None",
+   "reassure:leo"
+  ],
+  "d3": {
+   "last_model_act": "15:27",
+   "at_or_after_1600": []
+  },
+  "d4": {
+   "hits": [
+    {
+     "who": "Leo",
+     "minute": "12:18",
+     "words": [
+      "weak"
+     ],
+     "fasting": 65.3,
+     "ok": true,
+     "feeling": "exhausted",
+     "reason": "I am too weak to argue endlessly, but I will not let him pretend his reckless trip solved anything.",
+     "said": "You went out into the dark alone and brought back nothing, Daniel. Don't act like everything is fine."
+    }
+   ],
+   "model_acts": 40,
+   "answers_new": 40,
+   "unmatched": 0
+  },
+  "d5": {
+   "longest_run": {
+    "Daniel": 0,
+    "Elena": 0,
+    "Leo": 0,
+    "Mara": 0
+   },
+   "acts_with_words": []
+  },
+  "d6": [
+   [
+    "Elena",
+    "reassure",
+    "everyone",
+    [
+     "min 00",
+     "min 03",
+     "min 06"
+    ]
+   ],
+   [
+    "Mara",
+    "confront",
+    "Daniel",
+    [
+     "min 00",
+     "min 03",
+     "min 06"
+    ]
+   ]
+  ],
+  "d7": {
+   "day3_asks": 40,
+   "answers_live": 40,
+   "api_requests": 40
+  }
+ },
+ {
+  "seed": 3,
+  "d1": [
+   [
+    "Q2",
+    "10:48",
+    8
+   ],
+   [
+    "Q2",
+    "12:48",
+    5
+   ],
+   [
+    "Q2",
+    "16:54",
+    2
+   ]
+  ],
+  "d2": {
+   "stretch": [
+    "Q2",
+    "10:48",
+    "10:54"
+   ],
+   "speech": [
+    [
+     "Daniel",
+     "10:48",
+     "reassure_all",
+     false
+    ],
+    [
+     "Leo",
+     "10:48",
+     "confront_daniel",
+     false
+    ],
+    [
+     "Mara",
+     "10:48",
+     "confront_daniel",
+     false
+    ],
+    [
+     "Elena",
+     "10:48",
+     "reassure_daniel",
+     false
+    ],
+    [
+     "Daniel",
+     "10:51",
+     "reassure_all",
+     false
+    ],
+    [
+     "Leo",
+     "10:51",
+     "confront_daniel",
+     false
+    ],
+    [
+     "Elena",
+     "10:51",
+     "reassure_daniel",
+     false
+    ],
+    [
+     "Mara",
+     "10:51",
+     "confront_daniel",
+     false
+    ]
+   ],
+   "fresh": 0,
+   "of": 8,
+   "holds": false
+  },
+  "morning_pairs": [
+   "accuse:daniel",
+   "confront:daniel",
+   "confront:leo",
+   "confront:mara",
+   "reassure:None",
+   "reassure:daniel",
+   "reassure:elena"
+  ],
+  "d3": {
+   "last_model_act": "16:54",
+   "at_or_after_1600": [
+    [
+     "Mara",
+     "16:54",
+     "confront_daniel"
+    ],
+    [
+     "Daniel",
+     "16:54",
+     "confront_mara"
+    ]
+   ]
+  },
+  "d4": {
+   "hits": [],
+   "model_acts": 40,
+   "answers_new": 40,
+   "unmatched": 0
+  },
+  "d5": {
+   "longest_run": {
+    "Daniel": 0,
+    "Elena": 0,
+    "Leo": 0,
+    "Mara": 0
+   },
+   "acts_with_words": []
+  },
+  "d6": [
+   [
+    "Daniel",
+    "confront",
+    "Leo",
+    [
+     "12:48",
+     "12:51",
+     "12:54"
+    ]
+   ],
+   [
+    "Elena",
+    "reassure",
+    "Daniel",
+    [
+     "min 09",
+     "min 12",
+     "min 15"
+    ]
+   ]
+  ],
+  "d7": {
+   "day3_asks": 40,
+   "answers_live": 40,
+   "api_requests": 41
+  }
+ }
+]
+
+SUMMARY
+D1 every seed has a triggered stretch with model speech: True ([[8, 8, 0], [8, 8, 5, 6], [8, 5, 2]])
+D2 seeds holding: 0 of 3 ([(1, 8), (2, 8), (0, 8)]) -> FAIL
+D3 seeds with a model act at or after 16:00: 1 -> PASS; last model acts ['13:00', '15:27', '16:54']
+D4 acts with need words: 3; with fasting >= 48: 3 -> 100.0% PASS; unmatched model acts [0, 0, 0]
+D5 longest runs: [{'Daniel': 0, 'Elena': 0, 'Leo': 0, 'Mara': 0}, {'Daniel': 0, 'Elena': 0, 'Leo': 0, 'Mara': 0}, {'Daniel': 0, 'Elena': 0, 'Leo': 0, 'Mara': 0}] -> PASS
+D6 days with N11: 3 of 3 -> FAIL
+D7 day-3 asks [40, 40, 40]; live total 120 -> PASS

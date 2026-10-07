@@ -1,0 +1,4 @@
+v16 seed 1 day 3: N11 present: [('Daniel', 'volunteer kind', 'everyone', ['min 06', 'min 09', 'min 12']), ('Elena', 'reassure', 'everyone', ['min 30', 'min 33', 'min 36']), ('Mara', 'volunteer kind', 'everyone', ['min 06', 'min 09', 'min 12']), ('Mara', 'volunteer kind', 'everyone', ['min 09', 'min 12', 'min 15']), ('Mara', 'volunteer kind', 'everyone', ['min 12', 'min 15', 'min 18']), ('Mara', 'volunteer kind', 'everyone', ['min 15', 'min 18', 'min 21']), ('Mara', 'volunteer kind', 'everyone', ['min 18', 'min 21', 'min 24'])]
+v16 seed 2 day 3: N11 present: [('Elena', 'reassure', 'everyone', ['min 00', 'min 03', 'min 06']), ('Mara', 'confront', 'Daniel', ['min 00', 'min 03', 'min 06'])]
+v16 seed 3 day 3: N11 absent: []
+v16: N11 on 2 of 3 days

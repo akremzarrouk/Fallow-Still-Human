@@ -1,0 +1,77 @@
+Commands and output of the v17 run (reports/days_v17.md section 6, in full). From Prototypes/llm-morning/.
+
+From `Prototypes/llm-morning/`. Only the three live runs had `GEMINI_API_KEY` set.
+
+**1. The plan record** (`runs/v17/plan_frozen.txt`; it also holds `git status --short`, `git diff --stat` and every
+`*.py` sha256):
+```
+recorded_utc: 2026-10-07T17:08:46Z
+a249095ce4fadc817f16889f656cc2abba9df852fd2250efb1bbe0796f3bafd4 *reports/days_v17_plan.md
+$ git rev-parse HEAD
+2b6ad838bd4daa3e883cd4e723f6cc01693aabf4
+$ git diff --stat
+ 8 files changed, 464 insertions(+), 123 deletions(-)      (chronicle, data, mind, night, quiet, story, test_morning, world)
+```
+
+**2. The suite** (`runs/v17/unittest.stdout.txt`):
+```
+$ ( time env -u GEMINI_API_KEY PYTHONDONTWRITEBYTECODE=1 .venv/Scripts/python.exe -m unittest test_morning < /dev/null; echo "exit $?" ) > runs/v17/unittest.stdout.txt 2>&1
+Ran 227 tests in 210.450s
+OK
+exit 0
+```
+
+**3. The copy, and where each seed first misses** (`runs/v17/cache_copy.sha256.txt`,
+`runs/v17/premiss-seed{1,2,3}.stdout.txt`):
+```
+$ mkdir -p cache/v17 && cp cache/v16/gemini-3.5-flash-lite-daniel_ate_it-seed{1,2,3}.json cache/v17/
+$ sha256sum cache/v16/*seed?.json cache/v17/*seed?.json     # pairwise equal: d1efc889…, d79a4939…, 25e92cc7…
+$ for n in 1 2 3; do env -u GEMINI_API_KEY … morning.py --seed $n --out v17 --replay …; done
+seed 1 exit 3   last: night 2, the night mind: model asked for 4; so far 0 live, 98 cached, 0 API requests → stopped: replay found a prompt with no cached answer
+seed 2 exit 3   last: night 2, the night mind: model asked for 4; so far 0 live, 96 cached, 0 API requests → stopped: …
+seed 3 exit 3   last: night 2, the night mind: model asked for 4; so far 0 live, 135 cached, 0 API requests → stopped: …
+$ sha256sum -c runs/v17/cache_copy.sha256.txt     # all 6 OK
+```
+
+**4. The runs,** one after the other, each started after the one before had exited
+(`runs/v17/daniel_ate_it-seed{1,2,3}.stdout.txt`):
+```
+$ PYTHONDONTWRITEBYTECODE=1 .venv/Scripts/python.exe -u morning.py --seed 1 --out v17 > runs/v17/daniel_ate_it-seed1.stdout.txt 2>&1
+  api_requests: 40  answers_live: 40  answers_from_cache: 98  day3_asks: 40  story_sha256: dea0286f…b48d823  exit 0
+$ … --seed 2 --out v17 …
+  api_requests: 40  answers_live: 40  answers_from_cache: 96  day3_asks: 40  story_sha256: 726e8c41…abc9c3  exit 0
+$ … --seed 3 --out v17 …
+  api_requests: 41  answers_live: 40  answers_from_cache: 135  day3_asks: 40  story_sha256: 75191e48…675c05  exit 0
+    [503 UNAVAILABLE] waiting 5s, retry 1/6        (seed 3, stdout line 56)
+```
+
+**5. Scoring:**
+```
+$ env -u GEMINI_API_KEY … runs/v17/scoring/scripts/score.py d6 v16 > runs/v17/scoring/d6_v16_check.txt
+v16: N11 on 2 of 3 days
+$ … score.py all v17 > runs/v17/scoring/score_all.txt
+D1 every seed has a triggered stretch with model speech: True ([[8, 8, 0], [8, 8, 5, 6], [8, 5, 2]])
+D2 seeds holding: 0 of 3 ([(1, 8), (2, 8), (0, 8)]) -> FAIL
+D3 seeds with a model act at or after 16:00: 1 -> PASS; last model acts ['13:00', '15:27', '16:54']
+D4 acts with need words: 3; with fasting >= 48: 3 -> 100.0% PASS; unmatched model acts [0, 0, 0]
+D5 longest runs: [all 0, all 0, all 0] -> PASS
+D6 days with N11: 3 of 3 -> FAIL
+D7 day-3 asks [40, 40, 40]; live total 120 -> PASS
+$ … score.py lines v17 > runs/v17/scoring/lines.txt
+$ … runs/v17/scoring/scripts/n11_no_clause.py > runs/v17/scoring/n11_no_clause.txt
+v16: N11 without the target clause on 3 of 3 days
+v17: N11 without the target clause on 3 of 3 days
+```
+After the first scoring, `score.n11` gained a `clause` flag, for `n11_no_clause.py`. It defaults to the frozen rule.
+The rescore gave the same summary.
+
+**6. At the end: the plan, the code, the cache:**
+```
+$ sha256sum reports/days_v17_plan.md
+a249095ce4fadc817f16889f656cc2abba9df852fd2250efb1bbe0796f3bafd4 *reports/days_v17_plan.md
+$ sha256sum -c (the *.py and config.json sha256s of plan_frozen.txt) > runs/v17/scoring/code_unchanged.txt     # exit 0, 20 OK
+$ python - (compare cache/v16 and cache/v17 entry by entry)
+seed 1: v16 entries 236, v17 entries 276, all v16 kept unchanged True, new 40
+seed 2: v16 entries 147, v17 entries 187, all v16 kept unchanged True, new 40
+seed 3: v16 entries 184, v17 entries 224, all v16 kept unchanged True, new 40
+```
