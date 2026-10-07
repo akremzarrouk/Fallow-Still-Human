@@ -10,6 +10,7 @@ import json
 import re
 
 import data
+from quiet import clock
 from talk import SPEECH
 from world import estimate_tokens, trait_words
 
@@ -63,7 +64,7 @@ def records(chron, pid, k):
             key = (e["minute"], e["room"])
             if key not in voices:
                 voices.add(key)
-                out.append({"id": e["id"], "text": f"min {e['minute']:02d}: {text}", "n": 1})
+                out.append({"id": e["id"], "text": f"{clock(e['minute'])}: {text}", "n": 1})
             continue
         if not text:
             continue
@@ -73,15 +74,15 @@ def records(chron, pid, k):
             r["n"] += 1
             r["to"], r["last"] = e["minute"], e["words"]
             continue
-        r = {"id": e["id"], "text": f"min {e['minute']:02d}: {text}", "n": 1}
+        r = {"id": e["id"], "text": f"{clock(e['minute'])}: {text}", "n": 1}
         out.append(r)
         if fold:
             folds[fold] = r
-    return [(r["id"], r["text"] + (f' Then {r["n"] - 1} more time{"s" if r["n"] > 2 else ""}, to min {r["to"]:02d}; '
+    return [(r["id"], r["text"] + (f' Then {r["n"] - 1} more time{"s" if r["n"] > 2 else ""}, to {clock(r["to"])}; '
                                    f'last: "{r["last"]}"' if r["n"] > 1 else "")) for r in out]
 
 
-QUOTED = re.compile(r'(:\s*|,\s*saying:\s*)"[^"]*"|\s*Then \d+ more times?, to min \d\d; last: "[^"]*"')
+QUOTED = re.compile(r'(:\s*|,\s*saying:\s*)"[^"]*"|\s*Then \d+ more times?, to (?:min \d\d|\d\d:\d\d); last: "[^"]*"')
 
 
 def without_words(text):

@@ -4,6 +4,7 @@
 """
 import contextlib
 import difflib
+import hashlib
 import importlib.util
 import io
 import json
@@ -1217,7 +1218,7 @@ class WitnessScenarioTest(unittest.TestCase):
                                  r"| \([a-z ]+\): you thought \w+ took it, at minutes? [\d, and]+\."
                                  rf"| \([a-z ]+\): you thought \w+ took it(, (and )?({day} at minutes? [\d, and]+"
                                  rf"|{night}|this morning at minutes? [\d, and]+))*\."
-                                 rf"|: \w+ admitted taking it( {day},)? at minute \d\d\.)$")
+                                 rf"|: \w+ admitted taking it( {day},)? at minute \d{{2,3}}\.)$")   # day 3 runs to 840
                 for words in ("Daniel eats a can", "you ate it yourself", "On your conscience"):
                     self.assertNotIn(words, p)
             else:
@@ -3719,7 +3720,9 @@ class DaysTest(unittest.TestCase):
         tr = json.loads(read(os.path.join(self.dirs.runs, "daniel_ate_it-seed1.transcript.json")))
         self.assertEqual(set(tr), {"day1", "night", "mind1", "day2", "night2", "mind2", "day3", "chronicle"})
         self.assertEqual([s["id"] for s in tr["chronicle"]["scenes"]], ["D1", "G1", "N1", "D2", "G2", "N2", "D3"])
-        self.assertEqual(len(tr["day3"]["turns"]), 30)
+        # Day 3 is no longer 30 turns: it is a quiet day, played to bedtime (reports/quiet_day_design.md, §3).
+        self.assertEqual(max(s["end"] for s in tr["day3"]["quiet"]["spans"]), 840)
+        self.assertLessEqual(meta["day3_quiet"]["day_asks"], 40)
         story = read(os.path.join(self.dirs.runs, "daniel_ate_it-seed1.md"))
         heads = ["# The night\n", "## What the night left in them\n", "# The next morning (day 5)\n",
                  "# The second night\n", "## What the night left in them\n", "# The third morning (day 6)\n"]
@@ -4102,7 +4105,9 @@ class DaysTest(unittest.TestCase):
         tr = json.loads(read(os.path.join(self.dirs.runs, "daniel_ate_it-seed1.transcript.json")))
         ch = tr["chronicle"]
         for e in ch["events"]:
-            self.assertLessEqual(set(e), EVENT_KEYS, e)
+            # A routine span and a need crossing carry their own fields too (reports/quiet_day_design.md, §3).
+            quiet_keys = set(self.chron.QUIET_KEYS) if e["kind"] in ("routine", "need") else set()
+            self.assertLessEqual(set(e), EVENT_KEYS | quiet_keys, e)
             self.assertTrue(set(e["witnesses"].values()) <= WITNESS_MODES, e)
         ids = [e["id"] for e in ch["events"]]
         self.assertEqual(len(ids), len(set(ids)))
@@ -4646,6 +4651,560 @@ class GeminiClientTest(unittest.TestCase):
         for folder, _, files in os.walk(self.dirs.root):
             for name in files:
                 self.assertNotIn(SECRET, read(os.path.join(folder, name)))
+
+
+# ---------- the quiet day, stage A (reports/quiet_day_design.md, §1.1, §1.2, §2.1, §2.2, §3, §4, §6.1) ----------
+V16_CACHE = os.path.join(HERE, "cache", "v16")
+V16_RUNS = os.path.join(HERE, "runs", "v16")
+
+
+def asked_where(prompt):
+    """(who, minute or None at night, option ids, speech option ids) of a decision prompt."""
+    who = re.match(r"You are (\w+),", prompt).group(1).lower()
+    m = re.search(r"^Now, minute (\d+)", prompt, flags=re.M)
+    block = prompt.split("Your options:")[-1]
+    return (who, int(m.group(1)) if m else None, re.findall(r"^- (\w+):", block, flags=re.M),
+            set(re.findall(r"^- (\w+): \(speech\)", block, flags=re.M)))
+
+
+class HushFake(FakeClient):
+    """The fake model, never broken, silent two times in three when it may: the morning's talk ends, as v16's day 3s
+    did, and the quiet day runs."""
+
+    def __init__(self):
+        super().__init__(invalid_every=0, max_calls=10 ** 6)
+        self.asked = []             # (minute, who) of every day decision
+
+    def generate(self, system, prompt, schema=None):
+        text = super().generate(system, prompt, schema)
+        if schema is not None:
+            return text
+        who, minute, options, _ = asked_where(prompt)
+        self.asked.append((minute, who))
+        ans = json.loads(text)
+        if "silent" in options and int(hashlib.sha256(prompt.encode("utf-8")).hexdigest(), 16) % 3:
+            ans.update(option="silent", say=None)
+        return json.dumps(ans)
+
+
+class TalkFake(HushFake):
+    """Keeps talking from minute `talk_from` on: a speech option it has not yet used, else any speech option, always
+    angry with someone. Silent before `talk_from`."""
+
+    def __init__(self, talk_from=0):
+        super().__init__()
+        self.talk_from = talk_from
+        self.used = set()
+
+    def generate(self, system, prompt, schema=None):
+        if schema is not None:
+            return FakeClient.generate(self, system, prompt, schema)
+        self.requests += 1
+        who, minute, options, speech = asked_where(prompt)
+        self.asked.append((minute, who))
+        talk = [o for o in options if o in speech]
+        if minute is None or minute < self.talk_from or not talk:
+            pick = "silent" if "silent" in options else options[0]
+        else:
+            fresh = [o for o in talk if (who, o) not in self.used]
+            pick = (fresh or talk)[0]
+            self.used.add((who, pick))
+        return json.dumps({"option": pick, "say": f"Words of {who} {self.requests}." if pick in speech else None,
+                           "feeling": "angry", "reason": "Talk.", "suspects": "nobody",
+                           "angry_at": "Leo" if who == "daniel" else "Daniel"})
+
+
+class PolicyFake(HushFake):
+    """policy(who, minute, options) -> option or (option, angry_at); silent when it returns None or what it names is
+    not offered."""
+
+    def __init__(self, policy):
+        super().__init__()
+        self.policy = policy
+
+    def generate(self, system, prompt, schema=None):
+        if schema is not None:
+            return FakeClient.generate(self, system, prompt, schema)
+        self.requests += 1
+        who, minute, options, speech = asked_where(prompt)
+        self.asked.append((minute, who))
+        got = self.policy(who, minute, options) or "silent"
+        option, angry = got if isinstance(got, tuple) else (got, "nobody")
+        if option not in options:
+            option = "silent" if "silent" in options else options[0]
+        return json.dumps({"option": option, "say": f"Words of {who} at {minute}." if option in speech else None,
+                           "feeling": "tense", "reason": "Policy.", "suspects": "nobody", "angry_at": angry})
+
+
+class QuietDayTest(unittest.TestCase):
+    """Stage A of the quiet day, from day 3 on: the clock, time skipping, fasting and sleep debt with body lines, the
+    rest and withdraw routines, triggers Q1 and Q2, and the day budget. Every day-3 test starts from v16 seed 2 as it
+    was through night 2 and its night mind, replayed from cache/v16 (copied; never written) with no API call."""
+    MODEL = "gemini-3.5-flash-lite"
+
+    def setUp(self):
+        self.dirs = Dirs()
+        self.quiet = importlib.import_module("quiet")
+        self.night = importlib.import_module("night")
+        self.chron = importlib.import_module("chronicle")
+        self.mind = importlib.import_module("mind")
+
+    def tearDown(self):
+        self.dirs.cleanup()
+
+    def v16(self, seed=2, client=None):
+        """v16 seed N through night 2 and mind 2 from its own answers, then day 3 set up, answered by `client`."""
+        client = client or HushFake()
+        name = f"daniel_ate_it-seed{seed}"
+        copy = os.path.join(self.dirs.root, f"{self.MODEL}-{name}.json")
+        shutil.copyfile(os.path.join(V16_CACHE, f"{self.MODEL}-{name}.json"), copy)
+        oracle = Oracle(Cache(copy), self.MODEL, seed, client=client)
+        chron = self.chron.Chronicle(seed, "daniel")
+
+        def play(m):
+            for t in range(m.turns):
+                m.turn(t)
+            m.finish()
+            chron.add_day(m)
+            return m
+        day1 = play(Morning(oracle, seed))
+        n1 = self.night.Night(day1, oracle, number=1).run()
+        chron.add_night(n1)
+        mind1 = self.mind.NightMind(n1, chron, oracle).run()
+        day2 = play(Morning.next_day(day1, n1, oracle, chronicle=chron))
+        n2 = self.night.Night(day2, oracle, number=2, house=chron.house_state()).run()
+        chron.add_night(n2)
+        mind2 = self.mind.NightMind(n2, chron, oracle).run()
+        self.assertEqual((oracle.live, client.requests), (0, 0), "v16 through night 2 comes from its cache")
+        day3 = Morning.next_day(day2, n2, oracle, chronicle=chron)
+        return type("V16", (), dict(day1=day1, n1=n1, mind1=mind1, day2=day2, n2=n2, mind2=mind2, day3=day3,
+                                    chron=chron, oracle=oracle, client=client))
+
+    def played(self, client=None):
+        d = self.v16(client=client)
+        self.quiet.play(d.day3)
+        return d
+
+    # ---------- §1.1, §1.2, §6: the needs at day 3, 07:00 ----------
+    def test_fasting_at_day_3_0700_is_section_6s(self):
+        d = self.v16()
+        # Hours from the last meal to day 3, 07:00 (= 2 × 1440 minutes after day 1, 07:00), × the hunger rate.
+        hand = {"daniel": (2 * 1440 + 240) / 60 * 1.15,     # the can, 03:00 of house day 4
+                "leo": (2 * 1440 + 720) / 60 * 1.0,         # house day 3, 19:00, the fixed fact
+                "mara": (2 * 1440 - 54) / 60 * 0.95,        # day 1, min 54
+                "elena": (2 * 1440 - 1440) / 60 * 0.85}     # the given portion, day 2, min 00
+        self.assertEqual({k: round(v, 3) for k, v in hand.items()},
+                         {"daniel": 59.8, "leo": 60.0, "mara": 44.745, "elena": 20.4})
+        q = d.day3.quiet
+        for pid, v in hand.items():
+            self.assertAlmostEqual(q.fast(d.day3.people[pid], 0), v, places=9, msg=pid)
+        self.assertEqual({pid: self.quiet.fast_stage(q.fast(d.day3.people[pid], 0)) for pid in data.ORDER},
+                         {"daniel": 1, "elena": 0, "leo": 1, "mara": 0})
+        self.assertEqual([self.quiet.fast_stage(x) for x in (47.99, 48, 95.99, 96)], [0, 1, 1, 2])
+
+    def test_sleep_debt_at_day_3_0700_is_section_6s(self):
+        d = self.v16()
+        self.assertEqual(d.n1.choices, {q: "lie_awake" for q in data.ORDER})
+        self.assertEqual(d.n2.choices, {"daniel": "go_next_door", "elena": "sleep", "leo": "lie_awake",
+                                        "mara": "lie_awake"})
+        self.assertEqual(world.hunger_level(d.n2.bedtime_hunger["elena"]), 3)     # starving at bedtime: sleep pays 6
+        hand = {"daniel": 14 - 3 + 14 - 0, "elena": 14 - 3 + 14 - 6, "leo": 14 - 3 + 14 - 3, "mara": 14 - 3 + 14 - 3}
+        self.assertEqual(hand, {"daniel": 25, "elena": 19, "leo": 22, "mara": 22})
+        q = d.day3.quiet
+        for pid, v in hand.items():
+            self.assertAlmostEqual(q.debt(d.day3.people[pid], 0), v, places=9, msg=pid)
+        self.assertEqual({pid: self.quiet.debt_stage(q.debt(d.day3.people[pid], 0)) for pid in data.ORDER},
+                         {"daniel": 2, "elena": 1, "leo": 1, "mara": 1})
+        self.assertEqual([self.quiet.debt_stage(x) for x in (15.99, 16, 23.99, 24)], [0, 1, 1, 2])
+        self.assertEqual([self.quiet.night_payback(c, s) for c, s in (("sleep", False), ("sleep", True),
+                          ("lie_awake", True), ("watch_door", False), ("go_next_door", False))], [8, 6, 3, 0, 0])
+
+    def test_the_body_line_states_each_stage(self):
+        d = self.v16()
+        body = {pid: d.day3.inside_lines(d.day3.people[pid])[0] for pid in data.ORDER}
+        self.assertEqual(body, {
+            "daniel": "Your body: starving, and weak from it: standing up makes your head spin; and you have barely "
+                      "slept for nights; your eyes close on their own.",
+            "elena": "Your body: starving, and you have hardly slept.",
+            "leo": "Your body: starving, and weak from it: standing up makes your head spin; and you have hardly "
+                   "slept.",
+            "mara": "Your body: starving, and you have hardly slept."})
+        self.assertEqual(self.quiet.body_line("starving", 2, 0),
+                         "Your body: starving, and very weak: your legs shake when you stand.")
+        # Day 2 had no needs: its body line is as it was.
+        self.assertTrue(all(p.needs is None for p in d.day2.people.values()))
+
+    # ---------- the clock (§3; amendment 3) ----------
+    def test_records_show_the_clock_from_minute_90(self):
+        self.assertEqual([self.quiet.clock(x) for x in (0, 18, 87, 90, 201, 330, 840)],
+                         ["min 00", "min 18", "min 87", "08:30", "10:21", "12:30", "21:00"])
+        c = self.chron.Chronicle(1, "daniel")
+        for i, minute in enumerate((87, 201), 1):
+            c.add({"id": f"D3-{i:03d}", "scene": "D3", "minute": minute, "kind": "say", "actor": "leo",
+                   "witnesses": {"mara": "saw"}, "views": {"mara": f"Leo says something {i}."}})
+        self.assertEqual(self.mind.records(c, "mara", 3),
+                         [("D3-001", "min 87: Leo says something 1."), ("D3-002", "10:21: Leo says something 2.")])
+
+    # ---------- §2.2, §3: the day runs to bedtime, everyone rests, and they get up at different times ----------
+    def test_the_quiet_day_runs_to_bedtime_with_a_rest_for_everyone(self):
+        d = self.played()
+        m, q = d.day3, d.day3.quiet
+        spans = m.transcript["quiet"]["spans"]
+        self.assertTrue(spans)
+        self.assertLessEqual(max(s["end"] for s in spans), 840)
+        self.assertEqual(max(s["end"] for s in spans), 840)
+        first_up = {}
+        for pid in data.ORDER:
+            rests = [s for s in spans if s["who"] == pid and s["routine"] == "rest"]
+            self.assertTrue(1 <= len(rests) <= 2, (pid, rests))
+            for s in rests:
+                self.assertEqual(s["room"], self.night.OWN_ROOM[pid])
+                self.assertLessEqual(s["end"] - s["start"], 240)
+                if s["ended"] == "time":
+                    self.assertEqual(s["end"] - s["start"], s["planned"])
+                    self.assertIn(s["planned"], range(120, 241, 3))
+            for a, b in zip(rests, rests[1:]):
+                self.assertGreaterEqual(b["start"] - a["end"], 120)
+            first_up[pid] = rests[0]["end"]
+        self.assertGreater(len(set(first_up.values())), 1, first_up)
+        # Every jump lands on the 3-minute grid, and nothing happens after 21:00. No span is empty: whoever walks into
+        # a room where a trigger starts the talk is in the played turns, not in a routine.
+        self.assertTrue(all(s["start"] % 3 == 0 and s["end"] % 3 == 0 for s in spans))
+        self.assertEqual([s for s in spans if s["end"] == s["start"]], [])
+        self.assertEqual({pid: m.people[pid].needs["rests"] for pid in data.ORDER},
+                         {pid: sum(1 for s in spans if s["who"] == pid and s["routine"] == "rest") for pid in data.ORDER})
+        self.assertTrue(all(rec["minute"] < 840 for rec in m.log))
+
+    def test_rest_lengths_are_seeded_between_2_and_4_hours(self):
+        got = {(pid, n): self.quiet.rest_length(2, 3, pid, n) for pid in data.ORDER for n in (1, 2)}
+        self.assertEqual(got, {k: self.quiet.rest_length(2, *[3, *k]) for k in got})
+        self.assertTrue(all(v in range(120, 241, 3) for v in got.values()), got)
+        self.assertGreater(len(set(got.values())), 1)
+
+    def test_a_rest_ends_once_debt_is_below_12(self):
+        d = self.v16()
+        q, elena = d.day3.quiet, d.day3.people["elena"]
+        q.set_debt(elena, 13.0, 300)
+        end = q.rest_end(elena, 300, 240)
+        self.assertEqual(end, 342)                  # 13 → 12 takes 40 minutes; the next grid minute is 342
+        self.assertLess(13 - 1.5 * (end - 300) / 60, 12)
+        self.assertEqual(q.rest_end(elena, 300, 30), 330)       # its seeded length comes first
+
+    def test_needs_advance_exactly_across_the_jumps(self):
+        d = self.played()
+        m, q = d.day3, d.day3.quiet
+        start = {"daniel": 25, "elena": 19, "leo": 22, "mara": 22}
+        for pid in data.ORDER:
+            rest = sum(s["end"] - s["start"] for s in m.transcript["quiet"]["spans"]
+                       if s["who"] == pid and s["routine"] == "rest")
+            self.assertAlmostEqual(q.debt(m.people[pid], 840), start[pid] + (840 - rest) / 60 - 1.5 * rest / 60,
+                                   places=6, msg=pid)
+        needs = m.transcript["quiet"]["needs"]
+        self.assertEqual(needs["daniel"][0], [0, 59.8, 25.0])
+        self.assertEqual(needs["daniel"][-1][0], 840)
+
+    def test_a_routine_breaks_a_run_and_its_move_is_remembered(self):
+        """After a span, the played turns do not count the turns before it as "in a row", and a speech act held back
+        after three turns is offered again; whoever a routine moves remembers going."""
+        d = self.v16()
+        m, q = d.day3, d.day3.quiet
+        leo = m.people["leo"]
+        leo.history = [{"t": t, "kind": "confront", "seq": t + 1} for t in range(3)]
+        self.assertNotIn("confront_daniel", [o.id for o in m.options_for(leo)])
+        q.arrive(leo, "brothers_room", 30)
+        self.assertIn((30, "you went to the brothers room."), leo.memory)
+        q.start(leo, "rest", 30)
+        q.end(leo, 180, "time")
+        q.arrive(leo, "kitchen", 180)
+        self.assertEqual(m.pattern(leo), [])
+        self.assertIn("confront_daniel", [o.id for o in m.options_for(leo)])
+
+    # ---------- §2.1: withdraw ----------
+    def withdraw_case(self, policy, setup=None):
+        d = self.v16(client=PolicyFake(policy))
+        m, q = d.day3, d.day3.quiet
+        self.assertEqual((m.people["leo"].grudges["daniel"].strength, m.people["mara"].grudges["daniel"].strength),
+                         (3, 3))
+        if setup:
+            setup(m)
+        q.turn(0)
+        q.turn(1)
+        return m, q
+
+    def test_leo_withdraws_after_his_say_when_he_falls_silent(self):
+        def policy(who, minute, options):
+            if who == "leo":
+                return ("confront_daniel" if minute == 0 else "silent"), "Daniel"
+            if who == "daniel" and minute <= 3:
+                return "confront_leo"
+            return None
+        m, q = self.withdraw_case(policy)
+        self.assertEqual([(w["who"], w["minute"], w["room"]) for w in q.withdrawals], [("leo", 6, "brothers_room")])
+        self.assertEqual(q.withdrawals[0]["why"], {"chose": "silent", "spoke_at": 0, "grudge_against": ["daniel"]})
+        self.assertEqual(m.people["leo"].room, "brothers_room")
+        self.assertEqual(q.open["leo"]["routine"], "withdraw")
+        # The others in the kitchen saw him go; Mara, silent, had said nothing, so she stays.
+        for pid in ("daniel", "elena", "mara"):
+            self.assertIn((6, "Leo goes to the brothers room."), m.people[pid].memory, pid)
+        self.assertEqual(m.people["mara"].room, "kitchen")
+
+    def test_a_withdraw_into_a_room_with_a_grievance_is_a_meeting(self):
+        """Leo walks out to the brothers room, where Mara (who holds 2 against him) already is: the withdraw is a
+        routine bringing him into her room, so Q2 asks her at the next turn."""
+        def policy(who, minute, options):
+            if who == "leo":
+                return ("confront_daniel" if minute == 0 else "silent"), "Daniel"
+            if who == "daniel" and minute <= 3:
+                return "confront_leo"
+            return None
+
+        def setup(m):
+            m.people["mara"].room = "brothers_room"
+            g = m.people["mara"].grudge("leo")
+            g.strength, g.last_change = 2, 0        # as a grudge carried into the day: it holds for 15 minutes
+        m, q = self.withdraw_case(policy, setup)
+        self.assertEqual([(w["who"], w["minute"]) for w in q.withdrawals], [("leo", 6)])
+        self.assertEqual([(e["kind"], e["minute"], e["asked"]) for e in q.log if e["fired"]], [("Q2", 6, "mara")])
+        self.assertEqual(q.pending["mara"]["kind"], "Q2")
+        q.turn(2)
+        mara = next(x for x in m.log[-1]["decisions"] if x["person"] == "mara")
+        self.assertEqual((mara["mode"], mara.get("quiet")), ("model", "Q2"))
+
+    def test_no_withdraw_without_a_grudge_of_3(self):
+        def policy(who, minute, options):
+            if who == "leo":
+                return "confront_daniel" if minute == 0 else "silent"
+            return "confront_leo" if who == "daniel" and minute <= 3 else None
+
+        def setup(m):
+            m.people["leo"].grudges["daniel"].strength = 2
+        m, q = self.withdraw_case(policy, setup)
+        self.assertEqual(q.withdrawals, [])
+        self.assertEqual(m.people["leo"].room, "kitchen")
+
+    def test_no_withdraw_when_the_one_held_against_is_not_in_the_room(self):
+        def policy(who, minute, options):
+            if who == "leo":
+                return ("confront_mara" if minute == 0 else "silent"), "Daniel"
+            return "confront_leo" if who == "mara" and minute <= 3 else None
+
+        def setup(m):
+            m.people["daniel"].room = "back_room"
+        m, q = self.withdraw_case(policy, setup)
+        self.assertEqual(q.withdrawals, [])
+
+    def test_daniel_and_elena_never_withdraw(self):
+        for who, other in (("daniel", "leo"), ("elena", "daniel")):
+            def policy(w, minute, options, who=who, other=other):
+                if w == who:
+                    return ("confront_" + other if minute == 0 else "silent"), world.NAMES[other]
+                if w == other and minute <= 3:
+                    return "confront_" + who
+                return None
+
+            def setup(m, who=who, other=other):
+                m.people[who].grudge(other).strength = 3
+            m, q = self.withdraw_case(policy, setup)
+            self.assertEqual([w for w in q.withdrawals if w["who"] == who], [], who)
+            self.assertEqual(m.people[who].room, "kitchen", who)
+
+    def test_every_withdraw_of_the_day_had_every_condition(self):
+        d = self.played()
+        for w in d.day3.quiet.withdrawals:
+            self.assertEqual(w["why"]["chose"], "silent")
+            self.assertIsNotNone(w["why"]["spoke_at"])
+            self.assertTrue(w["why"]["grudge_against"])
+            self.assertNotIn(w["who"], ("daniel", "elena"))
+
+    # ---------- §4 Q2: a grievance meets ----------
+    def meeting(self):
+        d = self.v16()
+        m, q = d.day3, d.day3.quiet
+        for p in m.people.values():
+            p.room = "back_room"
+        m.people["leo"].room, m.people["daniel"].room = "kitchen", "brothers_room"
+        q.exchanged[("daniel", "leo")] = 200
+        return m, q
+
+    def test_q2_fires_on_an_arrival_after_60_quiet_minutes_and_not_before(self):
+        m, q = self.meeting()
+        dan = m.people["daniel"]
+        self.assertEqual(q.arrive(dan, "kitchen", 257), [])
+        self.assertEqual(q.log[-1]["kind"], "Q2")
+        self.assertFalse(q.log[-1]["fired"])
+        self.assertNotIn("leo", q.pending)
+        dan.room = "brothers_room"
+        fired = q.arrive(dan, "kitchen", 260)
+        self.assertEqual([(f["kind"], f["asked"], f["pair"]) for f in fired], [("Q2", "leo", ["daniel", "leo"])])
+        self.assertEqual(q.pending["leo"]["kind"], "Q2")
+        self.assertTrue(m.convos.active["kitchen"])
+
+    def test_q2_once_per_pair_in_2_hours(self):
+        m, q = self.meeting()
+        dan = m.people["daniel"]
+        self.assertEqual(len(q.arrive(dan, "kitchen", 260)), 1)
+        q.pending.clear()
+        for minute, n in ((377, 0), (380, 1)):
+            dan.room = "brothers_room"
+            self.assertEqual(len(q.arrive(dan, "kitchen", minute)), n, minute)
+
+    def test_q2_asks_the_higher_grudge_and_the_one_already_there_on_a_tie(self):
+        for dan_holds, asked in ((3, "leo"), (2, "leo")):
+            m, q = self.meeting()
+            m.people["daniel"].grudge("leo").strength = dan_holds
+            self.assertEqual([f["asked"] for f in q.arrive(m.people["daniel"], "kitchen", 300)], [asked])
+        m, q = self.meeting()
+        m.people["leo"].grudges["daniel"].strength = 1
+        m.people["daniel"].grudge("leo").strength = 2
+        self.assertEqual([f["asked"] for f in q.arrive(m.people["daniel"], "kitchen", 300)], ["daniel"])
+        m, q = self.meeting()
+        m.people["leo"].grudges["daniel"].strength = 1
+        self.assertEqual(q.arrive(m.people["daniel"], "kitchen", 300), [])
+
+    def test_every_q2_of_the_day_came_after_an_hour_apart(self):
+        d = self.played()
+        q = d.day3.quiet
+        checked = [e for e in q.log if e["kind"] == "Q2"]
+        self.assertTrue(checked, "no grievance pair met all day")
+        for e in checked:
+            apart = e["minute"] - e["last_line"] if e["last_line"] is not None else None
+            self.assertEqual(e["fired"], (apart is None or apart >= 60) and not e["within_2h"]
+                             and not e.get("budget"), e)
+
+    # ---------- §4 Q1: a need crosses a line with company ----------
+    def test_q1_asks_only_with_someone_awake_there_and_once(self):
+        d = self.v16()
+        m, q = d.day3, d.day3.quiet
+        for p in m.people.values():
+            p.room = "kitchen"
+            q.set_debt(p, 10.0, 0)          # no one's debt crosses a line before 10:27
+        mara = m.people["mara"]
+        mara.room = "back_room"
+        # Mara's fasting reaches 48 at (48 / 0.95) hours after day 1, min 54: 10:25.6, so 10:27 on the grid.
+        self.assertEqual(q.tick(204), [])
+        cross = q.tick(207)
+        self.assertEqual(cross, [("mara", "fast", 1)])
+        self.assertEqual(q.ask_q1(cross, 207), [])
+        self.assertEqual((q.log[-1]["kind"], q.log[-1]["fired"], q.log[-1]["why"]), ("Q1", False, "alone"))
+        # With Elena there, but resting: still alone.
+        elena = m.people["elena"]
+        elena.room = "back_room"
+        q.start(elena, "rest", 207)
+        self.assertEqual(q.ask_q1(cross, 207), [])
+        q.end(elena, 207, "test")
+        self.assertEqual([(f["kind"], f["asked"]) for f in q.ask_q1(cross, 207)], [("Q1", "mara")])
+        self.assertEqual(q.ask_q1(cross, 207), [])            # once per person per threshold
+
+    # ---------- §4: the budget ----------
+    def test_the_day_budget_holds_when_the_fake_keeps_talking(self):
+        d = self.played(client=TalkFake())
+        m, q = d.day3, d.day3.quiet
+        asks = m.transcript["quiet"]["asks"]
+        self.assertEqual(asks["day"], 40)
+        self.assertEqual(asks["day"], len([1 for rec in m.log for x in rec["decisions"]
+                                           if x["mode"] == "model" or x.get("invalid")]))
+        self.assertLessEqual(asks["quiet"], 12)
+        self.assertTrue(any(why == "the day's asks are spent" for _, _, what, why in m.convos.log))
+        self.assertEqual(max(s["end"] for s in m.transcript["quiet"]["spans"]), 840)
+
+    def test_the_quiet_asks_hold_at_12_and_4_each(self):
+        d = self.played(client=TalkFake(talk_from=60))
+        m = d.day3
+        asks = m.transcript["quiet"]["asks"]
+        self.assertLessEqual(asks["day"], 40)
+        self.assertLessEqual(asks["quiet"], 12)
+        self.assertTrue(all(n <= 4 for n in asks["quiet_by_person"].values()), asks)
+        m, q = self.meeting()
+        q.quiet_asked = [{"who": "mara"}] * 12
+        self.assertEqual(q.arrive(m.people["daniel"], "kitchen", 300), [])
+        self.assertEqual(q.log[-1]["budget"], "12 quiet asks today")
+        m, q = self.meeting()
+        q.quiet_asked = [{"who": "leo"}] * 4
+        self.assertEqual(q.arrive(m.people["daniel"], "kitchen", 300), [])
+        self.assertEqual(q.log[-1]["budget"], "4 quiet asks of Leo today")
+
+    def test_quiet_mode_asks_the_model_only_through_a_trigger(self):
+        d = self.played()
+        m, q = d.day3, d.day3.quiet
+        stretches = m.transcript["quiet"]["stretches"]
+        self.assertTrue(stretches)
+        self.assertEqual(stretches[0]["trigger"], "the morning")
+        fired = {(e["minute"], e["room"]) for e in q.log if e["fired"]}
+        for s in stretches[1:]:
+            self.assertIn((s["start"], s["room"]), fired, s)
+            # Nobody starts a routine in the room where a trigger has just started the talk.
+            self.assertEqual([x for x in m.transcript["quiet"]["spans"]
+                              if (x["start"], x["room"]) == (s["start"], s["room"])], [], s)
+        for rec in m.log:
+            self.assertTrue(any(s["start"] <= rec["minute"] < s["end"] for s in stretches), rec["minute"])
+
+    # ---------- §3: what it records ----------
+    def test_each_span_is_a_chronicle_event_with_its_witnesses(self):
+        d = self.played()
+        m, chron = d.day3, d.chron
+        chron.add_day(m)
+        spans = m.transcript["quiet"]["spans"]
+        routine = [e for e in chron.events if e["kind"] == "routine"]
+        self.assertEqual(len(routine), len(spans))
+        for e in routine:
+            s = next(x for x in spans if (x["who"], x["start"], x["routine"]) == (e["actor"], e["minute"], e["routine"]))
+            self.assertEqual((e["scene"], e["room"], e["until"]), ("D3", s["room"], s["end"]))
+            self.assertEqual(e["witnesses"][s["who"]], "did")
+            self.assertEqual(set(e["witnesses"]), {s["who"]} | set(s["seen_start"]) | set(s["seen_end"])
+                             | set(s["seen_leave"]))
+            self.assertEqual(set(e["views"]), set(e["witnesses"]))
+            # A witness who saw only its end is told when they saw it.
+            for q in set(s["seen_end"]) - set(s["seen_start"]) - set(s["seen_leave"]):
+                self.assertTrue(e["views"][q].endswith(f"{self.quiet.clock(s['end'])}."), e["views"][q])
+        for e in chron.events:
+            if e["scene"] in ("D1", "N1", "D2", "N2", "G1", "G2"):
+                self.assertEqual(list(e), list(self.chron.KEYS), e["id"])
+        for e in (x for x in chron.events if x["kind"] == "need"):
+            self.assertEqual(e["witnesses"], {e["actor"]: "did"})
+        recs = self.mind.records(chron, "daniel", 3)
+        self.assertTrue(any(re.match(r"^(min \d\d|\d\d:\d\d): You lay on your bed in the brothers room from "
+                                     r"(min \d\d|\d\d:\d\d) to \d\d:\d\d\.", t) for _, t in recs), recs)
+
+    def test_block_a_and_bedtime_say_the_day_after_the_morning(self):
+        d = self.played()
+        m, chron = d.day3, d.chron
+        chron.add_day(m)
+        lines = {pid: self.quiet.gap_line(m, pid) for pid in data.ORDER}
+        for pid, line in lines.items():
+            self.assertTrue(line.startswith("After the morning: you "), line)
+            self.assertRegex(line, r"\(min \d\d to \d\d:\d\d\)")
+            self.assertNotRegex(line, r"min \d{3}")
+            self.assertIn("lay on your bed", line)
+        m.people["elena"].hunger = 0.5
+        n3 = self.night.Night(m, d.oracle, number=3, house=chron.house_state()).run()
+        self.assertEqual(n3.bedtime_hunger["elena"], 0.5)              # the afternoon was played, not added
+        for dec in (x for x in n3.decisions if x["ask"] == "bedtime"):
+            self.assertEqual(dec["now"][0], "Now it is night. " + lines[dec["person"]])
+        for pid in data.ORDER:
+            a = self.night.carry_in_later(m, n3, n3.people[pid])
+            self.assertIn("- " + lines[pid], a)
+            self.assertNotIn("- " + data.GAP, a)
+
+    def test_the_story_shows_the_quiet_day(self):
+        d = self.played()
+        text = importlib.import_module("story").render_day2(d.day3)
+        self.assertIn("## After the morning", text)
+        self.assertIn("lies on his bed in the brothers room", text)
+
+    # ---------- nothing before day 3 changes ----------
+    def test_v16_through_night_2_is_unchanged(self):
+        story = importlib.import_module("story")
+        for seed in (1, 2, 3):
+            d = self.v16(seed=seed)
+            text = (render(d.day1, seed, self.MODEL, f"python morning.py --seed {seed}") + story.render_night(d.n1)
+                    + story.render_mind(d.mind1) + story.render_day2(d.day2) + story.render_night(d.n2)
+                    + story.render_mind(d.mind2))
+            orig = read(os.path.join(V16_RUNS, f"daniel_ate_it-seed{seed}.md"))
+            orig = orig[:orig.index("# The third morning (day 6)")]
+            if seed == 1:       # S4 and S8 warn since v16 (reports/checks_to_warnings.md): two verdicts read kept
+                orig = (orig.replace("**rejected: S8 elena stop: not twice**", "**kept**")
+                        .replace("**rejected: S8 daniel give: no such event**", "**kept**"))
+            self.assertEqual(text, orig, seed)
 
 
 if __name__ == "__main__":

@@ -28,6 +28,7 @@ import sys
 import time
 
 import data
+import quiet as quietday
 from gemini import Cache, FakeClient, GeminiClient, Oracle, StopMorning, load_config
 from chronicle import Chronicle
 from mind import NightMind, warning_lines
@@ -81,6 +82,20 @@ def day_meta(m, scene):
     return {k: meta[k] for k in DAY_KEYS}
 
 
+def quiet_meta(m):
+    """A quiet day's numbers, or None for a day not played to bedtime."""
+    if m.quiet is None:
+        return None
+    tr = m.quiet.transcript()
+    fired = [e for e in tr["log"] if e["fired"]]
+    return {"day_asks": tr["asks"]["day"], "quiet_asks": tr["asks"]["quiet"],
+            "quiet_asks_by_person": tr["asks"]["quiet_by_person"],
+            "q1_fired": sum(e["kind"] == "Q1" for e in fired), "q2_fired": sum(e["kind"] == "Q2" for e in fired),
+            "spans": len(tr["spans"]), "rests": sum(s["routine"] == "rest" for s in tr["spans"]),
+            "withdrawals": len(tr["withdrawals"]), "stretches": len(tr["stretches"]),
+            "morning_end": tr["morning_end"]}
+
+
 def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_dir=None,
         client=None, quiet=False, scenario=data.DEFAULT_SCENARIO, model_key=None, out="v15"):
     config = load_config(config_path or os.path.join(HERE, "config.json"))
@@ -112,6 +127,8 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
     started = time.monotonic()
 
     def morning_turns(m, tag):
+        if m.quiet is not None:         # from day 3, played to bedtime (reports/quiet_day_design.md, §3)
+            return quiet_day(m, tag)
         for t in range(m.turns):
             m.turn(t)
             asked = sum(d["mode"] != "routine" for d in m.log[-1]["decisions"])
@@ -119,6 +136,32 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
                 say(f"  {tag}min {t * 3:02d}: model asked for {asked}; so far {oracle.live} live, "
                     f"{oracle.from_cache} cached, {oracle.api_requests} API requests")
         m.finish()
+
+    def quiet_day(m, tag):
+        told = {"log": 0}
+
+        def turn_told(t):
+            q = m.quiet
+            for e in q.log[told["log"]:]:
+                say(f"  {tag}{quietday.clock(e['minute'])}: {quiet_line(e)}")
+            told["log"] = len(q.log)
+            rec = m.log[-1]
+            asked = [d for d in rec["decisions"] if d["mode"] != "routine"]
+            if asked:
+                say(f"  {tag}{quietday.clock(rec['minute'])}: model asked for {len(asked)}"
+                    + "".join(f", {d['quiet']} for {data.PEOPLE[d['person']]['name']}" for d in asked if d.get("quiet"))
+                    + f"; day asks {q.asks} of {quietday.DAY_ASKS}; so far {oracle.live} live, {oracle.from_cache} cached, "
+                    f"{oracle.api_requests} API requests")
+        quietday.play(m, turn_told)
+        for e in m.quiet.log[told["log"]:]:
+            say(f"  {tag}{quietday.clock(e['minute'])}: {quiet_line(e)}")
+
+    def quiet_line(e):
+        name = {p: data.PEOPLE[p]["name"] for p in data.ORDER}
+        how = f"{name[e['asked']]} is asked" if e["fired"] else f"not asked ({e['why']})"
+        if e["kind"] == "Q2":
+            return f"Q2, {name[e['arrived']]} comes into the {data.ROOMS[e['room']]}, where {name[e['there']]} is: {how}"
+        return f"Q1, {name[e['who']]}'s {'fasting' if e['need'] == 'fast' else 'sleep debt'} crossed a line: {how}"
 
     scenes = {}
 
@@ -223,6 +266,8 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
         "day3": {**day_meta(day3, scenes["day3"]),
                  "food_moments": sum(1 for rec in day3.log for d in rec["decisions"] if d.get("food_moment")),
                  "give_answers": sum(1 for rec in day3.log for d in rec["decisions"] if d.get("given_by"))},
+        # The quiet day (reports/quiet_day_design.md, §7, P5): its asks, spans and triggers.
+        "day3_quiet": quiet_meta(day3),
         "max_prompt_tokens_estimated": max(morning.max_prompt_tokens, night.m.max_prompt_tokens,
                                            day2.max_prompt_tokens, night2.m.max_prompt_tokens,
                                            day3.max_prompt_tokens),
@@ -250,6 +295,9 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
         say(f"  mind1 {k}: {meta['mind1'][k]}; mind2 {k}: {meta['mind2'][k]}")
     for k in DAY_KEYS + ("food_moments", "give_answers"):
         say(f"  day3 {k}: {meta['day3'][k]}")
+    if meta["day3_quiet"]:
+        for k, v in meta["day3_quiet"].items():
+            say(f"  day3 {k}: {v}")
     for k in ("day3_asks", "day3_api_requests", "max_prompt_tokens_estimated", "max_prompt_tokens_counted_by_api",
               "run_seconds", "story_sha256"):
         say(f"  {k}: {meta[k]}")

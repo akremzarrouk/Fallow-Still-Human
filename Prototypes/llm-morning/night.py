@@ -22,6 +22,7 @@ import random
 import re
 
 import data
+import quiet
 import world
 from world import (NAMES, NIGHT_MINUTE, NIGHT_SYSTEM, NEIGHBOUR_UNKNOWN, Option, day_index, estimate_tokens,
                    portions_text, when_words)
@@ -221,11 +222,13 @@ class Night:
 
     # ---------- the night ----------
     def run(self):
+        played = getattr(self.day1, "quiet", None) is not None     # a quiet day was played to bedtime (quiet.py)
         for p in self.people.values():                                  # the gap (§2)
             if p.id in self.away:
                 p.room = None
                 continue
-            p.hunger = min(1.0, p.hunger + GAP_HUNGER * p.sheet["hunger_rate"])
+            if not played:
+                p.hunger = min(1.0, p.hunger + GAP_HUNGER * p.sheet["hunger_rate"])
             p.room = OWN_ROOM[p.id]
             p.activity = {"kind": "idle", "label": "in bed"}
         self.bedtime_hunger = {q: (None if q in self.away else self.people[q].hunger) for q in data.ORDER}
@@ -243,7 +246,7 @@ class Night:
             r = ROOMMATE[q]
             mate = (f"{NAMES[r]}'s bed is empty." if r in self.away else
                     f"{NAMES[r]} is in {data.PRONOUNS[r]['his']} bed.")
-            now = ["Now it is night. " + data.GAP,
+            now = ["Now it is night. " + quiet.gap_line(self.day1, q),
                    (f"Everyone has gone to bed in their own room: {beds}." if not self.away else
                     f"Everyone in the house has gone to bed in their own room: {beds}."),
                    f"You are in the {data.ROOMS[room]}, in your bed. {mate}",
@@ -734,7 +737,7 @@ def carry_in_later(prev, n, p, short=False, minutes=True):
     if plan:
         out.append("About going to the neighbour's house last night, where it was left: "
                    + plan[len("About going there tonight: "):])
-    out.append(data.GAP)                                                          # Y8
+    out.append(quiet.gap_line(prev, p.id))                                        # Y8 (quiet.py, §3)
     out += (n.lines_short if short else n.lines)[p.id]
     return ["Yesterday and last night:"] + [f"- {x}" for x in out]
 
@@ -807,6 +810,8 @@ def next_day(day1, n, oracle, chronicle=None):
     present = [q for q in data.ORDER if q not in m.away]
     before, after = n.day1.portions, n.portions
     history = chronicle.nights if chronicle is not None and chronicle.nights else [n]
+    if day >= 6 and chronicle is not None:      # from day 3: the needs, before anyone has seen their levels
+        quiet.setup(m, chronicle)
     for q in data.ORDER:
         p = m.people[q]
         variants = carry_variants(day1, n, p)

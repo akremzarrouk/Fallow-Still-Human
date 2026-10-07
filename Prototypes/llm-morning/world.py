@@ -346,6 +346,9 @@ class Person:
         self.last_meal = None
         self.ate_yesterday = None
         self.last_food = None
+        # The quiet day (reports/quiet_day_design.md, §1), from day 3 on: when they last ate, their sleep debt, their
+        # rests and the stages the body line states (quiet.py). None before day 3.
+        self.needs = None
 
     def grudge(self, against):
         return self.grudges.setdefault(against, Grudge())
@@ -355,6 +358,9 @@ class Person:
                "grudges": {t: g.strength for t, g in self.grudges.items()}}
         if self.guilt is not None:
             out["guilt"] = self.guilt
+        if self.needs is not None:          # from day 3: weak and very weak; exhausted (quiet.py, §4 Q1)
+            out["fast"] = self.needs["fast_stage"]
+            out["debt"] = int(self.needs["debt_stage"] >= 2)
         return out
 
 
@@ -404,6 +410,7 @@ class Morning:
         self.views = {}
         self.voices_heard = {}
         self.blocks = {}            # day 2 on: person -> the memory blocks A, B and C (reports/days_design.md, §3)
+        self.quiet = None           # day 3 on: the quiet layer (quiet.py), which plays the day to bedtime
         if day != 4:
             return                  # day 2's opening is set up by next_day
         for p in self.people.values():
@@ -824,7 +831,7 @@ class Morning:
         """What has risen a level since they last decided with the model: "hunger", "guilt",
         "suspicion", or "grudge:<person>" for each grudge that rose."""
         now, seen = p.levels(), p.seen
-        out = [k for k in ("hunger", "guilt", "suspicion") if k in now and now[k] > seen[k]]
+        out = [k for k in ("hunger", "guilt", "suspicion", "fast", "debt") if k in now and now[k] > seen.get(k, now[k])]
         out += [f"grudge:{t}" for t in data.ORDER
                 if now["grudges"].get(t, 0) > seen["grudges"].get(t, 0)]
         return out
@@ -839,6 +846,10 @@ class Morning:
                 out.append(f"guilt rose (now {p.guilt} of 3)")
             elif k == "suspicion":
                 out.append(f"suspicion of {NAMES[p.suspicion.target]} rose (now {p.suspicion.strength} of 3)")
+            elif k == "fast":
+                out.append(f"fasting crossed a line (now {'very weak' if p.needs['fast_stage'] == 2 else 'weak'})")
+            elif k == "debt":
+                out.append("sleep debt crossed a line (now exhausted)")
             else:
                 t = k.split(":")[1]
                 out.append(f"grudge against {NAMES[t]} rose (now {p.grudges[t].strength} of 3)")
@@ -861,9 +872,18 @@ class Morning:
     # ---------- what is inside them, as the prompt says it ----------
     def inside_lines(self, p):
         """Hunger in words; suspicion, grudges and guilt as the events behind them."""
-        out = [f"Your body: {hunger_words(p.hunger)}."]
-        if "hunger" in self.risen(p):
+        rose = self.risen(p)
+        if p.needs is None:
+            out = [f"Your body: {hunger_words(p.hunger)}."]
+        else:                               # from day 3 (reports/quiet_day_design.md, §1)
+            import quiet
+            out = [quiet.body_line(hunger_words(p.hunger), p.needs["fast_stage"], p.needs["debt_stage"])]
+        if "hunger" in rose:
             out.append("Since you last decided, you have grown hungrier.")
+        if "fast" in rose:
+            out.append("Since you last decided, you have grown weaker.")
+        if "debt" in rose:
+            out.append("Since you last decided, you have grown more tired.")
         s = p.suspicion
         # What they know about the can wins over what their answers guessed. From day 2 on, a confession of an
         # earlier day says when (reports/night_design.md, §5.3; reports/days_design.md, §3.5).
@@ -915,7 +935,7 @@ class Morning:
         """How many turns in a row they have done the same kind of act, and how the others
         answered them in that time (lines aimed at them or at everyone)."""
         kind, n = self.repeating(p)
-        if not n:
+        if not n or kind == "routine":      # nothing done since a routine began (quiet.py)
             return []
         first = p.history[-n]["seq"]
         out = [f"What you have been doing: you have {KIND_DONE[kind]}, {n} turn{'s' if n > 1 else ''} in a row."]
@@ -1095,6 +1115,8 @@ class Morning:
         """What the transcript needs once the morning is over."""
         self.transcript["final_rooms"] = {r: [q for q in data.ORDER if self.people[q].room == r]
                                           for r in data.ROOMS}
+        if self.quiet is not None:
+            self.transcript["quiet"] = self.quiet.transcript()
         self.transcript["final_state"] = {
             p.id: {"suspicion": p.suspicion.state(),
                    "grudges": {t: {"strength": g.strength, "events": [list(e) for e in g.events]}
@@ -1282,8 +1304,13 @@ class Morning:
 
     def ask_model(self, p, t, opts, d, extra=None):
         """One model decision: the prompt, the answer, and what it does to their suspicion and
-        grudge. They have now seen the levels their prompt showed. extra: a last `Now` line."""
+        grudge. They have now seen the levels their prompt showed. extra: a last `Now` line. From day 3, no more than
+        the day's asks (quiet.py, §4)."""
         minute = t * data.MINUTES_PER_TURN
+        if self.quiet is not None:
+            if self.quiet.spent():
+                return None, "the day's asks are spent"
+            self.quiet.asks += 1
         seen = p.levels()
         prompt = self.prompt_for(p, t, opts, d.get("lull"), extra=extra)
         p.last_asked = minute
@@ -1328,18 +1355,29 @@ class Morning:
 
     def decide(self, p, t):
         minute = t * data.MINUTES_PER_TURN
+        # From day 3 (quiet.py): a quiet trigger's ask waiting for them; nobody is asked once the day's asks are
+        # spent; and someone out of every conversation, or resting, has no inner moment.
+        quiet = self.quiet
+        pending = quiet.pending.pop(p.id, None) if quiet is not None else None
+        spent = quiet is not None and quiet.spent()
+        inner_ok = quiet is None or pending is not None or (self.talking(p.room) and not quiet.resting(p.id))
         # The body's food moment comes before anything else (reports/body_design.md, §2.1).
-        if self.food_due(p, t):
+        if not spent and self.food_due(p, t):
             return self.decide_food(p, t)
         opts = self.options_for(p)
         triggers = self.social_triggers(p, t)
         p.triggers = []
+        if pending and pending["texts"]:
+            triggers = pending["texts"] + [x for x in triggers if x not in pending["texts"]]
         kind, n = self.repeating(p)
         d = {"person": p.id, "triggers": triggers, "offered": len(opts),
              "held_back": kind if kind in SPEECH and n >= 3 else None}
-        if not triggers:
+        if pending:
+            d["quiet"] = pending["kind"]
+        if not triggers and inner_ok:
             rose = self.risen(p)
-            if rose and (p.last_inner is None or minute - p.last_inner >= INNER_EVERY):
+            forced = bool(pending) and pending["kind"] == "Q1"
+            if rose and (forced or p.last_inner is None or minute - p.last_inner >= INNER_EVERY):
                 p.last_inner = minute
                 d["inner_kinds"] = rose
                 d["inner_families"] = list(dict.fromkeys(k.split(":")[0] for k in rose))
@@ -1351,8 +1389,10 @@ class Morning:
             d["trip_why"] = "; ".join(self.trip["why"])
         if not triggers and not d.get("inner_kinds") and "trip_moment" not in d and self.lull_due(p, minute):
             d["lull"] = self.last_stir[p.room]
-        if triggers or d.get("inner_kinds") or "trip_moment" in d or "lull" in d:
+        if (triggers or d.get("inner_kinds") or "trip_moment" in d or "lull" in d or pending) and not spent:
             choice, why = self.ask_model(p, t, opts, d)
+            if pending:
+                quiet.asked(p.id)
             if not choice:
                 d.update(mode="fallback", invalid=why, option=self.routine(p, opts), say=None)
         else:
@@ -1630,8 +1670,11 @@ class Morning:
             self.moved_by_inner[person.id] = bool(d.get("inner_kinds"))
 
         if kind == "silent":
-            p.activity = {"kind": "idle", "label": "staying put"}
-            so_far.append(f"{p.name} stays put and says nothing.")
+            if self.quiet is not None and p.id in self.quiet.open:      # in a routine (quiet.py): it goes on
+                so_far.append(f"{p.name} is {p.activity['label']}.")
+            else:
+                p.activity = {"kind": "idle", "label": "staying put"}
+                so_far.append(f"{p.name} stays put and says nothing.")
             if d["mode"] == "model":
                 p.memory.append((minute, f"you stayed where you were and said nothing.{feel}"))
             return "stayed where they were" + (" (its line was dropped: silent means no words)"

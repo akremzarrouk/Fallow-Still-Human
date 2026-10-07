@@ -12,6 +12,9 @@ from world import NAMES, day_index
 
 KEYS = ("id", "scene", "minute", "kind", "option", "actor", "target", "members", "words", "room", "witnesses",
         "text", "gist", "group", "effects", "views", "outcome")
+# A routine span and a need crossing a line (quiet.py) keep these too, after KEYS; no other event has them.
+QUIET_KEYS = ("routine", "until", "need", "stage")
+ROUTINE_GIST = {"rest": "lying down to rest", "withdraw": "going off to their own room", "sit": "sitting in the kitchen"}
 
 
 def he(pid):
@@ -42,7 +45,8 @@ def gist(e, pid):
         "door": "the front door opening in the night", "reaction": "what you did in the night",
         "stop": f"telling {t}, low, not to go", "answer": "answering, low, in the night",
         "went_out": "going out to the neighbour's house", "street": "the neighbour's house and the street",
-        "return": "coming back in before dawn"}
+        "return": "coming back in before dawn",
+        "routine": ROUTINE_GIST.get(e.get("routine"), "a routine"), "need": "how the body was"}
     phrase = phrases.get(kind, kind)
     if kind in ("door", "gap", "street"):
         return phrase
@@ -115,7 +119,7 @@ class Chronicle:
     def add(self, e):
         """One event, its missing fields filled; returns it."""
         e = {**{k: None for k in KEYS}, "witnesses": {}, "gist": {}, "effects": {}, "views": {}, "text": "", **e}
-        e = {k: e[k] for k in KEYS}
+        e = {k: e[k] for k in KEYS} | {k: e[k] for k in QUIET_KEYS if k in e}
         if not e["gist"]:
             e["gist"] = {pid: gist(e, pid) for pid in e["witnesses"]}
         self.events.append(e)
@@ -156,7 +160,14 @@ class Chronicle:
         said = iter(m.said)
         shelf = m.start_portions
         groups = {}
+        # From day 3, the routine spans and need crossings (quiet.py), each before the turns at or after its minute.
+        extra = m.quiet.items() if getattr(m, "quiet", None) is not None else []
+
+        def quiet_until(minute):
+            while extra and (minute is None or extra[0]["minute"] <= minute):
+                self.add({"id": new_id(), "scene": sid, **extra.pop(0)})
         for turn in m.transcript["turns"]:
+            quiet_until(turn["minute"])
             for a in turn["acts"]:
                 text = (next(said, None) or {}).get("text") if a["words"] else None
                 seq = a["decided_at"][1]
@@ -189,6 +200,7 @@ class Chronicle:
                               "text": text or f"{NAMES[a['who']]} {came}".strip(), "effects": effects, "views": texts})
                 if a["words"] and kind in SPEECH:
                     groups.setdefault((a["who"], a["option"]), []).append(e["id"])
+        quiet_until(None)
         for ids in groups.values():
             if len(ids) > 1:
                 for i in ids:
