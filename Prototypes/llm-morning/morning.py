@@ -30,7 +30,7 @@ import time
 import data
 from gemini import Cache, FakeClient, GeminiClient, Oracle, StopMorning, load_config
 from chronicle import Chronicle
-from mind import NightMind
+from mind import NightMind, warning_lines
 from night import Night
 from story import render, render_day2, render_mind, render_night
 from world import Morning
@@ -142,6 +142,8 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
         mind = NightMind(n, chron, oracle).run()
         say(f"  night {n.number}, the night mind: model asked for {len(mind.results)}; so far {oracle.live} live, "
             f"{oracle.from_cache} cached, {oracle.api_requests} API requests")
+        for line in warning_lines(n.number, mind.results):
+            say(line)
         return mind
 
     def day_after(day, n, tag):

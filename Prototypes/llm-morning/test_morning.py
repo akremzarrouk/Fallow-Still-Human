@@ -3861,13 +3861,19 @@ class DaysTest(unittest.TestCase):
         def verdict(pid, ids, meaning, carried=(), shown_ids=shown):
             r = self.mind.check_answer(mind_answer(ids, meaning), pid, shown_ids, c, carried)
             return r["memories"][0]["verdict"]
+
+        def warned(pid, ids, meaning, shown_ids=shown):
+            """S4 and S8 keep the memory and warn (reports/checks_to_warnings.md): the reasons of its warnings."""
+            r = self.mind.check_answer(mind_answer(ids, meaning), pid, shown_ids, c, ())
+            self.assertEqual(r["memories"][0]["verdict"], "kept", meaning)
+            return [w["reason"] for w in r["warnings"] if w["of"] == "memory"]
         # §2.7's five examples.
         self.assertEqual(verdict("daniel", ["N1-02"], "Leo had no right to stop me when I was the only one willing to "
                                                      "act."), "kept")
-        self.assertTrue(verdict("mara", ["D1-004", "D1-005"], "Leo ate mine too and lied to my face about it.")
-                        .startswith("rejected: S8"))
-        self.assertTrue(verdict("leo", ["D1-006"], "Daniel never admitted anything until he was cornered.")
-                        .startswith("rejected: S8"))
+        self.assertTrue(warned("mara", ["D1-004", "D1-005"], "Leo ate mine too and lied to my face about it.")[0]
+                        .startswith("S8"))
+        self.assertTrue(warned("leo", ["D1-006"], "Daniel never admitted anything until he was cornered.")[0]
+                        .startswith("S8"))
         self.assertEqual(verdict("mara", ["D1-006"], "If Daniel had gone out instead of eating, we might have food."),
                          "kept")
         self.assertEqual(verdict("mara", ["D1-003"], "He hid food in his bag."), "kept")
@@ -3880,16 +3886,20 @@ class DaysTest(unittest.TestCase):
             (["D1-999"], "He blamed me.", "S2"),
             (["N1-01"], "He went to bed.", "S2"),
             (["D1-003"], "Mara ate two portions.", "S3"),
-            (["D1-001"], "Mom never trusted me.", "S4"),
             (["D1-001"], "Tonight I saw who he really is.", "S5"),
             (["D1-006"], 'Daniel said "I will fix everything" and smiled.', "S6"),
             (["D1-006"], "Daniel probably hid bread somewhere.", "S7"),
-            (["D1-003"], "Mara stole the can.", "S8"),
-            (["D1-003"], "Mara ate again.", "S8"),
         ]
         for ids, meaning, check in cases:
             got = verdict("leo", ids, meaning, shown_ids={**shown, "N1-01": "x"} if "N1-01" in ids else shown)
             self.assertTrue(got.startswith(f"rejected: {check}"), (meaning, got))
+        # One warning case for each of S4 and S8: kept, with the check's reason.
+        for ids, meaning, check in [(["D1-001"], "Mom never trusted me.", "S4"),
+                                    (["D1-003"], "Mara stole the can.", "S8"),
+                                    (["D1-003"], "Mara ate again.", "S8")]:
+            got = warned("leo", ids, meaning)
+            self.assertEqual(len(got), 1, (meaning, got))
+            self.assertTrue(got[0].startswith(check), (meaning, got))
         self.assertEqual(verdict("leo", ["D1-001", "D1-002"], "Daniel accused me again."), "kept")
         self.assertEqual(verdict("leo", ["D1-001"], "Daniel would have let me take the blame."), "kept")
         self.assertEqual(verdict("leo", ["D1-006"], 'Daniel said "I took it in the night" at last.'), "kept")
@@ -4314,22 +4324,27 @@ class CheckErrorsTest(unittest.TestCase):
     meanings it already carried. The four check errors of reports/days_v15.md §4 now keep a true thought; every other
     verdict stays as v15 gave it."""
     FIXED = {(1, 1, "elena", 1), (3, 2, "elena", 1), (1, 2, "daniel", 2), (1, 1, "mara", "intent")}
-
     @classmethod
     def setUpClass(cls):
         cls.mind = importlib.import_module("mind")
         cls.chron = importlib.import_module("chronicle")
-        cls.v15 = {}
+        cls.runs = cls.load("v15")
+
+    @staticmethod
+    def load(version):
+        """seed -> (transcript, cache) of a live run, read only."""
+        runs = {}
         for seed in (1, 2, 3):
-            tr = json.loads(read(os.path.join(HERE, "runs", "v15", f"daniel_ate_it-seed{seed}.transcript.json")))
-            cache = json.loads(read(os.path.join(HERE, "cache", "v15",
+            tr = json.loads(read(os.path.join(HERE, "runs", version, f"daniel_ate_it-seed{seed}.transcript.json")))
+            cache = json.loads(read(os.path.join(HERE, "cache", version,
                                                  f"gemini-3.5-flash-lite-daniel_ate_it-seed{seed}.json")))
-            cls.v15[seed] = (tr, cache)
+            runs[seed] = (tr, cache)
+        return runs
 
     def inputs(self, seed, k, pid):
-        """(v15's record of this night mind, the records its prompt showed, the chronicle up to that night, the
+        """(the run's record of this night mind, the records its prompt showed, the chronicle up to that night, the
         meanings it already carried)."""
-        tr, cache = self.v15[seed]
+        tr, cache = self.runs[seed]
         rec = tr[f"mind{k}"][pid]
         prompts = [e["prompt"] for e in cache.values()
                    if e["response"] == rec["answer"] and e["prompt"].startswith(f"You are {world.NAMES[pid]},")]
@@ -4348,7 +4363,7 @@ class CheckErrorsTest(unittest.TestCase):
         return rec, shown, c, carried
 
     def checked(self, seed, k, pid):
-        """(v15's record of this night mind, its answer checked again now)."""
+        """(the run's record of this night mind, its answer checked again now)."""
         rec, shown, c, carried = self.inputs(seed, k, pid)
         return rec, self.mind.check_answer(rec["answer"], pid, shown, c, carried)
 
@@ -4384,27 +4399,42 @@ class CheckErrorsTest(unittest.TestCase):
         self.assertEqual(r["intent_verdict"], "kept")
 
     # The narrowed rules still catch what they are for, on the same input: seed 1, night 1, Elena. Leo did not go out
-    # and found nothing; he did not take the can (Daniel did, and confessed).
-    def test_false_finds_thefts_and_events_in_intents_are_still_rejected(self):
+    # and found nothing; he did not take the can (Daniel did, and confessed). S8 now warns and keeps
+    # (reports/checks_to_warnings.md): what it catches is the warning's reason.
+    def test_false_finds_thefts_and_events_in_intents_are_still_caught(self):
         rec, shown, c, carried = self.inputs(1, 1, "elena")
         leo = next(i for i, t in shown.items() if "Leo" in t)
-        verdict = lambda meaning: self.mind.check_memory({"ids": [leo], "meaning": meaning}, "elena", shown, c, carried)
-        self.assertEqual(verdict("Leo found food at the neighbour's house."), "rejected: S8 leo find: no such event")
-        self.assertEqual(verdict("Leo found nothing there."), "rejected: S8 leo find: no such event")
-        self.assertEqual(verdict("Leo took the can."), "rejected: S8 leo take: no such event")
-        self.assertEqual(verdict("Leo took risks and took the can."), "rejected: S8 leo take: no such event")
-        intent = lambda text: self.mind.intent_verdict(text, "elena", shown, c)
-        self.assertEqual(intent("I will ask Leo why, because Leo took the can."), "rejected: S8 leo take: no such event")
+
+        def verdict(meaning):
+            warnings = []
+            v = self.mind.check_memory({"ids": [leo], "meaning": meaning}, "elena", shown, c, carried, warnings)
+            return v, warnings
+
+        def warned(reason, text):
+            return "kept", [{"of": "memory", "text": text, "reason": reason}]
+        for text, reason in [("Leo found food at the neighbour's house.", "S8 leo find: no such event"),
+                             ("Leo found nothing there.", "S8 leo find: no such event"),
+                             ("Leo took the can.", "S8 leo take: no such event"),
+                             ("Leo took risks and took the can.", "S8 leo take: no such event")]:
+            self.assertEqual(verdict(text), warned(reason, text))
+
+        def intent(text):
+            warnings = []
+            return self.mind.intent_verdict(text, "elena", shown, c, warnings), warnings
+        text = "I will ask Leo why, because Leo took the can."
+        self.assertEqual(intent(text), ("kept", [{"of": "intent", "text": text,
+                                                  "reason": "S8 leo take: no such event"}]))
         # "came back" has no subject of its own, but the clause before it is no plan: it is still read as Leo's act.
-        self.assertEqual(intent("Leo went out and came back, so I will thank him."),
-                         "rejected: S8 leo go out: no such event; leo come back: no such event")
+        text = "Leo went out and came back, so I will thank him."
+        self.assertEqual(intent(text), ("kept", [{"of": "intent", "text": text, "reason": "S8 leo go out: no such "
+                                                  "event; leo come back: no such event"}]))
 
     # Every other v15 verdict, the six right rejections included, is what v15 gave.
     def test_every_other_v15_verdict_stands(self):
         rejected = []
         for seed in (1, 2, 3):
             for k in (1, 2):
-                for pid in self.v15[seed][0][f"mind{k}"]:
+                for pid in self.runs[seed][0][f"mind{k}"]:
                     rec, r = self.checked(seed, k, pid)
                     pairs = [(i, m["verdict"], g["verdict"]) for i, (m, g) in enumerate(zip(rec["memories"],
                                                                                             r["memories"]))]
@@ -4421,6 +4451,123 @@ class CheckErrorsTest(unittest.TestCase):
                                     (2, 2, "elena", 1, "rejected: S5 tonight"),
                                     (2, 2, "leo", 0, "rejected: S5 yesterday"),
                                     (3, 1, "elena", 0, "rejected: S3 one")])
+
+
+class WarningFake(FakeClient):
+    """The fake model, whose night minds each hold a false theft by Mara (worded apart each night, so S9 lets the
+    second through) and a false event in the intent."""
+    MEANINGS = ("Mara stole the can.", "Mara stole the can from us all.")
+    INTENT = "I will ask Leo why, because Leo took the can."
+
+    def __init__(self, **k):
+        super().__init__(**k)
+        self.nights = {}
+
+    def mind(self, prompt):
+        who = re.match(r"You are (\w+),", prompt).group(1)
+        answer = json.loads(super().mind(prompt))
+        answer["memories"][0]["meaning"] = self.MEANINGS[self.nights.get(who, 0)]
+        self.nights[who] = self.nights.get(who, 0) + 1
+        answer["intent"] = self.INTENT
+        return json.dumps(answer)
+
+
+class ChecksToWarningsTest(unittest.TestCase):
+    """S4 (a name the cited records do not hold) and S8 (a claim of fact the chronicle does not hold) warn instead of
+    rejecting (reports/checks_to_warnings.md): over v15 and v16 they rejected six true memories and no false one. The
+    memory or intent is kept, and the run log says what was doubted and why. S2, S3, S5 and S9 still reject."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.mind = importlib.import_module("mind")
+        cls.chron = importlib.import_module("chronicle")
+        cls.v15, cls.v16 = CheckErrorsTest.load("v15"), CheckErrorsTest.load("v16")
+
+    def checked(self, runs, seed, k, pid):
+        """(the run's record of this night mind, its answer checked again now)."""
+        self.runs = runs
+        rec, shown, c, carried = CheckErrorsTest.inputs(self, seed, k, pid)
+        return rec, self.mind.check_answer(rec["answer"], pid, shown, c, carried)
+
+    # v16, seed 1, mind 2 (reports/days_v16.md, §6): Leo's "empty-handed" was read as Daniel handing something over,
+    # and Daniel's "again" as Elena stopping him twice. Both are true (D2-008: "coming back with nothing"; D2-004:
+    # "please do not go out there again"). Each is kept now, and the run log carries its warning.
+    def test_v16_empty_handed_and_again_are_kept_with_a_warning(self):
+        cases = [("leo", 0, "Daniel thinks grand promises make up for reckless risks, but coming back empty-handed "
+                            "solves nothing.", "S8 daniel give: no such event"),
+                 ("daniel", 1, "Mom told me not to go out into the dark again and that we will get through this "
+                               "together inside.", "S8 elena stop: not twice")]
+        results, lines = {}, []
+        for pid, i, meaning, reason in cases:
+            rec, r = self.checked(self.v16, 1, 2, pid)
+            self.assertEqual((rec["memories"][i]["meaning"], rec["memories"][i]["verdict"]),
+                             (meaning, "rejected: " + reason))
+            self.assertEqual(r["memories"][i]["verdict"], "kept")
+            self.assertIn(meaning, [m["meaning"] for m in r["kept"]])
+            self.assertEqual(r["warnings"], [{"of": "memory", "text": meaning, "reason": reason}])
+            results[pid] = r
+            lines.append(f'  night 2, the night mind: warning, {world.NAMES[pid]}\'s memory kept: "{meaning}" '
+                         f"({reason})")
+        self.assertEqual(self.mind.warning_lines(2, results), lines)
+
+    # The other checks still reject, on v15's real cases: S3 (a number), S5 (a word for when), S9 (a repeat). v15 and
+    # v16 hold no S2 rejection, so S2 is shown on v15's real input: Elena cites N1-12, Daniel's walk in the street,
+    # which she did not perceive.
+    def test_s2_s3_s5_s9_still_reject_their_v15_cases(self):
+        cases = [(3, 1, "elena", 0, "rejected: S3 one"),
+                 (2, 1, "daniel", 1, "rejected: S5 tonight"),
+                 (2, 2, "daniel", 1, "rejected: S5 tonight"),
+                 (2, 2, "elena", 1, "rejected: S5 tonight"),
+                 (2, 2, "leo", 0, "rejected: S5 yesterday"),
+                 (1, 2, "mara", 0, "rejected: S9 a repeat")]
+        for seed, k, pid, i, verdict in cases:
+            rec, r = self.checked(self.v15, seed, k, pid)
+            self.assertEqual((rec["memories"][i]["verdict"], r["memories"][i]["verdict"]), (verdict, verdict))
+            self.assertNotIn(rec["memories"][i]["meaning"], [m["meaning"] for m in r["kept"]])
+            self.assertNotIn(rec["memories"][i]["meaning"], [w["text"] for w in r["warnings"]])
+        self.runs = self.v15
+        rec, shown, c, carried = CheckErrorsTest.inputs(self, 1, 1, "elena")
+        self.assertNotIn("N1-12", shown)
+        self.assertNotIn("elena", c.event("N1-12")["witnesses"])
+        warnings = []
+        self.assertEqual(self.mind.check_memory({"ids": ["N1-12"], "meaning": "Daniel went out in the dark."},
+                                                "elena", shown, c, carried, warnings), "rejected: S2 N1-12")
+        self.assertEqual(warnings, [])
+
+    # S4 warns as S8 does; a memory another check rejects carries no warning, as it never reaches a prompt.
+    def test_a_name_warns_and_a_rejected_memory_carries_no_warning(self):
+        self.runs = self.v15
+        rec, shown, c, carried = CheckErrorsTest.inputs(self, 1, 1, "elena")
+        nobody = next(i for i, t in shown.items() if "Mara" not in t and "mara" not in
+                      {c.event(i)["actor"], c.event(i)["target"], *(c.event(i)["members"] or [])})
+        for meaning, verdict, warned in [
+                ("Mara never trusted me.", "kept", [{"of": "memory", "text": "Mara never trusted me.",
+                                                     "reason": "S4 Mara"}]),
+                ("Mara stole the can tonight.", "rejected: S5 tonight", [])]:
+            warnings = []
+            self.assertEqual(self.mind.check_memory({"ids": [nobody], "meaning": meaning}, "elena", shown, c, carried,
+                                                    warnings), verdict)
+            self.assertEqual(warnings, warned)
+
+    # A whole run: every night mind's false theft and false intent are kept, and each is a line of the run log.
+    def test_the_run_log_carries_every_warning(self):
+        dirs = Dirs()
+        self.addCleanup(dirs.cleanup)
+        (meta, code), out = fake_morning(dirs, client=WarningFake(invalid_every=0))
+        self.assertEqual(code, 0, out)
+        tr = json.loads(read(os.path.join(dirs.runs, "daniel_ate_it-seed7.transcript.json")))
+        n = 0
+        for k in (1, 2):
+            for pid, r in tr[f"mind{k}"].items():
+                name = world.NAMES[pid]
+                self.assertEqual([m["verdict"] for m in r["memories"]], ["kept"], (k, pid))
+                self.assertEqual(r["intent_verdict"], "kept", (k, pid))
+                self.assertIn(f'  night {k}, the night mind: warning, {name}\'s memory kept: '
+                              f'"{WarningFake.MEANINGS[k - 1]}" (S8 mara take: no such event)', out)
+                self.assertIn(f'  night {k}, the night mind: warning, {name}\'s intent kept: "{WarningFake.INTENT}" '
+                              f"(S8 leo take: no such event)", out)
+                n += 1
+        self.assertGreaterEqual(n, 6)
 
 
 class GeminiClientTest(unittest.TestCase):

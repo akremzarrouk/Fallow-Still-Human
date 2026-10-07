@@ -1,8 +1,10 @@
 """The night mind (reports/days_design.md, §2): at the end of each night, one call per person in the house. It is
 given what they did, saw and heard that day and night as numbered records written by the code, and answers with one
 to three lasting memories (each citing record ids), a feeling and an intent for tomorrow. The code checks every
-memory (S1-S9, §2.6-§2.7): one that cites something the person did not perceive, or states as fact something the
-chronicle says is false, never reaches a prompt. The night mind changes no number.
+memory (S1-S9, §2.6-§2.7): one that cites something the person did not perceive never reaches a prompt. A name the
+cited records do not hold (S4), or a claim of fact the chronicle does not hold (S8), is only a warning in the run log:
+over v15 and v16 those two rejected six true memories and no false one (reports/checks_to_warnings.md). The night
+mind changes no number.
 """
 import json
 import re
@@ -234,8 +236,9 @@ def claims(meaning, pid, chron, plan=False):
     return false
 
 
-def check_memory(m, pid, shown, chron, carried):
-    """The verdict on one memory: "kept", or "rejected: <check> <why>" (S1-S9)."""
+def check_memory(m, pid, shown, chron, carried, warnings=None):
+    """The verdict on one memory: "kept", or "rejected: <check> <why>" (S1-S9). S4 and S8 do not reject: what they
+    doubt in a kept memory is added to `warnings`, as {"of": "memory", "text", "reason"}."""
     ids = m.get("ids") if isinstance(m, dict) else None
     meaning = m.get("meaning") if isinstance(m, dict) else None
     if not isinstance(ids, list) or not (1 <= len(ids) <= 3) or not all(isinstance(i, str) for i in ids):
@@ -260,10 +263,10 @@ def check_memory(m, pid, shown, chron, carried):
         e = chron.event(i)
         allowed |= {e["actor"], e["target"], *(e["members"] or [])}
         allowed |= {"elena" if n == "Mom" else n.lower() for n in NAME.findall(shown[i])}     # named in the record
-    for n in NAME.findall(meaning):
-        who = "elena" if n == "Mom" else n.lower()
-        if who not in allowed:
-            return f"rejected: S4 {n}"
+    doubts = []
+    unknown = [n for n in NAME.findall(meaning) if ("elena" if n == "Mom" else n.lower()) not in allowed]
+    if unknown:
+        doubts.append("S4 " + ", ".join(dict.fromkeys(unknown)))
     w = WHEN.search(meaning)
     if w:
         return f"rejected: S5 {w.group(0)}"
@@ -276,9 +279,11 @@ def check_memory(m, pid, shown, chron, carried):
         return f"rejected: S7 {d.group(0)}"
     false = claims(meaning, pid, chron)
     if false:
-        return "rejected: S8 " + "; ".join(false)
+        doubts.append("S8 " + "; ".join(false))
     if norm(meaning) in {norm(x) for x in carried}:
         return "rejected: S9 a repeat"
+    if warnings is not None:
+        warnings += [{"of": "memory", "text": meaning, "reason": d} for d in doubts]
     return "kept"
 
 
@@ -286,7 +291,7 @@ def check_answer(text, pid, shown, chron, carried=()):
     """The night mind's answer, checked (§2.6). `shown`: id -> the text the prompt showed for it; `carried`: the
     meanings they already carry."""
     r = {"mode": "model", "invalid": None, "memories": [], "kept": [], "feeling": None, "feeling_verdict": None,
-         "intent": None, "intent_verdict": None}
+         "intent": None, "intent_verdict": None, "warnings": []}
     raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", (text or "").strip())
     try:
         ans = json.loads(raw)
@@ -298,7 +303,7 @@ def check_answer(text, pid, shown, chron, carried=()):
     memories = ans.get("memories") if isinstance(ans.get("memories"), list) else []
     carried = list(carried)
     for m in memories[:3]:
-        verdict = check_memory(m, pid, shown, chron, carried)
+        verdict = check_memory(m, pid, shown, chron, carried, r["warnings"])
         entry = {"ids": m.get("ids") if isinstance(m, dict) else None,
                  "meaning": m.get("meaning") if isinstance(m, dict) else None, "verdict": verdict}
         r["memories"].append(entry)
@@ -311,13 +316,14 @@ def check_answer(text, pid, shown, chron, carried=()):
     else:
         r["feeling_verdict"] = f"rejected: feeling {feeling!r}"
     intent = ans.get("intent")
-    r["intent_verdict"] = intent_verdict(intent, pid, shown, chron)
+    r["intent_verdict"] = intent_verdict(intent, pid, shown, chron, r["warnings"])
     if r["intent_verdict"] == "kept":
         r["intent"] = " ".join(intent.split())
     return r
 
 
-def intent_verdict(intent, pid, shown, chron):
+def intent_verdict(intent, pid, shown, chron, warnings=None):
+    """The verdict on an intent: "kept" or "rejected: <why>". As for a memory, S8 only adds to `warnings`."""
     if not isinstance(intent, str) or not intent.strip():
         return "rejected: intent empty"
     if len(intent.split()) > MEANING_WORDS:
@@ -330,9 +336,15 @@ def intent_verdict(intent, pid, shown, chron):
     if d:
         return f"rejected: S7 {d.group(0)}"
     false = claims(intent, pid, chron, plan=True)
-    if false:
-        return "rejected: S8 " + "; ".join(false)
+    if false and warnings is not None:
+        warnings.append({"of": "intent", "text": intent, "reason": "S8 " + "; ".join(false)})
     return "kept"
+
+
+def warning_lines(k, results):
+    """The run log's line for each memory or intent of night k kept with a warning (S4, S8)."""
+    return [f"  night {k}, the night mind: warning, {data.PEOPLE[pid]['name']}'s {w['of']} kept: \"{w['text']}\" "
+            f"({w['reason']})" for pid, r in results.items() for w in r.get("warnings", [])]
 
 
 # ---------- one night ----------
