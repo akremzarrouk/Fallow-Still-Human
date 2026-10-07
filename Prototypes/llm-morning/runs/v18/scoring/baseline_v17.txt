@@ -1,0 +1,49 @@
+seed 1 (morning ended min 18):
+  E1 first triggered stretch ('Q2', '10:39'): 1 of 8 speech acts use a pair not used in the morning; holds False
+     ('Daniel', '10:39', 'reassure_all', False)
+     ('Elena', '10:39', 'reassure_all', False)
+     ('Mara', '10:39', 'accuse_daniel', False)
+     ('Daniel', '10:42', 'reassure_mara', True)
+     ('Mara', '10:42', 'accuse_daniel', False)
+     ('Elena', '10:42', 'reassure_all', False)
+     ('Daniel', '10:45', 'confront_mara', False)
+     ('Mara', '10:45', 'accuse_daniel', False)
+  E2 spoken lines after the morning with an E2 phrase: 7 of 16
+  E3 Leo's and Mara's answers after the morning naming Daniel as angry_at: 8 of 8
+  E4 speech acts after the morning of another kind: []
+  E5 {'day3_asks': 40, 'answers_live': 40}
+seed 2 (morning ended min 09):
+  E1 first triggered stretch ('Q2', '10:18'): 2 of 8 speech acts use a pair not used in the morning; holds False
+     ('Daniel', '10:18', 'reassure_all', False)
+     ('Mara', '10:18', 'accuse_daniel', True)
+     ('Elena', '10:18', 'reassure_all', False)
+     ('Leo', '10:18', 'accuse_daniel', True)
+     ('Daniel', '10:21', 'reassure_leo', False)
+     ('Leo', '10:21', 'confront_daniel', False)
+     ('Elena', '10:21', 'reassure_leo', False)
+     ('Mara', '10:21', 'confront_daniel', False)
+  E2 spoken lines after the morning with an E2 phrase: 16 of 27
+  E3 Leo's and Mara's answers after the morning naming Daniel as angry_at: 15 of 15
+  E4 speech acts after the morning of another kind: []
+  E5 {'day3_asks': 40, 'answers_live': 40}
+seed 3 (morning ended min 18):
+  E1 first triggered stretch ('Q2', '10:48'): 0 of 8 speech acts use a pair not used in the morning; holds False
+     ('Daniel', '10:48', 'reassure_all', False)
+     ('Leo', '10:48', 'confront_daniel', False)
+     ('Mara', '10:48', 'confront_daniel', False)
+     ('Elena', '10:48', 'reassure_daniel', False)
+     ('Daniel', '10:51', 'reassure_all', False)
+     ('Leo', '10:51', 'confront_daniel', False)
+     ('Elena', '10:51', 'reassure_daniel', False)
+     ('Mara', '10:51', 'confront_daniel', False)
+  E2 spoken lines after the morning with an E2 phrase: 7 of 15
+  E3 Leo's and Mara's answers after the morning naming Daniel as angry_at: 8 of 8
+  E4 speech acts after the morning of another kind: []
+  E5 {'day3_asks': 40, 'answers_live': 40}
+
+SUMMARY v17
+E1 seeds holding: 0 of 3
+E2 share of spoken lines after the morning with an E2 phrase: 30 of 58 = 0.5172
+E3 Leo's and Mara's answers after the morning naming Daniel: 31 of 31 = 1.0000
+E4 seeds with a speech act after the morning of another kind: 0 of 3
+E5 live total 120; day-3 asks [40, 40, 40]

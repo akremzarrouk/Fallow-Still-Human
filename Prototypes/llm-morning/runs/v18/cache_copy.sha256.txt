@@ -1,0 +1,6 @@
+b19f1bff2b1765d83357c9fd78c3bc3e55f55a2701646fc1d3a95f6b9dcdb0da *cache/v17/gemini-3.5-flash-lite-daniel_ate_it-seed1.json
+d9b0e99cefb9448571e55494e47629c60ebb6a06f8442dd95dfac7dde1cdb154 *cache/v17/gemini-3.5-flash-lite-daniel_ate_it-seed2.json
+61206daaaf7ed199713694f1a73d445d0de90c2e2427c21e72d49662b70914ec *cache/v17/gemini-3.5-flash-lite-daniel_ate_it-seed3.json
+b19f1bff2b1765d83357c9fd78c3bc3e55f55a2701646fc1d3a95f6b9dcdb0da *cache/v18/gemini-3.5-flash-lite-daniel_ate_it-seed1.json
+d9b0e99cefb9448571e55494e47629c60ebb6a06f8442dd95dfac7dde1cdb154 *cache/v18/gemini-3.5-flash-lite-daniel_ate_it-seed2.json
+61206daaaf7ed199713694f1a73d445d0de90c2e2427c21e72d49662b70914ec *cache/v18/gemini-3.5-flash-lite-daniel_ate_it-seed3.json

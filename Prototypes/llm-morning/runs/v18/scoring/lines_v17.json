@@ -1,0 +1,459 @@
+{
+ "1": {
+  "stretches": [
+   [
+    "min 00",
+    "min 18",
+    "the morning",
+    "kitchen",
+    22
+   ],
+   [
+    "10:39",
+    "10:48",
+    "Q2",
+    "kitchen",
+    8
+   ],
+   [
+    "11:00",
+    "11:06",
+    "Q2",
+    "kitchen",
+    8
+   ],
+   [
+    "13:00",
+    "13:03",
+    "Q2",
+    "brothers_room",
+    2
+   ]
+  ],
+  "lines": [
+   [
+    "10:39",
+    "Daniel",
+    "reassure_all",
+    "We are going to be fine, I promise you both that I am looking after us."
+   ],
+   [
+    "10:39",
+    "Elena",
+    "reassure_all",
+    "We are safe right here, and we will get through this together."
+   ],
+   [
+    "10:39",
+    "Mara",
+    "accuse_daniel",
+    "You keep promising things while we starve, Daniel, but you're the one who took the food."
+   ],
+   [
+    "10:42",
+    "Daniel",
+    "reassure_mara",
+    "Mara, please, I am trying my best to keep us all safe."
+   ],
+   [
+    "10:42",
+    "Mara",
+    "accuse_daniel",
+    "You say you are protecting us, Daniel, but you took the food we needed."
+   ],
+   [
+    "10:42",
+    "Elena",
+    "reassure_all",
+    "Let us not fight among ourselves, we need to stay together to survive this."
+   ],
+   [
+    "10:45",
+    "Daniel",
+    "confront_mara",
+    "Mara, you need to watch how you speak to me when I am trying to keep us all alive."
+   ],
+   [
+    "10:45",
+    "Mara",
+    "accuse_daniel",
+    "You keep telling us you are keeping us alive, but you are the one who took the food!"
+   ],
+   [
+    "11:00",
+    "Daniel",
+    "reassure_all",
+    "We will not fall apart now, I will take care of everything for all of us."
+   ],
+   [
+    "11:00",
+    "Leo",
+    "confront_daniel",
+    "Grand words do not fill an empty shelf, Daniel."
+   ],
+   [
+    "11:00",
+    "Elena",
+    "reassure_all",
+    "Let us not fight among ourselves, we need to stay together to survive."
+   ],
+   [
+    "11:00",
+    "Mara",
+    "accuse_daniel",
+    "You always say you will take care of everything, Daniel, but you are the one who took the food."
+   ],
+   [
+    "11:03",
+    "Daniel",
+    "confront_mara",
+    "Mara, watch your tongue, I am trying to keep us all alive in here."
+   ],
+   [
+    "11:03",
+    "Mara",
+    "accuse_daniel",
+    "You think you can silence me, Daniel, but you took the food and you're the reason we are starving."
+   ],
+   [
+    "11:03",
+    "Leo",
+    "confront_daniel",
+    "Arguing won't put food on the shelf, Daniel, and neither will your empty promises."
+   ],
+   [
+    "11:03",
+    "Elena",
+    "reassure_all",
+    "Please, we cannot turn on each other like this. We will get through today if we stay calm."
+   ]
+  ]
+ },
+ "2": {
+  "stretches": [
+   [
+    "min 00",
+    "min 09",
+    "the morning",
+    "kitchen",
+    12
+   ],
+   [
+    "10:18",
+    "10:24",
+    "Q2",
+    "kitchen",
+    8
+   ],
+   [
+    "10:27",
+    "10:33",
+    "Q1",
+    "kitchen",
+    8
+   ],
+   [
+    "12:18",
+    "12:27",
+    "Q2",
+    "brothers_room",
+    6
+   ],
+   [
+    "15:24",
+    "15:30",
+    "Q2",
+    "kitchen",
+    6
+   ]
+  ],
+  "lines": [
+   [
+    "10:18",
+    "Daniel",
+    "reassure_all",
+    "We are going to make it through this together, I promise you. Just stay calm."
+   ],
+   [
+    "10:18",
+    "Mara",
+    "accuse_daniel",
+    "You went out into the night and came back with nothing, Daniel. Why did you even go?"
+   ],
+   [
+    "10:18",
+    "Elena",
+    "reassure_all",
+    "We are staying right here together, and we will get through this without any more talk of going out."
+   ],
+   [
+    "10:18",
+    "Leo",
+    "accuse_daniel",
+    "You snuck out last night, Daniel, and came back empty-handed while we starve."
+   ],
+   [
+    "10:21",
+    "Daniel",
+    "reassure_leo",
+    "Leo, I know you are angry, but I only went out to try and find something for us."
+   ],
+   [
+    "10:21",
+    "Leo",
+    "confront_daniel",
+    "Finding nothing and risking your life does not fix that you went behind us anyway."
+   ],
+   [
+    "10:21",
+    "Elena",
+    "reassure_leo",
+    "Leo, please, arguing will only tear us apart when we need each other most."
+   ],
+   [
+    "10:21",
+    "Mara",
+    "confront_daniel",
+    "Daniel, you snuck out in the dark and brought back nothing while we are all starving."
+   ],
+   [
+    "10:27",
+    "Daniel",
+    "reassure_leo",
+    "Leo, I know you are angry, but I only went out to try and find us something to eat."
+   ],
+   [
+    "10:27",
+    "Leo",
+    "confront_daniel",
+    "Daniel, sneaking out into the dark solves nothing when we are already starving."
+   ],
+   [
+    "10:27",
+    "Mara",
+    "confront_daniel",
+    "Daniel, you snuck out in the middle of the night and came back with nothing at all."
+   ],
+   [
+    "10:27",
+    "Elena",
+    "reassure_all",
+    "We must not turn on each other, we will stay together and get through this."
+   ],
+   [
+    "10:30",
+    "Daniel",
+    "reassure_all",
+    "We are still alive, and I will keep looking after this family. We just need to stay calm."
+   ],
+   [
+    "10:30",
+    "Mara",
+    "confront_daniel",
+    "You snuck out into the dark last night and came back with nothing at all. Why did you even go?"
+   ],
+   [
+    "10:30",
+    "Elena",
+    "reassure_all",
+    "We must not turn on each other now, my children. We will stay together and get through this."
+   ],
+   [
+    "10:30",
+    "Leo",
+    "confront_daniel",
+    "You snuck out into the dark last night and came back with nothing, Daniel. Putting yourself at risk like that helps no one."
+   ],
+   [
+    "12:18",
+    "Daniel",
+    "reassure_leo",
+    "Don't worry about last night, Leo. I'm going to figure something out for us."
+   ],
+   [
+    "12:18",
+    "Leo",
+    "confront_daniel",
+    "You went out into the dark alone and brought back nothing, Daniel. Don't act like everything is fine."
+   ],
+   [
+    "12:21",
+    "Daniel",
+    "reassure_leo",
+    "I'm sorry, Leo. I just had to check, but I'll make sure we are all safe."
+   ],
+   [
+    "12:21",
+    "Leo",
+    "confront_daniel",
+    "Daniel, your reassuring words don't change the fact that you went out there alone and came back with nothing."
+   ],
+   [
+    "12:24",
+    "Daniel",
+    "confront_leo",
+    "Leo, stop treating me like an enemy when I'm the only one trying to fix this mess."
+   ],
+   [
+    "15:24",
+    "Daniel",
+    "reassure_all",
+    "We are going to figure this out together, nobody is going out there again."
+   ],
+   [
+    "15:24",
+    "Mara",
+    "accuse_daniel",
+    "You went out into the night and came back with nothing, Daniel. You always make things worse."
+   ],
+   [
+    "15:24",
+    "Leo",
+    "confront_daniel",
+    "You went out into the dark when we told you not to, Daniel, and now there is nothing left for any of us."
+   ],
+   [
+    "15:27",
+    "Daniel",
+    "reassure_leo",
+    "Leo, I had to see for myself so we wouldn't starve, I'm trying to fix this."
+   ],
+   [
+    "15:27",
+    "Leo",
+    "confront_daniel",
+    "Trying to fix it by sneaking out and bringing back nothing doesn't help any of us, Daniel."
+   ],
+   [
+    "15:27",
+    "Mara",
+    "confront_daniel",
+    "You went out into the dark and came back with nothing, Daniel, why did you even do it?"
+   ]
+  ]
+ },
+ "3": {
+  "stretches": [
+   [
+    "min 00",
+    "min 18",
+    "the morning",
+    "kitchen",
+    24
+   ],
+   [
+    "10:48",
+    "10:54",
+    "Q2",
+    "kitchen",
+    8
+   ],
+   [
+    "12:48",
+    "12:57",
+    "Q2",
+    "brothers_room",
+    6
+   ],
+   [
+    "16:54",
+    "16:57",
+    "Q2",
+    "kitchen",
+    2
+   ]
+  ],
+  "lines": [
+   [
+    "10:48",
+    "Daniel",
+    "reassure_all",
+    "We are going to figure this out, I promise you all."
+   ],
+   [
+    "10:48",
+    "Leo",
+    "confront_daniel",
+    "Empty promises don't feed anyone, Daniel. Especially after you snuck out last night against everyone's word."
+   ],
+   [
+    "10:48",
+    "Mara",
+    "confront_daniel",
+    "You went out into the street last night for nothing, Daniel, and you can't just pretend it didn't happen."
+   ],
+   [
+    "10:48",
+    "Elena",
+    "reassure_daniel",
+    "You wanted to help us, Daniel, but we have to stay safe together."
+   ],
+   [
+    "10:51",
+    "Daniel",
+    "reassure_all",
+    "We are going to figure this out together, I promise you."
+   ],
+   [
+    "10:51",
+    "Leo",
+    "confront_daniel",
+    "Promises don't fix an empty shelf, Daniel, especially when you caused this."
+   ],
+   [
+    "10:51",
+    "Elena",
+    "reassure_daniel",
+    "Daniel, we are all together now, and that is what matters most."
+   ],
+   [
+    "10:51",
+    "Mara",
+    "confront_daniel",
+    "Daniel, you snuck out last night and came back with nothing while we are starving."
+   ],
+   [
+    "12:48",
+    "Daniel",
+    "confront_leo",
+    "Leo, stop lecturing me when you ate your share just like everyone else."
+   ],
+   [
+    "12:48",
+    "Leo",
+    "confront_daniel",
+    "Daniel, eating your share is not the same as lying, sneaking out, and blaming others."
+   ],
+   [
+    "12:51",
+    "Daniel",
+    "confront_leo",
+    "Leo, you do not lecture me on what is right after everything I have carried for this family."
+   ],
+   [
+    "12:51",
+    "Leo",
+    "confront_daniel",
+    "You carried nothing except your own guilt, Daniel."
+   ],
+   [
+    "12:54",
+    "Daniel",
+    "confront_leo",
+    "You think you know everything, Leo, but you don't understand what it takes to protect this family."
+   ],
+   [
+    "16:54",
+    "Mara",
+    "confront_daniel",
+    "Why did you go out there last night when you knew it was dangerous, Daniel? You didn't even bring anything back."
+   ],
+   [
+    "16:54",
+    "Daniel",
+    "confront_mara",
+    "Mara, I went because I had to find something for us to eat, not to hear your lectures."
+   ]
+  ]
+ }
+}

@@ -1,0 +1,61 @@
+plan: reports/days_v18_plan.md
+recorded_utc: 2026-10-07T19:08:22Z
+plan sha256:
+9a2c30b681933e69074da379871634ee555a15b8a50977188731f25c3a9e2f3b *reports/days_v18_plan.md
+
+$ git rev-parse HEAD
+2b6ad838bd4daa3e883cd4e723f6cc01693aabf4
+$ git status --short
+ M chronicle.py
+ M data.py
+ M mind.py
+ M night.py
+ M quiet.py
+ M story.py
+ M test_morning.py
+ M world.py
+?? cache/v17/
+?? reports/days_v17.md
+?? reports/days_v17_plan.md
+?? reports/days_v18_plan.md
+?? reports/meeting_fixes.md
+?? reports/quiet_day_fixes.md
+?? reports/v17_meetings.md
+?? runs/v17/
+?? runs/v17_meetings/
+?? runs/v18/
+?? runs/v6/daniel_ate_it-seed1.replay.md
+?? runs/v6/daniel_ate_it-seed2.replay.md
+?? runs/v6/daniel_ate_it-seed3.replay.md
+$ git diff --stat
+ Prototypes/llm-morning/chronicle.py    |   2 +-
+ Prototypes/llm-morning/data.py         |  51 +++++
+ Prototypes/llm-morning/mind.py         |  12 +-
+ Prototypes/llm-morning/night.py        |  46 ++--
+ Prototypes/llm-morning/quiet.py        | 169 +++++++++++----
+ Prototypes/llm-morning/story.py        |  11 +-
+ Prototypes/llm-morning/test_morning.py | 380 ++++++++++++++++++++++++++++++++-
+ Prototypes/llm-morning/world.py        | 105 ++++-----
+ 8 files changed, 649 insertions(+), 127 deletions(-)
+
+code and test sha256 at freeze:
+a21ce3629b33842c77228f2d8b7cc8f568f75fd84923f8fbecd096a2f9db6fdc *chronicle.py
+5381672f9dd15e8be469cf9efc5e0470dd2b35a4d562b9e66cacefcb3eccb017 *data.py
+819b28129a21a564ee1a8ed2d7386f6c3f45ef86fb74e87692c42a96dd22ec52 *gemini.py
+1e3ed87260eb0f477dfea0a2ef27b4650ef23c1f526638825b34e367b8620597 *list_models.py
+1e61f829b8af54617f0587863c8c027e5394fd23989a47718625cb201a26b957 *memory.py
+9f2a5099b6f0e2a5cdd56f9021cf514e10c405440f056dc5d6b507909f4b61e1 *metrics.py
+425994a9ae32499a24157ba69609eaeab18e2655689ca2c1d2318c295ac7c419 *metrics3.py
+dbe5a9d728aa865acbb6de5212ba180da39c4d72635949ed47d43944731f9918 *metrics4.py
+95e9d68d6397d19ee83a86ac6235f21f0d7f004f7eddfdd68f87c4053a5a826f *metrics5.py
+606dd0e71c1210acc0caea52cd5de7a5ad0029e23eeb5f0dfafac7665fea16a2 *mind.py
+ecf5c97be314c444d81106103269da6a39ce2a2153ed29f90698097a8e6ca50c *morning.py
+60aa9bd3828141213cc0472c31ffc1da4e8f321bbe957ea1da8a88b30d4284b0 *night.py
+e2b589f28abca7ffd7c1fea8f116c2ab9dca2dd48be682779f4d0dea2d799539 *probe_model.py
+27e900813fbc3d1ca9ce7d5c07c031d104b862ace28caa2f014916d8cacd4d04 *probe_prompt.py
+ee824f8a94656e91d88c7c92c7f53ab77d6597ee199b3b0275909f2aeaee994a *quiet.py
+fe0456081f5279f60cede948f17aaf03938d330af21cb00090eb4a60883cfe41 *story.py
+504124db7214a05b3814d428118dd2ec2ad4efe6f8fc54458da09b5401df4108 *talk.py
+192ec384680096afadc726cd63a734fd30c8356c267153d0f3e71e6c6e0aa01b *test_morning.py
+c15d97b774e593f7b438eb94e1d19b1a22b45b66982def07d56e512bb96d422b *world.py
+394b6ac2a4c824701494191ee299049ccc8227e5ede737542188e2ef46d0892a *config.json
