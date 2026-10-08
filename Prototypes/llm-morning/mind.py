@@ -366,7 +366,12 @@ class NightMind:
                 for m in (self.chron.minds[k].get(pid) or {}).get("kept", [])]
 
     def prompt_for(self, p):
-        """The prompt (§2.4), and id -> the text it shows for that id."""
+        """The prompt (§2.4), and id -> the text it shows for that id; built with World out of reach (truth.py)."""
+        import truth
+        with truth.prompting():
+            return self._prompt_for(p)
+
+    def _prompt_for(self, p):
         s = p.sheet
         calls = "; ".join(f"{data.PEOPLE[q]['name']} \"{word}\"" for q, word in data.ADDRESS[p.id].items())
         head = [f"You are {p.name}, {s['age']}, {s['role']} of the family (Elena, 42, the mother; Daniel, 25; "

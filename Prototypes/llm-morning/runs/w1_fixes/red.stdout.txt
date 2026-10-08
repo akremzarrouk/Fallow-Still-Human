@@ -1,0 +1,26 @@
+FF
+======================================================================
+FAIL: test_eating_on_a_quiet_day_resets_fasting_at_that_minute (test_morning.PhysicalLayerTest.test_eating_on_a_quiet_day_resets_fasting_at_that_minute)
+Fix 1: eat, eat_given and share reset the eater's fasting at the minute they eat; their next body line
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 6835, in test_eating_on_a_quiet_day_resets_fasting_at_that_minute
+    self.assertEqual(leo.needs["ate_at"], self.at(3, 0))
+AssertionError: -1920 != 2880
+
+======================================================================
+FAIL: test_a_water_haul_from_next_door_still_tells_the_house_it_has_no_food (test_morning.PhysicalLayerTest.test_a_water_haul_from_next_door_still_tells_the_house_it_has_no_food)
+Fix 2: a trip next door that brought water and no food: everyone knows next door is empty of food, so the
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 6870, in test_a_water_haul_from_next_door_still_tells_the_house_it_has_no_food
+    self.assertEqual(g["outcome"], "back with water")
+AssertionError: 'back with nothing' != 'back with water'
+- back with nothing
++ back with water
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 1.691s
+
+FAILED (failures=2)

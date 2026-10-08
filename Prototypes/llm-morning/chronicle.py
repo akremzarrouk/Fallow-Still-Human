@@ -50,7 +50,11 @@ def gist(e, pid):
         "propose_far": "saying someone should try the houses further along the street",
         "volunteer_far": "offering to go further along the street",
         "return": "coming back in before dawn",
-        "routine": ROUTINE_GIST.get(e.get("routine"), "a routine"), "need": "how the body was"}
+        "routine": ROUTINE_GIST.get(e.get("routine"), "a routine"), "need": "how the body was",
+        "rain": "the rain beginning",
+        "save_water": "saying nobody should use the stored water for washing or the toilet",
+        "ration_water": "saying the water must be shared out by the cup",
+        "collect_rain": "setting the bin under the drainpipe in the rain"}
     phrase = phrases.get(kind, kind)
     if kind in ("door", "gap", "street"):
         return phrase
@@ -251,5 +255,9 @@ class Chronicle:
             if x in n.away and x not in n.prev.away:
                 self.open.append({"name": f"where {NAMES[x]} is", "since": f"N{k}",
                                   "what": "went out in the night and has not come back"})
+        for name, f in sorted(getattr(getattr(self, "world", None), "fixed", {}).items()):   # W1: water, once
+            if name not in self.fixed:
+                self.fixed[name] = {"value": f["value"], "draw": None, "string": f["string"], "scene": f"N{k}",
+                                    "why": "someone got inside it for the first time"}
         self._house = n.house_state()
         self.nights.append(n)

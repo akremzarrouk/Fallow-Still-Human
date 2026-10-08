@@ -32,6 +32,8 @@ import time
 
 import data
 import quiet as quietday
+import water
+import weather
 from gemini import Cache, FakeClient, GeminiClient, Oracle, StopMorning, load_config
 from chronicle import Chronicle
 from mind import NightMind, warning_lines
@@ -94,7 +96,8 @@ def quiet_meta(m):
     return {"day_asks": tr["asks"]["day"], "quiet_asks": tr["asks"]["quiet"],
             "quiet_asks_by_person": tr["asks"]["quiet_by_person"],
             "q1_fired": sum(e["kind"] == "Q1" for e in fired), "q2_fired": sum(e["kind"] == "Q2" for e in fired),
-            "q5_fired": sum(e["kind"] == "Q5" for e in fired),
+            "q5_fired": sum(e["kind"] == "Q5" for e in fired), "q6_fired": sum(e["kind"] == "Q6" for e in fired),
+            "rain_heard": len(tr["rain"]), "water": tr["water"],
             "spans": len(tr["spans"]), "rests": sum(s["routine"] == "rest" for s in tr["spans"]),
             "withdrawals": len(tr["withdrawals"]), "stretches": len(tr["stretches"]),
             "morning_end": tr["morning_end"]}
@@ -131,6 +134,13 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
     say(f"{name}: model {model_name}, {'replay from cache only' if replay else 'fresh'}; "
         f"cache {os.path.relpath(cache_path, HERE)} holds {len(cache.entries)} answers")
     started = time.monotonic()
+    w = weather.Weather(seed)           # W1: the seeded weather of every day played (reports/world_design.md, §4.1)
+    for k in range(1, days + 1):
+        x = w.day(k)
+        rain = ", ".join(f"{weather.hhmm(a)} to {weather.hhmm(b)}" + (" the next day" if b - weather.midnight(k) >= 1440
+                                                                      else "") for a, b, _ in x["spells"])
+        say(f"  weather day {k}: " + (f"wet, {x['mm']:.1f} mm ({rain})" if x["wet"] else "dry")
+            + f"; {x['tmin']:.1f} to {x['tmax']:.1f} °C outdoors, {x['indoor']:.1f} °C indoors")
 
     def morning_turns(m, tag):
         if m.quiet is not None:         # from day 3, played to bedtime (reports/quiet_day_design.md, §3)
@@ -161,15 +171,43 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
         quietday.play(m, turn_told)
         for e in m.quiet.log[told["log"]:]:
             say(f"  {tag}{quietday.clock(e['minute'])}: {quiet_line(e)}")
+        say(f"  {tag}21:00 stages: " + stages(m))
+
+    def stages(m):
+        """W1: each one's fasting (F) and thirst (T) stage at bedtime, cold, and the numbers behind them."""
+        q, w = m.quiet, m.quiet.world
+        out = []
+        for pid in data.ORDER:
+            p = m.people[pid]
+            if p.needs is None or pid in m.away:
+                out.append(f"{data.PEOPLE[pid]['name']} away")
+                continue
+            n = p.needs
+            cold = {True: ", cold", "wet": ", wet and cold"}.get(n.get("cold"), "")
+            out.append(f"{data.PEOPLE[pid]['name']} F{n['fast_stage']} T{n['thirst_stage']}{cold} "
+                       f"(fast {q.fast(p, quietday.DAY_END):.1f}, short of water {w.deficit[pid]:.2f} L)")
+        return "; ".join(out)
+
+    def water_now(m):
+        w = m.quiet.world
+        bath, kitchen = water.split(w.tap)
+        return (f"tap {w.tap:.1f} L (bath {bath:.1f}, kitchen {kitchen:.1f}), bin {w.rain:.1f} L"
+                + (" (under the drainpipe)" if w.bin_out else "") + f", level {w.level}")
 
     def quiet_line(e):
         name = {p: data.PEOPLE[p]["name"] for p in data.ORDER}
-        how = f"{name[e['asked']]} is asked" if e["fired"] else f"not asked ({e['why']})"
+        how = (f"{name[e['asked']]} is asked" if e["fired"] and e["kind"] != "Q6" else
+               f"not asked ({e['why']})")
         if e["kind"] == "Q2":
             return f"Q2, {name[e['arrived']]} comes into the {data.ROOMS[e['room']]}, where {name[e['there']]} is: {how}"
         if e["kind"] == "Q5":
             return f"Q5, the evening: {how}"
-        return f"Q1, {name[e['who']]}'s {'fasting' if e['need'] == 'fast' else 'sleep debt'} crossed a line: {how}"
+        if e["kind"] == "Q6":
+            asked = ", ".join(name[q] for q in e["asked"])
+            return (f"Q6, rain began: {asked} asked in the {data.ROOMS[e['room']]}" if e["fired"] else
+                    f"Q6, rain began: not asked ({e['why']})")
+        need = {"fast": "fasting", "debt": "sleep debt", "thirst": "thirst"}[e["need"]]
+        return f"Q1, {name[e['who']]}'s {need} crossed a line: {how}"
 
     scenes = {}
 
@@ -186,6 +224,11 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
         n = Night(day, oracle, number=number, house=chron.house_state()).run()
         say(f"  night {number}: model asked for {len(n.decisions)}; so far {oracle.live} live, "
             f"{oracle.from_cache} cached, {oracle.api_requests} API requests")
+        if n.world is not None:         # W1: tonight's rain, choices and any water carried in
+            say(f"  night {number}: {'rainy' if n.rainy else 'dry'}; bedtime " + ", ".join(
+                f"{data.PEOPLE[q]['name']} {c}" for q, c in n.choices.items())
+                + "".join(f"; {', '.join(data.PEOPLE[x]['name'] for x in g['members'])} out ({g['outcome']}), "
+                          f"water {g.get('water', 0):g} L" for g in n.groups))
         chron.add_night(n)
         return n
 
@@ -199,6 +242,8 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
 
     def day_after(day, n, tag):
         m = Morning.next_day(day, n, oracle, chronicle=chron)
+        if m.quiet is not None:
+            say(f"  {tag}07:00 water: " + water_now(m))
         morning_turns(m, tag)
         chron.add_day(m)
         return m

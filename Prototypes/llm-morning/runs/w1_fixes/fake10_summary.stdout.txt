@@ -1,0 +1,50 @@
+morning.run(2, fake=True, days=10): exit 0; asks 540 (fake)
+  weather day 1: wet, 2.5 mm (09:00 to 13:09); 7.7 to 14.2 °C outdoors, 15.0 °C indoors
+  weather day 2: dry; 11.2 to 15.2 °C outdoors, 17.2 °C indoors
+  weather day 3: dry; 12.6 to 16.1 °C outdoors, 18.4 °C indoors
+  weather day 4: dry; 7.1 to 19.4 °C outdoors, 17.2 °C indoors
+  weather day 5: wet, 12.3 mm (22:03 to 03:42 the next day); 7.1 to 14.3 °C outdoors, 14.7 °C indoors
+  weather day 6: wet, 4.5 mm (05:27 to 11:03, 06:30 to 10:45); 11.6 to 13.6 °C outdoors, 16.6 °C indoors
+  weather day 7: wet, 1.2 mm (04:36 to 10:09, 17:18 to 20:21); 11.8 to 13.3 °C outdoors, 16.6 °C indoors
+  weather day 8: dry; 8.0 to 19.1 °C outdoors, 17.5 °C indoors
+  weather day 9: wet, 17.8 mm (11:30 to 16:30); 7.8 to 14.0 °C outdoors, 14.9 °C indoors
+  weather day 10: dry; 8.6 to 18.6 °C outdoors, 17.6 °C indoors
+  day 3 07:00 water: tap 105.5 L (bath 59.0, kitchen 46.5), bin 0.0 L, level as_before
+  day 3 21:00 stages: Daniel F1 T0 (fast 70.7, short of water 0.00 L); Elena F1 T0 (fast 52.2, short of water 0.00 L); Leo F2 T0 (fast 74.0, short of water 0.00 L); Mara F1 T0 (fast 58.4, short of water 0.00 L)
+  night 3: dry; bedtime Daniel go_next_door, Elena sleep, Leo sleep, Mara sleep; Daniel, Leo out (back with water), water 9 L
+  day 4 07:00 water: tap 109.3 L (bath 62.8, kitchen 46.5), bin 0.0 L, level rationed
+  day 4 21:00 stages: Daniel F2 T0, cold (fast 98.3, short of water 0.00 L); Elena F2 T0, cold (fast 72.6, short of water 0.00 L); Leo F2 T0, cold (fast 98.0, short of water 0.00 L); Mara F2 T0, cold (fast 81.2, short of water 0.00 L)
+  night 4: dry; bedtime Daniel sleep, Elena go_next_door, Leo lie_awake, Mara go_next_door; Elena out (back with nothing), water 0 L; Mara out (back with nothing), water 0 L
+  day 5 07:00 water: tap 104.3 L (bath 57.8, kitchen 46.5), bin 0.0 L, level rationed
+  day 5 21:00 stages: Daniel F2 T0, cold (fast 125.9, short of water 0.00 L); Elena F2 T0, cold (fast 93.0, short of water 0.00 L); Leo F2 T0, cold (fast 122.0, short of water 0.00 L); Mara F2 T0, cold (fast 104.0, short of water 0.00 L)
+  night 5: rainy; bedtime Daniel sleep, Elena lie_awake, Leo watch_door, Mara lie_awake
+  day 6 07:00 water: tap 99.3 L (bath 52.8, kitchen 46.5), bin 0.0 L, level rationed
+  day 6 21:00 stages: Daniel F2 T0, cold (fast 153.5, short of water 0.00 L); Elena F2 T0, cold (fast 113.4, short of water 0.00 L); Leo F2 T0, cold (fast 146.0, short of water 0.00 L); Mara F2 T0, cold (fast 126.8, short of water 0.00 L)
+  night 6: rainy; bedtime Daniel lie_awake, Elena go_next_door, Leo watch_door, Mara watch_door
+  day 7 07:00 water: tap 94.3 L (bath 47.8, kitchen 46.5), bin 81.0 L (under the drainpipe), level rationed
+  day 7 17:18: Q6, rain began: Daniel, Elena, Leo, Mara asked in the kitchen
+  day 7 21:00 stages: Daniel F3 T0, cold (fast 181.1, short of water 0.00 L); Elena F2 T0, cold (fast 133.8, short of water 0.00 L); Leo F3 T0, cold (fast 170.0, short of water 0.00 L); Mara F2 T0, cold (fast 149.6, short of water 0.00 L)
+  night 7: dry; bedtime Daniel watch_door, Elena sleep, Leo sleep, Mara go_next_door; Mara out (back with nothing), water 0 L
+  day 8 07:00 water: tap 89.3 L (bath 42.8, kitchen 46.5), bin 100.9 L (under the drainpipe), level rationed
+  day 8 21:00 stages: Daniel F3 T0, cold (fast 208.7, short of water 0.00 L); Elena F2 T0, cold (fast 154.2, short of water 0.00 L); Leo F3 T0, cold (fast 194.0, short of water 0.00 L); Mara F3 T0, cold (fast 172.4, short of water 0.00 L)
+  night 8: dry; bedtime Daniel sleep, Elena watch_door, Leo go_further, Mara go_further; Mara, Elena out (not back by morning), water 0 L; Leo out (back with food and water), water 10 L
+  day 9 07:00 water: tap 94.8 L (bath 48.3, kitchen 46.5), bin 100.9 L (under the drainpipe), level rationed
+  day 9 11:30: Q6, rain began: Daniel, Leo, Mara asked in the kitchen
+  day 9 21:00 stages: Daniel F0 T0 (fast 2.3, short of water 0.00 L); Elena away; Leo F0 T0 (fast 2.0, short of water 0.00 L); Mara F0 T0 (fast 1.9, short of water 0.00 L)
+  night 9: dry; bedtime Daniel watch_door, Leo go_further, Mara sleep; Leo, Daniel out (back with food and water), water 10.5 L
+  day 10 07:00 water: tap 101.5 L (bath 55.0, kitchen 46.5), bin 240.0 L (under the drainpipe), level rationed
+  day 10 21:00 stages: Daniel F0 T0 (fast 16.1, short of water 0.00 L); Elena away; Leo F0 T0 (fast 14.0, short of water 0.00 L); Mara F0 T0 (fast 13.3, short of water 0.00 L)
+DONE 4: prompts 540; 'Your body:' lines 540 (13 distinct); matching "impossible|cannot|can't|unable|barely (stand|walk|move)": 0
+    24 × Your body: a little hungry.
+    47 × Your body: hungry.
+     3 × Your body: starving, and you have hardly slept.
+    53 × Your body: starving, for days now: you are thin and weak; stairs and carrying things tire you fast; and you feel cold, even indoors.
+     7 × Your body: starving, for days now: you are thin and weak; stairs and carrying things tire you fast; you feel cold, even indoors; and you have hardly slept.
+   146 × Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; and you feel cold, even indoors.
+     5 × Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; and you have hardly slept.
+     3 × Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; you are wet and cold; and you have hardly slept.
+    74 × Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; you feel cold, even indoors; and you have hardly slept.
+    75 × Your body: starving.
+    17 × Your body: starving; hunger comes in waves.
+    53 × Your body: starving; hunger comes in waves; and you have hardly slept.
+    33 × Your body: very hungry.

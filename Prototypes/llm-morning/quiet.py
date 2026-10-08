@@ -18,15 +18,17 @@ import math
 import random
 
 import data
+import water
 from talk import act_of
-from world import NAMES, TRIP_KINDS, day_index
+from world import NAMES, TRIP_KINDS, day_index, when_words
 
 DAY_END = 840               # 21:00, bedtime (§3)
-WEAK, VERY_WEAK = 48, 96    # fasting (§1.1)
-BARELY = 144                # fasting's third stage (reports/ten_days_prep.md, fix 2)
+# Fasting's stages, in hours × the hunger rate (reports/world_design.md, §4.3.1): 1, 3, 7, 14 and 28 days.
+FAST_LINES = (24, 72, 168, 336, 672)
+REST_FAST = 72              # from "light and slow" (F2), rest is due when quiet, as it was from "very weak"
 TIRED, EXHAUSTED = 16, 24   # sleep debt (§1.2)
 DAY_HOURS = 14              # a day not played to bedtime: awake from 07:00 to 21:00
-NIGHT_PAYS = {"sleep": 8, "lie_awake": 3, "watch_door": 0, "go_next_door": 0}
+NIGHT_PAYS = {"sleep": 8, "lie_awake": 3, "watch_door": 0, "go_next_door": 0, "rain_out": 8}
 SLEEP_STARVING = 6
 REST_PAYS = 1.5             # an hour on one's bed
 REST_UNTIL = 12
@@ -49,16 +51,42 @@ EVENING_TEXT = "it is evening, and in two hours everyone goes to bed"
 HUNGER_A_MINUTE = 0.004     # × hunger rate, as a played turn adds it (world.py)
 OWN_ROOM = {p: room for room, owners in data.OWNERS.items() for p in owners}
 
-FAST_WORDS = {1: ", and weak from it: standing up makes your head spin",
-              2: ", and very weak: your legs shake when you stand",
-              3: ", and so weak you can barely stand: walking any distance feels impossible"}
+# The body line states what the body feels and what effort costs; it never says an act cannot be done
+# (reports/world_design.md, §4.3.1, §4.3.5).
+FAST_WORDS = {1: "; hunger comes in waves",
+              2: ", for days now: you feel light and slow, and standing up fast greys your sight for a moment",
+              3: ", for days now: you are thin and weak; stairs and carrying things tire you fast",
+              4: ", for weeks: your strength is going; your heart races when you stand, and a short walk leaves you "
+                 "shaking",
+              5: ", for weeks: you are wasted; getting up takes everything you have"}
+THIRST_WORDS = {1: "you are thirsty, and your mouth is dry",
+                2: "you are badly thirsty: your head aches, and you are light-headed when you stand",
+                3: "you are parched: your lips are cracked, your heart races, and you feel faint",
+                4: "at times your thoughts drift and you lose track of where you are"}
+COLD_WORDS = {True: "you feel cold, even indoors", "wet": "you are wet and cold"}
 DEBT_WORDS = {1: "you have hardly slept", 2: "you have barely slept for nights; your eyes close on their own"}
 # A need crossing a line, as the person's own record of it (§3: its own event, with them alone as witness).
-NEED_VIEWS = {("fast", 1): "You had grown weak from hunger: standing up made your head spin.",
-              ("fast", 2): "You had grown very weak: your legs shook when you stood.",
-              ("fast", 3): "You had grown so weak you could barely stand; walking any distance felt impossible.",
+NEED_VIEWS = {("fast", 1): "Hunger had begun to come in waves.",
+              ("fast", 2): "You had grown light and slow from hunger: standing up fast greyed your sight.",
+              ("fast", 3): "You had grown thin and weak: stairs and carrying things tired you fast.",
+              ("fast", 4): "Your strength was going: your heart raced when you stood.",
+              ("fast", 5): "You were wasted: getting up took everything you had.",
+              ("thirst", 1): "You had grown thirsty: your mouth was dry.",
+              ("thirst", 2): "You were badly thirsty: your head ached, and you were light-headed when you stood.",
+              ("thirst", 3): "You were parched: your lips cracked, your heart raced, and you felt faint.",
+              ("thirst", 4): "At times your thoughts drifted from thirst.",
               ("debt", 1): "You had hardly slept, and you felt it.",
               ("debt", 2): "You had barely slept for nights; your eyes were closing on their own."}
+Q1_WORDS = {("fast", 2): "light and slow from hunger", ("fast", 3): "thin and weak", ("fast", 4): "weaker still",
+            ("fast", 5): "wasted", ("thirst", 2): "badly thirsty", ("thirst", 3): "parched",
+            ("thirst", 4): "confused from thirst", ("debt", 2): "exhausted"}
+# Rain (reports/world_design.md, §4.1, §5 Q6): heard by everyone awake in the house when a spell begins; Q6, at most
+# once a day, plays the room with the most people awake, with 8 asks of its own.
+RAIN_HEARD = "Rain began: you heard it on the roof and against the boards."
+RAIN_TRIGGER = "rain has started: you hear it on the roof and against the boards"
+RAIN_VIEW = "You heard rain begin on the roof and against the boards."
+RAIN_ASKS = 8
+COLD_UNDER = 18             # °C indoors: the WHO reference [S17]; cold from F2 on (§4.3.3)
 
 
 def clock(minute):
@@ -78,26 +106,38 @@ def absolute(k, minute):
 
 
 def fast_stage(f):
-    return 3 if f >= BARELY else 2 if f >= VERY_WEAK else 1 if f >= WEAK else 0
+    return sum(1 for x in FAST_LINES if f >= x)
 
 
 def debt_stage(d):
     return 2 if d >= EXHAUSTED else 1 if d >= TIRED else 0
 
 
-def body_line(hunger, fast, debt):
-    """The body line from day 3 on: the hunger word, then what fasting and sleep debt have come to."""
+def body_line(hunger, fast, debt, thirst=0, cold=False):
+    """The body line from day 3 on: the hunger word, what fasting has come to, then thirst, cold and sleep debt."""
     line = f"Your body: {hunger}" + FAST_WORDS.get(fast, "")
-    if debt:
-        line += ("; and " if fast else ", and ") + DEBT_WORDS[debt]
+    extra = ([THIRST_WORDS[thirst]] if thirst else []) + ([COLD_WORDS[cold]] if cold else []) + \
+            ([DEBT_WORDS[debt]] if debt else [])
+    if extra:
+        line += ("; " if fast else ", ") + ("; ".join(extra[:-1]) + "; and " if len(extra) > 1 else "and ") + extra[-1]
     return line + "."
 
 
 def night_payback(choice, starving):
-    """What a night's bedtime choice pays back of the debt (§1.2)."""
-    if choice == "sleep" and starving:
+    """What a night's bedtime choice pays back of the debt (§1.2). Setting the bin out in the rain, then going to
+    sleep, is sleep."""
+    if choice in ("sleep", "rain_out") and starving:
         return SLEEP_STARVING
     return NIGHT_PAYS.get(choice, 0)
+
+
+def world_of(chronicle):
+    """The run's World (truth.py), kept beside the chronicle: made the first time a quiet day needs it."""
+    import truth
+    w = getattr(chronicle, "world", None)
+    if w is None:
+        w = chronicle.world = truth.World(chronicle.seed)
+    return w
 
 
 def rest_length(seed, k, pid, n):
@@ -146,8 +186,11 @@ def setup(m, chronicle):
             starving = n.bedtime_hunger.get(pid) is not None and n.bedtime_hunger[pid] >= 0.85
             debt = max(0.0, debt - night_payback(n.choices.get(pid), starving))
         p.needs = {"ate_at": meals[pid], "debt": debt, "debt_at": 0, "rests": 0, "last_rest_end": None,
-                   "fast_stage": 0, "debt_stage": 0}
+                   "fast_stage": 0, "debt_stage": 0, "thirst_stage": 0, "cold": False}
+    # W1 (reports/world_design.md, §6): the weather and the water are the World's, brought to this morning.
+    q.world = world_of(chronicle)
     q.tick(0)
+    q.water_log.append([0, round(q.world.tap, 3), round(q.world.rain, 3), q.world.level, q.world.bin_out])
     return q
 
 
@@ -179,6 +222,15 @@ class Quiet:
         self.morning_end = None
         self.seq = 0                # orders spans and need events that share a minute
         self.left = None            # the last move: (pid, the room they left, who saw them go)
+        # W1: the World (truth.py), never read by a prompt; the rain spells begun since the last tick and not yet
+        # heard; each rain heard; whether Q6 has fired today; the water at 07:00, at each rule and at bedtime.
+        self.world = None
+        self.last_at = None
+        self.onsets = []
+        self.rain_events = []
+        self.q6_done = False
+        self.water_log = []
+        self.thirst_log = {}
 
     # ---------- the needs ----------
     def people(self):
@@ -201,25 +253,129 @@ class Quiet:
         self.set_debt(p, self.debt(p, minute), minute)
 
     def tick(self, minute):
-        """The needs at `minute`: each stage that rose since the last tick, as (pid, "fast" | "debt", stage)."""
+        """The needs at `minute`: each stage that rose since the last tick, as (pid, "fast" | "debt" | "thirst",
+        stage). The World is brought to `minute` first; the rain spells that began since the last tick wait in
+        `onsets` to be heard; and what each of them perceives of the water and the weather is written into them."""
         out = []
+        w = self.world
+        at = absolute(self.k, minute)
+        if w is not None:
+            w.advance_to(at, [p.id for p in self.people()])
+            since = at - 1 if self.last_at is None else self.last_at
+            self.onsets += [s for s in w.weather.spells(since + 1, at + 1) if since < s[0] <= at]
+            self.last_at = at
         for p in self.people():
             f, d = self.fast(p, minute), self.debt(p, minute)
             fs, ds = fast_stage(f), debt_stage(d)
-            old = self.stages.get(p.id, (fs, ds))
-            for need, now, before, value in (("fast", fs, old[0], f), ("debt", ds, old[1], d)):
+            ts = w.thirst_stage(p.id) if w is not None else 0
+            old = self.stages.get(p.id, (fs, ds, ts))
+            for need, now, before, value in (("fast", fs, old[0], f), ("debt", ds, old[1], d),
+                                             ("thirst", ts, old[2], w.deficit[p.id] / water.MASS[p.id] if w else 0)):
                 if now > before:
                     out.append((p.id, need, now))
                     self.seq += 1
                     self.need_events.append({"minute": minute, "who": p.id, "need": need, "stage": now,
                                              "value": round(value, 3), "room": p.room, "seq": self.seq,
                                              "view": NEED_VIEWS[(need, now)]})
-            self.stages[p.id] = (fs, ds)
-            p.needs["fast_stage"], p.needs["debt_stage"] = fs, ds
+            self.stages[p.id] = (fs, ds, ts)
+            p.needs["fast_stage"], p.needs["debt_stage"], p.needs["thirst_stage"] = fs, ds, ts
+            if w is not None:
+                p.needs["cold"] = ("wet" if w.wet(p.id, at) else
+                                   fs >= 2 and w.weather.indoor(at) < COLD_UNDER)
+                tl = self.thirst_log.setdefault(p.id, [])
+                if not tl or tl[-1][0] != minute:
+                    tl.append([minute, round(w.deficit[p.id], 3), ts])
             log = self.needs_log.setdefault(p.id, [])
             if not log or log[-1][0] != minute:
                 log.append([minute, round(f, 3), round(d, 3)])
+        self.sense(minute)
         return out
+
+    # ---------- W1: what they perceive of the water and the weather ----------
+    def sense(self, minute):
+        """Everyone in the house: whether it is raining now (and since when), and the water as an eye sees it."""
+        w = self.world
+        if w is None:
+            return
+        at = absolute(self.k, minute)
+        now = w.weather.spells(at, at + 1)
+        for p in self.people():
+            p.rain_since = now[0][0] if now else None
+            holder = None if w.holder is None else ("you" if w.holder == p.id else NAMES[w.holder])
+            p.water = {"line": water.describe(w.store(), w.level, self.since_words(w.level_since), holder, w.bin_out),
+                       "level": w.level, "bin_out": w.bin_out}
+
+    def since_words(self, at):
+        k = (at + 7 * 60) // 1440 + 1          # the played day of an absolute minute
+        if k == self.k:
+            return "since " + clock(at - (k - 1) * 1440)
+        return "since " + when_words(("D", k), self.m.day)
+
+    def ate(self, p, minute):
+        """p has eaten at `minute` (eat, eat_given, or a part of a share; reports/w1_fixes.md, fix 1): their fasting
+        counts from then, and its stage falls now, so their next body line follows."""
+        if p.needs is None:
+            return
+        p.needs["ate_at"] = absolute(self.k, minute)
+        fs = fast_stage(self.fast(p, minute))
+        p.needs["fast_stage"] = fs
+        if p.id in self.stages:
+            self.stages[p.id] = (fs,) + tuple(self.stages[p.id][1:])
+        p.needs["cold"] = ("wet" if p.needs.get("cold") == "wet" else
+                           bool(p.needs.get("cold")) and fs >= 2)
+
+    def water_rule(self, p, kind, minute):
+        """save_water or ration_water, said by p (world_design §4.2.3): the World's level from that minute."""
+        w = self.world
+        w.set_level({"save_water": "careful", "ration_water": "rationed"}[kind], absolute(self.k, minute), p.id)
+        self.water_log.append([minute, round(w.tap, 3), round(w.rain, 3), w.level, w.bin_out])
+        self.sense(minute)
+
+    def collect_rain(self, p, minute):
+        """p has set the bin under the drainpipe in the rain: it catches from this minute, and p is wet."""
+        w = self.world
+        w.put_bin_out(p.id, absolute(self.k, minute))
+        p.needs["cold"] = "wet"
+        self.water_log.append([minute, round(w.tap, 3), round(w.rain, 3), w.level, w.bin_out])
+        self.sense(minute)
+
+    def hear_rain(self, minute, played):
+        """Each rain spell begun since the last tick: everyone awake in the house hears it (a record, and a chronicle
+        event with them as witnesses). In played turns it is something new for each of them; in a quiet stretch it is
+        Q6: once a day, the room with the most people awake is played, everyone awake there asked."""
+        fired = []
+        for _ in self.onsets:
+            awake = [p for p in sorted(self.people(), key=lambda x: data.ORDER.index(x.id)) if not self.resting(p.id)]
+            rooms = {}
+            for p in awake:
+                p.memory.append((minute, RAIN_HEARD))
+                rooms.setdefault(p.room, []).append(p.id)
+            self.seq += 1
+            self.rain_events.append({"minute": minute, "heard": [p.id for p in awake], "seq": self.seq})
+            entry = {"kind": "Q6", "minute": minute, "room": None, "awake": rooms, "fired": False, "asked": [],
+                     "why": None}
+            self.log.append(entry)
+            if played:
+                entry["why"] = "the house was already talking"
+                for p in awake:
+                    p.triggers.append((RAIN_TRIGGER, True))
+                    self.m.started(p.room, minute, "rain began", False)
+                continue
+            if not awake:
+                entry["why"] = "nobody awake"
+                continue
+            if self.q6_done:
+                entry["why"] = "Q6 has fired today already"
+                continue
+            room = max(rooms, key=lambda r: (len(rooms[r]), -list(data.ROOMS).index(r)))
+            self.q6_done = True
+            entry.update(fired=True, room=room, asked=list(rooms[room]))
+            for pid in rooms[room]:
+                self.ask(self.m.people[pid], "Q6", minute, RAIN_TRIGGER,
+                         f"Q6, rain began: everyone awake in the {data.ROOMS[room]} is asked")
+            fired.append(entry)
+        self.onsets = []
+        return fired
 
     # ---------- the budget (§4) ----------
     def spent(self):
@@ -365,7 +521,7 @@ class Quiet:
         n = p.needs
         if n["rests"] >= RESTS_A_DAY or (n["last_rest_end"] is not None and minute - n["last_rest_end"] < REST_APART):
             return False
-        return self.debt(p, minute) >= TIRED or self.fast(p, minute) >= VERY_WEAK
+        return self.debt(p, minute) >= TIRED or self.fast(p, minute) >= REST_FAST
 
     def arrive(self, p, room, minute):
         """A routine brings p into `room`: who sees them go and come, and Q2. Someone coming in does not end a
@@ -426,7 +582,7 @@ class Quiet:
         Once per person per threshold; with nobody awake there it is recorded only."""
         fired = []
         for pid, need, stage in crossings:
-            if (need == "debt" and stage < 2) or (pid, need, stage) in self.q1_done:
+            if stage < 2 or (pid, need, stage) in self.q1_done:
                 continue
             p = self.m.people[pid]
             entry = {"kind": "Q1", "minute": minute, "room": p.room, "who": pid, "need": need, "stage": stage,
@@ -444,8 +600,7 @@ class Quiet:
                 continue
             entry.update(fired=True, asked=pid)
             self.q1_done.add((pid, need, stage))
-            word = {("fast", 1): "weak", ("fast", 2): "very weak", ("fast", 3): "barely able to stand",
-                    ("debt", 2): "exhausted"}[(need, stage)]
+            word = Q1_WORDS[(need, stage)]
             self.ask(p, "Q1", minute, None, f"Q1, a need crossed a line: {p.name} has grown {word}")
             fired.append(entry)
         return fired
@@ -549,6 +704,7 @@ class Quiet:
         self.assign(minute)
         self.ask_q1(crossings, minute)
         self.evening(minute)
+        self.hear_rain(minute, played=False)
         # Whoever began a routine this minute in a room where a trigger has just started the talk is in that talk.
         for p in self.people():
             span = self.open.get(p.id)
@@ -566,16 +722,31 @@ class Quiet:
                 out.append(span["until"])
             rate = p.sheet["hunger_rate"]
             f = self.fast(p, minute)
-            out += [grid(minute + (th - f) / rate * 60) for th in (WEAK, VERY_WEAK, BARELY) if f < th]
+            out += [grid(minute + (th - f) / rate * 60) for th in FAST_LINES if f < th]
             if not self.resting(p.id):
                 d = self.debt(p, minute)
                 out += [grid(minute + (th - d) * 60) for th in (TIRED, EXHAUSTED) if d < th]
                 n = p.needs
                 if span and span["routine"] in ("sit", "withdraw") and n["rests"] < RESTS_A_DAY:
                     allowed = minute if n["last_rest_end"] is None else n["last_rest_end"] + REST_APART
-                    due = min(minute + max(0.0, TIRED - d) * 60, minute + max(0.0, VERY_WEAK - f) / rate * 60)
+                    due = min(minute + max(0.0, TIRED - d) * 60, minute + max(0.0, REST_FAST - f) / rate * 60)
                     out.append(grid(max(allowed, due)))
+        out += self.world_events(minute)
         return min([x for x in out if x > minute] or [minute + data.MINUTES_PER_TURN])
+
+    def world_events(self, minute):
+        """W1: the minutes of today, after `minute`, at which a rain spell begins or ends, or the tap water runs out,
+        the bin fills, or someone's thirst reaches a new stage."""
+        w = self.world
+        if w is None:
+            return []
+        at, end = absolute(self.k, minute), absolute(self.k, DAY_END)
+        base = absolute(self.k, 0)
+        out = [x - base for a, b, _ in w.weather.spells(at + 1, end + 1) for x in (a, b) if at < x <= end]
+        nxt = w.next_change(at, end, [p.id for p in self.people()])
+        if nxt is not None:
+            out.append(grid(nxt - base))
+        return out
 
     def advance(self, minute, to):
         """The jump: hunger as played turns would have added it; debt and fasting are counted from the clock."""
@@ -589,6 +760,7 @@ class Quiet:
         minute = t * data.MINUTES_PER_TURN
         for pid, need, stage in self.tick(minute):
             self.q1_done.add((pid, need, stage))
+        self.hear_rain(minute, played=True)
         self.run_out(minute)            # a rest out of the played room ends on time; the next routine waits
         self.m.turn(t)
         self.after_turn(t)
@@ -657,6 +829,9 @@ class Quiet:
 
     def bedtime(self):
         self.tick(DAY_END)
+        if self.world is not None:
+            w = self.world
+            self.water_log.append([DAY_END, round(w.tap, 3), round(w.rain, 3), w.level, w.bin_out])
         for p in self.people():
             self.end(p, DAY_END, "bedtime")
             self.settle(p, DAY_END)
@@ -753,6 +928,10 @@ class Quiet:
                 # Fix 4: whoever saw only its end perceived it then, and their record is stamped at that minute.
                 "seen_at": {q: s["end"] for q in views if q != s["who"] and q not in s["seen_start"]
                             and q not in s["seen_leave"]}}))
+        for r in self.rain_events:
+            out.append((r["minute"], r["seq"], {
+                "minute": r["minute"], "kind": "rain", "actor": None, "witnesses": {q: "heard" for q in r["heard"]},
+                "views": {q: RAIN_VIEW for q in r["heard"]}, "text": "rain began"}))
         for n in self.need_events:
             out.append((n["minute"], n["seq"], {
                 "minute": n["minute"], "kind": "need", "need": n["need"], "stage": n["stage"], "actor": n["who"],
@@ -769,6 +948,8 @@ class Quiet:
                 "needs": self.needs_log,
                 "need_events": [{k: v for k, v in n.items() if k not in ("seq", "view")} for n in self.need_events],
                 "withdrawals": self.withdrawals, "log": self.log, "stretches": self.stretches, "cooled": self.cooled,
+                "rain": [{k: v for k, v in r.items() if k != "seq"} for r in self.rain_events],
+                "water": self.water_log, "thirst": self.thirst_log,
                 "asks": {"day": self.asks, "quiet": len(done),
                          "quiet_by_person": {q: sum(1 for a in done if a["who"] == q) for q in data.ORDER},
                          "quiet_let_through": len(self.quiet_asked)}}
@@ -795,10 +976,12 @@ def play(m, told=None):
             continue
         if q.step(minute):
             fired = [e for e in q.log if e["minute"] == minute and e["fired"]]
-            first = next((e for e in fired if e["kind"] == "Q5"), fired[0])
+            first = next((e for e in fired if e["kind"] in ("Q5", "Q6")), fired[0])
             stretch = {"start": minute, "end": None, "room": first["room"], "trigger": first["kind"]}
             if first["kind"] == "Q5":
                 q.begin(stretch, EVENING_ASKS, f"the evening's {EVENING_ASKS} asks are spent", reserved=True)
+            elif first["kind"] == "Q6":
+                q.begin(stretch, RAIN_ASKS, f"the rain's {RAIN_ASKS} asks are spent", reserved=True)
             else:
                 q.begin(stretch, STRETCH_ASKS, f"this stretch's {STRETCH_ASKS} asks are spent")
             continue

@@ -2314,6 +2314,9 @@ def without_blocks(prompt):
         if skipping and line.startswith("- "):
             continue
         skipping = False
+        if line.startswith("About water:") or line in world.W1_NOW or re.match(
+                r"^- (save_water|ration_water|collect_rain|rain_out): ", line):      # W1's lines (world_design §6)
+            continue
         if line.startswith(("About food:", "About the neighbour's house:", "About going there tonight:",
                             "About the street:",            # stage B's W5 line is in the trip block too
                             "About going out at night:")):  # and so is the outings line (facts_and_evening, fix 3)
@@ -2325,8 +2328,20 @@ def without_blocks(prompt):
             continue
         out.append(line.replace("Outside, and not to be gone to this morning:", "Outside, and not to be gone to:")
                    .replace("the street, the neighbour's house and the houses further along the street",
-                            "the street and the neighbour's house"))
+                            "the street and the neighbour's house")
+                   .replace(data.YARD[1], data.YARD[0]))                   # W1's yard, from day 3
     return "\n".join(out)
+
+
+def trimmed_to_the_end(prompt):
+    """Nothing left to trim: every line of the day was cut, and no more than four lines of the days before are left
+    (world.Morning.prompt_parts keeps the trip's own; reports/trip_design.md, §2.3)."""
+    lines = prompt.split("\n")
+    if "- (earlier things, left out here)" not in lines:
+        return False
+    i = lines.index("What you remember from the days before:")
+    back = [x for x in lines[i + 1:] if x.startswith("- Day ")]
+    return len(back) <= len(TRIP_DAY2) + 4
 
 
 def not_pairs(labels):
@@ -3001,7 +3016,14 @@ class NightTest(unittest.TestCase):
                                 1450 + TRIP_BLOCK_MAX + (MEMORY_HARD if CARRY_HEAD in p else 0))
             elif CARRY_HEAD in p:
                 day2_n += 1
-                self.assertLess(estimate_tokens(SYSTEM + without_blocks(p)), 1450)
+                bare = estimate_tokens(SYSTEM + without_blocks(p))
+                if bare >= 1450:
+                    # A quiet day's prompt can hold more than the budget that trimming cannot touch: meeting lines,
+                    # the turn's lines, grudges (reports/w1_impl.md). It must then have been trimmed to the end, and
+                    # stay under the run's bound (reports/days_v21.md, T2: 2600).
+                    self.assertTrue(trimmed_to_the_end(p), bare)
+                    self.assertLess(estimate_tokens(SYSTEM + p), 2600)
+                    continue
                 self.assertLess(estimate_tokens(SYSTEM + p), 1450 + TRIP_BLOCK_MAX + MEMORY_HARD)
         self.assertGreater(night_n, 0)
         self.assertGreater(day2_n, 0)
@@ -3734,8 +3756,10 @@ class DaysTest(unittest.TestCase):
         self.assertEqual(max(s["end"] for s in tr["day3"]["quiet"]["spans"]), 840)
         # The day's 40, and Q5's own 8 on top (reports/facts_and_evening.md, fix 5).
         evening = sum(s["asks"] for s in tr["day3"]["quiet"]["stretches"] if s["trigger"] == "Q5")
+        rain = sum(s["asks"] for s in tr["day3"]["quiet"]["stretches"] if s["trigger"] == "Q6")     # W1
         self.assertLessEqual(evening, 8)
-        self.assertLessEqual(meta["day3_quiet"]["day_asks"] - evening, 40)
+        self.assertLessEqual(rain, 8)
+        self.assertLessEqual(meta["day3_quiet"]["day_asks"] - evening - rain, 40)
         story = read(os.path.join(self.dirs.runs, "daniel_ate_it-seed1.md"))
         heads = ["# The night\n", "## What the night left in them\n", "# The next morning (day 5)\n",
                  "# The second night\n", "## What the night left in them\n", "# The third morning (day 6)\n"]
@@ -4843,9 +4867,10 @@ class QuietDayTest(unittest.TestCase):
         q = d.day3.quiet
         for pid, v in hand.items():
             self.assertAlmostEqual(q.fast(d.day3.people[pid], 0), v, places=9, msg=pid)
+        # Fasting in days (reports/world_design.md, §4.3.1): F1 from 24, F2 from 72.
         self.assertEqual({pid: self.quiet.fast_stage(q.fast(d.day3.people[pid], 0)) for pid in data.ORDER},
-                         {"daniel": 1, "elena": 0, "leo": 1, "mara": 0})
-        self.assertEqual([self.quiet.fast_stage(x) for x in (47.99, 48, 95.99, 96)], [0, 1, 1, 2])
+                         {"daniel": 1, "elena": 0, "leo": 1, "mara": 1})
+        self.assertEqual([self.quiet.fast_stage(x) for x in (23.99, 24, 71.99, 72)], [0, 1, 1, 2])
 
     def test_sleep_debt_at_day_3_0700_is_section_6s(self):
         d = self.v16()
@@ -4867,15 +4892,17 @@ class QuietDayTest(unittest.TestCase):
     def test_the_body_line_states_each_stage(self):
         d = self.v16()
         body = {pid: d.day3.inside_lines(d.day3.people[pid])[0] for pid in data.ORDER}
+        # Fasting in days (reports/world_design.md, §4.3.1): Daniel, Leo and Mara are past 24 hours (F1). Seed 2's
+        # day 3 is 18.4 °C indoors: nobody is cold.
         self.assertEqual(body, {
-            "daniel": "Your body: starving, and weak from it: standing up makes your head spin; and you have barely "
-                      "slept for nights; your eyes close on their own.",
+            "daniel": "Your body: starving; hunger comes in waves; and you have barely slept for nights; your eyes "
+                      "close on their own.",
             "elena": "Your body: starving, and you have hardly slept.",
-            "leo": "Your body: starving, and weak from it: standing up makes your head spin; and you have hardly "
-                   "slept.",
-            "mara": "Your body: starving, and you have hardly slept."})
+            "leo": "Your body: starving; hunger comes in waves; and you have hardly slept.",
+            "mara": "Your body: starving; hunger comes in waves; and you have hardly slept."})
         self.assertEqual(self.quiet.body_line("starving", 2, 0),
-                         "Your body: starving, and very weak: your legs shake when you stand.")
+                         "Your body: starving, for days now: you feel light and slow, and standing up fast greys your "
+                         "sight for a moment.")
         # Day 2 had no needs: its body line is as it was.
         self.assertTrue(all(p.needs is None for p in d.day2.people.values()))
 
@@ -5133,10 +5160,12 @@ class QuietDayTest(unittest.TestCase):
             q.set_debt(p, 10.0, 0)          # no one's debt crosses a line before 10:27
         mara = m.people["mara"]
         mara.room = "back_room"
-        # Mara's fasting reaches 48 at (48 / 0.95) hours after day 1, min 54: 10:25.6, so 10:27 on the grid.
+        # Mara's fasting reaches 72, light and slow (F2), at 10:25:30: 10:27 on the grid (fasting in days,
+        # reports/world_design.md §4.3.1; F1 at 24 asks nobody).
+        mara.needs["ate_at"] = self.quiet.absolute(3, 205.5) - 72 / 0.95 * 60
         self.assertEqual(q.tick(204), [])
         cross = q.tick(207)
-        self.assertEqual(cross, [("mara", "fast", 1)])
+        self.assertEqual(cross, [("mara", "fast", 2)])
         self.assertEqual(q.ask_q1(cross, 207), [])
         self.assertEqual((q.log[-1]["kind"], q.log[-1]["fired"], q.log[-1]["why"]), ("Q1", False, "alone"))
         # With Elena there, but resting: still alone.
@@ -5272,7 +5301,8 @@ class QuietDayTest(unittest.TestCase):
         self.assertGreaterEqual(len(stretches[1:]), 2, stretches)
         self.assertTrue(all(n <= 8 for n in counted[1:]), counted)
         self.assertEqual([s["asks"] for s in stretches], counted)
-        self.assertLessEqual(tr["asks"]["day"], 40)
+        own = sum(n for s, n in zip(stretches, counted) if s["trigger"] in ("Q5", "Q6"))     # their own 8 each
+        self.assertLessEqual(tr["asks"]["day"] - own, 40)
         self.assertEqual(tr["asks"]["day"], sum(counted))
         self.assertLessEqual(tr["asks"]["quiet"], 12)
 
@@ -5637,6 +5667,7 @@ class QuietDayTest(unittest.TestCase):
         chron.add_day(m)
         leo, dan = m.people["leo"], m.people["daniel"]
         leo.grudge("daniel").rise(600, "you were angry with Daniel", kind="angry")       # 17:00, an afternoon answer
+        leo.suspicion.target, leo.suspicion.strength = "daniel", 2      # so that a fall at night leaves it standing
         leo.suspected_at = [600]
         dan.guilt_events.append((600, "you let them blame Leo, at 17:00"))
         n3 = self.night.Night(m, d.oracle, number=3, house=chron.house_state()).run()
@@ -5772,13 +5803,13 @@ class QuietDayTest(unittest.TestCase):
         def r(t):
             return tuple(round(x, 4) for x in t)
         self.assertEqual(r(night.street_table(1)), (0.62, 0.14, 0.18, 0.06))
-        self.assertEqual(r(night.street_table(1, shift=night.body_shift(1, 0))), (0.60, 0.14, 0.18, 0.08))
-        self.assertEqual(r(night.street_table(1, shift=night.body_shift(2, 0))), (0.56, 0.14, 0.19, 0.11))
+        self.assertEqual(r(night.street_table(1, shift=night.body_shift(2, 0))), (0.60, 0.14, 0.18, 0.08))
+        self.assertEqual(r(night.street_table(1, shift=night.body_shift(3, 0))), (0.56, 0.14, 0.19, 0.11))
         self.assertEqual(r(night.street_table(1, shift=night.body_shift(0, 2))), (0.61, 0.14, 0.18, 0.07))
         self.assertEqual(r(night.street_table(1, far=True)), (0.45, 0.17, 0.23, 0.15))
         self.assertEqual(r(night.street_table(2, far=True)), (0.55, 0.15, 0.22, 0.08))
-        self.assertEqual(r(night.street_table(1, far=True, shift=night.body_shift(1, 0))), (0.41, 0.17, 0.23, 0.19))
-        weakest = night.group_shift([night.body_shift(2, 0), night.body_shift(0, 0)])
+        self.assertEqual(r(night.street_table(1, far=True, shift=night.body_shift(2, 0))), (0.41, 0.17, 0.23, 0.19))
+        weakest = night.group_shift([night.body_shift(3, 0), night.body_shift(0, 0)])
         self.assertEqual(r(night.street_table(2, shift=weakest)), (0.67, 0.12, 0.155, 0.055))
         # Night 3 follows a quiet day: Daniel's own shift, from his fasting and debt at bedtime, sets his table.
         d, m, n3, _ = self.night3({"daniel": "go_next_door"}, {**self.STILL, "trip:daniel": 0.6})
@@ -5888,15 +5919,15 @@ class QuietDayTest(unittest.TestCase):
 
         def r(t):
             return tuple(round(x, 4) for x in t)
-        self.assertEqual(r(night.street_table(1, shift=night.body_shift(1, 0))), (0.60, 0.14, 0.18, 0.08))
-        self.assertEqual(r(night.street_table(1, shift=night.body_shift(2, 0))), (0.56, 0.14, 0.19, 0.11))
+        self.assertEqual(r(night.street_table(1, shift=night.body_shift(2, 0))), (0.60, 0.14, 0.18, 0.08))
+        self.assertEqual(r(night.street_table(1, shift=night.body_shift(3, 0))), (0.56, 0.14, 0.19, 0.11))
         self.assertEqual(r(night.street_table(1, shift=night.body_shift(0, 2))), (0.61, 0.14, 0.18, 0.07))
-        self.assertEqual(r(night.street_table(1, shift=night.body_shift(2, 2))), (0.55, 0.14, 0.19, 0.12))
-        weakest = night.group_shift([night.body_shift(2, 0), night.body_shift(0, 0)])
+        self.assertEqual(r(night.street_table(1, shift=night.body_shift(3, 2))), (0.55, 0.14, 0.19, 0.12))
+        weakest = night.group_shift([night.body_shift(3, 0), night.body_shift(0, 0)])
         self.assertEqual(r(night.street_table(2, shift=weakest)), (0.67, 0.12, 0.155, 0.055))
         # Far: the full shift, as before.
-        self.assertEqual(r(night.street_table(1, far=True, shift=night.body_shift(1, 0))), (0.41, 0.17, 0.23, 0.19))
-        self.assertEqual(r(night.street_table(1, far=True, shift=night.body_shift(2, 2))), (0.31, 0.17, 0.25, 0.27))
+        self.assertEqual(r(night.street_table(1, far=True, shift=night.body_shift(2, 0))), (0.41, 0.17, 0.23, 0.19))
+        self.assertEqual(r(night.street_table(1, far=True, shift=night.body_shift(3, 2))), (0.31, 0.17, 0.25, 0.27))
         self.assertEqual(r(night.street_table(2, far=True, shift=weakest)), (0.49, 0.15, 0.23, 0.13))
 
     def test_the_suspicion_line_says_today_from_minute_90(self):
@@ -6016,12 +6047,15 @@ class QuietDayTest(unittest.TestCase):
         d, m, n3, day4, _ = self.far_day4({"trip_far:daniel": 0.0, "far_house:0": 0.1})
         g = n3.groups[0]
         self.assertEqual((g["far"], g["street"], g["found"], g["took"]), (True, "clean", 0, 0))
+        # W1 (amendment 2): every empty house holds some water (its cistern at least), and he carried some home.
+        w = self.night.water_words(g["water"])
         self.assertEqual(day4.street["daniel"], "About the street: you searched one house further along it last night, "
-                                                "and it held no food; " + self.FAR_REST)
+                                                f"and it held no food, and you brought back {w} of water; "
+                         + self.FAR_REST)
         seen = ("About the street: Daniel went further along it last night and came back with nothing; nobody knows "
                 "what is left in the houses further along, and they are further and more dangerous than next door.")
         for q in ("elena", "leo", "mara"):
-            self.assertEqual(day4.street[q], seen, q)
+            self.assertEqual(day4.street[q], seen.replace("with nothing", "with water"), q)
         mara = day4.people["mara"]
         self.assertIn("\n" + day4.street["mara"] + "\n", day4.prompt_for(mara, 0, day4.options_for(mara)))
         # Scared off before the door: the house sees the same; only Daniel knows he did not get in.
@@ -6052,11 +6086,12 @@ class QuietDayTest(unittest.TestCase):
         for q in data.ORDER:
             self.assertIn("\n" + expect[q] + "\n", beds[data.PEOPLE[q]["name"]], q)
         both = (out + "Daniel went to the neighbour's house the night before last and came back with nothing; Daniel "
-                      "went further along the street last night and came back with nothing.")
+                      "went further along the street last night and came back with water.")
+        w = self.night.water_words(n3.groups[0]["water"])          # W1: the house further along held water
         self.assertEqual({q: [x for x in day4.trip_lines(day4.people[q]) if x.startswith(out)] for q in data.ORDER}, {
             "daniel": [out + "you went to the neighbour's house the night before last, got inside and found no food; "
                              "you went further along the street last night, got inside a house there and found no "
-                             "food."],
+                             f"food, and brought back {w} of water."],
             "elena": [both], "leo": [both], "mara": [both]})
 
     def test_yesterdays_positions_are_named_as_said_yesterday_about_last_night(self):
@@ -6094,21 +6129,22 @@ class QuietDayTest(unittest.TestCase):
                "what is left in the houses further along, and they are further and more dangerous than next door.")
         d, m, n3, day4, _ = self.far_day4({"trip_far:daniel": 0.0, "far_house:0": 0.1})
         self.assertNotIn("daniel", n3.knows["elena"])
+        # W1 (amendment 2): the house he got into held water, and the house sees him carry it in.
         both = (out + "Daniel went to the neighbour's house the night before last and came back with nothing; Daniel "
-                      "went further along the street last night and came back with nothing.")
+                      "went further along the street last night and came back with water.")
         for q in ("elena", "leo", "mara"):
             self.assertTrue(day4.people[q].knows_empty, q)
             self.assertIn(both, day4.trip_lines(day4.people[q]), q)
-            self.assertEqual(day4.street[q], far, q)
+            self.assertEqual(day4.street[q], far.replace("with nothing", "with water"), q)
         elena = day4.people["elena"]
         self.assertIn("\n- volunteer_far: ", day4.prompt_for(elena, 0, day4.options_for(elena)))
         self.assertTrue(day4.street["daniel"].startswith("About the street: you searched one house further along it "
-                                                         "last night, and it held no food;"))
+                                                         "last night, and it held no food, and you brought back "))
         # Food came home: the house sees food, not what the house held, which only Daniel knows.
         d, m, n3, day4, _ = self.far_day4({"trip_far:daniel": 0.0, "far_house:0": 0.8})
-        self.assertEqual(day4.street["elena"], far.replace("came back with nothing", "came back with food"))
+        self.assertEqual(day4.street["elena"], far.replace("came back with nothing", "came back with food and water"))
         self.assertIn(out + "Daniel went to the neighbour's house the night before last and came back with nothing; "
-                            "Daniel went further along the street last night and came back with food.",
+                            "Daniel went further along the street last night and came back with food and water.",
                       day4.trip_lines(day4.people["elena"]))
         self.assertIn("it held 4 portions, all brought back", day4.street["daniel"])
         # Scared off before the door: the house sees him come back with nothing; only he knows he did not get in.
@@ -6155,56 +6191,51 @@ class QuietDayTest(unittest.TestCase):
         d.chron.add_night(n3)
         day4 = Morning.next_day(m, n3, d.oracle, chronicle=d.chron)
         line = {q: [x for x in day4.carry[q] if x.startswith(said)] for q in data.ORDER}
+        # W1 (amendment 2): the house he got into held water, which he carried home.
         self.assertEqual(line["leo"], [said + "Daniel offered to go further along the street (min 00); Elena said "
                                               "nobody should go (min 15); then Daniel went further along anyway and "
-                                              "came back with nothing."])
+                                              "came back with water."])
         self.assertEqual(line["elena"], [said + "Daniel offered to go further along the street (min 00); you said "
                                                 "nobody should go (min 15); then Daniel went further along anyway "
-                                                "and came back with nothing."])
+                                                "and came back with water."])
         self.assertEqual(line["daniel"], [said + "you offered to go further along the street (min 00); Elena said "
                                                  "nobody should go (min 15); then you went further along anyway and "
-                                                 "came back with nothing."])
+                                                 "came back with water."])
         # Nobody objected: no "anyway". Food came home: "with food".
         d, m, n3, _ = self.night3({"daniel": "go_further"}, {**self.STILL, "trip_far:daniel": 0.0, "far_house:0": 0.8},
                                   setup=self.heard(offer), react=self.let_go)
         day4 = Morning.next_day(m, n3, d.oracle, chronicle=d.chron)
         self.assertIn(said + "Daniel offered to go further along the street (min 00); then Daniel went further along "
-                             "and came back with food.", day4.carry["mara"])
+                             "and came back with food and water.", day4.carry["mara"])
         # Nobody went out.
         d, m, n3, _ = self.night3({}, self.STILL, setup=self.heard(offer, nobody))
         day4 = Morning.next_day(m, n3, d.oracle, chronicle=d.chron)
         self.assertIn(said + "Daniel offered to go further along the street (min 00); Elena said nobody should go "
                              "(min 15); then nobody went out.", day4.carry["leo"])
 
-    def test_a_third_fasting_stage_at_144(self):
-        """2: fasting's third stage at 144: its own body line (a situation, not an act), a Q1 crossing like the
-        others, and a street shift beyond very weak by the step from weak to very weak."""
+    def test_a_third_fasting_stage_at_168(self):
+        """Fasting in days (reports/world_design.md, §4.3.1, replacing reports/ten_days_prep.md's third stage at 144):
+        F3, thin and weak, at 168 (7 days); its body line states what effort costs; a Q1 crossing like the others; the
+        street shift of "very weak"."""
         quiet, night = self.quiet, self.night
-        self.assertEqual([quiet.fast_stage(x) for x in (95.99, 96, 143.99, 144, 300)], [1, 2, 2, 3, 3])
-        self.assertEqual(quiet.body_line("starving", 3, 0), "Your body: starving, and so weak you can barely stand: "
-                                                            "walking any distance feels impossible.")
-        step = tuple(b - a for a, b in zip(night.SHIFTS["weak"], night.SHIFTS["very weak"]))
-        third = night.body_shift(3, 0)
-        self.assertEqual(tuple(round(x, 4) for x in third),
-                         tuple(round(a + b, 4) for a, b in zip(night.SHIFTS["very weak"], step)))
-        self.assertEqual(tuple(round(x, 4) for x in third), (-0.20, 0.0, 0.04, 0.16))
-        self.assertEqual(tuple(round(x, 4) for x in night.body_shift(2, 0)), (-0.12, 0.0, 0.02, 0.10))
-        self.assertEqual(tuple(round(x, 4) for x in night.street_table(1, far=True, shift=third)),
-                         (0.25, 0.17, 0.27, 0.31))
-        # Leo last ate so long ago that he crosses 144 at 12:00 of day 3, in a quiet stretch: a Q1 check like others.
+        self.assertEqual([quiet.fast_stage(x) for x in (71.99, 72, 167.99, 168, 300)], [1, 2, 2, 3, 3])
+        self.assertEqual(quiet.body_line("starving", 3, 0), "Your body: starving, for days now: you are thin and weak; "
+                                                            "stairs and carrying things tire you fast.")
+        self.assertEqual(night.body_shift(3, 0), night.SHIFTS["very weak"])
+        self.assertEqual(tuple(round(x, 4) for x in night.body_shift(4, 0)), (-0.20, 0.0, 0.04, 0.16))
+        # Leo last ate so long ago that he crosses 168 at 12:00 of day 3, in a quiet stretch: a Q1 check like others.
         d = self.v16()
         m = d.day3
         leo = m.people["leo"]
-        leo.needs["ate_at"] = 2 * 1440 + 300 - 144 * 60
+        leo.needs["ate_at"] = 2 * 1440 + 300 - 168 * 60
         self.quiet.play(m)
         crossed = [e for e in m.quiet.need_events if (e["who"], e["need"], e["stage"]) == ("leo", "fast", 3)]
         self.assertEqual([e["minute"] for e in crossed], [300])
-        self.assertEqual(crossed[0]["view"], "You had grown so weak you could barely stand; walking any distance felt "
-                                             "impossible.")
+        self.assertEqual(crossed[0]["view"], "You had grown thin and weak: stairs and carrying things tired you fast.")
         q1 = [e for e in m.quiet.log if e["kind"] == "Q1" and (e["who"], e["need"], e["stage"]) == ("leo", "fast", 3)]
         self.assertEqual([e["minute"] for e in q1], [300])
-        self.assertTrue(m.inside_lines(leo)[0].startswith("Your body: starving, and so weak you can barely stand: "
-                                                          "walking any distance feels impossible; and "),
+        self.assertTrue(m.inside_lines(leo)[0].startswith("Your body: starving, for days now: you are thin and weak; "
+                                                          "stairs and carrying things tire you fast"),
                         m.inside_lines(leo)[0])
 
     def test_far_offers_read_as_offers_on_every_day(self):
@@ -6236,7 +6267,11 @@ class QuietDayTest(unittest.TestCase):
             def generate(self, system, prompt, schema=None):
                 self.prompts.append(prompt)
                 return super().generate(system, prompt, schema)
-        d = self.played(client=Kept(policy))
+        d = self.v16(client=Kept(policy))
+        # Fasting in days: Leo's reaches 72 (F2) at exactly 19:00 on day 3, so its Q1 would take Q5's minute. His last
+        # meal two hours earlier keeps it at 17:00.
+        d.day3.people["leo"].needs["ate_at"] -= 120
+        self.quiet.play(d.day3)
         m = d.day3
         entries = self.q5(m)
         self.assertEqual(len(entries), 1)
@@ -6286,6 +6321,571 @@ class QuietDayTest(unittest.TestCase):
         self.assertEqual([(e["fired"], e["why"]) for e in self.q5(m)], [(False, "no trip position today")])
         self.assertFalse([s for s in m.quiet.stretches if s["trigger"] == "Q5"])
 
+
+# ---------- W1, the physical layer (reports/world_design.md §1, §2, §3.1, §4.1-§4.3, §5 Q6, §6 W1, §7) ----------
+FORBIDS = re.compile(r"impossible|cannot|can't|unable|barely (stand|walk|move)", re.I)
+
+
+class PhysicalLayerTest(unittest.TestCase):
+    """W1: World owns the weather and the water; thirst, cold and fasting in days; rain heard and Q6; the yard and
+    the water acts; water in the houses next door and further along, fixed once, carried home. Every day-3 test
+    starts from v16 seed 2 as it was through night 2, replayed from cache/v16 with no API call."""
+    MODEL = QuietDayTest.MODEL
+    STILL = QuietDayTest.STILL
+    v16 = QuietDayTest.v16
+    played = QuietDayTest.played
+    night3 = QuietDayTest.night3
+
+    def setUp(self):
+        self.dirs = Dirs()
+        self.quiet = importlib.import_module("quiet")
+        self.night = importlib.import_module("night")
+        self.chron = importlib.import_module("chronicle")
+        self.mind = importlib.import_module("mind")
+        self.truth = importlib.import_module("truth")
+        self.weather = importlib.import_module("weather")
+        self.water = importlib.import_module("water")
+
+    def tearDown(self):
+        self.dirs.cleanup()
+
+    def at(self, k, minute):
+        return self.quiet.absolute(k, minute)
+
+    def rain(self, world, k, spells, **more):
+        """Day k's weather forced to these spells, (start, end) as day minutes, and mm each."""
+        world.weather.force(k, [(self.at(k, a), self.at(k, b), mm) for a, b, mm in spells], **more)
+
+    def dry(self, world, *days, **more):
+        for k in days:
+            world.weather.force(k, [], **more)
+
+    def silent(self):
+        return PolicyFake(lambda who, minute, opts: None)
+
+    def v16_forced(self, client=None, **days):
+        """v16 seed 2 to day 3, with day k's weather forced (days: d3=[(start, end, mm)], ...) before day 3 is set up,
+        so that a spell beginning at 07:00 is heard."""
+        real = self.quiet.world_of
+
+        def forced(chronicle):
+            w = real(chronicle)
+            for key, spells in days.items():
+                self.rain(w, int(key[1:]), spells)
+            return w
+        with mock.patch.object(self.quiet, "world_of", forced):
+            return self.v16(client=client)
+
+    # ---------- §1.2: World is never read while a prompt is built ----------
+    def test_world_cannot_be_read_while_a_prompt_is_built(self):
+        w = self.truth.World(2)
+        self.assertIsNotNone(w.weather)
+        with self.truth.prompting():
+            with self.assertRaises(self.truth.TruthLeak):
+                w.weather
+            with self.assertRaises(self.truth.TruthLeak):
+                w.store()
+        self.assertIsNotNone(w.store())
+        # The guard is on inside every prompt builder: a day prompt, a night prompt and the night mind's.
+        d = self.v16()
+        m = d.day3
+        leo = m.people["leo"]
+        self.assertIs(m.quiet.world, d.chron.world)
+        real = m.inside_lines
+
+        def leaky(p, today=False):
+            m.quiet.world.store()
+            return real(p, today)
+        with mock.patch.object(m, "inside_lines", leaky):
+            with self.assertRaises(self.truth.TruthLeak):
+                m.prompt_for(leo, 30, m.options_for(leo))
+            with self.assertRaises(self.truth.TruthLeak):
+                m.prompt_for(leo, None, [Option("sleep", "go to sleep")], night=["Now it is night."])
+        mind = self.mind.NightMind(d.n2, d.chron, d.oracle)
+        with mock.patch.object(type(d.n2.m), "inside_lines", lambda self_, p, today=False: [d.chron.world.weather]):
+            with self.assertRaises(self.truth.TruthLeak):
+                mind.prompt_for(d.n2.m.people["leo"])
+        m.prompt_for(leo, 30, m.options_for(leo))           # and without the leak, it builds
+
+    def test_a_ten_day_fake_run_never_reads_world_in_a_prompt(self):
+        """The guard is on for the whole run; litres in a prompt are only what an eye sees (multiples of 5); no body
+        line forbids an act."""
+        (meta, code), out = fake_morning(self.dirs, seed=2, days=10)
+        self.assertEqual(code, 0, out[-3000:])
+        prompts = cached_prompts(self.dirs)
+        self.assertTrue([p for p in prompts if "About water:" in p])
+        for p in prompts:
+            for n in re.findall(r"(\d+(?:\.\d+)?) litres", p):
+                self.assertEqual(float(n) % 5, 0, (n, p[:200]))
+            for line in p.splitlines():
+                if line.startswith("Your body:"):
+                    self.assertIsNone(FORBIDS.search(line), line)
+
+    # ---------- §4.1: the weather ----------
+    def test_the_weather_is_seeded_by_string_and_follows_the_kew_normals(self):
+        W = self.weather.Weather
+        self.assertEqual(W(2).day(5), W(2).day(5))
+        self.assertNotEqual([W(2).day(k)["wet"] for k in range(1, 31)], [W(3).day(k)["wet"] for k in range(1, 31)])
+        self.assertAlmostEqual(self.weather.wet_chance(1), (8.4 / 30 + 10.9 / 31) / 2, delta=0.02)
+        days = [W(s).day(k) for s in range(1, 401) for k in range(1, 11)]
+        wet = [x for x in days if x["wet"]]
+        self.assertAlmostEqual(len(wet) / len(days), 0.32, delta=0.04)
+        self.assertAlmostEqual(sum(x["mm"] for x in wet) / len(wet), 6.2, delta=0.6)
+        pairs = [(W(s).day(k)["wet"], W(s).day(k + 1)["wet"]) for s in range(1, 401) for k in range(1, 10)]
+        ww = [b for a, b in pairs if a]
+        self.assertAlmostEqual(sum(ww) / len(ww), 0.5, delta=0.06)
+        for x in days:
+            self.assertGreater(x["tmax"], x["tmin"])
+            self.assertAlmostEqual(x["indoor"], (x["tmax"] + x["tmin"]) / 2 + 4, places=9)
+            self.assertAlmostEqual(sum(mm for _, _, mm in x["spells"]), x["mm"] if x["wet"] else 0, places=9)
+            for a, b, _ in x["spells"]:
+                self.assertTrue(a % 3 == 0 and b % 3 == 0 and 120 <= b - a <= 360, (a, b))
+
+    # ---------- §4.2: the water ----------
+    def test_the_store_at_day_3_0700_is_105_5_litres_of_tap_water(self):
+        d = self.v16()
+        w = d.day3.quiet.world
+        s = w.store()
+        hand = 196.5 - 24 * (2 * 1440 + 2580) / 1440           # filled on house day 1; dry from house day 2, 12:00
+        self.assertAlmostEqual(hand, 105.5, places=9)
+        self.assertAlmostEqual(s["tap"], 105.5, places=6)
+        self.assertEqual((s["rain"], w.level, w.bin_out), (0, "as_before", False))
+        self.assertEqual({q: w.deficit[q] for q in data.ORDER}, {q: 0.0 for q in data.ORDER})
+        self.assertIsNone(w.places["neighbour"])            # night 2 took no water, and nobody knows of it
+
+    def test_each_level_uses_its_litres_a_day(self):
+        for level, litres in (("as_before", 24), ("careful", 10), ("rationed", 5)):
+            w = self.truth.World(2)
+            self.dry(w, *range(1, 11))
+            w.advance_to(self.at(3, 0), data.ORDER)
+            w.set_level(level, self.at(3, 0), "elena")
+            before = w.store()["tap"]
+            w.advance_to(self.at(4, 0), data.ORDER)
+            self.assertAlmostEqual(before - w.store()["tap"], litres, places=6, msg=level)
+            self.assertEqual(w.deficit, {q: 0.0 for q in data.ORDER})
+
+    def test_thirst_grows_only_without_water_and_its_stages_are_2_5_8_10_percent(self):
+        self.assertEqual([self.water.thirst_stage(x, 100) for x in (1.99, 2, 4.99, 5, 7.99, 8, 9.99, 10, 20)],
+                         [0, 1, 1, 2, 2, 3, 3, 4, 4])
+        w = self.truth.World(2)
+        self.dry(w, *range(1, 11))
+        w.advance_to(self.at(3, 0), data.ORDER)
+        w.tap = 0.0
+        w.advance_to(self.at(4, 0), data.ORDER)
+        self.assertAlmostEqual(w.deficit["leo"], 1.2, places=6)
+        # Leo, 70 kg: 2% is 1.4 litres, at 1.2 a day: 1680 minutes after the water ran out.
+        self.assertEqual(w.thirst_stage("leo"), 0)
+        w.advance_to(self.at(3, 0) + 1680, data.ORDER)
+        self.assertEqual(w.thirst_stage("leo"), 1)
+        # Water comes in: the thirsty drink what they lack at once.
+        w.receive(10.0)
+        w.advance_to(self.at(3, 0) + 1681, data.ORDER)
+        self.assertEqual(w.deficit, {q: 0.0 for q in data.ORDER})
+        self.assertLess(w.store()["tap"], 10.0 - 4 * 1.4 + 0.1)
+
+    def test_the_about_water_line_says_what_an_eye_sees(self):
+        d = self.v16()
+        m = d.day3
+        line = next(x for x in m.inside_lines(m.people["mara"]) if x.startswith("About water:"))
+        self.assertEqual(line, "About water: the bath holds about 60 litres and the pans, kettle, bottles and buckets "
+                               "in the kitchen about 45 litres: tap water stored before the taps ran dry. It is also "
+                               "used to flush the toilet and to wash.")
+        self.assertFalse([x for x in d.day2.inside_lines(d.day2.people["mara"]) if x.startswith("About water:")])
+        self.assertEqual(self.water.describe({"tap": 0.0, "rain": 0.0}, "careful", "since 10:21", None, False),
+                         "About water: the bath and the pans are empty: no stored tap water is left. Since 10:21, none "
+                         "of it goes on the toilet or on washing.")
+        self.assertEqual(self.water.describe({"tap": 30.0, "rain": 87.0}, "rationed", "since yesterday", "you", True),
+                         "About water: the bath is empty and the pans, kettle, bottles and buckets in the kitchen hold "
+                         "about 30 litres: tap water stored before the taps ran dry. Since yesterday, you share it out "
+                         "by the cup: five cups each a day. The bin under the drainpipe in the yard holds about 90 "
+                         "litres of rain water.")
+
+    # ---------- §4.3: the body ----------
+    def test_fasting_stages_are_in_days(self):
+        q = self.quiet
+        self.assertEqual([q.fast_stage(x) for x in (23.99, 24, 71.99, 72, 167.99, 168, 335.99, 336, 671.99, 672)],
+                         [0, 1, 1, 2, 2, 3, 3, 4, 4, 5])
+        self.assertEqual(q.body_line("starving", 3, 0),
+                         "Your body: starving, for days now: you are thin and weak; stairs and carrying things tire "
+                         "you fast.")
+        self.assertEqual(q.body_line("starving", 2, 1, thirst=1, cold=True),
+                         "Your body: starving, for days now: you feel light and slow, and standing up fast greys your "
+                         "sight for a moment; you are thirsty, and your mouth is dry; you feel cold, even indoors; and "
+                         "you have hardly slept.")
+        # The street shifts follow: light and slow (F2) is "weak", F3 "very weak", F4 and on "barely standing".
+        n = self.night
+        self.assertEqual(n.body_shift(1, 0), (0.0, 0.0, 0.0, 0.0))
+        self.assertEqual(n.body_shift(2, 0), n.SHIFTS["weak"])
+        self.assertEqual(n.body_shift(3, 0), n.SHIFTS["very weak"])
+        self.assertEqual(n.body_shift(4, 0), n.SHIFTS["barely standing"])
+        self.assertEqual(n.body_shift(5, 0), n.SHIFTS["barely standing"])
+
+    def test_no_body_line_forbids_an_act(self):
+        for fast in range(6):
+            for debt in range(3):
+                for thirst in range(5):
+                    for cold in (False, True, "wet"):
+                        line = self.quiet.body_line("starving", fast, debt, thirst=thirst, cold=cold)
+                        self.assertIsNone(FORBIDS.search(line), line)
+        self.assertFalse([v for v in self.quiet.NEED_VIEWS.values() if FORBIDS.search(v)])
+
+    def test_cold_at_f2_under_18_indoors_and_wet_after_the_yard(self):
+        d = self.v16()
+        m, q = d.day3, d.day3.quiet
+        w = q.world
+        self.dry(w, 3, indoor=17.0)
+        leo, elena = m.people["leo"], m.people["elena"]
+        leo.needs["ate_at"] = self.at(3, 0) - 80 * 60          # 80 hours: F2
+        elena.needs["ate_at"] = self.at(3, 0) - 30 * 60        # F1
+        q.tick(3)
+        self.assertIs(leo.needs["cold"], True)
+        self.assertIs(elena.needs["cold"], False)
+        self.dry(w, 3, indoor=19.0)
+        q.tick(6)
+        self.assertIs(leo.needs["cold"], False)
+        w.wet_until["elena"] = self.at(3, 6) + 120
+        q.tick(9)
+        self.assertEqual(elena.needs["cold"], "wet")
+        self.assertIn("you are wet and cold", m.inside_lines(elena)[0])
+        q.tick(126)
+        self.assertIs(elena.needs["cold"], False)
+
+    # ---------- §3.1, §4.1, §5: rain heard, and Q6 ----------
+    def test_rain_in_a_quiet_stretch_reaches_everyone_awake_and_q6_plays_their_room(self):
+        d = self.v16(client=self.silent())
+        m, q = d.day3, d.day3.quiet
+        self.rain(q.world, 3, [(300, 420, 6.0)])
+        self.quiet.play(m)
+        q6 = [e for e in q.log if e["kind"] == "Q6"]
+        self.assertEqual(len(q6), 1, q6)
+        e = q6[0]
+        self.assertEqual((e["minute"], e["fired"]), (300, True), e)
+        awake = [p for ids in e["awake"].values() for p in ids]
+        self.assertTrue(awake)
+        for pid in data.ORDER:
+            heard = (300, self.quiet.RAIN_HEARD) in m.people[pid].memory
+            self.assertEqual(heard, pid in awake, pid)
+        room = max(e["awake"], key=lambda r: (len(e["awake"][r]), -list(data.ROOMS).index(r)))
+        self.assertEqual(e["room"], room)
+        self.assertEqual(sorted(e["asked"]), sorted(e["awake"][room]))
+        st = next(s for s in q.stretches if s["trigger"] == "Q6")
+        self.assertTrue(0 < st["asks"] <= 8, st)
+        rain = [x for x in q.items() if x["kind"] == "rain"]
+        self.assertEqual([(x["minute"], x["witnesses"]) for x in rain], [(300, {p: "heard" for p in awake})])
+        asked = [x for rec in m.log for x in rec["decisions"] if x.get("quiet") == "Q6"]
+        self.assertEqual(sorted(x["person"] for x in asked), sorted(e["asked"]))
+
+    def test_q6_once_a_day_and_rain_in_played_turns_is_a_trigger(self):
+        d = self.v16_forced(client=self.silent(), d3=[(0, 120, 2.0), (300, 420, 2.0), (600, 720, 2.0)])
+        m, q = d.day3, d.day3.quiet
+        self.quiet.play(m)
+        q6 = [e for e in q.log if e["kind"] == "Q6"]
+        self.assertEqual([(e["minute"], e["fired"]) for e in q6], [(0, False), (300, True), (600, False)])
+        self.assertEqual(q6[0]["why"], "the house was already talking")
+        self.assertEqual(q6[2]["why"], "Q6 has fired today already")
+        first = [x for rec in m.log if rec["minute"] == 0 for x in rec["decisions"]]
+        self.assertTrue(first)
+        for x in first:
+            self.assertIn(self.quiet.RAIN_TRIGGER, x["triggers"], x)
+
+    def test_a_prompt_while_it_rains_says_so(self):
+        d = self.v16()
+        m, q = d.day3, d.day3.quiet
+        self.rain(q.world, 3, [(30, 150, 3.0)])
+        q.tick(33)
+        leo = m.people["leo"]
+        self.assertIn("\n- Rain is falling: you hear it on the roof and against the boards.\n",
+                      m.prompt_for(leo, 11, m.options_for(leo)))
+        q.tick(153)
+        self.assertNotIn("Rain is falling", m.prompt_for(leo, 51, m.options_for(leo)))
+
+    # ---------- the yard (amendment 3) and the water acts ----------
+    def test_the_back_door_and_the_yard_from_day_3_only(self):
+        d = self.v16()
+        yard = ("the counter, the dry taps and the back door to the yard; the yard behind the kitchen, small and "
+                "walled, with the drainpipe and the bin;")
+        p3 = d.day3.prompt_for(d.day3.people["leo"], 30, d.day3.options_for(d.day3.people["leo"]))
+        self.assertIn(yard, p3)
+        self.assertNotIn("stove", p3)
+        for m in (d.day1, d.day2):
+            p = m.prompt_for(m.people["leo"], 5, m.options_for(m.people["leo"]))
+            self.assertNotIn("yard", p)
+        night = d.day3.prompt_for(d.day3.people["leo"], None, [Option("sleep", "go to sleep")], night=["Now."])
+        self.assertIn(yard, night)
+
+    def test_collect_rain_sets_the_bin_under_the_drainpipe_and_it_fills_by_catchment(self):
+        def policy(who, minute, opts):
+            return "collect_rain" if "collect_rain" in opts else None
+        d = self.v16(client=PolicyFake(policy))
+        m, q = d.day3, d.day3.quiet
+        w = q.world
+        self.rain(w, 3, [(300, 420, 6.0)])
+        self.quiet.play(m)
+        acts = [a for turn in m.transcript["turns"] for a in turn["acts"] if a["option"] == "collect_rain"]
+        self.assertEqual(len(acts), 1, acts)
+        a = acts[0]
+        who = a["who"]
+        self.assertEqual(a["minute"], 300)           # Q6: whoever is awake hears it begin and is asked
+        self.assertTrue(w.bin_out)
+        self.assertAlmostEqual(w.caught, self.water.CATCH * 6.0 / 120 * (420 - a["minute"]), places=6)
+        self.assertEqual(self.water.CATCH, 25 * 0.85)
+        self.assertEqual(w.wet_until[who], self.at(3, a["minute"]) + 120)
+        for q_ in a["audience"]:
+            self.assertIn((a["minute"], f"{data.PEOPLE[who]['name']} goes out the back door into the rain and sets "
+                                        f"the bin under the drainpipe in the yard."), m.people[q_].memory)
+        self.assertNotIn("collect_rain", [o.id for o in m.options_for(m.people[who])])
+        d.chron.add_day(m)
+        self.assertEqual([e["actor"] for e in d.chron.events if e["kind"] == "collect_rain"], [who])
+
+    def test_save_and_ration_water_set_the_level_from_when_they_are_said(self):
+        def policy(who, minute, opts):
+            if who == "elena" and "save_water" in opts and minute == 0:
+                return "save_water"
+            if who == "leo" and "ration_water" in opts and minute == 3:
+                return "ration_water"
+        d = self.v16(client=PolicyFake(policy))
+        m, q = d.day3, d.day3.quiet
+        w = q.world
+        q.turn(0)
+        self.assertEqual((w.level, w.level_since), ("careful", self.at(3, 0)))
+        mara = m.people["mara"]
+        self.assertNotIn("save_water", [o.id for o in m.options_for(mara)])
+        self.assertIn("ration_water", [o.id for o in m.options_for(mara)])
+        q.turn(1)
+        self.assertEqual((w.level, w.holder), ("rationed", "leo"))
+        line = next(x for x in m.inside_lines(mara) if x.startswith("About water:"))
+        self.assertIn("Since min 03, Leo shares it out by the cup: five cups each a day.", line)
+        self.assertNotIn("ration_water", [o.id for o in m.options_for(mara)])
+        heard = [t for mm, t in mara.memory if mm == 3]
+        self.assertTrue(any("the water must be shared out by the cup" in t for t in heard), heard)
+
+    # ---------- water next door and further along (amendment 2) ----------
+    def neighbour_water(self, seed, place="neighbour"):
+        bath = 150.0 if random.Random(f"{seed}:world:water:{place}:bath").random() < 0.5 else 0.0
+        bottles = 1.5 * random.Random(f"{seed}:world:water:{place}:bottles").randint(0, 4)
+        return {"bath": bath, "cistern": 6.0, "bottles": bottles}
+
+    def test_the_neighbours_water_is_fixed_when_first_needed_and_carried_home(self):
+        bed = {"daniel": "go_next_door", "leo": "lie_awake"}
+        d, m, n3, _ = self.night3(bed, {**self.STILL, "trip:daniel": 0.1})
+        w = m.quiet.world
+        g = n3.groups[0]
+        self.assertEqual(g["street"], "clean")
+        want = self.neighbour_water(2)
+        self.assertEqual(w.places["neighbour"]["held"], want)
+        self.assertEqual(w.fixed["neighbour_water"]["value"], want)
+        total = sum(want.values())
+        take = min(total, self.water.CARRY)
+        self.assertEqual(g["water"], take)
+        self.assertAlmostEqual(w.places["neighbour"]["left"], total - take, places=9)
+        words = self.night.water_words(take)
+        self.assertIn(f"and put {words} of water in the kitchen.", " ".join(n3.lines["daniel"]))
+        d.chron.add_night(n3)
+        day4 = Morning.next_day(m, n3, d.oracle, chronicle=d.chron)
+        dan, leo = day4.people["daniel"], day4.people["leo"]
+        self.assertIn(f"The water you brought back is in the kitchen: {words}.", dan.sure[0])
+        self.assertIn(f"In the kitchen there is water that was not there last night: {words}. So someone brought water "
+                      f"into the house in the night.", leo.sure[0])
+        self.assertIn(f"brought back {words} of water", day4.neighbour["daniel"])
+        self.assertAlmostEqual(day4.quiet.world.received[-1][1], take, places=9)
+        self.assertIn("came back with water", day4.neighbour["leo"])
+        self.assertIn("came back with water", day4.outings["leo"])
+
+    def test_a_house_further_along_holds_water_fixed_once(self):
+        d, m, n3, _ = self.night3({"daniel": "go_further"}, {**self.STILL, "trip_far:daniel": 0.1})
+        w = m.quiet.world
+        g = n3.groups[0]
+        self.assertEqual(g["street"], "clean")
+        held = w.places["far"][0]["held"]
+        self.assertEqual(held, self.neighbour_water(2, "far:0"))
+        self.assertEqual(g["water"], min(sum(held.values()), self.water.CARRY))
+        self.assertEqual(w.fixed["far_house_0_water"]["value"], held)
+
+    def test_nights_1_and_2_took_no_water(self):
+        d = self.v16()
+        self.assertEqual([g.get("water") for g in d.n2.groups], [None])
+        self.assertIsNone(d.day3.quiet.world.places["neighbour"])
+        self.assertNotIn("water", d.day3.neighbour["leo"])
+
+    # ---------- the night ----------
+    def test_the_bedtime_rain_option_and_rain_masking_the_front_door(self):
+        def setup(m):
+            self.rain(m.quiet.world, 3, [(780, 1260, 4.0)])        # 20:00 to 04:00
+            m.quiet.tick(840)
+        bed = {"daniel": "go_next_door", "elena": "rain_out"}
+        d, m, n3, client = self.night3(bed, {**self.STILL, "door:daniel:elena": 0.2, "trip:daniel": 0.1},
+                                       setup=setup)
+        w = m.quiet.world
+        self.assertEqual(n3.choices["elena"], "rain_out")
+        self.assertTrue(w.bin_out)
+        self.assertTrue(n3.rainy)
+        elena_bed = next(p for p in client.prompts if p.startswith("You are Elena,") and "- sleep:" in p)
+        self.assertIn("It is raining: you hear it on the roof.", elena_bed)
+        self.assertIn("- rain_out: set the bin under the drainpipe in the yard to catch the rain, then go to sleep",
+                      elena_bed)
+        door = [x for x in n3.noticing if x["who"] == "elena" and x["how"] == "front door"]
+        self.assertEqual([(x["under"], x["noticed"]) for x in door],
+                         [(round(self.night.wake_door("elena") * self.night.RAIN_MASK, 4), False)])
+        self.assertEqual(self.quiet.night_payback("rain_out", True), 6)
+
+        def dry(m):
+            self.dry(m.quiet.world, 3, 4)
+        d, m, n3, client = self.night3({"daniel": "go_next_door", "elena": "sleep"},
+                                       {**self.STILL, "door:daniel:elena": 0.2, "trip:daniel": 0.1}, setup=dry)
+        self.assertFalse(n3.rainy)
+        door = [x for x in n3.noticing if x["who"] == "elena" and x["how"] == "front door"]
+        self.assertEqual([x["noticed"] for x in door], [True])
+        elena_bed = next(p for p in client.prompts if p.startswith("You are Elena,") and "- sleep:" in p)
+        self.assertNotIn("rain_out", elena_bed)
+
+    # ---------- the run prints what DONE 3 asks ----------
+    def test_a_run_prints_the_weather_the_water_the_stages_and_every_q6(self):
+        (meta, code), out = fake_morning(self.dirs, seed=2, days=4)
+        self.assertEqual(code, 0, out[-2000:])
+        for k in range(1, 5):
+            self.assertRegex(out, rf"\n  weather day {k}: (dry|wet, [\d.]+ mm)")
+        for k in (3, 4):
+            self.assertRegex(out, rf"\n  day {k} 07:00 water: tap [\d.]+ L")
+            self.assertRegex(out, rf"\n  day {k} 21:00 stages: Daniel F\d T\d")
+        self.assertIn("q6_fired", meta["day3_quiet"])
+
+    # ---------- rules added while building (reports/w1_impl.md) ----------
+    def test_w1_lines_sit_outside_the_budget_and_cut_no_memory_line(self):
+        d = self.v16()
+        m = d.day3
+        leo = m.people["leo"]
+        leo.memory += [(0, f"filler line number {i} " + "about nothing much at all " * 12) for i in range(200)]
+        self.rain(m.quiet.world, 3, [(0, 120, 2.0)])
+        m.quiet.sense(30)
+        self.assertIsNotNone(leo.rain_since)
+        with_w1 = m.prompt_for(leo, 10, m.options_for(leo))
+        water_seen, leo.water, leo.rain_since = leo.water, None, None
+        plain = m.prompt_for(leo, 10, m.options_for(leo))
+        leo.water = water_seen
+
+        def kept(prompt):
+            lines = prompt.split("\n")
+            return lines[lines.index("What else happened this morning, most recent last:"):
+                         next(i for i, x in enumerate(lines) if x.startswith("Now, "))]
+        self.assertIn("About water:", with_w1)
+        self.assertIn("- Rain is falling:", with_w1)
+        self.assertIn("- (earlier things, left out here)", kept(plain))
+        self.assertEqual(kept(with_w1), kept(plain))
+
+    def test_q1_asks_when_thirst_reaches_badly_thirsty(self):
+        d = self.v16()
+        m, q = d.day3, d.day3.quiet
+        w = q.world
+        for p in m.people.values():
+            p.room = "kitchen"
+        w.tap = 0.0
+        w.deficit["leo"] = 0.05 * self.water.MASS["leo"] - 0.01         # 0.01 litres short of 5%: T1
+        q.tick(3)
+        self.assertEqual(m.people["leo"].needs["thirst_stage"], 1)
+        cross = q.tick(30)                                             # 1.2 a day: 0.025 litres in 30 minutes
+        self.assertIn(("leo", "thirst", 2), cross)
+        fired = q.ask_q1(cross, 30)
+        self.assertEqual([(f["kind"], f["asked"], f["need"], f["stage"]) for f in fired if f["asked"] == "leo"],
+                         [("Q1", "leo", "thirst", 2)])
+        self.assertIn("you are badly thirsty", m.inside_lines(m.people["leo"])[0])
+
+    def test_the_chronicle_keeps_the_water_fixed_once(self):
+        d, m, n3, _ = self.night3({"daniel": "go_next_door"}, {**self.STILL, "trip:daniel": 0.1})
+        d.chron.add_night(n3)
+        f = d.chron.fixed["neighbour_water"]
+        self.assertEqual((f["value"], f["scene"]), (self.neighbour_water(2), "N3"))
+
+    def test_the_story_shows_rain_and_q6(self):
+        story = importlib.import_module("story")
+        d = self.v16(client=self.silent())
+        m = d.day3
+        self.rain(m.quiet.world, 3, [(300, 420, 6.0)])
+        self.quiet.play(m)
+        text = story.render_day2(m)
+        self.assertIn("- 12:00: rain begins (heard by ", text)
+        self.assertIn("- 12:00: **Q6**, rain began: ", text)
+
+    # ---------- W1 fixes (reports/w1_fixes.md) ----------
+    def test_eating_on_a_quiet_day_resets_fasting_at_that_minute(self):
+        """Fix 1: eat, eat_given and share reset the eater's fasting at the minute they eat; their next body line
+        follows. Daniel, Leo and Mara are at F1 at 07:00 on day 3; someone gets Leo F2 first (80 hours)."""
+        quiet = self.quiet
+
+        def case(policy, food_due=None):
+            d = self.v16(client=PolicyFake(policy))
+            m = d.day3
+            m.portions = 3
+            m.people["leo"].needs["ate_at"] = self.at(3, 0) - 80 * 60
+            m.quiet.tick(0)
+            self.assertEqual(m.people["leo"].needs["fast_stage"], 2)
+            if food_due:
+                with mock.patch.object(type(m), "food_due", lambda self_, p, t: p.id == food_due and t == 0):
+                    m.quiet.turn(0)
+            else:
+                m.quiet.turn(0)
+            return m
+
+        def fasting_words(line):
+            return any(w for k, w in quiet.FAST_WORDS.items() if w.lstrip(",; ") in line)
+
+        # eat: Leo eats at min 00.
+        m = case(lambda who, minute, opts: "eat" if who == "leo" and minute == 0 else None)
+        leo = m.people["leo"]
+        self.assertIn("eat", [a["option"] for a in m.transcript["turns"][0]["acts"] if a["who"] == "leo"])
+        self.assertEqual(leo.needs["ate_at"], self.at(3, 0))
+        self.assertEqual(leo.needs["fast_stage"], 0)
+        self.assertAlmostEqual(m.quiet.fast(leo, 3), 3 / 60 * 1.0, places=9)
+        self.assertFalse(fasting_words(m.inside_lines(leo)[0]), m.inside_lines(leo)[0])
+        # share: Mara shares out the shelf at min 00; everyone in the kitchen with her has their part.
+        m = case(lambda who, minute, opts: "share" if who == "mara" and minute == 0 else None)
+        acts = [a for a in m.transcript["turns"][0]["acts"] if a["option"] == "share"]
+        self.assertEqual([a["who"] for a in acts], ["mara"])
+        eaters = ["mara"] + acts[0]["audience"]
+        for q in eaters:
+            self.assertEqual(m.people[q].needs["ate_at"], self.at(3, 0), q)
+            self.assertEqual(m.people[q].needs["fast_stage"], 0, q)
+            self.assertFalse(fasting_words(m.inside_lines(m.people[q])[0]), q)
+        # eat_given: at a food moment Elena hands Leo a portion, and he eats it.
+        def given(who, minute, opts):
+            if who == "elena" and "give_leo" in opts:
+                return "give_leo"
+            if who == "leo" and "eat_given" in opts:
+                return "eat_given"
+        m = case(given, food_due="elena")
+        leo = m.people["leo"]
+        self.assertIn("eat_given", [a["option"] for a in m.transcript["turns"][0]["acts"] if a["who"] == "leo"])
+        self.assertEqual((leo.needs["ate_at"], leo.needs["fast_stage"]), (self.at(3, 0), 0))
+        # The next morning counts from that meal, as before (the chronicle's eat events).
+        self.assertEqual(self.quiet.last_meals(self.chron.Chronicle(2, "daniel"), "daniel")["leo"], self.quiet.BEFORE_DAY_1)
+
+    def test_a_water_haul_from_next_door_still_tells_the_house_it_has_no_food(self):
+        """Fix 2: a trip next door that brought water and no food: everyone knows next door is empty of food, so the
+        far options stay; every line says what came home, the block C line of an older night included."""
+        memory = importlib.import_module("memory")
+        bed = {"daniel": "go_next_door", "leo": "lie_awake"}
+        d, m, n3, _ = self.night3(bed, {**self.STILL, "trip:daniel": 0.1})
+        g = n3.groups[0]
+        self.assertEqual((g["street"], g["took"]), ("clean", 0))
+        self.assertGreater(g["water"], 0)
+        self.assertEqual(g["outcome"], "back with water")
+        d.chron.add_night(n3)
+        day4 = Morning.next_day(m, n3, d.oracle, chronicle=d.chron)
+        self.assertEqual({q: p.knows_empty for q, p in day4.people.items()}, {q: True for q in data.ORDER})
+        for q in data.ORDER:
+            p = day4.people[q]
+            self.assertIn("\n- volunteer_far: ", day4.prompt_for(p, 0, day4.options_for(p)), q)
+        self.assertIn("came back with water", day4.neighbour["elena"])
+        self.assertIn(f"brought back {self.night.water_words(g['water'])} of water", day4.neighbour["daniel"])
+        street = [e for e in d.chron.events if e["scene"] == "N3" and e["kind"] == "street"]
+        self.assertEqual([e["outcome"] for e in street], ["back with water"])
+        went = [e for e in d.chron.events if e["scene"] == "N3" and e["kind"] == "went_out"]
+        line = memory.person_line(d.chron, "leo", "daniel", "went_out", None, went, 8)      # seen from day 5
+        self.assertEqual(line, "The night before last, Daniel went out to the neighbour's house and came back with "
+                               "water.")
+        # Food and water: the outcome says both.
+        self.assertEqual(self.night.outcome_class("clean", 2, 10.0), "back with food and water")
+        self.assertEqual(self.night.outcome_class("scare_back", 0, 10.0), "back shaken, with water")
+        self.assertEqual(self.night.outcome_class("scare_back", 0), "back shaken, with nothing")
 
 if __name__ == "__main__":
     unittest.main()

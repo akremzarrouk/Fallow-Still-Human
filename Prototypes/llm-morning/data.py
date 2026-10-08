@@ -139,6 +139,18 @@ HOUSE_THINGS = (
     "between the rooms; the front door and the front windows, boarded up. Outside, and not "
     "to be gone to: the street and the neighbour's house. Do not mention any other object "
     "or place.")
+# W1 (reports/world_design.md, §6, amendment 3): from day 3, the kitchen has a back door to a small walled yard with
+# the drainpipe and the bin. There is no stove.
+YARD = ("the counter and the dry taps;",
+        "the counter, the dry taps and the back door to the yard; the yard behind the kitchen, small and walled, with "
+        "the drainpipe and the bin;")
+assert HOUSE_THINGS.count(YARD[0]) == 1
+
+
+def with_yard(house_things):
+    return house_things.replace(*YARD)
+
+
 # After the trip concern starts (reports/trip_design.md, §2.2): the trip the options speak of is
 # tonight, and nobody goes out this morning.
 HOUSE_THINGS_AFTER_TRIP = HOUSE_THINGS.replace("Outside, and not to be gone to:",

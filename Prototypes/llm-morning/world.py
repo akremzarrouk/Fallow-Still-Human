@@ -109,9 +109,19 @@ KIND_DONE = {   # what a run of one kind of act looks like, told to the person w
     "volunteer_far": "offered to go further along the street tonight",
     "give": "given someone a portion", "eat_given": "eaten", "refuse_given": "refused a portion",
     "confront": "confronted someone",
+    "save_water": "said nobody should use the stored water for washing or the toilet",          # W1
+    "ration_water": "said the water must be shared out by the cup",
+    "collect_rain": "set the bin under the drainpipe in the rain",
 }
 
-FAST_STAGE_WORD = {1: "weak", 2: "very weak", 3: "barely able to stand"}    # quiet.py; ten_days_prep.md
+# Fasting's stages in days (quiet.py; reports/world_design.md, §4.3.1), and thirst's (§4.3.2).
+FAST_STAGE_WORD = {1: "hungry all the time", 2: "light and slow", 3: "thin and weak", 4: "losing strength",
+                   5: "wasted"}
+THIRST_STAGE_WORD = {1: "thirsty", 2: "badly thirsty", 3: "parched", 4: "confused from thirst"}
+WATER_RULES = ("save_water", "ration_water")
+RAIN_NOW_DAY = "- Rain is falling: you hear it on the roof and against the boards."
+W1_NOW = (RAIN_NOW_DAY, "It is raining: you hear it on the roof.")        # the day's, and the night's (night.py)
+W1_OPTIONS = WATER_RULES + ("collect_rain", "rain_out")
 HUNGER_WORDS = ["a little hungry", "hungry", "very hungry", "starving"]
 LEVEL_WORDS = {1: "a little", 2: "some", 3: "a lot"}   # the only words a level is given
 EVENTS_SHOWN = 4             # most recent events shown per grudge and for guilt
@@ -359,6 +369,11 @@ class Person:
         # The quiet day (reports/quiet_day_design.md, §1), from day 3 on: when they last ate, their sleep debt, their
         # rests and the stages the body line states (quiet.py). None before day 3.
         self.needs = None
+        # W1 (reports/world_design.md, §1.2): what they perceive of the weather and the water, written by the code
+        # (quiet.py); never the World itself. rain_since: when the rain they hear now began; water: the "About water:"
+        # line, the house's rule, and whether the bin is under the drainpipe, as they know them.
+        self.rain_since = None
+        self.water = None
 
     def grudge(self, against):
         return self.grudges.setdefault(against, Grudge())
@@ -371,6 +386,7 @@ class Person:
         if self.needs is not None:          # from day 3: weak and very weak; exhausted (quiet.py, §4 Q1)
             out["fast"] = self.needs["fast_stage"]
             out["debt"] = int(self.needs["debt_stage"] >= 2)
+            out["thirst"] = self.needs.get("thirst_stage", 0)
         return out
 
 
@@ -545,6 +561,12 @@ class Morning:
             if len(others) > 1:
                 opts.append(Option("reassure_all", "reassure everyone here", True, kind="reassure_all"))
             opts += self.trip_options(p, others)
+            if p.water is not None and p.water["level"] == "as_before":     # W1 (world_design §4.2.3)
+                opts.append(Option("save_water", "say nobody should use the stored water for washing or the toilet "
+                                                 "any more", True, kind="save_water"))
+            if p.water is not None and p.water["level"] != "rationed":
+                opts.append(Option("ration_water", "say the water must be shared out by the cup from now on", True,
+                                   kind="ration_water"))
             opts.append(Option("say_other", "say something else", True, kind="say"))
             for q in others:
                 if q.activity["kind"] in ("searching", "walking"):
@@ -569,6 +591,9 @@ class Morning:
         for r in data.ROOMS:
             if r != p.room:
                 opts.append(Option(f"go_{r}", f"go to the {data.ROOMS[r]}", kind="go", to=r))
+        if p.room == "kitchen" and p.rain_since is not None and p.water is not None and not p.water["bin_out"]:
+            opts.append(Option("collect_rain", "go out the back door into the rain and set the bin under the "
+                                               "drainpipe in the yard", kind="collect_rain"))
         if p.room == "kitchen" and self.portions > 0:
             opts.append(Option("eat", "eat one of the portions", kind="eat"))
             if others:
@@ -893,7 +918,8 @@ class Morning:
         """What has risen a level since they last decided with the model: "hunger", "guilt",
         "suspicion", or "grudge:<person>" for each grudge that rose."""
         now, seen = p.levels(), p.seen
-        out = [k for k in ("hunger", "guilt", "suspicion", "fast", "debt") if k in now and now[k] > seen.get(k, now[k])]
+        out = [k for k in ("hunger", "guilt", "suspicion", "fast", "debt", "thirst")
+               if k in now and now[k] > seen.get(k, now[k])]
         out += [f"grudge:{t}" for t in data.ORDER
                 if now["grudges"].get(t, 0) > seen["grudges"].get(t, 0)]
         return out
@@ -912,6 +938,8 @@ class Morning:
                 out.append(f"fasting crossed a line (now {FAST_STAGE_WORD[p.needs['fast_stage']]})")
             elif k == "debt":
                 out.append("sleep debt crossed a line (now exhausted)")
+            elif k == "thirst":
+                out.append(f"thirst crossed a line (now {THIRST_STAGE_WORD[p.needs['thirst_stage']]})")
             else:
                 t = k.split(":")[1]
                 out.append(f"grudge against {NAMES[t]} rose (now {p.grudges[t].strength} of 3)")
@@ -939,13 +967,16 @@ class Morning:
             out = [f"Your body: {hunger_words(p.hunger)}."]
         else:                               # from day 3 (reports/quiet_day_design.md, §1)
             import quiet
-            out = [quiet.body_line(hunger_words(p.hunger), p.needs["fast_stage"], p.needs["debt_stage"])]
+            out = [quiet.body_line(hunger_words(p.hunger), p.needs["fast_stage"], p.needs["debt_stage"],
+                                   thirst=p.needs.get("thirst_stage", 0), cold=p.needs.get("cold", False))]
         if "hunger" in rose:
             out.append("Since you last decided, you have grown hungrier.")
         if "fast" in rose:
             out.append("Since you last decided, you have grown weaker.")
         if "debt" in rose:
             out.append("Since you last decided, you have grown more tired.")
+        if "thirst" in rose:
+            out.append("Since you last decided, you have grown thirstier.")
         s = p.suspicion
         # What they know about the can wins over what their answers guessed. From day 2 on, a confession of an
         # earlier day says when (reports/night_design.md, §5.3; reports/days_design.md, §3.5).
@@ -985,6 +1016,8 @@ class Morning:
         out.append(f"{about} {p.can_note}" if p.can_note else about)
         out += self.trip_lines(p)
         out += self.missing_lines(p)
+        if p.water is not None:                     # W1: the water as they see it (quiet.py)
+            out.append(p.water["line"])
         held = [(t, p.grudges[t]) for t in data.ORDER if t in p.grudges and p.grudges[t].strength]
         if not held:
             out.append("Against the others: nothing.")
@@ -1039,6 +1072,12 @@ class Morning:
                 }.get(h["kind"], "spoke to everyone")
 
     def prompt_for(self, p, t, opts, lull=None, night=None, extra=None):
+        """Every prompt is built with World out of reach (truth.prompting; reports/world_design.md, §1.2)."""
+        import truth
+        with truth.prompting():
+            return self._prompt_for(p, t, opts, lull, night, extra)
+
+    def _prompt_for(self, p, t, opts, lull=None, night=None, extra=None):
         """lull: for a lull moment, the minute the room was last stirred; None otherwise.
         night: the night's `Now` lines (reports/night_design.md, §3.2), which take the place of the
         room, the turn and the pattern block; None by day.
@@ -1061,6 +1100,8 @@ class Morning:
         ] + inside
         house = (data.HOUSE_THINGS_NIGHT if night is not None
                  else data.HOUSE_THINGS_AFTER_TRIP if self.trip else data.HOUSE_THINGS)
+        if self.quiet is not None:                 # W1, from day 3: the back door and the yard
+            house = data.with_yard(house)
         if p.knows_empty or p.id in self.street:   # stage B, W5: their places include the houses further along
             house = house.replace("the street and the neighbour's house",
                                   "the street, the neighbour's house and the houses further along the street")
@@ -1073,6 +1114,8 @@ class Morning:
         late = self.quiet is not None and minute >= data.CLOCK_FROM
         now = self.quiet.meeting_lines(p, minute) + self.quiet.evening_lines(p, minute) if late else []
         now += [f"Now, {data.minute_words(minute)}, you are in the {room}."]
+        if p.rain_since is not None:                # W1: what they hear now
+            now.append(RAIN_NOW_DAY)
         others = self.others_here(p)
         if not others:
             now.append("- Nobody else is here.")
@@ -1120,6 +1163,14 @@ class Morning:
             block += sum(len(f"- {x}") + 1 for x in keep)
             block += max(0, len(house) - len(data.HOUSE_THINGS))
         block += sum(len(x) + 1 for x in carry)
+        if self.quiet is not None:
+            # W1 (reports/world_design.md, §6): the water line, the rain heard now, the water's options and the yard
+            # sit outside the budget too, so that they never push a memory line out. The yard is in the house line,
+            # which the trip block already counts once the trip concern has started.
+            block += sum(len(x) + 1 for x in head + now if x.startswith("About water:") or x in W1_NOW)
+            block += sum(len(x) + 1 for o, x in zip(opts, tail[1:]) if o.id in W1_OPTIONS)
+            if not self.trip:
+                block += len(data.YARD[1]) - len(data.YARD[0])
         cut = False
         while True:
             parts = head + ["What you remember from the days before:"] + [f"- {x}" for x in back]
@@ -1542,6 +1593,10 @@ class Morning:
             gist = f"{p.name} says {aimed} should be the one to go"
         elif kind == "decline":
             gist = f"{p.name} says {data.PRONOUNS[p.id]['he']} will not be the one to go"
+        elif kind == "save_water":
+            gist = f"{p.name} says nobody should use the stored water for washing or the toilet any more"
+        elif kind == "ration_water":
+            gist = f"{p.name} says the water must be shared out by the cup from now on"
         elif while_doing:
             gist = f"{p.name} says to {aimed or 'everyone'}, while {while_doing}"
         else:
@@ -1603,9 +1658,11 @@ class Morning:
             self.add_guilt(minute, f"you accused {target.name} of what you did, at {data.minute_words(minute)}",
                            f"{he} accused {target.name} of what {he} did", record)
 
+        if kind in WATER_RULES and self.quiet is not None:      # W1: the house's rule, from this minute
+            self.quiet.water_rule(p, kind, minute)
         words = d.get("say")
         if words:
-            doing = {"go": f"leaving for the {data.ROOMS.get(opt.act.get('to'), '')}",
+            doing = {"collect_rain": "going out into the rain with the bin","go": f"leaving for the {data.ROOMS.get(opt.act.get('to'), '')}",
                      "search": "searching", "sit": f"sitting down with {target.name if target else ''}",
                      "eat": "eating", "share": "sharing out the food",
                      "aside": f"asking {target.name if target else ''} to come aside",
@@ -1692,7 +1749,9 @@ class Morning:
                     "back": f"said {target.name if target else ''} should be the one to go",
                     "decline": "said you will not be the one to go",
                     "propose_far": "said someone should try the houses further along the street tonight",
-                    "volunteer_far": "offered to go further along the street tonight"}.get(kind, "said")
+                    "volunteer_far": "offered to go further along the street tonight",
+                    "save_water": "said nobody should use the stored water for washing or the toilet any more",
+                    "ration_water": "said the water must be shared out by the cup from now on"}.get(kind, "said")
             if self.day != 4 and kind in TRIP_KINDS:
                 # Day 2's wording (reports/night_design.md, §6), for the speaker's own line.
                 mine = {"still_going": "said you still mean to go there tonight",
@@ -1761,6 +1820,18 @@ class Morning:
                 p.memory.append((minute, f"you stayed where you were and said nothing.{feel}"))
             return "stayed where they were" + (" (its line was dropped: silent means no words)"
                                                if d.get("dropped_line") else "") + "."
+        if kind == "collect_rain":                  # W1: out the back door and back, within the turn
+            seen_text = (f"{p.name} goes out the back door into the rain and sets the bin under the drainpipe in the "
+                         f"yard.")
+            so_far.append(seen_text)
+            if seen:
+                self.started_by(room, minute, f"{p.name} set the bin out in the rain", d)
+            for q in seen:
+                self.perceive(q, minute, seen_text, trigger=(seen_text.rstrip("."), True))
+            p.memory.append((minute, f"you went out the back door into the rain and set the bin under the drainpipe "
+                                     f"in the yard.{feel}"))
+            self.quiet.collect_rain(p, minute)
+            return "went out into the rain and set the bin under the drainpipe."
         if kind == "search":
             if opt.id == "search":
                 p.activity = {"kind": "searching", "label": f"searching the {data.ROOMS[room]}",
@@ -1846,6 +1917,8 @@ class Morning:
             p.hunger = max(0.0, p.hunger - 0.4)
             p.eaten += 1
             p.last_meal = minute
+            if self.quiet is not None:          # fasting counts from this meal (reports/w1_fixes.md, fix 1)
+                self.quiet.ate(p, minute)
             so_far.append(f"{p.name} eats one of the portions.")
             for q in seen:
                 q.sure.append(f"{data.clock(minute)}: {p.name} ate one of the portions (you saw it).")
@@ -1871,6 +1944,8 @@ class Morning:
                 q.hunger = max(0.0, q.hunger - 0.4 * each)
                 q.eaten += each
                 q.last_meal = minute
+                if self.quiet is not None:
+                    self.quiet.ate(q, minute)
             n, self.portions = self.portions, 0
             trig = f"{p.name} shares out the last {n} portion{'s' if n != 1 else ''} between {names}"
             so_far.append(trig + ".")
@@ -1893,6 +1968,8 @@ class Morning:
             p.hunger = max(0.0, p.hunger - 0.4)
             p.eaten += 1
             p.last_meal = minute
+            if self.quiet is not None:
+                self.quiet.ate(p, minute)
             line = f"{giver.name} gives one of the portions to {p.name}, and {p.name} eats it"
             so_far.append(line + ".")
             for q in seen:

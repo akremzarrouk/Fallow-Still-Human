@@ -1,0 +1,7 @@
+fix 1 out: eating does not move ate_at (quiet.py): test_eating_on_a_quiet_day_resets_fasting_at_that_minute: exit 1; AssertionError: -1920 != 2880 | FAILED (failures=1)
+  quiet.py restored: sha256 same
+fix 2 out: the outcome without the water (night.py): test_a_water_haul_from_next_door_still_tells_the_house_it_has_no_food: exit 1; AssertionError: 'back with nothing' != 'back with water' | FAILED (failures=1)
+  night.py restored: sha256 same
+fix 2 out: block C's line without the water (memory.py): test_a_water_haul_from_next_door_still_tells_the_house_it_has_no_food: exit 1; AssertionError: "The [25 chars] went out to the neighbour's house and came back with nothing." != "The [25 chars] went out to the neighbour's house and came bac | FAILED (failures=1)
+  memory.py restored: sha256 same
+every one failed without its rule, and every file is restored

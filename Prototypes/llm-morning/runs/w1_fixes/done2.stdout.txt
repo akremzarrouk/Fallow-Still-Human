@@ -1,0 +1,4 @@
+daniel_ate_it-seed2: through night 2 and mind 2: 96 answers from the cache, 0 live
+exit 0
+daniel_ate_it-seed2.md: before W1 vs after the fixes: IDENTICAL
+daniel_ate_it-seed2.transcript.json: before W1 vs after the fixes: IDENTICAL

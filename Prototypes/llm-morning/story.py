@@ -561,7 +561,10 @@ ENDED = {"time": "up when its time was out", "rested": "up once rested", "acted"
          "woken": "woken", "asked": "until {he} was asked", "two hours": "until two hours had passed",
          "withdrew": "until {he} walked out",
          "went to rest": "until {he} went to rest", "bedtime": "until bedtime"}
-NEED_WORD = {("fast", 1): "weak", ("fast", 2): "very weak", ("fast", 3): "barely able to stand", ("debt", 1): "tired",
+NEED_WORD = {("fast", 1): "hungry all the time", ("fast", 2): "light and slow", ("fast", 3): "thin and weak",
+             ("fast", 4): "losing strength", ("fast", 5): "wasted", ("thirst", 1): "thirsty",
+             ("thirst", 2): "badly thirsty", ("thirst", 3): "parched", ("thirst", 4): "confused from thirst",
+             ("debt", 1): "tired",
              ("debt", 2): "exhausted"}
 
 
@@ -587,7 +590,7 @@ def after_the_morning(morning, out):
         rows.append((s["start"], 0, f"- {clock(s['start'])} to {clock(s['end'])}: {NAME[s['who']]} {what} "
                                     f"({came}{ended})."))
     for n in tr["need_events"]:
-        need = "fasting" if n["need"] == "fast" else "sleep debt"
+        need = {"fast": "fasting", "debt": "sleep debt", "thirst": "thirst (share of body mass short)"}[n["need"]]
         rows.append((n["minute"], 1, f"- {clock(n['minute'])}: {NAME[n['who']]}'s {need} reaches {n['value']:g}: "
                                      f"{NEED_WORD[(n['need'], n['stage'])]}."))
     for c in tr["cooled"]:
@@ -598,7 +601,15 @@ def after_the_morning(morning, out):
                                      f"{data.ROOMS[x['room']]} (silent, after speaking at {clock(x['why']['spoke_at'])}; "
                                      f"a grudge of 3 against "
                                      + ", ".join(NAME[g] for g in x["why"]["grudge_against"]) + ")."))
+    for r in tr.get("rain", []):
+        heard = ", ".join(NAME[q] for q in r["heard"]) or "nobody awake"
+        rows.append((r["minute"], 1, f"- {clock(r['minute'])}: rain begins (heard by {heard})."))
     for e in tr["log"]:
+        if e["kind"] == "Q6":
+            how = (f"{', '.join(NAME[q] for q in e['asked'])} asked, in the {data.ROOMS[e['room']]}" if e["fired"]
+                   else f"not asked: {e['why']}")
+            rows.append((e["minute"], 2, f"- {clock(e['minute'])}: **Q6**, rain began: {how}."))
+            continue
         how = f"{NAME[e['asked']]} is asked" if e["fired"] else f"not asked: {e['why']}"
         if e["kind"] == "Q2":
             last = ("no line between them yet today" if e["last_line"] is None

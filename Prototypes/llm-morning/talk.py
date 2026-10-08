@@ -8,7 +8,8 @@ Knows nothing about the house beyond room names and option ids.
 SPEECH = ("ask", "deny", "accuse", "confess", "reassure", "say",
           "propose", "volunteer", "object", "back", "decline",     # these five: the trip
           "propose_far", "volunteer_far",                           # and further along the street (stage B, W5)
-          "confront")       # from the night on (reports/food_confront_impl.md)
+          "confront",       # from the night on (reports/food_confront_impl.md)
+          "save_water", "ration_water")     # the water's rule, from day 3 (reports/world_design.md, §4.2.3)
 
 
 def act_of(option):
@@ -95,6 +96,10 @@ class Newness:
             return new, "a confrontation" if new else "a confrontation they had made before"
         if kind == "reassure":
             return False, "reassurance"
+        if kind in ("save_water", "ration_water"):     # a rule for the water: new the first time they say it
+            new = kind not in taken
+            taken.add(kind)
+            return new, "a rule for the water" if new else "a rule for the water they had said before"
         if kind in TRIP_WHY:
             stance = (kind, target)
             new = stance not in taken

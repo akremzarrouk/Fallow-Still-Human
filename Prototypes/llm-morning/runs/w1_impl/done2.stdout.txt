@@ -1,0 +1,9 @@
+$ env -u GEMINI_API_KEY ... .venv/Scripts/python.exe runs/facts_evening/prefix.py . $S/w1/prefix_after 2
+daniel_ate_it-seed2: through night 2 and mind 2: 96 answers from the cache, 0 live
+exit 0
+daniel_ate_it-seed2.md: before vs after: IDENTICAL
+daniel_ate_it-seed2.transcript.json: before vs after: IDENTICAL
+bdaa0a9f3e69062f380480bd98e04d508bf6c2206549ddb1a6bf2bdf64a859fc *$S/w1/prefix_before/daniel_ate_it-seed2.md
+c6ea7695baa98b4ddb5f1ccc390d6e22e3286df0992a5e62e0494ec45be5ff52 *$S/w1/prefix_before/daniel_ate_it-seed2.transcript.json
+bdaa0a9f3e69062f380480bd98e04d508bf6c2206549ddb1a6bf2bdf64a859fc *$S/w1/prefix_after/daniel_ate_it-seed2.md
+c6ea7695baa98b4ddb5f1ccc390d6e22e3286df0992a5e62e0494ec45be5ff52 *$S/w1/prefix_after/daniel_ate_it-seed2.transcript.json

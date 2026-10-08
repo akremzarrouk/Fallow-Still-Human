@@ -189,7 +189,10 @@ def person_line(chron, pid, q, key, other, evs, day):
         if back and street:
             outcome = street["outcome"] or ""
             how = (" and came back shaken" if "shaken" in outcome else
-                   " and came back with food" if "with food" in outcome else " and came back with nothing")
+                   " and came back with food and water" if "with food and water" in outcome else
+                   " and came back with food" if "with food" in outcome else
+                   " and came back with water" if "with water" in outcome else      # W1 (reports/w1_fixes.md)
+                   " and came back with nothing")
         who = "you" if me else Q
         return f"{when}, {who} went out to the neighbour's house{f' after you told {him} not to' if told else ''}{how}{again}."
     if key == "accuse":

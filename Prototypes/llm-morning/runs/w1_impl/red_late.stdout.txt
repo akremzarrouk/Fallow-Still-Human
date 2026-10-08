@@ -1,0 +1,9 @@
+without the W1 block (world.py): test_w1_lines_sit_outside_the_budget_and_cut_no_memory_line: exit 1; AssertionError: Lists differ: ['Wha[80 chars]ere)'] != ['Wha[80 chars]ere)', '- min 00: filler line number 199 about[304 chars]ll '] | FAILED (failures=1)
+  world.py restored: sha256 same
+Q1 for fasting and debt only (quiet.py): test_q1_asks_when_thirst_reaches_badly_thirsty: exit 1; AssertionError: Lists differ: [] != [('Q1', 'leo', 'thirst', 2)] | FAILED (failures=1)
+  quiet.py restored: sha256 same
+the chronicle not keeping World's facts (chronicle.py): test_the_chronicle_keeps_the_water_fixed_once: exit 1; KeyError: 'neighbour_water' | FAILED (errors=1)
+  chronicle.py restored: sha256 same
+the story without rain and Q6 (story.py): test_the_story_shows_rain_and_q6: exit 1; AssertionError: '- 12:00: rain begins (heard by ' not found in '# The third morning (day 6)\n\nThe same rules as day 1, from the people as the night left them.  | FAILED (failures=1)
+  story.py restored: sha256 same
+every one failed without its rule, and every file is restored

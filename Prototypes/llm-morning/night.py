@@ -23,6 +23,7 @@ import re
 
 import data
 import quiet
+import water
 import world
 from world import (NAMES, NIGHT_MINUTE, NIGHT_SYSTEM, NEIGHBOUR_UNKNOWN, Option, day_index, estimate_tokens,
                    portions_text, when_words)
@@ -85,6 +86,15 @@ NEAR_SHIFT = 0.5        # next door, a body shifts the street by half as much as
 DOZE_FROM, DOZE_BASE, DOZE_STEP, DOZE_MAX = 24, 0.3, 0.05, 0.7
 DOZED = {"watch_door": "You dozed off in the night, and woke by the door at dawn.",
          "lie_awake": "You dozed off in the night."}
+# W1 (reports/world_design.md, §4.1, §6): rain at bedtime, and the bin set out before sleeping; rain in the night masks
+# the front door for whoever sleeps in a bedroom: moderate rain is about 50 dB(A) against a quiet night's 30 [S14], so
+# the chance of waking is halved (est.). A night is rainy if any spell falls between 22:00 and 06:00 (est.).
+BEDTIME_RAIN = ("rain_out", "set the bin under the drainpipe in the yard to catch the rain, then go to sleep")
+BED_LINE["rain_out"] = "You set the bin under the drainpipe in the yard to catch the rain, then went to sleep."
+TONIGHT["rain_out"] = "you set the bin out in the rain, then went to sleep."
+RAIN_NOW = world.W1_NOW[1]
+RAIN_MASK = 0.5
+RAINY_FROM, RAINY_TO = 900, 1380        # 22:00 to 06:00, as minutes of the day the night follows
 
 
 def pick(table, u):
@@ -103,9 +113,10 @@ def far_house_portions(u):
 
 def body_shift(fast_stage, debt_stage):
     """W2: how one body shifts the street (clean, scare_there, scare_back, not_back): weak, very weak or barely
-    standing from fasting, and exhausted from sleep debt, added up."""
+    standing from fasting, and exhausted from sleep debt, added up. Fasting in days (reports/world_design.md,
+    §4.3.1): light and slow (F2) is weak, thin and weak (F3) very weak, F4 and on barely standing."""
     out = (0.0, 0.0, 0.0, 0.0)
-    for name, on in (("weak", fast_stage == 1), ("very weak", fast_stage == 2), ("barely standing", fast_stage >= 3),
+    for name, on in (("weak", fast_stage == 2), ("very weak", fast_stage == 3), ("barely standing", fast_stage >= 4),
                      ("exhausted", debt_stage >= 2)):
         if on:
             out = tuple(a + b for a, b in zip(out, SHIFTS[name]))
@@ -199,7 +210,8 @@ def seen_outcome(g):
     what a house held beyond what came home, stay with whoever went (reports/household_knowledge.md)."""
     if g["lost"] and len(g["members"]) == 1:
         return "has not come back"
-    how = "came back with food" if g["took"] else "came back with nothing"
+    how = ("came back with food and water" if g["took"] and g.get("water") else "came back with food" if g["took"]
+           else "came back with water" if g.get("water") else "came back with nothing")
     return how + (f"; {NAMES[g['lost']]} has not come back" if g["lost"] else "")
 
 
@@ -218,7 +230,8 @@ def street_line(history, pid, day):
     inside none. Another's: only what the house saw (seen_outcome). Only searches of their own: the houses past them
     are unsearched. No far trip: STREET_UNSEARCHED."""
     def held(g):
-        return "no food" if not g["found"] else f"{portions_text(g['found'])}, all brought back"
+        food = "no food" if not g["found"] else f"{portions_text(g['found'])}, all brought back"
+        return food + (f", and you brought back {water_words(g['water'])} of water" if g.get("water") else "")
     items, searched = [], []
     for n, g, who in trips_known(history, pid):
         if not g.get("far"):
@@ -264,10 +277,20 @@ def outings_line(history, pid, day):
                 how = f"got inside{there}, found {portions_text(g['found'])} and brought back {g['took']}"
             else:
                 how = f"got inside{there} and found no food"
+            if g["found"] is not None and g.get("water"):
+                how += f", and brought back {water_words(g['water'])} of water"
             items.append(f"{joined(who)} went {where} {when}, {how}")
             continue
         items.append(f"{joined(who)} went {where} {when} and {seen_outcome(g)}")
     return "About going out at night: " + ("; ".join(items) or "as far as you know, nobody has gone out") + "."
+
+
+def water_words(litres):
+    """Litres as an eye counts them: "10 litres", "about 5 litres", "a few litres"."""
+    if litres < 2.5:
+        return "a few litres"
+    n = water.about(litres, 5)
+    return f"{n} litres" if abs(n - litres) < 1e-9 else f"about {n} litres"
 
 
 def street(u, size):
@@ -275,15 +298,15 @@ def street(u, size):
     return pick(ALONE if size == 1 else GROUP, u)
 
 
-def outcome_class(st, found):
-    """The row of the outcome table (§4.3), from the street and what the house held when they got there."""
+def outcome_class(st, found, water=0):
+    """The row of the outcome table (§4.3), from the street and what the house held when they got there; from night 3
+    on, with the water they carried home (reports/w1_fixes.md, fix 2)."""
     if st == "not_back":
         return "not back by morning"
     if st == "scare_there":
         return "back shaken, with nothing"
-    if st == "clean":
-        return "back with food" if found else "back with nothing"
-    return "back shaken, with food" if found else "back shaken, with nothing"
+    what = "food and water" if found and water else "food" if found else "water" if water else "nothing"
+    return f"back with {what}" if st == "clean" else f"back shaken, with {what}"
 
 
 def wake_room(pid):
@@ -344,6 +367,9 @@ class Night:
         self.far = {"houses": list(far["houses"]), "us": list(far["us"]), "searched": far["searched"]}
         self.far_visit = {}         # goer -> {"got_in", "found", "took", "house"}: a trip further along (W5)
         self.dozed = set()          # who dozed at the door or in bed (§1.2)
+        # W1: the World the day before it kept (truth.py), if it was a quiet day with one; whether it rains tonight.
+        self.world = getattr(getattr(day1, "quiet", None), "world", None)
+        self.rainy = False
         self.events = []            # what happened, for the chronicle: dicts with "key", in order
         self.line_events = {p: [] for p in data.ORDER}    # the event each night line tells of
         self.leavers = []           # everyone who went out, in order
@@ -421,6 +447,10 @@ class Night:
         self.story.append(("decision", d))
         return d["option"], d.get("say")
 
+    def wake_door(self, pid):
+        """The chance a sleeper wakes at the front door (§3.1), halved while it rains in the night (W1)."""
+        return round(wake_door(pid) * RAIN_MASK, 4) if self.rainy else wake_door(pid)
+
     def notice(self, who, of, how, draw=None, under=None, noticed=True):
         n = {"who": who, "of": of, "how": how, "awake": draw is None, "draw": draw, "under": under,
              "noticed": noticed, "where": self.where[who]}
@@ -444,6 +474,9 @@ class Night:
             q: [json.dumps({t: [g.strength, g.events] for t, g in p.grudges.items()}), p.suspicion.state(), p.guilt]
             for q, p in self.people.items()}
         present = [q for q in data.ORDER if q not in self.away]
+        k = day_index(self.day1.day)
+        if self.world is not None:
+            self.rainy = bool(self.world.weather.spells(quiet.absolute(k, RAINY_FROM), quiet.absolute(k, RAINY_TO)))
         beds = BEDS if not self.away else ", ".join(
             " and ".join(NAMES[x] for x in present if x in owners) + f" in the {data.ROOMS[room]}"
             for room, owners in sorted(data.OWNERS.items(), key=lambda kv: min(data.ORDER.index(x) for x in kv[1]))
@@ -459,16 +492,22 @@ class Night:
                    f"You are in the {data.ROOMS[room]}, in your bed. {mate}",
                    f"The kitchen is dark. The shelf holds {portions_text(self.portions)}."]
             p = self.people[q]
+            if p.rain_since is not None:                    # W1: raining at bedtime, as they hear it
+                now.append(RAIN_NOW)
             own = p.trip_heard.get(q)
             if own and own[1] == "volunteer":           # `volunteer`, or day 2's `still_going`
                 now.append(PROMISE)
             elif own and own[1] == "volunteer_far":
                 now.append(FAR_PROMISE)
             opts = [Option(i, label) for i, label in BEDTIME] + ([Option(*BEDTIME_FAR)] if p.knows_empty else [])
+            if p.rain_since is not None and p.water is not None and not p.water["bin_out"]:
+                opts.append(Option(*BEDTIME_RAIN))
             choice, _ = self.ask(q, "bedtime", now, opts, "sleep")
             self.choices[q] = choice
             self.where[q] = "kitchen" if choice == "watch_door" else room
-            self.awake[q] = choice != "sleep"
+            self.awake[q] = choice not in ("sleep", "rain_out")
+            if choice == "rain_out":
+                self.world.put_bin_out(q, quiet.absolute(k, quiet.DAY_END), wet=False)
             self.people[q].tonight.append(TONIGHT[choice])
             e = self.event("bedtime", q, {q: "did"}, option=choice)
             line = f"Last night you slept in the {data.ROOMS[room]} with {NAMES[r]}. {BED_LINE[choice]}"
@@ -592,8 +631,9 @@ class Night:
                 heard = True
             else:
                 draw = self.u(f"door:{L}:{P}")
-                heard = draw < wake_door(P)
-                self.notice(P, L, "front door", draw, wake_door(P), heard)
+                chance = self.wake_door(P)
+                heard = draw < chance
+                self.notice(P, L, "front door", draw, chance, heard)
             if not heard:
                 continue
             self.awake[P] = True
@@ -756,6 +796,11 @@ class Night:
             g["found"] = found
             g["took"] = min(found, CARRY * len(group))
             self.house_left -= g["took"]
+        if self.world is not None and st in ("clean", "scare_back"):     # W1: water, up to what they can carry
+            place = ("far", g["house"]) if far else "neighbour"
+            at = quiet.absolute(day_index(self.day1.day), quiet.DAY_END)
+            g["water"] = self.world.carry_home(place, water.CARRY * len(group), at)
+            g["water_left"] = self.world.house_water(place, at)["left"]
         if st in ("scare_there", "scare_back"):
             g["shaken"] = list(group)
         if st == "not_back":
@@ -766,7 +811,7 @@ class Night:
                 g["lost"] = sorted(group)[int(g["lost_u"] * len(group))]
                 g["shaken"] = [x for x in group if x != g["lost"]]
             self.away.add(g["lost"])
-        g["outcome"] = outcome_class(st, found)
+        g["outcome"] = outcome_class(st, found, g.get("water", 0))
         self.groups.append(g)
         if st in ("clean", "scare_back") and not far:
             self.entered = True
@@ -774,13 +819,19 @@ class Night:
         back = [x for x in group if x != g["lost"]]
         return_e = self.event("return", L, {x: "did" for x in back}, members=list(back)) if back else None
         k, F = g["took"], g["found"]
+        wl = g.get("water") or 0
+        home = []
+        if k:
+            home.append(f"the {portions_text(k)} on the shelf")
+        if wl:
+            home.append(f"{water_words(wl)} of water in the kitchen")
+        came_back = "You came back in by the front door before dawn" + (f" and put {' and '.join(home)}." if home else ".")
         for P in back:
             if far:
                 self.far_line(P, st, F, g, street_e)
-                self.line(P, "You came back in by the front door before dawn"
-                          + (f" and put the {portions_text(k)} on the shelf." if k else "."), event=return_e)
+                self.line(P, came_back, event=return_e)
                 self.far_visit[P] = {"got_in": st in ("clean", "scare_back"), "found": F, "took": k,
-                                     "house": g["house"]}
+                                     "house": g["house"], "water": wl}
                 continue
             if st == "clean" and F:
                 rest = F - k
@@ -800,17 +851,20 @@ class Night:
             else:
                 self.line(P, f"In the street, something was moving. You lost sight of {NAMES[g['lost']]} in the dark "
                              f"and came back without {him(g['lost'])}.", event=street_e)
-            self.line(P, "You came back in by the front door before dawn"
-                      + (f" and put the {portions_text(k)} on the shelf." if k else "."), event=return_e)
-            self.visit[P] = {"got_in": st in ("clean", "scare_back"), "found": F, "took": k}
+            self.line(P, came_back, event=return_e)
+            self.visit[P] = {"got_in": st in ("clean", "scare_back"), "found": F, "took": k, "water": wl,
+                             "water_left": g.get("water_left", 0)}
         if not back:
             return
         self.portions += k
+        if wl:
+            self.world.receive(wl)
         # The return: the front door again.
         for P in back:
             self.where[P] = OWN_ROOM[P]
             self.awake[P] = True
-        carrying = ", carrying food" if k else f", with nothing in {'their' if len(back) > 1 else data.PRONOUNS[back[0]]['his']} hands"
+        carrying = (", carrying food and water" if k and wl else ", carrying food" if k else ", carrying water" if wl
+                    else f", with nothing in {'their' if len(back) > 1 else data.PRONOUNS[back[0]]['his']} hands")
         shaken = ", and looked shaken" if g["shaken"] else ""
         alone = " alone" if g["lost"] else ""
         for P in data.ORDER:
@@ -829,8 +883,9 @@ class Night:
                 self.line(P, "Before dawn you heard the front door again. You did not see who.", event=return_e)
             else:
                 draw = self.u(f"return:{L}:{P}")
-                woke = draw < wake_door(P)
-                self.notice(P, L, "return", draw, wake_door(P), woke)
+                chance = self.wake_door(P)
+                woke = draw < chance
+                self.notice(P, L, "return", draw, chance, woke)
                 if woke:
                     self.awake[P] = True
                     self.events[return_e]["witnesses"][P] = "heard"
@@ -1044,13 +1099,20 @@ def neighbour_line(n, pid, history=None, day=None, away=None):
         if not v:
             continue
         when = when_words(("N", night.number), day)
+        drink = ""
+        if v.get("water"):              # W1: what they carried, and what they saw was left
+            left = v.get("water_left", 0)
+            drink = (f"; you brought back {water_words(v['water'])} of water, and "
+                     + (f"{water_words(left)} {'is' if left < 2.5 else 'are'} still there" if left else
+                        "no water is left there"))
         if v["got_in"] and v["found"]:
             rest = v["found"] - v["took"]
             left = f", and {rest} {'is' if rest == 1 else 'are'} still there" if rest else ", and none are left there"
             return (f"About the neighbour's house: you went in {when} and found {portions_text(v['found'])}; "
-                    f"you brought back {v['took']}{left}. Outside is dangerous.")
+                    f"you brought back {v['took']}{left}{drink}. Outside is dangerous.")
         if v["got_in"]:
-            return f"About the neighbour's house: you went in {when} and found no food there. Outside is dangerous."
+            return (f"About the neighbour's house: you went in {when} and found no food there{drink}. Outside is "
+                    f"dangerous.")
         return f"About the neighbour's house: you did not get inside {when}. Outside is dangerous."
     heard = heard_trip(history, pid)
     if heard is None:
@@ -1059,7 +1121,7 @@ def neighbour_line(n, pid, history=None, day=None, away=None):
     if x in away:
         how = " and has not come back"
     else:
-        how = " and came back with food" if g["took"] else " and came back with nothing"
+        how = " and " + seen_outcome({**g, "lost": None})
     return (f"About the neighbour's house: {NAMES[x]} went there {when_words(('N', night.number), day)}{how}. "
             f"Outside is dangerous.")
 
@@ -1142,6 +1204,8 @@ def next_day(day1, n, oracle, chronicle=None):
             m.blocks[q] = {"A": r["A"], "B": r["B"], "C": r["C"], "earlier": earlier}
         m.neighbour[q] = neighbour_line(n, q, history, day, m.away)
     brought = {P: g["took"] for g in n.groups for P in g["members"] if g["took"] and P not in m.away}
+    carried = {P: g["water"] for g in n.groups for P in g["members"] if g.get("water") and P not in m.away}
+    water_in = sum(g.get("water") or 0 for g in n.groups)
     shaken = {P for g in n.groups for P in g["shaken"] if P not in m.away}
     for q in data.ORDER:
         p = m.people[q]
@@ -1178,6 +1242,11 @@ def next_day(day1, n, oracle, chronicle=None):
             opening += ". So someone brought food into the house in the night."
         else:
             opening += "."
+        if q in carried:                # W1: water carried in tonight
+            opening += f" The water you brought back is in the kitchen: {water_words(carried[q])}."
+        elif water_in:
+            opening += (f" In the kitchen there is water that was not there last night: {water_words(water_in)}. So "
+                        f"someone brought water into the house in the night.")
         for x in data.ORDER:
             if x in m.away:
                 how, k = p.missing.get(x, ("gone", n.number))[:2]
