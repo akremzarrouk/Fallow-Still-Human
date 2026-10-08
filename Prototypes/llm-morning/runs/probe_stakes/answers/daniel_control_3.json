@@ -1,0 +1,10 @@
+{
+ "case": "daniel",
+ "arm": "control",
+ "sample": 3,
+ "seed": 103,
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 1.0,
+ "api_requests": 1,
+ "raw": "{\n  \"option\": \"lie_awake\",\n  \"say\": null,\n  \"feeling\": \"exhausted and anxious\",\n  \"reason\": \"I am far too weak to stand or walk anywhere tonight, so I must stay here and listen.\",\n  \"suspects\": \"nobody\",\n  \"angry_at\": \"nobody\"\n}"
+}

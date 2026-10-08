@@ -1,0 +1,10 @@
+{
+ "case": "elena",
+ "arm": "probe",
+ "sample": 1,
+ "seed": 101,
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 1.0,
+ "api_requests": 1,
+ "raw": "{\n  \"option\": \"lie_awake\",\n  \"say\": null,\n  \"feeling\": \"exhausted\",\n  \"reason\": \"I will lie awake in bed and listen to make sure everyone stays safe through the night.\",\n  \"suspects\": \"Daniel\",\n  \"angry_at\": \"nobody\"\n}"
+}

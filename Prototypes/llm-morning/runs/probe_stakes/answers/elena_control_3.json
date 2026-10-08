@@ -1,0 +1,10 @@
+{
+ "case": "elena",
+ "arm": "control",
+ "sample": 3,
+ "seed": 103,
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 1.0,
+ "api_requests": 1,
+ "raw": "{\n  \"option\": \"lie_awake\",\n  \"say\": null,\n  \"feeling\": \"exhausted\",\n  \"reason\": \"I am too weak to stand and watch the door, so I will lie here and listen to keep them safe in the dark.\",\n  \"suspects\": \"Daniel\",\n  \"angry_at\": \"nobody\"\n}"
+}

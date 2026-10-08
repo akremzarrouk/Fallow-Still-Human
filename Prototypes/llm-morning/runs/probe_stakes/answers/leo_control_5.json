@@ -1,0 +1,10 @@
+{
+ "case": "leo",
+ "arm": "control",
+ "sample": 5,
+ "seed": 105,
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 1.0,
+ "api_requests": 1,
+ "raw": "{\n  \"option\": \"sleep\",\n  \"say\": null,\n  \"feeling\": \"exhausted\",\n  \"reason\": \"I have no strength left to stay awake, and going outside now is simply too dangerous.\",\n  \"suspects\": \"Daniel\",\n  \"angry_at\": \"Daniel\"\n}"
+}

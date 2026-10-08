@@ -1,0 +1,59 @@
+== day 3: shelf at 07:00 ?; morning_end min 15; stretches [('min 00', 'min 15', 'the morning', 19), ('10:24', '10:30', 'Q2', 8), ('20:09', '20:15', 'Q1', 8)]; day asks 35; away []
+  Q1 20:09: asked leo, room kitchen, awake None, positions None, why None
+  fast stage 1 10:27 Mara (48.0 h)
+== night 3: portions 0 -> 0; away []; far None; leavers []
+  bedtime Daniel: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I have no strength left to stay awake or go out again.'
+  bedtime Elena: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I have hardly slept and my body is starving, so I must rest if I am to keep us together tomorrow.'
+  bedtime Leo: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am too weak to go out and too restless to sleep while Daniel is here.'
+  bedtime Mara: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I cannot sleep when my head spins from hunger and I need to listen just in case Daniel tries to sneak out again.'
+== day 4: shelf at 07:00 ?; morning_end min 18; stretches [('min 00', 'min 18', 'the morning', 22), ('10:57', '11:06', 'Q2', 8), ('19:00', '19:06', 'Q1', 8)]; day asks 38; away []
+  Q1 19:00: asked leo, room kitchen, awake None, positions None, why None
+  fast stage 2 14:30 Daniel (96.0 h)
+  fast stage 1 15:30 Elena (48.0 h)
+  fast stage 2 19:00 Leo (96.0 h)
+== night 4: portions 0 -> 0; away []; far None; leavers []
+  bedtime Daniel: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I need to stay alert and protect them, even when my body feels so weak.'
+  bedtime Elena: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I have nothing left to give today and my body needs rest to face tomorrow.'
+  bedtime Leo: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am too weak to go out into the street tonight, so I will lie awake and listen to what Daniel does.'
+  bedtime Mara: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am too weak and dizzy to go anywhere, so I will lie here in the dark and listen.'
+== day 5: shelf at 07:00 ?; morning_end min 18; stretches [('min 00', 'min 18', 'the morning', 24), ('10:03', '10:09', 'Q2', 8), ('19:00', '19:06', 'Q5', 8)]; day asks 40; away []
+  Q5 19:00: asked leo, room kitchen, awake {'kitchen': ['daniel', 'elena', 'leo', 'mara']}, positions {'daniel': [186, 29], 'leo': [186, 32], 'elena': [186, 30], 'mara': [183, 27]}, why None
+  fast stage 2 13:00 Mara (96.0 h)
+== night 5: portions 0 -> 0; away []; far None; leavers []
+  bedtime Daniel: go_next_door (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am the oldest and it is my duty to provide for my family.'
+  bedtime Elena: watch_door (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I must watch the front door so no one goes out into the dangerous street tonight.'
+  bedtime Leo: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'My legs are too weak to stand and going out now is suicide, so I will lie here and listen.'
+  bedtime Mara: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am too weak and anxious to sleep, so I will lie awake in the dark and listen.'
+  reaction Leo: stop_daniel say "Daniel, stay where you are. You aren't going out there tonight."
+  answer Daniel: stay_home say 'I will stay, Leo. I am too weak anyway.'
+== day 6: shelf at 07:00 ?; morning_end min 18; stretches [('min 00', 'min 18', 'the morning', 22), ('09:36', '09:45', 'Q2', 6), ('10:33', '10:42', 'Q2', 2), ('19:00', '19:09', 'Q1', 1)]; day asks 31; away []
+  Q1 19:00: asked leo, room kitchen, awake None, positions None, why None
+  fast stage 3 min 75 Daniel (144.0 h)
+  fast stage 3 19:00 Leo (144.0 h)
+== night 6: portions 0 -> 0; away []; far None; leavers []
+  bedtime Daniel: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am far too weak to go out tonight and have nothing left to prove.'
+  bedtime Elena: watch_door (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I must guard the door myself so no one wanders out into the darkness.'
+  bedtime Leo: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am too weak to walk anywhere, but I must stay awake to ensure Daniel does not try to slip out in the dark again.'
+  bedtime Mara: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I cannot sleep while my legs shake with hunger and Daniel acts like he owns us all.'
+== day 7: shelf at 07:00 ?; morning_end min 09; stretches [('min 00', 'min 09', 'the morning', 11), ('09:51', '10:00', 'Q2', 3), ('11:27', '11:36', 'Q2', 8), ('15:30', '15:39', 'Q1', 8)]; day asks 30; away []
+  Q1 15:30: asked mara, room kitchen, awake None, positions None, why None
+  fast stage 3 15:30 Mara (144.0 h)
+== night 7: portions 0 -> 0; away []; far None; leavers []
+  bedtime Daniel: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am far too weak to stand or walk, so I must rest and try to keep everyone safe tomorrow.'
+  bedtime Elena: watch_door (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I must watch the door tonight to make sure no one slips outside into the danger of the street.'
+  bedtime Leo: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am too weak to stand or walk anywhere tonight.'
+  bedtime Mara: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I cannot sleep while my stomach burns and Daniel lies there acting like he did nothing wrong.'
+== day 8: shelf at 07:00 ?; morning_end min 18; stretches [('min 00', 'min 18', 'the morning', 24), ('08:36', '08:45', 'Q2', 5), ('09:21', '09:30', 'Q2', 7)]; day asks 36; away []
+== night 8: portions 0 -> 0; away []; far None; leavers []
+  bedtime Daniel: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am too weak to stand or walk anywhere, so I must stay in bed and listen to keep watch over everyone.'
+  bedtime Elena: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am too weak to stand and watch the door all night, so I will lie here and listen to keep them safe.'
+  bedtime Leo: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'My body is too weak to stand or walk anywhere safely, so I will lie here and listen through the dark.'
+  bedtime Mara: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am too weak to stand or walk anywhere, so I will lie here in the dark and listen to everything.'
+== day 9: shelf at 07:00 ?; morning_end min 15; stretches [('min 00', 'min 15', 'the morning', 19), ('09:51', '10:00', 'Q2', 8), ('10:21', '10:30', 'Q2', 8)]; day asks 35; away []
+  fast stage 3 min 87 Elena (144.0 h)
+== night 9: portions 0 -> 0; away []; far None; leavers []
+  bedtime Daniel: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am too weak to stand or protect anyone tonight, so I must finally rest.'
+  bedtime Elena: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I must stay awake to listen for any trouble and protect my family through the night.'
+  bedtime Leo: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I have no strength left to walk anywhere, so I must stay in bed and save whatever energy I have.'
+  bedtime Mara: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am too weak to stand, so I will lie here in the dark and listen to everything they do.'
+== day 10: shelf at 07:00 ?; morning_end min 15; stretches [('min 00', 'min 15', 'the morning', 18), ('09:15', '09:24', 'Q2', 8), ('09:45', '09:54', 'Q2', 8)]; day asks 34; away []

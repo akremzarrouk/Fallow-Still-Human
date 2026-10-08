@@ -1,0 +1,10 @@
+{
+ "case": "leo",
+ "arm": "probe",
+ "sample": 3,
+ "seed": 103,
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 1.0,
+ "api_requests": 1,
+ "raw": "{\n  \"option\": \"sleep\",\n  \"say\": null,\n  \"feeling\": \"exhausted\",\n  \"reason\": \"My body is far too weak to stand or walk anywhere, so I need to sleep and conserve what little strength I have left.\",\n  \"suspects\": \"Daniel\",\n  \"angry_at\": \"Daniel\"\n}"
+}

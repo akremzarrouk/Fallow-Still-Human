@@ -1,0 +1,27 @@
+recorded_utc: 2026-10-08T14:40:26Z
+82755348bc3c56e536e0a2a88e2c0ad93a2a6248ca915302c5ddea38883cc39c *runs/probe_stakes/plan.md
+$ git rev-parse HEAD
+91380e400577a96145faf773f2d347a8934d1387
+$ git status --short
+?? cache/v21/
+?? reports/days_v21.md
+?? reports/days_v21_plan.md
+?? runs/probe_stakes/
+?? runs/v21/
+?? runs/v6/daniel_ate_it-seed1.replay.md
+?? runs/v6/daniel_ate_it-seed2.replay.md
+?? runs/v6/daniel_ate_it-seed3.replay.md
+$ sha256sum probe.py capture.py cases/*
+cd623edaa14cf52961218b2e5b70f10650df1c5a5131b7eac5f0dd9cd9c3b6ba *runs/probe_stakes/probe.py
+9d8358328c460e082c3714e2916e5205bd038df72becbcbdc1892d678e75986c *runs/probe_stakes/capture.py
+835ef5dac6095aede2c90ea1780e2d1c924fe9e4be958b4afefa68081aa325e0 *runs/probe_stakes/cases/daniel_control.txt
+d6ace919276887a01f1eb9803057115081edce1ace5fc57c6cf35beeee447d28 *runs/probe_stakes/cases/daniel_probe.txt
+6f51b75e043943658039833103f79c421398a9823f39ed19b1b4d1dc9dcc329c *runs/probe_stakes/cases/elena_control.txt
+3eb818194dc2efcc3ea145c17fa23362245fcd31f3a52f6471b0d5447a46b387 *runs/probe_stakes/cases/elena_probe.txt
+ba5f3dfdbb64748007046a3f5d9a6f56182d940bb88728c0a6a4d730e71bca6c *runs/probe_stakes/cases/leo_control.txt
+49557fd212710a6533b0d9346a890836e31ec7a57a8854fdbe9b621582dabaa9 *runs/probe_stakes/cases/leo_probe.txt
+4cd4f4286229a0f9dd88207fee9c0c4e03fd24a60a6a445848808189fb1bba37 *runs/probe_stakes/cases/mara_control.txt
+0ce0e4ace0a75e98365291ee29b1e0dd8911ccc0c0a7ed47c34957fe74114587 *runs/probe_stakes/cases/mara_probe.txt
+c576bd2ce8f035e1671eb4a0d055d4cf1bfbd1baa05e0174bca2457e576e32cc *runs/probe_stakes/cases/system.txt
+$ sha256sum -c cache/v21 (entries)
+484

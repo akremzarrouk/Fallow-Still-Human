@@ -1,0 +1,25 @@
+checked_utc: 2026-10-08T14:14:36Z
+859df50828ddb0f44f65c1e12f71d3aa23c4b1b86ba916e71a849030b277c2bd *reports/days_v21_plan.md
+recorded:
+recorded_utc: 2026-10-08T13:35:21Z
+859df50828ddb0f44f65c1e12f71d3aa23c4b1b86ba916e71a849030b277c2bd *reports/days_v21_plan.md
+$ sha256sum -c (the *.py and config.json sha256s of plan_frozen.txt)
+1 OK
+1 OK
+1 OK
+20
+$ sha256sum -c cache_copy
+cache/v16/gemini-3.5-flash-lite-daniel_ate_it-seed2.json: OK
+cache/v21/gemini-3.5-flash-lite-daniel_ate_it-seed2.json: FAILED
+sha256sum: WARNING: 1 computed checksum did NOT match
+$ git rev-parse HEAD
+91380e400577a96145faf773f2d347a8934d1387
+$ git status --short
+?? cache/v21/
+?? reports/days_v21_plan.md
+?? runs/v21/
+?? runs/v6/daniel_ate_it-seed1.replay.md
+?? runs/v6/daniel_ate_it-seed2.replay.md
+?? runs/v6/daniel_ate_it-seed3.replay.md
+$ git diff --stat
+v16 entries 147 v21 entries 484 all v16 kept unchanged True new 337

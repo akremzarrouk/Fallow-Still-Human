@@ -1,0 +1,10 @@
+{
+ "case": "daniel",
+ "arm": "probe",
+ "sample": 3,
+ "seed": 103,
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 1.0,
+ "api_requests": 1,
+ "raw": "{\n  \"option\": \"sleep\",\n  \"say\": null,\n  \"feeling\": \"exhausted\",\n  \"reason\": \"My body is far too weak and starving to stay awake any longer.\",\n  \"suspects\": \"nobody\",\n  \"angry_at\": \"nobody\"\n}"
+}

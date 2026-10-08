@@ -1,0 +1,34 @@
+day | day asks | quiet_asks | stretches | q1/q2/q5 fired | model acts | speech | silent | trip-position acts | distinct (kind,target) | morning speech | morning end | rests | withdrawals | night asks | mind asks
+3 35 3 3 1/2/0 35 31 4 0 6 16 min 15 8 2 4 4
+4 38 3 3 1/2/0 38 36 2 0 5 20 min 18 8 1 4 4
+5 40 3 3 0/2/1 40 40 0 21 10 24 min 18 9 0 6 4
+6 31 3 4 1/2/0 31 25 6 0 8 20 min 18 8 1 4 4
+7 30 3 4 1/2/0 30 24 6 0 6 10 min 09 9 1 4 4
+8 36 2 3 0/2/0 36 29 7 0 6 19 min 18 9 0 4 4
+9 35 2 3 0/2/0 35 31 4 0 7 16 min 15 8 2 4 4
+10 34 2 3 0/2/0 34 29 5 0 7 15 min 15 8 1 None None
+trip position acts by day: {3: [], 4: [], 5: [('min 06', 'Daniel', 'volunteer'), ('min 06', 'Leo', 'send_daniel'), ('min 06', 'Elena', 'keep_daniel_home'), ('min 09', 'Daniel', 'still_going'), ('min 09', 'Elena', 'nobody_goes'), ('min 09', 'Leo', 'keep_daniel_home'), ('min 12', 'Daniel', 'still_going'), ('min 12', 'Elena', 'keep_daniel_home'), ('min 12', 'Leo', 'send_daniel'), ('min 15', 'Daniel', 'propose_trip'), ('10:03', 'Daniel', 'volunteer'), ('10:03', 'Elena', 'nobody_goes'), ('10:03', 'Mara', 'send_daniel'), ('10:03', 'Leo', 'nobody_goes'), ('10:06', 'Daniel', 'still_going'), ('10:06', 'Elena', 'keep_daniel_home'), ('10:06', 'Leo', 'keep_daniel_home'), ('19:00', 'Daniel', 'still_going'), ('19:00', 'Elena', 'nobody_goes'), ('19:03', 'Daniel', 'still_going'), ('19:03', 'Elena', 'keep_daniel_home')], 6: [], 7: [], 8: [], 9: [], 10: []}
+meta totals: live 337 cached 96 api 337 run_seconds 1838.2 max_est 2315 api-counted 2854
+night 3 asks 4 mind 4 kept 9 rejected 0 api-counted max night 2112
+night 4 asks 4 mind 4 kept 7 rejected 1 api-counted max night 2172
+night 5 asks 6 mind 4 kept 6 rejected 1 api-counted max night 2261
+night 6 asks 4 mind 4 kept 6 rejected 2 api-counted max night 2241
+night 7 asks 4 mind 4 kept 10 rejected 0 api-counted max night 2098
+night 8 asks 4 mind 4 kept 5 rejected 1 api-counted max night 2172
+night 9 asks 4 mind 4 kept 7 rejected 0 api-counted max night 2233
+api max day 3 2276
+api max day 4 2294
+api max day 5 2400
+api max day 6 2308
+api max day 7 2265
+api max day 8 2231
+api max day 9 2320
+api max day 10 2284
+day 3 {('reassure', None): 13, ('confront', 'daniel'): 9, ('accuse', 'daniel'): 5, ('confront', 'leo'): 2, ('reassure', 'mara'): 1, ('reassure', 'leo'): 1}
+day 4 {('confront', 'daniel'): 11, ('reassure', None): 10, ('accuse', 'daniel'): 7, ('confront', 'mara'): 6, ('confront', 'leo'): 2}
+day 5 {('accuse', 'daniel'): 9, ('volunteer', None): 7, ('object', 'daniel'): 6, ('confront', 'daniel'): 5, ('object', None): 4, ('reassure', None): 3}
+day 6 {('accuse', 'daniel'): 8, ('confront', 'mara'): 5, ('reassure', None): 4, ('confront', 'daniel'): 4, ('confront', 'leo'): 1, ('reassure', 'elena'): 1}
+day 7 {('reassure', None): 9, ('accuse', 'daniel'): 8, ('confront', 'mara'): 4, ('confront', 'daniel'): 1, ('reassure', 'leo'): 1, ('reassure', 'mara'): 1}
+day 8 {('accuse', 'daniel'): 9, ('reassure', None): 6, ('confront', 'mara'): 5, ('confront', 'daniel'): 5, ('confront', 'leo'): 3, ('reassure', 'mara'): 1}
+day 9 {('reassure', None): 10, ('confront', 'daniel'): 8, ('confront', 'mara'): 5, ('accuse', 'daniel'): 3, ('confront', 'leo'): 3, ('reassure', 'elena'): 1}
+day 10 {('confront', 'mara'): 7, ('reassure', None): 7, ('confront', 'daniel'): 6, ('accuse', 'daniel'): 5, ('reassure', 'leo'): 2, ('confront', 'leo'): 1}

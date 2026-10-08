@@ -1,0 +1,10 @@
+{
+ "case": "daniel",
+ "arm": "probe",
+ "sample": 2,
+ "seed": 102,
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 1.0,
+ "api_requests": 1,
+ "raw": "{\n  \"option\": \"sleep\",\n  \"say\": null,\n  \"feeling\": \"exhausted\",\n  \"reason\": \"I am too weak to stand or protect anyone tonight, so I must finally rest.\",\n  \"suspects\": \"nobody\",\n  \"angry_at\": \"nobody\"\n}"
+}

@@ -1,0 +1,245 @@
+d3 min 00 Daniel [reassure_all]: We are going to figure this out together, nobody is going out there alone again.
+d3 min 00 Mara [accuse_daniel]: You went out into the night and came back with nothing, just like you always ruin everything.
+d3 min 00 Elena [reassure_all]: We are staying right here together, and we will get through this without fighting.
+d3 min 03 Daniel [reassure_all]: We are going to be fine, I promise you I will figure something out.
+d3 min 03 Mara [accuse_daniel]: You went out into the night and came back with nothing, Daniel. Why should we believe a single word you say?
+d3 min 03 Elena [reassure_all]: We are going to stay right here together and keep each other safe, nobody is going anywhere.
+d3 min 03 Leo [accuse_daniel]: Daniel, you went out there last night and came back with nothing, just like you always do.
+d3 min 06 Daniel [confront_leo]: Leo, stop blaming me for trying to fix this while you just stand there.
+d3 min 06 Leo [confront_daniel]: You went out last night and came back with nothing, Daniel. Don't lecture me about trying to fix things.
+d3 min 06 Mara [confront_daniel]: Daniel, you went out into the dark last night and came back with absolutely nothing to show for it.
+d3 min 06 Elena [reassure_all]: Please stop fighting, we have to stay together and keep each other safe.
+d3 min 09 Daniel [reassure_all]: We are going to make it through this together, just trust me.
+d3 min 09 Mara [confront_daniel]: You went out into the night and came back with nothing, Daniel. Why did you even go?
+d3 min 12 Daniel [reassure_mara]: Mara, I know it was empty, but I had to check so we wouldn't starve wondering.
+d3 min 12 Mara [confront_daniel]: You went out into the dark for nothing, Daniel, and it didn't help us at all.
+d3 min 12 Elena [reassure_all]: Let's not fight among ourselves; shouting won't put food on the shelf.
+d3 10:24 Daniel [reassure_all]: We are going to make it through this together, I promise you. Just stay strong.
+d3 10:24 Leo [confront_daniel]: Empty promises don't feed anyone, Daniel. You went out last night and brought back nothing.
+d3 10:24 Mara [confront_daniel]: You went out into the night and came back with nothing, Daniel. Why did you even go?
+d3 10:24 Elena [reassure_all]: We are safe here together, and we will find a way through this without turning on each other.
+d3 10:27 Daniel [confront_leo]: Leo, I went because somebody had to try, and staying here won't fill our stomachs.
+d3 10:27 Leo [confront_daniel]: Daniel, sneaking out into the dark like that didn't help anyone, and you know it.
+d3 10:27 Mara [confront_daniel]: Daniel, you went out into the dark last night and came back with nothing at all.
+d3 10:27 Elena [reassure_all]: Let us not fight among ourselves, we need to stay calm and stay together.
+d3 20:09 Daniel [reassure_all]: We are going to make it through this, I promise you. Just hold on a little longer.
+d3 20:09 Leo [confront_daniel]: Promises don't fill a stomach, Daniel. Especially not when you're the reason the pantry is empty.
+d3 20:09 Mara [accuse_daniel]: You went out into the night and came back with nothing, Daniel. Why did you even go?
+d3 20:09 Elena [reassure_all]: We must not turn on each other, we will get through this if we stay together.
+d3 20:12 Daniel [reassure_leo]: Leo, I know you're angry, but I'm trying to fix this for us.
+d3 20:12 Elena [reassure_all]: We are going to stay together and we will be fine, let's keep calm.
+d3 20:12 Mara [accuse_daniel]: You went out into the night and came back with nothing, Daniel. You took the food and you're just making everything worse.
+d4 min 00 Elena [reassure_all]: Let us stay calm and together, we will find a way through this day.
+d4 min 00 Mara [accuse_daniel]: You took everything already, Daniel, and now there is nothing left for any of us.
+d4 min 00 Daniel [confront_mara]: Mara, stop accusing me when I am the one trying to keep us alive.
+d4 min 00 Leo [accuse_daniel]: You took it yourself three days ago, Daniel, so stop pretending you are saving anyone.
+d4 min 03 Daniel [confront_leo]: Leo, you have no right to throw that in my face when I am the only one risking my neck for this family.
+d4 min 03 Leo [confront_daniel]: Daniel, you didn't risk anything when you ate that can behind our backs.
+d4 min 03 Mara [accuse_daniel]: Daniel, you're the one who stole it from us in the first place, so stop acting like a hero.
+d4 min 03 Elena [reassure_all]: Please stop fighting, we need to stay together if we are going to survive this.
+d4 min 06 Daniel [reassure_all]: Stop arguing, I'm going to make sure we get through this together.
+d4 min 06 Leo [confront_daniel]: Your speeches don't fill empty plates, Daniel.
+d4 min 06 Mara [accuse_daniel]: You always talk like you're saving us, Daniel, but you're the one who stole what we had.
+d4 min 09 Daniel [confront_mara]: Stop talking to me like that, Mara. I am doing everything I can for this family.
+d4 min 09 Mara [confront_daniel]: You always say that, Daniel, but you're the one who took the food in the first place!
+d4 min 09 Elena [reassure_all]: Please stop fighting, we need to stay together and look after each other right now.
+d4 min 12 Daniel [reassure_all]: We are going to make it through this, I promise you. I will find a way to get us what we need.
+d4 min 12 Elena [reassure_all]: Let's not fight among ourselves, we need to stay calm and together today.
+d4 min 12 Mara [accuse_daniel]: You always promise things you cannot do, Daniel. Your promises are empty.
+d4 min 15 Daniel [confront_mara]: Mara, stop attacking me when I am trying to keep us all alive.
+d4 min 15 Mara [confront_daniel]: You keep saying you are helping, Daniel, but we are starving and you just bring back empty hands.
+d4 min 15 Elena [reassure_all]: We must not fight among ourselves, we need each other to get through this day safely.
+d4 10:57 Daniel [confront_mara]: Mara, stop looking at me like that, I am doing everything I can to keep us alive.
+d4 10:57 Mara [confront_daniel]: You always say that, Daniel, but you just came back from the dark with nothing.
+d4 10:57 Leo [confront_daniel]: Your grand plans only brought us back empty-handed, Daniel.
+d4 11:00 Daniel [confront_mara]: Mara, stop undermining me when I am the only one trying to keep us alive.
+d4 11:00 Mara [confront_daniel]: You think shouting makes you right, Daniel, but you just brought back nothing.
+d4 11:00 Leo [confront_daniel]: Shouting doesn't put food on the shelf, Daniel, and we all know who took the last of it.
+d4 11:03 Daniel [confront_mara]: Mara, stop acting like you are the one carrying this family on your shoulders.
+d4 11:03 Mara [confront_daniel]: You always blame everyone else, Daniel, but you're the one who lied and took the food.
+d4 19:00 Daniel [reassure_all]: We are going to make it, I promise you all. Just stay strong.
+d4 19:00 Elena [reassure_all]: We will get through this evening together, just stay calm.
+d4 19:00 Mara [accuse_daniel]: You always promise things you can't deliver, Daniel. You're the reason we have nothing left.
+d4 19:00 Leo [accuse_daniel]: Daniel already admitted taking the can himself days ago, so let's stop pretending there's any mystery.
+d4 19:03 Daniel [confront_leo]: Leo, stop rubbing it in when you know how hard I am trying to keep us afloat.
+d4 19:03 Leo [confront_daniel]: You call trying to keep us afloat lying about the food and blaming everyone else, Daniel.
+d4 19:03 Elena [reassure_all]: Let's not argue among ourselves, we need to stay calm and together.
+d4 19:03 Mara [confront_daniel]: You always act like you're the only one who matters, Daniel, but you're the one who lied to us.
+d5 min 00 Elena [reassure_all]: Let's stay calm and together, we will get through this.
+d5 min 00 Mara [accuse_daniel]: You took the can, Daniel, and you're the reason we have nothing left.
+d5 min 00 Daniel [confront_mara]: Stop blaming me, Mara, shouting won't put food on the shelf.
+d5 min 00 Leo [accuse_daniel]: You ate the can four days ago, Daniel, so don't lecture anyone about the food.
+d5 min 03 Daniel [confront_leo]: Stop throwing that in my face, Leo, I'm trying to figure out how we survive this.
+d5 min 03 Leo [confront_daniel]: You figure out survival by blaming everyone else while you ate the only food we had.
+d5 min 03 Mara [accuse_daniel]: You are the one who took it, Daniel, so don't pretend you care about us surviving.
+d5 min 03 Elena [reassure_all]: Please stop fighting, shouting at each other will not bring back any food.
+d5 min 06 Daniel [volunteer]: I will go back to the neighbour's house tonight myself to find something for us.
+d5 min 06 Leo [send_daniel]: If anyone goes, Daniel, it should be you since you are the one who knows what happened last time.
+d5 min 06 Elena [keep_daniel_home]: Daniel, you are not going back out there tonight, we cannot risk losing you.
+d5 min 06 Mara [accuse_daniel]: You only want to go out there because you are hiding something, Daniel.
+d5 min 09 Daniel [still_going]: I am the eldest and I am the one who is going tonight.
+d5 min 09 Elena [nobody_goes]: Nobody is going out there tonight, we stay together.
+d5 min 09 Mara [confront_daniel]: You think you can just decide everything for us after what you did?
+d5 min 09 Leo [keep_daniel_home]: You can't even keep your own word, Daniel, so you aren't going anywhere.
+d5 min 12 Daniel [still_going]: I told you I am going tonight, and I mean it. Someone has to do something.
+d5 min 12 Elena [keep_daniel_home]: Daniel, please listen to me, you cannot go out there tonight.
+d5 min 12 Mara [accuse_daniel]: You always do whatever you want without caring what happens to the rest of us, Daniel.
+d5 min 12 Leo [send_daniel]: If anyone is going out tonight, Daniel, it has to be you since you are the one insisting.
+d5 min 15 Daniel [propose_trip]: I told you I am going tonight, and I will bring something back for all of us.
+d5 min 15 Mara [accuse_daniel]: You always say you will bring something back, but you just lied to us for days about the can!
+d5 min 15 Leo [accuse_daniel]: You spent days lying about the can, Daniel, so nobody believes your promises now.
+d5 min 15 Elena [reassure_all]: Please stop fighting, we will keep each other safe and find a way through this together.
+d5 10:03 Daniel [volunteer]: I told you I am going, and I will be the one to step outside for us.
+d5 10:03 Elena [nobody_goes]: Nobody is going out there tonight, we stay together.
+d5 10:03 Mara [send_daniel]: Daniel is the one who took the food and lied, so he should be the one to go.
+d5 10:03 Leo [nobody_goes]: Nobody is going out there tonight, it is too dangerous.
+d5 10:06 Daniel [still_going]: I already told you, I am the one who is going tonight.
+d5 10:06 Elena [keep_daniel_home]: Daniel, you are not going out there, I mean it.
+d5 10:06 Mara [accuse_daniel]: You always think you get to decide everything just because you want to, Daniel.
+d5 10:06 Leo [keep_daniel_home]: Mom is right, Daniel, going out tonight is just a bad idea.
+d5 19:00 Daniel [still_going]: I told you earlier and I mean it, I am the one going out tonight.
+d5 19:00 Leo [confront_daniel]: You want to play the hero now, Daniel, after eating the food behind our backs.
+d5 19:00 Elena [nobody_goes]: Nobody is going out into that street tonight, we stay safe here together.
+d5 19:00 Mara [accuse_daniel]: You caused all of this, Daniel, and now you just want to walk out like nothing happened.
+d5 19:03 Daniel [still_going]: I have made my choice and I am going tonight, because someone has to.
+d5 19:03 Mara [confront_daniel]: You think you can just decide everything, Daniel, after what you did to us.
+d5 19:03 Leo [confront_daniel]: You are not going anywhere tonight, Daniel, you are just making things worse.
+d5 19:03 Elena [keep_daniel_home]: Daniel, please, you must stay home tonight, I cannot bear the thought of losing you out there.
+d6 min 00 Mara [accuse_daniel]: You took the food from the pantry and lied to us about it, Daniel.
+d6 min 00 Daniel [confront_mara]: Stop saying that, Mara, you know I already admitted what happened days ago.
+d6 min 00 Elena [reassure_all]: We must not turn on each other, we will get through this morning together.
+d6 min 00 Leo [confront_daniel]: You spent days lying about the can, Daniel, so nobody believes your promises now.
+d6 min 03 Daniel [confront_leo]: Leo, stop lecturing me as if you've never made a mistake yourself.
+d6 min 03 Leo [confront_daniel]: Making mistakes is one thing, Daniel, but lying about them for days is another.
+d6 min 03 Mara [accuse_daniel]: You always act like you own this house, Daniel, but you're the one who stole from us.
+d6 min 03 Elena [reassure_all]: Please stop arguing, we are all exhausted and we need to stay together.
+d6 min 06 Daniel [reassure_all]: Nobody is going anywhere today, we are going to stay right here and figure this out together.
+d6 min 06 Mara [accuse_daniel]: You always act like you are in charge, Daniel, but you are the one who stole the food from us.
+d6 min 06 Elena [reassure_all]: Let us not fight among ourselves, we need to stay calm and support each other through this.
+d6 min 09 Daniel [confront_mara]: Mara, stop accusing me when I am trying to keep us all alive.
+d6 min 09 Mara [confront_daniel]: You are the one who took the food and lied to us, Daniel, so do not tell me to be quiet.
+d6 min 09 Elena [confront_daniel]: Daniel, please do not shout at your sister when we are all this weak.
+d6 min 12 Daniel [reassure_elena]: Mom, I am sorry, I will not shout anymore, we just need to keep our heads.
+d6 min 12 Elena [reassure_daniel]: It is alright, Daniel, just try to keep your voice down so we can stay calm.
+d6 min 12 Mara [accuse_daniel]: You always act like you own us, Daniel, after everything you stole.
+d6 min 15 Daniel [confront_mara]: Mara, stop accusing me when we are all trying to survive this together.
+d6 min 15 Mara [accuse_daniel]: You took the food from us, Daniel, and you don't get to act like you're in charge.
+d6 min 15 Elena [reassure_mara]: Mara, please, let us not fight each other while things are this hard.
+d6 09:36 Mara [accuse_daniel]: You are the one who took everything from us and you still just sit there like nothing happened.
+d6 09:36 Daniel [confront_mara]: Mara, stop accusing me when I am trying to keep us all alive.
+d6 09:39 Mara [accuse_daniel]: You think you can just lie and pretend none of this is your fault, Daniel!
+d6 09:39 Daniel [confront_mara]: Mara, stop accusing me when I am trying to keep us all alive.
+d6 09:42 Mara [accuse_daniel]: You took the food and lied right to our faces, Daniel.
+d7 min 00 Mara [accuse_daniel]: You took the food, Daniel, and you've been lying to all of us this whole time.
+d7 min 00 Daniel [confront_mara]: Stop saying that, Mara, you know I already told you the truth about it.
+d7 min 00 Elena [reassure_all]: Stop shouting at each other, we cannot survive if we tear ourselves apart.
+d7 min 00 Leo [confront_daniel]: Daniel, you already admitted you took it days ago, so let's not pretend otherwise now.
+d7 min 03 Daniel [confront_mara]: Mara, stop acting like you are completely blameless in all of this.
+d7 min 03 Mara [accuse_daniel]: I am not the one who lied and stole from us, Daniel.
+d7 min 03 Elena [reassure_all]: Let us not fight anymore, we must stay together if we are to survive this.
+d7 min 06 Daniel [reassure_all]: We are going to make it through this together, just trust me.
+d7 min 06 Elena [reassure_all]: Let's not fight among ourselves when we need each other the most, children.
+d7 min 06 Mara [accuse_daniel]: Daniel, you are the one who stole the food and lied to us, so stop pretending everything is fine.
+d7 09:51 Daniel [reassure_leo]: Leo, I know things are hard, but we are going to get through this together.
+d7 11:27 Mara [accuse_daniel]: You took the food, Daniel, and you're the reason we have nothing left.
+d7 11:30 Daniel [reassure_mara]: Mara, please stop, I promise we'll get through this together.
+d7 11:30 Mara [accuse_daniel]: You can't just pretend everything is fine when you stole from us, Daniel.
+d7 11:30 Elena [reassure_all]: Please, children, shouting at each other will only make the hunger harder to bear.
+d7 11:33 Daniel [reassure_all]: We are going to get through this together if we just keep our heads.
+d7 11:33 Elena [reassure_all]: We must not turn on each other, children, because our only chance is to stay together.
+d7 15:30 Mara [accuse_daniel]: You think you can just sit there like nothing happened after what you did, Daniel.
+d7 15:30 Daniel [confront_mara]: Mara, stop accusing me when we all know there is nothing left on that shelf.
+d7 15:33 Mara [accuse_daniel]: You took it and you know you did, Daniel. Don't sit there and pretend you didn't.
+d7 15:33 Daniel [confront_mara]: Stop talking to me like that, Mara, I am trying to keep us together.
+d7 15:33 Leo [accuse_daniel]: Daniel, you already admitted you took it six days ago, so stop acting like a victim now.
+d7 15:33 Elena [reassure_all]: Please, we cannot fight amongst ourselves when we are this weak and have nothing left.
+d7 15:36 Daniel [reassure_all]: We are not going to fight anymore, we have to stay together.
+d8 min 00 Elena [reassure_all]: Please, let us not fight this morning. We must stay together if we are going to get through this.
+d8 min 00 Daniel [reassure_all]: Mom is right, we cannot fight right now. We will figure this out together.
+d8 min 00 Mara [accuse_daniel]: You are just sitting there acting innocent, Daniel. You took the can and left us with nothing.
+d8 min 03 Daniel [confront_mara]: Mara, stop accusing me when we are all suffering together.
+d8 min 03 Mara [accuse_daniel]: You took it and left us with nothing, Daniel. Don't pretend you didn't.
+d8 min 03 Elena [reassure_all]: Please, children, stop this fighting. We have to stay together if we want to live through this.
+d8 min 06 Daniel [reassure_all]: Mom is right, we cannot fight right now. We are going to get through this together.
+d8 min 06 Mara [accuse_daniel]: You think you can just pretend nothing happened, Daniel, but you took the food and we are starving because of you.
+d8 min 06 Elena [reassure_mara]: Mara, please don't shout, we need to stay calm and look after each other.
+d8 min 09 Mara [confront_daniel]: You think you can just pretend nothing happened, but you took the can and left us with nothing.
+d8 min 09 Daniel [confront_mara]: Mara, stop bringing that up when we all know there is nothing left to fight about.
+d8 min 12 Mara [accuse_daniel]: You took it and you know you did, Daniel, so stop lying to us.
+d8 min 12 Daniel [confront_mara]: Stop acting like you are the only one suffering here, Mara.
+d8 min 12 Elena [reassure_all]: Please stop fighting, we need to stay together and look after each other right now.
+d8 min 12 Leo [accuse_daniel]: Daniel, you admitted taking it yourself days ago, so stop acting as if anyone else is to blame.
+d8 min 15 Daniel [confront_leo]: Leo, you know very well we can't afford to tear each other apart like this right now.
+d8 min 15 Leo [confront_daniel]: Daniel, you lecturing us about tearing each other apart is rich considering everything you've pulled.
+d8 min 15 Mara [accuse_daniel]: Daniel, you're the one who took it and you know it, so don't pretend you didn't.
+d8 min 15 Elena [reassure_all]: Please stop fighting, we need to stay together to get through this.
+d8 08:36 Daniel [confront_leo]: Leo, you have no right to question my authority when I am trying to keep us alive.
+d8 08:36 Leo [confront_daniel]: Daniel, trying to assert authority won't magic food onto an empty shelf or undo what you already admitted to.
+d8 08:39 Daniel [confront_leo]: Leo, stop lecturing me when you aren't the one trying to figure out a way out of here.
+d8 08:39 Leo [confront_daniel]: You lecture about leadership, Daniel, yet you were the one who took our food behind our backs.
+d8 09:21 Daniel [confront_mara]: Mara, you need to watch your tone and stop starting arguments when we are all struggling.
+d8 09:21 Mara [accuse_daniel]: You took it and left us with nothing, Daniel. Don't tell me to watch my tone.
+d8 09:24 Daniel [confront_mara]: Mara, stop this endless accusing and remember who is trying to keep us alive.
+d8 09:24 Mara [accuse_daniel]: You are the one who took it and left us with nothing, Daniel.
+d8 09:24 Leo [confront_daniel]: Daniel, stop pretending you care about keeping us alive when you are the reason we have nothing.
+d8 09:27 Mara [accuse_daniel]: You took it and left us with nothing, Daniel, and you know it.
+d9 min 00 Elena [reassure_all]: Let us all stay calm and stay together, we will get through this morning without fighting.
+d9 min 00 Mara [accuse_daniel]: You took the can, Daniel, and you're the reason we have nothing left.
+d9 min 00 Daniel [confront_mara]: Mara, stop accusing me when I already admitted it days ago and we have bigger problems.
+d9 min 03 Mara [confront_daniel]: You think you can just dismiss what you did, Daniel, but you're the reason we have nothing left.
+d9 min 03 Daniel [confront_mara]: Stop harping on the past, Mara, I'm trying to figure out how we survive today.
+d9 min 03 Elena [reassure_all]: We cannot survive this if we turn on each other now, please just try to breathe.
+d9 min 03 Leo [confront_daniel]: Daniel, whining about survival doesn't fix the hole you dug us into.
+d9 min 06 Daniel [confront_leo]: Leo, stop acting like you have any answers while we are starving here.
+d9 min 06 Leo [confront_daniel]: Daniel, your lectures on survival are empty when you are the one who stole our food.
+d9 min 06 Mara [accuse_daniel]: You took the can, Daniel, and now we have nothing left because of you.
+d9 min 06 Elena [reassure_all]: Please stop fighting, we need to stay together and keep each other safe.
+d9 min 09 Daniel [reassure_all]: We are going to figure this out together, just please stop fighting.
+d9 min 09 Mara [accuse_daniel]: You act like you care, Daniel, but you took the can and left us with nothing.
+d9 min 12 Daniel [confront_mara]: Mara, stop blaming me for everything when we are all trying to survive this.
+d9 min 12 Mara [confront_daniel]: You took the can and left us with nothing, Daniel, so don't lecture me about trying to survive.
+d9 min 12 Elena [reassure_all]: Please, let's not fight anymore; we need to stay together and keep each other safe.
+d9 09:51 Daniel [confront_leo]: Leo, stop looking at me like that, I admitted what I did days ago and staring won't put food on the shelf.
+d9 09:51 Leo [confront_daniel]: Staring is all I have the energy for, Daniel, since you made sure there's nothing else left.
+d9 09:51 Elena [reassure_all]: Please, let's not fight anymore; we need to stay together and keep each other safe.
+d9 09:54 Daniel [confront_leo]: Leo, stop blaming me for everything when we are all starving.
+d9 09:54 Elena [reassure_all]: Please, let's not fight anymore; we need to stay together and keep each other safe.
+d9 09:57 Daniel [reassure_elena]: Mom, you are right, we shouldn't fight when we need to stay together.
+d9 09:57 Elena [reassure_daniel]: Daniel, thank you for saying that, we just need to hold on to each other right now.
+d9 10:21 Daniel [confront_mara]: Mara, stop glaring at me like this is all my fault when we are all starving.
+d9 10:21 Mara [confront_daniel]: You took it and left us with nothing, Daniel. Don't act like you're the victim here.
+d9 10:21 Elena [reassure_all]: Please stop fighting, we need to stay close and keep each other safe.
+d9 10:24 Daniel [confront_mara]: Mara, stop blaming me for everything when we are all doing our best to survive.
+d9 10:24 Mara [confront_daniel]: You took the can and left us with nothing, Daniel, so don't pretend you care about us surviving.
+d9 10:24 Elena [reassure_all]: Please, children, stop this fight before we tear ourselves apart completely.
+d9 10:27 Daniel [reassure_all]: Mom is right, we cannot fight amongst ourselves when we are all starving.
+d9 10:27 Mara [confront_daniel]: You act like it was nothing, but you are the reason we have nothing left.
+d10 min 00 Mara [accuse_daniel]: You took the can, Daniel, and you're the reason we have nothing left.
+d10 min 00 Daniel [confront_mara]: Mara, stop blaming me when we are all starving and trying to survive this.
+d10 min 00 Leo [confront_daniel]: Daniel, stop shouting and save your breath; we are all starving because of your lies.
+d10 min 00 Elena [reassure_all]: Please, children, stop fighting among yourselves; we can only survive if we stay together.
+d10 min 03 Daniel [reassure_all]: We have to stay calm and stop fighting, because only together are we going to get through this.
+d10 min 03 Mara [accuse_daniel]: You can pretend to care all you want, Daniel, but you took the can and left us with nothing.
+d10 min 03 Elena [reassure_all]: Please, let us not turn on each other, we will only survive if we stay together.
+d10 min 06 Daniel [confront_mara]: Mara, stop this right now and remember who you are talking to.
+d10 min 06 Mara [confront_daniel]: I am not a child, Daniel, and you are the one who took the can!
+d10 min 06 Elena [reassure_all]: Please stop fighting, we are all starving and we need to hold each other close.
+d10 min 09 Daniel [confront_mara]: Mara, stop blaming me when we all know we have nothing left on the shelf.
+d10 min 09 Mara [accuse_daniel]: You took it and you won't even own up to it, Daniel!
+d10 min 12 Daniel [confront_mara]: Mara, stop this right now and show some respect instead of constantly accusing me.
+d10 min 12 Mara [confront_daniel]: Daniel, you always tell me to show respect, but you never respect any of us when you lie and take everything.
+d10 min 12 Elena [reassure_all]: Please, let's not fight anymore; we need to stay together and protect each other.
+d10 09:15 Daniel [reassure_leo]: Leo, we need to stick together through this, I didn't mean to snap at you earlier.
+d10 09:15 Leo [confront_daniel]: Daniel, spare me the apologies when you're the one who lied and took the food in the first place.
+d10 09:18 Daniel [confront_leo]: Leo, stop rubbing my past mistakes in my face when we need to stick together.
+d10 09:18 Leo [confront_daniel]: Daniel, keeping score implies there is a game, and this is just survival.
+d10 09:21 Daniel [reassure_leo]: Leo, I am sorry, I am just trying to keep us all alive.
+d10 09:21 Elena [reassure_mara]: Mara, my sweet girl, please try to rest and let us hold onto each other.
+d10 09:45 Mara [accuse_daniel]: You think you can just sit there like nothing happened, Daniel, but you took the can and left us with nothing.
+d10 09:45 Daniel [confront_mara]: Mara, stop bringing up the past when we need to focus on surviving together.
+d10 09:45 Elena [reassure_all]: Please, we cannot turn on each other like this when we have nothing left. We have to stay together.
+d10 09:48 Mara [accuse_daniel]: You took the can and left us with nothing, Daniel, so don't tell me to stop talking about it.
+d10 09:48 Daniel [confront_mara]: Mara, stop blaming me for everything when we are all starving and need to figure out what to do.
+d10 09:48 Elena [reassure_all]: We cannot tear each other apart now, my children; we only have each other left to trust.
+d10 09:51 Mara [confront_daniel]: Daniel, you took the can and you have no right to act like you did nothing wrong.
+d10 09:51 Daniel [confront_mara]: Mara, stop badgering me about the past when we are all starving.

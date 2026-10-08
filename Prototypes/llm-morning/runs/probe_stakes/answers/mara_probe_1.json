@@ -1,0 +1,10 @@
+{
+ "case": "mara",
+ "arm": "probe",
+ "sample": 1,
+ "seed": 101,
+ "model": "gemini-3.5-flash-lite",
+ "temperature": 1.0,
+ "api_requests": 1,
+ "raw": "{\n  \"option\": \"lie_awake\",\n  \"say\": null,\n  \"feeling\": \"exhausted and resentful\",\n  \"reason\": \"I am too weak to stand or go anywhere, so I lie in the dark listening to every little sound.\",\n  \"suspects\": \"Daniel\",\n  \"angry_at\": \"Daniel\"\n}"
+}

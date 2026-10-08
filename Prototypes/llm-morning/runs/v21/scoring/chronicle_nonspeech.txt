@@ -1,0 +1,598 @@
+D1-001 0 opening None | Elena counts the pantry with everyone standing there. She finds one can fewer than she expected and says so. 2 portions are left.
+D1-002 0 ask ask_who | Elena asks everyone who took the can: "Who took the can from the shelf? We need to be honest with each other."
+D1-003 0 deny deny | Mara denies taking it, to everyone: "I didn't take it, Mom. Why would I do that?"
+D1-004 0 deny deny | Daniel denies taking it, to everyone: "I didn't take any can, Mom. Nobody here did this."
+D1-005 0 deny deny | Leo denies taking it, to everyone: "I didn't take it either, Mom. We shouldn't start pointing fingers just yet."
+D1-006 3 reassure reassure_all | Elena reassures everyone: "Nobody needs to be afraid, we are going to figure this out together without fighting."
+D1-007 3 ask ask_who | Mara asks everyone who took the can: "If none of us took it, then where did it actually go?"
+D1-008 3 accuse accuse_leo | Daniel accuses Leo of taking it: "Leo, you were up late last night too. Are you sure you didn't grab it?"
+D1-009 6 deny deny | Leo denies taking it, to everyone: "I didn't take the can, Daniel. You know as well as I do that accusing each other gets us nowhere."
+D1-010 6 deny deny | Daniel denies taking it, to everyone: "I didn't take anything either, Leo, so don't look at me like that."
+D1-011 6 ask ask_who | Mara asks everyone who took the can: "If neither of you took it, then who actually did?"
+D1-012 6 reassure reassure_all | Elena reassures everyone: "Let's not turn on each other, we will figure this out together."
+D1-013 9 search search | Mara started going through the room.
+D1-014 9 search search | Leo started going through the room.
+D1-015 9 accuse accuse_leo | Daniel accuses Leo of taking it: "I still say Leo is hiding something, he's been acting suspicious this whole time."
+D1-016 12 deny deny | Leo denies taking it, to everyone: "I didn't take the can, Daniel. Stop accusing me."
+D1-017 12 ask ask_who | Mara asks everyone who took the can: "Please, someone just tell the truth so we can stop fighting."
+D1-018 12 accuse accuse_leo | Daniel accuses Leo of taking it: "You're lying, Leo, I know it was you. Just admit it."
+D1-019 12 reassure reassure_all | Elena reassures everyone: "Please stop fighting, we are going to get through this together."
+D1-020 15 deny deny | Leo denies taking it, to everyone: "I didn't take it, Daniel. You can keep repeating it all day, but it still won't be true."
+D1-021 30 reassure reassure_all | Elena reassures everyone: "We are not going to tear each other apart over this, we will figure it out together."
+D1-022 33 confess confess | Daniel admits taking it, to everyone: "I took it in the night, I'm sorry."
+D1-023 36 accuse accuse_daniel | Mara accuses Daniel of taking it: "You lied to us about it all morning until you had to confess, Daniel."
+D1-024 36 volunteer volunteer | Daniel offers to go to the neighbour's house tonight: "I was wrong, and I'll go to the neighbour's house tonight to bring back food for all of us."
+D1-025 36 object object_trip | Leo says nobody should go out tonight: "Nobody is going out there tonight, it is too dangerous."
+D1-026 36 object object_trip | Elena says nobody should go out tonight: "Nobody is going out into the street tonight, we stay together here."
+D1-027 39 reassure reassure_all | Daniel reassures everyone: "I am sorry for lying to you all, but I will keep you safe."
+D1-028 39 object object_daniel | Elena says Daniel should not be the one to go: "Daniel, you are not going out there tonight, we will find another way."
+D1-029 39 object object_daniel | Leo says Daniel should not be the one to go: "Daniel, Mom is right, you cannot go out there tonight."
+D1-030 39 volunteer volunteer | Mara offers to go to the neighbour's house tonight: "I can go to the neighbour's house tonight, I am not afraid to do it."
+D1-031 42 object object_mara | Daniel says Mara should not be the one to go: "Mara, you are not going out there, I will not let you risk your life."
+D1-032 42 decline decline | Mara says she will not be the one to go: "I won't go out there, but someone has to."
+D1-033 42 volunteer volunteer | Leo offers to go to the neighbour's house tonight: "I will go to the neighbour's house tonight, it is the only logical choice."
+D1-034 42 back back_leo | Elena says Leo should be the one to go: "Leo, you cannot go out there, it is far too dangerous for any of us."
+D1-035 45 decline decline | Leo says he will not be the one to go: "I already said I would go, Mom, and changing my mind now doesn't make it any safer."
+D1-036 45 volunteer volunteer | Daniel offers to go to the neighbour's house tonight: "I will go, Leo. I'm the oldest, and this is my burden to carry."
+D1-037 45 object object_daniel | Elena says Daniel should not be the one to go: "No, Daniel, you are not going out there alone."
+D1-038 48 reassure reassure_elena | Daniel reassures Elena: "Mom, I am strong enough to handle this and I will keep everyone safe."
+D1-039 48 volunteer volunteer | Elena offers to go to the neighbour's house tonight: "I will go, neither of you are going out there."
+D1-040 48 object object_elena | Mara says Elena should not be the one to go: "Mom, you can't go out there, it's too dangerous."
+D1-041 48 object object_elena | Leo says Elena should not be the one to go: "Mom, you cannot go out there, neither of us will let you take that risk."
+D1-042 51 decline decline | Elena says she will not be the one to go: "I will not go out there, none of us are going into the street."
+D1-043 51 object object_trip | Daniel says nobody should go out tonight: "Mom is right, nobody is stepping foot out there tonight."
+D1-044 54 eat eat | Mara ate a portion; 1 left.
+D1-045 75 reassure reassure_all | Elena reassures everyone: "We are going to stay together and we will figure this out without anyone going out."
+G1-01 90 gap None | The afternoon and evening passed in the house. Nobody ate.
+N1-01 90 bedtime lie_awake | Daniel: bedtime
+N1-02 90 bedtime lie_awake | Elena: bedtime
+N1-03 90 bedtime lie_awake | Leo: bedtime
+N1-04 90 bedtime lie_awake | Mara: bedtime
+D2-001 0 opening None | Everyone gets up and comes into the kitchen. Last night the shelf held 1 portion; this morning it holds 1 portion.
+D2-002 0 accuse accuse_daniel | Mara accuses Daniel of taking it: "You took it before and you're going to lie again, Daniel."
+D2-003 0 give give_elena | Daniel says to everyone, while handing Elena a portion: "Mom, take this portion, you need it more than I do."
+D2-004 0 eat_given eat_given | Elena says to everyone, while eating: "Thank you, Daniel, we will share this."
+D2-005 3 accuse accuse_daniel | Mara accuses Daniel of taking it: "You gave her food that isn't even yours to give, after you already stole from us."
+D2-006 3 volunteer volunteer | Daniel offers to go to the neighbour's house tonight: "I will go over to the neighbour's house tonight to find food for all of us."
+D2-007 6 back send_daniel | Mara says Daniel is the one who should go: "If you really want to help, Daniel, you are the one who has to go out there."
+D2-008 6 object nobody_goes | Elena says nobody should go out tonight: "Nobody is going out into the street, we stay together here."
+D2-009 6 back send_daniel | Leo says Daniel is the one who should go: "If anyone goes tonight, it has to be Daniel since he made this mess."
+D2-010 9 volunteer still_going | Daniel says he still means to go tonight: "I said I will go tonight, and I mean it. I am the eldest, so I will take the risk."
+D2-011 9 accuse accuse_daniel | Mara accuses Daniel of taking it: "You only want to go now because you got caught lying to us, Daniel."
+D2-012 9 confront confront_daniel | Leo confronts Daniel: "You hid it and lied for a whole day, Daniel, so don't act like a martyr now."
+D2-013 9 object keep_daniel_home | Elena says Daniel must stay home tonight: "Daniel, you are not going out there, none of us are."
+D2-014 12 reassure reassure_all | Daniel reassures everyone: "I know I messed up and lied to you all, but I am just trying to keep us alive."
+D2-015 12 accuse accuse_daniel | Mara accuses Daniel of taking it: "You only care about yourself, Daniel. You lied to us all day yesterday."
+D2-016 12 confront confront_daniel | Leo confronts Daniel: "You lied all day yesterday and you still expect us to trust your word."
+D2-017 12 object nobody_goes | Elena says nobody should go out tonight: "Nobody is going anywhere, we stay together right here."
+D2-018 15 reassure reassure_all | Daniel reassures everyone: "Listen to me, I was wrong before and I am sorry, but I will keep us safe."
+D2-019 15 accuse accuse_daniel | Mara accuses Daniel of taking it: "You only talk now because you got caught lying to us yesterday."
+D2-020 15 reassure reassure_all | Elena reassures everyone: "We are going to stay right here together and we will be fine."
+G2-01 90 gap None | The afternoon and evening passed in the house. Nobody ate.
+N2-01 90 bedtime go_next_door | Daniel: bedtime
+N2-02 90 bedtime sleep | Elena: bedtime
+N2-03 90 bedtime lie_awake | Leo: bedtime
+N2-04 90 bedtime lie_awake | Mara: bedtime
+N2-05 90 got_up None | Daniel: got_up
+N2-06 90 stop stop_daniel | Leo: stop
+N2-07 90 answer go_anyway | Daniel: answer
+N2-08 90 door None | Daniel: door
+N2-09 90 reaction get_up_and_look | Mara: reaction
+N2-10 90 went_out None | Daniel: went_out
+N2-11 90 street None | Daniel: street (back with nothing)
+N2-12 90 return None | Daniel: return
+D3-001 0 opening None | Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions.
+D3-002 0 reassure reassure_all | Daniel reassures everyone: "We are going to figure this out together, nobody is going out there alone again."
+D3-003 0 accuse accuse_daniel | Mara accuses Daniel of taking it: "You went out into the night and came back with nothing, just like you always ruin everything."
+D3-004 0 reassure reassure_all | Elena reassures everyone: "We are staying right here together, and we will get through this without fighting."
+D3-005 3 reassure reassure_all | Daniel reassures everyone: "We are going to be fine, I promise you I will figure something out."
+D3-006 3 accuse accuse_daniel | Mara accuses Daniel of taking it: "You went out into the night and came back with nothing, Daniel. Why should we believe a single word you say?"
+D3-007 3 reassure reassure_all | Elena reassures everyone: "We are going to stay right here together and keep each other safe, nobody is going anywhere."
+D3-008 3 accuse accuse_daniel | Leo accuses Daniel of taking it: "Daniel, you went out there last night and came back with nothing, just like you always do."
+D3-009 6 confront confront_leo | Daniel confronts Leo: "Leo, stop blaming me for trying to fix this while you just stand there."
+D3-010 6 confront confront_daniel | Leo confronts Daniel: "You went out last night and came back with nothing, Daniel. Don't lecture me about trying to fix things."
+D3-011 6 confront confront_daniel | Mara confronts Daniel: "Daniel, you went out into the dark last night and came back with absolutely nothing to show for it."
+D3-012 6 reassure reassure_all | Elena reassures everyone: "Please stop fighting, we have to stay together and keep each other safe."
+D3-013 9 reassure reassure_all | Daniel reassures everyone: "We are going to make it through this together, just trust me."
+D3-014 9 confront confront_daniel | Mara confronts Daniel: "You went out into the night and came back with nothing, Daniel. Why did you even go?"
+D3-015 12 routine None | Leo: withdraw in the brothers room, min 12 to min 15
+D3-016 12 reassure reassure_mara | Daniel reassures Mara: "Mara, I know it was empty, but I had to check so we wouldn't starve wondering."
+D3-017 12 confront confront_daniel | Mara confronts Daniel: "You went out into the dark for nothing, Daniel, and it didn't help us at all."
+D3-018 12 reassure reassure_all | Elena reassures everyone: "Let's not fight among ourselves; shouting won't put food on the shelf."
+D3-019 15 routine None | Daniel: rest in the brothers room, min 15 to 10:24
+D3-020 15 routine None | Elena: rest in the back room, min 15 to 09:39
+D3-021 15 routine None | Leo: rest in the brothers room, min 15 to 09:39
+D3-022 15 routine None | Mara: rest in the back room, min 15 to 09:39
+D3-023 159 routine None | Elena: sit in the kitchen, 09:39 to 10:24
+D3-024 159 routine None | Leo: sit in the kitchen, 09:39 to 10:24
+D3-025 159 routine None | Mara: sit in the kitchen, 09:39 to 10:24
+D3-026 180 need None | Elena: debt reached stage 1 (16.0)
+D3-027 204 reassure reassure_all | Daniel reassures everyone: "We are going to make it through this together, I promise you. Just stay strong."
+D3-028 204 confront confront_daniel | Leo confronts Daniel: "Empty promises don't feed anyone, Daniel. You went out last night and brought back nothing."
+D3-029 204 confront confront_daniel | Mara confronts Daniel: "You went out into the night and came back with nothing, Daniel. Why did you even go?"
+D3-030 204 reassure reassure_all | Elena reassures everyone: "We are safe here together, and we will find a way through this without turning on each other."
+D3-031 207 need None | Mara: fast reached stage 1 (48.022)
+D3-032 207 confront confront_leo | Daniel confronts Leo: "Leo, I went because somebody had to try, and staying here won't fill our stomachs."
+D3-033 207 confront confront_daniel | Leo confronts Daniel: "Daniel, sneaking out into the dark like that didn't help anyone, and you know it."
+D3-034 207 confront confront_daniel | Mara confronts Daniel: "Daniel, you went out into the dark last night and came back with nothing at all."
+D3-035 207 reassure reassure_all | Elena reassures everyone: "Let us not fight among ourselves, we need to stay calm and stay together."
+D3-036 210 routine None | Daniel: sit in the kitchen, 10:30 to 12:24
+D3-037 210 routine None | Elena: sit in the kitchen, 10:30 to 11:39
+D3-038 210 routine None | Leo: sit in the kitchen, 10:30 to 11:39
+D3-039 210 routine None | Mara: sit in the kitchen, 10:30 to 11:39
+D3-040 279 routine None | Elena: rest in the back room, 11:39 to 14:33
+D3-041 279 routine None | Leo: rest in the brothers room, 11:39 to 13:42
+D3-042 279 routine None | Mara: rest in the back room, 11:39 to 14:48
+D3-043 324 routine None | Daniel: rest in the brothers room, 12:24 to 15:21
+D3-044 402 routine None | Leo: sit in the kitchen, 13:42 to 20:09
+D3-045 453 routine None | Elena: sit in the kitchen, 14:33 to 20:09
+D3-046 468 routine None | Mara: sit in the kitchen, 14:48 to 20:09
+D3-047 474 need None | Mara: debt reached stage 1 (16.025)
+D3-048 501 routine None | Daniel: sit in the kitchen, 15:21 to 20:09
+D3-049 615 need None | Elena: debt reached stage 1 (16.0)
+D3-050 789 need None | Leo: debt reached stage 2 (24.025)
+D3-051 789 reassure reassure_all | Daniel reassures everyone: "We are going to make it through this, I promise you. Just hold on a little longer."
+D3-052 789 confront confront_daniel | Leo confronts Daniel: "Promises don't fill a stomach, Daniel. Especially not when you're the reason the pantry is empty."
+D3-053 789 accuse accuse_daniel | Mara accuses Daniel of taking it: "You went out into the night and came back with nothing, Daniel. Why did you even go?"
+D3-054 789 reassure reassure_all | Elena reassures everyone: "We must not turn on each other, we will get through this if we stay together."
+D3-055 792 reassure reassure_leo | Daniel reassures Leo: "Leo, I know you're angry, but I'm trying to fix this for us."
+D3-056 792 reassure reassure_all | Elena reassures everyone: "We are going to stay together and we will be fine, let's keep calm."
+D3-057 792 accuse accuse_daniel | Mara accuses Daniel of taking it: "You went out into the night and came back with nothing, Daniel. You took the food and you're just making everything worse."
+D3-058 795 routine None | Leo: withdraw in the brothers room, 20:15 to 21:00
+D3-059 795 routine None | Daniel: sit in the kitchen, 20:15 to 21:00
+D3-060 795 routine None | Elena: sit in the kitchen, 20:15 to 21:00
+D3-061 795 routine None | Mara: sit in the kitchen, 20:15 to 21:00
+G3-01 90 gap None | The afternoon and evening passed in the house. Nobody ate.
+N3-01 90 bedtime sleep | Daniel: bedtime
+N3-02 90 bedtime sleep | Elena: bedtime
+N3-03 90 bedtime lie_awake | Leo: bedtime
+N3-04 90 bedtime lie_awake | Mara: bedtime
+D4-001 0 opening None | Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions.
+D4-002 0 reassure reassure_all | Elena reassures everyone: "Let us stay calm and together, we will find a way through this day."
+D4-003 0 accuse accuse_daniel | Mara accuses Daniel of taking it: "You took everything already, Daniel, and now there is nothing left for any of us."
+D4-004 0 confront confront_mara | Daniel confronts Mara: "Mara, stop accusing me when I am the one trying to keep us alive."
+D4-005 0 accuse accuse_daniel | Leo accuses Daniel of taking it: "You took it yourself three days ago, Daniel, so stop pretending you are saving anyone."
+D4-006 3 confront confront_leo | Daniel confronts Leo: "Leo, you have no right to throw that in my face when I am the only one risking my neck for this family."
+D4-007 3 confront confront_daniel | Leo confronts Daniel: "Daniel, you didn't risk anything when you ate that can behind our backs."
+D4-008 3 accuse accuse_daniel | Mara accuses Daniel of taking it: "Daniel, you're the one who stole it from us in the first place, so stop acting like a hero."
+D4-009 3 reassure reassure_all | Elena reassures everyone: "Please stop fighting, we need to stay together if we are going to survive this."
+D4-010 6 reassure reassure_all | Daniel reassures everyone: "Stop arguing, I'm going to make sure we get through this together."
+D4-011 6 confront confront_daniel | Leo confronts Daniel: "Your speeches don't fill empty plates, Daniel."
+D4-012 6 accuse accuse_daniel | Mara accuses Daniel of taking it: "You always talk like you're saving us, Daniel, but you're the one who stole what we had."
+D4-013 9 confront confront_mara | Daniel confronts Mara: "Stop talking to me like that, Mara. I am doing everything I can for this family."
+D4-014 9 confront confront_daniel | Mara confronts Daniel: "You always say that, Daniel, but you're the one who took the food in the first place!"
+D4-015 9 reassure reassure_all | Elena reassures everyone: "Please stop fighting, we need to stay together and look after each other right now."
+D4-016 12 routine None | Leo: withdraw in the brothers room, min 12 to min 18
+D4-017 12 reassure reassure_all | Daniel reassures everyone: "We are going to make it through this, I promise you. I will find a way to get us what we need."
+D4-018 12 reassure reassure_all | Elena reassures everyone: "Let's not fight among ourselves, we need to stay calm and together today."
+D4-019 12 accuse accuse_daniel | Mara accuses Daniel of taking it: "You always promise things you cannot do, Daniel. Your promises are empty."
+D4-020 15 confront confront_mara | Daniel confronts Mara: "Mara, stop attacking me when I am trying to keep us all alive."
+D4-021 15 confront confront_daniel | Mara confronts Daniel: "You keep saying you are helping, Daniel, but we are starving and you just bring back empty hands."
+D4-022 15 reassure reassure_all | Elena reassures everyone: "We must not fight among ourselves, we need each other to get through this day safely."
+D4-023 18 routine None | Daniel: rest in the brothers room, min 18 to 10:57
+D4-024 18 routine None | Elena: sit in the kitchen, min 18 to 09:15
+D4-025 18 routine None | Leo: rest in the brothers room, min 18 to 10:36
+D4-026 18 routine None | Mara: rest in the back room, min 18 to 09:27
+D4-027 135 need None | Elena: debt reached stage 1 (16.0)
+D4-028 135 routine None | Elena: rest in the back room, 09:15 to 11:36
+D4-029 147 routine None | Mara: sit in the kitchen, 09:27 to 10:57
+D4-030 216 routine None | Leo: sit in the kitchen, 10:36 to 10:57
+D4-031 237 confront confront_mara | Daniel confronts Mara: "Mara, stop looking at me like that, I am doing everything I can to keep us alive."
+D4-032 237 confront confront_daniel | Mara confronts Daniel: "You always say that, Daniel, but you just came back from the dark with nothing."
+D4-033 237 confront confront_daniel | Leo confronts Daniel: "Your grand plans only brought us back empty-handed, Daniel."
+D4-034 240 confront confront_mara | Daniel confronts Mara: "Mara, stop undermining me when I am the only one trying to keep us alive."
+D4-035 240 confront confront_daniel | Mara confronts Daniel: "You think shouting makes you right, Daniel, but you just brought back nothing."
+D4-036 240 confront confront_daniel | Leo confronts Daniel: "Shouting doesn't put food on the shelf, Daniel, and we all know who took the last of it."
+D4-037 243 confront confront_mara | Daniel confronts Mara: "Mara, stop acting like you are the one carrying this family on your shoulders."
+D4-038 243 confront confront_daniel | Mara confronts Daniel: "You always blame everyone else, Daniel, but you're the one who lied and took the food."
+D4-039 246 routine None | Daniel: sit in the kitchen, 11:06 to 14:24
+D4-040 246 routine None | Leo: sit in the kitchen, 11:06 to 12:36
+D4-041 246 routine None | Mara: sit in the kitchen, 11:06 to 11:27
+D4-042 267 routine None | Mara: rest in the back room, 11:27 to 14:30
+D4-043 276 routine None | Elena: sit in the kitchen, 11:36 to 15:09
+D4-044 336 routine None | Leo: rest in the brothers room, 12:36 to 16:09
+D4-045 444 need None | Daniel: debt reached stage 1 (16.025)
+D4-046 444 routine None | Daniel: rest in the brothers room, 14:24 to 17:06
+D4-047 450 need None | Daniel: fast reached stage 2 (96.025)
+D4-048 450 routine None | Mara: sit in the kitchen, 14:30 to 19:00
+D4-049 489 need None | Elena: debt reached stage 1 (16.025)
+D4-050 489 routine None | Elena: rest in the back room, 15:09 to 17:51
+D4-051 510 need None | Elena: fast reached stage 1 (48.025)
+D4-052 549 routine None | Leo: sit in the kitchen, 16:09 to 19:00
+D4-053 594 need None | Mara: debt reached stage 1 (16.025)
+D4-054 606 routine None | Daniel: sit in the kitchen, 17:06 to 19:00
+D4-055 651 routine None | Elena: sit in the kitchen, 17:51 to 19:00
+D4-056 675 need None | Leo: debt reached stage 1 (16.0)
+D4-057 720 need None | Leo: fast reached stage 2 (96.0)
+D4-058 720 reassure reassure_all | Daniel reassures everyone: "We are going to make it, I promise you all. Just stay strong."
+D4-059 720 reassure reassure_all | Elena reassures everyone: "We will get through this evening together, just stay calm."
+D4-060 720 accuse accuse_daniel | Mara accuses Daniel of taking it: "You always promise things you can't deliver, Daniel. You're the reason we have nothing left."
+D4-061 720 accuse accuse_daniel | Leo accuses Daniel of taking it: "Daniel already admitted taking the can himself days ago, so let's stop pretending there's any mystery."
+D4-062 723 confront confront_leo | Daniel confronts Leo: "Leo, stop rubbing it in when you know how hard I am trying to keep us afloat."
+D4-063 723 confront confront_daniel | Leo confronts Daniel: "You call trying to keep us afloat lying about the food and blaming everyone else, Daniel."
+D4-064 723 reassure reassure_all | Elena reassures everyone: "Let's not argue among ourselves, we need to stay calm and together."
+D4-065 723 confront confront_daniel | Mara confronts Daniel: "You always act like you're the only one who matters, Daniel, but you're the one who lied to us."
+D4-066 726 routine None | Daniel: sit in the kitchen, 19:06 to 21:00
+D4-067 726 routine None | Elena: sit in the kitchen, 19:06 to 21:00
+D4-068 726 routine None | Leo: sit in the kitchen, 19:06 to 21:00
+D4-069 726 routine None | Mara: sit in the kitchen, 19:06 to 21:00
+G4-01 90 gap None | The afternoon and evening passed in the house. Nobody ate.
+N4-01 90 bedtime lie_awake | Daniel: bedtime
+N4-02 90 bedtime sleep | Elena: bedtime
+N4-03 90 bedtime lie_awake | Leo: bedtime
+N4-04 90 bedtime lie_awake | Mara: bedtime
+D5-001 0 opening None | Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions.
+D5-002 0 reassure reassure_all | Elena reassures everyone: "Let's stay calm and together, we will get through this."
+D5-003 0 accuse accuse_daniel | Mara accuses Daniel of taking it: "You took the can, Daniel, and you're the reason we have nothing left."
+D5-004 0 confront confront_mara | Daniel confronts Mara: "Stop blaming me, Mara, shouting won't put food on the shelf."
+D5-005 0 accuse accuse_daniel | Leo accuses Daniel of taking it: "You ate the can four days ago, Daniel, so don't lecture anyone about the food."
+D5-006 3 confront confront_leo | Daniel confronts Leo: "Stop throwing that in my face, Leo, I'm trying to figure out how we survive this."
+D5-007 3 confront confront_daniel | Leo confronts Daniel: "You figure out survival by blaming everyone else while you ate the only food we had."
+D5-008 3 accuse accuse_daniel | Mara accuses Daniel of taking it: "You are the one who took it, Daniel, so don't pretend you care about us surviving."
+D5-009 3 reassure reassure_all | Elena reassures everyone: "Please stop fighting, shouting at each other will not bring back any food."
+D5-010 6 volunteer volunteer | Daniel offers to go to the neighbour's house tonight: "I will go back to the neighbour's house tonight myself to find something for us."
+D5-011 6 back send_daniel | Leo says Daniel is the one who should go: "If anyone goes, Daniel, it should be you since you are the one who knows what happened last time."
+D5-012 6 object keep_daniel_home | Elena says Daniel must stay home tonight: "Daniel, you are not going back out there tonight, we cannot risk losing you."
+D5-013 6 accuse accuse_daniel | Mara accuses Daniel of taking it: "You only want to go out there because you are hiding something, Daniel."
+D5-014 9 volunteer still_going | Daniel says he still means to go tonight: "I am the eldest and I am the one who is going tonight."
+D5-015 9 object nobody_goes | Elena says nobody should go out tonight: "Nobody is going out there tonight, we stay together."
+D5-016 9 confront confront_daniel | Mara confronts Daniel: "You think you can just decide everything for us after what you did?"
+D5-017 9 object keep_daniel_home | Leo says Daniel must stay home tonight: "You can't even keep your own word, Daniel, so you aren't going anywhere."
+D5-018 12 volunteer still_going | Daniel says he still means to go tonight: "I told you I am going tonight, and I mean it. Someone has to do something."
+D5-019 12 object keep_daniel_home | Elena says Daniel must stay home tonight: "Daniel, please listen to me, you cannot go out there tonight."
+D5-020 12 accuse accuse_daniel | Mara accuses Daniel of taking it: "You always do whatever you want without caring what happens to the rest of us, Daniel."
+D5-021 12 back send_daniel | Leo says Daniel is the one who should go: "If anyone is going out tonight, Daniel, it has to be you since you are the one insisting."
+D5-022 15 need None | Leo: debt reached stage 1 (16.0)
+D5-023 15 propose propose_trip | Daniel says someone should go to the neighbour's house tonight: "I told you I am going tonight, and I will bring something back for all of us."
+D5-024 15 accuse accuse_daniel | Mara accuses Daniel of taking it: "You always say you will bring something back, but you just lied to us for days about the can!"
+D5-025 15 accuse accuse_daniel | Leo accuses Daniel of taking it: "You spent days lying about the can, Daniel, so nobody believes your promises now."
+D5-026 15 reassure reassure_all | Elena reassures everyone: "Please stop fighting, we will keep each other safe and find a way through this together."
+D5-027 18 routine None | Daniel: rest in the brothers room, min 18 to min 66
+D5-028 18 routine None | Elena: sit in the kitchen, min 18 to 10:03
+D5-029 18 routine None | Leo: rest in the brothers room, min 18 to 10:03
+D5-030 18 routine None | Mara: rest in the back room, min 18 to 10:03
+D5-031 66 routine None | Daniel: sit in the kitchen, min 66 to 10:03
+D5-032 183 volunteer volunteer | Daniel offers to go to the neighbour's house tonight: "I told you I am going, and I will be the one to step outside for us."
+D5-033 183 object nobody_goes | Elena says nobody should go out tonight: "Nobody is going out there tonight, we stay together."
+D5-034 183 back send_daniel | Mara says Daniel is the one who should go: "Daniel is the one who took the food and lied, so he should be the one to go."
+D5-035 183 object nobody_goes | Leo says nobody should go out tonight: "Nobody is going out there tonight, it is too dangerous."
+D5-036 186 volunteer still_going | Daniel says he still means to go tonight: "I already told you, I am the one who is going tonight."
+D5-037 186 object keep_daniel_home | Elena says Daniel must stay home tonight: "Daniel, you are not going out there, I mean it."
+D5-038 186 accuse accuse_daniel | Mara accuses Daniel of taking it: "You always think you get to decide everything just because you want to, Daniel."
+D5-039 186 object keep_daniel_home | Leo says Daniel must stay home tonight: "Mom is right, Daniel, going out tonight is just a bad idea."
+D5-040 189 routine None | Daniel: rest in the brothers room, 10:09 to 11:33
+D5-041 189 routine None | Elena: sit in the kitchen, 10:09 to 13:54
+D5-042 189 routine None | Leo: sit in the kitchen, 10:09 to 12:03
+D5-043 189 routine None | Mara: sit in the kitchen, 10:09 to 12:45
+D5-044 273 routine None | Daniel: sit in the kitchen, 11:33 to 13:33
+D5-045 303 routine None | Leo: rest in the brothers room, 12:03 to 13:21
+D5-046 345 need None | Mara: debt reached stage 1 (16.0)
+D5-047 345 routine None | Mara: rest in the back room, 12:45 to 15:12
+D5-048 360 need None | Mara: fast reached stage 2 (96.045)
+D5-049 381 routine None | Leo: sit in the kitchen, 13:21 to 19:00
+D5-050 393 routine None | Daniel: rest in the brothers room, 13:33 to 14:51
+D5-051 414 need None | Elena: debt reached stage 1 (16.025)
+D5-052 414 routine None | Elena: rest in the back room, 13:54 to 16:36
+D5-053 471 routine None | Daniel: sit in the kitchen, 14:51 to 19:00
+D5-054 492 routine None | Mara: sit in the kitchen, 15:12 to 19:00
+D5-055 576 routine None | Elena: sit in the kitchen, 16:36 to 19:00
+D5-056 624 need None | Leo: debt reached stage 1 (16.025)
+D5-057 714 need None | Daniel: debt reached stage 1 (16.025)
+D5-058 714 need None | Mara: debt reached stage 1 (16.025)
+D5-059 720 volunteer still_going | Daniel says he still means to go tonight: "I told you earlier and I mean it, I am the one going out tonight."
+D5-060 720 confront confront_daniel | Leo confronts Daniel: "You want to play the hero now, Daniel, after eating the food behind our backs."
+D5-061 720 object nobody_goes | Elena says nobody should go out tonight: "Nobody is going out into that street tonight, we stay safe here together."
+D5-062 720 accuse accuse_daniel | Mara accuses Daniel of taking it: "You caused all of this, Daniel, and now you just want to walk out like nothing happened."
+D5-063 723 volunteer still_going | Daniel says he still means to go tonight: "I have made my choice and I am going tonight, because someone has to."
+D5-064 723 confront confront_daniel | Mara confronts Daniel: "You think you can just decide everything, Daniel, after what you did to us."
+D5-065 723 confront confront_daniel | Leo confronts Daniel: "You are not going anywhere tonight, Daniel, you are just making things worse."
+D5-066 723 object keep_daniel_home | Elena says Daniel must stay home tonight: "Daniel, please, you must stay home tonight, I cannot bear the thought of losing you out there."
+D5-067 726 routine None | Daniel: sit in the kitchen, 19:06 to 21:00
+D5-068 726 routine None | Elena: sit in the kitchen, 19:06 to 20:39
+D5-069 726 routine None | Leo: sit in the kitchen, 19:06 to 21:00
+D5-070 726 routine None | Mara: sit in the kitchen, 19:06 to 21:00
+D5-071 819 need None | Elena: debt reached stage 1 (16.025)
+D5-072 819 routine None | Elena: rest in the back room, 20:39 to 21:00
+G5-01 90 gap None | The afternoon and evening passed in the house. Nobody ate.
+N5-01 90 bedtime go_next_door | Daniel: bedtime
+N5-02 90 bedtime watch_door | Elena: bedtime
+N5-03 90 bedtime lie_awake | Leo: bedtime
+N5-04 90 bedtime lie_awake | Mara: bedtime
+N5-05 90 got_up None | Daniel: got_up
+N5-06 90 stop stop_daniel | Leo: stop
+N5-07 90 answer stay_home | Daniel: answer
+D6-001 0 opening None | Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions.
+D6-002 0 accuse accuse_daniel | Mara accuses Daniel of taking it: "You took the food from the pantry and lied to us about it, Daniel."
+D6-003 0 confront confront_mara | Daniel confronts Mara: "Stop saying that, Mara, you know I already admitted what happened days ago."
+D6-004 0 reassure reassure_all | Elena reassures everyone: "We must not turn on each other, we will get through this morning together."
+D6-005 0 confront confront_daniel | Leo confronts Daniel: "You spent days lying about the can, Daniel, so nobody believes your promises now."
+D6-006 3 confront confront_leo | Daniel confronts Leo: "Leo, stop lecturing me as if you've never made a mistake yourself."
+D6-007 3 confront confront_daniel | Leo confronts Daniel: "Making mistakes is one thing, Daniel, but lying about them for days is another."
+D6-008 3 accuse accuse_daniel | Mara accuses Daniel of taking it: "You always act like you own this house, Daniel, but you're the one who stole from us."
+D6-009 3 reassure reassure_all | Elena reassures everyone: "Please stop arguing, we are all exhausted and we need to stay together."
+D6-010 6 reassure reassure_all | Daniel reassures everyone: "Nobody is going anywhere today, we are going to stay right here and figure this out together."
+D6-011 6 accuse accuse_daniel | Mara accuses Daniel of taking it: "You always act like you are in charge, Daniel, but you are the one who stole the food from us."
+D6-012 6 reassure reassure_all | Elena reassures everyone: "Let us not fight among ourselves, we need to stay calm and support each other through this."
+D6-013 9 routine None | Leo: withdraw in the brothers room, min 09 to min 18
+D6-014 9 confront confront_mara | Daniel confronts Mara: "Mara, stop accusing me when I am trying to keep us all alive."
+D6-015 9 confront confront_daniel | Mara confronts Daniel: "You are the one who took the food and lied to us, Daniel, so do not tell me to be quiet."
+D6-016 9 confront confront_daniel | Elena confronts Daniel: "Daniel, please do not shout at your sister when we are all this weak."
+D6-017 12 reassure reassure_elena | Daniel reassures Elena: "Mom, I am sorry, I will not shout anymore, we just need to keep our heads."
+D6-018 12 reassure reassure_daniel | Elena reassures Daniel: "It is alright, Daniel, just try to keep your voice down so we can stay calm."
+D6-019 12 accuse accuse_daniel | Mara accuses Daniel of taking it: "You always act like you own us, Daniel, after everything you stole."
+D6-020 15 confront confront_mara | Daniel confronts Mara: "Mara, stop accusing me when we are all trying to survive this together."
+D6-021 15 accuse accuse_daniel | Mara accuses Daniel of taking it: "You took the food from us, Daniel, and you don't get to act like you're in charge."
+D6-022 15 reassure reassure_mara | Elena reassures Mara: "Mara, please, let us not fight each other while things are this hard."
+D6-023 18 routine None | Daniel: rest in the brothers room, min 18 to 09:36
+D6-024 18 routine None | Elena: sit in the kitchen, min 18 to min 75
+D6-025 18 routine None | Leo: rest in the brothers room, min 18 to 10:33
+D6-026 18 routine None | Mara: rest in the back room, min 18 to 09:36
+D6-027 75 need None | Daniel: fast reached stage 3 (144.037)
+D6-028 75 need None | Elena: debt reached stage 1 (16.75)
+D6-029 75 routine None | Elena: rest in the back room, min 75 to 11:27
+D6-030 156 accuse accuse_daniel | Mara accuses Daniel of taking it: "You are the one who took everything from us and you still just sit there like nothing happened."
+D6-031 156 confront confront_mara | Daniel confronts Mara: "Mara, stop accusing me when I am trying to keep us all alive."
+D6-032 159 accuse accuse_daniel | Mara accuses Daniel of taking it: "You think you can just lie and pretend none of this is your fault, Daniel!"
+D6-033 159 confront confront_mara | Daniel confronts Mara: "Mara, stop accusing me when I am trying to keep us all alive."
+D6-034 162 accuse accuse_daniel | Mara accuses Daniel of taking it: "You took the food and lied right to our faces, Daniel."
+D6-035 165 routine None | Daniel: sit in the kitchen, 09:45 to 11:36
+D6-036 165 routine None | Mara: sit in the kitchen, 09:45 to 11:36
+D6-037 219 need None | Daniel: debt reached stage 1 (16.025)
+D6-038 222 routine None | Leo: sit in the kitchen, 10:42 to 12:33
+D6-039 267 routine None | Elena: sit in the kitchen, 11:27 to 15:30
+D6-040 276 routine None | Daniel: rest in the brothers room, 11:36 to 14:36
+D6-041 276 routine None | Mara: rest in the back room, 11:36 to 12:57
+D6-042 333 routine None | Leo: rest in the brothers room, 12:33 to 13:57
+D6-043 357 routine None | Mara: sit in the kitchen, 12:57 to 21:00
+D6-044 417 routine None | Leo: sit in the kitchen, 13:57 to 21:00
+D6-045 456 routine None | Daniel: sit in the kitchen, 14:36 to 21:00
+D6-046 510 need None | Elena: debt reached stage 1 (16.0)
+D6-047 510 routine None | Elena: rest in the back room, 15:30 to 17:51
+D6-048 600 need None | Mara: debt reached stage 1 (16.0)
+D6-049 651 routine None | Elena: sit in the kitchen, 17:51 to 21:00
+D6-050 660 need None | Leo: debt reached stage 1 (16.0)
+D6-051 669 need None | Daniel: debt reached stage 1 (16.025)
+D6-052 720 need None | Leo: fast reached stage 3 (144.0)
+G6-01 90 gap None | The afternoon and evening passed in the house. Nobody ate.
+N6-01 90 bedtime sleep | Daniel: bedtime
+N6-02 90 bedtime watch_door | Elena: bedtime
+N6-03 90 bedtime lie_awake | Leo: bedtime
+N6-04 90 bedtime lie_awake | Mara: bedtime
+D7-001 0 opening None | Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions.
+D7-002 0 accuse accuse_daniel | Mara accuses Daniel of taking it: "You took the food, Daniel, and you've been lying to all of us this whole time."
+D7-003 0 confront confront_mara | Daniel confronts Mara: "Stop saying that, Mara, you know I already told you the truth about it."
+D7-004 0 reassure reassure_all | Elena reassures everyone: "Stop shouting at each other, we cannot survive if we tear ourselves apart."
+D7-005 0 confront confront_daniel | Leo confronts Daniel: "Daniel, you already admitted you took it days ago, so let's not pretend otherwise now."
+D7-006 3 confront confront_mara | Daniel confronts Mara: "Mara, stop acting like you are completely blameless in all of this."
+D7-007 3 accuse accuse_daniel | Mara accuses Daniel of taking it: "I am not the one who lied and stole from us, Daniel."
+D7-008 3 reassure reassure_all | Elena reassures everyone: "Let us not fight anymore, we must stay together if we are to survive this."
+D7-009 6 routine None | Leo: withdraw in the brothers room, min 06 to min 09
+D7-010 6 reassure reassure_all | Daniel reassures everyone: "We are going to make it through this together, just trust me."
+D7-011 6 reassure reassure_all | Elena reassures everyone: "Let's not fight among ourselves when we need each other the most, children."
+D7-012 6 accuse accuse_daniel | Mara accuses Daniel of taking it: "Daniel, you are the one who stole the food and lied to us, so stop pretending everything is fine."
+D7-013 9 routine None | Daniel: rest in the brothers room, min 09 to min 51
+D7-014 9 routine None | Elena: rest in the back room, min 09 to 09:42
+D7-015 9 routine None | Leo: rest in the brothers room, min 09 to 09:51
+D7-016 9 routine None | Mara: rest in the back room, min 09 to 10:36
+D7-017 51 routine None | Daniel: sit in the kitchen, min 51 to 09:51
+D7-018 162 routine None | Elena: sit in the kitchen, 09:42 to 11:30
+D7-019 171 reassure reassure_leo | Daniel reassures Leo: "Leo, I know things are hard, but we are going to get through this together."
+D7-020 180 routine None | Daniel: rest in the brothers room, 10:00 to 11:27
+D7-021 180 routine None | Leo: sit in the kitchen, 10:00 to 11:51
+D7-022 216 routine None | Mara: sit in the kitchen, 10:36 to 11:27
+D7-023 267 accuse accuse_daniel | Mara accuses Daniel of taking it: "You took the food, Daniel, and you're the reason we have nothing left."
+D7-024 270 reassure reassure_mara | Daniel reassures Mara: "Mara, please stop, I promise we'll get through this together."
+D7-025 270 accuse accuse_daniel | Mara accuses Daniel of taking it: "You can't just pretend everything is fine when you stole from us, Daniel."
+D7-026 270 reassure reassure_all | Elena reassures everyone: "Please, children, shouting at each other will only make the hunger harder to bear."
+D7-027 273 reassure reassure_all | Daniel reassures everyone: "We are going to get through this together if we just keep our heads."
+D7-028 273 reassure reassure_all | Elena reassures everyone: "We must not turn on each other, children, because our only chance is to stay together."
+D7-029 276 routine None | Daniel: sit in the kitchen, 11:36 to 13:27
+D7-030 276 routine None | Elena: sit in the kitchen, 11:36 to 11:42
+D7-031 276 routine None | Mara: sit in the kitchen, 11:36 to 12:36
+D7-032 282 routine None | Elena: rest in the back room, 11:42 to 13:03
+D7-033 291 routine None | Leo: rest in the brothers room, 11:51 to 13:18
+D7-034 336 routine None | Mara: rest in the back room, 12:36 to 13:57
+D7-035 363 routine None | Elena: sit in the kitchen, 13:03 to 15:33
+D7-036 378 routine None | Leo: sit in the kitchen, 13:18 to 15:33
+D7-037 387 routine None | Daniel: rest in the brothers room, 13:27 to 14:48
+D7-038 417 routine None | Mara: sit in the kitchen, 13:57 to 15:30
+D7-039 468 routine None | Daniel: sit in the kitchen, 14:48 to 15:30
+D7-040 510 need None | Mara: fast reached stage 3 (144.02)
+D7-041 510 accuse accuse_daniel | Mara accuses Daniel of taking it: "You think you can just sit there like nothing happened after what you did, Daniel."
+D7-042 510 confront confront_mara | Daniel confronts Mara: "Mara, stop accusing me when we all know there is nothing left on that shelf."
+D7-043 513 accuse accuse_daniel | Mara accuses Daniel of taking it: "You took it and you know you did, Daniel. Don't sit there and pretend you didn't."
+D7-044 513 confront confront_mara | Daniel confronts Mara: "Stop talking to me like that, Mara, I am trying to keep us together."
+D7-045 513 accuse accuse_daniel | Leo accuses Daniel of taking it: "Daniel, you already admitted you took it six days ago, so stop acting like a victim now."
+D7-046 513 reassure reassure_all | Elena reassures everyone: "Please, we cannot fight amongst ourselves when we are this weak and have nothing left."
+D7-047 516 reassure reassure_all | Daniel reassures everyone: "We are not going to fight anymore, we have to stay together."
+D7-048 519 routine None | Daniel: sit in the kitchen, 15:39 to 21:00
+D7-049 519 routine None | Elena: sit in the kitchen, 15:39 to 21:00
+D7-050 519 routine None | Leo: sit in the kitchen, 15:39 to 21:00
+D7-051 519 routine None | Mara: sit in the kitchen, 15:39 to 21:00
+D7-052 609 need None | Elena: debt reached stage 1 (16.025)
+D7-053 624 need None | Leo: debt reached stage 1 (16.025)
+D7-054 714 need None | Daniel: debt reached stage 1 (16.025)
+D7-055 714 need None | Mara: debt reached stage 1 (16.9)
+G7-01 90 gap None | The afternoon and evening passed in the house. Nobody ate.
+N7-01 90 bedtime sleep | Daniel: bedtime
+N7-02 90 bedtime watch_door | Elena: bedtime
+N7-03 90 bedtime sleep | Leo: bedtime
+N7-04 90 bedtime lie_awake | Mara: bedtime
+D8-001 0 opening None | Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions.
+D8-002 0 reassure reassure_all | Elena reassures everyone: "Please, let us not fight this morning. We must stay together if we are going to get through this."
+D8-003 0 reassure reassure_all | Daniel reassures everyone: "Mom is right, we cannot fight right now. We will figure this out together."
+D8-004 0 accuse accuse_daniel | Mara accuses Daniel of taking it: "You are just sitting there acting innocent, Daniel. You took the can and left us with nothing."
+D8-005 3 confront confront_mara | Daniel confronts Mara: "Mara, stop accusing me when we are all suffering together."
+D8-006 3 accuse accuse_daniel | Mara accuses Daniel of taking it: "You took it and left us with nothing, Daniel. Don't pretend you didn't."
+D8-007 3 reassure reassure_all | Elena reassures everyone: "Please, children, stop this fighting. We have to stay together if we want to live through this."
+D8-008 6 reassure reassure_all | Daniel reassures everyone: "Mom is right, we cannot fight right now. We are going to get through this together."
+D8-009 6 accuse accuse_daniel | Mara accuses Daniel of taking it: "You think you can just pretend nothing happened, Daniel, but you took the food and we are starving because of you."
+D8-010 6 reassure reassure_mara | Elena reassures Mara: "Mara, please don't shout, we need to stay calm and look after each other."
+D8-011 9 confront confront_daniel | Mara confronts Daniel: "You think you can just pretend nothing happened, but you took the can and left us with nothing."
+D8-012 9 confront confront_mara | Daniel confronts Mara: "Mara, stop bringing that up when we all know there is nothing left to fight about."
+D8-013 12 accuse accuse_daniel | Mara accuses Daniel of taking it: "You took it and you know you did, Daniel, so stop lying to us."
+D8-014 12 confront confront_mara | Daniel confronts Mara: "Stop acting like you are the only one suffering here, Mara."
+D8-015 12 reassure reassure_all | Elena reassures everyone: "Please stop fighting, we need to stay together and look after each other right now."
+D8-016 12 accuse accuse_daniel | Leo accuses Daniel of taking it: "Daniel, you admitted taking it yourself days ago, so stop acting as if anyone else is to blame."
+D8-017 15 confront confront_leo | Daniel confronts Leo: "Leo, you know very well we can't afford to tear each other apart like this right now."
+D8-018 15 confront confront_daniel | Leo confronts Daniel: "Daniel, you lecturing us about tearing each other apart is rich considering everything you've pulled."
+D8-019 15 accuse accuse_daniel | Mara accuses Daniel of taking it: "Daniel, you're the one who took it and you know it, so don't pretend you didn't."
+D8-020 15 reassure reassure_all | Elena reassures everyone: "Please stop fighting, we need to stay together to get through this."
+D8-021 18 routine None | Daniel: rest in the brothers room, min 18 to min 36
+D8-022 18 routine None | Elena: rest in the back room, min 18 to 09:24
+D8-023 18 routine None | Leo: rest in the brothers room, min 18 to 08:36
+D8-024 18 routine None | Mara: rest in the back room, min 18 to 09:21
+D8-025 36 routine None | Daniel: sit in the kitchen, min 36 to 08:36
+D8-026 96 confront confront_leo | Daniel confronts Leo: "Leo, you have no right to question my authority when I am trying to keep us alive."
+D8-027 96 confront confront_daniel | Leo confronts Daniel: "Daniel, trying to assert authority won't magic food onto an empty shelf or undo what you already admitted to."
+D8-028 99 confront confront_leo | Daniel confronts Leo: "Leo, stop lecturing me when you aren't the one trying to figure out a way out of here."
+D8-029 99 confront confront_daniel | Leo confronts Daniel: "You lecture about leadership, Daniel, yet you were the one who took our food behind our backs."
+D8-030 105 routine None | Daniel: sit in the kitchen, 08:45 to 09:21
+D8-031 105 routine None | Leo: sit in the kitchen, 08:45 to 09:24
+D8-032 141 confront confront_mara | Daniel confronts Mara: "Mara, you need to watch your tone and stop starting arguments when we are all struggling."
+D8-033 141 accuse accuse_daniel | Mara accuses Daniel of taking it: "You took it and left us with nothing, Daniel. Don't tell me to watch my tone."
+D8-034 144 confront confront_mara | Daniel confronts Mara: "Mara, stop this endless accusing and remember who is trying to keep us alive."
+D8-035 144 accuse accuse_daniel | Mara accuses Daniel of taking it: "You are the one who took it and left us with nothing, Daniel."
+D8-036 144 confront confront_daniel | Leo confronts Daniel: "Daniel, stop pretending you care about keeping us alive when you are the reason we have nothing."
+D8-037 147 accuse accuse_daniel | Mara accuses Daniel of taking it: "You took it and left us with nothing, Daniel, and you know it."
+D8-038 150 routine None | Daniel: sit in the kitchen, 09:30 to 09:36
+D8-039 150 routine None | Elena: sit in the kitchen, 09:30 to 11:24
+D8-040 150 routine None | Leo: sit in the kitchen, 09:30 to 10:36
+D8-041 150 routine None | Mara: sit in the kitchen, 09:30 to 11:21
+D8-042 156 routine None | Daniel: rest in the brothers room, 09:36 to 10:57
+D8-043 216 routine None | Leo: rest in the brothers room, 10:36 to 11:57
+D8-044 237 routine None | Daniel: sit in the kitchen, 10:57 to 12:57
+D8-045 261 routine None | Mara: rest in the back room, 11:21 to 13:33
+D8-046 264 routine None | Elena: rest in the back room, 11:24 to 13:42
+D8-047 297 routine None | Leo: sit in the kitchen, 11:57 to 21:00
+D8-048 357 routine None | Daniel: rest in the brothers room, 12:57 to 14:18
+D8-049 393 routine None | Mara: sit in the kitchen, 13:33 to 21:00
+D8-050 402 routine None | Elena: sit in the kitchen, 13:42 to 21:00
+D8-051 429 need None | Elena: debt reached stage 1 (16.025)
+D8-052 438 routine None | Daniel: sit in the kitchen, 14:18 to 21:00
+D8-053 540 need None | Leo: debt reached stage 1 (16.0)
+D8-054 639 need None | Mara: debt reached stage 1 (16.025)
+D8-055 684 need None | Daniel: debt reached stage 1 (16.025)
+G8-01 90 gap None | The afternoon and evening passed in the house. Nobody ate.
+N8-01 90 bedtime lie_awake | Daniel: bedtime
+N8-02 90 bedtime lie_awake | Elena: bedtime
+N8-03 90 bedtime lie_awake | Leo: bedtime
+N8-04 90 bedtime lie_awake | Mara: bedtime
+D9-001 0 opening None | Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions.
+D9-002 0 reassure reassure_all | Elena reassures everyone: "Let us all stay calm and stay together, we will get through this morning without fighting."
+D9-003 0 accuse accuse_daniel | Mara accuses Daniel of taking it: "You took the can, Daniel, and you're the reason we have nothing left."
+D9-004 0 confront confront_mara | Daniel confronts Mara: "Mara, stop accusing me when I already admitted it days ago and we have bigger problems."
+D9-005 3 confront confront_daniel | Mara confronts Daniel: "You think you can just dismiss what you did, Daniel, but you're the reason we have nothing left."
+D9-006 3 confront confront_mara | Daniel confronts Mara: "Stop harping on the past, Mara, I'm trying to figure out how we survive today."
+D9-007 3 reassure reassure_all | Elena reassures everyone: "We cannot survive this if we turn on each other now, please just try to breathe."
+D9-008 3 confront confront_daniel | Leo confronts Daniel: "Daniel, whining about survival doesn't fix the hole you dug us into."
+D9-009 6 confront confront_leo | Daniel confronts Leo: "Leo, stop acting like you have any answers while we are starving here."
+D9-010 6 confront confront_daniel | Leo confronts Daniel: "Daniel, your lectures on survival are empty when you are the one who stole our food."
+D9-011 6 accuse accuse_daniel | Mara accuses Daniel of taking it: "You took the can, Daniel, and now we have nothing left because of you."
+D9-012 6 reassure reassure_all | Elena reassures everyone: "Please stop fighting, we need to stay together and keep each other safe."
+D9-013 9 reassure reassure_all | Daniel reassures everyone: "We are going to figure this out together, just please stop fighting."
+D9-014 9 accuse accuse_daniel | Mara accuses Daniel of taking it: "You act like you care, Daniel, but you took the can and left us with nothing."
+D9-015 12 routine None | Leo: withdraw in the brothers room, min 12 to min 15
+D9-016 12 confront confront_mara | Daniel confronts Mara: "Mara, stop blaming me for everything when we are all trying to survive this."
+D9-017 12 confront confront_daniel | Mara confronts Daniel: "You took the can and left us with nothing, Daniel, so don't lecture me about trying to survive."
+D9-018 12 reassure reassure_all | Elena reassures everyone: "Please, let's not fight anymore; we need to stay together and keep each other safe."
+D9-019 15 routine None | Daniel: rest in the brothers room, min 15 to 09:51
+D9-020 15 routine None | Elena: rest in the back room, min 15 to 09:30
+D9-021 15 routine None | Leo: rest in the brothers room, min 15 to 09:48
+D9-022 15 routine None | Mara: rest in the back room, min 15 to 10:21
+D9-023 87 need None | Elena: fast reached stage 3 (144.032)
+D9-024 150 routine None | Elena: sit in the kitchen, 09:30 to 09:51
+D9-025 168 routine None | Leo: sit in the kitchen, 09:48 to 09:51
+D9-026 171 confront confront_leo | Daniel confronts Leo: "Leo, stop looking at me like that, I admitted what I did days ago and staring won't put food on the shelf."
+D9-027 171 confront confront_daniel | Leo confronts Daniel: "Staring is all I have the energy for, Daniel, since you made sure there's nothing else left."
+D9-028 171 reassure reassure_all | Elena reassures everyone: "Please, let's not fight anymore; we need to stay together and keep each other safe."
+D9-029 174 confront confront_leo | Daniel confronts Leo: "Leo, stop blaming me for everything when we are all starving."
+D9-030 174 reassure reassure_all | Elena reassures everyone: "Please, let's not fight anymore; we need to stay together and keep each other safe."
+D9-031 177 routine None | Leo: withdraw in the brothers room, 09:57 to 11:48
+D9-032 177 reassure reassure_elena | Daniel reassures Elena: "Mom, you are right, we shouldn't fight when we need to stay together."
+D9-033 177 reassure reassure_daniel | Elena reassures Daniel: "Daniel, thank you for saying that, we just need to hold on to each other right now."
+D9-034 180 routine None | Daniel: sit in the kitchen, 10:00 to 10:21
+D9-035 180 routine None | Elena: sit in the kitchen, 10:00 to 10:21
+D9-036 201 confront confront_mara | Daniel confronts Mara: "Mara, stop glaring at me like this is all my fault when we are all starving."
+D9-037 201 confront confront_daniel | Mara confronts Daniel: "You took it and left us with nothing, Daniel. Don't act like you're the victim here."
+D9-038 201 reassure reassure_all | Elena reassures everyone: "Please stop fighting, we need to stay close and keep each other safe."
+D9-039 204 confront confront_mara | Daniel confronts Mara: "Mara, stop blaming me for everything when we are all doing our best to survive."
+D9-040 204 confront confront_daniel | Mara confronts Daniel: "You took the can and left us with nothing, Daniel, so don't pretend you care about us surviving."
+D9-041 204 reassure reassure_all | Elena reassures everyone: "Please, children, stop this fight before we tear ourselves apart completely."
+D9-042 207 reassure reassure_all | Daniel reassures everyone: "Mom is right, we cannot fight amongst ourselves when we are all starving."
+D9-043 207 confront confront_daniel | Mara confronts Daniel: "You act like it was nothing, but you are the reason we have nothing left."
+D9-044 210 routine None | Daniel: sit in the kitchen, 10:30 to 11:51
+D9-045 210 routine None | Elena: sit in the kitchen, 10:30 to 11:30
+D9-046 210 routine None | Mara: sit in the kitchen, 10:30 to 12:21
+D9-047 264 need None | Leo: debt reached stage 1 (16.025)
+D9-048 270 routine None | Elena: rest in the back room, 11:30 to 15:21
+D9-049 288 routine None | Leo: rest in the brothers room, 11:48 to 14:39
+D9-050 291 routine None | Daniel: rest in the brothers room, 11:51 to 13:12
+D9-051 321 routine None | Mara: rest in the back room, 12:21 to 13:42
+D9-052 372 routine None | Daniel: sit in the kitchen, 13:12 to 21:00
+D9-053 402 routine None | Mara: sit in the kitchen, 13:42 to 21:00
+D9-054 459 routine None | Leo: sit in the kitchen, 14:39 to 21:00
+D9-055 501 routine None | Elena: sit in the kitchen, 15:21 to 21:00
+D9-056 615 need None | Daniel: debt reached stage 1 (16.0)
+D9-057 645 need None | Mara: debt reached stage 1 (16.0)
+D9-058 684 need None | Elena: debt reached stage 1 (16.025)
+D9-059 690 need None | Leo: debt reached stage 1 (16.0)
+G9-01 90 gap None | The afternoon and evening passed in the house. Nobody ate.
+N9-01 90 bedtime sleep | Daniel: bedtime
+N9-02 90 bedtime lie_awake | Elena: bedtime
+N9-03 90 bedtime lie_awake | Leo: bedtime
+N9-04 90 bedtime lie_awake | Mara: bedtime
+D10-001 0 opening None | Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions.
+D10-002 0 accuse accuse_daniel | Mara accuses Daniel of taking it: "You took the can, Daniel, and you're the reason we have nothing left."
+D10-003 0 confront confront_mara | Daniel confronts Mara: "Mara, stop blaming me when we are all starving and trying to survive this."
+D10-004 0 confront confront_daniel | Leo confronts Daniel: "Daniel, stop shouting and save your breath; we are all starving because of your lies."
+D10-005 0 reassure reassure_all | Elena reassures everyone: "Please, children, stop fighting among yourselves; we can only survive if we stay together."
+D10-006 3 reassure reassure_all | Daniel reassures everyone: "We have to stay calm and stop fighting, because only together are we going to get through this."
+D10-007 3 accuse accuse_daniel | Mara accuses Daniel of taking it: "You can pretend to care all you want, Daniel, but you took the can and left us with nothing."
+D10-008 3 go go_brothers_room | Leo went to the brothers room.
+D10-009 3 reassure reassure_all | Elena reassures everyone: "Please, let us not turn on each other, we will only survive if we stay together."
+D10-010 6 confront confront_mara | Daniel confronts Mara: "Mara, stop this right now and remember who you are talking to."
+D10-011 6 confront confront_daniel | Mara confronts Daniel: "I am not a child, Daniel, and you are the one who took the can!"
+D10-012 6 reassure reassure_all | Elena reassures everyone: "Please stop fighting, we are all starving and we need to hold each other close."
+D10-013 9 confront confront_mara | Daniel confronts Mara: "Mara, stop blaming me when we all know we have nothing left on the shelf."
+D10-014 9 accuse accuse_daniel | Mara accuses Daniel of taking it: "You took it and you won't even own up to it, Daniel!"
+D10-015 12 confront confront_mara | Daniel confronts Mara: "Mara, stop this right now and show some respect instead of constantly accusing me."
+D10-016 12 confront confront_daniel | Mara confronts Daniel: "Daniel, you always tell me to show respect, but you never respect any of us when you lie and take everything."
+D10-017 12 reassure reassure_all | Elena reassures everyone: "Please, let's not fight anymore; we need to stay together and protect each other."
+D10-018 15 routine None | Daniel: rest in the brothers room, min 15 to 08:36
+D10-019 15 routine None | Elena: rest in the back room, min 15 to 09:21
+D10-020 15 routine None | Leo: rest in the brothers room, min 15 to 09:15
+D10-021 15 routine None | Mara: rest in the back room, min 15 to 09:45
+D10-022 96 routine None | Daniel: sit in the kitchen, 08:36 to 09:15
+D10-023 135 reassure reassure_leo | Daniel reassures Leo: "Leo, we need to stick together through this, I didn't mean to snap at you earlier."
+D10-024 135 confront confront_daniel | Leo confronts Daniel: "Daniel, spare me the apologies when you're the one who lied and took the food in the first place."
+D10-025 138 confront confront_leo | Daniel confronts Leo: "Leo, stop rubbing my past mistakes in my face when we need to stick together."
+D10-026 138 confront confront_daniel | Leo confronts Daniel: "Daniel, keeping score implies there is a game, and this is just survival."
+D10-027 141 reassure reassure_leo | Daniel reassures Leo: "Leo, I am sorry, I am just trying to keep us all alive."
+D10-028 141 reassure reassure_mara | Elena reassures Mara: "Mara, my sweet girl, please try to rest and let us hold onto each other."
+D10-029 144 routine None | Leo: withdraw in the brothers room, 09:24 to 11:15
+D10-030 144 routine None | Daniel: sit in the kitchen, 09:24 to 09:45
+D10-031 144 routine None | Elena: sit in the kitchen, 09:24 to 09:45
+D10-032 165 accuse accuse_daniel | Mara accuses Daniel of taking it: "You think you can just sit there like nothing happened, Daniel, but you took the can and left us with nothing."
+D10-033 165 confront confront_mara | Daniel confronts Mara: "Mara, stop bringing up the past when we need to focus on surviving together."
+D10-034 165 reassure reassure_all | Elena reassures everyone: "Please, we cannot turn on each other like this when we have nothing left. We have to stay together."
+D10-035 168 accuse accuse_daniel | Mara accuses Daniel of taking it: "You took the can and left us with nothing, Daniel, so don't tell me to stop talking about it."
+D10-036 168 confront confront_mara | Daniel confronts Mara: "Mara, stop blaming me for everything when we are all starving and need to figure out what to do."
+D10-037 168 reassure reassure_all | Elena reassures everyone: "We cannot tear each other apart now, my children; we only have each other left to trust."
+D10-038 171 confront confront_daniel | Mara confronts Daniel: "Daniel, you took the can and you have no right to act like you did nothing wrong."
+D10-039 171 confront confront_mara | Daniel confronts Mara: "Mara, stop badgering me about the past when we are all starving."
+D10-040 174 routine None | Daniel: sit in the kitchen, 09:54 to 10:36
+D10-041 174 routine None | Elena: sit in the kitchen, 09:54 to 11:21
+D10-042 174 routine None | Mara: sit in the kitchen, 09:54 to 11:45
+D10-043 216 routine None | Daniel: rest in the brothers room, 10:36 to 11:57
+D10-044 255 routine None | Leo: rest in the brothers room, 11:15 to 13:06
+D10-045 261 routine None | Elena: rest in the back room, 11:21 to 13:12
+D10-046 285 routine None | Mara: rest in the back room, 11:45 to 13:36
+D10-047 297 routine None | Daniel: sit in the kitchen, 11:57 to 21:00
+D10-048 366 routine None | Leo: sit in the kitchen, 13:06 to 21:00
+D10-049 372 routine None | Elena: sit in the kitchen, 13:12 to 21:00
+D10-050 396 routine None | Mara: sit in the kitchen, 13:36 to 21:00
+D10-051 540 need None | Daniel: debt reached stage 1 (16.0)
+D10-052 609 need None | Leo: debt reached stage 1 (16.025)
+D10-053 615 need None | Elena: debt reached stage 1 (16.0)
+D10-054 639 need None | Mara: debt reached stage 1 (16.025)
