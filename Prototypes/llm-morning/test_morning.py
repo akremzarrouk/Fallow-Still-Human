@@ -6887,5 +6887,23 @@ class PhysicalLayerTest(unittest.TestCase):
         self.assertEqual(self.night.outcome_class("scare_back", 0, 10.0), "back shaken, with water")
         self.assertEqual(self.night.outcome_class("scare_back", 0), "back shaken, with nothing")
 
+    def test_block_c_names_where_a_trip_went(self):
+        """Block C's went_out line: "went out to the neighbour's house" for a trip next door, "went further along the
+        street" for a far one, with the outcome as before; for whoever went, and for whoever heard it."""
+        memory = importlib.import_module("memory")
+
+        def line(bed, draws, pid):
+            d, m, n3, _ = self.night3(bed, {**self.STILL, **draws})
+            d.chron.add_night(n3)
+            went = [e for e in d.chron.events if e["scene"] == "N3" and e["kind"] == "went_out"]
+            return memory.person_line(d.chron, pid, "daniel", "went_out", None, went, 8)      # seen from day 5
+        far = line({"daniel": "go_further", "leo": "lie_awake"}, {"trip_far:daniel": 0.1, "far_house:0": 0.1}, "leo")
+        self.assertEqual(far, "The night before last, Daniel went further along the street and came back with water.")
+        self.assertEqual(line({"daniel": "go_further"}, {"trip_far:daniel": 0.1, "far_house:0": 0.1}, "daniel"),
+                         "The night before last, you went further along the street and came back with water.")
+        near = line({"daniel": "go_next_door", "leo": "lie_awake"}, {"trip:daniel": 0.1}, "leo")
+        self.assertEqual(near, "The night before last, Daniel went out to the neighbour's house and came back with "
+                               "water.")
+
 if __name__ == "__main__":
     unittest.main()

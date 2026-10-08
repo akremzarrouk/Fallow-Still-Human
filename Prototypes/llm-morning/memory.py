@@ -194,7 +194,9 @@ def person_line(chron, pid, q, key, other, evs, day):
                    " and came back with water" if "with water" in outcome else      # W1 (reports/w1_fixes.md)
                    " and came back with nothing")
         who = "you" if me else Q
-        return f"{when}, {who} went out to the neighbour's house{f' after you told {him} not to' if told else ''}{how}{again}."
+        where = ("went further along the street" if first.get("option") == "go_further"      # where the trip went
+                 else "went out to the neighbour's house")
+        return f"{when}, {who} {where}{f' after you told {him} not to' if told else ''}{how}{again}."
     if key == "accuse":
         if me:
             return f"{when}, you accused {T} of taking the can{times(n)}."
