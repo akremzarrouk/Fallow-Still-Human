@@ -111,6 +111,7 @@ KIND_DONE = {   # what a run of one kind of act looks like, told to the person w
     "confront": "confronted someone",
 }
 
+FAST_STAGE_WORD = {1: "weak", 2: "very weak", 3: "barely able to stand"}    # quiet.py; ten_days_prep.md
 HUNGER_WORDS = ["a little hungry", "hungry", "very hungry", "starving"]
 LEVEL_WORDS = {1: "a little", 2: "some", 3: "a lot"}   # the only words a level is given
 EVENTS_SHOWN = 4             # most recent events shown per grudge and for guilt
@@ -908,7 +909,7 @@ class Morning:
             elif k == "suspicion":
                 out.append(f"suspicion of {NAMES[p.suspicion.target]} rose (now {p.suspicion.strength} of 3)")
             elif k == "fast":
-                out.append(f"fasting crossed a line (now {'very weak' if p.needs['fast_stage'] == 2 else 'weak'})")
+                out.append(f"fasting crossed a line (now {FAST_STAGE_WORD[p.needs['fast_stage']]})")
             elif k == "debt":
                 out.append("sleep debt crossed a line (now exhausted)")
             else:

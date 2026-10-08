@@ -1,0 +1,2 @@
+2 {'answers_live': 134, 'api_requests': 134, 'from_cache': 96} {'day3': 40, 'night3': 4, 'mind3': 4, 'day4': 38, 'night4': 4, 'mind4': 4, 'day5': 40} {'day3': (40, 0), 'day4': (38, 0), 'day5': (40, 1)}
+3 {'answers_live': 141, 'api_requests': 141, 'from_cache': 135} {'day3': 40, 'night3': 8, 'mind3': 4, 'day4': 48, 'night4': 9, 'mind4': 4, 'day5': 28} {'day3': (40, 1), 'day4': (48, 1), 'day5': (28, 0)}

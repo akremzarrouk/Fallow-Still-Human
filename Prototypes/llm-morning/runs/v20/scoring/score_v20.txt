@@ -1,0 +1,28 @@
+seed 2: replay for H4 exit 1, prompts 230
+seed 3: replay for H4 exit 1, prompts 276
+seed 2:
+  H2_DAYS {"3": [["19:00", false, null, "no trip position today"]], "4": [["19:00", false, null, "no trip position today"]], "5": [["19:00", true, "daniel", null]]}
+  H2_TRIP_ACTS {"3": [], "4": [], "5": [["19:06", "Daniel", "still_going"]]}
+  H3 []
+  H4 {"prompts_scanned": 134, "far_as_will_not_go": [], "nobody_after_a_trip": [], "trips_before": {"3": true, "4": true, "5": true}}
+  H5_FOOD []
+  H5_LOSS []
+  H6 null
+  H7 {"answers_live": 134, "api_requests": 134, "day_asks": {"3": 40, "4": 38, "5": 40}}
+seed 3:
+  H2_DAYS {"3": [["19:00", true, "daniel", null]], "4": [["19:00", true, "elena", null]], "5": [["19:00", false, null, "no trip position today"]]}
+  H2_TRIP_ACTS {"3": [["19:00", "Daniel", "volunteer_far"], ["19:00", "Elena", "keep_daniel_home"], ["19:00", "Leo", "keep_daniel_home"]], "4": [["19:00", "Daniel", "still_going"], ["19:00", "Leo", "keep_daniel_home"], ["19:00", "Elena", "keep_daniel_home"], ["19:03", "Daniel", "still_going"], ["19:03", "Elena", "nobody_goes"]], "5": []}
+  H3 [[3, "Daniel", "model"], [4, "Daniel", "model"]]
+  H4 {"prompts_scanned": 141, "far_as_will_not_go": [], "nobody_after_a_trip": [], "trips_before": {"3": true, "4": true, "5": true}}
+  H5_FOOD [{"night": 4, "took": [[["daniel"], 4, true]], "food_acts": [["min 00", "Daniel", "eat"], ["min 00", "Elena", "share"]], "holds": true}]
+  H5_LOSS []
+  H6 {"day3_pairs": ["('accuse', 'daniel')", "('confront', 'daniel')", "('object', 'daniel')", "('object', None)", "('propose', None)", "('propose_far', None)", "('reassure', 'daniel')", "('volunteer', None)", "('volunteer_far', None)"], "of": 24, "fresh": 0, "holds": false, "acts": [["min 00", "Daniel", "volunteer_far", false], ["min 00", "Elena", "keep_daniel_home", false], ["min 00", "Leo", "keep_daniel_home", false], ["min 00", "Mara", "confront_daniel", false], ["min 03", "Daniel", "volunteer", false], ["min 03", "Mara", "confront_daniel", false], ["min 03", "Elena", "nobody_goes", false], ["min 03", "Leo", "nobody_goes", false], ["min 06", "Daniel", "still_going", false], ["min 06", "Mara", "keep_daniel_home", false], ["min 06", "Elena", "keep_daniel_home", false], ["min 06", "Leo", "keep_daniel_home", false], ["min 09", "Daniel", "still_going", false], ["min 09", "Mara", "confront_daniel", false], ["min 09", "Elena", "confront_daniel", false], ["min 09", "Leo", "confront_daniel", false], ["min 12", "Daniel", "volunteer_far", false], ["min 12", "Leo", "nobody_goes", false], ["min 12", "Mara", "confront_daniel", false], ["min 12", "Elena", "nobody_goes", false], ["min 15", "Daniel", "volunteer", false], ["min 15", "Elena", "keep_daniel_home", false], ["min 15", "Leo", "keep_daniel_home", false], ["min 15", "Mara", "nobody_goes", false]]}
+  H7 {"answers_live": 141, "api_requests": 141, "day_asks": {"3": 40, "4": 48, "5": 28}}
+
+SUMMARY runs/v20
+H2 PASS (Q5 days 3 of 6; trip acts in Q5 9)
+H3 PASS
+H4 PASS (far as 'will not go': 0; 'nobody' after a trip: 0)
+H5 PASS (food: PASS; loss: NOT TESTED)
+H6 FAIL
+H7 PASS (live 275)

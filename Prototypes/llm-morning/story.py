@@ -561,7 +561,8 @@ ENDED = {"time": "up when its time was out", "rested": "up once rested", "acted"
          "woken": "woken", "asked": "until {he} was asked", "two hours": "until two hours had passed",
          "withdrew": "until {he} walked out",
          "went to rest": "until {he} went to rest", "bedtime": "until bedtime"}
-NEED_WORD = {("fast", 1): "weak", ("fast", 2): "very weak", ("debt", 1): "tired", ("debt", 2): "exhausted"}
+NEED_WORD = {("fast", 1): "weak", ("fast", 2): "very weak", ("fast", 3): "barely able to stand", ("debt", 1): "tired",
+             ("debt", 2): "exhausted"}
 
 
 def after_the_morning(morning, out):

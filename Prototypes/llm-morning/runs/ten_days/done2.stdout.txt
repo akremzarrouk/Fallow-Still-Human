@@ -1,0 +1,23 @@
+exit 0; answers from cache/v20 (days 1-2, nights 1-2, minds 1-2): 143; sent to the recorded client: 133; v20's recorded answers used: 133 of 141
+  day3: 40 asks; recorded 40; not recorded []
+  night3: 8 asks; recorded 8; not recorded []
+  mind3: 0 asks; recorded 0; not recorded []
+  day4: 48 asks; recorded 48; not recorded []
+  night4: 9 asks; recorded 9; not recorded []
+  mind4: 0 asks; recorded 0; not recorded []
+  day5: 28 asks; recorded 28; not recorded []
+  night2 groups: [(['daniel'], False, 'clean', 0, 0)]
+  night3 groups: [(['daniel'], True, 'clean', 0, 0)]
+  night4 groups: [(['daniel'], True, 'clean', 4, 4)]
+
+day4, each one's carried-in positions line:
+  Daniel: - What was said yesterday about going out last night, where it was left: you offered to go further along the street (19:00); Elena said you must stay home (19:00); Leo said you must stay home (19:00); then you went further along anyway and came back with nothing.
+  Elena: - What was said yesterday about going out last night, where it was left: Daniel offered to go further along the street (19:00); you said Daniel must stay home (19:00); Leo said Daniel must stay home (19:00); then Daniel went further along anyway and came back with nothing.
+  Leo: - What was said yesterday about going out last night, where it was left: Daniel offered to go further along the street (19:00); Elena said Daniel must stay home (19:00); you said Daniel must stay home (19:00); then Daniel went further along anyway and came back with nothing.
+  Mara: - What was said yesterday about going out last night, where it was left: Daniel offered to go further along the street (19:00); Elena said Daniel must stay home (19:00); Leo said Daniel must stay home (19:00); then Daniel went further along anyway and came back with nothing.
+
+day5, each one's carried-in positions line:
+  Daniel: - What was said yesterday about going out last night, where it was left: Mara said you must stay home (10:57); Leo said you must stay home (19:00); you said you still mean to go (19:03); Elena said nobody should go (19:03); then you went further along anyway and came back with food.
+  Elena: - What was said yesterday about going out last night, where it was left: Mara said Daniel must stay home (10:57); Leo said Daniel must stay home (19:00); Daniel said he still means to go (19:03); you said nobody should go (19:03); then Daniel went further along anyway and came back with food.
+  Leo: - What was said yesterday about going out last night, where it was left: Mara said Daniel must stay home (10:57); you said Daniel must stay home (19:00); Daniel said he still means to go (19:03); Elena said nobody should go (19:03); then Daniel went further along anyway and came back with food.
+  Mara: - What was said yesterday about going out last night, where it was left: you said Daniel must stay home (10:57); Leo said Daniel must stay home (19:00); Daniel said he still means to go (19:03); Elena said nobody should go (19:03); then Daniel went further along anyway and came back with food.

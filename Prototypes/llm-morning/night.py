@@ -78,6 +78,8 @@ STREETS = ("clean", "scare_there", "scare_back", "not_back")
 NEAR_ALONE, NEAR_GROUP = (0.62, 0.14, 0.18, 0.06), (0.70, 0.12, 0.15, 0.03)
 FAR_ALONE, FAR_GROUP = (0.45, 0.17, 0.23, 0.15), (0.55, 0.15, 0.22, 0.08)
 SHIFTS = {"weak": (-0.04, 0.0, 0.0, 0.04), "very weak": (-0.12, 0.0, 0.02, 0.10), "exhausted": (-0.02, 0.0, 0.0, 0.02)}
+# Fasting's third stage (reports/ten_days_prep.md, fix 2): beyond very weak by the step from weak to very weak.
+SHIFTS["barely standing"] = tuple(round(2 * v - w, 4) for w, v in zip(SHIFTS["weak"], SHIFTS["very weak"]))
 NEAR_SHIFT = 0.5        # next door, a body shifts the street by half as much as further along
 # §1.2: someone exhausted who watches the door or lies awake may doze, and then notices nothing.
 DOZE_FROM, DOZE_BASE, DOZE_STEP, DOZE_MAX = 24, 0.3, 0.05, 0.7
@@ -100,10 +102,11 @@ def far_house_portions(u):
 
 
 def body_shift(fast_stage, debt_stage):
-    """W2: how one body shifts the street (clean, scare_there, scare_back, not_back): weak or very weak from fasting,
-    and exhausted from sleep debt, added up."""
+    """W2: how one body shifts the street (clean, scare_there, scare_back, not_back): weak, very weak or barely
+    standing from fasting, and exhausted from sleep debt, added up."""
     out = (0.0, 0.0, 0.0, 0.0)
-    for name, on in (("weak", fast_stage == 1), ("very weak", fast_stage >= 2), ("exhausted", debt_stage >= 2)):
+    for name, on in (("weak", fast_stage == 1), ("very weak", fast_stage == 2), ("barely standing", fast_stage >= 3),
+                     ("exhausted", debt_stage >= 2)):
         if on:
             out = tuple(a + b for a, b in zip(out, SHIFTS[name]))
     return out
@@ -1006,12 +1009,28 @@ def carry_in_later(prev, n, p, short=False, minutes=True):
         elif " shares out the last " in rest and rest.endswith("you had your part."):
             out.append(f"{rest.split(' shares out the last ')[0]} shared out the food at {data.minute_words(mm)}; you had your part.")
     plan = prev.heard_plan(p)                                                     # Y7
-    if plan:            # said yesterday, about last night (reports/facts_and_evening.md, fix 4)
+    if plan:            # said yesterday, about last night (reports/facts_and_evening.md, fix 4), and what came of it
         out.append("What was said yesterday about going out last night, where it was left: "
-                   + plan[len("About going there tonight: "):])
+                   + plan[len("About going there tonight: "):].rstrip(".") + "; " + night_came_to(n, p) + ".")
     out.append(quiet.gap_line(prev, p.id))                                        # Y8 (quiet.py, §3)
     out += (n.lines_short if short else n.lines)[p.id]
     return ["Yesterday and last night:"] + [f"- {x}" for x in out]
+
+
+def night_came_to(n, p):
+    """What the night after the positions came to, as the house knows it (reports/ten_days_prep.md, fix 1): who went,
+    where, "anyway" if a position heard said nobody should go or that one of them must stay home, and what could be
+    seen of it; or that nobody went out."""
+    if not n.groups:
+        return "then nobody went out"
+    against = {(kind, target) for _, kind, target, *_ in p.trip_heard.values() if kind == "object"}
+    parts = []
+    for g in n.groups:
+        who = ["you" if x == p.id else NAMES[x] for x in g["members"]]
+        anyway = ("object", None) in against or any(("object", x) in against for x in g["members"])
+        where = "further along" if g.get("far") else "to the neighbour's house"
+        parts.append(f"{joined(who)} went {where}{' anyway' if anyway else ''} and {seen_outcome(g)}")
+    return "then " + ", and ".join(parts)
 
 
 def neighbour_line(n, pid, history=None, day=None, away=None):

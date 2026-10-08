@@ -1,0 +1,1 @@
+seed 3: replay exit 1 (1: no original story in the temp folder); answers from day 3 on: 141; by scene {'day3': 40, 'night3': 8, 'mind3': 4, 'day4': 48, 'night4': 9, 'mind4': 4, 'day5': 28}

@@ -1,0 +1,32 @@
+recorded_utc: 2026-10-08T09:52:02Z
+8a52064aadb49ff71ea192d2c849356e0a222f25c53c85798aa1aab27e30dd98 *reports/days_v20_plan.md
+$ git rev-parse HEAD
+361eb300c434428131d423cf3b4ede61eb43b380
+$ git status --short
+?? reports/days_v20_plan.md
+?? runs/v20/
+?? runs/v6/daniel_ate_it-seed1.replay.md
+?? runs/v6/daniel_ate_it-seed2.replay.md
+?? runs/v6/daniel_ate_it-seed3.replay.md
+$ git diff --stat
+$ sha256sum *.py config.json
+5605a081c2e8b8ac30bebc3f45f3995b3a568ba19b156b525e7c1d40a55f4399 *chronicle.py
+5381672f9dd15e8be469cf9efc5e0470dd2b35a4d562b9e66cacefcb3eccb017 *data.py
+819b28129a21a564ee1a8ed2d7386f6c3f45ef86fb74e87692c42a96dd22ec52 *gemini.py
+1e3ed87260eb0f477dfea0a2ef27b4650ef23c1f526638825b34e367b8620597 *list_models.py
+a36d50517c86a6630ac8a8cef4e587a0e814372f7589504f543b9ee92d9b74e9 *memory.py
+9f2a5099b6f0e2a5cdd56f9021cf514e10c405440f056dc5d6b507909f4b61e1 *metrics.py
+425994a9ae32499a24157ba69609eaeab18e2655689ca2c1d2318c295ac7c419 *metrics3.py
+dbe5a9d728aa865acbb6de5212ba180da39c4d72635949ed47d43944731f9918 *metrics4.py
+95e9d68d6397d19ee83a86ac6235f21f0d7f004f7eddfdd68f87c4053a5a826f *metrics5.py
+606dd0e71c1210acc0caea52cd5de7a5ad0029e23eeb5f0dfafac7665fea16a2 *mind.py
+b59814827a4def76bec4c0c8a985c83ae339f128187f28e53a91f22a617087c5 *morning.py
+2e1e91f43ce3e4d5787d09463cd54eff7e952b888531a88692a5d2ea77797e01 *night.py
+e2b589f28abca7ffd7c1fea8f116c2ab9dca2dd48be682779f4d0dea2d799539 *probe_model.py
+27e900813fbc3d1ca9ce7d5c07c031d104b862ace28caa2f014916d8cacd4d04 *probe_prompt.py
+2fe4697710d4b051f4a051b69ca319789fe83ba2ac9cd19ffb067fd4b374806f *quiet.py
+f2726d8bf4b7839e3b54cafe4be56242d358c929cddbd41e03192f68940d282a *story.py
+9a4bf45d1a1fca7c91f0e71f4910adf312eab3f34a17e43b149ac40a9a664ca2 *talk.py
+c332f307331fb7b26ba53de95600746f040877192d1ae7e540cb730f7145e0d8 *test_morning.py
+f5051efdff6f33275f240f2c1193ff504c1a8adbdc56903b6e959198b9763c88 *world.py
+394b6ac2a4c824701494191ee299049ccc8227e5ede737542188e2ef46d0892a *config.json

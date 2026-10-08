@@ -23,6 +23,7 @@ from world import NAMES, TRIP_KINDS, day_index
 
 DAY_END = 840               # 21:00, bedtime (§3)
 WEAK, VERY_WEAK = 48, 96    # fasting (§1.1)
+BARELY = 144                # fasting's third stage (reports/ten_days_prep.md, fix 2)
 TIRED, EXHAUSTED = 16, 24   # sleep debt (§1.2)
 DAY_HOURS = 14              # a day not played to bedtime: awake from 07:00 to 21:00
 NIGHT_PAYS = {"sleep": 8, "lie_awake": 3, "watch_door": 0, "go_next_door": 0}
@@ -49,11 +50,13 @@ HUNGER_A_MINUTE = 0.004     # × hunger rate, as a played turn adds it (world.py
 OWN_ROOM = {p: room for room, owners in data.OWNERS.items() for p in owners}
 
 FAST_WORDS = {1: ", and weak from it: standing up makes your head spin",
-              2: ", and very weak: your legs shake when you stand"}
+              2: ", and very weak: your legs shake when you stand",
+              3: ", and so weak you can barely stand: walking any distance feels impossible"}
 DEBT_WORDS = {1: "you have hardly slept", 2: "you have barely slept for nights; your eyes close on their own"}
 # A need crossing a line, as the person's own record of it (§3: its own event, with them alone as witness).
 NEED_VIEWS = {("fast", 1): "You had grown weak from hunger: standing up made your head spin.",
               ("fast", 2): "You had grown very weak: your legs shook when you stood.",
+              ("fast", 3): "You had grown so weak you could barely stand; walking any distance felt impossible.",
               ("debt", 1): "You had hardly slept, and you felt it.",
               ("debt", 2): "You had barely slept for nights; your eyes were closing on their own."}
 
@@ -75,7 +78,7 @@ def absolute(k, minute):
 
 
 def fast_stage(f):
-    return 2 if f >= VERY_WEAK else 1 if f >= WEAK else 0
+    return 3 if f >= BARELY else 2 if f >= VERY_WEAK else 1 if f >= WEAK else 0
 
 
 def debt_stage(d):
@@ -441,7 +444,8 @@ class Quiet:
                 continue
             entry.update(fired=True, asked=pid)
             self.q1_done.add((pid, need, stage))
-            word = {("fast", 1): "weak", ("fast", 2): "very weak", ("debt", 2): "exhausted"}[(need, stage)]
+            word = {("fast", 1): "weak", ("fast", 2): "very weak", ("fast", 3): "barely able to stand",
+                    ("debt", 2): "exhausted"}[(need, stage)]
             self.ask(p, "Q1", minute, None, f"Q1, a need crossed a line: {p.name} has grown {word}")
             fired.append(entry)
         return fired
@@ -562,7 +566,7 @@ class Quiet:
                 out.append(span["until"])
             rate = p.sheet["hunger_rate"]
             f = self.fast(p, minute)
-            out += [grid(minute + (th - f) / rate * 60) for th in (WEAK, VERY_WEAK) if f < th]
+            out += [grid(minute + (th - f) / rate * 60) for th in (WEAK, VERY_WEAK, BARELY) if f < th]
             if not self.resting(p.id):
                 d = self.debt(p, minute)
                 out += [grid(minute + (th - d) * 60) for th in (TIRED, EXHAUSTED) if d < th]

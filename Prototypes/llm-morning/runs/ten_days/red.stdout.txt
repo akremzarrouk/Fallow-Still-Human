@@ -1,0 +1,44 @@
+FF
+======================================================================
+FAIL: test_yesterdays_positions_end_with_what_happened_that_night (test_morning.QuietDayTest.test_yesterdays_positions_end_with_what_happened_that_night)
+1: the carried-in line of yesterday's trip positions ends with what that night came to, as the house knows
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 6156, in test_yesterdays_positions_end_with_what_happened_that_night
+    self.assertEqual(line["leo"], [said + "Daniel offered to go further along the street (min 00); Elena said "
+AssertionError: Lists differ: ['- W[157 chars]n 15).'] != ['- W[157 chars]n 15); then Daniel went further along anyway a[23 chars]ng.']
+
+First differing element 0:
+'- Wh[156 chars]n 15).'
+'- Wh[156 chars]n 15); then Daniel went further along anyway a[22 chars]ing.'
+
+  ['- What was said yesterday about going out last night, where it was left: '
+   'Daniel offered to go further along the street (min 00); Elena said nobody '
+-  'should go (min 15).']
++  'should go (min 15); then Daniel went further along anyway and came back with '
++  'nothing.']
+
+======================================================================
+FAIL: test_a_third_fasting_stage_at_144 (test_morning.QuietDayTest.test_a_third_fasting_stage_at_144)
+2: fasting's third stage at 144: its own body line (a situation, not an act), a Q1 crossing like the
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 6181, in test_a_third_fasting_stage_at_144
+    self.assertEqual([quiet.fast_stage(x) for x in (95.99, 96, 143.99, 144, 300)], [1, 2, 2, 3, 3])
+AssertionError: Lists differ: [1, 2, 2, 2, 2] != [1, 2, 2, 3, 3]
+
+First differing element 3:
+2
+3
+
+- [1, 2, 2, 2, 2]
+?           ^  ^
+
++ [1, 2, 2, 3, 3]
+?           ^  ^
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.764s
+
+FAILED (failures=2)

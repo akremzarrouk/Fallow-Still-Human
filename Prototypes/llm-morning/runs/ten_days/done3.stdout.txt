@@ -1,0 +1,36 @@
+exit 0; days 10; api_requests 488 (the fake client's)
+scenes in the transcript: ['day1', 'night', 'mind1', 'day2', 'night2', 'mind2', 'day3', 'night3', 'mind3', 'day4', 'night4', 'mind4', 'day5', 'night5', 'mind5', 'day6', 'night6', 'mind6', 'day7', 'night7', 'mind7', 'day8', 'night8', 'mind8', 'day9', 'night9', 'mind9', 'day10']
+day 10: last span ends 21:00; stretches [('min 00', 'the morning'), ('10:39', 'Q2'), ('19:00', 'Q5')]
+
+third fasting stage (need events with fast stage 3), by day:
+  day 3: crossings []; Q1 []; fasting at 21:00 {'daniel': 71.2, 'elena': 62.9, 'leo': 61.9, 'mara': 58.8}; day asks 47; away []
+  day 4: crossings []; Q1 []; fasting at 21:00 {'daniel': 98.8, 'elena': 83.3, 'leo': 85.9, 'mara': 81.6}; day asks 48; away []
+  day 5: crossings []; Q1 []; fasting at 21:00 {'daniel': 126.4, 'elena': 103.7, 'leo': 109.9, 'mara': 104.4}; day asks 48; away []
+  day 6: crossings [('12:21', 'daniel')]; Q1 [('12:21', 'daniel', False, 'asleep')]; fasting at 21:00 {'daniel': 154.0, 'elena': 124.1, 'mara': 127.2}; day asks 34; away ['leo']
+  day 7: crossings [('14:42', 'mara'), ('20:27', 'elena')]; Q1 [('14:42', 'mara', False, 'asleep'), ('20:27', 'elena', True, None)]; fasting at 21:00 {'daniel': 181.6, 'elena': 144.5, 'mara': 150.0}; day asks 40; away ['leo']
+  day 8: crossings []; Q1 []; fasting at 21:00 {'elena': 164.9, 'mara': 172.8}; day asks 4; away ['daniel', 'leo']
+  day 9: crossings []; Q1 []; fasting at 21:00 {'elena': 185.3, 'mara': 195.6}; day asks 10; away ['daniel', 'leo']
+  day 10: crossings []; Q1 []; fasting at 21:00 {'elena': 205.7, 'mara': 218.4}; day asks 8; away ['daniel', 'leo']
+
+per day: prompts; largest estimate / against the budget; most cut by the budget in one prompt (today / before); prompts with any cut; the memory bound's trims that morning (A shortened, C thoughts, C lines, B lines)
+  day1: 71 prompts; largest 1673 / 1399 (mara, min 51); most cut 25 / 4; prompts with a cut 49; memory bound None
+  night1: 4 prompts; largest 1580 / 1383 (mara, night); most cut 26 / 1; prompts with a cut 4; memory bound None
+  day2: 107 prompts; largest 1990 / 1379 (mara, min 60); most cut 65 / 7; prompts with a cut 86; memory bound (0, 0, 0, 0)
+  night2: 4 prompts; largest 1829 / 1389 (daniel, night); most cut 65 / 2; prompts with a cut 4; memory bound None
+  day3: 47 prompts; largest 2118 / 1389 (mara, 10:33); most cut 45 / 9; prompts with a cut 45; memory bound (0, 0, 0, 0)
+  night3: 6 prompts; largest 1971 / 1384 (mara, night); most cut 42 / 4; prompts with a cut 6; memory bound None
+  day4: 48 prompts; largest 2391 / 1382 (elena, min 12); most cut 48 / 9; prompts with a cut 44; memory bound (0, 0, 0, 0)
+  night4: 4 prompts; largest 2199 / 1395 (elena, night); most cut 50 / 5; prompts with a cut 4; memory bound None
+  day5: 48 prompts; largest 2396 / 1529 (leo, 19:00); most cut 49 / 9; prompts with a cut 40; memory bound (0, 0, 0, 0)
+  night5: 7 prompts; largest 2124 / 1392 (leo, night); most cut 49 / 5; prompts with a cut 7; memory bound None
+  day6: 34 prompts; largest 2407 / 1480 (elena, 10:09); most cut 38 / 9; prompts with a cut 33; memory bound (0, 0, 0, 0)
+  night6: 5 prompts; largest 2222 / 1397 (daniel, night); most cut 36 / 5; prompts with a cut 5; memory bound None
+  day7: 40 prompts; largest 2410 / 1388 (elena, 11:21); most cut 44 / 9; prompts with a cut 37; memory bound (0, 0, 0, 0)
+  night7: 7 prompts; largest 2254 / 1397 (elena, night); most cut 50 / 6; prompts with a cut 7; memory bound None
+  day8: 4 prompts; largest 2347 / 1377 (elena, min 03); most cut 4 / 5; prompts with a cut 3; memory bound (0, 0, 0, 0)
+  night8: 3 prompts; largest 2262 / 1397 (mara, night); most cut 11 / 5; prompts with a cut 3; memory bound None
+  day9: 10 prompts; largest 2276 / 1396 (elena, 10:45); most cut 17 / 5; prompts with a cut 8; memory bound (0, 0, 0, 0)
+  night9: 3 prompts; largest 2149 / 1398 (elena, night); most cut 19 / 5; prompts with a cut 3; memory bound None
+  day10: 8 prompts; largest 2354 / 1393 (elena, 10:39); most cut 7 / 5; prompts with a cut 4; memory bound (0, 0, 0, 0)
+
+prompts over the 1400 budget after cutting: 11 (e.g. {'scene': 'day3', 'person': 'elena', 'minute': 720, 'estimate': 2042, 'budget': 1415, 'cut_today': 41, 'cut_before': 9})

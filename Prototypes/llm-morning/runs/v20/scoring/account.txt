@@ -1,0 +1,78 @@
+######## seed 2
+== day 3: shelf at 07:00 ?; morning_end min 18; stretches [('min 00', 'min 18', 'the morning', 24), ('10:27', '10:33', 'Q2', 8), ('20:09', '20:15', 'Q1', 8)]; day asks 40; away []
+  Q5 19:00: fired False, asked None, room None, awake {'kitchen': ['daniel', 'elena', 'leo', 'mara']}, positions {}, why no trip position today
+== night 3: portions 0 -> 0; away []; far None; dozed None
+  bedtime Daniel: sleep (offered go_further: True; mode model); reason 'I have no strength left to stay awake, and there is nothing more I can do tonight.'
+  bedtime Elena: watch_door (offered go_further: True; mode model); reason 'I will sit by the front door until morning so nobody can leave the house without me knowing.'
+  bedtime Leo: lie_awake (offered go_further: True; mode model); reason 'I cannot sleep while Daniel lies there pretending nothing is wrong after sneaking out into the night.'
+  bedtime Mara: lie_awake (offered go_further: True; mode model); reason 'I cannot sleep when my head is spinning with hunger and I keep wondering what Daniel is hiding from us.'
+== day 4: shelf at 07:00 ?; morning_end min 12; stretches [('min 00', 'min 12', 'the morning', 16), ('10:51', '10:57', 'Q2', 8), ('15:30', '15:39', 'Q1', 6), ('19:00', '19:09', 'Q1', 8)]; day asks 38; away []
+  Q5 19:00: fired False, asked None, room None, awake {'kitchen': ['daniel', 'elena', 'leo', 'mara']}, positions {}, why no trip position today
+== night 4: portions 0 -> 0; away []; far None; dozed None
+  bedtime Daniel: lie_awake (offered go_further: True; mode model); reason 'I need to stay alert to keep everyone safe and make sure nobody tries to do something foolish in the dark.'
+  bedtime Elena: lie_awake (offered go_further: True; mode model); reason 'I need to lie here and listen to make sure everyone stays safe through the night.'
+  bedtime Leo: lie_awake (offered go_further: True; mode model); reason 'I am too weak to stand and need to stay alert to make sure Daniel does nothing reckless.'
+  bedtime Mara: lie_awake (offered go_further: True; mode model); reason 'I am too weak and dizzy from hunger to do anything, so I will just lie here in the dark and listen.'
+== day 5: shelf at 07:00 ?; morning_end min 18; stretches [('min 00', 'min 18', 'the morning', 24), ('10:03', '10:12', 'Q2', 8), ('19:00', '19:09', 'Q5', 8)]; day asks 40; away []
+  Q5 19:00: fired True, asked daniel, room kitchen, awake {'kitchen': ['daniel', 'elena', 'leo', 'mara']}, positions {'leo': [186, 31], 'elena': [6, 11], 'daniel': [189, 33], 'mara': [186, 30]}, why None
+  Q5 stretch 19:00-19:09, 8 asks:
+    19:00 Leo [silent, routine]: 
+    19:00 Elena [silent, routine]: 
+    19:00 Mara [accuse_daniel, model]: You took everything and you know it, Daniel.
+    19:00 Daniel [confront_mara, model]: Stop accusing me, Mara, I am trying to keep us all alive.
+    19:03 Mara [accuse_daniel, model]: You are the one who took it, Daniel, and you are the reason we have nothing left.
+    19:03 Daniel [confront_mara, model]: You have no right to talk to me that way, Mara.
+    19:03 Leo [accuse_daniel, model]: Daniel, stop deflecting and admit you are the reason our pantry is empty.
+    19:03 Elena [reassure_all, model]: Please stop fighting, we will get through this evening if we stay calm.
+    19:06 Daniel [still_going, model]: I told you, I am still going to the neighbour's house tonight.
+    19:06 Mara [accuse_daniel, model]: You can't just go out there like it's nothing after what you stole from us, Daniel.
+    19:06 Elena [silent, routine]: 
+    19:06 Leo [silent, routine]: 
+######## seed 3
+== day 3: shelf at 07:00 ?; morning_end min 18; stretches [('min 00', 'min 18', 'the morning', 24), ('10:48', '10:54', 'Q2', 8), ('19:00', '19:06', 'Q5', 8)]; day asks 40; away []
+  Q5 19:00: fired True, asked daniel, room kitchen, awake {'kitchen': ['daniel', 'elena', 'leo', 'mara']}, positions {'daniel': [231, 29], 'leo': [228, 26], 'elena': [228, 28]}, why None
+  Q5 stretch 19:00-19:06, 8 asks:
+    19:00 Daniel [volunteer_far, model]: I'll go further down the street tonight and check the other houses myself.
+    19:00 Mara [confront_daniel, model]: You went out last night and came back with nothing, Daniel. You shouldn't go out again.
+    19:00 Elena [keep_daniel_home, model]: Daniel, you must stay home tonight. We cannot afford to lose you out there.
+    19:00 Leo [keep_daniel_home, model]: Mom is right, Daniel. Going out further tonight is just asking to get killed.
+    19:03 Daniel [confront_leo, model]: Leo, you cannot just tell me what to do when we are starving.
+    19:03 Leo [confront_daniel, model]: Daniel, you stole the food and lied about it for days, so spare me the lecture on what we can or cannot do.
+    19:03 Mara [confront_daniel, model]: Daniel, you started all of this by lying and stealing, and now you want to risk your life out there again?
+    19:03 Elena [reassure_all, model]: We are all safe here together, and we will get through this without any more fighting.
+== night 3: portions 0 -> 0; away []; far {'houses': [0], 'us': [0.20264767407799777], 'searched': 1}; dozed None
+  bedtime Daniel: go_further (offered go_further: True; mode model); reason 'I have to find food for my family no matter the risk.'
+  bedtime Elena: lie_awake (offered go_further: True; mode model); reason 'I need to lie awake and listen so I will know if anyone tries to slip out into the dark again.'
+  bedtime Leo: lie_awake (offered go_further: True; mode model); reason 'I am too tired to move and too wary to sleep with Daniel in the room.'
+  bedtime Mara: lie_awake (offered go_further: True; mode model); reason 'I cannot sleep knowing Daniel might try to sneak out into the street again in the middle of the night.'
+  reaction Leo: stop_daniel say 'Daniel, stay in this room. You are not going out there again tonight.'
+  answer Daniel: go_anyway say 'I have to find something for us, Leo, stay back.'
+  reaction Elena: get_up_and_look say None
+  reaction Mara: get_up_and_look say None
+  group ['daniel'] far=True house=0 street clean found 0 took 0 lost None: back with nothing
+== day 4: shelf at 07:00 ?; morning_end min 18; stretches [('min 00', 'min 18', 'the morning', 24), ('09:57', '10:06', 'Q2', 8), ('10:57', '11:03', 'Q2', 8), ('19:00', '19:06', 'Q5', 8)]; day asks 48; away []
+  Q5 19:00: fired True, asked elena, room kitchen, awake {'kitchen': ['daniel', 'elena', 'leo', 'mara']}, positions {'daniel': [240, 41], 'elena': [240, 44], 'leo': [240, 43], 'mara': [237, 40]}, why None
+  Q5 stretch 19:00-19:06, 8 asks:
+    19:00 Daniel [still_going, model]: I am the eldest, and I will go out there again tonight to find us something.
+    19:00 Mara [confront_daniel, model]: Daniel, you went out last night and came back with nothing, going out again is just insane.
+    19:00 Leo [keep_daniel_home, model]: Daniel, you went out last night and found nothing, so staying home is the only rational choice.
+    19:00 Elena [keep_daniel_home, model]: Daniel, you cannot go out there again tonight, you must stay home where it is safe.
+    19:03 Daniel [still_going, model]: I have to go because it is my duty to keep you all alive.
+    19:03 Mara [confront_daniel, model]: Daniel, risking your life out there again accomplishes nothing and puts us all through hell.
+    19:03 Leo [confront_daniel, model]: Daniel, walking out into the dark again is not duty, it is just reckless.
+    19:03 Elena [nobody_goes, model]: Nobody is going out into the dark tonight, we stay safe together here.
+== night 4: portions 0 -> 4; away []; far {'houses': [0, 4], 'us': [0.20264767407799777, 0.8990512501844641], 'searched': 2}; dozed None
+  bedtime Daniel: go_further (offered go_further: True; mode model); reason 'I am the eldest and I must keep searching the houses further down the street until I find food for them.'
+  bedtime Elena: watch_door (offered go_further: True; mode model); reason 'I will sit by the front door through the night so that Daniel cannot slip out into the dark again.'
+  bedtime Leo: lie_awake (offered go_further: True; mode model); reason 'I am too weak to stand and watch the door all night, so I will lie here and listen in the dark.'
+  bedtime Mara: watch_door (offered go_further: True; mode model); reason 'I have to stay by the front door to make sure Daniel does not sneak out again.'
+  reaction Leo: stop_daniel say 'Daniel, stay in this room. You are not going out there again tonight.'
+  answer Daniel: go_anyway say 'I have to keep trying, Leo, I am the eldest.'
+  reaction Elena: stop_daniel say "Daniel, please don't go out there into the dark."
+  reaction Mara: stop_daniel say "Daniel, please don't go out there again, it accomplishes nothing."
+  answer Daniel: go_anyway say 'I have to keep trying, I am the oldest and I cannot just sit here and do nothing.'
+  group ['daniel'] far=True house=1 street clean found 4 took 4 lost None: back with food
+== day 5: shelf at 07:00 ?; morning_end min 09; stretches [('min 00', 'min 09', 'the morning', 12), ('09:48', '09:57', 'Q2', 8), ('14:27', '14:36', 'Q2', 8)]; day asks 28; away []
+  Q5 19:00: fired False, asked None, room None, awake {'kitchen': ['daniel', 'elena', 'leo', 'mara']}, positions {}, why no trip position today
+  FOOD ACT min 00 Daniel eat: 'I brought it back, and I need this to stand.'
+  FOOD ACT min 00 Elena share: 'Let us share what we have and eat together quietly.'

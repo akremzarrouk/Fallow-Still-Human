@@ -6065,7 +6065,8 @@ class QuietDayTest(unittest.TestCase):
         leo = d.day3.carry["leo"]
         self.assertIn("- What was said yesterday about going out last night, where it was left: Mara said Daniel is "
                       "the one who should go (min 06); you said Daniel is the one who should go (min 06); Daniel said "
-                      "he still means to go (min 09); Elena said nobody should go (min 12).", leo)
+                      "he still means to go (min 09); Elena said nobody should go (min 12); then Daniel went to the "
+                      "neighbour's house anyway and came back with nothing.", leo)    # its end: ten_days_prep.md
         self.assertFalse([x for x in leo if "About going to the neighbour's house last night" in x])
 
     # ---------- what the whole house knows by morning (reports/household_knowledge.md) ----------
@@ -6130,6 +6131,81 @@ class QuietDayTest(unittest.TestCase):
         self.assertIn(out + "Daniel went to the neighbour's house the night before last and came back with nothing; "
                             "Daniel went further along the street last night and has not come back.",
                       day4.trip_lines(mara))
+
+    # ---------- a 10-day run's preparation (reports/ten_days_prep.md) ----------
+    @staticmethod
+    def heard(*positions):
+        """A setup for night3: everyone heard these positions on day 3 (minute, who, kind, target, option)."""
+        def setup(m):
+            for p in m.people.values():
+                p.trip_heard = {who: (minute, kind, target, i, option)
+                                for i, (minute, who, kind, target, option) in enumerate(positions)}
+        return setup
+
+    def test_yesterdays_positions_end_with_what_happened_that_night(self):
+        """1: the carried-in line of yesterday's trip positions ends with what that night came to, as the house knows
+        it: who went, where, anyway or not, and what could be seen; or that nobody went out."""
+        said = "- What was said yesterday about going out last night, where it was left: "
+        offer = (0, "daniel", "volunteer_far", None, "volunteer_far")
+        nobody = (15, "elena", "object", None, "nobody_goes")
+        # Daniel goes further along although Elena said nobody should go; back with nothing.
+        d, m, n3, _ = self.night3({"daniel": "go_further", "leo": "lie_awake"},
+                                  {**self.STILL, "trip_far:daniel": 0.0, "far_house:0": 0.1},
+                                  setup=self.heard(offer, nobody), react=self.let_go)
+        d.chron.add_night(n3)
+        day4 = Morning.next_day(m, n3, d.oracle, chronicle=d.chron)
+        line = {q: [x for x in day4.carry[q] if x.startswith(said)] for q in data.ORDER}
+        self.assertEqual(line["leo"], [said + "Daniel offered to go further along the street (min 00); Elena said "
+                                              "nobody should go (min 15); then Daniel went further along anyway and "
+                                              "came back with nothing."])
+        self.assertEqual(line["elena"], [said + "Daniel offered to go further along the street (min 00); you said "
+                                                "nobody should go (min 15); then Daniel went further along anyway "
+                                                "and came back with nothing."])
+        self.assertEqual(line["daniel"], [said + "you offered to go further along the street (min 00); Elena said "
+                                                 "nobody should go (min 15); then you went further along anyway and "
+                                                 "came back with nothing."])
+        # Nobody objected: no "anyway". Food came home: "with food".
+        d, m, n3, _ = self.night3({"daniel": "go_further"}, {**self.STILL, "trip_far:daniel": 0.0, "far_house:0": 0.8},
+                                  setup=self.heard(offer), react=self.let_go)
+        day4 = Morning.next_day(m, n3, d.oracle, chronicle=d.chron)
+        self.assertIn(said + "Daniel offered to go further along the street (min 00); then Daniel went further along "
+                             "and came back with food.", day4.carry["mara"])
+        # Nobody went out.
+        d, m, n3, _ = self.night3({}, self.STILL, setup=self.heard(offer, nobody))
+        day4 = Morning.next_day(m, n3, d.oracle, chronicle=d.chron)
+        self.assertIn(said + "Daniel offered to go further along the street (min 00); Elena said nobody should go "
+                             "(min 15); then nobody went out.", day4.carry["leo"])
+
+    def test_a_third_fasting_stage_at_144(self):
+        """2: fasting's third stage at 144: its own body line (a situation, not an act), a Q1 crossing like the
+        others, and a street shift beyond very weak by the step from weak to very weak."""
+        quiet, night = self.quiet, self.night
+        self.assertEqual([quiet.fast_stage(x) for x in (95.99, 96, 143.99, 144, 300)], [1, 2, 2, 3, 3])
+        self.assertEqual(quiet.body_line("starving", 3, 0), "Your body: starving, and so weak you can barely stand: "
+                                                            "walking any distance feels impossible.")
+        step = tuple(b - a for a, b in zip(night.SHIFTS["weak"], night.SHIFTS["very weak"]))
+        third = night.body_shift(3, 0)
+        self.assertEqual(tuple(round(x, 4) for x in third),
+                         tuple(round(a + b, 4) for a, b in zip(night.SHIFTS["very weak"], step)))
+        self.assertEqual(tuple(round(x, 4) for x in third), (-0.20, 0.0, 0.04, 0.16))
+        self.assertEqual(tuple(round(x, 4) for x in night.body_shift(2, 0)), (-0.12, 0.0, 0.02, 0.10))
+        self.assertEqual(tuple(round(x, 4) for x in night.street_table(1, far=True, shift=third)),
+                         (0.25, 0.17, 0.27, 0.31))
+        # Leo last ate so long ago that he crosses 144 at 12:00 of day 3, in a quiet stretch: a Q1 check like others.
+        d = self.v16()
+        m = d.day3
+        leo = m.people["leo"]
+        leo.needs["ate_at"] = 2 * 1440 + 300 - 144 * 60
+        self.quiet.play(m)
+        crossed = [e for e in m.quiet.need_events if (e["who"], e["need"], e["stage"]) == ("leo", "fast", 3)]
+        self.assertEqual([e["minute"] for e in crossed], [300])
+        self.assertEqual(crossed[0]["view"], "You had grown so weak you could barely stand; walking any distance felt "
+                                             "impossible.")
+        q1 = [e for e in m.quiet.log if e["kind"] == "Q1" and (e["who"], e["need"], e["stage"]) == ("leo", "fast", 3)]
+        self.assertEqual([e["minute"] for e in q1], [300])
+        self.assertTrue(m.inside_lines(leo)[0].startswith("Your body: starving, and so weak you can barely stand: "
+                                                          "walking any distance feels impossible; and "),
+                        m.inside_lines(leo)[0])
 
     def test_far_offers_read_as_offers_on_every_day(self):
         """2: an offer to go further along reads as an offer on days 1 and 2 too."""
