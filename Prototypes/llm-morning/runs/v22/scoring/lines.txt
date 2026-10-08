@@ -1,0 +1,326 @@
+d3 min 00 Daniel [reassure_all]: Listen to me, nobody is going out again right now and we are going to get through this day together.
+d3 min 00 Mara [confront_daniel]: You went out into the night and came back with nothing, Daniel. Why did you even go?
+d3 min 00 Elena [reassure_all]: We are all exhausted and frightened, but we need to stay calm and stay right here together.
+d3 min 03 Daniel [reassure_all]: I went to see what was there so we wouldn't have to guess, and I will keep us safe.
+d3 min 03 Mara [confront_daniel]: You went out into the dark and came back with nothing, Daniel. Why did you even go?
+d3 min 03 Elena [reassure_all]: We are all exhausted and frightened, but we will make it through this day if we stay together.
+d3 min 03 Leo [confront_daniel]: You went out into the dark and came back with nothing, Daniel, just like I told you would happen.
+d3 min 06 Daniel [confront_leo]: Leo, mocking me won't fill our stomachs. I tried to find something for us.
+d3 min 06 Leo [confront_daniel]: Finding nothing and blaming me doesn't fix what you broke last night, Daniel.
+d3 min 06 Mara [confront_daniel]: You went out into the dark and came back with nothing, Daniel. Why did you even go?
+d3 min 06 Elena [reassure_all]: Stop arguing now, children, we are going to get through this if we stay together.
+d3 min 09 Daniel [reassure_all]: We are going to figure this out together, just give me a moment to think.
+d3 min 09 Mara [accuse_daniel]: You went out there in the dark and you still have nothing to show for it, Daniel.
+d3 min 12 Daniel [reassure_mara]: Mara, I know you are scared, but I am going to keep us safe.
+d3 min 12 Mara [confront_daniel]: You went out into the night and came back with nothing, Daniel. Why did you even go?
+d3 min 12 Elena [reassure_all]: We are not going to survive this by fighting amongst ourselves. Please, let us just breathe and stay together.
+d3 min 15 Daniel [confront_mara]: Mara, questioning why I tried to help won't put food on that shelf.
+d3 min 15 Mara [confront_daniel]: You went out into the dark and came back with nothing, Daniel. Why did you even go?
+d3 min 15 Elena [reassure_all]: Let us not fight each other, children, we are all we have left.
+d3 min 18 Daniel [reassure_all]: We are going to make it through this together, I promise you.
+d3 min 18 Mara [confront_daniel]: You went out into the dark and came back with nothing, Daniel. Why did you even go?
+d3 10:30 Daniel [reassure_all]: We are all together and we will figure this out, nobody is going out there again today.
+d3 10:30 Mara [confront_daniel]: You went out into the night and came back with nothing, Daniel. Why did you even go?
+d3 10:30 Elena [reassure_all]: We are staying right here together, nobody is going anywhere.
+d3 10:30 Leo [confront_daniel]: You went out into the dark alone last night after I told you not to, Daniel, and now there is still nothing.
+d3 10:33 Daniel [reassure_leo]: Leo, I had to see for myself if we could find anything, but I am back and I am here with you now.
+d3 10:33 Leo [confront_daniel]: You snuck out alone last night and came back empty-handed just like I knew you would, Daniel.
+d3 10:33 Mara [confront_daniel]: Daniel, you went out into the dark and came back with nothing, just like you always do.
+d3 10:33 Elena [reassure_all]: We are all safe here together now, let us not fight among ourselves.
+d3 17:39 Daniel [reassure_all]: We are going to make it through this together, just hold on.
+d3 17:39 Mara [confront_daniel]: Daniel, you went out into the dark last night and came back with nothing at all.
+d3 17:39 Elena [reassure_all]: We are staying right here together, nobody is going anywhere.
+d3 17:39 Leo [confront_daniel]: Daniel, you snuck out last night and came back empty-handed, so don't pretend everything is fine.
+d3 17:42 Daniel [reassure_all]: We are going to make it through this, I promise you. Just trust me.
+d3 17:42 Mara [confront_daniel]: You snuck out last night and came back with nothing, Daniel, so don't act like everything is fine.
+d3 17:42 Elena [reassure_all]: We must not turn on each other now, please, we are all we have left.
+d3 17:42 Leo [confront_daniel]: Daniel, your promises don't feed us or fix the risks you took last night.
+d4 min 00 Elena [reassure_all]: We are all together and we will get through this morning without turning on each other.
+d4 min 00 Mara [accuse_daniel]: Daniel is the one who took the food in the first place, so why should we listen to any of you pretend everything is fine?
+d4 min 00 Daniel [reassure_all]: Stop fighting, please; I promise we will figure this out together.
+d4 min 03 Mara [accuse_daniel]: You think smooth words make up for what you stole, Daniel, but we are starving.
+d4 min 03 Elena [reassure_mara]: Mara, please don't let anger make this harder on us all than it already is.
+d4 min 06 Mara [propose_trip]: Daniel went into the dark before, so one of us has to check the neighbour's house tonight.
+d4 min 06 Daniel [volunteer]: I went into the dark before, and I will go to the neighbour's house again tonight so no one else has to take the risk.
+d4 min 06 Elena [keep_daniel_home]: You are not going back out into the dark, Daniel, we cannot afford to lose you.
+d4 min 06 Leo [nobody_goes]: Nobody is going out tonight, risking our lives again solves nothing.
+d4 min 09 Daniel [still_going]: I am the oldest, and I am going whether you like it or not.
+d4 min 09 Leo [keep_daniel_home]: You are not going anywhere tonight, Daniel, because it is suicide and you know it.
+d4 min 09 Elena [nobody_goes]: Nobody is going anywhere tonight, we have to stay safe together right here.
+d4 min 09 Mara [accuse_daniel]: You took the can and you lied to us, Daniel, so why should we trust anything you say now?
+d4 min 12 Daniel [still_going]: I told you I am going, and I am the oldest so I will do it.
+d4 min 12 Elena [keep_daniel_home]: Daniel, you must stay home tonight, because we cannot lose you out there.
+d4 min 12 Mara [accuse_daniel]: Daniel, you only care about playing the oldest so you can sneak off and lie to us again.
+d4 min 12 Leo [confront_daniel]: Daniel, playing the oldest does not make your reckless plans any safer.
+d4 min 15 Daniel [volunteer_far]: I will go further down the street myself to find what we need.
+d4 min 15 Mara [accuse_daniel]: You always say you will fix it, Daniel, but you just lie to us and make everything worse.
+d4 min 15 Elena [reassure_all]: We are not sending anyone out into the street, and we are going to get through this day together without shouting.
+d4 min 15 Leo [confront_daniel]: Daniel, you have already put us in enough danger with your reckless ideas.
+d4 min 18 Daniel [volunteer]: I am the oldest, and I will go out there to find something for us.
+d4 min 18 Mara [keep_daniel_home]: You can't just go back out there after what happened, Daniel.
+d4 11:00 Daniel [reassure_leo]: Leo, you do not need to worry, I am going to make sure we get through this safely.
+d4 11:00 Leo [confront_daniel]: Your reassurances mean nothing when your reckless decisions got us into this mess in the first place.
+d4 11:00 Mara [confront_daniel]: You always talk like you have everything under control, but you just make things worse.
+d4 11:03 Daniel [reassure_leo]: Trust me, Leo, I am doing what has to be done to keep us safe.
+d4 11:03 Leo [confront_daniel]: Your reckless plans only put us in greater danger, Daniel.
+d4 11:03 Mara [confront_daniel]: Daniel, stop acting like you are the one saving us when you are the reason we have nothing left.
+d4 11:03 Elena [go_kitchen]: Let us all try to stay calm and talk quietly.
+d4 11:06 Daniel [reassure_all]: We are going to be fine, just stay calm and trust me.
+d4 19:00 Mara [accuse_daniel]: You are the one who took the food, Daniel, and now we have nothing left at all.
+d4 19:00 Leo [accuse_daniel]: Mara is right, Daniel, you are the one who took the food from the pantry and lied about it.
+d4 19:03 Daniel [reassure_all]: We are going to be fine, I promise you all. Just trust me.
+d4 19:03 Leo [confront_daniel]: Your empty promises don't change the fact that you left us with nothing, Daniel.
+d4 19:03 Elena [reassure_all]: We must not turn on each other now, please. We will get through this evening together if we stay calm.
+d4 19:03 Mara [accuse_daniel]: You keep making promises, Daniel, but you're the one who stole from us.
+d4 19:06 Daniel [reassure_all]: Trust me, I will keep us safe and we will find a way through this together.
+d4 19:06 Elena [reassure_all]: We must stay calm and look after each other, fighting will not help us survive.
+d5 min 00 Elena [reassure_all]: We are all together and we will stay safe here in the house today.
+d5 min 00 Mara [accuse_daniel]: You are the one who took the food from the pantry and lied about it, Daniel.
+d5 min 00 Daniel [confront_mara]: Stop saying that, Mara. I am trying to keep us all safe.
+d5 min 00 Leo [accuse_daniel]: You took the food and lied about it, Daniel, so stop pretending you are protecting anyone.
+d5 min 03 Daniel [confront_leo]: Leo, stop undermining me when I am trying to keep us all alive.
+d5 min 03 Leo [confront_daniel]: You are the one who took the food, Daniel, so stop pretending you are protecting us.
+d5 min 03 Mara [accuse_daniel]: You are the one who took the food, Daniel, so stop acting like you care about any of us.
+d5 min 03 Elena [reassure_all]: Let us not fight each other now while we are all so weak and hungry.
+d5 min 06 Daniel [volunteer]: I will go out tonight to check the neighbor's house again, because I am the oldest and it's my duty to keep us safe.
+d5 min 06 Leo [keep_daniel_home]: You stayed home last time for a reason, Daniel, and going out tonight solves nothing.
+d5 min 06 Elena [keep_daniel_home]: Daniel, you must stay home tonight. We cannot risk losing you out there in the dark.
+d5 min 06 Mara [keep_daniel_home]: Daniel, you heard Mom and Leo. You must stay home tonight.
+d5 min 09 Daniel [still_going]: I am the eldest, and I am the one who is going tonight whether you like it or not.
+d5 min 09 Mara [accuse_daniel]: You always act like you decide everything, but you're the one who stole the food from us.
+d5 min 09 Elena [nobody_goes]: Nobody is going out anywhere tonight, we stay safe here together.
+d5 min 09 Leo [nobody_goes]: Mom is right, nobody is going out there tonight and risking their life.
+d5 min 12 Daniel [still_going]: I am the oldest and I am going tonight whether you like it or not.
+d5 min 12 Mara [accuse_daniel]: You think you can just decide everything, Daniel, but you are the reason we have nothing left.
+d5 min 12 Leo [keep_daniel_home]: Daniel, you are not going anywhere tonight, and making bad choices will not fix that we have nothing.
+d5 min 12 Elena [keep_daniel_home]: Daniel, you are staying right here with us because nobody is going out into that street.
+d5 min 15 Daniel [propose_trip]: I am the oldest, and I will go to the neighbour's house tonight to find what we need.
+d5 min 15 Mara [accuse_daniel]: You are the one who took it and you have no right to act like you are saving anyone.
+d5 min 15 Leo [confront_daniel]: Daniel, you admitted taking it yourself four days ago, so stop pretending you are going out to save us.
+d5 min 15 Elena [reassure_all]: Nobody is going out into the dark street because we will stay safe together here.
+d5 10:03 Daniel [volunteer]: I am the oldest, and I will go out tonight to find food for us all.
+d5 10:03 Mara [accuse_daniel]: You took the can yourself, Daniel, so stop pretending you are doing this for us.
+d5 10:03 Leo [nobody_goes]: Nobody is going out anywhere tonight, Daniel. We stay put.
+d5 10:06 Daniel [still_going]: I am the oldest, and I will go out tonight to find what we need.
+d5 10:06 Mara [accuse_daniel]: You took everything already, Daniel, and now you want to act like a hero.
+d5 10:06 Leo [keep_daniel_home]: You are not going anywhere, Daniel, because staying here alive is the only option we have left.
+d5 10:09 Daniel [still_going]: I am the oldest and I am the one who has to go out there for us.
+d5 10:09 Mara [accuse_daniel]: You always say you're the oldest just to get your own way, Daniel.
+d5 19:00 Daniel [still_going]: I told you, I am going out tonight to find food for us whether you like it or not.
+d5 19:00 Leo [confront_daniel]: Daniel, you went before and found nothing, and going out again will just get you killed.
+d5 19:00 Elena [nobody_goes]: Nobody is going out tonight, we stay safe together right here.
+d5 19:00 Mara [accuse_daniel]: You caused all of this because you lied and took the food from the pantry.
+d5 19:03 Daniel [still_going]: I have to go out and find something for us, no matter what you all say.
+d5 19:03 Mara [accuse_daniel]: You always act like you are saving us, Daniel, but you are the one who stole the food and lied to us.
+d5 19:03 Leo [nobody_goes]: You are not going anywhere into the dark, Daniel, because it is suicide and we are staying put.
+d5 19:03 Elena [keep_daniel_home]: Daniel, you are staying right here with us because I will not let you walk out into that dark.
+d6 min 00 Daniel [collect_rain]: It's raining out, I'm setting the bin under the drainpipe to catch water.
+d6 min 00 Mara [accuse_daniel]: You sneaked out in the middle of the night just like you always do, Daniel.
+d6 min 00 Elena [reassure_mara]: Hush now, Mara, we are all safe inside and we need to stay calm together.
+d6 min 00 Leo [accuse_daniel]: You brought back water in the dark while everyone was asleep, Daniel, so don't pretend you were just resting.
+d6 min 03 Daniel [confront_leo]: I risked my life in the dark for that water, Leo, so stop accusing me when you stayed safely in bed.
+d6 min 03 Leo [confront_daniel]: Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel.
+d6 min 03 Mara [confront_daniel]: You had no right to sneak out into the dark like that, Daniel.
+d6 min 03 Elena [reassure_all]: We are all safe here together, and shouting at each other will not help us through today.
+d6 min 06 Daniel [reassure_all]: We are safe as long as we stick together, I promise you.
+d6 min 06 Mara [confront_daniel]: You sneaked out into the dark in the middle of the night just like you always do.
+d6 min 06 Leo [confront_daniel]: You went out into the dark when everyone told you not to, Daniel, and you put us all at risk.
+d6 min 06 Elena [reassure_leo]: Leo, your brother came back safe with the water, so let us try to calm down and listen to each other.
+d6 min 09 Leo [confront_daniel]: You went out into the dark when we all told you not to, Daniel, and now you act like nothing happened.
+d6 min 09 Daniel [confront_leo]: I risked my life out there in the dark to bring back water for all of us, Leo, so do not lecture me.
+d6 min 09 Elena [confront_daniel]: Daniel, going out alone in the dark puts us all in danger, even if you brought water.
+d6 min 12 Daniel [confront_leo]: Leo, stop complaining when I am the only one actually risking my life to bring water back for us.
+d6 min 12 Elena [reassure_all]: Let us not fight each other now when we need to stay close and keep safe.
+d6 min 12 Mara [go_kitchen]: Mom, Daniel is back out there doing whatever he wants again.
+d6 min 15 Daniel [reassure_elena]: Mom, you don't need to worry about me going out again, I am staying right here with you all.
+d6 min 15 Elena [reassure_daniel]: Thank you for staying, Daniel, we need to stay together right now.
+d6 min 15 Mara [accuse_daniel]: You sneaked out in the night like a thief, Daniel, and now you sit here acting like a hero.
+d6 min 15 Leo [go_kitchen]: I heard rain on the roof, so we should check the yard bin before it misses any water.
+d6 10:03 Mara [confront_daniel]: You sneaked out in the dark again, Daniel. Why do you always have to do whatever you want?
+d6 10:03 Daniel [confront_mara]: I went out there to keep us alive, Mara, so don't you dare talk to me like that.
+d6 10:06 Mara [confront_daniel]: You had no right to sneak out into the dark like that, Daniel.
+d6 10:06 Daniel [confront_mara]: I went out there to keep us alive, Mara, so don't lecture me about what I have a right to do.
+d6 10:06 Elena [go_kitchen]: I am coming out now, let us not raise our voices again.
+d6 10:09 Mara [confront_daniel]: You had no right to sneak out into the dark like that, Daniel.
+d6 10:09 Daniel [reassure_mara]: Mara, I went out into the dark so we could survive, and I am only trying to keep us safe.
+d6 10:36 Mara [accuse_daniel]: You went out into the dark behind our backs last night, Daniel, and you think you can just pretend it is fine.
+d6 10:36 Daniel [confront_mara]: I went out there to keep us alive, Mara, so don't you dare judge me.
+d6 10:36 Leo [confront_daniel]: You went out anyway after I warned you not to, Daniel. Putting yourself at risk like that helps no one.
+d6 10:36 Elena [reassure_all]: We are all scared and starving, but fighting amongst ourselves will tear us apart. We need to stay together.
+d6 10:39 Daniel [reassure_all]: Mom is right, we cannot fight right now or we will not survive.
+d6 10:39 Mara [confront_daniel]: You sneaked out into the dark last night just like you always do. Why won't you ever listen to anyone?
+d6 10:39 Elena [reassure_all]: Let us not argue while we are all together, we need to stay calm.
+d6 10:39 Leo [confront_daniel]: You went out into the dark again and risked everything just to prove you can do whatever you want.
+d7 min 00 Mara [accuse_daniel]: You took it before and you're hiding something again, Daniel.
+d7 min 00 Daniel [confront_mara]: Stop talking to me like that, Mara. I am only trying to keep us safe.
+d7 min 00 Elena [reassure_all]: Please stop fighting. We are all hungry and tired, but we have to stay together.
+d7 min 00 Leo [confront_daniel]: Daniel, stop deflecting every time someone asks a straightforward question.
+d7 min 03 Daniel [confront_leo]: Leo, stop acting like you know better than me when I am the one who went out there.
+d7 min 03 Leo [confront_daniel]: Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel.
+d7 min 03 Mara [accuse_daniel]: You think you can just sneak around and lie to us, Daniel, but I know you took it.
+d7 min 03 Elena [reassure_all]: Let's stop fighting, we are all exhausted and we need to stay together.
+d7 min 06 Daniel [reassure_all]: Stop arguing, all of you, I'm trying to keep us safe.
+d7 min 06 Mara [accuse_daniel]: You think you can just act like nothing happened, Daniel, but you took the can and you lied to us all.
+d7 min 09 Daniel [confront_mara]: Mara, stop accusing me when I'm the one who went out into the dark to bring back water for all of us.
+d7 min 09 Mara [confront_daniel]: You went out because you wanted to, not for us, and you took the can first.
+d7 min 09 Elena [reassure_all]: Please stop fighting, we need to stay together right now.
+d7 min 12 Daniel [confront_mara]: Mara, you have no right to talk to me that way after everything I have done to keep us alive.
+d7 min 12 Mara [confront_daniel]: You think going out makes you special, Daniel, but you just use it to hide what you took.
+d7 min 12 Elena [reassure_all]: Please stop fighting, we have to stay calm and protect each other.
+d7 min 15 Daniel [reassure_all]: We have to stay calm and stop accusing each other, because I will keep us safe.
+d7 min 15 Elena [reassure_all]: Let's all take a breath and keep our voices down, we will get through this together.
+d7 min 15 Mara [accuse_daniel]: You always act like you are in charge, Daniel, but you are the one who stole the food.
+d7 10:06 Daniel [confront_leo]: Leo, you cannot just walk in here and start judging me when I am the one holding this family together.
+d7 10:06 Leo [confront_daniel]: Holding the family together doesn't give you the right to lecture anyone, Daniel.
+d7 10:09 Daniel [confront_leo]: You can sit there and judge me, Leo, but I am the one risking my life to keep us alive.
+d7 10:09 Leo [confront_daniel]: Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel.
+d7 10:12 Daniel [confront_leo]: Drop the attitude, Leo, I am trying to keep us alive out there while you just sit here complaining.
+d7 10:36 Mara [accuse_daniel]: You think you can just sit there like nothing happened, but you took the can and you know it.
+d7 10:36 Daniel [confront_mara]: I went out there into the dark to keep us alive, so you have no right to judge me, Mara.
+d7 10:39 Mara [confront_daniel]: Going out into the dark doesn't give you the right to lie to us, Daniel.
+d7 10:39 Daniel [confront_mara]: You weren't out there in the dark risking your neck to keep us alive, so don't lecture me.
+d7 10:42 Mara [accuse_daniel]: You think going out makes you special, Daniel, but you took what was ours.
+d7 10:42 Daniel [confront_mara]: You have no right to talk to me that way, Mara.
+d7 17:18 Mara [accuse_daniel]: You took the can, Daniel, and you're the reason we have nothing left.
+d7 17:18 Daniel [confront_mara]: Stop blaming me, Mara, when I'm the one who risked everything out there to keep us alive.
+d7 17:18 Elena [reassure_all]: Please, let us not fight anymore, we will get through this if we stay together.
+d7 17:18 Leo [confront_daniel]: Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel.
+d7 17:21 Daniel [confront_leo]: Leo, you weren't out there in the dark risking your neck to bring back water for us.
+d7 17:21 Leo [confront_daniel]: Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel.
+d7 17:21 Mara [confront_daniel]: You think you can just yell at everyone after what you did, Daniel?
+d7 17:21 Elena [reassure_all]: Let's not fight among ourselves. We will get through this if we stick together.
+d8 min 00 Elena [reassure_all]: Please, let us not start the day with anger. We will get through this together.
+d8 min 00 Daniel [reassure_all]: Mom is right, we are going to get through this if we stick together.
+d8 min 00 Mara [accuse_daniel]: You talk about sticking together after what you did to us? You're the one who stole from us, Daniel.
+d8 min 03 Daniel [confront_mara]: Stop acting like you have any right to judge me, Mara. I am the one who keeps us safe.
+d8 min 03 Mara [accuse_daniel]: You think you keep us safe, Daniel, but you are the one who stole from us.
+d8 min 03 Elena [reassure_all]: Please, we cannot turn on each other like this. We have to stay calm and hold together.
+d8 min 03 Leo [accuse_daniel]: You talk about keeping us safe, Daniel, after everything you stole and lied about.
+d8 min 06 Daniel [confront_mara]: Stop blaming me for everything, Mara, when I'm the one who went out there to keep us alive.
+d8 min 06 Mara [confront_daniel]: You went out because you had to fix what you broke, Daniel, not because you are some kind of hero.
+d8 min 06 Leo [confront_daniel]: Going out there doesn't erase the fact that you lied to us for days, Daniel.
+d8 min 06 Elena [reassure_all]: Please, let's not fight among ourselves when we need to stay strong together.
+d8 min 09 Daniel [confront_mara]: Mara, stop glaring at me and blaming me when I'm the one who went out there into the dark for us.
+d8 min 09 Mara [confront_daniel]: Going out doesn't change what you did, Daniel.
+d8 min 09 Leo [confront_daniel]: Bringing back water doesn't erase the fact that you lied to us and stole the food.
+d8 min 12 Daniel [volunteer]: I will go out there myself tonight and find us something to eat.
+d8 min 12 Elena [keep_daniel_home]: You are not going out into the dark again, Daniel. We will stay together and find another way.
+d8 min 12 Leo [keep_daniel_home]: Mom is right, Daniel. Going out there again is just asking to get killed.
+d8 min 12 Mara [keep_daniel_home]: You shouldn't go back out there, Daniel. We can't risk it.
+d8 min 15 Daniel [still_going]: I'm the oldest, and I'm going whether you like it or not.
+d8 min 15 Elena [nobody_goes]: Nobody is going out tonight. We stay together and we stay safe.
+d8 min 15 Mara [accuse_daniel]: You just want to sneak out again because you think you can do whatever you want.
+d8 min 15 Leo [nobody_goes]: Mom is right, Daniel, going out tonight only puts us all in unnecessary danger.
+d8 09:51 Daniel [still_going]: I told you, I still mean to go out there tonight and check the neighbour's house.
+d8 09:51 Mara [accuse_daniel]: You always do whatever you want without caring what any of us say.
+d8 09:51 Elena [keep_daniel_home]: Daniel, please, you cannot go out there tonight and put yourself in such danger.
+d8 09:51 Leo [keep_daniel_home]: Daniel, you heard Mom. Staying home is the only sensible choice.
+d8 09:54 Daniel [still_going]: I am the oldest and I am going tonight whether you like it or not.
+d8 09:54 Elena [nobody_goes]: Nobody is going out there tonight, we must stay together and keep each other safe.
+d8 09:54 Mara [accuse_daniel]: You just want to sneak out again because you think you rule us all, Daniel.
+d8 09:54 Leo [nobody_goes]: Mom is right, Daniel, going out there is a needless risk we cannot afford.
+d8 16:45 Daniel [still_going]: I am the one who went out before, and I am still going tonight.
+d8 16:45 Leo [keep_daniel_home]: You are not going out there tonight, Daniel. We agreed on this.
+d8 16:45 Mara [accuse_daniel]: You shouldn't even be talking about going out after what you did. You can't be trusted.
+d8 16:45 Elena [keep_daniel_home]: Daniel, please, you cannot go out there tonight. We must keep each other safe inside.
+d8 16:48 Daniel [still_going]: I am the oldest, and I am the one who is going out there tonight.
+d8 16:48 Leo [nobody_goes]: Being the oldest doesn't make you bulletproof, Daniel. We are staying inside.
+d8 16:48 Elena [nobody_goes]: Nobody is going out tonight. We cannot risk losing anyone else.
+d8 16:48 Mara [accuse_daniel]: You just want an excuse to leave because you don't care about the rest of us.
+d8 19:00 Daniel [still_going]: I am going to the neighbour's house tonight whether you like it or not.
+d8 19:00 Elena [keep_daniel_home]: Daniel, you must stay home tonight, we cannot risk losing you out there.
+d8 19:00 Mara [accuse_daniel]: You think you can just do whatever you want after what you did to us!
+d8 19:00 Leo [keep_daniel_home]: Daniel, staying home is the only safe choice we have left.
+d8 19:03 Daniel [still_going]: I am the oldest, and I am the one who is going out there tonight.
+d8 19:03 Mara [accuse_daniel]: You think you can just do whatever you want, but you are the one who stole from us!
+d8 19:03 Leo [confront_daniel]: You are not going anywhere tonight, Daniel, and we are not having this argument again.
+d8 19:03 Elena [nobody_goes]: Nobody is going out into the dark tonight, we must stay together and keep safe.
+d9 min 00 Elena [reassure_all]: Let us not fight this morning, we are all here and we are safe.
+d9 min 00 Mara [accuse_daniel]: You think you can just pretend everything is fine after what you did, Daniel?
+d9 min 00 Daniel [confront_mara]: Stop talking to me like that, Mara. I am doing everything I can to keep us alive.
+d9 min 03 Mara [accuse_daniel]: You think you can just act like a hero now, Daniel, but going out doesn't change what you did to us.
+d9 min 03 Daniel [confront_mara]: You have no right to question me, Mara, when I'm the only one trying to keep us alive.
+d9 min 03 Elena [reassure_all]: Please, stop fighting. We only have each other and we will get through this.
+d9 min 03 Leo [accuse_daniel]: Going out doesn't erase the fact that you lied to us for days, Daniel.
+d9 min 06 Daniel [propose_trip]: We can't just sit here arguing while we starve; I say someone has to check the neighbour's house again tonight.
+d9 min 06 Mara [accuse_daniel]: You don't get to act like a hero now after what you did, Daniel.
+d9 min 06 Leo [send_daniel]: If anyone goes out tonight, it should be you, Daniel, since you're the one who caused this mess.
+d9 min 06 Elena [nobody_goes]: Nobody is going out anywhere tonight, we are staying safe right here.
+d9 min 09 Daniel [volunteer]: I am the eldest and I will be the one to go tonight. I will keep us safe.
+d9 min 09 Mara [confront_daniel]: You think you can just act like a hero now, but going out doesn't change what you did to us.
+d9 min 09 Leo [keep_daniel_home]: Daniel, you're not going anywhere tonight. Staying home is the only sensible choice.
+d9 min 09 Elena [keep_daniel_home]: Daniel, please, you must stay home tonight. We cannot risk losing you.
+d9 min 12 Daniel [still_going]: I am the oldest and I am the one going out tonight whether you like it or not.
+d9 min 12 Mara [keep_daniel_home]: Daniel, you can't just decide this for all of us. You have to stay home.
+d9 min 12 Leo [nobody_goes]: Nobody is going out tonight. We stay inside.
+d9 min 12 Elena [nobody_goes]: Nobody is going out tonight. We keep each other safe right here.
+d9 min 15 Daniel [still_going]: I am the oldest, and I am the one who will go out tonight to find what we need.
+d9 min 15 Mara [accuse_daniel]: You think you can just act like a hero now, Daniel, but going out doesn't change what you did to us.
+d9 min 15 Leo [keep_daniel_home]: Daniel, staying inside is the only sensible choice left for any of us.
+d9 min 15 Elena [reassure_all]: Please, we cannot argue like this when we need each other most. We will stay safe together inside.
+d9 09:51 Daniel [still_going]: I don't care what anyone says, I am still going out there tonight to find something for us.
+d9 09:51 Leo [nobody_goes]: Nobody is going anywhere tonight, Daniel. We aren't throwing lives away.
+d9 09:51 Elena [keep_daniel_home]: Daniel, please, you cannot go out there tonight. We are staying safe inside.
+d9 09:54 Daniel [still_going]: I have to go out there because staying here gets us nowhere.
+d9 09:54 Leo [keep_daniel_home]: Daniel, staying home is the only rational choice for all of us.
+d9 09:54 Elena [nobody_goes]: Nobody is going out tonight, we stay safe together under this roof.
+d9 09:57 Daniel [still_going]: I have to go out there because sitting here waiting for nothing will kill us faster.
+d9 09:57 Elena [keep_daniel_home]: Daniel, please, you cannot go out there tonight. We have to stay together and keep each other safe.
+d9 11:30 Leo [nobody_goes]: We are not going out there, and neither is Daniel.
+d9 11:30 Mara [nobody_goes]: Leo is right, we can't let anyone go out there tonight.
+d9 11:30 Elena [nobody_goes]: Nobody is going out there, we stay together.
+d9 11:33 Leo [ration_water]: We need to ration what is left in the pans and the bin so it actually lasts.
+d9 11:33 Elena [reassure_leo]: You are right to look after the water, Leo, we will make it last together.
+d9 11:33 Daniel [go_kitchen]: I need to see what is happening out there.
+d9 11:36 Leo [keep_daniel_home]: You are not going anywhere tonight, Daniel. We stay inside.
+d9 19:00 Leo [nobody_goes]: Nobody is going out tonight, Daniel. We stay inside.
+d9 19:00 Mara [keep_daniel_home]: Leo is right, Daniel, you have to stay here where it's safe.
+d9 19:00 Daniel [still_going]: I am the eldest, and I will decide when it is time to go.
+d9 19:00 Elena [keep_daniel_home]: Daniel, please listen to us, you are not going out into the dark tonight.
+d9 19:03 Daniel [still_going]: I am the oldest, and I am the one who has to go out there for us.
+d9 19:03 Leo [keep_daniel_home]: You are not going out there, Daniel. We stay inside.
+d9 19:03 Elena [nobody_goes]: Nobody is going out tonight, we stay together.
+d9 19:03 Mara [accuse_daniel]: You think you can just act like a hero now, but going out doesn't change what you did to us.
+d10 min 00 Mara [accuse_daniel]: You took it before and you are going to ruin us all again, Daniel.
+d10 min 00 Daniel [confront_mara]: Stop talking to me like that, Mara. I am trying to keep us all alive.
+d10 min 00 Leo [confront_daniel]: Daniel, stop shouting and stop accusing everyone else. We all know how this ends if you start going out again.
+d10 min 00 Elena [reassure_all]: Please stop arguing, let's just stay together and keep calm.
+d10 min 03 Daniel [volunteer]: I am the oldest, so I will go out to the neighbour's house tonight to find what we need.
+d10 min 03 Mara [keep_daniel_home]: You are not going anywhere, Daniel. You have no right to decide this for us.
+d10 min 03 Leo [keep_daniel_home]: Daniel, you are not going out tonight. We agreed on this.
+d10 min 03 Elena [nobody_goes]: Nobody is going out tonight. We stay together and we stay safe.
+d10 min 06 Daniel [still_going]: I am the oldest, and I am going whether you like it or not.
+d10 min 06 Mara [confront_daniel]: You do not get to decide everything just because you are older, Daniel. You almost got us killed before.
+d10 min 06 Leo [confront_daniel]: You nearly got yourself killed last time, Daniel. Going out again is just stupid.
+d10 min 06 Elena [keep_daniel_home]: Daniel, please listen to us and stay home. We cannot survive losing you out there.
+d10 min 09 Daniel [still_going]: I am the eldest, and I am going to the neighbour's house tonight whether you like it or not.
+d10 min 09 Elena [nobody_goes]: Nobody is going out tonight, we cannot risk losing any of you.
+d10 min 09 Leo [confront_daniel]: You think acting like a tyrant makes you the eldest, Daniel, but it just makes you reckless.
+d10 min 09 Mara [accuse_daniel]: You always think you can just ignore everyone and do whatever you want, Daniel!
+d10 min 12 Daniel [propose_trip]: I am the oldest, and I am the one who will go to the neighbour's house tonight to see what we can find.
+d10 min 12 Elena [reassure_all]: We are safe right here together if we do not go out into the street.
+d10 min 12 Mara [send_daniel]: Daniel is the only one who should go anywhere because he always thinks he is in charge.
+d10 min 12 Leo [nobody_goes]: Nobody is going anywhere tonight, Daniel, it is too dangerous.
+d10 min 15 Daniel [volunteer]: I am the oldest, so I am the one who will go.
+d10 min 15 Elena [keep_daniel_home]: Daniel, you are staying right here with us. We are not letting you go out there again.
+d10 min 15 Mara [accuse_daniel]: Daniel, you always think you get to decide everything just because you are older!
+d10 min 15 Leo [keep_daniel_home]: Mom is right, Daniel. You are not going out there again tonight.
+d10 09:18 Daniel [still_going]: I am the eldest, Leo, and I am going to the neighbour's house tonight whether you like it or not.
+d10 09:18 Leo [confront_daniel]: Daniel, staying home is the only rational choice if you want to keep us alive.
+d10 09:21 Daniel [still_going]: I have made up my mind, Leo. Someone has to see what is out there.
+d10 09:21 Leo [confront_daniel]: You went before and brought back nothing, Daniel. Going out again solves nothing.
+d10 09:24 Daniel [still_going]: I am the eldest, and I am the one who has to go out for us.
+d10 09:48 Mara [accuse_daniel]: You think you can just sit there like nothing happened, but you took it and you know you did.
+d10 09:48 Daniel [still_going]: I am the eldest, and I am the one who has to go out tonight.
+d10 09:51 Mara [keep_daniel_home]: You are not going anywhere, Daniel. You stayed home before and you will stay home tonight.
+d10 09:51 Daniel [still_going]: I have to go out there because staying here gets us nowhere.
+d10 09:54 Mara [accuse_daniel]: You think you can just do whatever you want because you're older, but you're not going anywhere.
+d10 09:54 Daniel [still_going]: I am the eldest and I am the one who is going out tonight whether you like it or not.
+d10 19:00 Mara [accuse_daniel]: You think you can just decide everything for us, Daniel. You have no right.
+d10 19:00 Daniel [still_going]: I am the eldest, and I am going to the neighbour's house tonight whether you like it or not.
+d10 19:00 Elena [nobody_goes]: Nobody is going out tonight. We stay inside together where it is safe.
+d10 19:00 Leo [nobody_goes]: Mom is right, Daniel. Going out there tonight is suicide.
+d10 19:03 Elena [keep_daniel_home]: Daniel, please, you cannot go out there. We need you to stay safe with us.
+d10 19:03 Daniel [still_going]: I have to go, Mom, because someone has to find something for us.
+d10 19:03 Leo [keep_daniel_home]: Daniel, you heard Mom. You are not going out tonight.
+d10 19:03 Mara [accuse_daniel]: Daniel, you cannot just decide to go out there like you own us all!

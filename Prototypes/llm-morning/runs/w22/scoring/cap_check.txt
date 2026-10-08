@@ -1,0 +1,2 @@
+CAP in the file: 470 | ARGS: ['morning.py', '--seed', '2', '--out', 'v22', '--days', '10']
+cap raised: stopped: the 3-ask cap of reports/days_v22_plan.md was reached (3 live asks sent). | requests sent to api: 3 | counter: 3

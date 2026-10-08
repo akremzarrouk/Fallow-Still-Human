@@ -1,0 +1,3 @@
+d79a49396e91a3beb0789e7c03b371e00ae3435e72ee1ac6f27864087406a959 *cache/v16/gemini-3.5-flash-lite-daniel_ate_it-seed2.json
+d79a49396e91a3beb0789e7c03b371e00ae3435e72ee1ac6f27864087406a959 *cache/v22/gemini-3.5-flash-lite-daniel_ate_it-seed2.json
+d79a49396e91a3beb0789e7c03b371e00ae3435e72ee1ac6f27864087406a959 *cache/v22/gemini-3.5-flash-lite-daniel_ate_it-seed2.json

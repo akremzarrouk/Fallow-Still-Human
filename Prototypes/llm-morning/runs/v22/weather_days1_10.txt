@@ -1,0 +1,18 @@
+  weather day 1: wet, 2.5 mm (09:00 to 13:09); 7.7 to 14.2 C outdoors, 15.0 C indoors
+  weather day 2: dry; 11.2 to 15.2 C outdoors, 17.2 C indoors
+  weather day 3: dry; 12.6 to 16.1 C outdoors, 18.4 C indoors
+  weather day 4: dry; 7.1 to 19.4 C outdoors, 17.2 C indoors
+  weather day 5: wet, 12.3 mm (22:03 to 03:42 the next day); 7.1 to 14.3 C outdoors, 14.7 C indoors
+  weather day 6: wet, 4.5 mm (05:27 to 11:03, 06:30 to 10:45); 11.6 to 13.6 C outdoors, 16.6 C indoors
+  weather day 7: wet, 1.2 mm (04:36 to 10:09, 17:18 to 20:21); 11.8 to 13.3 C outdoors, 16.6 C indoors
+  weather day 8: dry; 8.0 to 19.1 C outdoors, 17.5 C indoors
+  weather day 9: wet, 17.8 mm (11:30 to 16:30); 7.8 to 14.0 C outdoors, 14.9 C indoors
+  weather day 10: dry; 8.6 to 18.6 C outdoors, 17.6 C indoors
+spells (abs start,end,mm):
+1 (120, 369, 2.5163336620251555) 09:00 13:09
+5 (6663, 7002, 12.317520411523313) 22:03 03:42
+6 (7107, 7443, 2.2413182722391167) 05:27 11:03
+6 (7170, 7425, 2.2413182722391167) 06:30 10:45
+7 (8496, 8829, 0.5983892717524147) 04:36 10:09
+7 (9258, 9441, 0.5983892717524147) 17:18 20:21
+9 (11790, 12090, 17.773692319365665) 11:30 16:30

@@ -1,0 +1,37 @@
+ok   W1-4 three days with water words: got (3, 3)
+ok   W1-4 four days (rain counts): got 4
+ok   W1-4 whole words only (waterproof no; drinking, thirsty yes): got 1
+ok   W1-6 claim while the store is > 0: got 1
+ok   W1-6 claim while the store is 0 (day 4) is not a violation: got 0
+ok   W1-6 a night reason counts: got 1
+ok   W1-6 four claims, all while water is stored: got (4, 4)
+ok   W1-6 verdict FAIL over 1: got 'FAIL'
+ok   W1-7 drop below 50 L on day 5, a ration act on day 3 holds: got (5, True, True)
+ok   W1-7 no rationing act at all fails: got False
+ok   W1-7 a save_water on day 6 = k + 1 holds: got True
+ok   W1-7 a ration on day 7 = k + 2 is late: got False
+ok   W1-7 a drop only on day 10 is not tested: got False
+ok   W1-7 the unedited fake never falls below 50 L: got None
+ok   W1-11 fake: went_out nights exist and no water in reasons: got (True, False)
+ok   W1-11 a leaver's bedtime reason with water holds: got True
+ok   W1-11 trip words of that day with water hold: got True
+ok   W1-11 no went_out: NOT TESTED: got False
+ok   W1-1 none: got 0
+ok   W1-1 a leaver's two got_up in one night count once: got 1
+ok   W1-1 got_up with a went_out for that leaver counts once as went_out: got (1, [(6, 'Mara', 'went_out')])
+ok   W1-1 nights 2 and 10 are outside 3-9: got 1
+ok   W1-1 at_door counts its group: got (3, [6, 7])
+ok   W1-5 fake: 2 qualifying spells (day 7 17:18, day 9 11:30), all heard: got ([(7, '17:18'), (9, '11:30')], True)
+ok   W1-5(a) someone not heard: not 100%: got False
+ok   W1-5(a) a resting person need not hear: got True
+ok   W1-5(b) a collect_rain in the Q6 stretch holds; counted: got (True, 2)
+ok   W1-5(b) a speech act matching bin holds: got True
+ok   W1-5(b) whole words only: got False
+ok   W1-5(b) no Q6 stretch: 30 minutes read instead: got True
+ok   W1-5 rain_out counted: got 1
+ok   W1-2 nine frozen reasons fail: got 'FAIL'
+ok   W1-2 count: got 9
+ok   W1-9 one forbidding line: got (2, 1)
+ok   W1-10 over 20% fails: got True
+
+all checks ok

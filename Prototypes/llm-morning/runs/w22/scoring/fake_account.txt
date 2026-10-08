@@ -1,0 +1,178 @@
+== day 3: weather dry, indoors 18.4 C; shelf ?; morning_end min 21; day asks 48; away []
+  stretches: [('min 00', 'min 21', 'the morning', 24), ('09:45', '09:54', 'Q2', 8), ('10:30', '10:39', 'Q2', 8), ('19:00', '19:09', 'Q5', 8)]
+  water min 00: tap 105.5 L + bin 0.0 L; level as_before; bin out False
+  water min 18: tap 105.2 L + bin 0.0 L; level rationed; bin out False
+  water 21:00: tap 102.3 L + bin 0.0 L; level rationed; bin out False
+  Q5 19:00: asked leo, room kitchen, why None
+  debt stage 1 11:54 Daniel (16.025)
+  debt stage 1 13:00 Leo (16.0)
+  debt stage 1 18:09 Leo (16.025)
+  fast stage 2 19:00 Leo (72.0)
+  debt stage 1 19:15 Daniel (16.0)
+  thirst Daniel: at 21:00 short 0.00 L, stage 0
+  thirst Elena: at 21:00 short 0.00 L, stage 0
+  thirst Leo: at 21:00 short 0.00 L, stage 0
+  thirst Mara: at 21:00 short 0.00 L, stage 0
+  ACT min 18 Leo ration_water: '[fake line 152]'
+== night 3: away []; far None; leavers ['daniel', 'leo']
+  bedtime Daniel: go_next_door (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 178.'
+  bedtime Elena: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 179.'
+  bedtime Leo: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode fallback); reason None
+  bedtime Mara: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 181.'
+  reaction Leo: go_with_daniel say None reason 'Fake reason 182.'
+  group ['daniel', 'leo'] far=False house=None street clean found 0 took 0 lost None water 9.0: back with water
+== day 4: weather dry, indoors 17.2 C; shelf ?; morning_end min 24; day asks 48; away []
+  stretches: [('min 00', 'min 24', 'the morning', 18), ('10:18', '10:27', 'Q2', 1), ('10:27', '10:39', 'Q2', 8), ('11:21', '11:30', 'Q1', 8), ('14:51', '14:57', 'Q2', 5), ('19:00', '19:06', 'Q5', 8)]
+  water min 00: tap 109.3 L + bin 0.0 L; level rationed; bin out False
+  water 21:00: tap 106.3 L + bin 0.0 L; level rationed; bin out False
+  Q1 11:21: asked mara, room kitchen, why None
+  Q5 19:00: asked daniel, room kitchen, why None
+  fast stage 2 11:21 Mara (72.01)
+  debt stage 1 12:09 Elena (16.025)
+  debt stage 1 12:30 Leo (16.0)
+  debt stage 1 17:54 Mara (16.025)
+  debt stage 1 18:54 Daniel (16.025)
+  debt stage 1 18:54 Elena (16.025)
+  fast stage 2 20:18 Elena (72.037)
+  thirst Daniel: at 21:00 short 0.00 L, stage 0
+  thirst Elena: at 21:00 short 0.00 L, stage 0
+  thirst Leo: at 21:00 short 0.00 L, stage 0
+  thirst Mara: at 21:00 short 0.00 L, stage 0
+== night 4: away []; far None; leavers ['elena', 'mara']
+  bedtime Daniel: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode fallback); reason None
+  bedtime Elena: go_next_door (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 236.'
+  bedtime Leo: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 237.'
+  bedtime Mara: go_next_door (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 238.'
+  reaction Mara: let_elena_go say None reason 'Fake reason 239.'
+  reaction Leo: stay_in_bed say None reason None
+  reaction Elena: stop_mara say '[fake line 241]' reason 'Fake reason 241.'
+  answer Mara: go_anyway say '[fake line 242]' reason 'Fake reason 242.'
+  group ['elena'] far=False house=None street clean found 0 took 0 lost None water 0.0: back with nothing
+  group ['mara'] far=False house=None street clean found 0 took 0 lost None water 0.0: back with nothing
+== day 5: weather wet 12.3 mm, indoors 14.7 C; shelf ?; morning_end min 24; day asks 48; away []
+  stretches: [('min 00', 'min 24', 'the morning', 24), ('09:48', '09:54', 'Q2', 2), ('10:30', '10:39', 'Q2', 8), ('10:39', '10:45', 'Q2', 6), ('19:00', '19:06', 'Q5', 8)]
+  water min 00: tap 104.3 L + bin 0.0 L; level rationed; bin out False
+  water 21:00: tap 101.3 L + bin 0.0 L; level rationed; bin out False
+  Q5 19:00: asked leo, room kitchen, why None
+  debt stage 1 12:09 Mara (17.4)
+  debt stage 1 16:54 Mara (16.025)
+  debt stage 1 19:09 Elena (16.025)
+  thirst Daniel: at 21:00 short 0.00 L, stage 0
+  thirst Elena: at 21:00 short 0.00 L, stage 0
+  thirst Leo: at 21:00 short 0.00 L, stage 0
+  thirst Mara: at 21:00 short 0.00 L, stage 0
+== night 5: away []; far None; leavers []
+  bedtime Daniel: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode fallback); reason None
+  bedtime Elena: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 296.'
+  bedtime Leo: watch_door (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 297.'
+  bedtime Mara: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 298.'
+== day 6: weather wet 4.5 mm, indoors 16.6 C; shelf ?; morning_end min 21; day asks 48; away []
+  stretches: [('min 00', 'min 21', 'the morning', 24), ('09:39', '09:48', 'Q2', 8), ('09:48', '10:00', 'Q2', 8), ('19:00', '19:09', 'Q5', 8)]
+  water min 00: tap 99.3 L + bin 0.0 L; level rationed; bin out False
+  water min 03: tap 99.3 L + bin 0.0 L; level rationed; bin out True
+  water 21:00: tap 96.3 L + bin 75.5 L; level rationed; bin out True
+  Q5 19:00: asked leo, room kitchen, why None
+  debt stage 1 11:39 Mara (16.025)
+  debt stage 1 16:54 Elena (16.025)
+  debt stage 1 18:24 Mara (16.025)
+  thirst Daniel: at 21:00 short 0.00 L, stage 0
+  thirst Elena: at 21:00 short 0.00 L, stage 0
+  thirst Leo: at 21:00 short 0.00 L, stage 0
+  thirst Mara: at 21:00 short 0.00 L, stage 0
+  ACT min 03 Mara collect_rain: None
+== night 6: away []; far None; leavers []
+  bedtime Daniel: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 351.'
+  bedtime Elena: go_next_door (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 352.'
+  bedtime Leo: watch_door (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 353.'
+  bedtime Mara: watch_door (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 354.'
+  reaction Leo: let_elena_go say None reason None
+  reaction Mara: stop_elena say '[fake line 356]' reason 'Fake reason 356.'
+  answer Elena: stay_home say '[fake line 357]' reason 'Fake reason 357.'
+== day 7: weather wet 1.2 mm, indoors 16.6 C; shelf ?; morning_end min 24; day asks 47; away []
+  stretches: [('min 00', 'min 24', 'the morning', 24), ('11:12', '11:18', 'Q2', 8), ('17:18', '17:24', 'Q6', 7), ('19:00', '19:09', 'Q5', 8)]
+  water min 00: tap 94.3 L + bin 81.0 L; level rationed; bin out True
+  water 21:00: tap 91.3 L + bin 100.9 L; level rationed; bin out True
+  rain heard 17:18: ['Daniel', 'Elena', 'Leo', 'Mara']
+  Q6 17:18: asked ['daniel', 'elena', 'leo', 'mara'], room kitchen, why None
+  Q1 19:00: asked leo, room kitchen, why None
+  Q5 19:00: asked leo, room kitchen, why None
+  fast stage 3 09:39 Daniel (168.015)
+  debt stage 1 12:42 Elena (16.45)
+  fast stage 3 19:00 Leo (168.0)
+  debt stage 1 20:00 Mara (16.5)
+  debt stage 1 20:21 Elena (16.35)
+  thirst Daniel: at 21:00 short 0.00 L, stage 0
+  thirst Elena: at 21:00 short 0.00 L, stage 0
+  thirst Leo: at 21:00 short 0.00 L, stage 0
+  thirst Mara: at 21:00 short 0.00 L, stage 0
+== night 7: away []; far None; leavers ['mara']
+  bedtime Daniel: watch_door (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 409.'
+  bedtime Elena: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode fallback); reason None
+  bedtime Leo: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 411.'
+  bedtime Mara: go_next_door (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 412.'
+  reaction Elena: let_mara_go say None reason 'Fake reason 413.'
+  reaction Daniel: let_mara_go say None reason 'Fake reason 414.'
+  group ['mara'] far=False house=None street clean found 0 took 0 lost None water 0.0: back with nothing
+== day 8: weather dry, indoors 17.5 C; shelf ?; morning_end min 15; day asks 46; away []
+  stretches: [('min 00', 'min 15', 'the morning', 17), ('09:48', '10:00', 'Q2', 8), ('10:00', '10:09', 'Q2', 8), ('14:03', '14:09', 'Q2', 7), ('19:00', '19:06', 'Q5', 6)]
+  water min 00: tap 89.3 L + bin 100.9 L; level rationed; bin out True
+  water 21:00: tap 86.3 L + bin 100.9 L; level rationed; bin out True
+  Q5 19:00: asked mara, room kitchen, why None
+  debt stage 1 10:39 Mara (16.025)
+  fast stage 3 16:24 Mara (168.007)
+  debt stage 1 17:30 Mara (16.0)
+  thirst Daniel: at 21:00 short 0.00 L, stage 0
+  thirst Elena: at 21:00 short 0.00 L, stage 0
+  thirst Leo: at 21:00 short 0.00 L, stage 0
+  thirst Mara: at 21:00 short 0.00 L, stage 0
+== night 8: away ['elena']; far {'houses': [4], 'us': [0.7705531762047743], 'searched': 1}; leavers ['mara', 'elena', 'leo']
+  bedtime Daniel: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode fallback); reason None
+  bedtime Elena: watch_door (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 466.'
+  bedtime Leo: go_further (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 467.'
+  bedtime Mara: go_further (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 468.'
+  reaction Elena: go_with_mara say None reason 'Fake reason 469.'
+  reaction Leo: go_later say None reason None
+  reaction Mara: get_up_and_look say None reason 'Fake reason 471.'
+  group ['mara', 'elena'] far=True house=0 street not_back found None took 0 lost elena water None: not back by morning
+  group ['leo'] far=True house=0 street clean found 4 took 4 lost None water 10.0: back with food and water
+== day 9: weather wet 17.8 mm, indoors 14.9 C; shelf ?; morning_end min 12; day asks 28; away ['Elena']
+  stretches: [('min 00', 'min 12', 'the morning', 6), ('10:12', '10:15', 'Q2', 1), ('10:51', '10:57', 'Q2', 5), ('11:30', '11:39', 'Q6', 8), ('19:00', '19:09', 'Q5', 8)]
+  water min 00: tap 94.8 L + bin 100.9 L; level rationed; bin out True
+  water 21:00: tap 92.6 L + bin 240.0 L; level rationed; bin out True
+  rain heard 11:30: ['Daniel', 'Leo', 'Mara']
+  Q6 11:30: asked ['daniel', 'leo', 'mara'], room kitchen, why None
+  Q5 19:00: asked leo, room kitchen, why None
+  debt stage 1 12:39 Mara (16.025)
+  debt stage 1 16:03 Leo (16.0)
+  debt stage 1 19:45 Mara (16.0)
+  thirst Daniel: at 21:00 short 0.00 L, stage 0
+  thirst Leo: at 21:00 short 0.00 L, stage 0
+  thirst Mara: at 21:00 short 0.00 L, stage 0
+  ACT min 00 Leo eat: None
+  ACT 11:33 Mara give_daniel: None
+  ACT 11:33 Daniel eat_given: None
+  ACT 19:00 Mara share: None
+== night 9: away ['elena']; far {'houses': [4, 2], 'us': [0.7705531762047743, 0.6691131918793661], 'searched': 2}; leavers ['leo', 'daniel']
+  bedtime Daniel: watch_door (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 503.'
+  bedtime Leo: go_further (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'Fake reason 504.'
+  bedtime Mara: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode fallback); reason None
+  reaction Daniel: go_with_leo say None reason 'Fake reason 506.'
+  reaction Mara: get_up_and_look say None reason 'Fake reason 507.'
+  group ['leo', 'daniel'] far=True house=1 street clean found 2 took 2 lost None water 10.5: back with food and water
+== day 10: weather dry, indoors 17.6 C; shelf ?; morning_end min 09; day asks 15; away ['Elena']
+  stretches: [('min 00', 'min 09', 'the morning', 5), ('10:27', '10:36', 'Q2', 8), ('13:27', '13:36', 'Q2', 1), ('14:15', '14:24', 'Q2', 1)]
+  water min 00: tap 101.5 L + bin 240.0 L; level rationed; bin out True
+  water 21:00: tap 99.3 L + bin 240.0 L; level rationed; bin out True
+  debt stage 1 min 87 Leo (16.025)
+  debt stage 1 11:45 Mara (16.0)
+  debt stage 1 12:12 Daniel (16.0)
+  debt stage 1 13:27 Leo (16.025)
+  fast stage 1 15:54 Daniel (24.035)
+  debt stage 1 17:12 Daniel (16.0)
+  debt stage 1 18:00 Mara (16.0)
+  debt stage 1 18:27 Leo (16.025)
+  fast stage 1 19:00 Leo (24.0)
+  fast stage 1 20:18 Mara (24.035)
+  thirst Daniel: at 21:00 short 0.00 L, stage 0
+  thirst Leo: at 21:00 short 0.00 L, stage 0
+  thirst Mara: at 21:00 short 0.00 L, stage 0

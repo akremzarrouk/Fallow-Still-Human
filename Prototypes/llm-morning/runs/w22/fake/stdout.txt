@@ -1,0 +1,521 @@
+daniel_ate_it-seed2: model fake, fresh; cache runs\w22\fake\cache\fake-daniel_ate_it-seed2.json holds 0 answers
+  weather day 1: wet, 2.5 mm (09:00 to 13:09); 7.7 to 14.2 °C outdoors, 15.0 °C indoors
+  weather day 2: dry; 11.2 to 15.2 °C outdoors, 17.2 °C indoors
+  weather day 3: dry; 12.6 to 16.1 °C outdoors, 18.4 °C indoors
+  weather day 4: dry; 7.1 to 19.4 °C outdoors, 17.2 °C indoors
+  weather day 5: wet, 12.3 mm (22:03 to 03:42 the next day); 7.1 to 14.3 °C outdoors, 14.7 °C indoors
+  weather day 6: wet, 4.5 mm (05:27 to 11:03, 06:30 to 10:45); 11.6 to 13.6 °C outdoors, 16.6 °C indoors
+  weather day 7: wet, 1.2 mm (04:36 to 10:09, 17:18 to 20:21); 11.8 to 13.3 °C outdoors, 16.6 °C indoors
+  weather day 8: dry; 8.0 to 19.1 °C outdoors, 17.5 °C indoors
+  weather day 9: wet, 17.8 mm (11:30 to 16:30); 7.8 to 14.0 °C outdoors, 14.9 °C indoors
+  weather day 10: dry; 8.6 to 18.6 °C outdoors, 17.6 °C indoors
+  min 00: model asked for 4; so far 4 live, 0 cached, 4 API requests
+  min 03: model asked for 4; so far 8 live, 0 cached, 8 API requests
+  min 06: model asked for 1; so far 9 live, 0 cached, 9 API requests
+  min 09: model asked for 1; so far 10 live, 0 cached, 10 API requests
+  min 12: model asked for 1; so far 11 live, 0 cached, 11 API requests
+  min 15: model asked for 2; so far 13 live, 0 cached, 13 API requests
+  min 18: model asked for 2; so far 15 live, 0 cached, 15 API requests
+  min 21: model asked for 2; so far 17 live, 0 cached, 17 API requests
+  min 24: model asked for 2; so far 19 live, 0 cached, 19 API requests
+  min 27: model asked for 2; so far 21 live, 0 cached, 21 API requests
+  min 30: model asked for 2; so far 23 live, 0 cached, 23 API requests
+  min 33: model asked for 3; so far 26 live, 0 cached, 26 API requests
+  min 36: model asked for 3; so far 29 live, 0 cached, 29 API requests
+  min 39: model asked for 3; so far 32 live, 0 cached, 32 API requests
+  min 42: model asked for 3; so far 35 live, 0 cached, 35 API requests
+  min 45: model asked for 3; so far 38 live, 0 cached, 38 API requests
+  min 48: model asked for 3; so far 41 live, 0 cached, 41 API requests
+  min 51: model asked for 3; so far 44 live, 0 cached, 44 API requests
+  min 54: model asked for 3; so far 47 live, 0 cached, 47 API requests
+  min 57: model asked for 3; so far 50 live, 0 cached, 50 API requests
+  min 60: model asked for 3; so far 53 live, 0 cached, 53 API requests
+  min 63: model asked for 4; so far 57 live, 0 cached, 57 API requests
+  min 66: model asked for 2; so far 59 live, 0 cached, 59 API requests
+  min 69: model asked for 1; so far 60 live, 0 cached, 60 API requests
+  min 72: model asked for 2; so far 62 live, 0 cached, 62 API requests
+  min 75: model asked for 4; so far 66 live, 0 cached, 66 API requests
+  min 78: model asked for 4; so far 70 live, 0 cached, 70 API requests
+  min 81: model asked for 4; so far 74 live, 0 cached, 74 API requests
+  min 84: model asked for 4; so far 78 live, 0 cached, 78 API requests
+  min 87: model asked for 2; so far 80 live, 0 cached, 80 API requests
+  night 1: model asked for 6; so far 86 live, 0 cached, 86 API requests
+  night 1, the night mind: model asked for 4; so far 90 live, 0 cached, 90 API requests
+  day 2 min 00: model asked for 4; so far 94 live, 0 cached, 94 API requests
+  day 2 min 03: model asked for 3; so far 97 live, 0 cached, 97 API requests
+  day 2 min 06: model asked for 3; so far 100 live, 0 cached, 100 API requests
+  day 2 min 09: model asked for 3; so far 103 live, 0 cached, 103 API requests
+  day 2 min 12: model asked for 3; so far 106 live, 0 cached, 106 API requests
+  day 2 min 15: model asked for 2; so far 108 live, 0 cached, 108 API requests
+  day 2 min 18: model asked for 3; so far 111 live, 0 cached, 111 API requests
+  day 2 min 21: model asked for 3; so far 114 live, 0 cached, 114 API requests
+  day 2 min 24: model asked for 4; so far 118 live, 0 cached, 118 API requests
+  day 2 min 27: model asked for 2; so far 120 live, 0 cached, 120 API requests
+  day 2 min 30: model asked for 1; so far 121 live, 0 cached, 121 API requests
+  night 2: model asked for 4; so far 125 live, 0 cached, 125 API requests
+  night 2, the night mind: model asked for 4; so far 129 live, 0 cached, 129 API requests
+  day 3 07:00 water: tap 105.5 L (bath 59.0, kitchen 46.5), bin 0.0 L, level as_before
+  day 3 min 00: model asked for 4; day asks 4 of 40; so far 133 live, 0 cached, 133 API requests
+  day 3 min 03: model asked for 2; day asks 6 of 40; so far 135 live, 0 cached, 135 API requests
+  day 3 min 06: model asked for 4; day asks 10 of 40; so far 139 live, 0 cached, 139 API requests
+  day 3 min 09: model asked for 4; day asks 14 of 40; so far 143 live, 0 cached, 143 API requests
+  day 3 min 12: model asked for 4; day asks 18 of 40; so far 147 live, 0 cached, 147 API requests
+  day 3 min 15: model asked for 3; day asks 21 of 40; so far 150 live, 0 cached, 150 API requests
+  day 3 min 18: model asked for 3; day asks 24 of 40; so far 153 live, 0 cached, 153 API requests
+  day 3 min 21: Q2, Leo comes into the brothers room, where Daniel is: not asked (a line between them 3 minutes before)
+  day 3 min 21: Q2, Mara comes into the back room, where Elena is: not asked (a line between them 3 minutes before)
+  day 3 09:45: Q2, Mara comes into the kitchen, where Elena is: Elena is asked
+  day 3 09:45: model asked for 3, Q2 for Elena; day asks 27 of 40; so far 156 live, 0 cached, 156 API requests
+  day 3 09:48: model asked for 2; day asks 29 of 40; so far 158 live, 0 cached, 158 API requests
+  day 3 09:51: model asked for 3; day asks 32 of 40; so far 161 live, 0 cached, 161 API requests
+  day 3 09:54: Q2, Mara comes into the kitchen, where Elena is: not asked (they met this way at 09:45 already today)
+  day 3 10:30: Q2, Daniel comes into the kitchen, where Elena is: Daniel is asked
+  day 3 10:30: Q2, Daniel comes into the kitchen, where Leo is: Leo is asked
+  day 3 10:30: model asked for 3, Q2 for Daniel, Q2 for Leo; day asks 35 of 40; so far 164 live, 0 cached, 164 API requests
+  day 3 10:33: model asked for 4; day asks 39 of 40; so far 168 live, 0 cached, 168 API requests
+  day 3 10:36: model asked for 1; day asks 40 of 40; so far 169 live, 0 cached, 169 API requests
+  day 3 10:39: Q2, Elena comes into the kitchen, where Daniel is: not asked (they met this way at 10:30 already today)
+  day 3 10:39: Q2, Elena comes into the kitchen, where Mara is: not asked (they met this way at 09:45 already today)
+  day 3 11:45: Q2, Mara comes into the back room, where Elena is: not asked (they met this way at 09:45 already today)
+  day 3 13:00: Q2, Leo comes into the brothers room, where Daniel is: not asked (they met this way at 10:30 already today)
+  day 3 14:54: Q2, Mara comes into the kitchen, where Elena is: not asked (they met this way at 09:45 already today)
+  day 3 15:27: Q2, Daniel comes into the kitchen, where Elena is: not asked (they met this way at 10:30 already today)
+  day 3 15:27: Q2, Daniel comes into the kitchen, where Leo is: not asked (they met this way at 10:30 already today)
+  day 3 19:00: Q1, Leo's fasting crossed a line: not asked (the day's 40 asks are spent)
+  day 3 19:00: Q5, the evening: Leo is asked
+  day 3 19:00: model asked for 3, Q5 for Leo; day asks 43 of 40; so far 172 live, 0 cached, 172 API requests
+  day 3 19:03: model asked for 4; day asks 47 of 40; so far 176 live, 0 cached, 176 API requests
+  day 3 19:06: model asked for 1; day asks 48 of 40; so far 177 live, 0 cached, 177 API requests
+  day 3 21:00 stages: Daniel F1 T0 (fast 70.7, short of water 0.00 L); Elena F1 T0 (fast 52.2, short of water 0.00 L); Leo F2 T0 (fast 74.0, short of water 0.00 L); Mara F1 T0 (fast 58.4, short of water 0.00 L)
+  night 3: model asked for 5; so far 182 live, 0 cached, 182 API requests
+  night 3: dry; bedtime Daniel go_next_door, Elena sleep, Leo sleep, Mara sleep; Daniel, Leo out (back with water), water 9 L
+  night 3, the night mind: model asked for 4; so far 186 live, 0 cached, 186 API requests
+  day 4 07:00 water: tap 109.3 L (bath 62.8, kitchen 46.5), bin 0.0 L, level rationed
+  day 4 min 00: model asked for 4; day asks 4 of 40; so far 190 live, 0 cached, 190 API requests
+  day 4 min 03: model asked for 4; day asks 8 of 40; so far 194 live, 0 cached, 194 API requests
+  day 4 min 06: model asked for 4; day asks 12 of 40; so far 198 live, 0 cached, 198 API requests
+  day 4 min 09: model asked for 3; day asks 15 of 40; so far 201 live, 0 cached, 201 API requests
+  day 4 min 12: model asked for 2; day asks 17 of 40; so far 203 live, 0 cached, 203 API requests
+  day 4 min 15: model asked for 1; day asks 18 of 40; so far 204 live, 0 cached, 204 API requests
+  day 4 min 24: Q2, Leo comes into the brothers room, where Daniel is: not asked (a line between them 15 minutes before)
+  day 4 10:18: Q2, Leo comes into the brothers room, where Daniel is: Daniel is asked
+  day 4 10:18: model asked for 1, Q2 for Daniel; day asks 19 of 40; so far 205 live, 0 cached, 205 API requests
+  day 4 10:27: Q2, Daniel comes into the kitchen, where Elena is: Daniel is asked
+  day 4 10:27: Q2, Daniel comes into the kitchen, where Mara is: Mara is asked
+  day 4 10:27: model asked for 3, Q2 for Daniel, Q2 for Mara; day asks 22 of 40; so far 208 live, 0 cached, 208 API requests
+  day 4 10:30: model asked for 3; day asks 25 of 40; so far 211 live, 0 cached, 211 API requests
+  day 4 10:33: model asked for 1; day asks 26 of 40; so far 212 live, 0 cached, 212 API requests
+  day 4 10:36: model asked for 1; day asks 27 of 40; so far 213 live, 0 cached, 213 API requests
+  day 4 11:21: Q1, Mara's fasting crossed a line: Mara is asked
+  day 4 11:21: model asked for 4, Q1 for Mara; day asks 31 of 40; so far 217 live, 0 cached, 217 API requests
+  day 4 11:24: model asked for 3; day asks 34 of 40; so far 220 live, 0 cached, 220 API requests
+  day 4 11:27: model asked for 1; day asks 35 of 40; so far 221 live, 0 cached, 221 API requests
+  day 4 11:30: Q2, Leo comes into the kitchen, where Daniel is: not asked (a line between them 9 minutes before)
+  day 4 12:09: Q2, Elena comes into the back room, where Mara is: not asked (a line between them 45 minutes before)
+  day 4 12:30: Q2, Leo comes into the brothers room, where Daniel is: not asked (they met this way at 10:18 already today)
+  day 4 14:51: Q2, Elena comes into the kitchen, where Mara is: Mara is asked
+  day 4 14:51: model asked for 3, Q2 for Mara; day asks 38 of 40; so far 224 live, 0 cached, 224 API requests
+  day 4 14:54: model asked for 2; day asks 40 of 40; so far 226 live, 0 cached, 226 API requests
+  day 4 14:57: Q2, Mara comes into the kitchen, where Elena is: not asked (a line between them 3 minutes before)
+  day 4 15:12: Q2, Leo comes into the kitchen, where Daniel is: not asked (they met this way at 10:18 already today)
+  day 4 15:12: Q2, Leo comes into the kitchen, where Mara is: not asked (the day's 40 asks are spent)
+  day 4 18:33: Q2, Leo comes into the kitchen, where Daniel is: not asked (they met this way at 10:18 already today)
+  day 4 18:33: Q2, Leo comes into the kitchen, where Mara is: not asked (the day's 40 asks are spent)
+  day 4 19:00: Q5, the evening: Daniel is asked
+  day 4 19:00: model asked for 4, Q5 for Daniel; day asks 44 of 40; so far 230 live, 0 cached, 230 API requests
+  day 4 19:03: model asked for 4; day asks 48 of 40; so far 234 live, 0 cached, 234 API requests
+  day 4 20:18: Q1, Elena's fasting crossed a line: not asked (the day's 40 asks are spent)
+  day 4 21:00 stages: Daniel F2 T0, cold (fast 98.3, short of water 0.00 L); Elena F2 T0, cold (fast 72.6, short of water 0.00 L); Leo F2 T0, cold (fast 98.0, short of water 0.00 L); Mara F2 T0, cold (fast 81.2, short of water 0.00 L)
+  night 4: model asked for 8; so far 242 live, 0 cached, 242 API requests
+  night 4: dry; bedtime Daniel sleep, Elena go_next_door, Leo lie_awake, Mara go_next_door; Elena out (back with nothing), water 0 L; Mara out (back with nothing), water 0 L
+  night 4, the night mind: model asked for 4; so far 246 live, 0 cached, 246 API requests
+  day 5 07:00 water: tap 104.3 L (bath 57.8, kitchen 46.5), bin 0.0 L, level rationed
+  day 5 min 00: model asked for 4; day asks 4 of 40; so far 250 live, 0 cached, 250 API requests
+  day 5 min 03: model asked for 4; day asks 8 of 40; so far 254 live, 0 cached, 254 API requests
+  day 5 min 06: model asked for 3; day asks 11 of 40; so far 257 live, 0 cached, 257 API requests
+  day 5 min 09: model asked for 3; day asks 14 of 40; so far 260 live, 0 cached, 260 API requests
+  day 5 min 12: model asked for 4; day asks 18 of 40; so far 264 live, 0 cached, 264 API requests
+  day 5 min 15: model asked for 4; day asks 22 of 40; so far 268 live, 0 cached, 268 API requests
+  day 5 min 18: model asked for 1; day asks 23 of 40; so far 269 live, 0 cached, 269 API requests
+  day 5 min 21: model asked for 1; day asks 24 of 40; so far 270 live, 0 cached, 270 API requests
+  day 5 min 24: Q2, Daniel comes into the brothers room, where Leo is: not asked (a line between them 21 minutes before)
+  day 5 min 24: Q2, Mara comes into the back room, where Elena is: not asked (a line between them 6 minutes before)
+  day 5 09:48: Q2, Daniel comes into the brothers room, where Leo is: Daniel is asked
+  day 5 09:48: model asked for 1, Q2 for Daniel; day asks 25 of 40; so far 271 live, 0 cached, 271 API requests
+  day 5 09:51: model asked for 1; day asks 26 of 40; so far 272 live, 0 cached, 272 API requests
+  day 5 09:54: Q2, Daniel comes into the brothers room, where Leo is: not asked (a line between them 6 minutes before)
+  day 5 10:30: Q2, Elena comes into the kitchen, where Mara is: Mara is asked
+  day 5 10:30: model asked for 2, Q2 for Mara; day asks 28 of 40; so far 274 live, 0 cached, 274 API requests
+  day 5 10:33: model asked for 3; day asks 31 of 40; so far 277 live, 0 cached, 277 API requests
+  day 5 10:36: model asked for 3; day asks 34 of 40; so far 280 live, 0 cached, 280 API requests
+  day 5 10:39: Q2, Leo comes into the kitchen, where Daniel is: not asked (a line between them 6 minutes before)
+  day 5 10:39: Q2, Leo comes into the kitchen, where Elena is: Elena is asked
+  day 5 10:39: Q2, Leo comes into the kitchen, where Mara is: Mara is asked
+  day 5 10:39: model asked for 4, Q2 for Mara, Q2 for Elena; day asks 38 of 40; so far 284 live, 0 cached, 284 API requests
+  day 5 10:42: model asked for 2; day asks 40 of 40; so far 286 live, 0 cached, 286 API requests
+  day 5 10:45: Q2, Daniel comes into the kitchen, where Elena is: not asked (the day's 40 asks are spent)
+  day 5 10:45: Q2, Daniel comes into the kitchen, where Leo is: not asked (a line between them 12 minutes before)
+  day 5 12:30: Q2, Elena comes into the back room, where Mara is: not asked (they met this way at 10:30 already today)
+  day 5 12:33: Q2, Leo comes into the brothers room, where Daniel is: not asked (they met this way at 09:48 already today)
+  day 5 15:06: Q2, Elena comes into the kitchen, where Daniel is: not asked (the day's 40 asks are spent)
+  day 5 15:06: Q2, Elena comes into the kitchen, where Mara is: not asked (they met this way at 10:30 already today)
+  day 5 16:30: Q2, Leo comes into the kitchen, where Daniel is: not asked (they met this way at 09:48 already today)
+  day 5 16:30: Q2, Leo comes into the kitchen, where Elena is: not asked (they met this way at 10:39 already today)
+  day 5 16:30: Q2, Leo comes into the kitchen, where Mara is: not asked (they met this way at 10:39 already today)
+  day 5 17:57: Q2, Daniel comes into the kitchen, where Elena is: not asked (the day's 40 asks are spent)
+  day 5 17:57: Q2, Daniel comes into the kitchen, where Leo is: not asked (they met this way at 09:48 already today)
+  day 5 19:00: Q5, the evening: Leo is asked
+  day 5 19:00: model asked for 4, Q5 for Leo; day asks 44 of 40; so far 290 live, 0 cached, 290 API requests
+  day 5 19:03: model asked for 4; day asks 48 of 40; so far 294 live, 0 cached, 294 API requests
+  day 5 21:00 stages: Daniel F2 T0, cold (fast 125.9, short of water 0.00 L); Elena F2 T0, cold (fast 93.0, short of water 0.00 L); Leo F2 T0, cold (fast 122.0, short of water 0.00 L); Mara F2 T0, cold (fast 104.0, short of water 0.00 L)
+  night 5: model asked for 4; so far 298 live, 0 cached, 298 API requests
+  night 5: rainy; bedtime Daniel sleep, Elena lie_awake, Leo watch_door, Mara lie_awake
+  night 5, the night mind: model asked for 4; so far 302 live, 0 cached, 302 API requests
+  day 6 07:00 water: tap 99.3 L (bath 52.8, kitchen 46.5), bin 0.0 L, level rationed
+  day 6 min 00: model asked for 4; day asks 4 of 40; so far 306 live, 0 cached, 306 API requests
+  day 6 min 03: model asked for 3; day asks 7 of 40; so far 309 live, 0 cached, 309 API requests
+  day 6 min 06: model asked for 4; day asks 11 of 40; so far 313 live, 0 cached, 313 API requests
+  day 6 min 09: model asked for 3; day asks 14 of 40; so far 316 live, 0 cached, 316 API requests
+  day 6 min 12: model asked for 4; day asks 18 of 40; so far 320 live, 0 cached, 320 API requests
+  day 6 min 15: model asked for 4; day asks 22 of 40; so far 324 live, 0 cached, 324 API requests
+  day 6 min 18: model asked for 2; day asks 24 of 40; so far 326 live, 0 cached, 326 API requests
+  day 6 min 21: Q2, Daniel comes into the brothers room, where Mara is: not asked (a line between them 15 minutes before)
+  day 6 min 21: Q2, Leo comes into the brothers room, where Daniel is: not asked (a line between them 3 minutes before)
+  day 6 min 21: Q2, Leo comes into the brothers room, where Mara is: not asked (a line between them 21 minutes before)
+  day 6 09:39: Q2, Daniel comes into the kitchen, where Elena is: Daniel is asked
+  day 6 09:39: model asked for 3, Q2 for Daniel; day asks 27 of 40; so far 329 live, 0 cached, 329 API requests
+  day 6 09:42: model asked for 3; day asks 30 of 40; so far 332 live, 0 cached, 332 API requests
+  day 6 09:45: model asked for 2; day asks 32 of 40; so far 334 live, 0 cached, 334 API requests
+  day 6 09:48: Q2, Leo comes into the kitchen, where Daniel is: Daniel is asked
+  day 6 09:48: Q2, Leo comes into the kitchen, where Elena is: not asked (a line between them 6 minutes before)
+  day 6 09:48: Q2, Leo comes into the kitchen, where Mara is: Leo is asked
+  day 6 09:48: model asked for 4, Q2 for Leo, Q2 for Daniel; day asks 36 of 40; so far 338 live, 0 cached, 338 API requests
+  day 6 09:51: model asked for 3; day asks 39 of 40; so far 341 live, 0 cached, 341 API requests
+  day 6 09:54: model asked for 1; day asks 40 of 40; so far 342 live, 0 cached, 342 API requests
+  day 6 10:00: Q2, Leo comes into the kitchen, where Daniel is: not asked (they met this way at 09:48 already today)
+  day 6 10:00: Q2, Mara comes into the kitchen, where Daniel is: not asked (a line between them 15 minutes before)
+  day 6 10:00: Q2, Mara comes into the kitchen, where Leo is: not asked (they met this way at 09:48 already today)
+  day 6 11:42: Q2, Leo comes into the brothers room, where Daniel is: not asked (they met this way at 09:48 already today)
+  day 6 14:39: Q2, Daniel comes into the kitchen, where Mara is: not asked (the day's 40 asks are spent)
+  day 6 15:15: Q2, Leo comes into the kitchen, where Daniel is: not asked (they met this way at 09:48 already today)
+  day 6 15:15: Q2, Leo comes into the kitchen, where Mara is: not asked (they met this way at 09:48 already today)
+  day 6 19:00: Q5, the evening: Leo is asked
+  day 6 19:00: model asked for 4, Q5 for Leo; day asks 44 of 40; so far 346 live, 0 cached, 346 API requests
+  day 6 19:03: model asked for 3; day asks 47 of 40; so far 349 live, 0 cached, 349 API requests
+  day 6 19:06: model asked for 1; day asks 48 of 40; so far 350 live, 0 cached, 350 API requests
+  day 6 19:09: Q2, Daniel comes into the kitchen, where Mara is: not asked (the day's 40 asks are spent)
+  day 6 21:00 stages: Daniel F2 T0, cold (fast 153.5, short of water 0.00 L); Elena F2 T0, cold (fast 113.4, short of water 0.00 L); Leo F2 T0, cold (fast 146.0, short of water 0.00 L); Mara F2 T0, cold (fast 126.8, short of water 0.00 L)
+  night 6: model asked for 7; so far 357 live, 0 cached, 357 API requests
+  night 6: rainy; bedtime Daniel lie_awake, Elena go_next_door, Leo watch_door, Mara watch_door
+  night 6, the night mind: model asked for 4; so far 361 live, 0 cached, 361 API requests
+  day 7 07:00 water: tap 94.3 L (bath 47.8, kitchen 46.5), bin 81.0 L (under the drainpipe), level rationed
+  day 7 min 00: model asked for 4; day asks 4 of 40; so far 365 live, 0 cached, 365 API requests
+  day 7 min 03: model asked for 4; day asks 8 of 40; so far 369 live, 0 cached, 369 API requests
+  day 7 min 06: model asked for 2; day asks 10 of 40; so far 371 live, 0 cached, 371 API requests
+  day 7 min 09: model asked for 3; day asks 13 of 40; so far 374 live, 0 cached, 374 API requests
+  day 7 min 12: model asked for 4; day asks 17 of 40; so far 378 live, 0 cached, 378 API requests
+  day 7 min 15: model asked for 3; day asks 20 of 40; so far 381 live, 0 cached, 381 API requests
+  day 7 min 18: model asked for 3; day asks 23 of 40; so far 384 live, 0 cached, 384 API requests
+  day 7 min 21: model asked for 1; day asks 24 of 40; so far 385 live, 0 cached, 385 API requests
+  day 7 min 24: Q2, Mara comes into the back room, where Elena is: not asked (a line between them 6 minutes before)
+  day 7 09:39: Q1, Daniel's fasting crossed a line: not asked (alone)
+  day 7 11:12: Q2, Mara comes into the kitchen, where Daniel is: Daniel is asked
+  day 7 11:12: Q2, Mara comes into the kitchen, where Elena is: Elena is asked
+  day 7 11:12: model asked for 4, Q2 for Daniel, Q2 for Elena; day asks 28 of 40; so far 389 live, 0 cached, 389 API requests
+  day 7 11:15: model asked for 4; day asks 32 of 40; so far 393 live, 0 cached, 393 API requests
+  day 7 11:18: Q2, Daniel comes into the kitchen, where Mara is: not asked (a line between them 3 minutes before)
+  day 7 13:12: Q2, Mara comes into the back room, where Elena is: not asked (they met this way at 11:12 already today)
+  day 7 15:27: Q2, Mara comes into the kitchen, where Daniel is: not asked (they met this way at 11:12 already today)
+  day 7 16:15: Q2, Elena comes into the kitchen, where Mara is: not asked (they met this way at 11:12 already today)
+  day 7 17:18: Q6, rain began: Daniel, Elena, Leo, Mara asked in the kitchen
+  day 7 17:18: model asked for 4, Q6 for Elena, Q6 for Daniel, Q6 for Leo, Q6 for Mara; day asks 36 of 40; so far 397 live, 0 cached, 397 API requests
+  day 7 17:21: model asked for 3; day asks 39 of 40; so far 400 live, 0 cached, 400 API requests
+  day 7 17:24: Q2, Leo comes into the kitchen, where Daniel is: not asked (a line between them 6 minutes before)
+  day 7 17:24: Q2, Mara comes into the kitchen, where Elena is: not asked (they met this way at 11:12 already today)
+  day 7 19:00: Q1, Leo's fasting crossed a line: Leo is asked
+  day 7 19:00: Q5, the evening: Leo is asked
+  day 7 19:00: model asked for 2, Q1 for Leo; day asks 41 of 40; so far 402 live, 0 cached, 402 API requests
+  day 7 19:03: model asked for 4; day asks 45 of 40; so far 406 live, 0 cached, 406 API requests
+  day 7 19:06: model asked for 2; day asks 47 of 40; so far 408 live, 0 cached, 408 API requests
+  day 7 19:09: Q2, Mara comes into the kitchen, where Daniel is: not asked (a line between them 9 minutes before)
+  day 7 19:09: Q2, Mara comes into the kitchen, where Elena is: not asked (a line between them 6 minutes before)
+  day 7 21:00 stages: Daniel F3 T0, cold (fast 181.1, short of water 0.00 L); Elena F2 T0, cold (fast 133.8, short of water 0.00 L); Leo F3 T0, cold (fast 170.0, short of water 0.00 L); Mara F2 T0, cold (fast 149.6, short of water 0.00 L)
+  night 7: model asked for 6; so far 414 live, 0 cached, 414 API requests
+  night 7: dry; bedtime Daniel watch_door, Elena sleep, Leo sleep, Mara go_next_door; Mara out (back with nothing), water 0 L
+  night 7, the night mind: model asked for 4; so far 418 live, 0 cached, 418 API requests
+  day 8 07:00 water: tap 89.3 L (bath 42.8, kitchen 46.5), bin 100.9 L (under the drainpipe), level rationed
+  day 8 min 00: model asked for 4; day asks 4 of 40; so far 422 live, 0 cached, 422 API requests
+  day 8 min 03: model asked for 4; day asks 8 of 40; so far 426 live, 0 cached, 426 API requests
+  day 8 min 06: model asked for 3; day asks 11 of 40; so far 429 live, 0 cached, 429 API requests
+  day 8 min 09: model asked for 4; day asks 15 of 40; so far 433 live, 0 cached, 433 API requests
+  day 8 min 12: model asked for 2; day asks 17 of 40; so far 435 live, 0 cached, 435 API requests
+  day 8 min 15: Q2, Leo comes into the brothers room, where Daniel is: not asked (a line between them 9 minutes before)
+  day 8 09:48: Q2, Daniel comes into the kitchen, where Elena is: Elena is asked
+  day 8 09:48: Q2, Daniel comes into the kitchen, where Mara is: Daniel is asked
+  day 8 09:48: model asked for 2, Q2 for Daniel, Q2 for Elena; day asks 19 of 40; so far 437 live, 0 cached, 437 API requests
+  day 8 09:51: model asked for 3; day asks 22 of 40; so far 440 live, 0 cached, 440 API requests
+  day 8 09:54: model asked for 2; day asks 24 of 40; so far 442 live, 0 cached, 442 API requests
+  day 8 09:57: model asked for 1; day asks 25 of 40; so far 443 live, 0 cached, 443 API requests
+  day 8 10:00: Q2, Leo comes into the kitchen, where Daniel is: Leo is asked
+  day 8 10:00: model asked for 3, Q2 for Leo; day asks 28 of 40; so far 446 live, 0 cached, 446 API requests
+  day 8 10:03: model asked for 4; day asks 32 of 40; so far 450 live, 0 cached, 450 API requests
+  day 8 10:06: model asked for 1; day asks 33 of 40; so far 451 live, 0 cached, 451 API requests
+  day 8 11:54: Q2, Leo comes into the brothers room, where Daniel is: not asked (they met this way at 10:00 already today)
+  day 8 14:03: Q2, Mara comes into the kitchen, where Leo is: Mara is asked
+  day 8 14:03: model asked for 3, Q2 for Mara; day asks 36 of 40; so far 454 live, 0 cached, 454 API requests
+  day 8 14:06: model asked for 4; day asks 40 of 40; so far 458 live, 0 cached, 458 API requests
+  day 8 14:09: Q2, Daniel comes into the kitchen, where Leo is: not asked (they met this way at 10:00 already today)
+  day 8 14:09: Q2, Daniel comes into the kitchen, where Mara is: not asked (they met this way at 09:48 already today)
+  day 8 16:24: Q1, Mara's fasting crossed a line: not asked (the day's 40 asks are spent)
+  day 8 19:00: Q5, the evening: Mara is asked
+  day 8 19:00: model asked for 4, Q5 for Mara; day asks 44 of 40; so far 462 live, 0 cached, 462 API requests
+  day 8 19:03: model asked for 2; day asks 46 of 40; so far 464 live, 0 cached, 464 API requests
+  day 8 19:06: Q2, Daniel comes into the kitchen, where Mara is: not asked (they met this way at 09:48 already today)
+  day 8 19:06: Q2, Leo comes into the kitchen, where Daniel is: not asked (they met this way at 10:00 already today)
+  day 8 19:06: Q2, Leo comes into the kitchen, where Elena is: not asked (the day's 40 asks are spent)
+  day 8 19:06: Q2, Leo comes into the kitchen, where Mara is: not asked (a line between them 6 minutes before)
+  day 8 21:00 stages: Daniel F3 T0, cold (fast 208.7, short of water 0.00 L); Elena F2 T0, cold (fast 154.2, short of water 0.00 L); Leo F3 T0, cold (fast 194.0, short of water 0.00 L); Mara F3 T0, cold (fast 172.4, short of water 0.00 L)
+  night 8: model asked for 7; so far 471 live, 0 cached, 471 API requests
+  night 8: dry; bedtime Daniel sleep, Elena watch_door, Leo go_further, Mara go_further; Mara, Elena out (not back by morning), water 0 L; Leo out (back with food and water), water 10 L
+  night 8, the night mind: model asked for 3; so far 474 live, 0 cached, 474 API requests
+  day 9 07:00 water: tap 94.8 L (bath 48.3, kitchen 46.5), bin 100.9 L (under the drainpipe), level rationed
+  day 9 min 00: model asked for 3; day asks 3 of 40; so far 477 live, 0 cached, 477 API requests
+  day 9 min 03: model asked for 3; day asks 6 of 40; so far 480 live, 0 cached, 480 API requests
+  day 9 min 12: Q2, Daniel comes into the brothers room, where Leo is: not asked (a line between them 12 minutes before)
+  day 9 min 12: Q2, Leo comes into the kitchen, where Mara is: not asked (a line between them 9 minutes before)
+  day 9 10:12: Q2, Daniel comes into the kitchen, where Leo is: Leo is asked
+  day 9 10:12: model asked for 1, Q2 for Leo; day asks 7 of 40; so far 481 live, 0 cached, 481 API requests
+  day 9 10:15: Q2, Leo comes into the kitchen, where Daniel is: not asked (they met this way at 10:12 already today)
+  day 9 10:51: Q2, Mara comes into the kitchen, where Daniel is: Daniel is asked
+  day 9 10:51: Q2, Mara comes into the kitchen, where Leo is: Mara is asked
+  day 9 10:51: model asked for 3, Q2 for Daniel, Q2 for Mara; day asks 10 of 40; so far 484 live, 0 cached, 484 API requests
+  day 9 10:54: model asked for 2; day asks 12 of 40; so far 486 live, 0 cached, 486 API requests
+  day 9 10:57: Q2, Mara comes into the kitchen, where Daniel is: not asked (they met this way at 10:51 already today)
+  day 9 10:57: Q2, Mara comes into the kitchen, where Leo is: not asked (a line between them 6 minutes before)
+  day 9 11:30: Q6, rain began: Daniel, Leo, Mara asked in the kitchen
+  day 9 11:30: model asked for 3, Q6 for Leo, Q6 for Daniel, Q6 for Mara; day asks 15 of 40; so far 489 live, 0 cached, 489 API requests
+  day 9 11:33: model asked for 3; day asks 18 of 40; so far 492 live, 0 cached, 492 API requests
+  day 9 11:36: model asked for 2; day asks 20 of 40; so far 494 live, 0 cached, 494 API requests
+  day 9 15:42: Q2, Mara comes into the kitchen, where Daniel is: not asked (they met this way at 10:51 already today)
+  day 9 15:42: Q2, Mara comes into the kitchen, where Leo is: not asked (they met this way at 10:51 already today)
+  day 9 18:36: Q2, Leo comes into the kitchen, where Mara is: not asked (they met this way at 10:51 already today)
+  day 9 19:00: Q5, the evening: Leo is asked
+  day 9 19:00: model asked for 3, Q5 for Leo; day asks 23 of 40; so far 497 live, 0 cached, 497 API requests
+  day 9 19:03: model asked for 3; day asks 26 of 40; so far 500 live, 0 cached, 500 API requests
+  day 9 19:06: model asked for 2; day asks 28 of 40; so far 502 live, 0 cached, 502 API requests
+  day 9 19:09: Q2, Mara comes into the kitchen, where Daniel is: not asked (a line between them 3 minutes before)
+  day 9 21:00 stages: Daniel F0 T0 (fast 2.3, short of water 0.00 L); Elena away; Leo F0 T0 (fast 2.0, short of water 0.00 L); Mara F0 T0 (fast 1.9, short of water 0.00 L)
+  night 9: model asked for 5; so far 507 live, 0 cached, 507 API requests
+  night 9: dry; bedtime Daniel watch_door, Leo go_further, Mara sleep; Leo, Daniel out (back with food and water), water 10.5 L
+  night 9, the night mind: model asked for 3; so far 510 live, 0 cached, 510 API requests
+  day 10 07:00 water: tap 101.5 L (bath 55.0, kitchen 46.5), bin 240.0 L (under the drainpipe), level rationed
+  day 10 min 00: model asked for 3; day asks 3 of 40; so far 513 live, 0 cached, 513 API requests
+  day 10 min 03: model asked for 2; day asks 5 of 40; so far 515 live, 0 cached, 515 API requests
+  day 10 10:27: Q2, Leo comes into the kitchen, where Mara is: Mara is asked
+  day 10 10:27: model asked for 3, Q2 for Mara; day asks 8 of 40; so far 518 live, 0 cached, 518 API requests
+  day 10 10:30: model asked for 3; day asks 11 of 40; so far 521 live, 0 cached, 521 API requests
+  day 10 10:33: model asked for 2; day asks 13 of 40; so far 523 live, 0 cached, 523 API requests
+  day 10 13:27: Q2, Leo comes into the brothers room, where Daniel is: Leo is asked
+  day 10 13:27: model asked for 1, Q2 for Leo; day asks 14 of 40; so far 524 live, 0 cached, 524 API requests
+  day 10 14:15: Q2, Mara comes into the kitchen, where Daniel is: Daniel is asked
+  day 10 14:15: model asked for 1, Q2 for Daniel; day asks 15 of 40; so far 525 live, 0 cached, 525 API requests
+  day 10 15:36: Q2, Leo comes into the kitchen, where Mara is: not asked (they met this way at 10:27 already today)
+  day 10 19:00: Q5, the evening: not asked (nobody who took a trip position is awake with someone)
+  day 10 20:42: Q2, Mara comes into the kitchen, where Daniel is: not asked (they met this way at 14:15 already today)
+  day 10 20:42: Q2, Mara comes into the kitchen, where Leo is: not asked (they met this way at 10:27 already today)
+  day 10 21:00 stages: Daniel F1 T0 (fast 29.9, short of water 0.00 L); Elena away; Leo F1 T0 (fast 26.0, short of water 0.00 L); Mara F1 T0 (fast 24.7, short of water 0.00 L)
+
+wrote runs/w22/fake/daniel_ate_it-seed2.md
+  api_requests: 525
+  answers_live: 525
+  answers_from_cache: 0
+  day1 api_requests: 80
+  day1 answers_live: 80
+  day1 answers_from_cache: 0
+  day1 model_decisions: 64
+  day1 fallbacks: 16
+  day1 routine_decisions: 40
+  day1 lines_spoken: 27
+  day1 inner_moments: 16
+  day1 lull_moments: 0
+  day1 private_talks: 4
+  day1 trip_minute: 30
+  day1 trip_acts: 16
+  day1 max_prompt_tokens_estimated: 1699
+  day1 max_prompt_tokens_counted_by_api: None
+  night_asks: 6
+  night_api_requests: 6
+  leavers: ['mara']
+  outcome: ['back with nothing']
+  night house: 0; away: []
+  day2 api_requests: 31
+  day2 answers_live: 31
+  day2 answers_from_cache: 0
+  day2 model_decisions: 25
+  day2 fallbacks: 6
+  day2 routine_decisions: 89
+  day2 lines_spoken: 8
+  day2 inner_moments: 4
+  day2 lull_moments: 0
+  day2 private_talks: 3
+  day2 trip_minute: 0
+  day2 trip_acts: 4
+  day2 max_prompt_tokens_estimated: 2083
+  day2 max_prompt_tokens_counted_by_api: None
+  day2 food_moments: 0
+  day2 give_answers: 0
+  day2_asks: 31
+  day2_api_requests: 31
+  night1_asks: 6
+  mind1_asks: 4
+  mind1_api_requests: 4
+  night2_asks: 4
+  night2_api_requests: 4
+  leavers2: []
+  outcome2: []
+  mind2_asks: 4
+  mind2_api_requests: 4
+  mind1 memories_proposed: 4; mind2 memories_proposed: 4
+  mind1 memories_kept: 3; mind2 memories_kept: 4
+  mind1 memories_rejected: 1; mind2 memories_rejected: 0
+  day3 api_requests: 48
+  day3 answers_live: 48
+  day3 answers_from_cache: 0
+  day3 model_decisions: 38
+  day3 fallbacks: 10
+  day3 routine_decisions: 16
+  day3 lines_spoken: 20
+  day3 inner_moments: 5
+  day3 lull_moments: 0
+  day3 private_talks: 1
+  day3 trip_minute: 0
+  day3 trip_acts: 9
+  day3 max_prompt_tokens_estimated: 2299
+  day3 max_prompt_tokens_counted_by_api: None
+  day3 food_moments: 0
+  day3 give_answers: 0
+  day3 day_asks: 48
+  day3 quiet_asks: 4
+  day3 quiet_asks_by_person: {'daniel': 1, 'elena': 1, 'leo': 2, 'mara': 0}
+  day3 q1_fired: 0
+  day3 q2_fired: 3
+  day3 q5_fired: 1
+  day3 q6_fired: 0
+  day3 rain_heard: 0
+  day3 water: [[0, 105.5, 0.0, 'as_before', False], [18, 105.2, 0.0, 'rationed', False], [840, 102.346, 0.0, 'rationed', False]]
+  day3 spans: 22
+  day3 rests: 8
+  day3 withdrawals: 0
+  day3 stretches: 4
+  day3 morning_end: 21
+  night3 asks: 5; mind3 asks: 4; mind3 memories kept 3
+  day4 day_asks: 48
+  day4 quiet_asks: 6
+  day4 quiet_asks_by_person: {'daniel': 3, 'elena': 0, 'leo': 0, 'mara': 3}
+  day4 q1_fired: 1
+  day4 q2_fired: 4
+  day4 q5_fired: 1
+  day4 q6_fired: 0
+  day4 rain_heard: 0
+  day4 water: [[0, 109.262, 0.0, 'rationed', False], [840, 106.346, 0.0, 'rationed', False]]
+  day4 spans: 31
+  day4 rests: 10
+  day4 withdrawals: 0
+  day4 stretches: 6
+  day4 morning_end: 24
+  night4 asks: 8; mind4 asks: 4; mind4 memories kept 3
+  day5 day_asks: 48
+  day5 quiet_asks: 5
+  day5 quiet_asks_by_person: {'daniel': 1, 'elena': 1, 'leo': 1, 'mara': 2}
+  day5 q1_fired: 0
+  day5 q2_fired: 4
+  day5 q5_fired: 1
+  day5 q6_fired: 0
+  day5 rain_heard: 0
+  day5 water: [[0, 104.262, 0.0, 'rationed', False], [840, 101.346, 0.0, 'rationed', False]]
+  day5 spans: 25
+  day5 rests: 10
+  day5 withdrawals: 0
+  day5 stretches: 5
+  day5 morning_end: 24
+  night5 asks: 4; mind5 asks: 4; mind5 memories kept 3
+  day6 day_asks: 48
+  day6 quiet_asks: 4
+  day6 quiet_asks_by_person: {'daniel': 2, 'elena': 0, 'leo': 2, 'mara': 0}
+  day6 q1_fired: 0
+  day6 q2_fired: 3
+  day6 q5_fired: 1
+  day6 q6_fired: 0
+  day6 rain_heard: 0
+  day6 water: [[0, 99.262, 0.0, 'rationed', False], [3, 99.252, 0.0, 'rationed', True], [840, 96.346, 75.484, 'rationed', True]]
+  day6 spans: 21
+  day6 rests: 8
+  day6 withdrawals: 0
+  day6 stretches: 4
+  day6 morning_end: 21
+  night6 asks: 7; mind6 asks: 4; mind6 memories kept 3
+  day7 day_asks: 47
+  day7 quiet_asks: 7
+  day7 quiet_asks_by_person: {'daniel': 2, 'elena': 2, 'leo': 2, 'mara': 1}
+  day7 q1_fired: 1
+  day7 q2_fired: 2
+  day7 q5_fired: 1
+  day7 q6_fired: 1
+  day7 rain_heard: 1
+  day7 water: [[0, 94.262, 80.983, 'rationed', True], [840, 91.346, 100.916, 'rationed', True]]
+  day7 spans: 26
+  day7 rests: 8
+  day7 withdrawals: 0
+  day7 stretches: 4
+  day7 morning_end: 24
+  night7 asks: 6; mind7 asks: 4; mind7 memories kept 3
+  day8 day_asks: 46
+  day8 quiet_asks: 5
+  day8 quiet_asks_by_person: {'daniel': 1, 'elena': 1, 'leo': 1, 'mara': 2}
+  day8 q1_fired: 0
+  day8 q2_fired: 4
+  day8 q5_fired: 1
+  day8 q6_fired: 0
+  day8 rain_heard: 0
+  day8 water: [[0, 89.262, 100.916, 'rationed', True], [840, 86.346, 100.916, 'rationed', True]]
+  day8 spans: 23
+  day8 rests: 8
+  day8 withdrawals: 0
+  day8 stretches: 5
+  day8 morning_end: 15
+  night8 asks: 7; mind8 asks: 3; mind8 memories kept 3
+  day9 day_asks: 28
+  day9 quiet_asks: 7
+  day9 quiet_asks_by_person: {'daniel': 2, 'elena': 0, 'leo': 3, 'mara': 2}
+  day9 q1_fired: 0
+  day9 q2_fired: 3
+  day9 q5_fired: 1
+  day9 q6_fired: 1
+  day9 rain_heard: 1
+  day9 water: [[0, 94.783, 100.916, 'rationed', True], [840, 92.596, 240.0, 'rationed', True]]
+  day9 spans: 17
+  day9 rests: 4
+  day9 withdrawals: 0
+  day9 stretches: 5
+  day9 morning_end: 12
+  night9 asks: 5; mind9 asks: 3; mind9 memories kept 2
+  day10 day_asks: 15
+  day10 quiet_asks: 3
+  day10 quiet_asks_by_person: {'daniel': 1, 'elena': 0, 'leo': 1, 'mara': 1}
+  day10 q1_fired: 0
+  day10 q2_fired: 3
+  day10 q5_fired: 0
+  day10 q6_fired: 0
+  day10 rain_heard: 0
+  day10 water: [[0, 101.533, 240.0, 'rationed', True], [840, 99.346, 240.0, 'rationed', True]]
+  day10 spans: 17
+  day10 rests: 6
+  day10 withdrawals: 1
+  day10 stretches: 4
+  day10 morning_end: 9
+  day3_asks: 48
+  day3_api_requests: 48
+  max_prompt_tokens_estimated: 2299
+  max_prompt_tokens_counted_by_api: None
+  run_seconds: 15.0
+  story_sha256: e81939c0ff2ed865df102dd9b91e9fcc89a1b7c7f8e9522f57f06a741ed6e93b

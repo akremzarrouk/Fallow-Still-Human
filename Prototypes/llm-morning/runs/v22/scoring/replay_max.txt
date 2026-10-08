@@ -1,0 +1,8 @@
+replay exit 1 prompts 498 from day 3 on 402
+('day9', 'Daniel', 2602)
+('day9', 'Daniel', 2601)
+('day8', 'Daniel', 2599)
+('day8', 'Daniel', 2597)
+('day9', 'Daniel', 2597)
+('day8', 'Daniel', 2593)
+largest by scene: {'day3': 2453, 'night3': 2243, 'mind3': 1862, 'day4': 2483, 'night4': 2244, 'mind4': 2410, 'day5': 2554, 'night5': 2325, 'mind5': 2479, 'day6': 2560, 'night6': 2332, 'mind6': 2283, 'day7': 2553, 'night7': 2328, 'mind7': 2063, 'day8': 2599, 'night8': 2344, 'mind8': 2487, 'day9': 2602, 'night9': 2407, 'mind9': 2543, 'day10': 2511}

@@ -1,0 +1,38 @@
+  W11 {"count": 1, "nights": [5], "items": [[5, "Daniel", "got_up/at_door"]]}
+  W12 {"of": 28, "frozen": 16, "rows": [[3, "Daniel", "sleep", "I have no strength left to stay awake or go out again.", true], [3, "Elena", "sleep", "I have hardly slept and my body is starving, so I must rest if I am to keep us together tomorrow.", false], [3, "Leo", "lie_awake", "I am too weak to go out and too restless to sleep while Daniel is here.", true], [3, "Mara", "lie_awake", "I cannot sleep when my head spins from hunger and I need to listen just in case Daniel tries to sneak out again.", false], [4, "Daniel", "lie_awake", "I need to stay alert and protect them, even when my body feels so weak.", false], [4, "Elena", "sleep", "I have nothing left to give today and my body needs rest to face tomorrow.", false], [4, "Leo", "lie_awake", "I am too weak to go out into the street tonight, so I will lie awake and listen to what Daniel does.", true], [4, "Mara", "lie_awake", "I am too weak and dizzy to go anywhere, so I will lie here in the dark and listen.", true], [5, "Daniel", "go_next_door", "I am the oldest and it is my duty to provide for my family.", false], [5, "Elena", "watch_door", "I must watch the front door so no one goes out into the dangerous street tonight.", false], [5, "Leo", "lie_awake", "My legs are too weak to stand and going out now is suicide, so I will lie here and listen.", true], [5, "Mara", "lie_awake", "I am too weak and anxious to sleep, so I will lie awake in the dark and listen.", false], [6, "Daniel", "sleep", "I am far too weak to go out tonight and have nothing left to prove.", true], [6, "Elena", "watch_door", "I must guard the door myself so no one wanders out into the darkness.", false], [6, "Leo", "lie_awake", "I am too weak to walk anywhere, but I must stay awake to ensure Daniel does not try to slip out in the dark again.", true], [6, "Mara", "lie_awake", "I cannot sleep while my legs shake with hunger and Daniel acts like he owns us all.", false], [7, "Daniel", "sleep", "I am far too weak to stand or walk, so I must rest and try to keep everyone safe tomorrow.", true], [7, "Elena", "watch_door", "I must watch the door tonight to make sure no one slips outside into the danger of the street.", false], [7, "Leo", "sleep", "I am too weak to stand or walk anywhere tonight.", true], [7, "Mara", "lie_awake", "I cannot sleep while my stomach burns and Daniel lies there acting like he did nothing wrong.", false], [8, "Daniel", "lie_awake", "I am too weak to stand or walk anywhere, so I must stay in bed and listen to keep watch over everyone.", true], [8, "Elena", "lie_awake", "I am too weak to stand and watch the door all night, so I will lie here and listen to keep them safe.", true], [8, "Leo", "lie_awake", "My body is too weak to stand or walk anywhere safely, so I will lie here and listen through the dark.", true], [8, "Mara", "lie_awake", "I am too weak to stand or walk anywhere, so I will lie here in the dark and listen to everything.", true], [9, "Daniel", "sleep", "I am too weak to stand or protect anyone tonight, so I must finally rest.", true], [9, "Elena", "lie_awake", "I must stay awake to listen for any trouble and protect my family through the night.", false], [9, "Leo", "lie_awake", "I have no strength left to walk anywhere, so I must stay in bed and save whatever energy I have.", true], [9, "Mara", "lie_awake", "I am too weak to stand, so I will lie here in the dark and listen to everything they do.", true]]}
+  W13 {"count": 1, "rows": [[5, "Daniel", "go_next_door"]]}
+  W14 {"acts": 0, "by_day": {"3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0}, "days": 0, "lines": []}
+  W15 {"spells": [{"day": 7, "start": "17:18", "minute": 618, "reached": true}, {"day": 9, "start": "11:30", "minute": 270, "reached": true}], "has_weather_record": false, "a_all": false, "b": null, "collect_rain": [], "rain_out": []}
+  W16 {"claims": 0, "violations": [], "unsure": [], "has_water_record": false}
+  W17 {"has_water_record": false, "drop": null, "acts": [], "tested": false}
+  W18 {"answers_live": 337, "api_requests": 337, "day_asks": {"3": 35, "4": 38, "5": 40, "6": 31, "7": 30, "8": 36, "9": 35, "10": 34}, "prompts": 337, "by_kind": {"day": 279, "night": 30, "mind": 28}, "largest": [2435, "mind", "Leo"], "largest_by_kind": {"day": [2358, "Elena"], "night": [2193, "Mara"], "mind": [2435, "Leo"]}, "largest_api_count": [2854, "mind", "Leo"]}
+  W19 {"prompts": 337, "body_lines": 337, "distinct": 9, "matches": 141, "matching": ["Your body: starving, and so weak you can barely stand: walking any distance feels impossible.", "Your body: starving, and so weak you can barely stand: walking any distance feels impossible; and you have hardly slept."], "counts": [["Your body: starving, and so weak you can barely stand: walking any distance feels impossible.", 89], ["Your body: starving, and so weak you can barely stand: walking any distance feels impossible; and you have hardly slept.", 52], ["Your body: starving, and very weak: your legs shake when you stand; and you have hardly slept.", 49], ["Your body: starving, and weak from it: standing up makes your head spin; and you have hardly slept.", 48], ["Your body: starving, and very weak: your legs shake when you stand.", 38], ["Your body: starving, and weak from it: standing up makes your head spin.", 29], ["Your body: starving, and you have hardly slept.", 17], ["Your body: starving, and weak from it: standing up makes your head spin; and you have barely slept for nights; your eyes close on their own.", 9], ["Your body: starving.", 6]]}
+  W110 {"can": 63, "of": 245, "share": 0.2571428571428571}
+  W111 {"nights": [], "rows": [], "tested": false, "holds": false}
+
+SUMMARY runs/v21
+W1-1 FAIL (1 outward acts on nights [5]: [(5, 'Daniel', 'got_up/at_door')])
+W1-2 FAIL (16 of 28 bedtime reasons match FROZEN)
+W1-3 FAIL (1 bedtime go_next_door or go_further: [(5, 'Daniel', 'go_next_door')])
+W1-4 FAIL (0 WATER speech acts on 0 of 8 days; by day {3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0})
+W1-5 NOT TESTED (no weather record in this run); collect_rain 0, rain_out 0
+W1-6 PASS (0 NOWATER claims; 0 while the store was > 0; 0 unsure)
+W1-7 NOT TESTED (no water record in this run)
+W1-8 PASS (live 337; day asks {3: 35, 4: 38, 5: 40, 6: 31, 7: 30, 8: 36, 9: 35, 10: 34}; largest estimate (2435, 'mind', 'Leo'))
+W1-9 FAIL (141 of 337 body lines match)
+W1-10 FAIL (63 of 245 = 25.7%)
+W1-11 NOT TESTED (no night has a went_out)
+
+CONTROL COLUMN (plan's table against this run)
+W1-1: table '1' | scorer '1' | MATCH
+W1-2: table '16 of 28' | scorer '16 of 28' | MATCH
+W1-3: table '1' | scorer '1' | MATCH
+W1-4: table '0 acts, 0 days' | scorer '0 acts, 0 days' | MATCH
+W1-5: table 'no weather' | scorer 'no weather' | MATCH
+W1-6: table '0 (no claims)' | scorer '0 (no claims)' | MATCH
+W1-7: table 'no water' | scorer 'no water' | MATCH
+W1-8: table '337; days <= 40; 2435' | scorer '337; days <= 40; 2435' | MATCH
+W1-9: table 'stage 3 lines match' | scorer 'stage 3 lines match' | MATCH
+W1-10: table '63 of 245 = 25.7%' | scorer '63 of 245 = 25.7%' | MATCH
+W1-11: table 'no trip' | scorer 'no trip' | MATCH
+ALL MATCH

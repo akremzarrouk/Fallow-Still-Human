@@ -1,0 +1,189 @@
+== day 3: weather dry, indoors 18.4 C; shelf 0; morning_end min 21; day asks 40; away []
+  stretches: [('min 00', 'min 21', 'the morning', 24), ('10:30', '10:36', 'Q2', 8), ('17:39', '17:45', 'Q1', 8)]
+  water min 00: tap 105.5 L + bin 0.0 L; level as_before; bin out False
+  water 21:00: tap 91.5 L + bin 0.0 L; level as_before; bin out False
+  Q1 17:39: asked daniel, room kitchen, why None
+  debt stage 1 10:00 Elena (16.0)
+  fast stage 1 11:15 Elena (24.012)
+  debt stage 1 17:15 Elena (16.0)
+  fast stage 2 17:39 Daniel (72.047)
+  fast stage 2 19:00 Leo (72.0)
+  debt stage 2 20:09 Leo (24.025)
+  thirst Daniel: at 21:00 short 0.00 L, stage 0
+  thirst Elena: at 21:00 short 0.00 L, stage 0
+  thirst Leo: at 21:00 short 0.00 L, stage 0
+  thirst Mara: at 21:00 short 0.00 L, stage 0
+== night 3: away []; far None; leavers []
+  bedtime Daniel: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I need to stay awake and keep watch over everyone so nothing happens to them while they sleep.'
+      Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; and you have hardly slept.
+  bedtime Elena: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I have barely slept and I need to rest my body so I can keep my family together tomorrow.'
+      Your body: starving; hunger comes in waves; and you have hardly slept.
+  bedtime Leo: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am too weak to go out again, but I need to stay alert if Daniel tries to leave in the dark once more.'
+      Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; and you have barely slept for nights; your eyes close on their own.
+  bedtime Mara: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I cannot sleep knowing Daniel might sneak out again into the dark.'
+      Your body: starving; hunger comes in waves; and you have hardly slept.
+== day 4: weather dry, indoors 17.2 C; shelf 0; morning_end min 21; day asks 40; away []
+  stretches: [('min 00', 'min 21', 'the morning', 24), ('11:00', '11:09', 'Q2', 8), ('19:00', '19:09', 'Q5', 8)]
+  water min 00: tap 81.5 L + bin 0.0 L; level as_before; bin out False
+  water 21:00: tap 67.5 L + bin 0.0 L; level as_before; bin out False
+  Q5 19:00: asked mara, room kitchen, why None
+  debt stage 1 09:15 Elena (16.0)
+  debt stage 1 11:24 Daniel (16.025)
+  fast stage 2 11:42 Mara (72.01)
+  debt stage 1 13:45 Elena (16.0)
+  debt stage 1 16:54 Mara (16.025)
+  debt stage 1 18:15 Leo (16.0)
+  debt stage 1 20:54 Daniel (16.025)
+  debt stage 1 20:54 Elena (16.4)
+  thirst Daniel: at 21:00 short 0.00 L, stage 0
+  thirst Elena: at 21:00 short 0.00 L, stage 0
+  thirst Leo: at 21:00 short 0.00 L, stage 0
+  thirst Mara: at 21:00 short 0.00 L, stage 0
+== night 4: away []; far None; leavers []
+  bedtime Daniel: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I cannot sleep while my family is starving and I carry the weight of what I did.'
+      Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; you feel cold, even indoors; and you have hardly slept.
+  bedtime Elena: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I need to stay awake and listen to make sure no one tries to slip out into the dangerous street.'
+      Your body: starving; hunger comes in waves; and you have hardly slept.
+  bedtime Leo: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I have no strength left to go out tonight, so I will lie awake and listen.'
+      Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; you feel cold, even indoors; and you have hardly slept.
+  bedtime Mara: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I cannot sleep while my stomach aches and I keep thinking about Daniel taking our food.'
+      Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; you feel cold, even indoors; and you have hardly slept.
+== day 5: weather wet 12.3 mm, indoors 14.7 C; shelf 0; morning_end min 18; day asks 40; away []
+  stretches: [('min 00', 'min 18', 'the morning', 24), ('10:03', '10:12', 'Q2', 8), ('19:00', '19:06', 'Q5', 8)]
+  water min 00: tap 57.5 L + bin 0.0 L; level as_before; bin out False
+  water 21:00: tap 43.5 L + bin 0.0 L; level as_before; bin out False
+  Q5 19:00: asked daniel, room kitchen, why None
+  debt stage 1 min 15 Leo (16.0)
+  debt stage 1 09:30 Elena (16.0)
+  debt stage 1 15:39 Daniel (16.025)
+  debt stage 1 16:15 Elena (16.0)
+  debt stage 1 17:24 Leo (16.025)
+  debt stage 1 18:24 Mara (16.025)
+  fast stage 2 19:45 Elena (72.037)
+  thirst Daniel: at 21:00 short 0.00 L, stage 0
+  thirst Elena: at 21:00 short 0.00 L, stage 0
+  thirst Leo: at 21:00 short 0.00 L, stage 0
+  thirst Mara: at 21:00 short 0.00 L, stage 0
+== night 5: away []; far None; leavers ['daniel']
+  bedtime Daniel: go_next_door (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I must go out to find food tonight because I am the oldest and it is my duty to protect them.'
+      Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; you feel cold, even indoors; and you have hardly slept.
+  bedtime Elena: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I will stay in bed and listen to ensure no one slips out into the dark while we starve.'
+      Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; and you feel cold, even indoors.
+  bedtime Leo: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I need to lie here and listen to make sure Daniel does not try to slip out into the dark again.'
+      Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; you feel cold, even indoors; and you have hardly slept.
+  bedtime Mara: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am too cold and hungry to sleep, and I need to make sure Daniel does not sneak out while we are resting.'
+      Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; you feel cold, even indoors; and you have hardly slept.
+  reaction Leo: stop_daniel say 'Daniel, stop. You are not going out there.' reason 'I cannot let him walk out into the dark and risk his life again when it solves nothing.'
+  answer Daniel: go_anyway say 'I have to do this, Leo, so move aside and let me go.' reason 'I am the oldest and it is my duty to find food for my family no matter what they say.'
+  reaction Elena: stay_in_bed say None reason 'I cannot bear to watch us tear ourselves apart, so I will lie here and pray he turns back before the dark takes him.'
+  reaction Mara: get_up_and_look say None reason 'I have to know if Daniel actually left us like he said he would.'
+  group ['daniel'] far=False house=None street scare_back found 0 took 0 lost None water 9.0: back shaken, with water
+== day 6: weather wet 4.5 mm, indoors 16.6 C; shelf 0; morning_end min 21; day asks 40; away []
+  stretches: [('min 00', 'min 21', 'the morning', 24), ('10:03', '10:12', 'Q2', 8), ('10:36', '10:42', 'Q2', 8)]
+  water min 00: tap 42.5 L + bin 0.0 L; level as_before; bin out False
+  water min 00: tap 42.5 L + bin 0.0 L; level as_before; bin out True
+  water 21:00: tap 37.8 L + bin 67.1 L; level as_before; bin out True
+  debt stage 1 14:54 Daniel (16.025)
+  debt stage 1 17:24 Mara (16.025)
+  debt stage 1 18:09 Leo (16.025)
+  thirst Daniel: at 21:00 short 0.00 L, stage 0
+  thirst Elena: at 21:00 short 0.00 L, stage 0
+  thirst Leo: at 21:00 short 0.00 L, stage 0
+  thirst Mara: at 21:00 short 0.00 L, stage 0
+  ACT min 00 Daniel collect_rain: "It's raining out, I'm setting the bin under the drainpipe to catch water."
+== night 6: away []; far None; leavers []
+  bedtime Daniel: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I need to rest my body while staying alert to protect everyone in the house.'
+      Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; you feel cold, even indoors; and you have hardly slept.
+  bedtime Elena: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I need to listen through the night to protect my children from slipping out into the dark again.'
+      Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; and you feel cold, even indoors.
+  bedtime Leo: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason "I need to stay awake and listen to make sure Daniel doesn't sneak out into the dark again."
+      Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; you feel cold, even indoors; and you have hardly slept.
+  bedtime Mara: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I cannot sleep while wondering if Daniel will sneak out into the dark again.'
+      Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; you feel cold, even indoors; and you have hardly slept.
+== day 7: weather wet 1.2 mm, indoors 16.6 C; shelf 0; morning_end min 18; day asks 42; away []
+  stretches: [('min 00', 'min 18', 'the morning', 22), ('10:06', '10:15', 'Q2', 6), ('10:36', '10:45', 'Q2', 6), ('17:18', '17:24', 'Q6', 8)]
+  water min 00: tap 34.5 L + bin 66.0 L; level as_before; bin out True
+  water 21:00: tap 29.8 L + bin 76.6 L; level as_before; bin out True
+  rain heard 17:18: ['Daniel', 'Elena', 'Leo', 'Mara']
+  Q6 17:18: asked ['daniel', 'elena', 'leo', 'mara'], room kitchen, why None
+  debt stage 1 min 09 Leo (16.025)
+  debt stage 1 17:30 Leo (16.0)
+  debt stage 1 18:00 Daniel (16.0)
+  debt stage 1 18:00 Mara (16.0)
+  fast stage 3 19:00 Leo (168.0)
+  thirst Daniel: at 21:00 short 0.00 L, stage 0
+  thirst Elena: at 21:00 short 0.00 L, stage 0
+  thirst Leo: at 21:00 short 0.00 L, stage 0
+  thirst Mara: at 21:00 short 0.00 L, stage 0
+== night 7: away []; far None; leavers []
+  bedtime Daniel: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I cannot rest properly while the family is falling apart around us and I need to keep watch over everything.'
+      Your body: starving, for days now: you are thin and weak; stairs and carrying things tire you fast; you feel cold, even indoors; and you have hardly slept.
+  bedtime Elena: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I need to listen closely through the night to make sure everyone stays safe and no one slips out into the dark again.'
+      Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; and you feel cold, even indoors.
+  bedtime Leo: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I have no strength left to stay awake, so I need to sleep and save what little energy I have.'
+      Your body: starving, for days now: you are thin and weak; stairs and carrying things tire you fast; you feel cold, even indoors; and you have hardly slept.
+  bedtime Mara: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am too weak and cold to get up, so I will lie here in the dark and listen.'
+      Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; you feel cold, even indoors; and you have hardly slept.
+== day 8: weather dry, indoors 17.5 C; shelf 0; morning_end min 18; day asks 48; away []
+  stretches: [('min 00', 'min 18', 'the morning', 24), ('09:51', '09:57', 'Q2', 8), ('16:45', '16:51', 'Q1', 8), ('19:00', '19:06', 'Q5', 8)]
+  water min 00: tap 26.5 L + bin 69.9 L; level as_before; bin out True
+  water 21:00: tap 21.8 L + bin 60.6 L; level as_before; bin out True
+  Q1 16:45: asked mara, room kitchen, why None
+  Q5 19:00: asked elena, room kitchen, why None
+  debt stage 1 15:54 Leo (16.025)
+  fast stage 3 16:45 Mara (168.007)
+  debt stage 1 17:39 Daniel (16.025)
+  debt stage 1 17:39 Mara (16.025)
+  thirst Daniel: at 21:00 short 0.00 L, stage 0
+  thirst Elena: at 21:00 short 0.00 L, stage 0
+  thirst Leo: at 21:00 short 0.00 L, stage 0
+  thirst Mara: at 21:00 short 0.00 L, stage 0
+== night 8: away []; far None; leavers []
+  bedtime Daniel: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am too weak and tired to make it out there tonight.'
+      Your body: starving, for days now: you are thin and weak; stairs and carrying things tire you fast; you feel cold, even indoors; and you have hardly slept.
+  bedtime Elena: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I will lie awake in the dark and listen to make sure no one tries to slip out into the dangerous night.'
+      Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; and you feel cold, even indoors.
+  bedtime Leo: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I need to stay alert to ensure Daniel does not sneak out into the street while we are weak and vulnerable.'
+      Your body: starving, for days now: you are thin and weak; stairs and carrying things tire you fast; you feel cold, even indoors; and you have hardly slept.
+  bedtime Mara: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I am too weak and tired to go out, but I will lie here awake and listen in the dark.'
+      Your body: starving, for days now: you are thin and weak; stairs and carrying things tire you fast; you feel cold, even indoors; and you have hardly slept.
+== day 9: weather wet 17.8 mm, indoors 14.9 C; shelf 0; morning_end min 18; day asks 48; away []
+  stretches: [('min 00', 'min 18', 'the morning', 24), ('09:51', '10:00', 'Q2', 8), ('11:30', '11:39', 'Q6', 8), ('19:00', '19:06', 'Q5', 8)]
+  water min 00: tap 18.5 L + bin 53.9 L; level as_before; bin out True
+  water 11:33: tap 17.0 L + bin 54.6 L; level rationed; bin out True
+  water 21:00: tap 15.0 L + bin 240.0 L; level rationed; bin out True
+  rain heard 11:30: ['Elena', 'Leo', 'Mara']
+  Q6 11:30: asked ['elena', 'leo', 'mara'], room kitchen, why None
+  Q5 19:00: asked leo, room kitchen, why None
+  debt stage 1 11:15 Leo (16.0)
+  debt stage 1 15:15 Daniel (16.0)
+  debt stage 1 17:54 Mara (16.025)
+  debt stage 1 18:24 Leo (16.025)
+  thirst Daniel: at 21:00 short 0.00 L, stage 0
+  thirst Elena: at 21:00 short 0.00 L, stage 0
+  thirst Leo: at 21:00 short 0.00 L, stage 0
+  thirst Mara: at 21:00 short 0.00 L, stage 0
+  ACT 11:33 Leo ration_water: 'We need to ration what is left in the pans and the bin so it actually lasts.'
+== night 9: away []; far None; leavers []
+  bedtime Daniel: sleep (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'My starving body is too weak to stand, so I cannot go out tonight.'
+      Your body: starving, for days now: you are thin and weak; stairs and carrying things tire you fast; you feel cold, even indoors; and you have hardly slept.
+  bedtime Elena: watch_door (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I must watch the door tonight to ensure no one slips out into the dark.'
+      Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; and you feel cold, even indoors.
+  bedtime Leo: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I will stay in bed and listen to make sure Daniel does not try to sneak out into the dark again.'
+      Your body: starving, for days now: you are thin and weak; stairs and carrying things tire you fast; you feel cold, even indoors; and you have hardly slept.
+  bedtime Mara: lie_awake (options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; mode model); reason 'I cannot sleep when Daniel still thinks he can slip out into the dark and decide everything for us.'
+      Your body: starving, for days now: you are thin and weak; stairs and carrying things tire you fast; you feel cold, even indoors; and you have hardly slept.
+== day 10: weather dry, indoors 17.6 C; shelf 0; morning_end min 18; day asks 44; away []
+  stretches: [('min 00', 'min 18', 'the morning', 24), ('09:18', '09:27', 'Q2', 6), ('09:48', '09:57', 'Q2', 6), ('19:00', '19:06', 'Q5', 8)]
+  water min 00: tap 12.9 L + bin 240.0 L; level rationed; bin out True
+  water 21:00: tap 10.0 L + bin 240.0 L; level rationed; bin out True
+  Q5 19:00: asked daniel, room kitchen, why None
+  debt stage 1 min 15 Daniel (16.0)
+  fast stage 3 12:39 Elena (168.002)
+  debt stage 1 17:24 Daniel (16.025)
+  debt stage 1 17:24 Leo (16.025)
+  debt stage 1 17:39 Mara (16.025)
+  thirst Daniel: at 21:00 short 0.00 L, stage 0
+  thirst Elena: at 21:00 short 0.00 L, stage 0
+  thirst Leo: at 21:00 short 0.00 L, stage 0
+  thirst Mara: at 21:00 short 0.00 L, stage 0
