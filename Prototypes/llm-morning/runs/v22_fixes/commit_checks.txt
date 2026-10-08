@@ -1,0 +1,8 @@
+$ git diff --cached --name-only | wc -l
+60
+$ git grep --cached -c "<middle of the one-off key>"; echo exit $?
+exit 1
+$ git grep --cached -cE "AQ\.[A-Za-z0-9_-]{30,}"; echo exit $?
+exit 1
+$ git diff --cached --name-only | grep -v prefixes
+(none above = only the intended paths)

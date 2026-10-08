@@ -1,0 +1,35 @@
+LEO MIND PROMPT (live idx 194 ): lines holding his sentence:
+    [D6-007] min 03: you confronted Daniel, saying: "Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel." You felt resentful. Then 4 more times, to 10:39; last: "You went out into the dark again and risked everything just to prove you can d
+   his answer: {
+  "memories": [
+    {
+      "ids": [
+        "D6-005"
+      ],
+      "meaning": "Daniel brought back water in the dark while everyone was asleep, so he should not pretend he was just resting."
+    },
+    {
+      "ids": [
+        "D6-007"
+      ],
+      "meaning": "Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel."
+    }
+  ],
+  "feeling": "exhausted and resentful",
+  "intent": "I will check on the water supply in the yard and keep my distance from Daniel."
+}
+LEO MIND PROMPT (live idx 244 ): lines holding his sentence:
+    - [D6-007] About confronting Daniel: "Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel."
+    [D7-005] min 00: you confronted Daniel, saying: "Daniel, stop deflecting every time someone asks a straightforward question." You felt cold. Then 5 more times, to 17:21; last: "Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel."
+   his answer: {"memories": [{"ids": ["D7-005", "D7-006"], "meaning": "Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel."}, {"ids": ["D7-068"], "meaning": "I have grown thin and weak, and stairs and carrying things tired me fast."}], "feeling": "cold and exhausted", "intent": "I will check the rain water in the bin under the drainpipe tomorrow."}
+
+Leo's day prompts that hold his own sentence in 'What yesterday left in you', with the answer's words:
+   Now, minute 00, you are in the kitchen. | Daniel, stop deflecting every time someone asks a straightforward question.
+   Now, minute 03, you are in the kitchen. | Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel.
+   Now, minute 06, you are in the kitchen. | None
+   Now, minute 12, you are in the brothers  | None
+   Now, 10:06, you are in the kitchen. | Holding the family together doesn't give you the right to lecture anyone, Daniel.
+   Now, 10:09, you are in the kitchen. | Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel.
+   Now, 10:12, you are in the kitchen. | None
+   Now, 17:18, you are in the kitchen. | Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel.
+   Now, 17:21, you are in the kitchen. | Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel.

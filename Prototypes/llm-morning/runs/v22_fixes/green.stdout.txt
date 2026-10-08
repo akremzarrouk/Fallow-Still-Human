@@ -1,0 +1,10 @@
+$ python -m unittest <the three new tests>   (after the three changes)
+test_s6_a_sentence_the_person_spoke_is_a_quotation_not_in_the_records (test_morning.DaysTest.test_s6_a_sentence_the_person_spoke_is_a_quotation_not_in_the_records) ... ok
+test_you_meant_to_is_shown_only_until_the_first_speech_act_of_the_day (test_morning.PhysicalLayerTest.test_you_meant_to_is_shown_only_until_the_first_speech_act_of_the_day) ... ok
+test_q6_is_skipped_when_nobody_in_its_room_is_offered_a_rain_action (test_morning.PhysicalLayerTest.test_q6_is_skipped_when_nobody_in_its_room_is_offered_a_rain_action) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 4.132s
+
+OK
+exit 0

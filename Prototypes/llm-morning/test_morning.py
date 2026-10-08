@@ -3958,6 +3958,40 @@ class DaysTest(unittest.TestCase):
         r = self.mind.check_answer("not json", "leo", shown, c, ())
         self.assertEqual((r["mode"], r["kept"], r["feeling"], r["intent"]), ("fallback", [], None, None))
 
+    # reports/v22_fixes.md, rule 1
+    def test_s6_a_sentence_the_person_spoke_is_a_quotation_not_in_the_records(self):
+        mine = "Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel."
+        c = self.handmade([
+            {"id": "D1-006", "scene": "D1", "minute": 33, "kind": "confess", "option": "confess", "actor": "daniel",
+             "words": "I took it in the night, I'm sorry.", "witnesses": {p: "saw" for p in data.ORDER} | {"daniel": "did"}},
+            {"id": "D1-007", "scene": "D1", "minute": 40, "kind": "confront", "option": "confront_daniel", "actor": "leo",
+             "target": "daniel", "words": mine, "witnesses": {p: "saw" for p in data.ORDER} | {"leo": "did"}},
+        ])
+        shown = {"D1-006": "min 33: Daniel admitted taking the can: \"I took it in the night, I'm sorry.\" (you heard it)",
+                 "D1-007": f"min 40: you confronted Daniel, saying: \"{mine}\" You felt resentful."}
+
+        def verdict(pid, meaning):
+            return self.mind.check_answer(mind_answer(["D1-006" if pid != "leo" else "D1-007"], meaning), pid, shown, c, ()
+                                          )["memories"][0]["verdict"]
+        S6 = "rejected: S6 a quotation not in the records"
+        # The person's own sentence, unquoted, quoted, or part of it quoted: the same verdict as a quotation that is
+        # not in the records.
+        self.assertEqual(verdict("leo", mine), S6)
+        self.assertEqual(verdict("leo", f'I told Daniel "{mine}"'), S6)
+        self.assertEqual(verdict("leo", 'I told Daniel "put everyone else in danger" and he did not listen.'), S6)
+        self.assertEqual(verdict("daniel", "I said \"I took it in the night, I'm sorry\" and nobody answered."), S6)
+        # Other people's words are as before, quoted or not, and so is the person's own gist.
+        self.assertEqual(verdict("leo", 'Daniel said "I took it in the night" at last.'), "kept")
+        self.assertEqual(verdict("leo", "I took it in the night, I'm sorry."), "kept")
+        self.assertEqual(verdict("leo", "I told Daniel that risking his life put the rest of us in danger."), "kept")
+        # The intent is held to the same rule.
+        def intent(pid, text):
+            return self.mind.check_answer(mind_answer(["D1-006"], "He blamed me.", intent=text), pid, shown, c, ()
+                                          )["intent_verdict"]
+        self.assertEqual(intent("leo", mine), S6)
+        self.assertEqual(intent("leo", f'Say it again: "{mine}"'), S6)
+        self.assertEqual(intent("leo", 'Ask Daniel why he said "I took it in the night".'), "kept")
+
     # N-T6
     def test_n_t6_the_blocks_exactly(self):
         # A on day 2 is v13's carry-in, byte for byte; B follows it.
@@ -4369,9 +4403,12 @@ class DaysTest(unittest.TestCase):
 class CheckErrorsTest(unittest.TestCase):
     """The night-mind checks on v15's own answers (reports/check_errors.md): each answer is checked again on the input
     it had, i.e. the records its prompt showed (from cache/v15, read only), the chronicle up to that night and the
-    meanings it already carried. The four check errors of reports/days_v15.md §4 now keep a true thought; every other
-    verdict stays as v15 gave it."""
-    FIXED = {(1, 1, "elena", 1), (3, 2, "elena", 1), (1, 2, "daniel", 2), (1, 1, "mara", "intent")}
+    meanings it already carried. The four check errors of reports/days_v15.md §4 now keep a true thought, and the two own
+    sentences of Mara's now fail S6; every other verdict stays as v15 gave it."""
+    # Plus, from reports/v22_fixes.md (rule 1): two memories of Mara's (seed 1, night 2) that were her own spoken
+    # sentences, kept in v15 and now rejected by S6.
+    FIXED = {(1, 1, "elena", 1), (3, 2, "elena", 1), (1, 2, "daniel", 2), (1, 1, "mara", "intent"),
+             (1, 2, "mara", 1), (1, 2, "mara", 2)}
     @classmethod
     def setUpClass(cls):
         cls.mind = importlib.import_module("mind")
@@ -6587,6 +6624,85 @@ class PhysicalLayerTest(unittest.TestCase):
         self.assertTrue(first)
         for x in first:
             self.assertIn(self.quiet.RAIN_TRIGGER, x["triggers"], x)
+
+    # reports/v22_fixes.md, rule 2
+    def test_you_meant_to_is_shown_only_until_the_first_speech_act_of_the_day(self):
+        class Recording(PolicyFake):
+            prompts = []
+
+            def generate(self, system, prompt, schema=None):
+                if schema is None:
+                    self.prompts.append(prompt)
+                return super().generate(system, prompt, schema)
+        rec = Recording(lambda who, minute, opts: "reassure_all" if "reassure_all" in opts else None)
+        rec.prompts = []
+        d = self.v16(client=rec)
+        m = d.day3
+        mara = m.people["mara"]
+        meant = '- You meant to: "'
+        self.assertTrue([x for x in d.day3.carry["mara"] if x.startswith(meant)], "the premise: the night mind left an intent")
+        self.quiet.play(m)
+        hers = [x for x in rec.prompts if x.startswith("You are Mara,") and "Your options:" in x and "Now it is night" not in x]
+        self.assertGreaterEqual(len(hers), 3)
+        self.assertIn(meant, hers[0])                       # before she has spoken
+        for later in hers[1:]:
+            self.assertNotIn(meant, later)
+            self.assertIn("- How it left you:", later)      # the rest of the block stays
+            self.assertIn("What yesterday left in you (your own thoughts, last night):", later)
+        # The bedtime prompt follows the same rule: she spoke today.
+        night = m.prompt_for(mara, None, [Option("sleep", "go to sleep")], night=["Now it is night."])
+        self.assertNotIn(meant, night)
+        mara.said_lines = []
+        self.assertIn(meant, m.prompt_for(mara, None, [Option("sleep", "go to sleep")], night=["Now it is night."]))
+        # It is each person's own: Leo spoke too, and with his spoken lines cleared his intent is back, hers still gone.
+        leo = m.people["leo"]
+        self.assertTrue(leo.said_lines)
+        leo.said_lines = []
+        mara.said_lines = ["19:03, you reassured everyone."]
+        self.assertIn(meant, m.prompt_for(leo, 3, m.options_for(leo)))
+        self.assertNotIn(meant, m.prompt_for(mara, 3, m.options_for(mara)))
+        # Days 1 and 2 are as they were: the intent stays after a spoken line (v16's cache answers them).
+        spoke = [p for p in d.day2.people.values() if p.said_lines and [x for x in d.day2.carry[p.id] if x.startswith(meant)]]
+        self.assertTrue(spoke, "the premise: someone spoke on day 2 and carried an intent")
+        for p in spoke:
+            self.assertIn(meant, d.day2.prompt_for(p, 9, d.day2.options_for(p)), p.id)
+
+    # reports/v22_fixes.md, rule 3
+    def test_q6_is_skipped_when_nobody_in_its_room_is_offered_a_rain_action(self):
+        def run(bin_out, rain=True):
+            d = self.v16(client=self.silent())
+            m, q = d.day3, d.day3.quiet
+            if rain:
+                self.rain(q.world, 3, [(300, 420, 6.0)])
+            else:
+                self.dry(q.world, 3)
+            if bin_out:
+                q.world.put_bin_out("daniel", self.at(3, 0))
+            self.quiet.play(m)
+            return m, q
+        m, q = run(True)
+        q6 = [e for e in q.log if e["kind"] == "Q6"]
+        self.assertEqual(len(q6), 1, q6)
+        e = q6[0]
+        self.assertEqual((e["minute"], e["fired"], e["asked"], e["why"]), (300, False, [], "Q6 skipped: no rain action"), e)
+        self.assertFalse([s for s in q.stretches if s["trigger"] == "Q6"], q.stretches)
+        self.assertFalse([x for rec in m.log for x in rec["decisions"] if x.get("quiet") == "Q6"])
+        # The onset is written as before: remembered by everyone awake, and in the record of the day.
+        awake = [p for ids in e["awake"].values() for p in ids]
+        self.assertTrue(awake)
+        for pid in data.ORDER:
+            self.assertEqual((300, self.quiet.RAIN_HEARD) in m.people[pid].memory, pid in awake, pid)
+        self.assertEqual([(x["minute"], sorted(x["witnesses"])) for x in q.items() if x["kind"] == "rain"],
+                         [(300, sorted(awake))])
+        # No asks are spent on it (the same day without the rain asks as many), and it does not use up the day's Q6.
+        self.assertFalse(q.q6_done)
+        _, dry = run(True, rain=False)
+        self.assertEqual(q.asks, dry.asks)
+        # With the bin not out, as before: Q6 fires and plays the room.
+        m2, q2 = run(False)
+        self.assertEqual([(e["fired"], e["why"]) for e in q2.log if e["kind"] == "Q6"], [(True, None)])
+        self.assertTrue([s for s in q2.stretches if s["trigger"] == "Q6"])
+        self.assertGreater(q2.asks, q.asks)
 
     def test_a_prompt_while_it_rains_says_so(self):
         d = self.v16()

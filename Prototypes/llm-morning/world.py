@@ -75,6 +75,7 @@ SHOWN = {
     1: ("sad", "miserab"),
 }
 FEELING_SHOWS_FOR_TURNS = 3
+INTENT_LINE = "- You meant to:"     # the first line of memory.block_b that is the night mind's intent
 PROMPT_TOKEN_BUDGET = 1400   # estimated; the API counted 1,370 at most in the second step
 QUIET_TURNS = 2              # full turns with nothing new that end a conversation
 INNER_EVERY = 9              # minutes: an inner moment at most this often per person
@@ -591,7 +592,7 @@ class Morning:
         for r in data.ROOMS:
             if r != p.room:
                 opts.append(Option(f"go_{r}", f"go to the {data.ROOMS[r]}", kind="go", to=r))
-        if p.room == "kitchen" and p.rain_since is not None and p.water is not None and not p.water["bin_out"]:
+        if self.rain_action(p):
             opts.append(Option("collect_rain", "go out the back door into the rain and set the bin under the "
                                                "drainpipe in the yard", kind="collect_rain"))
         if p.room == "kitchen" and self.portions > 0:
@@ -732,6 +733,11 @@ class Morning:
                 said = f"{x} said {he} will not go"
             parts.append(f"{said} ({data.clock(minute)})")
         return "About going there tonight: " + "; ".join(parts) + "."
+
+    @staticmethod
+    def rain_action(p):
+        """Whether p is offered `collect_rain`: in the kitchen, while it rains for them, with the bin not out."""
+        return p.room == "kitchen" and p.rain_since is not None and p.water is not None and not p.water["bin_out"]
 
     def trip_lines(self, p):
         """What the trip concern adds after their "About the can:" line. On day 2 the food and
@@ -1150,6 +1156,10 @@ class Morning:
         if p.said_lines:
             pinned += [f"Your own last words {when}:"] + [f"- {x}" for x in p.said_lines[-3:]]
         carry = self.carry.get(p.id, [])
+        if self.quiet is not None and p.said_lines:
+            # From day 3 on, last night's intent is shown until their first speech act of the day (reports/v22_fixes.md,
+            # rule 2). Days 1 and 2 are as they were, so that v16's cache still answers them.
+            carry = [x for x in carry if not x.startswith(INTENT_LINE)]
         # Once the trip concern has started, its block sits outside the budget
         # (reports/trip_design.md, §2.5): its lines, its options, the day-2 memories it keeps from
         # trimming, and "this morning" in the house line. `block` counts its characters. On day 2

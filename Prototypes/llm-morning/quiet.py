@@ -368,6 +368,9 @@ class Quiet:
                 entry["why"] = "Q6 has fired today already"
                 continue
             room = max(rooms, key=lambda r: (len(rooms[r]), -list(data.ROOMS).index(r)))
+            if not any(self.m.rain_action(self.m.people[pid]) for pid in rooms[room]):
+                entry["why"] = "Q6 skipped: no rain action"      # nobody there could do anything about it (v22_fixes)
+                continue
             self.q6_done = True
             entry.update(fired=True, room=room, asked=list(rooms[room]))
             for pid in rooms[room]:

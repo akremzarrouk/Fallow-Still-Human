@@ -1,0 +1,148 @@
+== 2a. Daniel's bedtime prompt, the lines that come from the day just played (v22 cache; files runs/v22gaps/daniel_night<k>_bedtime_prompt.txt)
+
+-- NIGHT 6: options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; chose lie_awake; reason: 'I need to rest my body while staying alert to protect everyone in the house.'
+   Daniel's trip-position acts on day 6: []
+   What you are sure of from today:
+   - min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. The water you brought back is in the kitchen: about 10 litres. (you saw it)
+   Your own last words today:
+   - 10:09, you reassured Mara.
+   - 10:36, you confronted Mara.
+   - 10:39, you reassured everyone.
+   What else happened today, most recent last:
+   - (earlier things, left out here)
+   - 10:39: Elena reassures everyone: "Let us not argue while we are all together, we need to stay calm."
+   - 10:39: Leo confronts you: "You went out into the dark again and risked everything just to prove you can do whatever you want."
+   - 11:39: you went to the brothers room.
+   - 11:39: you lay down on your bed.
+   - 14:39: you got up from your bed.
+   - 14:39: you went to the kitchen.
+   Against Mara (some): five days ago, Mara ate a portion in front of you at minute 54, while you were hungry; you were angry with Mara today at 10:03, 10:06, 10:36 and 10:39.
+   Now it is night. After the morning: you lay on your bed in the brothers room (min 21 to 09:39); you sat in the kitchen (09:39 to 11:39); you lay on your bed in the brothers room (11:39 to 14:39); you sat in the kitchen with Elena, Leo and Mara (14:39 to 21:00). Nobody ate.
+   'Yesterday and last night' (day 6's own lines? no: day 5's): lines naming a trip: ['- What was said yesterday about going out last night, where it was left: Mara said you must stay home (min 06); you said you still mean to go (19:03); Leo said nobody should go (19:03); Elena said you must stay home (19:03); then you went t']
+
+-- NIGHT 7: options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; chose lie_awake; reason: 'I cannot rest properly while the family is falling apart around us and I need to keep watch over everything.'
+   Daniel's trip-position acts on day 7: []
+   What you are sure of from today:
+   - min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)
+   Your own last words today:
+   - 10:42, you confronted Mara.
+   - 17:18, you confronted Mara.
+   - 17:21, you confronted Leo.
+   What else happened today, most recent last:
+   - (earlier things, left out here)
+   - 17:21: you confronted Leo. You felt anxious.
+   - 17:21: Leo confronts you: "Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel."
+   - 17:21: Mara confronts you: "You think you can just yell at everyone after what you did, Daniel?"
+   - 17:21: Elena reassures everyone: "Let's not fight among ourselves. We will get through this if we stick together."
+   Against Leo (some): you were angry with Leo today at 10:06, 10:09, 10:12 and 17:21.
+   Against Mara (a lot): six days ago, Mara ate a portion in front of you at minute 54, while you were hungry; you were angry with Mara today at 10:36, 10:39, 10:42 and 17:18.
+   Now it is night. After the morning: you lay on your bed in the brothers room (min 18 to 09:27); you sat in the kitchen (09:27 to 11:27); you lay on your bed in the brothers room (11:27 to 14:57); you sat in the kitchen with Leo and Mara (14:57 to 21:00). Nobody ate.
+   'Yesterday and last night' (day 7's own lines? no: day 6's): lines naming a trip: []
+
+-- NIGHT 8: options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; chose sleep; reason: 'I am too weak and tired to make it out there tonight.'
+   Daniel's trip-position acts on day 8: [('min 12', 'volunteer', 'I will go out there myself tonight and find us something to eat.'), ('min 15', 'still_going', "I'm the oldest, and I'm going whether you like it or not."), ('09:51', 'still_going', "I told you, I still mean to go out there tonight and check the neighbour's house."), ('09:54', 'still_going', 'I am the oldest and I am going tonight whether you like it or not.'), ('16:45', 'still_going', 'I am the one who went out before, and I am still going tonight.'), ('16:48', 'still_going', 'I am the oldest, and I am the one who is going out there tonight.'), ('19:00', 'still_going', "I am going to the neighbour's house tonight whether you like it or not."), ('19:03', 'still_going', 'I am the oldest, and I am the one who is going out there tonight.')]
+   What you are sure of from today:
+   - min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)
+   Your own last words today:
+   - 16:48, you said you still mean to go there tonight.
+   - 19:00, you said you still mean to go there tonight.
+   - 19:03, you said you still mean to go there tonight.
+   What else happened today, most recent last:
+   - (earlier things, left out here)
+   - 19:03: Leo confronts you: "You are not going anywhere tonight, Daniel, and we are not having this argument again."
+   - 19:03: Elena says nobody should go out tonight: "Nobody is going out into the dark tonight, we must stay together and keep safe."
+   About going there tonight: Mara said you must stay home (min 12); Leo said you must stay home (19:00); you said you still mean to go (19:03); Elena said nobody should go (19:03).
+   Against Mara (a lot): seven days ago, Mara ate a portion in front of you at minute 54, while you were hungry; you were angry with Mara today at 16:45, 16:48, 19:00 and 19:03.
+   Now it is night. After the morning: you lay on your bed in the brothers room (min 18 to 09:51); you sat in the kitchen with Elena, Leo and Mara (09:57 to 11:51); you lay on your bed in the brothers room (11:51 to 13:33); you sat in the kitchen with Leo (13:33 to 21:00). Nobody ate.
+   You said you would go to the neighbour's house tonight. If you are going, it is now.
+   'Yesterday and last night' (day 8's own lines? no: day 7's): lines naming a trip: []
+
+-- NIGHT 9: options ['sleep', 'lie_awake', 'watch_door', 'go_next_door', 'go_further']; chose sleep; reason: 'My starving body is too weak to stand, so I cannot go out tonight.'
+   Daniel's trip-position acts on day 9: [('min 06', 'propose_trip', "We can't just sit here arguing while we starve; I say someone has to check the neighbour's house again tonight."), ('min 09', 'volunteer', 'I am the eldest and I will be the one to go tonight. I will keep us safe.'), ('min 12', 'still_going', 'I am the oldest and I am the one going out tonight whether you like it or not.'), ('min 15', 'still_going', 'I am the oldest, and I am the one who will go out tonight to find what we need.'), ('09:51', 'still_going', "I don't care what anyone says, I am still going out there tonight to find something for us."), ('09:54', 'still_going', 'I have to go out there because staying here gets us nowhere.'), ('09:57', 'still_going', 'I have to go out there because sitting here waiting for nothing will kill us faster.'), ('19:00', 'still_going', 'I am the eldest, and I will decide when it is time to go.'), ('19:03', 'still_going', 'I am the oldest, and I am the one who has to go out there for us.')]
+   What you are sure of from today:
+   - min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)
+   Your own last words today:
+   - 11:33, you said.
+   - 19:00, you said you still mean to go there tonight.
+   - 19:03, you said you still mean to go there tonight.
+   What else happened today, most recent last:
+   - (earlier things, left out here)
+   - 19:03: you said you still mean to go there tonight. You felt defiant.
+   - 19:03: Leo says you must stay home tonight: "You are not going out there, Daniel. We stay inside."
+   - 19:03: Elena says nobody should go out tonight: "Nobody is going out tonight, we stay together."
+   - 19:03: Mara accuses you of taking it: "You think you can just act like a hero now, but going out doesn't change what you did to us."
+   About going there tonight: Mara said you must stay home (19:00); you said you still mean to go (19:03); Leo said you must stay home (19:03); Elena said nobody should go (19:03).
+   Against Leo (some): you were angry with Leo yesterday at minute 12; and today at 09:51, 09:54 and 19:00.
+   Now it is night. After the morning: you lay on your bed in the brothers room (min 18 to min 87); you sat in the kitchen (min 87 to 10:27); you lay on your bed in the brothers room (10:27 to 11:33); you sat in the kitchen with Elena and Leo (11:39 to 21:00). Nobody ate.
+   You said you would go to the neighbour's house tonight. If you are going, it is now.
+   'Yesterday and last night' (day 9's own lines? no: day 8's): lines naming a trip: ['- What was said yesterday about going out last night, where it was left: Mara said you must stay home (min 12); Leo said you must stay home (19:00); you said you still mean to go (19:03); Elena said nobody should go (19:03); then nobody wen']
+
+== 2c. each day's Q5 (quiet.log), Daniel's trip positions that day, and the night that followed
+
+day 3: trip-position acts 0; Daniel's 0; Q5 entry: fired=False asked=None room=None why=no trip position today positions={}
+   night 3: Daniel bedtime lie_awake; leavers []; groups []
+
+day 4: trip-position acts 12; Daniel's 5; Q5 entry: fired=True asked=mara room=kitchen why=None positions={'mara': [18, 26], 'daniel': [18, 25], 'elena': [12, 18], 'leo': [9, 14]}
+   Q5 stretch 19:00-19:09, 8 asks:
+      19:00 Mara [accuse_daniel] You are the one who took the food, Daniel, and now we have nothing left at all.
+      19:00 Leo [accuse_daniel] Mara is right, Daniel, you are the one who took the food from the pantry and lied about it.
+      19:03 Daniel [reassure_all] We are going to be fine, I promise you all. Just trust me.
+      19:03 Leo [confront_daniel] Your empty promises don't change the fact that you left us with nothing, Daniel.
+      19:03 Elena [reassure_all] We must not turn on each other now, please. We will get through this evening together if we stay calm.
+      19:03 Mara [accuse_daniel] You keep making promises, Daniel, but you're the one who stole from us.
+      19:06 Daniel [reassure_all] Trust me, I will keep us safe and we will find a way through this together.
+      19:06 Elena [reassure_all] We must stay calm and look after each other, fighting will not help us survive.
+   night 4: Daniel bedtime lie_awake; leavers []; groups []
+
+day 5: trip-position acts 21; Daniel's 9; Q5 entry: fired=True asked=daniel room=kitchen why=None positions={'daniel': [189, 33], 'leo': [186, 31], 'elena': [12, 20], 'mara': [6, 12]}
+   Q5 stretch 19:00-19:06, 8 asks:
+      19:00 Daniel [still_going] I told you, I am going out tonight to find food for us whether you like it or not.
+      19:00 Leo [confront_daniel] Daniel, you went before and found nothing, and going out again will just get you killed.
+      19:00 Elena [nobody_goes] Nobody is going out tonight, we stay safe together right here.
+      19:00 Mara [accuse_daniel] You caused all of this because you lied and took the food from the pantry.
+      19:03 Daniel [still_going] I have to go out and find something for us, no matter what you all say.
+      19:03 Mara [accuse_daniel] You always act like you are saving us, Daniel, but you are the one who stole the food and lied to us.
+      19:03 Leo [nobody_goes] You are not going anywhere into the dark, Daniel, because it is suicide and we are staying put.
+      19:03 Elena [keep_daniel_home] Daniel, you are staying right here with us because I will not let you walk out into that dark.
+   night 5: Daniel bedtime go_next_door; leavers ['daniel']; groups [(['daniel'], 'back shaken, with water')]
+
+day 6: trip-position acts 0; Daniel's 0; Q5 entry: fired=False asked=None room=None why=no trip position today positions={}
+   night 6: Daniel bedtime lie_awake; leavers []; groups []
+
+day 7: trip-position acts 0; Daniel's 0; Q5 entry: fired=False asked=None room=None why=no trip position today positions={}
+   night 7: Daniel bedtime lie_awake; leavers []; groups []
+
+day 8: trip-position acts 24; Daniel's 8; Q5 entry: fired=True asked=elena room=kitchen why=None positions={'daniel': [588, 37], 'elena': [588, 39], 'leo': [588, 38], 'mara': [12, 20]}
+   Q5 stretch 19:00-19:06, 8 asks:
+      19:00 Daniel [still_going] I am going to the neighbour's house tonight whether you like it or not.
+      19:00 Elena [keep_daniel_home] Daniel, you must stay home tonight, we cannot risk losing you out there.
+      19:00 Mara [accuse_daniel] You think you can just do whatever you want after what you did to us!
+      19:00 Leo [keep_daniel_home] Daniel, staying home is the only safe choice we have left.
+      19:03 Daniel [still_going] I am the oldest, and I am the one who is going out there tonight.
+      19:03 Mara [accuse_daniel] You think you can just do whatever you want, but you are the one who stole from us!
+      19:03 Leo [confront_daniel] You are not going anywhere tonight, Daniel, and we are not having this argument again.
+      19:03 Elena [nobody_goes] Nobody is going out into the dark tonight, we must stay together and keep safe.
+   night 8: Daniel bedtime sleep; leavers []; groups []
+
+day 9: trip-position acts 31; Daniel's 9; Q5 entry: fired=True asked=leo room=kitchen why=None positions={'daniel': [177, 33], 'leo': [276, 45], 'elena': [270, 39], 'mara': [270, 38]}
+   Q5 stretch 19:00-19:06, 8 asks:
+      19:00 Leo [nobody_goes] Nobody is going out tonight, Daniel. We stay inside.
+      19:00 Mara [keep_daniel_home] Leo is right, Daniel, you have to stay here where it's safe.
+      19:00 Daniel [still_going] I am the eldest, and I will decide when it is time to go.
+      19:00 Elena [keep_daniel_home] Daniel, please listen to us, you are not going out into the dark tonight.
+      19:03 Daniel [still_going] I am the oldest, and I am the one who has to go out there for us.
+      19:03 Leo [keep_daniel_home] You are not going out there, Daniel. We stay inside.
+      19:03 Elena [nobody_goes] Nobody is going out tonight, we stay together.
+      19:03 Mara [accuse_daniel] You think you can just act like a hero now, but going out doesn't change what you did to us.
+   night 9: Daniel bedtime sleep; leavers []; groups []
+
+day 10: trip-position acts 27; Daniel's 13; Q5 entry: fired=True asked=daniel room=kitchen why=None positions={'daniel': [174, 46], 'mara': [171, 41], 'leo': [15, 24], 'elena': [15, 22]}
+   Q5 stretch 19:00-19:06, 8 asks:
+      19:00 Mara [accuse_daniel] You think you can just decide everything for us, Daniel. You have no right.
+      19:00 Daniel [still_going] I am the eldest, and I am going to the neighbour's house tonight whether you like it or not.
+      19:00 Elena [nobody_goes] Nobody is going out tonight. We stay inside together where it is safe.
+      19:00 Leo [nobody_goes] Mom is right, Daniel. Going out there tonight is suicide.
+      19:03 Elena [keep_daniel_home] Daniel, please, you cannot go out there. We need you to stay safe with us.
+      19:03 Daniel [still_going] I have to go, Mom, because someone has to find something for us.
+      19:03 Leo [keep_daniel_home] Daniel, you heard Mom. You are not going out tonight.
+      19:03 Mara [accuse_daniel] Daniel, you cannot just decide to go out there like you own us all!

@@ -1,0 +1,69 @@
+prompts with a Now line at 17:1x: [('Mara', 'Now, 17:18, you are in the kitchen.'), ('Daniel', 'Now, 17:18, you are in the kitchen.'), ('Elena', 'Now, 17:18, you are in the kitchen.'), ('Leo', 'Now, 17:18, you are in the kitchen.')]
+
+== Mara: options (29): ['silent', 'deny', 'accuse_daniel', 'confront_daniel', 'confront_elena', 'confront_leo', 'reassure_daniel', 'reassure_elena', 'reassure_leo', 'reassure_all', 'propose_trip', 'volunteer', 'send_daniel', 'send_elena', 'send_leo', 'propose_far', 'volunteer_far', 'save_water', 'ration_water', 'say_other', 'sit_daniel', 'sit_elena', 'sit_leo', 'aside_daniel', 'aside_elena', 'aside_leo', 'go_brothers_room', 'go_back_room', 'go_bathroom']
+   chose accuse_daniel | You took the can, Daniel, and you're the reason we have nothing left.
+   Now, 17:18, you are in the kitchen.
+   - Rain is falling: you hear it on the roof and against the boards.
+   - Daniel is here, sitting in the kitchen.
+   - Elena is here, sitting in the kitchen.
+   - Leo is here, sitting in the kitchen.
+   - 0 portions on the shelf.
+   You are the first to act in the kitchen this turn.
+   Your options:
+   RAIN/WATER LINE: About water: the bath is empty and the pans, kettle, bottles and buckets in the kitchen hold about 30 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash. The bin under the drainpipe in the yard holds about 70 litres of rain water.
+   RAIN/WATER LINE: - Rain is falling: you hear it on the roof and against the boards.
+
+== Daniel: options (26): ['silent', 'confront_elena', 'confront_leo', 'confront_mara', 'reassure_elena', 'reassure_leo', 'reassure_mara', 'reassure_all', 'propose_trip', 'volunteer', 'send_elena', 'send_leo', 'send_mara', 'propose_far', 'volunteer_far', 'save_water', 'ration_water', 'say_other', 'sit_elena', 'sit_leo', 'sit_mara', 'aside_elena', 'aside_leo', 'go_brothers_room', 'go_back_room', 'go_bathroom']
+   chose confront_mara | Stop blaming me, Mara, when I'm the one who risked everything out there to keep us alive.
+   Now, 17:18, you are in the kitchen.
+   - Rain is falling: you hear it on the roof and against the boards.
+   - Elena is here, sitting in the kitchen.
+   - Leo is here, sitting in the kitchen.
+   - Mara is here, talking.
+   - 0 portions on the shelf.
+   Said and done in the kitchen this turn, before you, in order:
+   1. Mara accuses Daniel of taking it: "You took the can, Daniel, and you're the reason we have nothing left."
+   RAIN/WATER LINE: About water: the bath is empty and the pans, kettle, bottles and buckets in the kitchen hold about 30 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash. The bin under the drainpipe in the yard holds about 70 litres of rain water.
+   RAIN/WATER LINE: - Rain is falling: you hear it on the roof and against the boards.
+
+== Elena: options (27): ['silent', 'deny', 'accuse_daniel', 'confront_daniel', 'confront_leo', 'confront_mara', 'reassure_daniel', 'reassure_leo', 'reassure_mara', 'reassure_all', 'propose_trip', 'volunteer', 'send_daniel', 'send_leo', 'send_mara', 'propose_far', 'volunteer_far', 'save_water', 'ration_water', 'say_other', 'sit_daniel', 'sit_leo', 'sit_mara', 'aside_leo', 'go_brothers_room', 'go_back_room', 'go_bathroom']
+   chose reassure_all | Please, let us not fight anymore, we will get through this if we stay together.
+   Now, 17:18, you are in the kitchen.
+   - Rain is falling: you hear it on the roof and against the boards.
+   - Daniel is here, talking.
+   - Leo is here, sitting in the kitchen.
+   - Mara is here, talking.
+   - 0 portions on the shelf.
+   Said and done in the kitchen this turn, before you, in order:
+   1. Mara accuses Daniel of taking it: "You took the can, Daniel, and you're the reason we have nothing left."
+   RAIN/WATER LINE: About water: the bath is empty and the pans, kettle, bottles and buckets in the kitchen hold about 30 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash. The bin under the drainpipe in the yard holds about 70 litres of rain water.
+   RAIN/WATER LINE: - About Daniel setting the bin under the drainpipe in the rain and confronting Daniel: "Daniel went out into the dark to bring water, but going out alone puts us all in danger."
+   RAIN/WATER LINE: - Rain is falling: you hear it on the roof and against the boards.
+
+== Leo: options (26): ['silent', 'deny', 'accuse_daniel', 'confront_daniel', 'confront_elena', 'confront_mara', 'reassure_daniel', 'reassure_elena', 'reassure_mara', 'reassure_all', 'propose_trip', 'volunteer', 'send_daniel', 'send_elena', 'send_mara', 'propose_far', 'volunteer_far', 'save_water', 'ration_water', 'say_other', 'sit_daniel', 'sit_elena', 'sit_mara', 'go_brothers_room', 'go_back_room', 'go_bathroom']
+   chose confront_daniel | Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel.
+   Now, 17:18, you are in the kitchen.
+   - Rain is falling: you hear it on the roof and against the boards.
+   - Daniel is here, talking.
+   - Elena is here, talking.
+   - Mara is here, talking.
+   - 0 portions on the shelf.
+   Said and done in the kitchen this turn, before you, in order:
+   1. Mara accuses Daniel of taking it: "You took the can, Daniel, and you're the reason we have nothing left."
+   RAIN/WATER LINE: About water: the bath is empty and the pans, kettle, bottles and buckets in the kitchen hold about 30 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash. The bin under the drainpipe in the yard holds about 70 litres of rain water.
+   RAIN/WATER LINE: - Rain is falling: you hear it on the roof and against the boards.
+
+== prompts holding the 'Rain began' memory line:
+  Leo ['Now, 11:33, you are in the kitchen.'] ['- 11:30: Rain began: you heard it on the roof and against the boards.']
+  Elena ['Now, 11:33, you are in the kitchen.'] ['- 11:30: Rain began: you heard it on the roof and against the boards.']
+  Mara ['Now, 11:33, you are in the kitchen.'] ['- 11:30: Rain began: you heard it on the roof and against the boards.']
+== prompts per kind with 'collect_rain' option: 1
+   Daniel ['Now, minute 00, you are in the kitchen.'] chose collect_rain
+== prompts with 'Rain is falling' per day-of-run rows and whether collect_rain was offered:
+  prompts with the rain line: 80 ; of them in the kitchen: 74
+
+== day 7 17:21 prompts: the memory lines at the end of 'What else happened today' (is 'Rain began' there?)
+  Daniel ['- (earlier things, left out here)', '- 17:18: Leo confronts you: "Risking your life doesn\'t give you the right to put everyone else in danger by sneaking out without a word, Daniel."']
+  Leo ['- (earlier things, left out here)', '- 17:18: Elena reassures everyone: "Please, let us not fight anymore, we will get through this if we stay together."', '- 17:18: you confronted Daniel. You felt resentful.']
+  Mara ['- (earlier things, left out here)', '- 17:18: Elena reassures everyone: "Please, let us not fight anymore, we will get through this if we stay together."', '- 17:18: Leo confronts Daniel: "Risking your life doesn\'t give you the right to put everyone else in danger by sneaking out without a word, Daniel."']
+  Elena ['- (earlier things, left out here)', '- 17:18: Mara accuses Daniel of taking it: "You took the can, Daniel, and you\'re the reason we have nothing left."', '- 17:18: Daniel confronts Mara: "Stop blaming me, Mara, when I\'m the one who risked everything out there to keep us alive."', '- 17:18: you reassured everyone. You felt anxious.', '- 17:18: Leo confronts Daniel: "Risking your life doesn\'t give you the right to put everyone else in danger by sneaking out without a word, Daniel."']

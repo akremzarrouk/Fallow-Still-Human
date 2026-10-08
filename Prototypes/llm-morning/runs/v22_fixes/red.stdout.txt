@@ -1,0 +1,41 @@
+$ python -m unittest <the three new tests>   (before any change to mind.py, world.py, quiet.py)
+FFF
+======================================================================
+FAIL: test_s6_a_sentence_the_person_spoke_is_a_quotation_not_in_the_records (test_morning.DaysTest.test_s6_a_sentence_the_person_spoke_is_a_quotation_not_in_the_records)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 3979, in test_s6_a_sentence_the_person_spoke_is_a_quotation_not_in_the_records
+    self.assertEqual(verdict("leo", mine), S6)
+AssertionError: 'kept' != 'rejected: S6 a quotation not in the records'
+- kept
++ rejected: S6 a quotation not in the records
+
+
+======================================================================
+FAIL: test_you_meant_to_is_shown_only_until_the_first_speech_act_of_the_day (test_morning.PhysicalLayerTest.test_you_meant_to_is_shown_only_until_the_first_speech_act_of_the_day)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 6646, in test_you_meant_to_is_shown_only_until_the_first_speech_act_of_the_day
+    self.assertNotIn(meant, later)
+AssertionError: '- You meant to: "' unexpectedly found in 'You are Mara, 17, the youngest, the daughter of the family (Elena, 42, the mother; Daniel, 25; Leo, 21; Mara, 17).\nHow you address them: Elena "Mom"; Daniel "Daniel"; Leo "Leo".\nWho you are: Younger 
+
+======================================================================
+FAIL: test_q6_is_skipped_when_nobody_in_its_room_is_offered_a_rain_action (test_morning.PhysicalLayerTest.test_q6_is_skipped_when_nobody_in_its_room_is_offered_a_rain_action)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 6676, in test_q6_is_skipped_when_nobody_in_its_room_is_offered_a_rain_action
+    self.assertEqual((e["minute"], e["fired"], e["asked"], e["why"]), (300, False, [], "Q6 skipped: no rain action"), e)
+AssertionError: Tuples differ: (300, True, ['daniel'], None) != (300, False, [], 'Q6 skipped: no rain action')
+
+First differing element 1:
+True
+False
+
+- (300, True, ['daniel'], None)
++ (300, False, [], 'Q6 skipped: no rain action') : {'kind': 'Q6', 'minute': 300, 'room': 'kitchen', 'awake': {'kitchen': ['daniel']}, 'fired': True, 'asked': ['daniel'], 'why': None}
+
+----------------------------------------------------------------------
+Ran 3 tests in 2.091s
+
+FAILED (failures=3)
+exit 1

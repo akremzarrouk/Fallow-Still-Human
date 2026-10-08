@@ -1,0 +1,33 @@
+[all three rules on] FIRST MISS at ask 100 (live ask 4), scene day3, Daniel; ['Now, minute 03, you are in the kitchen.']
+      --- cached v22 prompt
+      +++ prompt now
+      -- You meant to: "I will face whatever they say to me in the morning and try to keep us all alive."
+      (1 differing lines in all)
+[rule 2 off] FIRST MISS at ask 295 (live ask 199), scene day7, Leo; ['Now, minute 00, you are in the kitchen.']
+      --- cached v22 prompt
+      +++ prompt now
+      -- About confronting Daniel: "Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel."
+      (1 differing lines in all)
+[rules 2 and 3 off (rule 1 only)] FIRST MISS at ask 295 (live ask 199), scene day7, Leo; ['Now, minute 00, you are in the kitchen.']
+      --- cached v22 prompt
+      +++ prompt now
+      -- About confronting Daniel: "Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Daniel."
+      (1 differing lines in all)
+[rules 1 and 2 off (rule 3 only)] FIRST MISS at ask 326 (live ask 230), scene day7, Mara; ['Now, 19:00, you are in the kitchen.']
+      --- cached v22 prompt
+      +++ prompt now
+      -Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; and you feel cold, even indoors.
+      +Your body: starving, for days now: you feel light and slow, and standing up fast greys your sight for a moment; you feel cold, even indoors; and you have hardly slept.
+      -- 13:57: you got up from your bed.
+      -- 13:57: you went to the kitchen.
+      -- 14:57: Daniel comes into the kitchen.
+      +- 17:18: Rain began: you heard it on the roof and against the boards.
+      -Now, 17:18, you are in the kitchen.
+      +Now, 19:00, you are in the kitchen.
+      (8 differing lines in all)
+[rules 1 and 3 off (rule 2 only)] FIRST MISS at ask 100 (live ask 4), scene day3, Daniel; ['Now, minute 03, you are in the kitchen.']
+      --- cached v22 prompt
+      +++ prompt now
+      -- You meant to: "I will face whatever they say to me in the morning and try to keep us all alive."
+      (1 differing lines in all)
+[all three off (the check: v22 as it ran)] no cache miss: 498 asks answered from cache; ended with the run finishing

@@ -1,0 +1,7 @@
+v15 verdicts that differ from what the current checks give (seed, night, person, memory), with the FIXED set: ["(1, 1, 'elena', 1)", "(1, 1, 'mara', 'intent')", "(1, 2, 'daniel', 2)", "(1, 2, 'mara', 1)", "(1, 2, 'mara', 2)", "(3, 2, 'elena', 1)"]
+(1, 1, 'elena', 1) in FIXED | was rejected: S8 elena find: no such event | now kept | I heard the front door open in the night and found Daniel's bed empty before he returned with nothing in his hands.
+(1, 1, 'mara', 'intent') in FIXED | was rejected: S8 mara come back: no such event | now kept | I am going to ask Daniel why he went out into the night and came back with nothing.
+(1, 2, 'daniel', 2) in FIXED | was rejected: S4 Leo | now kept | I lay awake in the dark with Leo, listening and starving, knowing the responsibility is mine alone.
+(1, 2, 'mara', 1) in FIXED | was kept | now rejected: S6 a quotation not in the records | You think you can just sneak out and fix everything by yourself, Daniel, but you can't.
+(1, 2, 'mara', 2) in FIXED | was kept | now rejected: S6 a quotation not in the records | You act like you're so smart, Leo, but you just sit there and judge everyone else when you're just as bad.
+(3, 2, 'elena', 1) in FIXED | was rejected: S8 elena take: no such event | now kept | Someone went out into the dark and came back before dawn and I stayed in bed while my children took risks.

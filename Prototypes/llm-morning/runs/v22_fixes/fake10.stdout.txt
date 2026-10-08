@@ -1,0 +1,3 @@
+morning.run(2, fake=True, days=10): exit 0; asks 360
+  day 7 Q6 at minute 618: fired=True asked=['leo'] why=None
+  day 9 Q6 at minute 270: fired=True asked=['leo'] why=None

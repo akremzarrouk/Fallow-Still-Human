@@ -1,0 +1,17 @@
+runs/v22: day prompts 342; verbatim own earlier words (>= 25 chars) found in a later prompt of the same person: 5 lines
+    Leo 5 ('What yesterday left in you (your own thoughts, last night):', '- About confronting Daniel: "Risking your life doesn\'t give you the right to put everyone else in danger by sneaking out without a word, Daniel."')
+    by section: {'What yesterday left in you (your own thoughts, last night):': 5}
+    lines said word for word on 2+ different days: 5 ({'Daniel': 3, 'Elena': 1, 'Leo': 1})
+       Daniel [4, 10] I am the oldest, and I am going whether you like it or not.
+       Daniel [5, 8] I am the oldest and I am going tonight whether you like it or not.
+       Daniel [9, 10] I have to go out there because staying here gets us nowhere.
+       Elena [8, 10] Nobody is going out tonight. We stay together and we stay safe.
+       Leo [6, 7] Risking your life doesn't give you the right to put everyone else in danger by sneaking out without a word, Da
+runs/v21: day prompts 279; verbatim own earlier words (>= 25 chars) found in a later prompt of the same person: 6 lines
+    Leo 6 ('What yesterday left in you (your own thoughts, last night):', '- About accusing Daniel of taking the can and confronting Daniel: "You spent days lying about the can, Daniel, so nobody believes your promises now."')
+    by section: {'What yesterday left in you (your own thoughts, last night):': 6}
+    lines said word for word on 2+ different days: 4 ({'Daniel': 1, 'Elena': 1, 'Leo': 1, 'Mara': 1})
+       Daniel [3, 7] We are going to make it through this together, just trust me.
+       Elena [4, 8] Please stop fighting, we need to stay together and look after each other right now.
+       Leo [5, 6] You spent days lying about the can, Daniel, so nobody believes your promises now.
+       Mara [5, 9, 10] You took the can, Daniel, and you're the reason we have nothing left.

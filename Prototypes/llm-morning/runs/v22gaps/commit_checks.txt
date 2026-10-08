@@ -1,0 +1,12 @@
+$ git rev-parse HEAD
+966d5b5fa0bb58ae28e76c9516aaf1a457248358
+$ git show --stat --format="%h %s" HEAD | tail -1
+ 40 files changed, 191011 insertions(+)
+$ git grep -c <middle of the one-off key> HEAD   (the one-off key's middle; no output = in no file of the commit)
+exit 1
+$ git grep -cE "AQ\.[A-Za-z0-9_-]{30,}" HEAD
+exit 1
+$ git diff HEAD~1 HEAD --name-only | grep -vc "^Prototypes/llm-morning/\(reports/days_v22\|runs/v22\|runs/w22\|cache/v22\)"
+0
+$ git diff HEAD~1 HEAD --name-only | wc -l
+40

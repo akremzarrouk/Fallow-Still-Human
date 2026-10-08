@@ -161,6 +161,32 @@ def tokens(text):
     return re.findall(r"[a-z0-9']+", text.lower().replace("no one", "noone"))
 
 
+MIN_OWN_SENTENCE = 5        # words: a whole spoken sentence this long, copied into a meaning, is a quotation of it
+
+
+def own_sentences(chron, pid):
+    """Every sentence pid spoke (the words of their events, whole and sentence by sentence), as norm() writes them
+    (reports/v22_gaps.md, §1b)."""
+    out = set()
+    for e in chron.events:
+        if e["actor"] == pid and e["words"]:
+            out.add(norm(e["words"]))
+            out |= {norm(x) for x in re.split(r"(?<=[.!?])\s+", e["words"])}
+    out.discard("")
+    return out
+
+
+def quotes_own_words(text, chron, pid):
+    """Whether text quotes something pid said: words in quotation marks that are part of a sentence they spoke, or
+    a whole sentence of theirs, quoted or not (S6, reports/v22_gaps.md). Other people's words are not looked at."""
+    own = own_sentences(chron, pid)
+    for q in QUOTE.findall(text):
+        said = norm(q[0] or q[1])
+        if said and any(f" {said} " in f" {o} " for o in own):
+            return True
+    return any(len(o.split()) >= MIN_OWN_SENTENCE and f" {o} " in f" {norm(text)} " for o in own)
+
+
 def verb_at(toks, j):
     """The family whose words start at toks[j], if any."""
     for family, patterns in FAMILIES:
@@ -279,6 +305,8 @@ def check_memory(m, pid, shown, chron, carried, warnings=None):
     for q in QUOTE.findall(meaning):
         if norm(q[0] or q[1]) not in said:
             return "rejected: S6 a quotation not in the records"
+    if quotes_own_words(meaning, chron, pid):
+        return "rejected: S6 a quotation not in the records"
     d = DENY.search(meaning)
     if d:
         return f"rejected: S7 {d.group(0)}"
@@ -337,6 +365,8 @@ def intent_verdict(intent, pid, shown, chron, warnings=None):
     for q in QUOTE.findall(intent):
         if norm(q[0] or q[1]) not in said:
             return "rejected: S6 a quotation not in the records"
+    if quotes_own_words(intent, chron, pid):
+        return "rejected: S6 a quotation not in the records"
     d = DENY.search(intent)
     if d:
         return f"rejected: S7 {d.group(0)}"

@@ -1,0 +1,5 @@
+v21: kept memories and intents of minds 3-9: 78; that quote the person's own words: 1
+    (5, 'leo', 'memory', 'You spent days lying about the can, Daniel, so nobody believes your promises now.')
+v22: kept memories and intents of minds 3-9: 73; that quote the person's own words: 2
+    (6, 'daniel', 'memory', 'I went out there to keep us alive, so Mara has no right to judge me when I am only trying to keep us')
+    (6, 'leo', 'memory', "Risking your life doesn't give you the right to put everyone else in danger by sneaking out without ")

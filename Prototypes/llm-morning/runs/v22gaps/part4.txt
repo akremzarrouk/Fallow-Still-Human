@@ -1,0 +1,47 @@
+largest day/night prompt: scene day9, daniel, estimate 2602; `block` passed to estimate_tokens 4337 characters = 1205 tokens; counted against the budget: 1397 (PROMPT_TOKEN_BUDGET 1400)
+outside the budget (summing to block): {'trip lines': 859, 'trip options': 485, 'kept day-2 memories': 365, 'house line beyond HOUSE_THINGS': 156, 'carry': 2016, 'W1 water line + rain Now line': 278, 'W1 options (save/ration/collect)': 178}  = 4337 characters
+
+system prompt: 913 chars = 254 tokens (world.SYSTEM), counted in the budget, not trimmable
+prompt: 8452 chars = 2348 tokens; system + prompt = 2602
+
+chars  tokens  section (status)
+105    29      You are Daniel, 25, the eldest son of the family (Elena, 42, t  [inside, not trimmable]
+59     16      How you address them: Elena "Mom"; Leo "Leo"; Mara "Mara".  [inside, not trimmable]
+192    53      Who you are: Older brother. Takes charge because he is frighte  [inside, not trimmable]
+112    31      Temperament: not cautious, very dominant, somewhat empathetic,  [inside, not trimmable]
+81     22      What matters to you: being in control, being respected, keepin  [inside, not trimmable]
+133    37      Your body: starving, for days now: you are thin and weak; stai  [inside, not trimmable]
+72     20      About the can: you ate it yourself, and you admitted it eight   [inside, not trimmable]
+115    32      About food: the shelf holds 0 portions, and there is no other   [outside (trip lines)]
+175    49      About the neighbour's house: you went in four nights ago and f  [outside (trip lines)]
+158    44      About the street: the houses further along it have not been se  [outside (trip lines)]
+232    64      About going out at night: you went to the neighbour's house se  [outside (trip lines)]
+179    50      About going there tonight: Mara said you must stay home (min 1  [outside (trip lines)]
+278    77      About water: the bath is empty and the pans, kettle, bottles a  [outside (W1 water line)]
+125    35      Against Leo (some): you were angry with Leo two days ago at 17  [inside, not trimmable]
+174    48      Against Mara (a little): eight days ago, Mara ate a portion in  [inside, not trimmable]
+314    87      On your conscience (a lot): you ate the can in the night, and   [inside, not trimmable]
+846    235     The house: The family has shut itself in the house. The water   [inside, not trimmable; 156 chars of it outside (trip)]
+786    218     What you remember from the days before:  [inside, trimmable; 365 chars of it outside (kept memories)]  (+7 lines)
+489    136     What stays with you from earlier days:  [outside (carry: memory block C)]  (+4 lines)
+947    263     Yesterday and last night:  [outside (carry: memory block A)]  (+6 lines)
+580    161     What yesterday left in you (your own thoughts, last night):  [outside (carry: memory block B)]  (+4 lines)
+168    47      What you are sure of today:  [inside, not trimmable]  (+1 lines)
+190    53      Your own last words today:  [inside, not trimmable]  (+3 lines)
+198    55      What else happened today, most recent last:  [inside, trimmable (oldest cut first)]  (+2 lines)
+113    31      Now, 09:57, you are in the kitchen.  [inside, not trimmable]  (+3 lines)
+51     14      You are the first to act in the kitchen this turn.  [inside, not trimmable]
+82     23      What you have been doing: you have offered to go there tonight  [inside, not trimmable]
+156    43      In that time: Leo said nobody should go, then said you should   [inside, not trimmable]
+64     18      Answered you differently from one time to the next: Leo, Elena  [inside, not trimmable]
+1279   355     Your options:  [inside; 663 chars of it outside (trip + W1 options)]  (+23 lines)
+
+`block` (outside the budget): 4337 chars = 1205 tokens; counted against PROMPT_TOKEN_BUDGET: 1397 <= 1400
+parts of `block`, chars / tokens:
+   trip lines                               859 / 239
+   trip options                             485 / 135
+   kept day-2 memories                      365 / 101
+   house line beyond HOUSE_THINGS           156 / 43
+   carry                                   2016 / 560
+   W1 water line + rain Now line            278 / 77
+   W1 options (save/ration/collect)         178 / 49

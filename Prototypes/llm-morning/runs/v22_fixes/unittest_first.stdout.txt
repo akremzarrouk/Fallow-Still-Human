@@ -1,0 +1,30 @@
+...............F..................................................    [429 RESOURCE_EXHAUSTED] waiting 8s, retry 1/6
+    [429 RESOURCE_EXHAUSTED] waiting 10s, retry 2/6
+.    [429 RESOURCE_EXHAUSTED] waiting 8s, retry 1/2
+    [429 RESOURCE_EXHAUSTED] waiting 10s, retry 2/2
+.................................................................................................................C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py:5664: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\Akrem\\AppData\\Local\\Temp\\llm-morning-test-qpkj9pnl\\runs\\daniel_ate_it-seed2.transcript.json' mode='r' encoding='utf-8'>
+  tr = json.load(open(os.path.join(runs_dir, f"{name}.transcript.json"), encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py:5675: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\Akrem\\AppData\\Local\\Temp\\llm-morning-test-qpkj9pnl\\runs\\daniel_ate_it-seed2.md' mode='r' encoding='utf-8'>
+  story = open(os.path.join(runs_dir, f"{name}.md"), encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py:5689: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\Akrem\\AppData\\Local\\Temp\\llm-morning-test-i4rnuczw\\runs\\daniel_ate_it-seed2.transcript.json' mode='r' encoding='utf-8'>
+  tr = json.load(open(os.path.join(runs_dir, f"{name}.transcript.json"), encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+...........................................................................................................
+======================================================================
+FAIL: test_every_other_v15_verdict_stands (test_morning.CheckErrorsTest.test_every_other_v15_verdict_stands)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 4527, in test_every_other_v15_verdict_stands
+    self.assertEqual(now, was, (seed, k, pid, i))
+AssertionError: 'rejected: S6 a quotation not in the records' != 'kept'
+- rejected: S6 a quotation not in the records
++ kept
+ : (1, 2, 'mara', 1)
+
+----------------------------------------------------------------------
+Ran 288 tests in 345.583s
+
+FAILED (failures=1)
+exit 1
