@@ -1,0 +1,22 @@
+exit 0; answers from cache/v19 (days 1-2, nights 1-2, minds 1-2): 135; sent to the recorded client: 142; v19's recorded answers used: 132 of 132
+  day3: 35 asks; v19's recorded answer: 32; not recorded in v19: [('daniel', 720, 'silent'), ('elena', 720, 'silent'), ('leo', 720, 'silent')]
+  night3: 8 asks; v19's recorded answer: 8; not recorded in v19: []
+  mind3: 4 asks; v19's recorded answer: 4; not recorded in v19: []
+  day4: 44 asks; v19's recorded answer: 40; not recorded in v19: [('daniel', 720, 'silent'), ('mara', 720, 'silent'), ('leo', 720, 'silent'), ('elena', 720, 'silent')]
+  night4: 4 asks; v19's recorded answer: 4; not recorded in v19: []
+  mind4: 4 asks; v19's recorded answer: 4; not recorded in v19: []
+  day5: 43 asks; v19's recorded answer: 40; not recorded in v19: [('mara', 720, 'silent'), ('elena', 720, 'silent'), ('daniel', 720, 'silent')]
+  night2 groups: [(['daniel'], False, 'clean', 0, 0)]
+  night3 groups: [(['daniel'], True, 'clean', 0, 0)]
+  night4 groups: []
+  night3 bedtimes: {'daniel': 'go_further', 'elena': 'lie_awake', 'leo': 'lie_awake', 'mara': 'lie_awake'}
+
+Elena's day-4 prompts: 12
+  About the neighbour's house: Daniel went there the night before last and came back with nothing. Outside is dangerous.
+  About the street: Daniel went further along it last night and came back with nothing; nobody knows what is left in the houses further along, and they are further and more dangerous than next door.
+  About going out at night: Daniel went to the neighbour's house the night before last and came back with nothing; Daniel went further along the street last night and came back with nothing.
+  ... Outside, and not to be gone to this morning: the street, the neighbour's house and the houses further along the street. Do not mention any other object or place.
+  with propose_far and volunteer_far offered: 12 of 12
+  - propose_far: (speech) say someone should try the houses further along the street tonight
+  - volunteer_far: (speech) offer to go further along the street tonight yourself
+  her night-4 bedtime offers go_further: [True]

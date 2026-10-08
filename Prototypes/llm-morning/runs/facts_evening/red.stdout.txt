@@ -1,0 +1,92 @@
+FFFFFEF
+======================================================================
+ERROR: test_q5_has_8_asks_on_top_of_the_days_40 (test_morning.QuietDayTest.test_q5_has_8_asks_on_top_of_the_days_40)
+5: the day's asks spent before 19:00, the evening still has its 8. This day spends 32 by 19:00, so the
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 6110, in test_q5_has_8_asks_on_top_of_the_days_40
+    e = self.q5(m)[0]
+        ~~~~~~~~~~^^^
+IndexError: list index out of range
+
+======================================================================
+FAIL: test_far_positions_are_heard_as_what_they_are (test_morning.QuietDayTest.test_far_positions_are_heard_as_what_they_are)
+1: on a quiet day, an offer to go further along and saying someone should try there are heard as such, not
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 5997, in test_far_positions_are_heard_as_what_they_are
+    self.assertEqual(m.line_text(dan, "volunteer_far", None, "I'll go.", leo, option="volunteer_far"),
+AssertionError: 'Daniel says he will not go: "I\'ll go."' != 'Daniel offers to go further along the street tonight: "I\'ll go."'
+- Daniel says he will not go: "I'll go."
++ Daniel offers to go further along the street tonight: "I'll go."
+
+
+======================================================================
+FAIL: test_the_street_line_says_how_many_houses_were_searched_as_each_knows_it (test_morning.QuietDayTest.test_the_street_line_says_how_many_houses_were_searched_as_each_knows_it)
+2: whoever knows of a far trip that came back with nothing (the neighbour's-house rule) is told how many
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 6019, in test_the_street_line_says_how_many_houses_were_searched_as_each_knows_it
+    self.assertEqual(day4.street["daniel"], "About the street: you searched one house further along it last night, "
+AssertionError: 'Abou[13 chars] you got inside the next house further along l[135 chars]oor.' != 'Abou[13 chars] you searched one house further along it last [157 chars]oor.'
+- About the street: you got inside the next house further along last night and found no food there; nobody knows what is left in the houses past it, and they are further and more dangerous than next door.
++ About the street: you searched one house further along it last night, and it held no food; the houses past it have not been searched: nobody knows what is left in them, and they are further and more dangerous than next door.
+
+
+======================================================================
+FAIL: test_every_quiet_prompt_carries_the_outings_line (test_morning.QuietDayTest.test_every_quiet_prompt_carries_the_outings_line)
+3: on quiet days and their nights, each prompt lists the trips its person knows of (the neighbour's-house
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 6042, in test_every_quiet_prompt_carries_the_outings_line
+    self.assertEqual(lines, {q: [x] for q, x in expect.items()})      # in the trip block: outside the 1400
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'daniel': [], 'elena': [], 'leo': [], 'mara': []} != {'daniel': ["About going out at night: you went to th[369 chars]g."]}
+- {'daniel': [], 'elena': [], 'leo': [], 'mara': []}
++ {'daniel': ["About going out at night: you went to the neighbour's house last "
++             'night, got inside and found no food.'],
++  'elena': ['About going out at night: as far as you know, nobody has gone '
++            'out.'],
++  'leo': ["About going out at night: Daniel went to the neighbour's house last "
++          'night and came back with nothing.'],
++  'mara': ["About going out at night: Daniel went to the neighbour's house last "
++           'night and came back with nothing.']}
+
+======================================================================
+FAIL: test_yesterdays_positions_are_named_as_said_yesterday_about_last_night (test_morning.QuietDayTest.test_yesterdays_positions_are_named_as_said_yesterday_about_last_night)
+4: the carried-in line of the trip positions says they were said yesterday, about last night.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 6065, in test_yesterdays_positions_are_named_as_said_yesterday_about_last_night
+    self.assertIn("- What was said yesterday about going out last night, where it was left: Mara said Daniel is "
+AssertionError: '- What was said yesterday about going out last night, where it was left: Mara said Daniel is the one who should go (min 06); you said Daniel is the one who should go (min 06); Daniel said he still means to go (min 09); Elena said nobody should go (min 12).' not found in ['What stays with you from earlier days:', '- Two days ago, Daniel admitted taking the can, after denying it to you, after accusing you of it. You thought then: "Daniel spent hours accusing me of taking the can before finally admitting he took it himself."', '- Two days ago, you denied taking the can 4 times.', '- Two days ago, Mara ate a portion in front of you.', 'Yesterday and last night:', '- Yesterday morning the shelf held 1 portion.', '- Accusations: Mara accused Daniel 5 times (min 00, 03, 09, 12, 15).', '- Confrontations: you confronted Daniel twice (min 09, 12).', '- Daniel gave Elena a portion at minute 00, and Elena ate it (you saw it).', "- About going to the neighbour's house last night, where it was left: Mara said Daniel is the one who should go (min 06); you said Daniel is the one who should go (min 06); Daniel said he still means to go (min 09); Elena said nobody should go (min 12).", '- The afternoon and evening passed in the house. Nobody ate.', '- Last night you slept in the brothers room with Daniel. You lay awake and listened.', '- In the night Daniel got up in the dark and left the room toward the kitchen and the front door (you saw it).', '- You told Daniel, low, not to go: "Daniel, don\'t do this alone. If you go out there, you take us with you or you don\'t go." He answered: "I have to do this, Leo, stay here.", and went all the same.', '- Before dawn you heard the front door again. You did not see who.', 'What yesterday left in you (your own thoughts, last night):', '- About Daniel getting up in the night and telling Daniel, low, not to go: "Daniel left in the dark alone despite my warning that if he goes out there, he takes us with him or he does not go."', '- You meant to: "I will find out if Daniel came back through that door and what he brought us."', '- How it left you: exhausted and resentful.']
+
+======================================================================
+FAIL: test_q5_at_19_asks_whoever_took_a_trip_position_last (test_morning.QuietDayTest.test_q5_at_19_asks_whoever_took_a_trip_position_last)
+5: at 19:00, with two or more awake in one room and a trip position taken there today, the one whose trip
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 6084, in test_q5_at_19_asks_whoever_took_a_trip_position_last
+    self.assertEqual(len(entries), 1)
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_no_q5_without_a_trip_position (test_morning.QuietDayTest.test_no_q5_without_a_trip_position)
+5: nobody took a trip position today: nothing happens at 19:00.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 6124, in test_no_q5_without_a_trip_position
+    self.assertEqual([(e["fired"], e["why"]) for e in self.q5(m)], [(False, "no trip position today")])
+AssertionError: Lists differ: [] != [(False, 'no trip position today')]
+
+Second list contains 1 additional elements.
+First extra element 0:
+(False, 'no trip position today')
+
+- []
++ [(False, 'no trip position today')]
+
+----------------------------------------------------------------------
+Ran 7 tests in 2.848s
+
+FAILED (failures=6, errors=1)

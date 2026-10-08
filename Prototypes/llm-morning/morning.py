@@ -94,6 +94,7 @@ def quiet_meta(m):
     return {"day_asks": tr["asks"]["day"], "quiet_asks": tr["asks"]["quiet"],
             "quiet_asks_by_person": tr["asks"]["quiet_by_person"],
             "q1_fired": sum(e["kind"] == "Q1" for e in fired), "q2_fired": sum(e["kind"] == "Q2" for e in fired),
+            "q5_fired": sum(e["kind"] == "Q5" for e in fired),
             "spans": len(tr["spans"]), "rests": sum(s["routine"] == "rest" for s in tr["spans"]),
             "withdrawals": len(tr["withdrawals"]), "stretches": len(tr["stretches"]),
             "morning_end": tr["morning_end"]}
@@ -166,6 +167,8 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
         how = f"{name[e['asked']]} is asked" if e["fired"] else f"not asked ({e['why']})"
         if e["kind"] == "Q2":
             return f"Q2, {name[e['arrived']]} comes into the {data.ROOMS[e['room']]}, where {name[e['there']]} is: {how}"
+        if e["kind"] == "Q5":
+            return f"Q5, the evening: {how}"
         return f"Q1, {name[e['who']]}'s {'fasting' if e['need'] == 'fast' else 'sleep debt'} crossed a line: {how}"
 
     scenes = {}

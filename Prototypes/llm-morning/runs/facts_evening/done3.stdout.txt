@@ -1,0 +1,13 @@
+A: exit 0; api_requests 354; days 5
+  A day3: trip positions 9 (last ('19:03', 'daniel', 'propose_far')); day asks 45; Q5 [('19:00', True, 'daniel', None, 'kitchen')]; Q5 stretch [('19:00', '19:06', 8)]
+      acts at 19:00: [('daniel', 'sit_elena', 'model'), ('leo', 'silent', 'fallback'), ('elena', 'accuse_leo', 'model'), ('mara', 'reassure_daniel', 'model')]
+  A day4: trip positions 11 (last ('19:00', 'mara', 'keep_leo_home')); day asks 48; Q5 [('19:00', True, 'leo', None, 'kitchen')]; Q5 stretch [('19:00', '19:06', 8)]
+      acts at 19:00: [('elena', 'search', 'model'), ('mara', 'keep_leo_home', 'model'), ('leo', 'silent', 'fallback'), ('daniel', 'go_kitchen', 'model')]
+  A day5: trip positions 14 (last ('10:39', 'daniel', 'refuse_to_go')); day asks 48; Q5 [('19:00', True, 'daniel', None, 'kitchen')]; Q5 stretch [('19:00', '19:09', 8)]
+      acts at 19:00: [('leo', 'go_brothers_room', 'model'), ('elena', 'ask_who', 'model'), ('mara', 'reassure_all', 'model'), ('daniel', 'silent', 'fallback')]
+B: exit 0; api_requests 339; days 5; day-4 answers turned from a trip act to another: 10
+  B day3: trip positions 9 (last ('19:03', 'daniel', 'propose_far')); day asks 45; Q5 [('19:00', True, 'daniel', None, 'kitchen')]; Q5 stretch [('19:00', '19:06', 8)]
+      acts at 19:00: [('daniel', 'sit_elena', 'model'), ('leo', 'silent', 'fallback'), ('elena', 'accuse_leo', 'model'), ('mara', 'reassure_daniel', 'model')]
+  B day4: trip positions 0 (last None); day asks 33; Q5 [('19:00', False, None, 'no trip position today', None)]; Q5 stretch []
+  B day5: trip positions 16 (last ('19:03', 'elena', 'volunteer_far')); day asks 48; Q5 [('19:00', True, 'leo', None, 'kitchen')]; Q5 stretch [('19:00', '19:06', 8)]
+      acts at 19:00: [('leo', 'reassure_elena', 'model'), ('elena', 'silent', 'model'), ('mara', 'sit_daniel', 'model'), ('daniel', 'silent', 'fallback')]

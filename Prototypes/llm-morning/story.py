@@ -606,6 +606,11 @@ def after_the_morning(morning, out):
             rows.append((e["minute"], 2, f"- {clock(e['minute'])}: **Q2**, {NAME[e['arrived']]} comes into the "
                                          f"{data.ROOMS[e['room']]}, where {NAME[e['there']]} is ({last}; {held}): "
                                          f"{how}."))
+        elif e["kind"] == "Q5":
+            took = ", ".join(NAME[q] for q in e["positions"]) or "nobody"
+            where = f", in the {data.ROOMS[e['room']]}" if e["room"] else ""
+            rows.append((e["minute"], 2, f"- {clock(e['minute'])}: **Q5**, the evening{where} (trip positions today: "
+                                         f"{took}): {how}."))
         else:
             rows.append((e["minute"], 2, f"- {clock(e['minute'])}: **Q1**, {NAME[e['who']]} has grown "
                                          f"{NEED_WORD[(e['need'], e['stage'])]}, in the {data.ROOMS[e['room']]}: "

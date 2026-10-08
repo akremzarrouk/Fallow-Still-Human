@@ -18,7 +18,8 @@ import math
 import random
 
 import data
-from world import NAMES, day_index
+from talk import act_of
+from world import NAMES, TRIP_KINDS, day_index
 
 DAY_END = 840               # 21:00, bedtime (§3)
 WEAK, VERY_WEAK = 48, 96    # fasting (§1.1)
@@ -40,6 +41,10 @@ QUIET_ASKS, QUIET_ASKS_EACH, DAY_ASKS = 12, 4, 40
 MORNING_ASKS, STRETCH_ASKS = 24, 8      # fix 1: the morning's played turns, and a stretch a trigger starts
 FULL_REST = 60              # reports/meeting_fixes.md: a rest this long cools a grudge of 3, and counts as one of two
 MEETING_APART = 60          # reports/meeting_fixes.md: not spoken with for this long, a meeting gets its own line
+# Q5, the evening (reports/facts_and_evening.md, fix 5): at 19:00, its own 8 asks on top of the day's 40.
+EVENING, EVENING_ASKS = 720, 8
+EVENING_LINE = "It is evening; in two hours everyone goes to bed."
+EVENING_TEXT = "it is evening, and in two hours everyone goes to bed"
 HUNGER_A_MINUTE = 0.004     # × hunger rate, as a played turn adds it (world.py)
 OWN_ROOM = {p: room for room, owners in data.OWNERS.items() for p in owners}
 
@@ -163,6 +168,8 @@ class Quiet:
         self.stretches = []         # each run of played turns: {"start", "end", "room", "trigger"}
         self.asks = 0               # the model's answers asked today
         self.cap, self.cap_why = None, None     # the asks the played stretch under way may reach, and why it stops
+        self.reserved = False       # the stretch under way is Q5's: its own asks, past the day's 40
+        self.evening_done = False   # Q5 has been checked today
         self.withdrawn = {}         # pid -> the minute their withdraw is over, whether in its span or resting in it
         self.came_in = {}           # pid -> (minute, room) of the last time they came into a room
         self.cooled = []            # each grudge of 3 that a rest brought down to 2
@@ -213,20 +220,24 @@ class Quiet:
 
     # ---------- the budget (§4) ----------
     def spent(self):
-        """No more asks now: the day's 40, or the played stretch's own (fix 1)."""
-        return self.asks >= DAY_ASKS or (self.cap is not None and self.asks >= self.cap)
+        """No more asks now: the day's 40, or the played stretch's own (fix 1). Q5's stretch has its own 8, past the
+        day's 40 (reports/facts_and_evening.md, fix 5)."""
+        return ((self.asks >= DAY_ASKS and not self.reserved)
+                or (self.cap is not None and self.asks >= self.cap))
 
     def spent_why(self):
-        return "the day's asks are spent" if self.asks >= DAY_ASKS else self.cap_why
+        return "the day's asks are spent" if self.asks >= DAY_ASKS and not self.reserved else self.cap_why
 
-    def begin(self, stretch, n, why):
-        """A played stretch begins: it may ask the model at most n times more (fix 1)."""
+    def begin(self, stretch, n, why, reserved=False):
+        """A played stretch begins: it may ask the model at most n times more (fix 1); reserved, past the day's 40."""
         stretch["asks_at"] = self.asks
         self.cap, self.cap_why = self.asks + n, why
+        self.reserved = reserved
 
     def close(self, stretch, end):
         stretch["end"], stretch["asks"] = end, self.asks - stretch.pop("asks_at")
         self.cap = self.cap_why = None
+        self.reserved = False
         self.stretches.append(stretch)
 
     def budget(self, pid):
@@ -435,6 +446,39 @@ class Quiet:
             fired.append(entry)
         return fired
 
+    def evening(self, minute):
+        """Q5 (reports/facts_and_evening.md, fix 5), once a day, at the first quiet minute from 19:00: if anyone took
+        a trip position today and is awake in a room with someone else awake, the one whose trip act is the most
+        recent is asked. Nobody took one: nothing happens."""
+        if self.evening_done or minute < EVENING:
+            return []
+        self.evening_done = True
+        last = {}
+        for turn in self.m.transcript["turns"]:
+            for a in turn["acts"]:
+                if act_of(a["option"])[0] in TRIP_KINDS:
+                    last[a["who"]] = max(last.get(a["who"], (-1, -1)), tuple(a["decided_at"]))
+        awake = {}
+        for p in sorted(self.people(), key=lambda x: data.ORDER.index(x.id)):
+            if not self.resting(p.id):
+                awake.setdefault(p.room, []).append(p.id)
+        entry = {"kind": "Q5", "minute": minute, "room": None, "awake": awake,
+                 "positions": {q: list(v) for q, v in last.items()}, "fired": False, "asked": None, "why": None}
+        self.log.append(entry)
+        if not last:
+            entry["why"] = "no trip position today"
+            return []
+        cands = [(last[q], q, room) for room, ids in awake.items() if len(ids) >= 2 for q in ids if q in last]
+        if not cands:
+            entry["why"] = "nobody who took a trip position is awake with someone"
+            return []
+        _, pid, room = max(cands)
+        entry.update(fired=True, asked=pid, room=room)
+        for q in awake[room]:
+            self.m.people[q].memory.append((minute, EVENING_LINE))
+        self.ask(self.m.people[pid], "Q5", minute, EVENING_TEXT, f"Q5, the evening: {NAMES[pid]} is asked")
+        return [entry]
+
     # ---------- quiet mode (§3) ----------
     def routine_for(self, p, minute):
         if self.rest_due(p, minute):
@@ -500,6 +544,7 @@ class Quiet:
         self.run_out(minute)
         self.assign(minute)
         self.ask_q1(crossings, minute)
+        self.evening(minute)
         # Whoever began a routine this minute in a room where a trigger has just started the talk is in that talk.
         for p in self.people():
             span = self.open.get(p.id)
@@ -510,7 +555,7 @@ class Quiet:
     def next_event(self, minute):
         """The next minute anything changes: a rest or a withdraw running out, a need crossing a line, a rest falling
         due for a sitter or for whoever keeps to their room, or bedtime. Never past bedtime."""
-        out = [DAY_END]
+        out = [DAY_END] + ([EVENING] if not self.evening_done else [])
         for p in self.people():
             span = self.open.get(p.id)
             if span and span["until"] is not None:
@@ -613,6 +658,12 @@ class Quiet:
             self.settle(p, DAY_END)
         self.pending.clear()
         self.withdrawn.clear()
+
+    def evening_lines(self, p, minute):
+        """Q5's minute, for whoever was awake in its room: the evening, just before "Now". Their record of it is in
+        their memory too, which a prompt lists only from the next minute on."""
+        return [EVENING_LINE] if any(e["kind"] == "Q5" and e["fired"] and e["minute"] == minute
+                                     and p.id in e["awake"][e["room"]] for e in self.log) else []
 
     # ---------- a meeting after hours apart (reports/meeting_fixes.md) ----------
     def meeting_lines(self, p, minute):
@@ -739,9 +790,13 @@ def play(m, told=None):
                     q.morning_end = t * data.MINUTES_PER_TURN
             continue
         if q.step(minute):
-            first = next(e for e in q.log if e["minute"] == minute and e["fired"])
+            fired = [e for e in q.log if e["minute"] == minute and e["fired"]]
+            first = next((e for e in fired if e["kind"] == "Q5"), fired[0])
             stretch = {"start": minute, "end": None, "room": first["room"], "trigger": first["kind"]}
-            q.begin(stretch, STRETCH_ASKS, f"this stretch's {STRETCH_ASKS} asks are spent")
+            if first["kind"] == "Q5":
+                q.begin(stretch, EVENING_ASKS, f"the evening's {EVENING_ASKS} asks are spent", reserved=True)
+            else:
+                q.begin(stretch, STRETCH_ASKS, f"this stretch's {STRETCH_ASKS} asks are spent")
             continue
         nxt = q.next_event(minute)
         q.advance(minute, nxt)

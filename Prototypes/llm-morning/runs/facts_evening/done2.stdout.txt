@@ -1,0 +1,42 @@
+exit 0; answers from cache/v19 (days 1-2, nights 1-2, minds 1-2): 135; sent to the recorded client: 142
+  day3: 35 asks; v19's recorded answer: 32; not recorded in v19: [('daniel', 720, 'silent'), ('elena', 720, 'silent'), ('leo', 720, 'silent')]
+  night3: 8 asks; v19's recorded answer: 8; not recorded in v19: []
+  mind3: 4 asks; v19's recorded answer: 4; not recorded in v19: []
+  day4: 44 asks; v19's recorded answer: 40; not recorded in v19: [('daniel', 720, 'silent'), ('mara', 720, 'silent'), ('leo', 720, 'silent'), ('elena', 720, 'silent')]
+  night4: 4 asks; v19's recorded answer: 4; not recorded in v19: []
+  mind4: 4 asks; v19's recorded answer: 4; not recorded in v19: []
+  day5: 43 asks; v19's recorded answer: 40; not recorded in v19: [('mara', 720, 'silent'), ('elena', 720, 'silent'), ('daniel', 720, 'silent')]
+  night2 groups: [(['daniel'], False, 'clean', 0, 0)]
+  night3 groups: [(['daniel'], True, 'clean', 0, 0)]
+  night4 groups: []
+
+(a) Leo's day-5 prompts, their outings line:
+  About going out at night: Daniel went to the neighbour's house three nights ago and came back with nothing; Daniel went further along the street the night before last and came back with nothing.
+  Leo's day-5 prompts: 11; carrying both of Daniel's trips: 11
+
+(b) Leo's day-4 prompts, every line naming Daniel's far offer or 'Daniel says he will not go':
+  - 09:57: Daniel offers to go further along the street tonight: "I went out last night and I am telling you I can find something further down the street."
+  1. Daniel offers to go further along the street tonight: "I already went out there and I'm going back tonight to find something for us."
+  1. Daniel offers to go further along the street tonight: "I went out last night and I am going to check the houses further down the street again tonight."
+  1. Daniel offers to go further along the street tonight: "I went out last night and I am telling you I can find something further down the street."
+  1. Daniel offers to go further along the street tonight: "I went out past the neighbour's house last night to look further down the street, and I will go again tonight if we need to."
+  Leo's day-4 prompts: 11; with 'Daniel offers to go further along the street tonight': 5; with 'Daniel says he will not go': 0
+
+(c) Mara's day-4 prompts, their street line:
+  About the street: Daniel searched one house further along it last night, and it held no food; the houses past it have not been searched: nobody knows what is left in them, and they are further and more dangerous than next door.
+
+Also, each one's day-4 and day-5 outings and street lines:
+  day4 Daniel: About going out at night: you went to the neighbour's house the night before last, got inside and found no food; you went further along the street last night, got inside a house there and found no food.
+  day4 Daniel: About the street: you searched one house further along it last night, and it held no food; the houses past it have not been searched: nobody knows what is left in them, and they are further and more dangerous than next door.
+  day4 Elena: About going out at night: as far as you know, nobody has gone out.
+  day4 Leo: About going out at night: Daniel went to the neighbour's house the night before last and came back with nothing; Daniel went further along the street last night and came back with nothing.
+  day4 Leo: About the street: Daniel searched one house further along it last night, and it held no food; the houses past it have not been searched: nobody knows what is left in them, and they are further and more dangerous than next door.
+  day4 Mara: About going out at night: Daniel went to the neighbour's house the night before last and came back with nothing; Daniel went further along the street last night and came back with nothing.
+  day4 Mara: About the street: Daniel searched one house further along it last night, and it held no food; the houses past it have not been searched: nobody knows what is left in them, and they are further and more dangerous than next door.
+  day5 Daniel: About going out at night: you went to the neighbour's house three nights ago, got inside and found no food; you went further along the street the night before last, got inside a house there and found no food.
+  day5 Daniel: About the street: you searched one house further along it the night before last, and it held no food; the houses past it have not been searched: nobody knows what is left in them, and they are further and more dangerous than next door.
+  day5 Elena: About going out at night: as far as you know, nobody has gone out.
+  day5 Leo: About going out at night: Daniel went to the neighbour's house three nights ago and came back with nothing; Daniel went further along the street the night before last and came back with nothing.
+  day5 Leo: About the street: Daniel searched one house further along it the night before last, and it held no food; the houses past it have not been searched: nobody knows what is left in them, and they are further and more dangerous than next door.
+  day5 Mara: About going out at night: Daniel went to the neighbour's house three nights ago and came back with nothing; Daniel went further along the street the night before last and came back with nothing.
+  day5 Mara: About the street: Daniel searched one house further along it the night before last, and it held no food; the houses past it have not been searched: nobody knows what is left in them, and they are further and more dangerous than next door.

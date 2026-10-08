@@ -174,25 +174,97 @@ def missing_opening(x, how):
                    f"back.",
             "heard": f"{NAMES[x]} is not here: {pro['his']} bed is empty and {pro['he']} is nowhere in the house. "
                      f"In the night you heard the front door; {pro['he']} has not come back.",
-            "gone": f"{NAMES[x]} is not here: {pro['his']} bed is empty and {pro['he']} is nowhere in the house, and "
-                    f"you do not know where {pro['he']} went."}[how]
+            # Where they went is the house's by morning (reports/household_knowledge.md): no "you do not know where".
+            "gone": f"{NAMES[x]} is not here: {pro['his']} bed is empty and {pro['he']} is nowhere in the house."}[how]
+
+
+def trips_known(history, pid):
+    """Every trip of the nights so far, oldest first, as (night, group, who): who went is the whole house's by the
+    next morning (reports/household_knowledge.md, fix 1). Their own, with "you" first; another's, all who went."""
+    out = []
+    for night in history:
+        for g in night.groups:
+            if pid in g["members"]:
+                out.append((night, g, ["you"] + [NAMES[x] for x in g["members"] if x != pid]))
+            else:
+                out.append((night, g, [NAMES[x] for x in g["members"]]))
+    return out
+
+
+def seen_outcome(g):
+    """What the house saw of another's trip by morning: back with food, back with nothing, or not back. A scare, and
+    what a house held beyond what came home, stay with whoever went (reports/household_knowledge.md)."""
+    if g["lost"] and len(g["members"]) == 1:
+        return "has not come back"
+    how = "came back with food" if g["took"] else "came back with nothing"
+    return how + (f"; {NAMES[g['lost']]} has not come back" if g["lost"] else "")
+
+
+def joined(words):
+    return words[0] if len(words) == 1 else ", ".join(words[:-1]) + " and " + words[-1]
+
+
+FAR_REST = ("have not been searched: nobody knows what is left in them, and they are further and more dangerous than "
+            "next door.")
+COUNT = {2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}
 
 
 def street_line(history, pid, day):
-    """W5's fact line for someone who knows next door is empty: their own last trip further along, if any."""
-    for night in reversed(history):
-        v = getattr(night, "far_visit", {}).get(pid)
-        if not v:
+    """The "About the street:" line, each far trip oldest first (reports/facts_and_evening.md, fix 2;
+    reports/household_knowledge.md, fix 1). Their own: the house they searched and what it held, or that they got
+    inside none. Another's: only what the house saw (seen_outcome). Only searches of their own: the houses past them
+    are unsearched. No far trip: STREET_UNSEARCHED."""
+    def held(g):
+        return "no food" if not g["found"] else f"{portions_text(g['found'])}, all brought back"
+    items, searched = [], []
+    for n, g, who in trips_known(history, pid):
+        if not g.get("far"):
             continue
-        when = when_words(("N", night.number), day)
-        if v["got_in"]:
-            found = f"{portions_text(v['found'])} of food" if v["found"] else "no food"
-            return (f"About the street: you got inside the next house further along {when} and found {found} there; "
-                    f"nobody knows what is left in the houses past it, and they are further and more dangerous than "
-                    f"next door.")
-        return (f"About the street: you went along it {when} but did not get inside any house further along; nobody "
-                f"knows what is left in them, and they are further and more dangerous than next door.")
-    return STREET_UNSEARCHED
+        when = when_words(("N", n.number), day)
+        if who[0] != "you":
+            items.append(f"{joined(who)} went further along it {when} and {seen_outcome(g)}")
+        elif g["found"] is not None:
+            searched.append((when, g, who))
+            items.append(f"{joined(who)} searched a house further along it {when}, and it held {held(g)}")
+        else:
+            items.append(f"{joined(who)} went along it {when} but did not get inside any house further along")
+    if not items:
+        return STREET_UNSEARCHED
+    if len(searched) == len(items) == 1:
+        when, g, who = searched[0]
+        return (f"About the street: {joined(who)} searched one house further along it {when}, and it held {held(g)}; "
+                f"the houses past it {FAR_REST}")
+    if len(searched) == len(items):
+        each = "; ".join(f"one {when}, which held {held(g)}" for when, g, who in searched)
+        return (f"About the street: you have searched {COUNT.get(len(searched), len(searched))} houses further along "
+                f"it: {each}; the houses past them {FAR_REST}")
+    return ("About the street: " + "; ".join(items) + "; nobody knows what is left in the houses further along, and "
+            "they are further and more dangerous than next door.")
+
+
+def outings_line(history, pid, day):
+    """A quiet day's "About going out at night:" line (reports/facts_and_evening.md, fix 3): each trip of the nights so
+    far (trips_known), oldest first: who, next door or further along, which night, and the outcome. Their own trip's
+    from what they did; another's as the house saw it: food, nothing, or not back (reports/household_knowledge.md)."""
+    items = []
+    for n, g, who in trips_known(history, pid):
+        where = "further along the street" if g.get("far") else "to the neighbour's house"
+        when = when_words(("N", n.number), day)
+        if who[0] == "you":
+            there = " a house there" if g.get("far") else ""
+            if g["found"] is None and g["lost"]:
+                he = data.PRONOUNS[g["lost"]]["he"]
+                how = f"lost sight of {NAMES[g['lost']]} in the street, and {he} has not come back"
+            elif g["found"] is None:
+                how = "turned back before getting inside"
+            elif g["found"]:
+                how = f"got inside{there}, found {portions_text(g['found'])} and brought back {g['took']}"
+            else:
+                how = f"got inside{there} and found no food"
+            items.append(f"{joined(who)} went {where} {when}, {how}")
+            continue
+        items.append(f"{joined(who)} went {where} {when} and {seen_outcome(g)}")
+    return "About going out at night: " + ("; ".join(items) or "as far as you know, nobody has gone out") + "."
 
 
 def street(u, size):
@@ -934,8 +1006,8 @@ def carry_in_later(prev, n, p, short=False, minutes=True):
         elif " shares out the last " in rest and rest.endswith("you had your part."):
             out.append(f"{rest.split(' shares out the last ')[0]} shared out the food at {data.minute_words(mm)}; you had your part.")
     plan = prev.heard_plan(p)                                                     # Y7
-    if plan:
-        out.append("About going to the neighbour's house last night, where it was left: "
+    if plan:            # said yesterday, about last night (reports/facts_and_evening.md, fix 4)
+        out.append("What was said yesterday about going out last night, where it was left: "
                    + plan[len("About going there tonight: "):])
     out.append(quiet.gap_line(prev, p.id))                                        # Y8 (quiet.py, §3)
     out += (n.lines_short if short else n.lines)[p.id]
@@ -974,13 +1046,13 @@ def neighbour_line(n, pid, history=None, day=None, away=None):
 
 
 def heard_trip(history, pid):
-    """The latest trip next door they know someone else went on, as (night, who, group), or None: not whoever got up
-    and was talked back to bed."""
+    """The latest trip next door that someone else went on, as (night, who, group), or None: not whoever got up and
+    was talked back to bed. By the next morning the whole house knows who went (reports/household_knowledge.md)."""
     for night in reversed(history):
-        near = [g for g in night.groups if not g.get("far")]
-        known = [x for x in night.knows[pid] if x != pid and any(x in g["members"] for g in near)]
-        if known:
-            return night, known[0], next(g for g in near if known[0] in g["members"])
+        for g in night.groups:
+            known = [x for x in g["members"] if x != pid]
+            if known and not g.get("far"):
+                return night, known[0], g
     return None
 
 
@@ -1023,11 +1095,16 @@ def next_day(day1, n, oracle, chronicle=None):
     for q in present:
         p = m.people[q]
         p.knows_empty = knows_next_door_empty(history, q, m.away)           # W5 (amendment 1; fix 1)
-        if p.knows_empty:
-            m.street[q] = street_line(history, q, day)
+        street = street_line(history, q, day)
+        if p.knows_empty or street != STREET_UNSEARCHED:    # and whoever knows of a far trip (facts_and_evening)
+            m.street[q] = street
+        if m.quiet is not None:                                             # facts_and_evening, fix 3
+            m.outings[q] = outings_line(history, q, day)
         for x in data.ORDER:                                                # amendment 4
             if x in n.away and x not in day1.away:
-                p.missing[x] = (how_known(n, q, x), n.number)
+                g = next((g for g in n.groups if x in g["members"]), {})
+                p.missing[x] = (how_known(n, q, x), n.number,
+                                "further along the street" if g.get("far") else "to the neighbour's house")
     for q in data.ORDER:
         p = m.people[q]
         variants = carry_variants(day1, n, p)
@@ -1084,7 +1161,7 @@ def next_day(day1, n, oracle, chronicle=None):
             opening += "."
         for x in data.ORDER:
             if x in m.away:
-                how, k = p.missing.get(x, ("gone", n.number))
+                how, k = p.missing.get(x, ("gone", n.number))[:2]
                 opening += (" " + missing_opening(x, how) if k == n.number else
                             f" {NAMES[x]} is still not here: {data.PRONOUNS[x]['he']} has not come back.")
         p.sure = [f"min 00: {opening} (you saw it)"]

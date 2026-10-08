@@ -85,6 +85,9 @@ LULL_EVERY = 12              # minutes since a person was last asked before a lu
 TRIP_HUNGER = 2              # the hunger level ("very hungry") that starts the trip concern
 TRIP_ON = True               # the trip concern (reports/trip_design.md); off only in tests
 TRIP_KINDS = tuple(TRIP_WHY)  # propose, volunteer, object, back, decline; propose_far, volunteer_far (stage B)
+# What others hear of a far position (reports/facts_and_evening.md, fix 1; on every day: household_knowledge.md, fix 2).
+FAR_GIST = {"volunteer_far": "{name} offers to go further along the street tonight",
+            "propose_far": "{name} says someone should try the houses further along the street tonight"}
 # The body's food moment on day 2 (reports/body_design.md, §2): the chance a turn, at impulsive 0.5,
 # by when they last ate; and the minutes between one person's moments.
 FOOD_RATE = {"before yesterday": 0.07, "yesterday": 0.035}
@@ -378,6 +381,7 @@ class Morning:
         self.day = day
         self.away = set()           # day 2: who did not come back in the night
         self.street = {}            # stage B, W5: person -> their "About the street:" line, once next door is empty
+        self.outings = {}           # a quiet day: person -> their "About going out at night:" line (facts_and_evening)
         self.carry = {}             # day 2: person -> the carry-in block (reports/night_design.md, §5.2)
         self.neighbour = {}         # day 2: person -> their "About the neighbour's house:" line
         self.carried = {}           # day 2: person -> their opening, food and neighbour lines at minute 00
@@ -711,23 +715,27 @@ class Morning:
         plan = self.heard_plan(p)
         if self.day != 4:
             street = [self.street[p.id]] if p.id in self.street else []        # stage B, W5
-            return [self.food_line(p), self.neighbour.get(p.id, NEIGHBOUR_UNKNOWN)] + street + ([plan] if plan else [])
+            # A quiet day and its night: every outing they know of (reports/facts_and_evening.md, fix 3).
+            outings = [self.outings[p.id]] if p.id in self.outings else []
+            return ([self.food_line(p), self.neighbour.get(p.id, NEIGHBOUR_UNKNOWN)] + street + outings
+                    + ([plan] if plan else []))
         return [data.ABOUT_FOOD, data.ABOUT_NEIGHBOUR] + ([plan] if plan else [])
 
     def missing_lines(self, p):
         """Stage B, amendment 4: for each one who did not come back, what p knows of it."""
         out = []
-        for x, (how, k) in p.missing.items():
+        for x, (how, k, *where) in p.missing.items():
             pro = data.PRONOUNS[x]
             when = when_words(("N", k), self.day)
+            gone = (f"About {NAMES[x]}: {pro['he']} went {where[0]} {when} and has not come back." if where else
+                    f"About {NAMES[x]}: {pro['he']} has been gone since {when}.")     # household_knowledge.md
             out.append({"with": f"About {NAMES[x]}: {pro['he']} was with you in the street {when}; you lost sight of "
                                 f"{pro['him']} in the dark, and {pro['he']} has not come back.",
                         "saw": f"About {NAMES[x]}: you saw {pro['him']} go out {when}, and {pro['he']} has not come "
                                f"back.",
                         "heard": f"About {NAMES[x]}: {when} you heard the front door, and by morning {pro['he']} was "
                                  f"gone; {pro['he']} has not come back.",
-                        "gone": f"About {NAMES[x]}: {pro['he']} has been gone since {when}; you do not know where "
-                                f"{pro['he']} went."}[how])
+                        "gone": gone}[how])
         return out
 
     def food_line(self, p=None):
@@ -1052,7 +1060,7 @@ class Morning:
         ] + inside
         house = (data.HOUSE_THINGS_NIGHT if night is not None
                  else data.HOUSE_THINGS_AFTER_TRIP if self.trip else data.HOUSE_THINGS)
-        if p.knows_empty:           # stage B, W5: their places include the houses further along
+        if p.knows_empty or p.id in self.street:   # stage B, W5: their places include the houses further along
             house = house.replace("the street and the neighbour's house",
                                   "the street, the neighbour's house and the houses further along the street")
         head += [f"The house: {data.HOUSE} {house}"]
@@ -1062,7 +1070,7 @@ class Morning:
         # A quiet day from minute 90 on (reports/meeting_fixes.md): a meeting after an hour apart gets its own lines,
         # just before "Now", and the headings say "today".
         late = self.quiet is not None and minute >= data.CLOCK_FROM
-        now = self.quiet.meeting_lines(p, minute) if late else []
+        now = self.quiet.meeting_lines(p, minute) + self.quiet.evening_lines(p, minute) if late else []
         now += [f"Now, {data.minute_words(minute)}, you are in the {room}."]
         others = self.others_here(p)
         if not others:
@@ -1506,7 +1514,9 @@ class Morning:
 
     def line_text(self, p, kind, target, words, listener, while_doing=None, option=None):
         aimed = ("you" if listener is not None and target is listener else target.name) if target else None
-        if self.day != 4 and kind in TRIP_KINDS:
+        if kind in FAR_GIST:                    # on every day (reports/household_knowledge.md, fix 2)
+            gist = FAR_GIST[kind].format(name=p.name)
+        elif self.day != 4 and kind in TRIP_KINDS:
             gist = self.trip_gist(p, kind, aimed, option)
         elif kind == "ask":
             gist = f"{p.name} asks everyone who took the can"

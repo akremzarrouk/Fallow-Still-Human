@@ -1,0 +1,32 @@
+FF
+======================================================================
+FAIL: test_a_trip_is_known_to_the_whole_house_by_the_next_morning (test_morning.QuietDayTest.test_a_trip_is_known_to_the_whole_house_by_the_next_morning)
+1: from the morning after a trip, everyone in the house knows who went, where, which night, and what could
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 6082, in test_a_trip_is_known_to_the_whole_house_by_the_next_morning
+    self.assertEqual({q: p.knows_empty for q, p in m.people.items()},
+AssertionError: {'daniel': True, 'elena': False, 'leo': True, 'mara': True} != {'daniel': True, 'elena': True, 'leo': True, 'mara': True}
+- {'daniel': True, 'elena': False, 'leo': True, 'mara': True}
+?                           ^^^^
+
++ {'daniel': True, 'elena': True, 'leo': True, 'mara': True}
+?                           ^^^
+
+
+======================================================================
+FAIL: test_far_offers_read_as_offers_on_every_day (test_morning.QuietDayTest.test_far_offers_read_as_offers_on_every_day)
+2: an offer to go further along reads as an offer on days 1 and 2 too.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 6138, in test_far_offers_read_as_offers_on_every_day
+    self.assertEqual(m.line_text(dan, "volunteer_far", None, "I'll go.", leo, option="volunteer_far"),
+AssertionError: 'Daniel says to everyone: "I\'ll go."' != 'Daniel offers to go further along the street tonight: "I\'ll go."'
+- Daniel says to everyone: "I'll go."
++ Daniel offers to go further along the street tonight: "I'll go."
+ : 4
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.343s
+
+FAILED (failures=2)

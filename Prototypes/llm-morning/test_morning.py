@@ -2315,7 +2315,8 @@ def without_blocks(prompt):
             continue
         skipping = False
         if line.startswith(("About food:", "About the neighbour's house:", "About going there tonight:",
-                            "About the street:")):         # stage B's W5 line is in the trip block too
+                            "About the street:",            # stage B's W5 line is in the trip block too
+                            "About going out at night:")):  # and so is the outings line (facts_and_evening, fix 3)
             continue
         if (TRIP_OPTION_LINE.match(line)
                 or re.match(r"^- (still_going|send_\w+|nobody_goes|keep_\w+_home|refuse_to_go|propose_far|"
@@ -2819,7 +2820,9 @@ class NightTest(unittest.TestCase):
         for p in ("elena", "leo", "mara"):
             self.assertFalse([x for x in day2.carry[p][1:] if "Daniel" in x and not x.startswith("- Last night you slept")],
                              p)
-            self.assertIn("About the neighbour's house: its people left in the first days, so there may be food there. "
+            # Who went, and what came home, is the house's by morning (reports/household_knowledge.md); what they
+            # noticed in the night (block A, above) is still only their own.
+            self.assertIn("About the neighbour's house: Daniel went there last night and came back with nothing. "
                           "Outside is dangerous.", day2.inside_lines(day2.people[p]))
         self.assertIn("About the neighbour's house: you went in last night and found no food there. Outside is "
                       "dangerous.", day2.inside_lines(day2.people["daniel"]))
@@ -2877,8 +2880,9 @@ class NightTest(unittest.TestCase):
         self.assertNotIn("- Daniel is here", text)
         self.assertEqual(leo.sure, ["min 00: Everyone else gets up and comes into the kitchen. Last night the shelf held "
                                     "2 portions; this morning it holds 2 portions. Daniel is not here: his bed is empty "
-                                    "and he is nowhere in the house, and you do not know where he went. "
-                                    "(you saw it)"])        # Leo slept through it (stage B, amendment 4)
+                                    "and he is nowhere in the house. "
+                                    "(you saw it)"])        # Leo slept through it (stage B, amendment 4; where he
+        # went is the house's by morning: reports/household_knowledge.md)
         self.assertIn("About food: the shelf holds 2 portions, and there is no other food in the house, so there is "
                       "not one portion each.", day2.inside_lines(leo))
         for t in range(3):
@@ -3728,7 +3732,10 @@ class DaysTest(unittest.TestCase):
         self.assertEqual([s["id"] for s in tr["chronicle"]["scenes"]], ["D1", "G1", "N1", "D2", "G2", "N2", "D3"])
         # Day 3 is no longer 30 turns: it is a quiet day, played to bedtime (reports/quiet_day_design.md, §3).
         self.assertEqual(max(s["end"] for s in tr["day3"]["quiet"]["spans"]), 840)
-        self.assertLessEqual(meta["day3_quiet"]["day_asks"], 40)
+        # The day's 40, and Q5's own 8 on top (reports/facts_and_evening.md, fix 5).
+        evening = sum(s["asks"] for s in tr["day3"]["quiet"]["stretches"] if s["trigger"] == "Q5")
+        self.assertLessEqual(evening, 8)
+        self.assertLessEqual(meta["day3_quiet"]["day_asks"] - evening, 40)
         story = read(os.path.join(self.dirs.runs, "daniel_ate_it-seed1.md"))
         heads = ["# The night\n", "## What the night left in them\n", "# The next morning (day 5)\n",
                  "# The second night\n", "## What the night left in them\n", "# The third morning (day 6)\n"]
@@ -4239,8 +4246,9 @@ class DaysTest(unittest.TestCase):
         self.assertEqual(meta["mind2_asks"], len(tr["mind2"]))
         self.assertEqual(meta["day2_asks"], sum(a["mode"] != "routine" for t in tr["day2"]["turns"] for a in t["acts"]))
         # Day 3 has a budget (quiet.py, §4): a decision made after it is spent, an aside's answer in the same turn,
-        # is a fallback that asked nobody.
-        unasked = len(re.findall(r"could not be used \((this stretch's \d+|the day's \d+) asks are spent\)",
+        # is a fallback that asked nobody. Q5's stretch has its own (reports/facts_and_evening.md, fix 5).
+        unasked = len(re.findall(r"could not be used \((this stretch's \d+|the day's \d+|the evening's \d+) asks are "
+                                 r"spent\)",
                                  read(os.path.join(self.dirs.runs, "daniel_ate_it-seed1.md"))))
         self.assertEqual(meta["day3_asks"],
                          sum(a["mode"] != "routine" for t in tr["day3"]["turns"] for a in t["acts"]) - unasked)
@@ -5142,10 +5150,15 @@ class QuietDayTest(unittest.TestCase):
 
     # ---------- §4: the budget ----------
     def test_the_day_budget_holds_when_the_fake_keeps_talking(self):
-        d = self.played(client=TalkFake())
+        """The day's own budget holds; Q5's 8 come on top of it (reports/facts_and_evening.md, fix 5). This day spends
+        32 asks before 19:00, so its budget is set to 30 here to see it spent."""
+        with mock.patch.object(self.quiet, "DAY_ASKS", 30):
+            d = self.played(client=TalkFake())
         m, q = d.day3, d.day3.quiet
         asks = m.transcript["quiet"]["asks"]
-        self.assertEqual(asks["day"], 40)
+        evening = sum(s["asks"] for s in m.transcript["quiet"]["stretches"] if s["trigger"] == "Q5")
+        self.assertLessEqual(evening, 8)
+        self.assertEqual(asks["day"] - evening, 30)
         self.assertEqual(asks["day"], len([1 for rec in m.log for x in rec["decisions"]
                                            if x["mode"] == "model" or x.get("invalid")]))
         self.assertLessEqual(asks["quiet"], 12)
@@ -5590,7 +5603,10 @@ class QuietDayTest(unittest.TestCase):
         self.assertNotIn("night5", tr)
         for k in ("day3", "day4", "day5"):
             self.assertEqual(max(s["end"] for s in tr[k]["quiet"]["spans"]), 840, k)
-            self.assertLessEqual(meta[f"{k}_quiet"]["day_asks"], 40, k)
+            # The day's 40, and Q5's own 8 on top (reports/facts_and_evening.md, fix 5).
+            evening = sum(s["asks"] for s in tr[k]["quiet"]["stretches"] if s["trigger"] == "Q5")
+            self.assertLessEqual(evening, 8, k)
+            self.assertLessEqual(meta[f"{k}_quiet"]["day_asks"] - evening, 40, k)
         self.assertEqual(meta["days"], 5)
         story = open(os.path.join(runs_dir, f"{name}.md"), encoding="utf-8").read()
         for title in ("# The third morning (day 6)", "# The third night", "# The morning of day 7", "# Night 4",
@@ -5696,12 +5712,13 @@ class QuietDayTest(unittest.TestCase):
     def test_w5_is_offered_once_someone_knows_next_door_is_empty(self):
         """1: v16 seed 2's Daniel got inside the neighbour's house on night 2 and found nothing. From day 3 he has the
         far street: a fact line, the house line's places, two day options and a bedtime choice. So do Leo and Mara,
-        whose neighbour's-house line says he came back with nothing (reports/stage_b_fixes.md, fix 1); Elena does not."""
+        whose neighbour's-house line says he came back with nothing (reports/stage_b_fixes.md, fix 1), and from
+        reports/household_knowledge.md Elena too: the whole house knows by morning. On day 2 nobody does."""
         night = self.night
         d = self.v16()
         m = d.day3
         self.assertEqual({q: p.knows_empty for q, p in m.people.items()},
-                         {"daniel": True, "elena": False, "leo": True, "mara": True})
+                         {"daniel": True, "elena": True, "leo": True, "mara": True})
         self.assertFalse(any(p.knows_empty for p in d.day2.people.values()))
         dan, elena = m.people["daniel"], m.people["elena"]
         late = m.prompt_for(dan, 70, m.options_for(dan))
@@ -5711,7 +5728,8 @@ class QuietDayTest(unittest.TestCase):
         self.assertIn("\n- propose_far: (speech) say someone should try the houses further along the street tonight\n",
                       late)
         self.assertIn("\n- volunteer_far: (speech) offer to go further along the street tonight yourself\n", late)
-        other = m.prompt_for(elena, 70, m.options_for(elena))
+        elena = d.day2.people["elena"]
+        other = d.day2.prompt_for(elena, 0, d.day2.options_for(elena))
         for x in ("further along", "propose_far", "volunteer_far"):
             self.assertNotIn(x, other)
         d, m, n3, client = self.night3({}, self.STILL)
@@ -5720,7 +5738,7 @@ class QuietDayTest(unittest.TestCase):
                       "neighbour's house, to the houses further along the street", beds["Daniel"])
         self.assertIn("Outside: the street, the neighbour's house and the houses further along the street.",
                       beds["Daniel"])
-        self.assertNotIn("go_further", beds["Elena"])
+        self.assertIn("\n- go_further: ", beds["Elena"])
 
     def test_far_houses_are_drawn_once_and_a_searched_house_is_empty(self):
         """2: each further house's food is drawn once, when first entered (45% none, 30% 2, 18% 4, 7% 6); a searched
@@ -5810,15 +5828,15 @@ class QuietDayTest(unittest.TestCase):
         self.assertIn("Daniel is not here: you saw him go out in the night, and he has not come back.", sure["leo"])
         self.assertIn("Daniel is not here: his bed is empty and he is nowhere in the house. In the night you heard the "
                       "front door; he has not come back.", sure["elena"])
-        self.assertIn("Daniel is not here: his bed is empty and he is nowhere in the house, and you do not know where "
-                      "he went.", sure["mara"])
+        # Where he went is the house's by morning (reports/household_knowledge.md).
+        self.assertIn("Daniel is not here: his bed is empty and he is nowhere in the house. (you saw it)", sure["mara"])
         facts = {q: next(x for x in day4.inside_lines(day4.people[q]) if x.startswith("About Daniel:"))
                  for q in ("leo", "elena", "mara")}
         self.assertEqual(facts, {
             "leo": "About Daniel: you saw him go out last night, and he has not come back.",
             "elena": "About Daniel: last night you heard the front door, and by morning he was gone; he has not come "
                      "back.",
-            "mara": "About Daniel: he has been gone since last night; you do not know where he went."})
+            "mara": "About Daniel: he went further along the street last night and has not come back."})
         self.quiet.play(day4)
         self.assertFalse([x for rec in day4.log for x in rec["decisions"] if x["person"] == "daniel"])
         self.assertTrue(all("daniel" not in rec for rec in day4.transcript["quiet"]["needs"]))
@@ -5843,30 +5861,25 @@ class QuietDayTest(unittest.TestCase):
     def test_w5_is_known_from_a_neighbour_line_that_came_back_with_nothing(self):
         """Fix 1: whoever's own neighbour's-house line says a trip there came back with nothing knows next door is
         empty, as well as whoever went inside. v16 seed 2, day 3: Leo and Mara (Daniel came back with nothing) are
-        offered W5; Elena (there may be food there) is not."""
+        offered W5; and Elena, since by morning the whole house knows he came back with nothing
+        (reports/household_knowledge.md)."""
         night = self.night
         d = self.v16()
         m = d.day3
         empty = {q for q in data.ORDER if m.neighbour[q].endswith(" and came back with nothing. Outside is dangerous.")}
-        self.assertEqual(empty, {"leo", "mara"})
-        self.assertIn("so there may be food there", m.neighbour["elena"])
+        self.assertEqual(empty, {"elena", "leo", "mara"})
         self.assertEqual({q: p.knows_empty for q, p in m.people.items()},
-                         {"daniel": True, "elena": False, "leo": True, "mara": True})
-        for q in ("leo", "mara"):
+                         {"daniel": True, "elena": True, "leo": True, "mara": True})
+        for q in ("elena", "leo", "mara"):
             p = m.people[q]
             late = m.prompt_for(p, 70, m.options_for(p))
             self.assertIn("\n" + night.STREET_UNSEARCHED + "\n", late, q)
             self.assertIn("- propose_far:", late, q)
             self.assertIn("- volunteer_far:", late, q)
-        elena = m.people["elena"]
-        other = m.prompt_for(elena, 70, m.options_for(elena))
-        for x in ("further along", "propose_far", "volunteer_far"):
-            self.assertNotIn(x, other)
         d, m, n3, client = self.night3({}, self.STILL)
         beds = {re.match(r"You are (\w+),", p).group(1): p for p in client.prompts if "- sleep:" in p}
-        for name in ("Daniel", "Leo", "Mara"):
+        for name in ("Daniel", "Elena", "Leo", "Mara"):
             self.assertIn("\n- go_further: ", beds[name], name)
-        self.assertNotIn("go_further", beds["Elena"])
 
     def test_weakness_shifts_the_near_table_by_half_of_the_far(self):
         """Fix 2: a walk next door is not as deadly to a weak body as the far street: the near table takes half the
@@ -5959,6 +5972,243 @@ class QuietDayTest(unittest.TestCase):
         self.assertTrue(missed[0].startswith("You are Daniel,"), missed[0][:40])
         self.assertRegex(missed[0], r"(?m)^Now, minute 00, ")
         self.assertIn("\n" + self.night.STREET_UNSEARCHED + "\n", missed[0])
+
+    # ---------- what the family is told about outings, and the evening (reports/facts_and_evening.md) ----------
+    OUT = "About going out at night: "
+    FAR_NIGHT = {"daniel": "go_further", "leo": "lie_awake", "elena": "sleep", "mara": "watch_door"}
+    FAR_REST = ("the houses past it have not been searched: nobody knows what is left in them, and they are further "
+                "and more dangerous than next door.")
+
+    @staticmethod
+    def let_go(who, opts):
+        return next((o for o in ("let_daniel_go", "go_anyway", "stay_in_bed") if o in opts), opts[0])
+
+    def far_day4(self, draws):
+        """v16 seed 2's night 3 with Daniel going further along: Leo (awake in his room) sees him go, Mara watches the
+        door, Elena sleeps through it. Then day 4 is set up."""
+        d, m, n3, client = self.night3(self.FAR_NIGHT, {**self.STILL, **draws}, react=self.let_go)
+        d.chron.add_night(n3)
+        return d, m, n3, Morning.next_day(m, n3, d.oracle, chronicle=d.chron), client
+
+    def test_far_positions_are_heard_as_what_they_are(self):
+        """1: on a quiet day, an offer to go further along and saying someone should try there are heard as such, not
+        as "says he will not go". A real refusal still is."""
+        m = self.v16().day3
+        dan, leo = m.people["daniel"], m.people["leo"]
+        self.assertEqual(m.line_text(dan, "volunteer_far", None, "I'll go.", leo, option="volunteer_far"),
+                         'Daniel offers to go further along the street tonight: "I\'ll go."')
+        self.assertEqual(m.line_text(dan, "propose_far", None, "Someone should.", leo, option="propose_far"),
+                         'Daniel says someone should try the houses further along the street tonight: '
+                         '"Someone should."')
+        self.assertEqual(m.line_text(dan, "decline", None, "Not me.", leo, option="refuse_to_go"),
+                         'Daniel says he will not go: "Not me."')
+        # Played: Daniel offers at min 00, and what Leo has of it says so.
+        d = self.v16(client=PolicyFake(lambda who, minute, opts: "volunteer_far" if (who, minute) == ("daniel", 0)
+                                       else None))
+        self.quiet.play(d.day3)
+        heard = [x for _, x in d.day3.people["leo"].memory if x.startswith("Daniel ") and "Words of daniel at 0" in x]
+        self.assertEqual(heard, ['Daniel offers to go further along the street tonight: "Words of daniel at 0."'])
+
+    def test_the_street_line_says_how_many_houses_were_searched_as_each_knows_it(self):
+        """2: whoever searched a house further along is told when, and that it held nothing; the rest are unsearched.
+        The others are told what the house saw (reports/household_knowledge.md): who went further along, when, and
+        that they came back with nothing; not what the house held."""
+        d, m, n3, day4, _ = self.far_day4({"trip_far:daniel": 0.0, "far_house:0": 0.1})
+        g = n3.groups[0]
+        self.assertEqual((g["far"], g["street"], g["found"], g["took"]), (True, "clean", 0, 0))
+        self.assertEqual(day4.street["daniel"], "About the street: you searched one house further along it last night, "
+                                                "and it held no food; " + self.FAR_REST)
+        seen = ("About the street: Daniel went further along it last night and came back with nothing; nobody knows "
+                "what is left in the houses further along, and they are further and more dangerous than next door.")
+        for q in ("elena", "leo", "mara"):
+            self.assertEqual(day4.street[q], seen, q)
+        mara = day4.people["mara"]
+        self.assertIn("\n" + day4.street["mara"] + "\n", day4.prompt_for(mara, 0, day4.options_for(mara)))
+        # Scared off before the door: the house sees the same; only Daniel knows he did not get in.
+        d, m, n3, day4, _ = self.far_day4({"trip_far:daniel": 0.5})
+        self.assertEqual((n3.groups[0]["street"], n3.groups[0]["found"]), ("scare_there", None))
+        self.assertEqual(day4.street["leo"], seen)
+
+    def test_every_quiet_prompt_carries_the_outings_line(self):
+        """3: on quiet days and their nights, each prompt lists the trips its person knows of (the neighbour's-house
+        rule): who, where, which night, and the outcome as they know it; in the trip block, outside the budget."""
+        out = self.OUT
+        d = self.v16()
+        m = d.day3
+        nothing = out + "Daniel went to the neighbour's house last night and came back with nothing."
+        # Elena slept through it, but the whole house knows by morning (reports/household_knowledge.md).
+        expect = {"daniel": out + "you went to the neighbour's house last night, got inside and found no food.",
+                  "elena": nothing, "leo": nothing, "mara": nothing}
+        lines = {q: [x for x in m.trip_lines(m.people[q]) if x.startswith(out)] for q in data.ORDER}
+        self.assertEqual(lines, {q: [x] for q, x in expect.items()})      # in the trip block: outside the 1400
+        for q in data.ORDER:
+            p = m.people[q]
+            for t in (0, 70):
+                self.assertIn("\n" + expect[q] + "\n", m.prompt_for(p, t, m.options_for(p)), (q, t))
+        for p in d.day2.people.values():                                   # days 1 and 2 are as they were
+            self.assertFalse([x for x in d.day2.trip_lines(p) if x.startswith(out)])
+        d, m, n3, day4, client = self.far_day4({"trip_far:daniel": 0.0, "far_house:0": 0.1})
+        beds = {re.match(r"You are (\w+),", p).group(1): p for p in client.prompts if "- sleep:" in p}
+        for q in data.ORDER:
+            self.assertIn("\n" + expect[q] + "\n", beds[data.PEOPLE[q]["name"]], q)
+        both = (out + "Daniel went to the neighbour's house the night before last and came back with nothing; Daniel "
+                      "went further along the street last night and came back with nothing.")
+        self.assertEqual({q: [x for x in day4.trip_lines(day4.people[q]) if x.startswith(out)] for q in data.ORDER}, {
+            "daniel": [out + "you went to the neighbour's house the night before last, got inside and found no food; "
+                             "you went further along the street last night, got inside a house there and found no "
+                             "food."],
+            "elena": [both], "leo": [both], "mara": [both]})
+
+    def test_yesterdays_positions_are_named_as_said_yesterday_about_last_night(self):
+        """4: the carried-in line of the trip positions says they were said yesterday, about last night."""
+        d = self.v16()
+        leo = d.day3.carry["leo"]
+        self.assertIn("- What was said yesterday about going out last night, where it was left: Mara said Daniel is "
+                      "the one who should go (min 06); you said Daniel is the one who should go (min 06); Daniel said "
+                      "he still means to go (min 09); Elena said nobody should go (min 12).", leo)
+        self.assertFalse([x for x in leo if "About going to the neighbour's house last night" in x])
+
+    # ---------- what the whole house knows by morning (reports/household_knowledge.md) ----------
+    def test_a_trip_is_known_to_the_whole_house_by_the_next_morning(self):
+        """1: from the morning after a trip, everyone in the house knows who went, where, which night, and what could
+        be seen of it: back with nothing, back with food, or not back. Their outings, neighbour's-house and street
+        lines follow, and so does knowing next door is empty. What happened out there stays with whoever went."""
+        out, night = self.OUT, self.night
+        # Elena slept through night 2: by day 3 she knows Daniel went next door and came back with nothing.
+        d = self.v16()
+        m = d.day3
+        elena = m.people["elena"]
+        self.assertEqual({q: p.knows_empty for q, p in m.people.items()},
+                         {"daniel": True, "elena": True, "leo": True, "mara": True})
+        self.assertEqual(m.neighbour["elena"], "About the neighbour's house: Daniel went there last night and came "
+                                               "back with nothing. Outside is dangerous.")
+        self.assertIn(out + "Daniel went to the neighbour's house last night and came back with nothing.",
+                      m.trip_lines(elena))
+        text = m.prompt_for(elena, 70, m.options_for(elena))
+        for x in ("\n- propose_far: ", "\n- volunteer_far: ", "\n" + night.STREET_UNSEARCHED + "\n"):
+            self.assertIn(x, text)
+        # Night 3, Daniel further along, back with nothing; Elena slept again. Day 4: she knows both trips, and the
+        # street line of everyone but Daniel says only what could be seen.
+        far = ("About the street: Daniel went further along it last night and came back with nothing; nobody knows "
+               "what is left in the houses further along, and they are further and more dangerous than next door.")
+        d, m, n3, day4, _ = self.far_day4({"trip_far:daniel": 0.0, "far_house:0": 0.1})
+        self.assertNotIn("daniel", n3.knows["elena"])
+        both = (out + "Daniel went to the neighbour's house the night before last and came back with nothing; Daniel "
+                      "went further along the street last night and came back with nothing.")
+        for q in ("elena", "leo", "mara"):
+            self.assertTrue(day4.people[q].knows_empty, q)
+            self.assertIn(both, day4.trip_lines(day4.people[q]), q)
+            self.assertEqual(day4.street[q], far, q)
+        elena = day4.people["elena"]
+        self.assertIn("\n- volunteer_far: ", day4.prompt_for(elena, 0, day4.options_for(elena)))
+        self.assertTrue(day4.street["daniel"].startswith("About the street: you searched one house further along it "
+                                                         "last night, and it held no food;"))
+        # Food came home: the house sees food, not what the house held, which only Daniel knows.
+        d, m, n3, day4, _ = self.far_day4({"trip_far:daniel": 0.0, "far_house:0": 0.8})
+        self.assertEqual(day4.street["elena"], far.replace("came back with nothing", "came back with food"))
+        self.assertIn(out + "Daniel went to the neighbour's house the night before last and came back with nothing; "
+                            "Daniel went further along the street last night and came back with food.",
+                      day4.trip_lines(day4.people["elena"]))
+        self.assertIn("it held 4 portions, all brought back", day4.street["daniel"])
+        # Scared off before the door: the house sees him come back with nothing; only he knows he did not get in.
+        d, m, n3, day4, _ = self.far_day4({"trip_far:daniel": 0.5})
+        self.assertEqual(day4.street["leo"], far)
+        self.assertEqual(day4.street["daniel"], "About the street: you went along it last night but did not get inside "
+                                                "any house further along; nobody knows what is left in the houses "
+                                                "further along, and they are further and more dangerous than next "
+                                                "door.")
+        # Not back: whoever slept through it knows by morning where he went.
+        bed = {"daniel": "go_further", "leo": "lie_awake", "elena": "lie_awake", "mara": "sleep"}
+        d, m, n3, _ = self.night3(bed, {**self.STILL, "trip_far:daniel": 0.99},
+                                  react=lambda who, opts: "let_daniel_go" if who == "leo" else "stay_in_bed")
+        d.chron.add_night(n3)
+        day4 = Morning.next_day(m, n3, d.oracle, chronicle=d.chron)
+        mara = day4.people["mara"]
+        self.assertIn("Daniel is not here: his bed is empty and he is nowhere in the house. (you saw it)", mara.sure[0])
+        self.assertIn("About Daniel: he went further along the street last night and has not come back.",
+                      day4.inside_lines(mara))
+        self.assertIn(out + "Daniel went to the neighbour's house the night before last and came back with nothing; "
+                            "Daniel went further along the street last night and has not come back.",
+                      day4.trip_lines(mara))
+
+    def test_far_offers_read_as_offers_on_every_day(self):
+        """2: an offer to go further along reads as an offer on days 1 and 2 too."""
+        d = self.v16()
+        for m in (d.day1, d.day2, d.day3):
+            dan, leo = m.people["daniel"], m.people["leo"]
+            self.assertEqual(m.line_text(dan, "volunteer_far", None, "I'll go.", leo, option="volunteer_far"),
+                             'Daniel offers to go further along the street tonight: "I\'ll go."', m.day)
+            self.assertEqual(m.line_text(dan, "propose_far", None, "Try.", leo, option="propose_far"),
+                             'Daniel says someone should try the houses further along the street tonight: "Try."',
+                             m.day)
+
+    def q5(self, m):
+        return [e for e in m.quiet.log if e["kind"] == "Q5"]
+
+    def test_q5_at_19_asks_whoever_took_a_trip_position_last(self):
+        """5: at 19:00, with two or more awake in one room and a trip position taken there today, the one whose trip
+        act is most recent is asked; the stretch has 8 asks of its own."""
+        def policy(who, minute, opts):          # Daniel offers at min 00; Leo answers it whenever he can
+            if (who, minute) == ("daniel", 0):
+                return "volunteer_far"
+            if who == "leo":
+                return next((o for o in ("keep_daniel_home", "nobody_goes") if o in opts), None)
+
+        class Kept(PolicyFake):
+            prompts = []
+
+            def generate(self, system, prompt, schema=None):
+                self.prompts.append(prompt)
+                return super().generate(system, prompt, schema)
+        d = self.played(client=Kept(policy))
+        m = d.day3
+        entries = self.q5(m)
+        self.assertEqual(len(entries), 1)
+        e = entries[0]
+        self.assertEqual((e["minute"], e["fired"]), (720, True), e)
+        last = {}
+        for turn in m.transcript["turns"]:
+            for a in turn["acts"]:
+                if a["minute"] < 720 and world.act_of(a["option"])[0] in world.TRIP_KINDS:
+                    last[a["who"]] = max(last.get(a["who"], (-1, -1)), tuple(a["decided_at"]))
+        rooms = [ids for ids in e["awake"].values() if len(ids) >= 2]
+        want = max((last[q], q) for ids in rooms for q in ids if q in last)[1]
+        self.assertEqual(set(last), {"daniel", "leo"})
+        self.assertEqual(e["asked"], want)
+        self.assertEqual(want, "leo")           # his nobody_goes at 10:21 is more recent than Daniel's offer at min 00
+        self.assertIn((720, self.quiet.EVENING_LINE), m.people["leo"].memory)
+        # The one asked at 19:00 is told it is evening, just before "Now" (their own minute's records are not listed).
+        at = [p for p in Kept.prompts if p.startswith("You are Leo,") and "\nNow, 19:00, " in p]
+        self.assertEqual(len(at), 1)
+        self.assertIn("\n" + self.quiet.EVENING_LINE + "\nNow, 19:00, ", at[0])
+        st = next(s for s in m.quiet.stretches if s["trigger"] == "Q5")
+        self.assertEqual(st["start"], 720)
+        self.assertTrue(0 < st["asks"] <= 8, st)
+        asked = [x for rec in m.log for x in rec["decisions"] if x.get("quiet") == "Q5"]
+        self.assertEqual([(x["person"], x["mode"]) for x in asked], [(want, "model")])
+
+    def test_q5_has_8_asks_on_top_of_the_days_40(self):
+        """5: the day's asks spent before 19:00, the evening still has its 8. This day spends 32 by 19:00, so the
+        day's budget is set to 30 here to have it spent."""
+        with mock.patch.object(self.quiet, "DAY_ASKS", 30):
+            d = self.played(client=TalkFake(talk_from=0))
+        m = d.day3
+        e = self.q5(m)[0]
+        self.assertTrue(e["fired"], e)
+        st = next(s for s in m.quiet.stretches if s["trigger"] == "Q5")
+        before = sum(s["asks"] for s in m.quiet.stretches if s["start"] < 720)
+        self.assertEqual(before, 30)
+        self.assertTrue(0 < st["asks"] <= 8, st)
+        self.assertEqual(m.quiet.asks, 30 + st["asks"])
+
+    def test_no_q5_without_a_trip_position(self):
+        """5: nobody took a trip position today: nothing happens at 19:00."""
+        d = self.played(client=PolicyFake(lambda who, minute, opts: None))
+        m = d.day3
+        self.assertFalse([a for turn in m.transcript["turns"] for a in turn["acts"]
+                          if world.act_of(a["option"])[0] in world.TRIP_KINDS])
+        self.assertEqual([(e["fired"], e["why"]) for e in self.q5(m)], [(False, "no trip position today")])
+        self.assertFalse([s for s in m.quiet.stretches if s["trigger"] == "Q5"])
 
 
 if __name__ == "__main__":
