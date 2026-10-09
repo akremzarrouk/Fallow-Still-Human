@@ -1,0 +1,23 @@
+test_a_a_q2_before_the_evening_counts_only_ordinary_asks_against_40_and_leaves_the_evening_its_8 (test_morning.BudgetFixTest.test_a_a_q2_before_the_evening_counts_only_ordinary_asks_against_40_and_leaves_the_evening_its_8) ... ok
+test_b_a_knock_inside_a_running_stretch_gives_it_18_until_2_turns_after_the_visit (test_morning.BudgetFixTest.test_b_a_knock_inside_a_running_stretch_gives_it_18_until_2_turns_after_the_visit) ... FAIL
+
+======================================================================
+FAIL: test_b_a_knock_inside_a_running_stretch_gives_it_18_until_2_turns_after_the_visit (test_morning.BudgetFixTest.test_b_a_knock_inside_a_running_stretch_gives_it_18_until_2_turns_after_the_visit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8094, in test_b_a_knock_inside_a_running_stretch_gives_it_18_until_2_turns_after_the_visit
+    self.assertEqual((s["end"], s["asks"]), (219, seen[216][0] - 24), s)
+AssertionError: Tuples differ: (228, 26) != (219, 16)
+
+First differing element 0:
+228
+219
+
+- (228, 26)
++ (219, 16) : {'start': 207, 'end': 228, 'room': 'kitchen', 'trigger': 'Q2', 'asks': 26}
+
+----------------------------------------------------------------------
+Ran 2 tests in 2.545s
+
+FAILED (failures=1)
+exit 1

@@ -1,0 +1,26 @@
+runs/door_memory/full_scene1.json
+  Q1 and Q2 checked 10:00 to 19:00: 11; fired: 0 (Q1 0, Q2 0)
+    10:03 Q2 fired False why the day's 40 asks are spent
+    10:03 Q2 fired False why a line between them 12 minutes before
+    10:03 Q2 fired False why the day's 40 asks are spent
+    10:03 Q2 fired False why a line between them 3 minutes before
+    11:42 Q2 fired False why the day's 40 asks are spent
+    11:51 Q2 fired False why the day's 40 asks are spent
+    14:36 Q2 fired False why the day's 40 asks are spent
+    14:48 Q2 fired False why the day's 40 asks are spent
+    14:51 Q2 fired False why the day's 40 asks are spent
+    14:51 Q2 fired False why the day's 40 asks are spent
+    17:39 Q1 fired False why the day's 40 asks are spent
+  day 3's asks: 50
+  stretches from the knock: [(162, 183, 'Q7', 18), (720, 726, 'Q5', 8)]
+runs/budget_fix/full_scene1.json
+  Q1 and Q2 checked 10:00 to 19:00: 7; fired: 3 (Q1 1, Q2 2)
+    10:27 Q2 fired True why None
+    10:27 Q2 fired True why None
+    12:27 Q2 fired False why they met this way at 10:27 already today
+    15:24 Q2 fired False why they met this way at 10:27 already today
+    15:24 Q2 fired False why they met this way at 10:27 already today
+    17:39 Q1 fired True why None
+    17:48 Q2 fired False why a line between them 9 minutes before
+  day 3's asks: 56
+  stretches from the knock: [(162, 171, 'Q7', 9), (207, 213, 'Q2', 8), (639, 648, 'Q1', 8), (720, 726, 'Q5', 7)]

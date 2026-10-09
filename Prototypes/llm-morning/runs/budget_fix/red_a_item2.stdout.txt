@@ -1,0 +1,33 @@
+test_a_a_q2_before_the_evening_counts_only_ordinary_asks_against_40_and_leaves_the_evening_its_8 (test_morning.BudgetFixTest.test_a_a_q2_before_the_evening_counts_only_ordinary_asks_against_40_and_leaves_the_evening_its_8) ... FAIL
+
+======================================================================
+FAIL: test_a_a_q2_before_the_evening_counts_only_ordinary_asks_against_40_and_leaves_the_evening_its_8 (test_morning.BudgetFixTest.test_a_a_q2_before_the_evening_counts_only_ordinary_asks_against_40_and_leaves_the_evening_its_8)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8057, in test_a_a_q2_before_the_evening_counts_only_ordinary_asks_against_40_and_leaves_the_evening_its_8
+    self.assertEqual(fired, [])
+AssertionError: Lists differ: [{'kind': 'Q2', 'minute': 260, 'room': 'ki[185 chars]one}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'kind': 'Q2', 'minute': 260, 'room': 'kitchen', 'pair': ['daniel', 'leo'], 'arrived': 'daniel', 'there': 'leo', 'grudges': {'daniel': 0, 'leo': 3}, 'last_line': 200, 'met_today': False, 'fired': True, 'asked': 'leo', 'why': None}
+
++ []
+- [{'arrived': 'daniel',
+-   'asked': 'leo',
+-   'fired': True,
+-   'grudges': {'daniel': 0, 'leo': 3},
+-   'kind': 'Q2',
+-   'last_line': 200,
+-   'met_today': False,
+-   'minute': 260,
+-   'pair': ['daniel', 'leo'],
+-   'room': 'kitchen',
+-   'there': 'leo',
+-   'why': None}]
+
+----------------------------------------------------------------------
+Ran 1 test in 0.656s
+
+FAILED (failures=1)
+exit 1

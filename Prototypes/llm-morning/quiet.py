@@ -96,6 +96,8 @@ COLD_UNDER = 18             # °C indoors: the WHO reference [S17]; cold from F2
 # W2a's "deferred at 52 asks spent", which let a knock take the evening's 8 (reports/door_memory_impl.md).
 # Once a visit has ended, its Q7 stretch plays at most AFTER_VISIT more turns: the door's 18 do not pay for the rest
 # of the day's talk (reports/door_after_facts.md §1.2: 15 asks after the visit, then every quiet trigger refused).
+# A knock inside a stretch already under way adds the door's 18 to its cap until the same turn: then the cap goes back
+# to its own, or to the asks made, if more (reports/budget_fix_impl.md).
 DOOR_ASKS, DAY_MAX, KNOCK_NEEDS, AFTER_VISIT = 18, 56, 6, 2
 ASK_SLOTS = ("voice_ask_", "open_ask_", "again_")      # the visitor's lines that say what they need
 DOOR_KINDS = ("door_look", "door_call", "door_open", "door_give", "door_refuse")
@@ -231,8 +233,9 @@ class Quiet:
         self.withdrawals = []
         self.stretches = []         # each run of played turns: {"start", "end", "room", "trigger"}
         self.asks = 0               # the model's answers asked today
+        self.reserved_asks = 0      # those asked in a reserved stretch (Q5, Q6, Q7): toward DAY_MAX only, not the 40
         self.cap, self.cap_why = None, None     # the asks the played stretch under way may reach, and why it stops
-        self.reserved = False       # the stretch under way is Q5's: its own asks, past the day's 40
+        self.reserved = False       # the stretch under way is reserved (Q5, Q6, Q7): its own asks, past the day's 40
         self.evening_done = False   # Q5 has been checked today
         self.withdrawn = {}         # pid -> the minute their withdraw is over, whether in its span or resting in it
         self.came_in = {}           # pid -> (minute, room) of the last time they came into a room
@@ -257,6 +260,7 @@ class Quiet:
         self.door_events = []
         self.woken_now = []
         self.q7_open = None         # the Q7 stretch under way, if one is (reports/w2a_fixes.md, fix 3)
+        self.knock_in = None        # a knock inside a played stretch: its visit, and the cap and reserved before it
 
     # ---------- the needs ----------
     def people(self):
@@ -408,19 +412,30 @@ class Quiet:
         return fired
 
     # ---------- the budget (§4) ----------
+    def ordinary(self):
+        """The asks made today outside a reserved stretch: what the day's 40 hold (reports/budget_fix_impl.md)."""
+        return self.asks - self.reserved_asks
+
+    def counted(self):
+        """One ask of the model made: toward the day's 56, and toward the ordinary 40 unless a reserved stretch is
+        under way (reports/budget_fix_impl.md)."""
+        self.asks += 1
+        if self.reserved:
+            self.reserved_asks += 1
+
     def spent(self, p=None):
         """No more asks now: the day's 40, or the played stretch's own (fix 1). Q5's stretch has its own 8, past the
         day's 40 (reports/facts_and_evening.md, fix 5). No day asks more than 56, reserved or not (W2a). A door ask of
         p (p perceives the door, the visit's 18 not yet spent) is not limited by the stretch's own cap
-        (reports/door_heard_impl.md)."""
+        (reports/door_heard_impl.md). The 40 hold only the ordinary asks (reports/budget_fix_impl.md)."""
         door = p is not None and self.door is not None and p.door is not None and not self.door_full(p)
-        return (self.asks >= DAY_MAX or (self.asks >= DAY_ASKS and not self.reserved)
+        return (self.asks >= DAY_MAX or (self.ordinary() >= DAY_ASKS and not self.reserved)
                 or (not door and self.cap is not None and self.asks >= self.cap))
 
     def spent_why(self):
         if self.asks >= DAY_MAX:
             return f"the day's {DAY_MAX} asks are spent"
-        return "the day's asks are spent" if self.asks >= DAY_ASKS and not self.reserved else self.cap_why
+        return "the day's asks are spent" if self.ordinary() >= DAY_ASKS and not self.reserved else self.cap_why
 
     def begin(self, stretch, n, why, reserved=False):
         """A played stretch begins: it may ask the model at most n times more (fix 1); reserved, past the day's 40."""
@@ -441,14 +456,20 @@ class Quiet:
                     sc["asks"] = sc["q7_asks"]
         self.cap = self.cap_why = None
         self.reserved = False
+        self.knock_in = None
         self.stretches.append(stretch)
 
     def budget(self, pid):
-        """Why a quiet ask of pid cannot be made now, or None."""
-        if self.asks >= DAY_ASKS:
+        """Why a quiet ask of pid cannot be made now, or None. The ordinary 40; then the day's 56, less what the
+        evening (Q5) is still owed (reports/budget_fix_impl.md)."""
+        if self.ordinary() >= DAY_ASKS:
             return f"the day's {DAY_ASKS} asks are spent"
+        owed = 0 if self.evening_done else EVENING_ASKS
+        if self.asks + owed >= DAY_MAX:
+            return (f"{self.asks} asks spent and the evening's {owed} still owed reach the day's {DAY_MAX}" if owed
+                    else f"the day's {DAY_MAX} asks are spent")
         if self.spent():
-            return self.cap_why
+            return self.spent_why()
         if len(self.quiet_asked) >= QUIET_ASKS:
             return f"{QUIET_ASKS} quiet asks today"
         if sum(1 for a in self.quiet_asked if a["who"] == pid) >= QUIET_ASKS_EACH:
@@ -534,6 +555,7 @@ class Quiet:
             entry.update(fired=True, awake=rooms)
             if played:
                 entry["why"] = "the house was already talking"
+                self.knock_in = {"visit": v["id"], "cap": self.cap, "reserved": self.reserved}
                 if self.cap is not None:
                     self.cap += DOOR_ASKS
                 self.reserved = True
@@ -925,6 +947,21 @@ class Quiet:
                 self.m.convos.log.append((minute, r, "ended", f"the visit ended {AFTER_VISIT} turns ago"))
         self.m.arrivals = []
         self.pending.clear()
+
+    def knock_back(self, minute):
+        """The AFTER_VISIT-th turn after the last of a visit that came into a running stretch has been played: the
+        stretch's cap goes back to what it was before the knock, or to the asks made so far, if more, and it is
+        reserved only if it was before. If that spends it, its talk ends, as when its asks are spent
+        (reports/budget_fix_impl.md)."""
+        k, self.knock_in = self.knock_in, None
+        if k["cap"] is not None:
+            self.cap = max(k["cap"], self.asks)
+        self.reserved = k["reserved"]
+        if self.spent():
+            for r in data.ROOMS:
+                if self.m.convos.active[r]:
+                    self.m.convos.active[r] = False
+                    self.m.convos.log.append((minute, r, "ended", self.spent_why()))
 
     def door_release(self, minute):
         """The Q7 stretch ends with nobody in its room at the door: its talk ends, and its unused asks are not held
@@ -1482,7 +1519,7 @@ class Quiet:
                 "rain": [{k: v for k, v in r.items() if k != "seq"} for r in self.rain_events],
                 "water": self.water_log, "thirst": self.thirst_log,
                 "door": [{k: v for k, v in sc.items() if k not in ("queue",)} for sc in self.door_scenes],
-                "asks": {"day": self.asks, "quiet": len(done),
+                "asks": {"day": self.asks, "reserved": self.reserved_asks, "quiet": len(done),
                          "quiet_by_person": {q: sum(1 for a in done if a["who"] == q) for q in data.ORDER},
                          "quiet_let_through": len(self.quiet_asked)}}
 
@@ -1515,6 +1552,10 @@ def play(m, told=None):
             if (stretch["trigger"] == "Q7" and q.door is None and ended is not None
                     and t * data.MINUTES_PER_TURN >= ended + AFTER_VISIT * data.MINUTES_PER_TURN):
                 q.door_after_close(t * data.MINUTES_PER_TURN)
+            # reports/budget_fix_impl.md: a knock inside a running stretch gives it the door's 18 until the same turn.
+            ended = q.knock_in and next((sc["end"] for sc in q.door_scenes if sc["visit"] == q.knock_in["visit"]), None)
+            if ended is not None and t * data.MINUTES_PER_TURN >= ended + AFTER_VISIT * data.MINUTES_PER_TURN:
+                q.knock_back(t * data.MINUTES_PER_TURN)
             if not any(m.convos.active.values()) and not m.arrivals and q.door is None:
                 q.close(stretch, t * data.MINUTES_PER_TURN)
                 stretch = None

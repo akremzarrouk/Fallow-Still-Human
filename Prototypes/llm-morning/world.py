@@ -1485,7 +1485,7 @@ class Morning:
             full = self.quiet.door_full(p)          # a visit asks at most 18 of those at the door (door_heard_impl)
             if full:
                 return None, full
-            self.quiet.asks += 1
+            self.quiet.counted()
             self.quiet.door_asked(p)
         seen = p.levels()
         prompt = self.prompt_for(p, t, opts, d.get("lull"), extra=extra)

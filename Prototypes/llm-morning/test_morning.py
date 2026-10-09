@@ -8018,5 +8018,89 @@ class DoorAfterTest(unittest.TestCase):
         self.assertNotIn("evening", v["deferrals"][-1]["why"])
 
 
+class RefuseTalkFake(TalkFake):
+    """TalkFake that refuses at the door whenever it is offered door_refuse: a visit ends in its first turn."""
+
+    def generate(self, system, prompt, schema=None):
+        if schema is None and "door_refuse" in asked_where(prompt)[2]:
+            self.requests += 1
+            return json.dumps({"option": "door_refuse", "say": "Go away.", "feeling": "tense", "reason": "Refuse.",
+                               "suspects": "nobody", "angry_at": "nobody"})
+        return super().generate(system, prompt, schema)
+
+
+class BudgetFixTest(unittest.TestCase):
+    """reports/budget_fix_impl.md (from reports/door_memory_impl.md §5.2): a reserved stretch's asks (Q5, Q6, Q7) count
+    toward the day's 56 only, not the ordinary 40; an ordinary trigger is refused if the day's asks and the evening's
+    still-owed 8 would reach 56; a knock inside a running stretch gives it the door's 18 only until 2 turns after the
+    visit. Day-3 tests start from v16 seed 2 through night 2, replayed from cache/v16 with no API call."""
+    MODEL = QuietDayTest.MODEL
+    v16 = QuietDayTest.v16
+    setUp, tearDown, need, at = KnockTest.setUp, KnockTest.tearDown, KnockTest.need, KnockTest.at
+    door_day = KnockTest.door_day
+    meeting = QuietDayTest.meeting
+
+    # ---------- (a) the ordinary 40 and the evening's owed asks ----------
+    def test_a_a_q2_before_the_evening_counts_only_ordinary_asks_against_40_and_leaves_the_evening_its_8(self):
+        self.assertEqual((self.quiet.DAY_ASKS, self.quiet.DAY_MAX, self.quiet.EVENING_ASKS), (40, 56, 8))
+
+        def q2_with(ordinary, reserved):
+            m, q = self.meeting()
+            q.asks, q.reserved_asks = ordinary + reserved, reserved
+            self.assertFalse(q.evening_done)
+            return q, q.arrive(m.people["daniel"], "kitchen", 260)        # 11:20, before 19:00
+        # 35 ordinary and 9 reserved: 44 spent, and 44 + the evening's 8 = 52 leaves room. Q2 fires.
+        q, fired = q2_with(35, 9)
+        self.assertEqual([(f["kind"], f["asked"]) for f in fired], [("Q2", "leo")], q.log[-1])
+        # 35 ordinary and 14 reserved: 49 spent, and 49 + 8 = 57 would reach 56. Refused, naming the evening's asks.
+        q, fired = q2_with(35, 14)
+        self.assertEqual(fired, [])
+        why = q.log[-1]["why"]
+        self.assertEqual((q.log[-1]["kind"], q.log[-1]["budget"]), ("Q2", why))
+        self.assertIn("the evening's 8", why)
+        self.assertIn("56", why)
+        # The ordinary 40 still holds for ordinary asks, and says so.
+        q, fired = q2_with(40, 0)
+        self.assertEqual(fired, [])
+        self.assertEqual(q.log[-1]["why"], "the day's 40 asks are spent")
+
+    # ---------- (b) a knock inside a running stretch ----------
+    def test_b_a_knock_inside_a_running_stretch_gives_it_18_until_2_turns_after_the_visit(self):
+        def knock_in_q2(stretch_asks):
+            """v16 seed 2's day 3, its Q2 stretch from 10:27; a knock at 10:30, inside it; the house refuses at once, so
+            the visit's last turn is 10:30. seen[minute]: (asks, cap, reserved, reserved asks) after that minute's
+            turn."""
+            d, q, (v,) = self.door_day(RefuseTalkFake(), [(210, "ask_food")])
+            seen = {}
+            with mock.patch.object(self.quiet, "STRETCH_ASKS", stretch_asks):
+                self.quiet.play(d.day3, told=lambda t: seen.setdefault(
+                    t * data.MINUTES_PER_TURN, (q.asks, q.cap, q.reserved, getattr(q, "reserved_asks", None))))
+            s = next(s for s in q.stretches if s["start"] == 207)
+            sc = q.door_scenes[0]
+            self.assertEqual((s["trigger"], sc["start"], sc["end"], sc["played"], sc["outcome"]),
+                             ("Q2", 210, 213, True, "refused"), "the premise")
+            return q, s, seen
+        own = self.quiet.STRETCH_ASKS
+        # The stretch's own cap is 24 + 8 = 32; the knock adds the door's 18, as now. The visit's last turn is 10:30;
+        # the 2 turns after it are 10:33 and 10:36; from the end of 10:36 (seen at 10:39) the cap is back.
+        q, s, seen = knock_in_q2(own)
+        self.assertEqual(seen[207][1], 24 + own, seen)
+        self.assertEqual(seen[210][1:3], (24 + own + 18, True), seen)
+        self.assertEqual(seen[216][1:3], (24 + own + 18, True), seen)
+        # Asks made while the door's 18 are on (10:30 to 10:36) are reserved ones.
+        self.assertEqual(seen[216][3], seen[216][0] - seen[207][0], seen)
+        # The asks made by 10:36 (40) are more than its own 32: the cap goes back to them, and the talk ends there.
+        self.assertGreater(seen[216][0], 24 + own)
+        self.assertEqual((s["end"], s["asks"]), (219, seen[216][0] - 24), s)
+        # With a stretch whose own cap is higher than the asks made (patched to 20: 24 + 20 = 44), the cap goes back to
+        # exactly its own, and it is no longer reserved: the stretch goes on, on its own asks.
+        q, s, seen = knock_in_q2(20)
+        self.assertEqual(seen[216][1:3], (24 + 20 + 18, True), seen)
+        self.assertLess(seen[216][0], 24 + 20)
+        self.assertEqual(seen[219][1:3], (24 + 20, False), seen)
+        self.assertGreater(s["end"], 219, s)
+        self.assertLessEqual(s["asks"], 20, s)
+
+
 if __name__ == "__main__":
     unittest.main()
