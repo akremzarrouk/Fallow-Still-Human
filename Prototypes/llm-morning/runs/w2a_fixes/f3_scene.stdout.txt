@@ -1,0 +1,7 @@
+10:00 Q7: fired=True room=kitchen asked=['elena', 'leo', 'mara'] why=None left=None
+stretch 10:00-10:03 Q7 in kitchen: 3 asks
+  10:00 mara in kitchen: go_back_room [model]
+  10:00 leo in kitchen: go_back_room [model]
+  10:00 elena in kitchen: go_back_room [model]
+scene 10:00-10:18: outcome ignored; Q7 asks 3; knocks ['10:00', '10:09']; heard {'elena': 'words', 'leo': 'words', 'mara': 'words', 'daniel': 'heard'}
+day asks 24; reserved now False

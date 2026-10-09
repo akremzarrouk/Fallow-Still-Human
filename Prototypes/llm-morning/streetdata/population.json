@@ -33,10 +33,12 @@
   "night_search_from": 0.8,
   "evening_from": 0.6
  },
- "approach": {"trips_a_part": 0.2, "factor": 2.0, "factor_uncalibrated": 1.0, "factor_cap": 2.0},
+ "approach": {"trips_a_part": 0.2, "factor": 1.0, "factor_uncalibrated": 1.0, "factor_cap": 2.0},
  "give": {"chance": {"helper": 0.7, "guarded": 0.3, "opportunist": 0.2, "violent": 0.05}, "child": 0.1,
           "share": 0.2, "keep_days": 5, "request_days": 2, "kind_step": 0.3, "refused_twice": 0.1},
  "visit": {"windows": [[30, 297], [300, 630]], "grid": 3, "door_give": 3.0},
+ "yard": {"has_surplus": 0.8, "occupied": 1.0, "about": "what a household that sees a bin set out in no. 9's yard believes of no. 9 (has_surplus, est.: a bin under a drainpipe says water, not how much nor whether they would share); someone seen in the yard says only that no. 9 is occupied (reports/w2a_fixes.md, fix 1)"},
+ "sight": {"range_m": 30.0, "sunrise": 1, "sunset_day1": 697, "sunset_a_day": -2, "about": "w2_design 3.2: by day, what a figure carries is seen to 30 m (est.); daylight from 07:01 to 18:37 on day 1, sunset 2 minutes earlier a day (N11; est.); minutes of the day from 07:00"},
  "sound": {"knock": 70, "front_door": 25, "ambient": {"day": 25, "rain": 35}, "words_over": 10,
            "wake": [0.10, 0.20, 0.9]}
 }

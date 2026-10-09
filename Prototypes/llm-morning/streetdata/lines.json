@@ -1,5 +1,5 @@
 {
- "about": "The stranger's words at the family's door in W2a (reports/w2_design.md, §4.3), written by hand once, before any run. Code chooses a line by slot, by the visiting household (`with`: only for a household with a child, or of two or more), and by the string <seed>:street:<household>:visit<n>:<slot>. Rules: at most 25 words; no digit, number word, weekday or house number; nothing the family's world does not have; a request, never a duty; a line states a need the household really has.",
+ "about": "The stranger's words at the family's door in W2a (reports/w2_design.md, §4.3), written by hand once, before any run. Code chooses a line by slot, by the visiting household (`with`: only for a household with a child, with a girl, with a boy, of two or more, or that heard the family's voices), and by the string <seed>:street:<household>:visit<n>:<slot>. Rules: at most 25 words; no digit, number word, weekday or house number; nothing the family's world does not have; a request, never a duty; a line states a need the household really has.",
  "slots": {
   "voice_ask_water": [
    {
@@ -21,13 +21,21 @@
     "text": "Hello. I'm not here to cause trouble. I'm out of water, that's all. Could you spare some?"
    },
    {
-    "text": "I heard voices, so I knocked. I've no water left. Anything you could spare, I'd be grateful."
+    "text": "Hello? I'm sorry to trouble you. There's not a drop left in my house. Could you spare a little water?"
    },
    {
     "text": "It's water. I need water. A little, if you have it. I'm sorry to ask."
    },
    {
+    "text": "I heard voices, so I knocked. I've no water left. Anything you could spare, I'd be grateful.",
+    "with": "heard_voices"
+   },
+   {
     "text": "Please, I've a little one at home and no water left to give her. Just a cup, if you can.",
+    "with": "girl"
+   },
+   {
+    "text": "Please, I've a little one at home and no water left. Just a cup, if you can.",
     "with": "child"
    },
    {
@@ -52,13 +60,17 @@
     "text": "I'm not here for trouble. I'm hungry, that's all. Have you anything to spare?"
    },
    {
-    "text": "I heard voices, so I knocked. I've nothing left to eat. Could you spare a little?"
+    "text": "Hello? I'm sorry to trouble you. There's nothing left in my house to eat. Could you spare a little?"
    },
    {
     "text": "Is anybody in? I'm sorry. I've had nothing to eat for days. Anything would help."
    },
    {
     "text": "It's food I'm asking for. Only a little. I'm sorry, I know it's hard for everyone."
+   },
+   {
+    "text": "I heard voices, so I knocked. I've nothing left to eat. Could you spare a little?",
+    "with": "heard_voices"
    },
    {
     "text": "Please, my little one hasn't eaten properly in days. Anything you could spare, for the child.",
@@ -96,6 +108,10 @@
    },
    {
     "text": "Thank you for opening. My little girl's had nothing to drink since this morning. Just a little water.",
+    "with": "girl"
+   },
+   {
+    "text": "Thank you for opening. My little one's had nothing to drink since this morning. Just a little water.",
     "with": "child"
    },
    {
@@ -130,6 +146,10 @@
    },
    {
     "text": "Thank you for opening. My boy hasn't had a proper meal in days. Anything at all, for him.",
+    "with": "boy"
+   },
+   {
+    "text": "Thank you for opening. My little one hasn't had a proper meal in days. Anything at all.",
     "with": "child"
    },
    {

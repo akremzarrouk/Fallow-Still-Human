@@ -1,0 +1,64 @@
+approach factor 1.0; houses overlooking no. 9's yard: [5, 7, 11, 13]; a bin seen sets has_surplus 0.8 (prior 0.5) and occupied 1.0
+
+BIN NEVER OUT:
+  seed  1: 1 knock(s)  day 6 15:45 no. 10 ask water
+  seed  2: 1 knock(s)  day 6 09:27 no. 6 ask water
+  seed  3: 1 knock(s)  day 9 16:06 no. 3 ask water
+  seed  4: 0 knock(s)  
+  seed  5: 0 knock(s)  
+  seed  6: 0 knock(s)  
+  seed  7: 1 knock(s)  day 9 08:51 no. 17 ask water
+  seed  8: 2 knock(s)  day 3 08:15 no. 3 ask food; day 7 16:30 no. 11 ask water
+  seed  9: 0 knock(s)  
+  seed 10: 0 knock(s)  
+  counts [1, 1, 1, 0, 0, 0, 1, 2, 0, 0]; median 0.5; max 2
+
+BIN OUT FROM DAY 6, 07:00, NEVER BROUGHT IN:
+  seed  1: 1 knock(s)  day 6 15:45 no. 10 ask water
+  seed  2: 1 knock(s)  day 6 09:27 no. 6 ask water
+  seed  3: 1 knock(s)  day 9 16:06 no. 3 ask water
+  seed  4: 0 knock(s)  
+  seed  5: 0 knock(s)  
+  seed  6: 1 knock(s)  day 9 11:57 no. 11 ask food
+  seed  7: 1 knock(s)  day 9 08:51 no. 17 ask water
+  seed  8: 2 knock(s)  day 3 08:15 no. 3 ask food; day 7 16:30 no. 11 ask water
+  seed  9: 0 knock(s)  
+  seed 10: 0 knock(s)  
+  counts [1, 1, 1, 0, 0, 1, 1, 2, 0, 0]; median 1.0; max 2
+
+WHO OVERLOOKS NO. 9'S YARD, AND WHAT EACH BELIEVES WHEN (the bin out from day 6, 07:00; no knock answered):
+  seed  1: no. 5 occupied (4, helper); no. 7 neighbour; no. 11 occupied (5, helper); no. 13 occupied (1, guarded)
+     no. 5: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (16.8 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+     no. 11: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (9.4 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+     no. 13: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (16.8 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+  seed  2: no. 5 occupied (1, guarded); no. 7 neighbour; no. 11 occupied (3, guarded); no. 13 occupied (2, helper)
+     no. 5: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (16.8 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+     no. 11: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (9.4 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+     no. 13: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (16.8 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+  seed  3: no. 5 empty; no. 7 neighbour; no. 11 occupied (2, guarded); no. 13 occupied (2, helper)
+     no. 11: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (9.4 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+     no. 13: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (16.8 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+  seed  4: no. 5 occupied (2, helper); no. 7 neighbour; no. 11 occupied (2, helper); no. 13 occupied (1, helper)
+     no. 5: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (16.8 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+     no. 11: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (9.4 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+     no. 13: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (16.8 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+  seed  5: no. 5 occupied (2, helper); no. 7 neighbour; no. 11 empty; no. 13 occupied (2, opportunist)
+     no. 5: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (16.8 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+     no. 13: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (16.8 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+  seed  6: no. 5 occupied (2, helper); no. 7 neighbour; no. 11 occupied (1, helper); no. 13 occupied (1, helper)
+     no. 5: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (16.8 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+     no. 11: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (9.4 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+     no. 13: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (16.8 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+  seed  7: no. 5 empty; no. 7 neighbour; no. 11 occupied (2, opportunist); no. 13 empty
+     no. 11: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (9.4 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+  seed  8: no. 5 empty; no. 7 neighbour; no. 11 occupied (2, helper); no. 13 occupied (2, helper)
+     no. 11: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (9.4 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+     no. 13: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (16.8 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+  seed  9: no. 5 occupied (3, guarded); no. 7 neighbour; no. 11 occupied (5, guarded); no. 13 empty
+     no. 5: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (16.8 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+     no. 11: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (9.4 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+  seed 10: no. 5 occupied (2, helper); no. 7 neighbour; no. 11 occupied (3, helper); no. 13 empty
+     no. 5: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (16.8 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+     no. 11: before day 6, occupied 1.0, has_surplus 0.5; saw the bin by day 6 12:00 (9.4 m): occupied 1.0, has_surplus 0.8; at the end of day 10: occupied 1.0, has_surplus 0.8, kind 0.6, refused 0
+
+SEED 2, bin out: 1 visit(s) on days 3 to 10: NOT READY FOR LIVE RUN

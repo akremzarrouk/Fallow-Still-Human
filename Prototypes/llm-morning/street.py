@@ -6,7 +6,8 @@ each by a string of its own, f"{seed}:street:...", so a draw never depends on ho
 and water.py). The weather enters as a value (`wet(minute) -> bool`), never as a read of World. World (truth.py) holds
 the state; no prompt builder reads it.
 
-Minutes are absolute, as in weather.py: minutes since 07:00 of played day 1.
+Minutes are absolute, as in weather.py: minutes since 07:00 of played day 1. The family's yard enters the same way,
+as a value (`yard() -> {"bin_out_at", "people"}`), what World holds of it.
 
 W2a builds the plans `stay`, `search` and `ask` (§2.7), the exchange between two households resolved in code (§2.5),
 and the visit to no. 9 by day (§4.2). Not built: trade, offer, warn, take, leave, perception of the family by the
@@ -409,13 +410,15 @@ def plan(state, hh, s, wet):
     return best, targets.get(best), {a: round(v, 4) for a, v in scores.items()}
 
 
-def advance(state, to, wet):
-    """The street up to absolute minute `to`: at each part's start, the stores used up to it, then every household's
-    plan for the part, carried out at once (§2.2). A household waiting on a visit to no. 9 makes no plan."""
+def advance(state, to, wet, yard=None):
+    """The street up to absolute minute `to`: at each part's start, the stores used up to it, what the households that
+    overlook no. 9's yard saw of it in the part's daylight, then every household's plan for the part, carried out at
+    once (§2.2). A household waiting on a visit to no. 9 makes no plan."""
     while state["next_part"] <= to:
         s = state["next_part"]
         consume(state, s)
         state["log"].append({"what": "part", "at": s})
+        see_yard(state, s, yard)
         rain = bool(wet(s))
         for hid in sorted(state["households"], key=lambda h: state["households"][h]["home"]):
             hh = state["households"][hid]
@@ -523,9 +526,10 @@ def end_visit(state, v, outcome, qty, at):
                            "good": "water" if v["purpose"] == "ask_water" else "food", "place": n, "visit": v["id"]})
 
 
-def schedule(seed, days, factor=None, wet=None):
+def schedule(seed, days, factor=None, wet=None, yard=None):
     """The visits to no. 9 the seed makes on days 3 to `days` if no knock is ever answered: at most one a day, the
-    rest deferred to the next day, as Q7 does (§4.2). The family can move later visits; the first are the seed's."""
+    rest deferred to the next day, as Q7 does (§4.2). The family can move later visits; the first are the seed's.
+    yard: what is in no. 9's yard (`advance`); None, nothing ever."""
     state = generate(seed)
     if factor is not None:
         state["factor"] = factor
@@ -538,7 +542,7 @@ def schedule(seed, days, factor=None, wet=None):
     for k in range(1, days + 1):
         for p in range(4):
             s = midnight(k) + p * PART
-            advance(state, s, wet)
+            advance(state, s, wet, yard)
             for v in due(state, s, s + PART - 1):
                 if k in knocked:
                     defer(state, v, v["at"], "a knock has come today already", tomorrow=True)
@@ -546,7 +550,7 @@ def schedule(seed, days, factor=None, wet=None):
                 knocked.add(k)
                 out.append(dict(v, day=k))
                 end_visit(state, v, "ignored", 0.0, v["at"])
-    advance(state, midnight(days + 1), wet)
+    advance(state, midnight(days + 1), wet, yard)
     return out
 
 
@@ -560,6 +564,57 @@ def perceive(stimulus, observer):
     if level >= observer["ambient"] + stimulus.get("words_over", 10):
         return "words"
     return "heard" if level >= observer["ambient"] else None
+
+
+def sees(observer, light, pop=None):
+    """The sight rule (§3.1): seen if it is light and the distance is within range; the observer's viewpoint is
+    already one that looks onto the place (street.json `overlook`)."""
+    return bool(light) and observer["metres"] <= (pop or load("population"))["sight"]["range_m"]
+
+
+def daylight(k, pop):
+    """(sunrise, sunset) of played day k, absolute minutes."""
+    sight = pop["sight"]
+    base = midnight(k) + 7 * 60
+    return base + sight["sunrise"], base + sight["sunset_day1"] + sight["sunset_a_day"] * (k - 1)
+
+
+def see_yard(state, s, yard):
+    """What the households whose upstairs back windows overlook no. 9's yard saw of it in the daylight of the part
+    that ends at `s` (reports/w2a_fixes.md, fix 1): the bin, if it was out; anyone in the yard. A bin says no. 9 has
+    water to spare (`yard.has_surplus`) and is lived in; a person says only that it is lived in."""
+    y = yard() if yard is not None else None
+    if not y:
+        return
+    pop, street = state["pop"], state["street"]
+    a = s - PART
+    lit = []
+    for k in {day_of(a), day_of(s - 1)}:
+        up, down = daylight(k, pop)
+        if max(a, up) < min(s, down):
+            lit.append((max(a, up), min(s, down)))
+    if not lit:
+        return
+    at = y.get("bin_out_at")
+    bin_seen = at is not None and any(at < hi for lo, hi in lit)
+    people = any(lo <= t < hi for t in y.get("people", []) for lo, hi in lit)
+    if not (bin_seen or people):
+        return
+    n9 = street["family"]
+    yard9 = state["houses"][n9]
+    for n in street["overlook"][str(n9)]:
+        h = state["houses"][n]
+        hh = state["households"].get(h["household"])
+        if hh is None:
+            continue
+        d = math.hypot(h["x"] - yard9["x"], street["yard_depth_m"])
+        if not sees({"metres": d}, True, pop):
+            continue
+        hh["occupied"][n9] = pop["yard"]["occupied"]
+        if bin_seen:
+            hh["surplus"][n9] = max(hh["surplus"][n9], pop["yard"]["has_surplus"])
+        state["log"].append({"what": "saw_yard", "at": s, "house": n, "household": hh["id"], "bin": bin_seen,
+                             "people": people, "metres": round(d, 1)})
 
 
 def wake_chance(anxious, pop=None):
@@ -582,12 +637,19 @@ def lines():
     return _LINES[0]
 
 
+def says_true(tag, hh):
+    """Whether a line tagged `with` is true of the household (reports/w2a_fixes.md, fix 4): a child, a girl, a boy,
+    others at home, or having heard the family's voices (no household perceives them in W2a, so never)."""
+    kids = {m["sex"] for m in hh["drawn"]["members"] if m["role"] == "child"}
+    return {None: True, "child": bool(kids), "girl": "f" in kids, "boy": "m" in kids, "others": size(hh) >= 2,
+            "heard_voices": bool(hh.get("heard_voices"))}[tag]
+
+
 def line(state, v, slot, i=0):
     """A line of the pool for this visit's household (`with`: a child, or two or more), by the string
     <seed>:street:<household>:visit<n>:<slot>."""
     hh = state["households"][v["household"]]
-    ok = [x for x in lines()[slot] if x.get("with") is None or (x["with"] == "child" and has_child(hh))
-          or (x["with"] == "others" and size(hh) >= 2)]
+    ok = [x for x in lines()[slot] if says_true(x.get("with"), hh)]
     u = default_or(state)(f"{state['seed']}:street:{v['household']}:visit{v['n']}:{slot}" + (f":{i}" if i else ""))
     return ok[int(u * len(ok))]["text"]
 

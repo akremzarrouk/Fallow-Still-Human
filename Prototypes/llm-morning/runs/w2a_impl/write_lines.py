@@ -1,10 +1,15 @@
 """Writes streetdata/lines.json, the stranger's words at the door in W2a (reports/w2_design.md, §4.3; amendment 3:
-at least 8 variants per slot). Run once from Prototypes/llm-morning/."""
+at least 8 variants per slot). Run once from Prototypes/llm-morning/. Changed by reports/w2a_fixes.md, fix 4: a line
+that says the household heard voices is only for a household that did (none in W2a); a line that names a girl or a
+boy only for a household whose child is that sex, with neutral wording beside it."""
 import json
 
 P = lambda *xs: [{"text": x} for x in xs]
 C = lambda x: {"text": x, "with": "child"}
 O = lambda x: {"text": x, "with": "others"}
+G = lambda x: {"text": x, "with": "girl"}
+B = lambda x: {"text": x, "with": "boy"}
+V = lambda x: {"text": x, "with": "heard_voices"}
 slots = {
     "voice_ask_water": P(
         "Hello? I'm sorry to knock. I've run out of water. Could you spare a little? Even a cup would help.",
@@ -13,9 +18,11 @@ slots = {
         "I won't come in. I just need water. Mine ran out and the taps are dry.",
         "Sorry to bother you. Is there any water in the house you could spare? I've nothing left.",
         "Hello. I'm not here to cause trouble. I'm out of water, that's all. Could you spare some?",
-        "I heard voices, so I knocked. I've no water left. Anything you could spare, I'd be grateful.",
+        "Hello? I'm sorry to trouble you. There's not a drop left in my house. Could you spare a little water?",
         "It's water. I need water. A little, if you have it. I'm sorry to ask.") + [
-        C("Please, I've a little one at home and no water left to give her. Just a cup, if you can."),
+        V("I heard voices, so I knocked. I've no water left. Anything you could spare, I'd be grateful."),
+        G("Please, I've a little one at home and no water left to give her. Just a cup, if you can."),
+        C("Please, I've a little one at home and no water left. Just a cup, if you can."),
         O("Hello? There's a few of us at home and the water's gone. Whatever you can spare.")],
     "voice_ask_food": P(
         "Hello? I'm sorry to knock. Have you anything to eat you could spare? Anything at all.",
@@ -23,9 +30,10 @@ slots = {
         "Please, if there's any food you can spare, I'd be grateful. I won't come in.",
         "Sorry to bother you. My food ran out. Is there anything at all you could let me have?",
         "I'm not here for trouble. I'm hungry, that's all. Have you anything to spare?",
-        "I heard voices, so I knocked. I've nothing left to eat. Could you spare a little?",
+        "Hello? I'm sorry to trouble you. There's nothing left in my house to eat. Could you spare a little?",
         "Is anybody in? I'm sorry. I've had nothing to eat for days. Anything would help.",
         "It's food I'm asking for. Only a little. I'm sorry, I know it's hard for everyone.") + [
+        V("I heard voices, so I knocked. I've nothing left to eat. Could you spare a little?"),
         C("Please, my little one hasn't eaten properly in days. Anything you could spare, for the child."),
         O("Hello? There's a few of us at home and the food's gone. Could you spare anything at all?")],
     "open_ask_water": P(
@@ -37,7 +45,8 @@ slots = {
         "Thank you. I know what it costs to open a door now. I just need some water.",
         "Hello. Thank you. I'm sorry, I'll be quick. Have you any water to spare?",
         "Thank you for opening. My water's gone and the taps are dry. Anything would help.") + [
-        C("Thank you for opening. My little girl's had nothing to drink since this morning. Just a little water."),
+        G("Thank you for opening. My little girl's had nothing to drink since this morning. Just a little water."),
+        C("Thank you for opening. My little one's had nothing to drink since this morning. Just a little water."),
         O("Thank you. There's a few of us at home with no water left. Whatever you can spare.")],
     "open_ask_food": P(
         "Thank you for opening. I've had nothing to eat in days. Anything you could spare.",
@@ -48,7 +57,8 @@ slots = {
         "Thank you. I know what it costs to open a door now. I just need something to eat.",
         "Hello. Thank you. I'm sorry, I'll be quick. Have you any food to spare?",
         "Thank you for opening. My food's gone. I'm not asking for much, just something.") + [
-        C("Thank you for opening. My boy hasn't had a proper meal in days. Anything at all, for him."),
+        B("Thank you for opening. My boy hasn't had a proper meal in days. Anything at all, for him."),
+        C("Thank you for opening. My little one hasn't had a proper meal in days. Anything at all."),
         O("Thank you. There's a few of us at home and nothing left to eat. Whatever you can spare.")],
     "insist_water": P(
         "Please. Just a cup.",
@@ -118,7 +128,7 @@ slots = {
 }
 doc = {"about": ("The stranger's words at the family's door in W2a (reports/w2_design.md, §4.3), written by hand once, "
                  "before any run. Code chooses a line by slot, by the visiting household (`with`: only for a household "
-                 "with a child, or of two or more), and by the string <seed>:street:<household>:visit<n>:<slot>. Rules: "
+                 "with a child, with a girl, with a boy, of two or more, or that heard the family's voices), and by the string <seed>:street:<household>:visit<n>:<slot>. Rules: "
                  "at most 25 words; no digit, number word, weekday or house number; nothing the family's world does not "
                  "have; a request, never a duty; a line states a need the household really has."),
        "slots": slots}

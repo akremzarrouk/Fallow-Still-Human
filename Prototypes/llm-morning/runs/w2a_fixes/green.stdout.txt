@@ -1,0 +1,9 @@
+test_f1_a_bin_in_no_9s_yard_is_seen_by_day_from_the_houses_that_overlook_it (test_morning.KnockFixTest.test_f1_a_bin_in_no_9s_yard_is_seen_by_day_from_the_houses_that_overlook_it) ... ok
+test_f2_the_approach_factor_is_back_to_1 (test_morning.KnockFixTest.test_f2_the_approach_factor_is_back_to_1) ... ok
+test_f3_a_q7_stretch_ends_and_frees_its_reserve_when_nobody_in_its_room_perceives_the_door (test_morning.KnockFixTest.test_f3_a_q7_stretch_ends_and_frees_its_reserve_when_nobody_in_its_room_perceives_the_door) ... ok
+test_f4_a_strangers_line_says_only_what_its_household_is (test_morning.KnockFixTest.test_f4_a_strangers_line_says_only_what_its_household_is) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 2.184s
+
+OK

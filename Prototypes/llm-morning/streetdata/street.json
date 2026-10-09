@@ -171,5 +171,177 @@
   },
   "bathroom": null
  },
- "gap": "a gap the width of a hand between two boards beside the front door, at eye height (O1)"
+ "gap": "a gap the width of a hand between two boards beside the front door, at eye height (O1)",
+ "overlook_about": "Whose upstairs back windows overlook each yard (reports/w2a_fixes.md, fix 1): the two houses on each side, on the same side of the street (est.: beyond the second yard, the yard walls and back extensions of a terrace hide the ground of a yard from an upstairs window). The houses across the street face the front. A window is yard_depth_m behind its own house's yard line (est.).",
+ "yard_depth_m": 5.0,
+ "overlook": {
+  "1": [
+   3,
+   5
+  ],
+  "2": [
+   4,
+   6
+  ],
+  "3": [
+   1,
+   5,
+   7
+  ],
+  "4": [
+   2,
+   6,
+   8
+  ],
+  "5": [
+   1,
+   3,
+   7,
+   9
+  ],
+  "6": [
+   2,
+   4,
+   8,
+   10
+  ],
+  "7": [
+   3,
+   5,
+   9,
+   11
+  ],
+  "8": [
+   4,
+   6,
+   10,
+   12
+  ],
+  "9": [
+   5,
+   7,
+   11,
+   13
+  ],
+  "10": [
+   6,
+   8,
+   12,
+   14
+  ],
+  "11": [
+   7,
+   9,
+   13,
+   15
+  ],
+  "12": [
+   8,
+   10,
+   14,
+   16
+  ],
+  "13": [
+   9,
+   11,
+   15,
+   17
+  ],
+  "14": [
+   10,
+   12,
+   16,
+   18
+  ],
+  "15": [
+   11,
+   13,
+   17,
+   19
+  ],
+  "16": [
+   12,
+   14,
+   18,
+   20
+  ],
+  "17": [
+   13,
+   15,
+   19,
+   21
+  ],
+  "18": [
+   14,
+   16,
+   20,
+   22
+  ],
+  "19": [
+   15,
+   17,
+   21,
+   23
+  ],
+  "20": [
+   16,
+   18,
+   22,
+   24
+  ],
+  "21": [
+   17,
+   19,
+   23,
+   25
+  ],
+  "22": [
+   18,
+   20,
+   24,
+   26
+  ],
+  "23": [
+   19,
+   21,
+   25,
+   27
+  ],
+  "24": [
+   20,
+   22,
+   26,
+   28
+  ],
+  "25": [
+   21,
+   23,
+   27,
+   29
+  ],
+  "26": [
+   22,
+   24,
+   28,
+   30
+  ],
+  "27": [
+   23,
+   25,
+   29
+  ],
+  "28": [
+   24,
+   26,
+   30
+  ],
+  "29": [
+   25,
+   27
+  ],
+  "30": [
+   26,
+   28
+  ]
+ }
 }

@@ -249,6 +249,7 @@ class Quiet:
         self.door_scenes = []
         self.door_events = []
         self.woken_now = []
+        self.q7_open = None         # the Q7 stretch under way, if one is (reports/w2a_fixes.md, fix 3)
 
     # ---------- the needs ----------
     def people(self):
@@ -282,7 +283,7 @@ class Quiet:
             since = at - 1 if self.last_at is None else self.last_at
             self.onsets += [s for s in w.weather.spells(since + 1, at + 1) if since < s[0] <= at]
             self.last_at = at
-            streetmod.advance(w.street, at, w.weather.raining)          # W2a: the street's plans, by parts
+            streetmod.advance(w.street, at, w.weather.raining, w.yard)  # W2a: the street's plans, by parts
         for p in self.people():
             f, d = self.fast(p, minute), self.debt(p, minute)
             fs, ds = fast_stage(f), debt_stage(d)
@@ -414,11 +415,20 @@ class Quiet:
     def begin(self, stretch, n, why, reserved=False):
         """A played stretch begins: it may ask the model at most n times more (fix 1); reserved, past the day's 40."""
         stretch["asks_at"] = self.asks
+        if stretch.get("trigger") == "Q7":
+            self.q7_open = stretch
         self.cap, self.cap_why = self.asks + n, why
         self.reserved = reserved
 
     def close(self, stretch, end):
         stretch["end"], stretch["asks"] = end, self.asks - stretch.pop("asks_at")
+        if stretch is self.q7_open:             # its asks are its door scene's (reports/w2a_fixes.md, fix 3)
+            self.q7_open = None
+            sc = self.door or (self.door_scenes[-1] if self.door_scenes else None)
+            if sc is not None:
+                sc["q7_asks"] += stretch["asks"]
+                if sc["end"] is not None:
+                    sc["asks"] = sc["q7_asks"]
         self.cap = self.cap_why = None
         self.reserved = False
         self.stretches.append(stretch)
@@ -494,7 +504,7 @@ class Quiet:
                               "silent": 0, "knocks": [minute], "queue": [], "outcome": None, "acts": [],
                               "heard": dict(heard), "woken": [], "at_door": [], "said": [], "who": who,
                               "voice": voice, "give": None, "asks_at": self.asks, "asks": None, "played": played,
-                              "summary": {}}
+                              "summary": {}, "q7_asks": 0, "unplayed_from": None}
             sc["woken"] = [q for q in heard if q in self.woken_now]
             self.knock_percepts(sc, heard, minute, played)
             rooms = {}
@@ -726,7 +736,8 @@ class Quiet:
         v = self.visit(sc)
         sc["end"] = minute
         sc["outcome"] = sc["outcome"] or "ignored"
-        sc["asks"] = self.asks - sc["asks_at"]
+        sc["asks"] = (self.asks - sc["asks_at"] if sc["played"] else
+                      sc["q7_asks"] + (self.asks - self.q7_open["asks_at"] if self.q7_open is not None else 0))
         if v["state"] != "done":
             streetmod.end_visit(st, v, sc["outcome"], 0.0, absolute(self.k, minute))
         good = "water" if sc["purpose"] == "ask_water" else "food"
@@ -762,6 +773,35 @@ class Quiet:
                                  "text": f"the visit ended: {sc['outcome']}"})
         self.door_scenes.append(sc)
         self.door = None
+
+    # ---------- reports/w2a_fixes.md, fix 3: a door nobody in the played room perceives ----------
+    def door_unwatched(self, room):
+        """Nobody awake in `room` perceives the door now (their `p.door`, as door_views wrote it)."""
+        return not any(p.door is not None for p in self.people() if p.room == room and not self.resting(p.id))
+
+    def door_release(self, minute):
+        """The Q7 stretch ends with nobody in its room at the door: its talk ends, and its unused asks are not held
+        for it. The person outside goes on as before, in quiet time (door_quiet)."""
+        for r in data.ROOMS:
+            if self.m.convos.active[r]:
+                self.m.convos.active[r] = False
+                self.m.convos.log.append((minute, r, "ended", "nobody in the room perceives the front door"))
+        self.m.arrivals = []
+        self.pending.clear()
+        self.door["unplayed_from"] = minute
+
+    def door_quiet(self, minute):
+        """A turn of the door scene in quiet time, once its Q7 stretch has ended: what the person outside does now (a
+        second knock, heard and remembered; going away). The released asks are not taken back: nobody is asked for it
+        again. (Asking whoever perceives the door again was tried and dropped: the routines seat everyone in the kitchen
+        the minute the talk ends, so it re-asked the people who had just walked away from the door; reports/w2a_fixes.md.)"""
+        sc = self.door
+        if sc is None or sc["unplayed_from"] is None or sc.get("quiet_at") == minute:
+            return
+        sc["quiet_at"] = minute
+        self.door_before(minute)
+        if self.door is not None:
+            self.door_after(minute)
 
     # ---------- spans (§2, §3) ----------
     def awake_with(self, p, room=None):
@@ -1035,6 +1075,7 @@ class Quiet:
         self.evening(minute)
         self.hear_rain(minute, played=False)
         self.hear_knock(minute, played=False)
+        self.door_quiet(minute)
         # Whoever began a routine this minute in a room where a trigger has just started the talk is in that talk.
         for p in self.people():
             span = self.open.get(p.id)
@@ -1045,6 +1086,8 @@ class Quiet:
     def next_event(self, minute):
         """The next minute anything changes: a rest or a withdraw running out, a need crossing a line, a rest falling
         due for a sitter or for whoever keeps to their room, or bedtime. Never past bedtime."""
+        if self.door is not None:          # a door scene going on in quiet time is stepped turn by turn
+            return minute + data.MINUTES_PER_TURN
         out = [DAY_END] + ([EVENING] if not self.evening_done else [])
         for p in self.people():
             span = self.open.get(p.id)
@@ -1305,6 +1348,14 @@ def play(m, told=None):
     while t * data.MINUTES_PER_TURN < DAY_END:
         minute = t * data.MINUTES_PER_TURN
         if stretch is not None:
+            # reports/w2a_fixes.md, fix 3: a Q7 stretch ends when nobody in its room perceives the door any more.
+            if stretch["trigger"] == "Q7" and q.door is not None and minute > stretch["start"]:
+                q.door_before(minute)
+                if q.door is not None and q.door_unwatched(stretch["room"]):
+                    q.door_release(minute)
+                    q.close(stretch, minute)
+                    stretch = None
+                    continue
             q.turn(t)
             if told:
                 told(t)

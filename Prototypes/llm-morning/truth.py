@@ -62,6 +62,10 @@ class World(Guarded):
         self.fixed = {}                 # facts fixed once, as the chronicle's: name -> {"value", "string", "at"}
         self.received = []              # (minute, litres): water carried in from outside
         self.given = []                 # (minute, litres): water handed out at the front door (W2a)
+        # What is in the yard, for the street to see (reports/w2a_fixes.md, fix 1): when the bin was first set out, and
+        # each minute someone was out there.
+        self.bin_out_at = None
+        self.yard_people = []
         # W2a (reports/w2_design.md, §1, §2): the street, drawn once; advanced by quiet.Quiet.tick, never by advance_to.
         self.street = street.generate(seed)
 
@@ -114,8 +118,16 @@ class World(Guarded):
 
     def put_bin_out(self, pid, minute, wet=True):
         self.bin_out = True
+        if self.bin_out_at is None:
+            self.bin_out_at = minute
+        self.yard_people.append(minute)
         if wet:
             self.wet_until[pid] = minute + water.WET_FOR
+
+    def yard(self):
+        """What is in the yard, as the street's eyes can find it: the bin (from when, while it is out) and the minutes
+        someone was out there."""
+        return {"bin_out_at": self.bin_out_at if self.bin_out else None, "people": list(self.yard_people)}
 
     def receive(self, litres, minute=None):
         self.tap += litres

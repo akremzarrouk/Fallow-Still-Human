@@ -1,0 +1,79 @@
+no. 5 (1 people, guarded): at the end of day 10 water 10.5 L, food 3.0 days; need_w, need_f, u = [0.0, 0.57, 0.34]; belief of no. 9: occupied 1.0, has_surplus 0.8
+   day 5 00:00: stay  {'stay': 0.2765}
+   day 5 06:00: stay  {'stay': 0.3439, 'search': -0.2087, 'ask': -0.187}
+   day 5 12:00: stay  {'stay': 0.3784, 'search': -0.2186, 'ask': -0.2271}
+   day 5 18:00: stay  {'stay': 0.3025}
+   day 6 00:00: stay  {'stay': 0.2363}
+   day 6 06:00: stay  {'stay': 0.3009, 'search': -0.1178, 'ask': -0.1291}
+   day 6 12:00: stay  {'stay': 0.2992, 'search': -0.1992, 'ask': -0.1656}
+   day 6 18:00: stay  {'stay': 0.337}
+   day 7 00:00: stay  {'stay': 0.3004}
+   day 7 06:00: stay  {'stay': 0.3188, 'search': -0.1025, 'ask': -0.1319}
+   day 7 12:00: stay  {'stay': 0.2603, 'search': -0.1301, 'ask': -0.2402}
+   day 7 18:00: stay  {'stay': 0.2724}
+   day 8 00:00: stay  {'stay': 0.2555}
+   day 8 06:00: stay  {'stay': 0.2604, 'search': -0.1002, 'ask': -0.1692}
+   day 8 12:00: stay  {'stay': 0.2485, 'search': -0.1968, 'ask': -0.2467}
+   day 8 18:00: stay  {'stay': 0.2647}
+   day 9 00:00: stay  {'stay': 0.2041}
+   day 9 06:00: stay  {'stay': 0.248, 'search': -0.1945, 'ask': -0.2727}
+   day 9 12:00: stay  {'stay': 0.235, 'search': 0.0708, 'ask': -0.0963}
+   day 9 18:00: stay  {'stay': 0.2919}
+   day 10 00:00: stay  {'stay': 0.2261}
+   day 10 06:00: stay  {'stay': 0.2087, 'search': -0.0256, 'ask': -0.1256}
+   day 10 12:00: stay  {'stay': 0.219, 'search': -0.0583, 'ask': -0.1624}
+   day 10 18:00: stay  {'stay': 0.1945}
+   day 11 00:00: stay  {'stay': 0.2171}
+no. 7: neighbour
+no. 11 (3 people, guarded): at the end of day 10 water 0.0 L, food 9.9 days; need_w, need_f, u = [1.0, 0.0, 1.0]; belief of no. 9: occupied 1.0, has_surplus 0.8
+   day 5 00:00: stay  {'stay': 0.2767}
+   day 5 06:00: stay  {'stay': 0.3759, 'search': -0.1822, 'ask': -0.1029}
+   day 5 12:00: stay  {'stay': 0.308, 'search': -0.1144, 'ask': -0.2619}
+   day 5 18:00: stay  {'stay': 0.2757}
+   day 6 00:00: stay  {'stay': 0.3975}
+   day 6 06:00: stay  {'stay': 0.2835, 'search': -0.0284, 'ask': -0.1656}
+   day 6 12:00: stay  {'stay': 0.343, 'search': -0.2662, 'ask': -0.3037}
+   day 6 18:00: stay  {'stay': 0.3394}
+   day 7 00:00: stay  {'stay': 0.3716}
+   day 7 06:00: stay  {'stay': 0.3145, 'search': -0.0963, 'ask': -0.0772}
+   day 7 12:00: stay  {'stay': 0.284, 'search': -0.1718, 'ask': -0.2461}
+   day 7 18:00: stay  {'stay': 0.312}
+   day 8 00:00: stay  {'stay': 0.2166}
+   day 8 06:00: stay  {'stay': 0.2468, 'search': 0.0984, 'ask': -0.1589}
+   day 8 12:00: stay  {'stay': 0.2634, 'search': 0.0982, 'ask': -0.0274}
+   day 8 18:00: stay  {'stay': 0.0774}
+   day 9 00:00: stay  {'stay': 0.1988}
+   day 9 06:00: search -> no. 10  {'stay': 0.0778, 'search': 0.2722, 'ask': -0.0267}
+   day 9 12:00: search -> no. 17  {'stay': 0.0529, 'search': 0.1214, 'ask': -0.1401}
+   day 9 18:00: search -> no. 3  {'stay': -0.0482, 'search': 0.1033, 'ask': -0.0355}
+   day 10 00:00: stay  {'stay': 0.1601, 'search': 0.0309}
+   day 10 06:00: search -> no. 19  {'stay': 0.0294, 'search': 0.3385, 'ask': 0.0575}
+   day 10 12:00: search -> no. 4  {'stay': 0.0152, 'search': 0.0937, 'ask': -0.0619}
+   day 10 18:00: search -> no. 1  {'stay': -0.019, 'search': 0.2209, 'ask': 0.0332}
+   day 11 00:00: search -> no. 22  {'stay': -0.0679, 'search': 0.173}
+no. 13 (2 people, helper): at the end of day 10 water 3.9 L, food 7.4 days; need_w, need_f, u = [0.67, 0.0, 0.67]; belief of no. 9: occupied 1.0, has_surplus 0.8
+   day 5 00:00: stay  {'stay': 0.3239}
+   day 5 06:00: stay  {'stay': 0.3268, 'search': -0.1324, 'ask': -0.1695}
+   day 5 12:00: stay  {'stay': 0.2679, 'search': -0.1, 'ask': -0.1104}
+   day 5 18:00: stay  {'stay': 0.3827}
+   day 6 00:00: stay  {'stay': 0.3255}
+   day 6 06:00: stay  {'stay': 0.2971, 'search': -0.0502, 'ask': -0.0968}
+   day 6 12:00: stay  {'stay': 0.3128, 'search': -0.0412, 'ask': -0.0861}
+   day 6 18:00: stay  {'stay': 0.3453}
+   day 7 00:00: stay  {'stay': 0.2973}
+   day 7 06:00: stay  {'stay': 0.2285, 'search': 0.0554, 'ask': -0.091}
+   day 7 12:00: stay  {'stay': 0.2601, 'search': -0.0833, 'ask': -0.2038}
+   day 7 18:00: stay  {'stay': 0.3883}
+   day 8 00:00: stay  {'stay': 0.3161}
+   day 8 06:00: stay  {'stay': 0.3186, 'search': -0.0971, 'ask': -0.1672}
+   day 8 12:00: stay  {'stay': 0.239, 'search': -0.1812, 'ask': -0.2444}
+   day 8 18:00: stay  {'stay': 0.2807}
+   day 9 00:00: stay  {'stay': 0.3518}
+   day 9 06:00: stay  {'stay': 0.228, 'search': 0.0053, 'ask': -0.0929}
+   day 9 12:00: stay  {'stay': 0.2469, 'search': -0.025, 'ask': -0.0091}
+   day 9 18:00: stay  {'stay': 0.1989}
+   day 10 00:00: stay  {'stay': 0.1208}
+   day 10 06:00: search -> no. 17  {'stay': 0.1192, 'search': 0.1413, 'ask': 0.0618}
+   day 10 12:00: stay  {'stay': 0.1683, 'search': 0.12, 'ask': -0.0049}
+   day 10 18:00: stay  {'stay': 0.1067, 'search': 0.0551, 'ask': -0.0817}
+   day 11 00:00: stay  {'stay': 0.0404}

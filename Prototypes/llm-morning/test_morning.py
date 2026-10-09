@@ -7367,7 +7367,7 @@ class KnockTest(unittest.TestCase):
                 self.assertLessEqual(len(text.split()), 25, text)
                 self.assertIsNone(re.search(r"\d", text), text)
                 self.assertIsNone(absent.search(text), text)
-                self.assertIn(x.get("with"), (None, "child", "others"), text)
+                self.assertIn(x.get("with"), (None, "child", "girl", "boy", "others", "heard_voices"), text)
                 if "water" in slot:
                     self.assertNotRegex(text.lower(), r"\b(eat|food|bread|tin)\b", text)
                 if "food" in slot:
@@ -7375,6 +7375,149 @@ class KnockTest(unittest.TestCase):
                 if not x.get("with"):
                     self.assertNotRegex(text.lower(), r"\b(we|us|our|child|kids?|little one|baby|son|daughter|"
                                                       r"husband|wife|mother|mum|father|dad)\b", text)
+
+
+
+class KnockFixTest(unittest.TestCase):
+    """reports/w2a_fixes.md: the street sees no. 9's yard from the houses that overlook it, the approach factor back to
+    1.0, a Q7 stretch that ends when nobody in its room perceives the door, and lines that say only what the visiting
+    household is. Day-3 tests start from v16 seed 2 through night 2, replayed from cache/v16 with no API call."""
+    MODEL = QuietDayTest.MODEL
+    v16 = QuietDayTest.v16
+    setUp, tearDown, need, at = KnockTest.setUp, KnockTest.tearDown, KnockTest.need, KnockTest.at
+    door_day, door_lines = KnockTest.door_day, staticmethod(KnockTest.door_lines)
+
+    # ---------- 1: the yard seen ----------
+    def test_f1_a_bin_in_no_9s_yard_is_seen_by_day_from_the_houses_that_overlook_it(self):
+        street = self.need("street")
+        over = street.load("street").get("overlook", {}).get("9")
+        self.assertTrue(over, "street.json does not say which houses overlook no. 9's yard")
+        pop = street.load("population")
+        self.assertIn("yard", pop, "population.json has no belief value for a seen yard")
+        prior, seen = pop["priors"]["surplus"], pop["yard"]["has_surplus"]
+        self.assertGreater(seen, prior)
+        dry = lambda minute: False
+
+        def street_with(bin_at=None, people=()):
+            st = street.generate(2)
+            return st, (lambda: {"bin_out_at": bin_at, "people": list(people)})
+
+        def beliefs(st):
+            return {h["home"]: (h["occupied"][9], h["surplus"][9]) for h in st["households"].values()}
+        st, yard = street_with(self.at(6, 0))                         # the bin out at 07:00 on day 6
+        occ = [n for n in over if st["houses"][n]["status"] == "occupied"]
+        self.assertTrue(occ, "the premise: someone lives in a house that overlooks no. 9's yard")
+        far = [h for h in st["households"].values() if h["home"] not in over]
+        street.advance(st, self.at(6, 0), dry, yard=yard)
+        before = beliefs(st)
+        for n in occ:
+            self.assertEqual(before[n][1], prior, n)
+        street.advance(st, self.at(6, 300), dry, yard=yard)            # 12:00: the morning's daylight showed it
+        after = beliefs(st)
+        for n in occ:
+            self.assertEqual(after[n], (1.0, seen), n)
+            self.assertTrue([x for x in st["log"] if x["what"] == "saw_yard" and x["house"] == n and x["bin"]], n)
+        for h in far:
+            self.assertEqual(after[h["home"]], before[h["home"]], h["home"])
+        # Only by day: a bin put out at 19:00 is not seen at midnight or at 06:00, and is seen by 12:00 the next day.
+        st, yard = street_with(self.at(6, 720))
+        street.advance(st, self.at(7, -60), dry, yard=yard)
+        self.assertEqual({n: beliefs(st)[n][1] for n in occ}, {n: prior for n in occ})
+        street.advance(st, self.at(7, 300), dry, yard=yard)
+        self.assertEqual({n: beliefs(st)[n] for n in occ}, {n: (1.0, seen) for n in occ})
+        # Out of sight range nothing is seen, whatever is there.
+        self.assertFalse(street.sees({"metres": pop["sight"]["range_m"] + 1}, True))
+        self.assertTrue(street.sees({"metres": pop["sight"]["range_m"]}, True))
+        self.assertFalse(street.sees({"metres": 5.0}, False))
+        # Someone in the yard by day, with no bin: no. 9 is occupied; its water is not judged from that.
+        st, yard = street_with(None, [self.at(6, 180)])
+        for h in st["households"].values():
+            h["occupied"][9] = 0.5
+        street.advance(st, self.at(6, 300), dry, yard=yard)
+        for n in occ:
+            self.assertEqual(beliefs(st)[n], (1.0, prior), n)
+        # In the run: the bin set out from the kitchen on day 3 reaches the street through World, by 12:00.
+        d = self.v16()
+        m, q = d.day3, d.day3.quiet
+        self.assertIsNone(getattr(q.world, "bin_out_at", None))
+        q.tick(30)
+        q.collect_rain(m.people["leo"], 30)
+        self.assertEqual(q.world.bin_out_at, self.at(3, 30))
+        self.assertEqual(q.world.yard_people, [self.at(3, 30)])
+        q.tick(303)
+        got = beliefs(q.world.street)
+        for n in [n for n in over if q.world.street["houses"][n]["status"] == "occupied"]:
+            self.assertEqual(got[n], (1.0, seen), n)
+
+    # ---------- 2: the reasoned rate ----------
+    def test_f2_the_approach_factor_is_back_to_1(self):
+        street = self.need("street")
+        self.assertEqual(street.load("population")["approach"]["factor"], 1.0)
+        self.assertEqual(street.generate(2)["factor"], 1.0)
+
+    # ---------- 3: the door stretch ends when nobody in its room perceives the door ----------
+    def test_f3_a_q7_stretch_ends_and_frees_its_reserve_when_nobody_in_its_room_perceives_the_door(self):
+        class Recording(PolicyFake):
+            pass
+
+        def policy(who, minute, opts):
+            if minute is None or minute < 180:
+                return None
+            if "door_call" in opts:
+                return next((o for o in ("go_back_room", "go_brothers_room") if o in opts), None)
+            return next((o for o in opts if o.startswith("confront_")), None)
+        rec = Recording(policy)
+        rec.prompts = []
+        real = rec.generate
+
+        def generate(system, prompt, schema=None):
+            if schema is None:
+                rec.prompts.append((now_minute(prompt), prompt))
+            return real(system, prompt, schema)
+        rec.generate = generate
+        d, q, (v,) = self.door_day(rec, [(180, "ask_water")])
+        self.quiet.play(d.day3)
+        q7 = [s for s in q.stretches if s["trigger"] == "Q7"]
+        self.assertTrue(q7, q.log[-6:])
+        self.assertEqual(q7[0]["start"], 180)
+        # The family walked away from the door at 10:00; at 10:03 nobody in the kitchen perceives it: the stretch ends.
+        self.assertEqual(q7[0]["end"], 183, q7)
+        for s in q7:
+            asked = [(mm, p) for mm, p in rec.prompts if mm is not None and s["start"] <= mm < s["end"]]
+            self.assertTrue(asked, s)
+            for mm, p in asked:
+                self.assertTrue(self.door_lines(p), f"a Q7 ask without the door in it, at {mm}:\n{p[-800:]}")
+        sc = q.door_scenes[0]
+        self.assertLessEqual(sc["asks"], 6)
+        self.assertEqual(sc["outcome"], "ignored")
+        self.assertIsNone(q.door)
+        self.assertFalse(q.reserved)
+
+    # ---------- 4: the stranger says only what their household is ----------
+    def test_f4_a_strangers_line_says_only_what_its_household_is(self):
+        street = self.need("street")
+        pool = street.lines()
+        voices = [x for xs in pool.values() for x in xs if "heard voices" in x["text"].lower()]
+        self.assertTrue(voices)
+        for x in voices:
+            self.assertEqual(x.get("with"), "heard_voices", x["text"])
+        seen = set()
+        for seed in range(1, 11):
+            st = street.generate(seed)
+            for hid, hh in st["households"].items():
+                kids = {m["sex"] for m in hh["drawn"]["members"] if m["role"] == "child"}
+                for n in range(1, 6):
+                    for slot in pool:
+                        text = street.line(st, {"household": hid, "n": n}, slot)
+                        seen.add(text)
+                        self.assertNotIn("heard voices", text.lower(), (seed, hid))
+                        if re.search(r"\b(girl|her|she)\b", text, re.I):
+                            self.assertIn("f", kids, (seed, hid, text))
+                        if re.search(r"\b(boy|him|he)\b", text, re.I):
+                            self.assertIn("m", kids, (seed, hid, text))
+                        if re.search(r"\b(little one|child)\b", text, re.I):
+                            self.assertTrue(kids, (seed, hid, text))
+        self.assertGreater(len(seen), 60)
 
 
 if __name__ == "__main__":
