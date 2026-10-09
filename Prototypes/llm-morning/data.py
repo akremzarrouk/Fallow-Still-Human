@@ -151,6 +151,18 @@ def with_yard(house_things):
     return house_things.replace(*YARD)
 
 
+# W2a (reports/w2_design.md, §0.4 O1, §7.2): while someone is at the front door, the house line names the gap in the
+# boards and the person there, since it says "Do not mention any other object or place".
+DOOR = ("the front door and the front windows, boarded up.",
+        "the front door and the front windows, boarded up, with a gap in the boards by the front door; the person at "
+        "the front door.")
+assert HOUSE_THINGS.count(DOOR[0]) == 1
+
+
+def with_door(house_things):
+    return house_things.replace(*DOOR)
+
+
 # After the trip concern starts (reports/trip_design.md, §2.2): the trip the options speak of is
 # tonight, and nobody goes out this morning.
 HOUSE_THINGS_AFTER_TRIP = HOUSE_THINGS.replace("Outside, and not to be gone to:",

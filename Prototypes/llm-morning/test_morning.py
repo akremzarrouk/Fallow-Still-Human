@@ -7021,5 +7021,361 @@ class PhysicalLayerTest(unittest.TestCase):
         self.assertEqual(near, "The night before last, Daniel went out to the neighbour's house and came back with "
                                "water.")
 
+
+class KnockTest(unittest.TestCase):
+    """W2a, the knock (reports/w2_design.md, §7.2): the street drawn and planned in code, a visit to the family's door
+    by day, the door scene (Q7) with five door options, the stranger's lines from a pool, and the day cap. Every day-3
+    test starts from v16 seed 2 through night 2, replayed from cache/v16 with no API call."""
+    MODEL = QuietDayTest.MODEL
+    v16 = QuietDayTest.v16
+
+    def setUp(self):
+        self.dirs = Dirs()
+        self.quiet = importlib.import_module("quiet")
+        self.night = importlib.import_module("night")
+        self.chron = importlib.import_module("chronicle")
+        self.mind = importlib.import_module("mind")
+        self.truth = importlib.import_module("truth")
+
+    def tearDown(self):
+        self.dirs.cleanup()
+
+    def need(self, name):
+        """A module W2a adds: the test fails, rather than errs, until it is built."""
+        self.assertIsNotNone(importlib.util.find_spec(name), f"{name}.py is not built")
+        return importlib.import_module(name)
+
+    def at(self, k, minute):
+        return self.quiet.absolute(k, minute)
+
+    def door_day(self, client=None, visits=()):
+        """v16 seed 2 to day 3, the street's own visits taken away and its asks stopped, then a visit by each of its
+        first households at these (day minute, purpose)."""
+        street = self.need("street")
+        d = self.v16(client=client or PolicyFake(lambda who, minute, opts: None))
+        q = d.day3.quiet
+        st = getattr(q.world, "street", None)
+        self.assertIsNotNone(st, "World.street is not built")
+        st["factor"] = 0.0
+        st["visits"] = [v for v in st["visits"] if v["state"] == "done"]
+        hids = sorted(st["households"], key=lambda h: st["households"][h]["home"])
+        made = [street.make_visit(st, hids[i], self.at(3, mm), purpose) for i, (mm, purpose) in enumerate(visits)]
+        return d, q, made
+
+    @staticmethod
+    def door_lines(prompt):
+        return [x for x in prompt.split("\n") if x.startswith(("- Someone is knocking", "- You hear knocking",
+                                                                 "- Someone is at the front door",
+                                                                 "- The front door is open"))
+                or re.match(r"^- (A|An|Earlier).* voice at the front door", x)
+                or re.match(r"^- door_\w+: ", x)]
+
+    # ---------- T1: the street is drawn by string ----------
+    def test_t1_the_street_is_drawn_by_string_and_adding_a_house_changes_no_other_draw(self):
+        street = self.need("street")
+        a = street.generate(2)
+        self.assertEqual(a, street.generate(2))
+        self.assertNotEqual(a["households"], street.generate(3)["households"])
+        status = [h["status"] for h in a["houses"].values()]
+        self.assertEqual((len(status), status.count("occupied"), status.count("empty")), (30, 20, 8))
+        self.assertEqual((a["houses"][9]["status"], a["houses"][7]["status"]), ("family", "neighbour"))
+        self.assertEqual(len(a["households"]), 20)
+        for h in a["households"].values():
+            self.assertTrue(any(m["role"] == "adult" for m in h["drawn"]["members"]), h["id"])
+            self.assertIn(h["drawn"]["disposition"], ("helper", "guarded", "opportunist", "violent"))
+        # Independent of order: the houses listed the other way round give the same households.
+        s = street.load("street")
+        rev = dict(s, houses=list(reversed(s["houses"])))
+        self.assertEqual(street.generate(2, street=rev)["households"], a["households"])
+        # Adding a house changes no other house's draw: every household of a house occupied in both is drawn the same.
+        more = dict(s, houses=s["houses"] + [{"n": 31, "side": "odd", "x": 120.0}])
+        c = street.generate(2, street=more)
+        both = [h for h in a["households"] if h in c["households"]]
+        self.assertGreaterEqual(len(both), 15)
+        for h in both:
+            self.assertEqual(c["households"][h]["drawn"], a["households"][h]["drawn"], h)
+        # Every value comes from the one draw argument, each by a string of its own that starts with the seed.
+        seen = []
+
+        def draw(x):
+            seen.append(x)
+            return random.Random(x).random()
+        self.assertEqual(street.generate(2, draw=draw), a)
+        self.assertTrue(seen)
+        self.assertTrue(all(x.startswith("2:street:") for x in seen), seen[:3])
+        self.assertEqual(len(seen), len(set(seen)))
+
+    # ---------- T2: stocks are conserved ----------
+    def test_t2_stocks_are_conserved_across_every_exchange_and_every_door_give(self):
+        street = self.need("street")
+        st = street.generate(2)
+        hs = sorted(st["households"], key=lambda h: st["households"][h]["home"])
+        a, b = st["households"][hs[0]], st["households"][hs[1]]
+        a["water"], b["water"], b["food"] = 0.0, 60.0, 30.0
+        before = a["water"] + b["water"]
+        deed = street.resolve(st, {"by": a["id"], "to": b["home"], "good": "water"}, 300)
+        self.assertAlmostEqual(a["water"] + b["water"], before, places=9)
+        self.assertIn(deed["kind"], ("gave", "refused"))
+        self.assertAlmostEqual(a["water"], deed["qty"], places=9)
+        # A search moves what an empty house holds into the household, all of it, once.
+        empty = next(n for n, h in st["houses"].items() if h["status"] == "empty")
+        held = street.contents(st, empty)
+        food0, water0 = a["food"] * len(a["drawn"]["members"]), a["water"]
+        street.search(st, a["id"], empty, 300)
+        self.assertAlmostEqual(a["water"] - water0, held["water"], places=9)
+        self.assertAlmostEqual(a["food"] * len(a["drawn"]["members"]) - food0, held["food"], places=9)
+        self.assertEqual(st["houses"][empty]["state"], "searched")
+        self.assertEqual(street.contents(st, empty), {"water": 0.0, "food": 0.0})
+        # Over eight days of plans, what the street holds changes only by what it used and what it found.
+        st = street.generate(2)
+        t0 = street.totals(st)
+        street.advance(st, self.at(10, 0), wet=lambda minute: False)
+        t1 = street.totals(st)
+        for good in ("water", "food"):
+            self.assertAlmostEqual(t0[good] - st["used"][good] + st["found"][good], t1[good], places=6)
+        for move in st["ledger"]:
+            self.assertGreaterEqual(move["qty"], 0)
+        # A door_give: World's stored water falls by exactly what the visitor's household gains, min(3 L, the store).
+        policy = lambda who, minute, opts: ("door_give" if "door_give" in opts else
+                                            "door_call" if "door_call" in opts else None)
+        d, q, (v,) = self.door_day(PolicyFake(policy), [(30, "ask_water")])
+        w = q.world
+        self.quiet.play(d.day3)
+        sc = q.door_scenes[0]
+        self.assertEqual(sc["outcome"], "given", sc)
+        g = sc["give"]
+        self.assertAlmostEqual(g["world_before"] - g["world_after"], g["qty"], places=9)
+        self.assertAlmostEqual(g["household_after"] - g["household_before"], g["qty"], places=9)
+        self.assertAlmostEqual(g["qty"], min(3.0, g["world_before"]), places=9)
+        self.assertEqual([(x[1]) for x in w.given], [g["qty"]])
+
+    # ---------- T3: no prompt builder reads the street ----------
+    def test_t3_a_prompt_builder_that_reads_world_street_raises_truthleak(self):
+        w = self.truth.World(2)
+        self.assertIsNotNone(getattr(w, "street", None), "World.street is not built")
+        with self.truth.prompting():
+            with self.assertRaises(self.truth.TruthLeak):
+                w.street
+        d = self.v16()
+        m = d.day3
+        leo = m.people["leo"]
+        real = m.inside_lines
+
+        def leaky(p, today=False):
+            m.quiet.world.street["households"]
+            return real(p, today)
+        with mock.patch.object(m, "inside_lines", leaky):
+            with self.assertRaises(self.truth.TruthLeak):
+                m.prompt_for(leo, 30, m.options_for(leo))
+        # The copy World makes to look ahead does not carry the street (it stays cheap).
+        self.assertIsNone(m.quiet.world.ahead().__dict__.get("street"))
+
+    # ---------- T4: days 1 and 2 as before; nobody comes to no. 9 before day 3 ----------
+    def test_t4_days_1_and_2_replay_and_the_street_makes_no_visit_before_day_3(self):
+        d = self.v16()          # days 1 and 2, nights 1 and 2, minds 1 and 2: all from cache/v16 (asserted there)
+        st = getattr(d.day3.quiet.world, "street", None)
+        self.assertIsNotNone(st, "World.street is not built")
+        parts = [x for x in st["log"] if x["what"] == "part"]
+        self.assertTrue(parts, "the street has not been advanced to day 3")
+        self.assertEqual(parts[0]["at"], self.quiet.absolute(1, -420))        # played day 1, 00:00
+        self.assertGreaterEqual(len(parts), 9)
+        self.assertTrue([x for x in st["log"] if x["what"] == "plan"])
+        self.assertFalse([v for v in st["visits"] if v["at"] < self.at(3, -420)], "a visit to no. 9 before day 3")
+        self.assertFalse([x for x in st["deeds"] if x["to"] == 9 and x["at"] < self.at(3, -420)])
+        # The replay of v16 seed 2 to day 10 asks nothing new until day 3, min 00.
+        copy = os.path.join(self.dirs.root, f"{self.MODEL}-daniel_ate_it-seed2.json")
+        shutil.copyfile(os.path.join(V16_CACHE, f"{self.MODEL}-daniel_ate_it-seed2.json"), copy)
+        missed = []
+        real = gemini.Oracle.ask
+
+        def ask(oracle, system, prompt, schema=None):
+            try:
+                return real(oracle, system, prompt, schema)
+            except gemini.CacheMiss:
+                missed.append(prompt)
+                raise
+        with mock.patch.object(gemini.Oracle, "ask", ask):
+            (meta, code), _ = quiet_run(2, replay=True, days=10, config_path=CONFIG, runs_dir=self.dirs.runs,
+                                        cache_dir=self.dirs.root)
+        self.assertEqual(code, 3)
+        self.assertEqual(len(missed), 1)
+        self.assertIn("\nNow, minute 00, you are in the kitchen.", missed[0])
+        self.assertIn("Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions", missed[0])
+
+    # ---------- T5: the door lines sit inside the budget ----------
+    def test_t5_the_block_is_the_same_with_and_without_a_door_and_the_door_lines_are_under_140_tokens(self):
+        policy = lambda who, minute, opts: "door_call" if "door_call" in opts and minute == 30 else None
+        d, q, (v,) = self.door_day(PolicyFake(policy), [(30, "ask_water")])
+        m = d.day3
+        for t in range(0, 12):
+            q.turn(t)
+        kitchen = [p for p in m.people.values() if p.room == "kitchen" and getattr(p, "door", None)]
+        self.assertTrue(kitchen, "nobody in the kitchen has the door scene")
+        p = kitchen[0]
+        p.memory += [(0, f"filler line number {i} " + "about nothing much at all " * 12) for i in range(200)]
+        with_door = m.prompt_for(p, 11, m.options_for(p))
+        b1 = m.last_block
+        lines = self.door_lines(with_door)
+        self.assertTrue([x for x in lines if "voice at the front door says" in x], with_door[-1500:])
+        self.assertTrue([x for x in lines if x.startswith("- door_")])
+        house = next(x for x in with_door.split("\n") if x.startswith("The house:"))
+        seen, p.door = p.door, None
+        plain = m.prompt_for(p, 11, m.options_for(p))
+        b0 = m.last_block
+        p.door = seen
+        self.assertEqual(b1, b0)
+        plain_house = next(x for x in plain.split("\n") if x.startswith("The house:"))
+        extra = estimate_tokens("\n".join(lines)) + (len(house) - len(plain_house)) / 3.6
+        self.assertLessEqual(extra, 140, (extra, lines))
+        self.assertIn("- (earlier things, left out here)", with_door)
+
+    # ---------- T6: when a knock comes, and who hears it ----------
+    def test_t6_a_knock_comes_by_day_once_a_day_never_into_the_bathroom_and_wakes_by_the_draw(self):
+        street = self.need("street")
+        for seed in range(1, 11):
+            for v in street.schedule(seed, days=10):
+                k = (v["at"] + 420) // 1440 + 1
+                minute = v["at"] - self.at(k, 0)
+                self.assertTrue(30 <= minute <= 630 and minute % 3 == 0, (seed, v))
+                self.assertGreaterEqual(k, 3, (seed, v))
+        # At most one a day: a second visit the same day is deferred to the next part, and logged.
+        d, q, (v1, v2) = self.door_day(None, [(180, "ask_food"), (240, "ask_water")])     # people are awake then
+        self.quiet.play(d.day3)
+        q7 = [e for e in q.log if e["kind"] == "Q7"]
+        self.assertEqual(sum(e["fired"] for e in q7), 1, q7)
+        later = [e for e in q7 if e["visit"] == v2["id"]]
+        self.assertEqual([e["why"] for e in later], ["a knock has come today already"])
+        self.assertGreaterEqual(v2["at"], self.at(4, 30))
+        self.assertEqual(v2["deferrals"][0]["why"], "a knock has come today already")
+        # Deferred when 52 asks are spent.
+        d, q, (v,) = self.door_day(None, [(120, "ask_food")])
+        q.asks = 52
+        q.tick(120)
+        self.assertFalse(q.hear_knock(120, played=False))
+        self.assertEqual(v["deferrals"][-1]["why"], "52 asks are spent")
+        # Never into the bathroom; a resting person wakes by the draw; the kitchen hears the words.
+        d, q, (v,) = self.door_day(None, [(120, "ask_food")])
+        m = d.day3
+        q.tick(120)
+        for p in m.people.values():
+            q.end(p, 120, "test")
+        el, mara, leo, dan = (m.people[x] for x in ("elena", "mara", "leo", "daniel"))
+        el.room, mara.room, leo.room, dan.room = "kitchen", "bathroom", "brothers_room", "back_room"
+        q.start(leo, "rest", 120, planned=180, until=300)
+        fired = q.hear_knock(120, played=False)
+        self.assertTrue(fired)
+        sc = q.door
+        self.assertEqual(sc["heard"].get("elena"), "words")
+        self.assertNotIn("mara", sc["heard"])
+        self.assertIsNone(mara.door)
+        self.assertEqual(sc["heard"].get("daniel"), "heard")
+        woke = street.wakes(q.world.street, v, 1, "leo", data.PEOPLE["leo"]["traits"]["anxious"])
+        self.assertEqual("leo" in sc["heard"], woke)
+        self.assertEqual(q.resting("leo"), not woke)
+        self.assertAlmostEqual(street.wake_chance(0.25), 0.3, places=9)
+        self.assertAlmostEqual(street.wake_chance(0.95), 0.58, places=9)
+        self.assertEqual(street.wake_chance(5.0), 0.9)
+
+    # ---------- T7: the door options ----------
+    def test_t7_the_door_options_exist_only_in_a_scene_in_the_kitchen(self):
+        def ids(m, p):
+            return [o.id for o in m.options_for(p) if o.id.startswith("door_")]
+        d, q, (v,) = self.door_day(None, [(120, "ask_water")])
+        m = d.day3
+        el, leo = m.people["elena"], m.people["leo"]
+        el.room = "kitchen"
+        self.assertEqual(ids(m, el), [])
+        q.tick(120)
+        for p in m.people.values():
+            q.end(p, 120, "test")
+            p.room = "kitchen"
+        leo.room = "back_room"
+        self.assertTrue(q.hear_knock(120, played=False))
+        self.assertEqual(ids(m, el), ["door_look", "door_call", "door_open", "door_refuse"])
+        self.assertEqual(ids(m, leo), [])
+        # Once the stranger has said what they need, water to give puts door_give in; with no water it is not offered.
+        q.door_act(el, "door_call", 120, "Who is it?")
+        q.door_after(120)
+        q.door_before(123)
+        self.assertEqual(ids(m, el), ["door_look", "door_call", "door_open", "door_give", "door_refuse"])
+        tap, rain = q.world.tap, q.world.rain
+        q.world.tap = q.world.rain = 0.0
+        q.door_before(123)
+        self.assertNotIn("door_give", ids(m, el))
+        q.world.tap, q.world.rain = tap, rain
+        # door_open only while the door is shut.
+        q.door_act(el, "door_open", 123, None)
+        q.door_after(123)
+        q.door_before(126)
+        self.assertEqual(q.door["door"], "open")
+        self.assertNotIn("door_open", ids(m, el))
+        self.assertNotIn("door_look", ids(m, el))
+        self.assertIn("door_give", ids(m, el))
+        # A visit for food: nothing in the house is offered at the door (W2a gives water only).
+        d, q, (v,) = self.door_day(None, [(120, "ask_food")])
+        m = d.day3
+        q.tick(120)
+        for p in m.people.values():
+            q.end(p, 120, "test")
+            p.room = "kitchen"
+        q.hear_knock(120, played=False)
+        el = m.people["elena"]
+        q.door_act(el, "door_call", 120, "Who is it?")
+        q.door_after(120)
+        q.door_before(123)
+        self.assertNotIn("door_give", ids(m, el))
+
+    # ---------- T8: the cost ----------
+    def test_t8_a_q7_stretch_asks_at_most_6_and_a_day_at_most_56(self):
+        d, q, (v,) = self.door_day(TalkFake(), [(300, "ask_water")])
+        m = d.day3
+        self.quiet.play(m)
+        q7 = [s for s in q.stretches if s["trigger"] == "Q7"]
+        knocks = [e for e in q.log if e["kind"] == "Q7" and e["fired"]]
+        self.assertEqual(len(knocks), 1, q.log[-5:])
+        for s in q7:
+            self.assertLessEqual(s["asks"], 6, s)
+        self.assertLessEqual(q.asks, 56)
+        # The day cap holds whatever stretch is under way, reserved or not.
+        q.cap, q.reserved, q.asks = None, True, 55
+        self.assertFalse(q.spent())
+        q.asks = 56
+        self.assertTrue(q.spent())
+        self.assertEqual(self.quiet.DAY_MAX, 56)
+        self.assertEqual(self.quiet.DOOR_ASKS, 6)
+
+    # ---------- T9: the stranger's lines ----------
+    def test_t9_every_strangers_line_is_short_plain_and_of_the_familys_world(self):
+        path = os.path.join(HERE, "streetdata", "lines.json")
+        self.assertTrue(os.path.exists(path), "streetdata/lines.json is not written")
+        pool = json.loads(read(path))
+        slots = ("voice_ask_water", "voice_ask_food", "open_ask_water", "open_ask_food", "insist_water",
+                 "insist_food", "again_water", "again_food", "given", "refused_polite", "refused_flat")
+        self.assertEqual(sorted(pool["slots"]), sorted(slots))
+        absent = re.compile(r"\b(radio|police|army|soldiers?|phone|mobile|electricity|power|cars?|shops?|church|"
+                            r"hospital|television|tv|internet|council|government|news|candles?|stove|gas|monday|"
+                            r"tuesday|wednesday|thursday|friday|saturday|sunday|number|street|neighbour\w*|"
+                            r"should|must|have to|ought|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|"
+                            r"gun|knife|kill)\b", re.I)
+        for slot in slots:
+            lines = pool["slots"][slot]
+            plain = [x for x in lines if not x.get("with")]
+            self.assertGreaterEqual(len(plain), 8, slot)
+            self.assertEqual(len({x["text"] for x in lines}), len(lines), slot)
+            for x in lines:
+                text = x["text"]
+                self.assertLessEqual(len(text.split()), 25, text)
+                self.assertIsNone(re.search(r"\d", text), text)
+                self.assertIsNone(absent.search(text), text)
+                self.assertIn(x.get("with"), (None, "child", "others"), text)
+                if "water" in slot:
+                    self.assertNotRegex(text.lower(), r"\b(eat|food|bread|tin)\b", text)
+                if "food" in slot:
+                    self.assertNotRegex(text.lower(), r"\b(water|drink|thirst\w*)\b", text)
+                if not x.get("with"):
+                    self.assertNotRegex(text.lower(), r"\b(we|us|our|child|kids?|little one|baby|son|daughter|"
+                                                      r"husband|wife|mother|mum|father|dad)\b", text)
+
+
 if __name__ == "__main__":
     unittest.main()

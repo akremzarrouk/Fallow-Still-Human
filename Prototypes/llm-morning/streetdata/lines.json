@@ -1,0 +1,331 @@
+{
+ "about": "The stranger's words at the family's door in W2a (reports/w2_design.md, §4.3), written by hand once, before any run. Code chooses a line by slot, by the visiting household (`with`: only for a household with a child, or of two or more), and by the string <seed>:street:<household>:visit<n>:<slot>. Rules: at most 25 words; no digit, number word, weekday or house number; nothing the family's world does not have; a request, never a duty; a line states a need the household really has.",
+ "slots": {
+  "voice_ask_water": [
+   {
+    "text": "Hello? I'm sorry to knock. I've run out of water. Could you spare a little? Even a cup would help."
+   },
+   {
+    "text": "I'm sorry, I know nobody's opening doors. I haven't had a drink since yesterday. Have you any water at all?"
+   },
+   {
+    "text": "Please, it's only water I'm after. A cup or a bottle, whatever you can spare."
+   },
+   {
+    "text": "I won't come in. I just need water. Mine ran out and the taps are dry."
+   },
+   {
+    "text": "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."
+   },
+   {
+    "text": "Hello. I'm not here to cause trouble. I'm out of water, that's all. Could you spare some?"
+   },
+   {
+    "text": "I heard voices, so I knocked. I've no water left. Anything you could spare, I'd be grateful."
+   },
+   {
+    "text": "It's water. I need water. A little, if you have it. I'm sorry to ask."
+   },
+   {
+    "text": "Please, I've a little one at home and no water left to give her. Just a cup, if you can.",
+    "with": "child"
+   },
+   {
+    "text": "Hello? There's a few of us at home and the water's gone. Whatever you can spare.",
+    "with": "others"
+   }
+  ],
+  "voice_ask_food": [
+   {
+    "text": "Hello? I'm sorry to knock. Have you anything to eat you could spare? Anything at all."
+   },
+   {
+    "text": "I haven't eaten in days. I'm not asking for much. A tin, a bit of bread, whatever you have."
+   },
+   {
+    "text": "Please, if there's any food you can spare, I'd be grateful. I won't come in."
+   },
+   {
+    "text": "Sorry to bother you. My food ran out. Is there anything at all you could let me have?"
+   },
+   {
+    "text": "I'm not here for trouble. I'm hungry, that's all. Have you anything to spare?"
+   },
+   {
+    "text": "I heard voices, so I knocked. I've nothing left to eat. Could you spare a little?"
+   },
+   {
+    "text": "Is anybody in? I'm sorry. I've had nothing to eat for days. Anything would help."
+   },
+   {
+    "text": "It's food I'm asking for. Only a little. I'm sorry, I know it's hard for everyone."
+   },
+   {
+    "text": "Please, my little one hasn't eaten properly in days. Anything you could spare, for the child.",
+    "with": "child"
+   },
+   {
+    "text": "Hello? There's a few of us at home and the food's gone. Could you spare anything at all?",
+    "with": "others"
+   }
+  ],
+  "open_ask_water": [
+   {
+    "text": "Thank you for opening. I've had no water since yesterday. A bottle would see me through."
+   },
+   {
+    "text": "Thank you. I didn't think anyone would open. Could you spare some water? Only a little."
+   },
+   {
+    "text": "Oh, thank you. I won't keep you. It's water I need, whatever you can manage."
+   },
+   {
+    "text": "Thank you for opening the door. I'm out of water. A cup, a bottle, anything."
+   },
+   {
+    "text": "I'm grateful you opened. I've nothing left to drink. Could you fill one of these for me?"
+   },
+   {
+    "text": "Thank you. I know what it costs to open a door now. I just need some water."
+   },
+   {
+    "text": "Hello. Thank you. I'm sorry, I'll be quick. Have you any water to spare?"
+   },
+   {
+    "text": "Thank you for opening. My water's gone and the taps are dry. Anything would help."
+   },
+   {
+    "text": "Thank you for opening. My little girl's had nothing to drink since this morning. Just a little water.",
+    "with": "child"
+   },
+   {
+    "text": "Thank you. There's a few of us at home with no water left. Whatever you can spare.",
+    "with": "others"
+   }
+  ],
+  "open_ask_food": [
+   {
+    "text": "Thank you for opening. I've had nothing to eat in days. Anything you could spare."
+   },
+   {
+    "text": "Thank you. I didn't think anyone would open. Have you any food? Even a little."
+   },
+   {
+    "text": "Oh, thank you. I won't keep you. It's food I need, whatever you can manage."
+   },
+   {
+    "text": "Thank you for opening the door. I've run out of food. Anything at all would help."
+   },
+   {
+    "text": "I'm grateful you opened. I'm hungry, that's all. A tin, some bread, anything."
+   },
+   {
+    "text": "Thank you. I know what it costs to open a door now. I just need something to eat."
+   },
+   {
+    "text": "Hello. Thank you. I'm sorry, I'll be quick. Have you any food to spare?"
+   },
+   {
+    "text": "Thank you for opening. My food's gone. I'm not asking for much, just something."
+   },
+   {
+    "text": "Thank you for opening. My boy hasn't had a proper meal in days. Anything at all, for him.",
+    "with": "child"
+   },
+   {
+    "text": "Thank you. There's a few of us at home and nothing left to eat. Whatever you can spare.",
+    "with": "others"
+   }
+  ],
+  "insist_water": [
+   {
+    "text": "Please. Just a cup."
+   },
+   {
+    "text": "Please, I'm begging you. A little water. I won't ask again."
+   },
+   {
+    "text": "I'm asking once more, that's all. Please, any water."
+   },
+   {
+    "text": "Please. I'm so thirsty I can hardly think. Just a little."
+   },
+   {
+    "text": "Anything. A mouthful. Please."
+   },
+   {
+    "text": "I wouldn't ask if I had anywhere else to go. Please, some water."
+   },
+   {
+    "text": "Please. I've tried other doors. Nobody answers."
+   },
+   {
+    "text": "Just a cup, please. Then I'll go."
+   },
+   {
+    "text": "Please. Just a cup. For the child.",
+    "with": "child"
+   }
+  ],
+  "insist_food": [
+   {
+    "text": "Please. Anything at all."
+   },
+   {
+    "text": "Please, I'm begging you. A little food. I won't ask again."
+   },
+   {
+    "text": "I'm asking once more, that's all. Please, anything to eat."
+   },
+   {
+    "text": "Please. I'm so hungry I can hardly stand."
+   },
+   {
+    "text": "A crust. Anything. Please."
+   },
+   {
+    "text": "I wouldn't ask if I had anywhere else to go. Please, something to eat."
+   },
+   {
+    "text": "Please. I've tried other doors. Nobody answers."
+   },
+   {
+    "text": "Just a little, please. Then I'll go."
+   },
+   {
+    "text": "Please. Anything. For the child.",
+    "with": "child"
+   }
+  ],
+  "again_water": [
+   {
+    "text": "I'm still here. I only want a little water, if you can spare it."
+   },
+   {
+    "text": "I'll wait a moment, if that's all right. Just some water."
+   },
+   {
+    "text": "I'm not going to cause trouble. It's only water I'm asking for."
+   },
+   {
+    "text": "Did you hear me? I'm asking for a little water, that's all."
+   },
+   {
+    "text": "Sorry. I'm still here. Any water at all?"
+   },
+   {
+    "text": "I understand if you can't. I'm just asking for some water."
+   },
+   {
+    "text": "I'll not keep you long. A little water, if you have it."
+   },
+   {
+    "text": "Hello? I'm still at the door. It's water I need."
+   }
+  ],
+  "again_food": [
+   {
+    "text": "I'm still here. I only want a little food, if you can spare it."
+   },
+   {
+    "text": "I'll wait a moment, if that's all right. Just something to eat."
+   },
+   {
+    "text": "I'm not going to cause trouble. It's only food I'm asking for."
+   },
+   {
+    "text": "Did you hear me? I'm asking for a little food, that's all."
+   },
+   {
+    "text": "Sorry. I'm still here. Anything to eat at all?"
+   },
+   {
+    "text": "I understand if you can't. I'm just asking for something to eat."
+   },
+   {
+    "text": "I'll not keep you long. A bite to eat, if you have it."
+   },
+   {
+    "text": "Hello? I'm still at the door. It's food I need."
+   }
+  ],
+  "given": [
+   {
+    "text": "God bless you. I won't forget this."
+   },
+   {
+    "text": "Thank you. Thank you. I'll not forget it."
+   },
+   {
+    "text": "Oh, thank you. You don't know what this means."
+   },
+   {
+    "text": "Thank you. Look after yourselves in there."
+   },
+   {
+    "text": "Bless you. I'll go now. Thank you."
+   },
+   {
+    "text": "Thank you. I'll not tell anyone where it came from."
+   },
+   {
+    "text": "That's more than I hoped for. Thank you."
+   },
+   {
+    "text": "Thank you, truly. Stay safe."
+   }
+  ],
+  "refused_polite": [
+   {
+    "text": "I understand. I'm sorry to have bothered you. Look after yourselves."
+   },
+   {
+    "text": "All right. I understand. Take care in there."
+   },
+   {
+    "text": "That's all right. I'm sorry I asked. Goodbye."
+   },
+   {
+    "text": "I understand. Everyone's in the same boat. I'll go."
+   },
+   {
+    "text": "Right. I'm sorry. I'll try somewhere else."
+   },
+   {
+    "text": "Of course. I'm sorry I knocked. Take care."
+   },
+   {
+    "text": "I understand. Good luck to you."
+   },
+   {
+    "text": "No, I understand. I'm sorry. I'll leave you be."
+   }
+  ],
+  "refused_flat": [
+   {
+    "text": "Right. Never mind."
+   },
+   {
+    "text": "Fine."
+   },
+   {
+    "text": "Right. Thanks for nothing."
+   },
+   {
+    "text": "I see. Well. I'll go, then."
+   },
+   {
+    "text": "Suit yourselves."
+   },
+   {
+    "text": "Right. I won't bother you again."
+   },
+   {
+    "text": "Fine. I'll find it somewhere else."
+   },
+   {
+    "text": "Right. Goodbye, then."
+   }
+  ]
+ }
+}

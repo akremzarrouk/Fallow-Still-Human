@@ -1,0 +1,175 @@
+{
+ "about": "W2a street (reports/w2_design.md, 1.1): 30 houses, 15 a side, odd numbers on the family side, 8 m a house; 11 m between facing pavements. The places in the family house a knock is heard from (3.3): metres from the front door and the dB of what is between (est.); the bathroom hears nothing (data.SOUNDPROOF).",
+ "family": 9,
+ "neighbour": 7,
+ "frontage": 8.0,
+ "across": 11.0,
+ "houses": [
+  {
+   "n": 1,
+   "side": "odd",
+   "x": 0.0
+  },
+  {
+   "n": 2,
+   "side": "even",
+   "x": 0.0
+  },
+  {
+   "n": 3,
+   "side": "odd",
+   "x": 8.0
+  },
+  {
+   "n": 4,
+   "side": "even",
+   "x": 8.0
+  },
+  {
+   "n": 5,
+   "side": "odd",
+   "x": 16.0
+  },
+  {
+   "n": 6,
+   "side": "even",
+   "x": 16.0
+  },
+  {
+   "n": 7,
+   "side": "odd",
+   "x": 24.0
+  },
+  {
+   "n": 8,
+   "side": "even",
+   "x": 24.0
+  },
+  {
+   "n": 9,
+   "side": "odd",
+   "x": 32.0
+  },
+  {
+   "n": 10,
+   "side": "even",
+   "x": 32.0
+  },
+  {
+   "n": 11,
+   "side": "odd",
+   "x": 40.0
+  },
+  {
+   "n": 12,
+   "side": "even",
+   "x": 40.0
+  },
+  {
+   "n": 13,
+   "side": "odd",
+   "x": 48.0
+  },
+  {
+   "n": 14,
+   "side": "even",
+   "x": 48.0
+  },
+  {
+   "n": 15,
+   "side": "odd",
+   "x": 56.0
+  },
+  {
+   "n": 16,
+   "side": "even",
+   "x": 56.0
+  },
+  {
+   "n": 17,
+   "side": "odd",
+   "x": 64.0
+  },
+  {
+   "n": 18,
+   "side": "even",
+   "x": 64.0
+  },
+  {
+   "n": 19,
+   "side": "odd",
+   "x": 72.0
+  },
+  {
+   "n": 20,
+   "side": "even",
+   "x": 72.0
+  },
+  {
+   "n": 21,
+   "side": "odd",
+   "x": 80.0
+  },
+  {
+   "n": 22,
+   "side": "even",
+   "x": 80.0
+  },
+  {
+   "n": 23,
+   "side": "odd",
+   "x": 88.0
+  },
+  {
+   "n": 24,
+   "side": "even",
+   "x": 88.0
+  },
+  {
+   "n": 25,
+   "side": "odd",
+   "x": 96.0
+  },
+  {
+   "n": 26,
+   "side": "even",
+   "x": 96.0
+  },
+  {
+   "n": 27,
+   "side": "odd",
+   "x": 104.0
+  },
+  {
+   "n": 28,
+   "side": "even",
+   "x": 104.0
+  },
+  {
+   "n": 29,
+   "side": "odd",
+   "x": 112.0
+  },
+  {
+   "n": 30,
+   "side": "even",
+   "x": 112.0
+  }
+ ],
+ "listen": {
+  "kitchen": {
+   "metres": 2.0,
+   "between": 25.0
+  },
+  "brothers_room": {
+   "metres": 6.0,
+   "between": 25.0
+  },
+  "back_room": {
+   "metres": 6.0,
+   "between": 25.0
+  },
+  "bathroom": null
+ },
+ "gap": "a gap the width of a hand between two boards beside the front door, at eye height (O1)"
+}

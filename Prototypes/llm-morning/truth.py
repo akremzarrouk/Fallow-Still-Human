@@ -11,6 +11,7 @@ and a thirst all fall where they happen.
 import contextlib
 import copy
 
+import street
 import water
 from weather import Weather
 
@@ -60,6 +61,9 @@ class World(Guarded):
         self.places = {"neighbour": None, "far": {}}
         self.fixed = {}                 # facts fixed once, as the chronicle's: name -> {"value", "string", "at"}
         self.received = []              # (minute, litres): water carried in from outside
+        self.given = []                 # (minute, litres): water handed out at the front door (W2a)
+        # W2a (reports/w2_design.md, §1, §2): the street, drawn once; advanced by quiet.Quiet.tick, never by advance_to.
+        self.street = street.generate(seed)
 
     # ---------- reading ----------
     def store(self):
@@ -117,6 +121,13 @@ class World(Guarded):
         self.tap += litres
         self.received.append((self.clock if minute is None else minute, litres))
 
+    def give_away(self, litres, minute):
+        """Up to `litres` of the stored water handed out at the front door: the tap water, then the bin (the order of
+        drinking, `advance_to`). Returns what went."""
+        got = self._draw(litres, ("tap", "rain"))
+        self.given.append((minute, got))
+        return got
+
     def house_water(self, place, minute):
         """What an empty house holds: drawn once, the first time it is needed, and kept as it is left. place:
         "neighbour" or ("far", i)."""
@@ -144,12 +155,17 @@ class World(Guarded):
         return took
 
     # ---------- what comes next ----------
+    def ahead(self):
+        """A copy of the world to run forward, without the street, which the water and thirst do not need."""
+        street_ = object.__getattribute__(self, "__dict__").get("street")
+        return copy.deepcopy(self, {id(street_): None} if street_ is not None else {})
+
     def next_change(self, start, end, present):
         """The first minute in (start, end] at which the tap water runs out, the bin fills, or someone's thirst
         reaches a new stage, by a copy of the world run forward; or None."""
         if not self.deficit:
             return None
-        ahead = copy.deepcopy(self)
+        ahead = self.ahead()
         stages = {q: ahead.thirst_stage(q) for q in present if q in ahead.deficit}
         empty = ahead.tap <= 0
         t = start

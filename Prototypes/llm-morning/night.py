@@ -1063,6 +1063,10 @@ def carry_in_later(prev, n, p, short=False, minutes=True):
             out.append(f"You shared out the food at {data.minute_words(mm)}.")
         elif " shares out the last " in rest and rest.endswith("you had your part."):
             out.append(f"{rest.split(' shares out the last ')[0]} shared out the food at {data.minute_words(mm)}; you had your part.")
+    q = getattr(prev, "quiet", None)                                              # W2a: yesterday's door
+    for sc in (q.door_scenes if q is not None else []):
+        if p.id in sc["summary"]:
+            out.append(sc["summary"][p.id])
     plan = prev.heard_plan(p)                                                     # Y7
     if plan:            # said yesterday, about last night (reports/facts_and_evening.md, fix 4), and what came of it
         out.append("What was said yesterday about going out last night, where it was left: "

@@ -1,0 +1,16 @@
+F
+======================================================================
+FAIL: test_t2_stocks_are_conserved_across_every_exchange_and_every_door_give (test_morning.KnockTest.test_t2_stocks_are_conserved_across_every_exchange_and_every_door_give)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7141, in test_t2_stocks_are_conserved_across_every_exchange_and_every_door_give
+    d, q, (v,) = self.door_day(PolicyFake(policy), [(30, "ask_water")])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7058, in door_day
+    self.assertIsNotNone(st, "World.street is not built")
+AssertionError: unexpectedly None : World.street is not built
+
+----------------------------------------------------------------------
+Ran 1 test in 0.457s
+
+FAILED (failures=1)

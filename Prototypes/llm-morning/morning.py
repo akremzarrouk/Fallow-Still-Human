@@ -32,6 +32,7 @@ import time
 
 import data
 import quiet as quietday
+import street as streetmod
 import water
 import weather
 from gemini import Cache, FakeClient, GeminiClient, Oracle, StopMorning, load_config
@@ -97,6 +98,10 @@ def quiet_meta(m):
             "quiet_asks_by_person": tr["asks"]["quiet_by_person"],
             "q1_fired": sum(e["kind"] == "Q1" for e in fired), "q2_fired": sum(e["kind"] == "Q2" for e in fired),
             "q5_fired": sum(e["kind"] == "Q5" for e in fired), "q6_fired": sum(e["kind"] == "Q6" for e in fired),
+            "q7_fired": sum(e["kind"] == "Q7" for e in fired),
+            "q7_deferred": sum(e["kind"] == "Q7" and not e["fired"] for e in tr["log"]),
+            "door": [{"start": sc["start"], "end": sc["end"], "outcome": sc["outcome"], "asks": sc["asks"],
+                      "acts": [a[2] for a in sc["acts"]]} for sc in tr["door"]],
             "rain_heard": len(tr["rain"]), "water": tr["water"],
             "spans": len(tr["spans"]), "rests": sum(s["routine"] == "rest" for s in tr["spans"]),
             "withdrawals": len(tr["withdrawals"]), "stretches": len(tr["stretches"]),
@@ -141,6 +146,13 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
                                                                       else "") for a, b, _ in x["spells"])
         say(f"  weather day {k}: " + (f"wet, {x['mm']:.1f} mm ({rain})" if x["wet"] else "dry")
             + f"; {x['tmin']:.1f} to {x['tmax']:.1f} °C outdoors, {x['indoor']:.1f} °C indoors")
+    if days >= 3:       # W2a: the visits to the front door the seed makes if no knock is answered (reports/w2_design.md)
+        visits = streetmod.schedule(seed, days)
+        for v in visits:
+            say(f"  street day {v['day']} {weather.hhmm(v['at'])}: a visit to the front door from no. {v['home']} "
+                f"({v['purpose'].replace('_', ' ')})")
+        if not visits:
+            say(f"  street: no visit to the front door on days 3 to {days} if no knock is answered")
 
     def morning_turns(m, tag):
         if m.quiet is not None:         # from day 3, played to bedtime (reports/quiet_day_design.md, §3)
@@ -196,6 +208,11 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
 
     def quiet_line(e):
         name = {p: data.PEOPLE[p]["name"] for p in data.ORDER}
+        if e["kind"] == "Q7":
+            asked = ", ".join(name[q] for q in e["asked"])
+            return (f"Q7, a knock at the front door: {asked} asked in the {data.ROOMS[e['room']]}" if e["fired"] and e["room"]
+                    else "Q7, a knock at the front door, in played turns" if e["fired"] else
+                    f"Q7, a visit to the front door: deferred ({e['why']})")
         how = (f"{name[e['asked']]} is asked" if e["fired"] and e["kind"] != "Q6" else
                f"not asked ({e['why']})")
         if e["kind"] == "Q2":

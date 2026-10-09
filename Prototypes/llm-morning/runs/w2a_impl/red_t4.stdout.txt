@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_t4_days_1_and_2_replay_and_the_street_makes_no_visit_before_day_3 (test_morning.KnockTest.test_t4_days_1_and_2_replay_and_the_street_makes_no_visit_before_day_3)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7179, in test_t4_days_1_and_2_replay_and_the_street_makes_no_visit_before_day_3
+    self.assertTrue(parts, "the street has not been advanced to day 3")
+AssertionError: [] is not true : the street has not been advanced to day 3
+
+----------------------------------------------------------------------
+Ran 1 test in 0.404s
+
+FAILED (failures=1)

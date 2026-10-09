@@ -1,0 +1,104 @@
+FFFFFFFFF
+======================================================================
+FAIL: test_t1_the_street_is_drawn_by_string_and_adding_a_house_changes_no_other_draw (test_morning.KnockTest.test_t1_the_street_is_drawn_by_string_and_adding_a_house_changes_no_other_draw)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7075, in test_t1_the_street_is_drawn_by_string_and_adding_a_house_changes_no_other_draw
+    street = self.need("street")
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7045, in need
+    self.assertIsNotNone(importlib.util.find_spec(name), f"{name}.py is not built")
+AssertionError: unexpectedly None : street.py is not built
+
+======================================================================
+FAIL: test_t2_stocks_are_conserved_across_every_exchange_and_every_door_give (test_morning.KnockTest.test_t2_stocks_are_conserved_across_every_exchange_and_every_door_give)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7110, in test_t2_stocks_are_conserved_across_every_exchange_and_every_door_give
+    street = self.need("street")
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7045, in need
+    self.assertIsNotNone(importlib.util.find_spec(name), f"{name}.py is not built")
+AssertionError: unexpectedly None : street.py is not built
+
+======================================================================
+FAIL: test_t3_a_prompt_builder_that_reads_world_street_raises_truthleak (test_morning.KnockTest.test_t3_a_prompt_builder_that_reads_world_street_raises_truthleak)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7155, in test_t3_a_prompt_builder_that_reads_world_street_raises_truthleak
+    self.assertIsNotNone(getattr(w, "street", None), "World.street is not built")
+AssertionError: unexpectedly None : World.street is not built
+
+======================================================================
+FAIL: test_t4_days_1_and_2_replay_and_the_street_makes_no_visit_before_day_3 (test_morning.KnockTest.test_t4_days_1_and_2_replay_and_the_street_makes_no_visit_before_day_3)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7177, in test_t4_days_1_and_2_replay_and_the_street_makes_no_visit_before_day_3
+    self.assertIsNotNone(st, "World.street is not built")
+AssertionError: unexpectedly None : World.street is not built
+
+======================================================================
+FAIL: test_t5_the_block_is_the_same_with_and_without_a_door_and_the_door_lines_are_under_140_tokens (test_morning.KnockTest.test_t5_the_block_is_the_same_with_and_without_a_door_and_the_door_lines_are_under_140_tokens)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7207, in test_t5_the_block_is_the_same_with_and_without_a_door_and_the_door_lines_are_under_140_tokens
+    d, q, (v,) = self.door_day(PolicyFake(policy), [(30, "ask_water")])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7054, in door_day
+    street = self.need("street")
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7045, in need
+    self.assertIsNotNone(importlib.util.find_spec(name), f"{name}.py is not built")
+AssertionError: unexpectedly None : street.py is not built
+
+======================================================================
+FAIL: test_t6_a_knock_comes_by_day_once_a_day_never_into_the_bathroom_and_wakes_by_the_draw (test_morning.KnockTest.test_t6_a_knock_comes_by_day_once_a_day_never_into_the_bathroom_and_wakes_by_the_draw)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7233, in test_t6_a_knock_comes_by_day_once_a_day_never_into_the_bathroom_and_wakes_by_the_draw
+    street = self.need("street")
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7045, in need
+    self.assertIsNotNone(importlib.util.find_spec(name), f"{name}.py is not built")
+AssertionError: unexpectedly None : street.py is not built
+
+======================================================================
+FAIL: test_t7_the_door_options_exist_only_in_a_scene_in_the_kitchen (test_morning.KnockTest.test_t7_the_door_options_exist_only_in_a_scene_in_the_kitchen)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7282, in test_t7_the_door_options_exist_only_in_a_scene_in_the_kitchen
+    d, q, (v,) = self.door_day(None, [(120, "ask_water")])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7054, in door_day
+    street = self.need("street")
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7045, in need
+    self.assertIsNotNone(importlib.util.find_spec(name), f"{name}.py is not built")
+AssertionError: unexpectedly None : street.py is not built
+
+======================================================================
+FAIL: test_t8_a_q7_stretch_asks_at_most_6_and_a_day_at_most_56 (test_morning.KnockTest.test_t8_a_q7_stretch_asks_at_most_6_and_a_day_at_most_56)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7329, in test_t8_a_q7_stretch_asks_at_most_6_and_a_day_at_most_56
+    d, q, (v,) = self.door_day(TalkFake(), [(300, "ask_water")])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7054, in door_day
+    street = self.need("street")
+             ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7045, in need
+    self.assertIsNotNone(importlib.util.find_spec(name), f"{name}.py is not built")
+AssertionError: unexpectedly None : street.py is not built
+
+======================================================================
+FAIL: test_t9_every_strangers_line_is_short_plain_and_of_the_familys_world (test_morning.KnockTest.test_t9_every_strangers_line_is_short_plain_and_of_the_familys_world)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7349, in test_t9_every_strangers_line_is_short_plain_and_of_the_familys_world
+    self.assertTrue(os.path.exists(path), "streetdata/lines.json is not written")
+AssertionError: False is not true : streetdata/lines.json is not written
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.375s
+
+FAILED (failures=9)

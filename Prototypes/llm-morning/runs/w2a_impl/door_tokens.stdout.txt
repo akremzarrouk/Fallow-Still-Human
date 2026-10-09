@@ -1,0 +1,19 @@
+min 30 Daniel: door shut; 5 lines; 88.6 est. tokens
+    - Someone is knocking at the front door.
+    - door_look: look through the gap in the boards
+    - door_call: (speech) call out through the front door
+    - door_open: unbar and open the front door
+    - door_refuse: (speech) send the person at the door away
+min 33 Daniel: door shut; 6 lines; 127.6 est. tokens
+    - A woman's voice at the front door says: "I heard voices, so I knocked. I've no water left. Anything you could spare, I'd be grateful."
+    - door_look: look through the gap in the boards
+    - door_call: (speech) call out through the front door
+    - door_open: unbar and open the front door
+    - door_give: hand out some of the stored water
+    - door_refuse: (speech) send the person at the door away
+min 36 Daniel: door open; 5 lines; 129.6 est. tokens
+    - The front door is open. A woman of about sixty-five, holding two empty bottles, stands on the step.
+    - A woman's voice at the front door says: "Thank you. I didn't think anyone would open. Could you spare some water? Only a little."
+    - door_call: (speech) speak to the person on the step
+    - door_give: hand out some of the stored water
+    - door_refuse: (speech) send the person at the door away

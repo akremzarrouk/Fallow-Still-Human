@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_t9_every_strangers_line_is_short_plain_and_of_the_familys_world (test_morning.KnockTest.test_t9_every_strangers_line_is_short_plain_and_of_the_familys_world)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7349, in test_t9_every_strangers_line_is_short_plain_and_of_the_familys_world
+    self.assertTrue(os.path.exists(path), "streetdata/lines.json is not written")
+AssertionError: False is not true : streetdata/lines.json is not written
+
+----------------------------------------------------------------------
+Ran 1 test in 0.013s
+
+FAILED (failures=1)

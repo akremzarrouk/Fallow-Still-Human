@@ -113,7 +113,11 @@ KIND_DONE = {   # what a run of one kind of act looks like, told to the person w
     "save_water": "said nobody should use the stored water for washing or the toilet",          # W1
     "ration_water": "said the water must be shared out by the cup",
     "collect_rain": "set the bin under the drainpipe in the rain",
+    "door_look": "looked through the gap in the boards", "door_call": "called out through the front door",       # W2a
+    "door_open": "opened the front door", "door_give": "handed out water at the front door",
+    "door_refuse": "told the person at the door to go away",
 }
+DOOR_KINDS = ("door_look", "door_call", "door_open", "door_give", "door_refuse")
 
 # Fasting's stages in days (quiet.py; reports/world_design.md, §4.3.1), and thirst's (§4.3.2).
 FAST_STAGE_WORD = {1: "hungry all the time", 2: "light and slow", 3: "thin and weak", 4: "losing strength",
@@ -375,6 +379,9 @@ class Person:
         # line, the house's rule, and whether the bin is under the drainpipe, as they know them.
         self.rain_since = None
         self.water = None
+        # W2a (reports/w2_design.md, §4.2): what they perceive of the front door now, written by the code (quiet.py):
+        # {"lines", "options", "door", "opening", "give"}; None when nothing is there for them.
+        self.door = None
 
     def grudge(self, against):
         return self.grudges.setdefault(against, Grudge())
@@ -595,6 +602,8 @@ class Morning:
         if self.rain_action(p):
             opts.append(Option("collect_rain", "go out the back door into the rain and set the bin under the "
                                                "drainpipe in the yard", kind="collect_rain"))
+        if p.door is not None and p.door["options"] and p.room == "kitchen":
+            opts += self.door_options(p)
         if p.room == "kitchen" and self.portions > 0:
             opts.append(Option("eat", "eat one of the portions", kind="eat"))
             if others:
@@ -604,6 +613,24 @@ class Morning:
         if kind in SPEECH and n >= 3:
             opts = [o for o in opts if act_of(o.id)[0] != kind]
         return opts
+
+    @staticmethod
+    def door_options(p):
+        """The door's options (reports/w2_design.md, §4.6), in a fixed order: by what the door is (shut or open) and
+        whether there is water to give to someone who asked for it; never by how the family feels."""
+        d = p.door
+        out = []
+        if d["door"] == "shut":
+            out.append(Option("door_look", "look through the gap in the boards", kind="door_look"))
+            out.append(Option("door_call", "call out through the front door", True, kind="door_call"))
+            if not d["opening"]:
+                out.append(Option("door_open", "unbar and open the front door", kind="door_open"))
+        else:
+            out.append(Option("door_call", "speak to the person on the step", True, kind="door_call"))
+        if d["give"]:
+            out.append(Option("door_give", "hand out some of the stored water", kind="door_give"))
+        out.append(Option("door_refuse", "send the person at the door away", True, kind="door_refuse"))
+        return out
 
     def trip_options(self, p, others):
         """The positions on the trip open to them (reports/trip_design.md, §3.1): none before it
@@ -1108,6 +1135,8 @@ class Morning:
                  else data.HOUSE_THINGS_AFTER_TRIP if self.trip else data.HOUSE_THINGS)
         if self.quiet is not None:                 # W1, from day 3: the back door and the yard
             house = data.with_yard(house)
+        if p.door is not None and p.door["options"]:      # W2a: the gap and the person at the door
+            house = data.with_door(house)
         if p.knows_empty or p.id in self.street:   # stage B, W5: their places include the houses further along
             house = house.replace("the street and the neighbour's house",
                                   "the street, the neighbour's house and the houses further along the street")
@@ -1122,6 +1151,8 @@ class Morning:
         now += [f"Now, {data.minute_words(minute)}, you are in the {room}."]
         if p.rain_since is not None:                # W1: what they hear now
             now.append(RAIN_NOW_DAY)
+        if p.door is not None:                      # W2a: what they perceive of the front door now (quiet.py)
+            now += p.door["lines"]
         others = self.others_here(p)
         if not others:
             now.append("- Nobody else is here.")
@@ -1171,7 +1202,8 @@ class Morning:
             block += sum(len(x) + 1 for x in self.trip_lines(p))
             block += sum(len(x) + 1 for o, x in zip(opts, tail[1:]) if act_of(o.id)[0] in TRIP_KINDS)
             block += sum(len(f"- {x}") + 1 for x in keep)
-            block += max(0, len(house) - len(data.HOUSE_THINGS))
+            # The door's words in the house line (W2a) are inside the budget, as its other lines are.
+            block += max(0, len(house.replace(data.DOOR[1], data.DOOR[0])) - len(data.HOUSE_THINGS))
         block += sum(len(x) + 1 for x in carry)
         if self.quiet is not None:
             # W1 (reports/world_design.md, §6): the water line, the rain heard now, the water's options and the yard
@@ -1202,6 +1234,7 @@ class Morning:
             else:
                 back.remove(loose[0])
         self.max_prompt_tokens = max(self.max_prompt_tokens, estimate_tokens(system + text))
+        self.last_block = block
         return text
 
     # ---------- reading the answer ----------
@@ -1607,6 +1640,11 @@ class Morning:
             gist = f"{p.name} says nobody should use the stored water for washing or the toilet any more"
         elif kind == "ration_water":
             gist = f"{p.name} says the water must be shared out by the cup from now on"
+        elif kind == "door_call":
+            gist = (f"{p.name} calls out through the front door" if p.door is None or p.door.get("door") != "open"
+                    else f"{p.name} speaks to the person on the step")
+        elif kind == "door_refuse":
+            gist = f"{p.name} tells the person at the front door to go away"
         elif while_doing:
             gist = f"{p.name} says to {aimed or 'everyone'}, while {while_doing}"
         else:
@@ -1670,9 +1708,14 @@ class Morning:
 
         if kind in WATER_RULES and self.quiet is not None:      # W1: the house's rule, from this minute
             self.quiet.water_rule(p, kind, minute)
+        door_line = None
+        if kind in DOOR_KINDS and self.quiet is not None:       # W2a: what the act does at the door (quiet.py)
+            door_line = self.quiet.door_act(p, kind, minute, d.get("say"))
         words = d.get("say")
         if words:
-            doing = {"collect_rain": "going out into the rain with the bin","go": f"leaving for the {data.ROOMS.get(opt.act.get('to'), '')}",
+            doing = {"door_look": "looking through the gap in the boards", "door_open": "unbarring the front door",
+                     "door_give": "handing water out at the front door",
+                     "collect_rain": "going out into the rain with the bin","go": f"leaving for the {data.ROOMS.get(opt.act.get('to'), '')}",
                      "search": "searching", "sit": f"sitting down with {target.name if target else ''}",
                      "eat": "eating", "share": "sharing out the food",
                      "aside": f"asking {target.name if target else ''} to come aside",
@@ -1761,7 +1804,9 @@ class Morning:
                     "propose_far": "said someone should try the houses further along the street tonight",
                     "volunteer_far": "offered to go further along the street tonight",
                     "save_water": "said nobody should use the stored water for washing or the toilet any more",
-                    "ration_water": "said the water must be shared out by the cup from now on"}.get(kind, "said")
+                    "ration_water": "said the water must be shared out by the cup from now on",
+                    "door_call": "called out through the front door",
+                    "door_refuse": "told the person at the door to go away"}.get(kind, "said")
             if self.day != 4 and kind in TRIP_KINDS:
                 # Day 2's wording (reports/night_design.md, §6), for the speaker's own line.
                 mine = {"still_going": "said you still mean to go there tonight",
@@ -1842,6 +1887,18 @@ class Morning:
                                      f"in the yard.{feel}"))
             self.quiet.collect_rain(p, minute)
             return "went out into the rain and set the bin under the drainpipe."
+        if kind in ("door_look", "door_open", "door_give"):      # W2a: at the front door, within the turn
+            seen_text = {"door_look": f"{p.name} looks through the gap in the boards beside the front door.",
+                         "door_open": f"{p.name} unbars the front door and opens it.",
+                         "door_give": f"{p.name} hands some of the stored water out at the front door."}[kind]
+            so_far.append(seen_text)
+            if seen:
+                self.started_by(room, minute, seen_text.rstrip("."), d)
+            for q in seen:
+                self.perceive(q, minute, seen_text, trigger=(seen_text.rstrip("."), True))
+            p.memory.append((minute, (door_line or f"you {KIND_DONE[kind]}.") + feel))
+            return {"door_look": "looked through the gap in the boards.", "door_open": "unbarred the front door.",
+                    "door_give": "handed some of the stored water out at the front door."}[kind]
         if kind == "search":
             if opt.id == "search":
                 p.activity = {"kind": "searching", "label": f"searching the {data.ROOMS[room]}",

@@ -1,0 +1,30 @@
+EE
+======================================================================
+ERROR: test_t5_the_block_is_the_same_with_and_without_a_door_and_the_door_lines_are_under_140_tokens (test_morning.KnockTest.test_t5_the_block_is_the_same_with_and_without_a_door_and_the_door_lines_are_under_140_tokens)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7211, in test_t5_the_block_is_the_same_with_and_without_a_door_and_the_door_lines_are_under_140_tokens
+    q.turn(t)
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\quiet.py", line 1099, in turn
+    self.hear_knock(minute, played=True)
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\quiet.py", line 490, in hear_knock
+    self.m.newness.forget_door()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Newness' object has no attribute 'forget_door'
+
+======================================================================
+ERROR: test_t7_the_door_options_exist_only_in_a_scene_in_the_kitchen (test_morning.KnockTest.test_t7_the_door_options_exist_only_in_a_scene_in_the_kitchen)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7293, in test_t7_the_door_options_exist_only_in_a_scene_in_the_kitchen
+    self.assertTrue(q.hear_knock(120, played=False))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\quiet.py", line 490, in hear_knock
+    self.m.newness.forget_door()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Newness' object has no attribute 'forget_door'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.760s
+
+FAILED (errors=2)

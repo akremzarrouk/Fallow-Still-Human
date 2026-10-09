@@ -54,7 +54,12 @@ def gist(e, pid):
         "rain": "the rain beginning",
         "save_water": "saying nobody should use the stored water for washing or the toilet",
         "ration_water": "saying the water must be shared out by the cup",
-        "collect_rain": "setting the bin under the drainpipe in the rain"}
+        "collect_rain": "setting the bin under the drainpipe in the rain",
+        "knock": "the knock at the front door", "door_line": "what the person at the front door said",     # W2a
+        "door_end": "the person at the front door going away",
+        "door_look": "looking through the gap in the boards", "door_call": "calling out through the front door",
+        "door_open": "opening the front door", "door_give": "handing out water at the front door",
+        "door_refuse": "sending the person at the front door away"}
     phrase = phrases.get(kind, kind)
     if kind in ("door", "gap", "street"):
         return phrase

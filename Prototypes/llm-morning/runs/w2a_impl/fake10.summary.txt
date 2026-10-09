@@ -1,0 +1,20 @@
+morning.run(2, fake=True, days=10): exit 0; asks 490 (fake)
+  street day 6 09:27: a visit to the front door from no. 6 (ask water)
+day 3: day asks 46; Q7 stretches []
+day 4: day asks 48; Q7 stretches []
+day 5: day asks 46; Q7 stretches []
+day 6: day asks 40; Q7 stretches [('09:27', 6)]
+  09:27 Q7 visit v1 (h6, ask_water): fired=True room=kitchen asked=['leo'] why=None
+  DOOR SCENE day 6, 09:27 to 09:45: a woman of about forty from h6 (ask_water); heard {'leo': 'heard'}; woken []; outcome ignored; asks 6; give None
+    09:27 leo kitchen: go_back_room [model]
+    09:30 leo back_room: propose_trip "[fake line 327]" [model]
+    09:30 elena back_room: confront_leo "[fake line 328]" [model]
+    09:30 mara back_room: go_bathroom [model]
+    09:33 leo back_room: silent [fallback]
+    09:36 leo back_room: silent [model]
+    leo's line of it: At 09:27 you heard knocking at the front of the house.
+day 7: day asks 44; Q7 stretches []
+day 8: day asks 23; Q7 stretches []
+day 9: day asks 31; Q7 stretches []
+day 10: day asks 24; Q7 stretches []
+door scenes 1; largest Q7 stretch 6 asks; largest day 48 asks

@@ -9,7 +9,8 @@ SPEECH = ("ask", "deny", "accuse", "confess", "reassure", "say",
           "propose", "volunteer", "object", "back", "decline",     # these five: the trip
           "propose_far", "volunteer_far",                           # and further along the street (stage B, W5)
           "confront",       # from the night on (reports/food_confront_impl.md)
-          "save_water", "ration_water")     # the water's rule, from day 3 (reports/world_design.md, §4.2.3)
+          "save_water", "ration_water",     # the water's rule, from day 3 (reports/world_design.md, §4.2.3)
+          "door_call", "door_refuse")       # words at the front door (reports/w2_design.md, §4.2; W2a)
 
 
 def act_of(option):
@@ -100,12 +101,23 @@ class Newness:
             new = kind not in taken
             taken.add(kind)
             return new, "a rule for the water" if new else "a rule for the water they had said before"
+        if kind in ("door_call", "door_refuse"):      # W2a: new the first time in a door scene (forget_door)
+            new = ("door", kind) not in taken
+            taken.add(("door", kind))
+            return new, "an answer at the door" if new else "an answer at the door they had given before"
         if kind in TRIP_WHY:
             stance = (kind, target)
             new = stance not in taken
             taken.add(stance)
             return new, TRIP_WHY[kind] if new else TRIP_WHY[kind] + " they had made before"
         return False, "a remark (the rules cannot tell what free words add)"
+
+
+    def forget_door(self):
+        """A new door scene: an answer at the door is new again for everyone."""
+        for taken in self.stances.values():
+            taken.discard(("door", "door_call"))
+            taken.discard(("door", "door_refuse"))
 
 
 class Conversations:

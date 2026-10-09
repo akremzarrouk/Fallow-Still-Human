@@ -604,7 +604,21 @@ def after_the_morning(morning, out):
     for r in tr.get("rain", []):
         heard = ", ".join(NAME[q] for q in r["heard"]) or "nobody awake"
         rows.append((r["minute"], 1, f"- {clock(r['minute'])}: rain begins (heard by {heard})."))
+    for sc in tr.get("door", []):                     # W2a: each door scene, and what the person outside said
+        heard = ", ".join(f"{NAME[q]} ({how})" for q, how in sc["heard"].items()) or "nobody"
+        rows.append((sc["start"], 1, f"- {clock(sc['start'])}: a knock at the front door: {sc['who']} from no. "
+                                     f"{sc['household'][1:]}, {sc['purpose'].replace('_', ' ')} (heard by {heard})."))
+        for at, text in sc["said"]:
+            rows.append((at, 1, f"- {clock(at)}: {sc['voice']} at the front door says: \"{text}\""))
+        rows.append((sc["end"], 1, f"- {clock(sc['end'])}: the visit ends: {sc['outcome']}"
+                                   + (f", {sc['give']['qty']:g} L of water handed out by {NAME[sc['give']['by']]}"
+                                      if sc.get("give") else "") + "."))
     for e in tr["log"]:
+        if e["kind"] == "Q7":
+            how = (f"{', '.join(NAME[q] for q in e['asked'])} asked, in the {data.ROOMS[e['room']]}" if e["fired"]
+                   and e["room"] else "heard in played turns" if e["fired"] else f"deferred: {e['why']}")
+            rows.append((e["minute"], 2, f"- {clock(e['minute'])}: **Q7**, a knock at the front door: {how}."))
+            continue
         if e["kind"] == "Q6":
             how = (f"{', '.join(NAME[q] for q in e['asked'])} asked, in the {data.ROOMS[e['room']]}" if e["fired"]
                    else f"not asked: {e['why']}")
