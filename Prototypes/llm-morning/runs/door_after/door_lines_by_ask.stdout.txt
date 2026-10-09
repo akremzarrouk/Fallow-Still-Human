@@ -1,0 +1,95 @@
+09:45 elena (kitchen, fake): 8 door line(s)
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:42, you told the person at the door to go away.
+    | - 09:42: Someone knocked at the front door.
+    | - 09:42: A woman's voice at the front door says: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left.".
+    | - 09:42: you told the person at the door to go away. You felt anxious.
+    | - 09:42: Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored."
+    | - 09:42: Mara hands some of the stored water out at the front door.
+    | What you have been doing: you have told the person at the door to go away, 1 turn in a row.
+    | water: Since 09:42, none of it goes on the toilet or on washing.
+09:45 leo (kitchen, fake): 6 door line(s)
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:42: Someone knocked at the front door.
+    | - 09:42: A woman's voice at the front door says: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left.".
+    | - 09:42: Elena tells the person at the front door to go away: "I am so sorry, but we have nothing to spare for you today."
+    | - 09:42: Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored."
+    | - 09:42: Mara hands some of the stored water out at the front door.
+    | water: Since 09:42, none of it goes on the toilet or on washing.
+09:45 mara (kitchen, fake): 5 door line(s)
+    | - 09:45: at 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:42: Someone knocked at the front door.
+    | - 09:42: A woman's voice at the front door says: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left.".
+    | - 09:42: Elena tells the person at the front door to go away: "I am so sorry, but we have nothing to spare for you today."
+    | - 09:42: you handed a woman of about forty-five at the door about three litres of the stored water. You felt anxious.
+    | water: Since 09:42, none of it goes on the toilet or on washing.
+09:45 daniel (brothers_room, fake): 0 door line(s)
+    | water: Since 09:42, none of it goes on the toilet or on washing.
+09:48 elena (kitchen, fake): 6 door line(s)
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:42, you told the person at the door to go away.
+    | - 09:42: Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored."
+    | - 09:42: Mara hands some of the stored water out at the front door.
+    | - 09:45: A woman's voice at the front door says: "Oh, thank you. You don't know what this means.".
+    | - 09:45: Footsteps go away along the street.
+    | water: Since 09:42, none of it goes on the toilet or on washing.
+09:48 leo (kitchen, fake): 2 door line(s)
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:45: Footsteps go away along the street.
+    | water: Since 09:42, none of it goes on the toilet or on washing.
+09:48 mara (kitchen, fake): 4 door line(s)
+    | - 09:45: at 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:42: you handed a woman of about forty-five at the door about three litres of the stored water. You felt anxious.
+    | - 09:45: A woman's voice at the front door says: "Oh, thank you. You don't know what this means.".
+    | - 09:45: Footsteps go away along the street.
+    | water: Since 09:42, none of it goes on the toilet or on washing.
+09:51 elena (kitchen, fake): 4 door line(s)
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:42, you told the person at the door to go away.
+    | - 09:45: A woman's voice at the front door says: "Oh, thank you. You don't know what this means.".
+    | - 09:45: Footsteps go away along the street.
+    | water: Since 09:42, none of it goes on the toilet or on washing.
+09:51 mara (kitchen, fake): 3 door line(s)
+    | - 09:45: at 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:45: A woman's voice at the front door says: "Oh, thank you. You don't know what this means.".
+    | - 09:45: Footsteps go away along the street.
+    | water: Since 09:42, none of it goes on the toilet or on washing.
+09:51 leo (kitchen, fake): 1 door line(s)
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    | water: Since 09:42, none of it goes on the toilet or on washing.
+09:51 daniel (brothers_room, fake): 0 door line(s)
+    | water: Since 09:42, none of it goes on the toilet or on washing.
+09:54 elena (kitchen, fake): 2 door line(s)
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:42, you told the person at the door to go away.
+    | water: Since 09:42, none of it goes on the toilet or on washing.
+09:54 daniel (kitchen, fake): 0 door line(s)
+    | water: Since 09:42, none of it goes on the toilet or on washing.
+09:54 mara (kitchen, fake): 1 door line(s)
+    | - 09:45: at 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.
+    | water: Since 09:42, none of it goes on the toilet or on washing.
+09:57 elena (kitchen, fake): 2 door line(s)
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:42, you told the person at the door to go away.
+    | water: Since 09:42, none of it goes on the toilet or on washing.
+19:00 daniel (kitchen, fake): 0 door line(s)
+    | water: Since 09:42, none of it goes on the toilet or on washing.
+19:00 leo (kitchen, fake): 1 door line(s)
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    | water: Since 19:00, Daniel shares it out by the cup: five cups each a day.
+19:00 elena (kitchen, fake): 1 door line(s)
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    | water: Since 19:00, Daniel shares it out by the cup: five cups each a day.
+19:00 mara (kitchen, fake): 1 door line(s)
+    | - 09:45: at 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.
+    | water: Since 19:00, Daniel shares it out by the cup: five cups each a day.
+19:03 elena (kitchen, fake): 1 door line(s)
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    | water: Since 19:00, Daniel shares it out by the cup: five cups each a day.
+19:03 daniel (kitchen, fake): 0 door line(s)
+    | water: Since 19:00, you share it out by the cup: five cups each a day.
+19:06 mara (kitchen, fake): 1 door line(s)
+    | - 09:45: at 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.
+    | water: Since 19:00, Daniel shares it out by the cup: five cups each a day.
+19:06 daniel (kitchen, fake): 0 door line(s)
+    | water: Since 19:00, you share it out by the cup: five cups each a day.

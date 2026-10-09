@@ -1,0 +1,45 @@
+FF.FE
+======================================================================
+ERROR: test_d_block_c_keeps_a_refusal_at_the_door_when_it_is_the_heaviest (test_morning.DoorMemoryTest.test_d_block_c_keeps_a_refusal_at_the_door_when_it_is_the_heaviest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7883, in test_d_block_c_keeps_a_refusal_at_the_door_when_it_is_the_heaviest
+    self.assertEqual(M.WEIGHT["door_refuse"], 3)
+                     ~~~~~~~~^^^^^^^^^^^^^^^
+KeyError: 'door_refuse'
+
+======================================================================
+FAIL: test_a2_the_give_first_then_the_refusal_and_each_act_only_if_perceived (test_morning.DoorMemoryTest.test_a2_the_give_first_then_the_refusal_and_each_act_only_if_perceived)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7843, in test_a2_the_give_first_then_the_refusal_and_each_act_only_if_perceived
+    self.assertEqual(sc["summary"]["elena"], self.HEAD + "Mara handed a woman, who asked for water, about three "
+AssertionError: 'At 0[93 chars] litres of the stored water.' != 'At 0[93 chars] litres of the stored water, and then you told her to go away.'
+- At 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
++ At 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water, and then you told her to go away.
+?                                                                                                                             ++++++++++++++++++++++++++++++++++
+
+
+======================================================================
+FAIL: test_a_a_give_over_a_refusal_is_in_each_summary_with_the_refusal_in_the_order_done (test_morning.DoorMemoryTest.test_a_a_give_over_a_refusal_is_in_each_summary_with_the_refusal_in_the_order_done)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7819, in test_a_a_give_over_a_refusal_is_in_each_summary_with_the_refusal_in_the_order_done
+    self.assertEqual(sc["summary"]["elena"], self.HEAD + "you told a woman, who asked for water, "
+AssertionError: 'At 0[35 chars]oor: Mara handed a woman, who asked for water,[36 chars]ter.' != 'At 0[35 chars]oor: you told a woman, who asked for water, to[72 chars]way.'
+- At 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
++ At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.
+
+
+======================================================================
+FAIL: test_c_maras_own_line_and_her_chronicle_view_of_her_give_say_she_handed_water_out (test_morning.DoorMemoryTest.test_c_maras_own_line_and_her_chronicle_view_of_her_give_say_she_handed_water_out)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7866, in test_c_maras_own_line_and_her_chronicle_view_of_her_give_say_she_handed_water_out
+    self.assertTrue(words, "the premise: Mara spoke as she gave")
+AssertionError: None is not true : the premise: Mara spoke as she gave
+
+----------------------------------------------------------------------
+Ran 5 tests in 2.281s
+
+FAILED (failures=3, errors=1)

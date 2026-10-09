@@ -1,0 +1,8 @@
+day_index(6) = 3
+t 54 (09:42) '2:day3:54:kitchen': draws daniel 0.5710, elena 0.1592, leo 0.5654, mara 0.2049; the kitchen's three by draw: elena, mara, leo
+t 55 (09:45) '2:day3:55:kitchen': draws daniel 0.0229, elena 0.2135, leo 0.4360, mara 0.7768; the kitchen's three by draw: elena, leo, mara
+t 56 (09:48) '2:day3:56:kitchen': draws daniel 0.8356, elena 0.2788, leo 0.9977, mara 0.3045; the kitchen's three by draw: elena, mara, leo
+t 57 (09:51) '2:day3:57:kitchen': draws daniel 0.0711, elena 0.3200, leo 0.4912, mara 0.3678; the kitchen's three by draw: elena, mara, leo
+t 58 (09:54) '2:day3:58:kitchen': draws daniel 0.8223, elena 0.2258, leo 0.5965, mara 0.5373; the kitchen's three by draw: elena, mara, leo
+all 280 turns of day 3 (t = 0 to 279): lowest draw of the three: elena 97, leo 90, mara 93
+the six orders of the three: elena > mara > leo 59; mara > elena > leo 51; leo > elena > mara 48; leo > mara > elena 42; mara > leo > elena 42; elena > leo > mara 38

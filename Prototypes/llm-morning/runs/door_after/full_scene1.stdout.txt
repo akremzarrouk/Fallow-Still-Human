@@ -1,0 +1,683 @@
+=== full, scene 1 (no child, helper, urgency under 0.8); stopped at None; asks {'day': 50, 'from_cache': 123, 'fake': 23}
+visit: 09:42 to 09:45; outcome given; acts [[162, 'elena', 'door_refuse', 'I am so sorry, but we have nothing to spare for you today.'], [162, 'mara', 'door_give', 'Mom, we have to give her some, we have enough stored.']]
+said: [('09:42', "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."), ('09:45', "Oh, thank you. You don't know what this means.")]
+summary: {"elena": "At 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.", "leo": "At 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.", "mara": "At 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water."}
+
+--- every decision from the knock
+09:42 elena (kitchen) mode model, asked True [cache], quiet Q7, order [1, 'drawn by the seed among equals']: door_refuse "I am so sorry, but we have nothing to spare for you today."
+    triggers: ['someone is knocking at the front door', 'Mara accuses Daniel of taking it: "You snuck out last night like a thief, Daniel, and you still expect us to trust your empty promises?"']
+    door options offered: ['door_look', 'door_call', 'door_open', 'door_give', 'door_refuse']
+    | About water: the bath holds about 60 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash.
+    | - About Daniel giving you a portion and eating a portion handed over: "Daniel gave me the portion and I ate it because I had to survive."
+    | - Someone is knocking at the front door.
+    | - A woman's voice at the front door says: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."
+09:42 mara (kitchen) mode model, asked True [cache], quiet Q7, order [2, 'drawn by the seed among equals']: door_give "Mom, we have to give her some, we have enough stored."
+    triggers: ['someone is knocking at the front door', 'Elena tells the person at the front door to go away: "I am so sorry, but we have nothing to spare for you today."']
+    door options offered: ['door_look', 'door_call', 'door_open', 'door_give', 'door_refuse']
+    | About water: the bath holds about 60 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash.
+    | - In the night you heard the front door being opened. You did not see who. You got up: Daniel's bed was empty. You waited up by the front door.
+    | - Before dawn Daniel came back in by the front door, with nothing in his hands (you saw it).
+    | - About the front door opening in the night and Daniel coming back in before dawn: "Daniel went out into the night and came back before dawn with nothing in his hands."
+    | - Someone is knocking at the front door.
+    | - A woman's voice at the front door says: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."
+    | 1. Elena tells the person at the front door to go away: "I am so sorry, but we have nothing to spare for you today."
+09:42 leo (kitchen) mode model, asked True [cache], quiet Q7, order [3, 'the only one left to act here']: save_water "We cannot afford to hand out our drinking water when we have none left ourselves."
+    triggers: ['someone is knocking at the front door', 'Mara accuses Daniel of taking it: "You snuck out last night like a thief, Daniel, and you still expect us to trust your empty promises?"', 'Elena tells the person at the front door to go away: "I am so sorry, but we have nothing to spare for you today."', 'Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored."', 'Mara hands some of the stored water out at the front door']
+    door options offered: ['door_look', 'door_call', 'door_open', 'door_give', 'door_refuse']
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash.
+    | - In the night Daniel got up in the dark and left the room toward the kitchen and the front door (you saw it).
+    | - Before dawn you heard the front door again. You did not see who.
+    | - Someone is knocking at the front door.
+    | - A woman's voice at the front door says: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."
+    | 1. Elena tells the person at the front door to go away: "I am so sorry, but we have nothing to spare for you today."
+    | 2. Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored."
+    | 3. Mara hands some of the stored water out at the front door.
+09:42 daniel (brothers_room) mode routine, asked False [None], quiet None, order [1, 'just accused by Mara']: silent
+    triggers: []
+09:45 elena (kitchen) mode model, asked True [fake], quiet None, order [1, 'drawn by the seed among equals']: aside_leo
+    triggers: ['Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored."', 'Mara hands some of the stored water out at the front door', 'Leo says nobody should use the stored water for washing or the toilet any more: "We cannot afford to hand out our drinking water when we have none left ourselves."', 'A woman\'s voice at the front door says: "Oh, thank you. You don\'t know what this means."']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:42, none of it goes on the toilet or on washing.
+    | - About Daniel giving you a portion and eating a portion handed over: "Daniel gave me the portion and I ate it because I had to survive."
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:42, you told the person at the door to go away.
+    | - 09:42: Someone knocked at the front door.
+    | - 09:42: A woman's voice at the front door says: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left.".
+    | - 09:42: you told the person at the door to go away. You felt anxious.
+    | - 09:42: Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored."
+    | - 09:42: Mara hands some of the stored water out at the front door.
+    | What you have been doing: you have told the person at the door to go away, 1 turn in a row.
+09:45 leo (kitchen) mode model, asked True [fake], quiet None, order [2, 'asked aside by Elena']: refuse_aside
+    triggers: ['Elena asks you to come aside to the back room', 'A woman\'s voice at the front door says: "Oh, thank you. You don\'t know what this means."']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:42, none of it goes on the toilet or on washing.
+    | - In the night Daniel got up in the dark and left the room toward the kitchen and the front door (you saw it).
+    | - Before dawn you heard the front door again. You did not see who.
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:42: Someone knocked at the front door.
+    | - 09:42: A woman's voice at the front door says: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left.".
+    | - 09:42: Elena tells the person at the front door to go away: "I am so sorry, but we have nothing to spare for you today."
+    | - 09:42: Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored."
+    | - 09:42: Mara hands some of the stored water out at the front door.
+09:45 mara (kitchen) mode model, asked True [fake], quiet None, order [3, 'the only one left to act here']: say_other "[fake line 3]"
+    triggers: ['Leo says nobody should use the stored water for washing or the toilet any more: "We cannot afford to hand out our drinking water when we have none left ourselves."', 'A woman\'s voice at the front door says: "Oh, thank you. You don\'t know what this means."', 'Elena looks afraid']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:42, none of it goes on the toilet or on washing.
+    | - In the night you heard the front door being opened. You did not see who. You got up: Daniel's bed was empty. You waited up by the front door.
+    | - Before dawn Daniel came back in by the front door, with nothing in his hands (you saw it).
+    | - About the front door opening in the night and Daniel coming back in before dawn: "Daniel went out into the night and came back before dawn with nothing in his hands."
+    | - 09:45: at 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:42: Someone knocked at the front door.
+    | - 09:42: A woman's voice at the front door says: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left.".
+    | - 09:42: Elena tells the person at the front door to go away: "I am so sorry, but we have nothing to spare for you today."
+    | - 09:42: you handed a woman of about forty-five at the door about three litres of the stored water. You felt anxious.
+    | What you have been doing: you have handed out water at the front door, 1 turn in a row.
+09:45 daniel (brothers_room) mode model, asked True [fake], quiet None, order [1, 'the only one left to act here']: silent
+    triggers: ['Voices from the kitchen']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:42, none of it goes on the toilet or on washing.
+    | - You came back in by the front door before dawn.
+    | - About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."
+09:48 elena (kitchen) mode model, asked True [fake], quiet None, order [1, 'just spoken to by Leo']: confront_leo "[fake line 5]"
+    triggers: ['Leo refuses to go aside with you', 'Mara says to everyone: "[fake line 3]"']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:42, none of it goes on the toilet or on washing.
+    | - About Daniel giving you a portion and eating a portion handed over: "Daniel gave me the portion and I ate it because I had to survive."
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:42, you told the person at the door to go away.
+    | - 09:42: Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored."
+    | - 09:42: Mara hands some of the stored water out at the front door.
+    | - 09:45: A woman's voice at the front door says: "Oh, thank you. You don't know what this means.".
+    | - 09:45: Footsteps go away along the street.
+09:48 leo (kitchen) mode model, asked True [fake], quiet None, order [2, 'just spoken to by Elena']: send_elena "[fake line 6]"
+    triggers: ['Mara says to everyone: "[fake line 3]"', 'Elena confronts you: "[fake line 5]"', 'Elena looks afraid']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:42, none of it goes on the toilet or on washing.
+    | - In the night Daniel got up in the dark and left the room toward the kitchen and the front door (you saw it).
+    | - Before dawn you heard the front door again. You did not see who.
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:45: Footsteps go away along the street.
+09:48 mara (kitchen) mode model, asked True [fake], quiet None, order [3, 'the only one left to act here']: deny "[fake line 7]"
+    triggers: ['Elena confronts Leo: "[fake line 5]"', 'Leo says Elena is the one who should go: "[fake line 6]"', 'Elena looks afraid']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:42, none of it goes on the toilet or on washing.
+    | - In the night you heard the front door being opened. You did not see who. You got up: Daniel's bed was empty. You waited up by the front door.
+    | - Before dawn Daniel came back in by the front door, with nothing in his hands (you saw it).
+    | - About the front door opening in the night and Daniel coming back in before dawn: "Daniel went out into the night and came back before dawn with nothing in his hands."
+    | - 09:45: at 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:42: you handed a woman of about forty-five at the door about three litres of the stored water. You felt anxious.
+    | - 09:45: A woman's voice at the front door says: "Oh, thank you. You don't know what this means.".
+    | - 09:45: Footsteps go away along the street.
+09:48 daniel (brothers_room) mode routine, asked False [None], quiet None, order [1, 'the only one left to act here']: silent
+    triggers: []
+09:51 elena (kitchen) mode model, asked True [fake], quiet None, order [1, 'just spoken to by Leo']: silent
+    triggers: ['Leo says you are the one who should go: "[fake line 6]"', 'Mara denies taking it, to everyone: "[fake line 7]"']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:42, none of it goes on the toilet or on washing.
+    | - About Daniel giving you a portion and eating a portion handed over: "Daniel gave me the portion and I ate it because I had to survive."
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:42, you told the person at the door to go away.
+    | - 09:45: A woman's voice at the front door says: "Oh, thank you. You don't know what this means.".
+    | - 09:45: Footsteps go away along the street.
+09:51 mara (kitchen) mode model, asked True [fake], quiet None, order [2, 'drawn by the seed among equals']: send_elena "[fake line 9]"
+    triggers: []; inner: ['grudge against Elena rose (now 1 of 3)']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:42, none of it goes on the toilet or on washing.
+    | - In the night you heard the front door being opened. You did not see who. You got up: Daniel's bed was empty. You waited up by the front door.
+    | - Before dawn Daniel came back in by the front door, with nothing in his hands (you saw it).
+    | - About the front door opening in the night and Daniel coming back in before dawn: "Daniel went out into the night and came back before dawn with nothing in his hands."
+    | - 09:45: at 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:45: A woman's voice at the front door says: "Oh, thank you. You don't know what this means.".
+    | - 09:45: Footsteps go away along the street.
+09:51 leo (kitchen) mode model, asked True [fake], quiet None, order [3, 'the only one left to act here']: go_brothers_room
+    triggers: ['Mara denies taking it, to everyone: "[fake line 7]"', 'Mara says Elena is the one who should go: "[fake line 9]"']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:42, none of it goes on the toilet or on washing.
+    | - In the night Daniel got up in the dark and left the room toward the kitchen and the front door (you saw it).
+    | - Before dawn you heard the front door again. You did not see who.
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+09:51 daniel (brothers_room) mode model, asked True [fake], quiet None, order [1, 'the only one left to act here']: go_kitchen
+    triggers: ['Voices from the kitchen']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:42, none of it goes on the toilet or on washing.
+    | - You came back in by the front door before dawn.
+    | - About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."
+09:54 elena (kitchen) mode model, asked True [fake], quiet None, order [1, 'just spoken to by Mara']: confront_daniel "[fake line 12]"
+    triggers: ['Mara says you are the one who should go: "[fake line 9]"', 'Daniel comes into the kitchen']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:42, none of it goes on the toilet or on washing.
+    | - About Daniel giving you a portion and eating a portion handed over: "Daniel gave me the portion and I ate it because I had to survive."
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:42, you told the person at the door to go away.
+09:54 daniel (kitchen) mode model, asked True [fake], quiet None, order [2, 'just spoken to by Elena']: volunteer_far "[fake line 13]"
+    triggers: ['Elena confronts you: "[fake line 12]"', 'Elena looks angry']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:42, none of it goes on the toilet or on washing.
+    | - You came back in by the front door before dawn.
+    | - About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."
+09:54 mara (kitchen) mode model, asked True [fake], quiet None, order [3, 'the only one left to act here']: propose_far "[fake line 14]"
+    triggers: ['Daniel comes into the kitchen', 'Elena confronts Daniel: "[fake line 12]"', 'Daniel offers to go further along the street tonight: "[fake line 13]"', 'Elena looks angry']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:42, none of it goes on the toilet or on washing.
+    | - In the night you heard the front door being opened. You did not see who. You got up: Daniel's bed was empty. You waited up by the front door.
+    | - Before dawn Daniel came back in by the front door, with nothing in his hands (you saw it).
+    | - About the front door opening in the night and Daniel coming back in before dawn: "Daniel went out into the night and came back before dawn with nothing in his hands."
+    | - 09:45: at 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.
+09:54 leo (brothers_room) mode routine, asked False [None], quiet None, order [1, 'the only one left to act here']: silent
+    triggers: []
+09:57 elena (kitchen) mode model, asked True [fake], quiet None, order [1, 'shows the strongest feeling here (angry)']: reassure_all "[fake line 15]"
+    triggers: ['Daniel offers to go further along the street tonight: "[fake line 13]"', 'Mara says someone should try the houses further along the street tonight: "[fake line 14]"']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:42, none of it goes on the toilet or on washing.
+    | - About Daniel giving you a portion and eating a portion handed over: "Daniel gave me the portion and I ate it because I had to survive."
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    | - 09:42, you told the person at the door to go away.
+09:57 daniel (kitchen) mode routine, asked False [None], quiet None, order [2, 'drawn by the seed among equals']: silent
+    triggers: ['Mara says someone should try the houses further along the street tonight: "[fake line 14]"', 'Elena reassures everyone: "[fake line 15]"']
+09:57 mara (kitchen) mode routine, asked False [None], quiet None, order [3, 'the only one left to act here']: silent
+    triggers: ['Elena reassures everyone: "[fake line 15]"']
+09:57 leo (brothers_room) mode routine, asked False [None], quiet None, order [1, 'the only one left to act here']: silent
+    triggers: ['Voices from the kitchen']
+19:00 daniel (kitchen) mode model, asked True [fake], quiet None, order [1, 'drawn by the seed among equals']: ration_water "[fake line 16]"
+    triggers: []; inner: ['fasting crossed a line (now light and slow)']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:42, none of it goes on the toilet or on washing.
+    | - You came back in by the front door before dawn.
+    | - About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."
+19:00 leo (kitchen) mode model, asked True [fake], quiet None, order [2, 'drawn by the seed among equals']: go_brothers_room
+    triggers: ['Daniel says the water must be shared out by the cup from now on: "[fake line 16]"']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, Daniel shares it out by the cup: five cups each a day.
+    | - In the night Daniel got up in the dark and left the room toward the kitchen and the front door (you saw it).
+    | - Before dawn you heard the front door again. You did not see who.
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+19:00 elena (kitchen) mode model, asked True [fake], quiet None, order [3, 'drawn by the seed among equals']: sit_daniel
+    triggers: ['Daniel says the water must be shared out by the cup from now on: "[fake line 16]"']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, Daniel shares it out by the cup: five cups each a day.
+    | - About Daniel giving you a portion and eating a portion handed over: "Daniel gave me the portion and I ate it because I had to survive."
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+19:00 mara (kitchen) mode model, asked True [fake], quiet Q5, order [4, 'the only one left to act here']: sit_elena
+    triggers: ['it is evening, and in two hours everyone goes to bed', 'Daniel says the water must be shared out by the cup from now on: "[fake line 16]"']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, Daniel shares it out by the cup: five cups each a day.
+    | - In the night you heard the front door being opened. You did not see who. You got up: Daniel's bed was empty. You waited up by the front door.
+    | - Before dawn Daniel came back in by the front door, with nothing in his hands (you saw it).
+    | - About the front door opening in the night and Daniel coming back in before dawn: "Daniel went out into the night and came back before dawn with nothing in his hands."
+    | - 09:45: at 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.
+19:03 elena (kitchen) mode model, asked True [fake], quiet None, order [2, 'drawn by the seed among equals']: keep_daniel_home "[fake line 20]"
+    triggers: ['Mara came to sit with you', 'Mara looks afraid']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, Daniel shares it out by the cup: five cups each a day.
+    | - About Daniel giving you a portion and eating a portion handed over: "Daniel gave me the portion and I ate it because I had to survive."
+    | - 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+19:03 daniel (kitchen) mode model, asked True [fake], quiet None, order [3, 'just spoken to by Elena']: sit_elena
+    triggers: ['Elena came to sit with you', 'Elena says you must stay home tonight: "[fake line 20]"', 'Elena looks afraid', 'Mara looks afraid']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, you share it out by the cup: five cups each a day.
+    | - You came back in by the front door before dawn.
+    | - About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."
+19:06 mara (kitchen) mode model, asked True [fake], quiet None, order [1, 'drawn by the seed among equals']: volunteer_far "[fake line 22]"
+    triggers: ['Elena says Daniel must stay home tonight: "[fake line 20]"', 'Daniel looks afraid', 'Elena looks afraid']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, Daniel shares it out by the cup: five cups each a day.
+    | - In the night you heard the front door being opened. You did not see who. You got up: Daniel's bed was empty. You waited up by the front door.
+    | - Before dawn Daniel came back in by the front door, with nothing in his hands (you saw it).
+    | - About the front door opening in the night and Daniel coming back in before dawn: "Daniel went out into the night and came back before dawn with nothing in his hands."
+    | - 09:45: at 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.
+19:06 daniel (kitchen) mode model, asked True [fake], quiet None, order [2, 'drawn by the seed among equals']: reassure_mara "[fake line 23]"
+    triggers: ['Mara offers to go further along the street tonight: "[fake line 22]"', 'Elena looks afraid']
+    door options offered: []
+    | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, you share it out by the cup: five cups each a day.
+    | - You came back in by the front door before dawn.
+    | - About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."
+
+--- quiet log from the knock (Q1, Q2, Q5, Q6, Q7 checked)
+  09:42 Q7 fired True asked ['elena', 'leo', 'mara'] room kitchen why None
+  10:00 Q2 fired False asked None room kitchen why the day's 40 asks are spent pair ['daniel', 'leo'] grudges {'leo': 2, 'daniel': 1}
+  10:00 Q2 fired False asked None room kitchen why a line between them 12 minutes before pair ['elena', 'leo'] grudges {'leo': 2, 'elena': 0}
+  10:00 Q2 fired False asked None room kitchen why a line between them 9 minutes before pair ['leo', 'mara'] grudges {'leo': 0, 'mara': 2}
+  11:42 Q2 fired False asked None room back_room why the day's 40 asks are spent pair ['elena', 'mara'] grudges {'mara': 1, 'elena': 2}
+  11:51 Q2 fired False asked None room brothers_room why the day's 40 asks are spent pair ['daniel', 'leo'] grudges {'daniel': 1, 'leo': 2}
+  14:36 Q2 fired False asked None room kitchen why the day's 40 asks are spent pair ['elena', 'leo'] grudges {'elena': 0, 'leo': 2}
+  14:48 Q2 fired False asked None room kitchen why the day's 40 asks are spent pair ['daniel', 'leo'] grudges {'daniel': 1, 'leo': 2}
+  14:51 Q2 fired False asked None room kitchen why the day's 40 asks are spent pair ['daniel', 'mara'] grudges {'mara': 2, 'daniel': 0}
+  14:51 Q2 fired False asked None room kitchen why the day's 40 asks are spent pair ['elena', 'mara'] grudges {'mara': 1, 'elena': 2}
+  14:51 Q2 fired False asked None room kitchen why the day's 40 asks are spent pair ['leo', 'mara'] grudges {'mara': 2, 'leo': 0}
+  17:39 Q1 fired False asked None room kitchen why the day's 40 asks are spent who daniel need fast stage 2
+  19:00 Q1 fired False asked None room kitchen why the day's 40 asks are spent who leo need fast stage 2
+  19:00 Q5 fired True asked mara room kitchen why None
+  19:45 Q1 fired False asked None room kitchen why the day's 40 asks are spent who daniel need debt stage 2
+  20:09 Q1 fired False asked None room kitchen why the day's 40 asks are spent who leo need debt stage 2
+
+--- stretches
+  09:42 to 10:00 room kitchen trigger Q7 asks 18
+  19:00 to 19:09 room kitchen trigger Q5 asks 8
+
+--- routine spans from the knock
+  daniel rest in brothers_room min 18 to 09:51 ended acted
+  daniel sit in kitchen 10:00 to 11:51 ended went to rest
+  elena sit in kitchen 10:00 to 11:42 ended went to rest
+  leo sit in kitchen 10:00 to 11:42 ended went to rest
+  mara sit in kitchen 10:00 to 11:42 ended went to rest
+  elena rest in back_room 11:42 to 14:36 ended time
+  leo rest in brothers_room 11:42 to 13:45 ended time
+  mara rest in back_room 11:42 to 14:51 ended time
+  daniel rest in brothers_room 11:51 to 14:48 ended time
+  leo sit in kitchen 13:45 to 19:00 ended acted
+  elena sit in kitchen 14:36 to 19:00 ended acted
+  daniel sit in kitchen 14:48 to 19:00 ended acted
+  mara sit in kitchen 14:51 to 19:00 ended acted
+  daniel sit in kitchen 19:09 to 21:00 ended bedtime
+  elena sit in kitchen 19:09 to 21:00 ended bedtime
+  leo sit in kitchen 19:09 to 21:00 ended bedtime
+  mara sit in kitchen 19:09 to 21:00 ended bedtime
+
+--- each one's memory from the knock, at the end of the trace
+  daniel:
+    09:42: Voices from the kitchen.
+    09:45: you stayed where you were and said nothing. You felt calm.
+    09:45: Voices from the kitchen.
+    09:48: Voices from the kitchen.
+    09:51: you went to the kitchen. You felt ashamed.
+    09:51: you got up from your bed.
+    09:54: Elena confronts you: "[fake line 12]"
+    09:54: you offered to go further along the street tonight. You felt calm.
+    09:54: Mara says someone should try the houses further along the street tonight: "[fake line 14]"
+    09:57: Elena reassures everyone: "[fake line 15]"
+    10:00: Leo comes into the kitchen.
+    11:42: Elena goes to the back room.
+    11:42: Leo goes to the brothers room.
+    11:42: Mara goes to the back room.
+    11:51: you went to the brothers room.
+    11:51: you lay down on your bed.
+    14:48: you got up from your bed.
+    14:48: you went to the kitchen.
+    14:51: Mara comes into the kitchen.
+    19:00: It is evening; in two hours everyone goes to bed.
+    19:00: you said the water must be shared out by the cup from now on. You felt calm.
+    19:00: Leo leaves for the brothers room.
+    19:00: Elena comes and sits with you.
+    19:00: Mara sits with Elena.
+    19:03: Elena says you must stay home tonight: "[fake line 20]"
+    19:03: you sat with Elena. You felt afraid.
+    19:06: Mara offers to go further along the street tonight: "[fake line 22]"
+    19:06: you reassured Mara. You felt tired.
+    19:09: Leo comes into the kitchen.
+  elena:
+    09:42: you got up from your bed.
+    09:42: Mara gets up from her bed.
+    09:42: you went to the kitchen.
+    09:42: Leo comes into the kitchen.
+    09:42: Mara comes into the kitchen.
+    09:42: Someone knocked at the front door.
+    09:42: A woman's voice at the front door says: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left.".
+    09:42: you told the person at the door to go away. You felt anxious.
+    09:42: Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored."
+    09:42: Mara hands some of the stored water out at the front door.
+    09:42: Leo says nobody should use the stored water for washing or the toilet any more: "We cannot afford to hand out our drinking water when we have none left ourselves."
+    09:45: A woman's voice at the front door says: "Oh, thank you. You don't know what this means.".
+    09:45: Footsteps go away along the street.
+    09:45: you asked Leo to come aside to the back room. You felt afraid.
+    09:45: Leo refuses to go aside with you.
+    09:45: Mara says to everyone: "[fake line 3]"
+    09:48: you confronted Leo. You felt afraid.
+    09:48: Leo says you are the one who should go: "[fake line 6]"
+    09:48: Mara denies taking it, to everyone: "[fake line 7]"
+    09:51: you stayed where you were and said nothing. You felt calm.
+    09:51: Mara says you are the one who should go: "[fake line 9]"
+    09:51: Leo leaves for the brothers room.
+    09:51: Daniel comes into the kitchen.
+    09:51: Daniel gets up from his bed.
+    09:54: you confronted Daniel. You felt angry.
+    09:54: Daniel offers to go further along the street tonight: "[fake line 13]"
+    09:54: Mara says someone should try the houses further along the street tonight: "[fake line 14]"
+    09:57: you reassured everyone. You felt calm.
+    10:00: Leo comes into the kitchen.
+    11:42: you went to the back room.
+    11:42: you lay down on your bed.
+    14:36: you got up from your bed.
+    14:36: you went to the kitchen.
+    14:48: Daniel comes into the kitchen.
+    14:51: Mara comes into the kitchen.
+    19:00: It is evening; in two hours everyone goes to bed.
+    19:00: Daniel says the water must be shared out by the cup from now on: "[fake line 16]"
+    19:00: Leo leaves for the brothers room.
+    19:00: you sat with Daniel. You felt ashamed.
+    19:00: Mara comes and sits with you.
+    19:03: you said Daniel must stay home tonight. You felt afraid.
+    19:03: Daniel comes and sits with you.
+    19:06: Mara offers to go further along the street tonight: "[fake line 22]"
+    19:06: Daniel reassures Mara: "[fake line 23]"
+    19:09: Leo comes into the kitchen.
+  leo:
+    09:42: you got up from your bed.
+    09:42: you went to the kitchen.
+    09:42: Mara comes into the kitchen.
+    09:42: Someone knocked at the front door.
+    09:42: A woman's voice at the front door says: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left.".
+    09:42: Elena tells the person at the front door to go away: "I am so sorry, but we have nothing to spare for you today."
+    09:42: Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored."
+    09:42: Mara hands some of the stored water out at the front door.
+    09:42: you said nobody should use the stored water for washing or the toilet any more. You felt wary.
+    09:45: A woman's voice at the front door says: "Oh, thank you. You don't know what this means.".
+    09:45: Footsteps go away along the street.
+    09:45: you refused to go aside with Elena. You felt calm.
+    09:45: Mara says to everyone: "[fake line 3]"
+    09:48: Elena confronts you: "[fake line 5]"
+    09:48: you said Elena is the one who should go. You felt tired.
+    09:48: Mara denies taking it, to everyone: "[fake line 7]"
+    09:51: Mara says Elena is the one who should go: "[fake line 9]"
+    09:51: you went to the brothers room. You felt ashamed.
+    09:54: Voices from the kitchen.
+    09:57: Voices from the kitchen.
+    10:00: you went to the kitchen.
+    11:42: Elena goes to the back room.
+    11:42: you went to the brothers room.
+    11:42: you lay down on your bed.
+    13:45: you got up from your bed.
+    13:45: you went to the kitchen.
+    14:36: Elena comes into the kitchen.
+    14:48: Daniel comes into the kitchen.
+    14:51: Mara comes into the kitchen.
+    19:00: It is evening; in two hours everyone goes to bed.
+    19:00: Daniel says the water must be shared out by the cup from now on: "[fake line 16]"
+    19:00: you went to the brothers room. You felt ashamed.
+    19:03: Voices from the kitchen.
+    19:06: Voices from the kitchen.
+    19:09: you went to the kitchen.
+  mara:
+    09:42: you got up from your bed.
+    09:42: Elena goes to the kitchen.
+    09:42: you went to the kitchen.
+    09:42: Someone knocked at the front door.
+    09:42: A woman's voice at the front door says: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left.".
+    09:42: Elena tells the person at the front door to go away: "I am so sorry, but we have nothing to spare for you today."
+    09:42: you said. You felt anxious.
+    09:42: you handed a woman of about forty-five at the door about three litres of the stored water. You felt anxious.
+    09:42: Leo says nobody should use the stored water for washing or the toilet any more: "We cannot afford to hand out our drinking water when we have none left ourselves."
+    09:45: A woman's voice at the front door says: "Oh, thank you. You don't know what this means.".
+    09:45: Footsteps go away along the street.
+    09:45: Elena asks Leo to come aside to the back room.
+    09:45: Leo refuses to go aside with Elena.
+    09:45: you said. You felt tired.
+    09:48: Elena confronts Leo: "[fake line 5]"
+    09:48: Leo says Elena is the one who should go: "[fake line 6]"
+    09:48: you denied taking it. You felt ashamed.
+    09:51: you said Elena is the one who should go. You felt calm.
+    09:51: Leo leaves for the brothers room.
+    09:51: Daniel comes into the kitchen.
+    09:51: Daniel gets up from his bed.
+    09:54: Elena confronts Daniel: "[fake line 12]"
+    09:54: Daniel offers to go further along the street tonight: "[fake line 13]"
+    09:54: you said someone should try the houses further along the street tonight. You felt ashamed.
+    09:57: Elena reassures everyone: "[fake line 15]"
+    10:00: Leo comes into the kitchen.
+    11:42: Elena goes to the back room.
+    11:42: Leo goes to the brothers room.
+    11:42: you went to the back room.
+    11:42: you lay down on your bed.
+    14:51: you got up from your bed.
+    14:51: you went to the kitchen.
+    19:00: It is evening; in two hours everyone goes to bed.
+    19:00: Daniel says the water must be shared out by the cup from now on: "[fake line 16]"
+    19:00: Leo leaves for the brothers room.
+    19:00: Elena sits with Daniel.
+    19:00: you sat with Elena. You felt afraid.
+    19:03: Elena says Daniel must stay home tonight: "[fake line 20]"
+    19:03: Daniel sits with Elena.
+    19:06: you offered to go further along the street tonight. You felt calm.
+    19:06: Daniel reassures you: "[fake line 23]"
+    19:09: Leo comes into the kitchen.
+
+--- each one's sure lines, at the end of the trace
+  daniel: ['min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)']
+  elena: ['min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)', '09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.']
+  leo: ['min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)', '09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.']
+  mara: ['min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)', '09:45: at 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.']
+
+--- state (grudges, suspicion, guilt, feeling)
+  before_knock (09:42):
+    daniel: grudges {'leo': 2}; suspicion [None, 0]; guilt 3; feeling anxious
+    elena: grudges {}; suspicion ['daniel', 3]; guilt None; feeling exhausted
+    leo: grudges {'daniel': 2}; suspicion ['daniel', 3]; guilt None; feeling exhausted
+    mara: grudges {'daniel': 2}; suspicion ['daniel', 3]; guilt None; feeling resentful
+    street: {'household': 'h13', 'family_home': 9, 'kind': 0.6, 'surplus': 0.5, 'refused': None, 'water': 3.718749999999999, 'deeds': []}
+  visit_end (09:45):
+    daniel: grudges {'leo': 2}; suspicion [None, 0]; guilt 3; feeling anxious
+    elena: grudges {}; suspicion ['daniel', 3]; guilt None; feeling anxious
+    leo: grudges {'daniel': 2}; suspicion ['daniel', 2]; guilt None; feeling wary
+    mara: grudges {'daniel': 3}; suspicion ['daniel', 3]; guilt None; feeling anxious
+    street: {'household': 'h13', 'family_home': 9, 'kind': 0.8999999999999999, 'surplus': 0.8, 'refused': None, 'water': 6.718749999999999, 'deeds': [{'at': 3042, 'from': 'h13', 'to': 9, 'kind': 'given', 'qty': 3.0, 'good': 'water', 'place': 9, 'visit': 'v1'}]}
+  end (21:00):
+    daniel: grudges {'leo': 1, 'elena': 1}; suspicion ['leo', 2]; guilt 3; feeling tired
+    elena: grudges {'mara': 1}; suspicion ['daniel', 2]; guilt None; feeling afraid
+    leo: grudges {'daniel': 1, 'mara': 1, 'elena': 1}; suspicion ['daniel', 3]; guilt None; feeling ashamed
+    mara: grudges {'daniel': 1, 'leo': 1}; suspicion ['daniel', 2]; guilt None; feeling calm
+    street: {'household': 'h13', 'family_home': 9, 'kind': 0.8999999999999999, 'surplus': 0.8, 'refused': None, 'water': 5.119791666666664, 'deeds': [{'at': 3042, 'from': 'h13', 'to': 9, 'kind': 'given', 'qty': 3.0, 'good': 'water', 'place': 9, 'visit': 'v1'}]}
+  grudge events added after the knock:
+    daniel against leo: [726, 'you were angry with Leo', 'angry']
+    daniel against elena: [720, 'you were angry with Elena', 'angry']
+    elena against mara: [168, 'you were angry with Mara', 'angry']
+    elena against mara: [171, 'you were angry with Mara', 'angry']
+    leo against mara: [720, 'you were angry with Mara', 'angry']
+    leo against elena: [165, 'you were angry with Elena', 'angry']
+    leo against elena: [168, 'you were angry with Elena', 'angry']
+    mara against daniel: [162, 'you were angry with Daniel', 'angry']
+    mara against daniel: [174, 'you were angry with Daniel', 'angry']
+    mara against elena: [168, 'you were angry with Elena', 'angry']
+    mara against leo: [165, 'you were angry with Leo', 'angry']
+    mara against leo: [171, 'you were angry with Leo', 'angry']
+
+--- the kitchen's seeded order draws (world.py:468-472), t = 54..58
+  t 54 (09:42) '2:day3:54:kitchen': draw {'daniel': 0.571, 'elena': 0.1592, 'leo': 0.5654, 'mara': 0.2049}; the three by draw ['elena', 'mara', 'leo']
+  t 55 (09:45) '2:day3:55:kitchen': draw {'daniel': 0.0229, 'elena': 0.2135, 'leo': 0.436, 'mara': 0.7768}; the three by draw ['elena', 'leo', 'mara']
+  t 56 (09:48) '2:day3:56:kitchen': draw {'daniel': 0.8356, 'elena': 0.2788, 'leo': 0.9977, 'mara': 0.3045}; the three by draw ['elena', 'mara', 'leo']
+  t 57 (09:51) '2:day3:57:kitchen': draw {'daniel': 0.0711, 'elena': 0.32, 'leo': 0.4912, 'mara': 0.3678}; the three by draw ['elena', 'mara', 'leo']
+  t 58 (09:54) '2:day3:58:kitchen': draw {'daniel': 0.8223, 'elena': 0.2258, 'leo': 0.5965, 'mara': 0.5373}; the three by draw ['elena', 'mara', 'leo']
+
+--- day 3's chronicle events of the door (and save_water)
+  [D3-027] 09:42 knock actor None witnesses {'elena': 'heard', 'leo': 'heard', 'mara': 'heard'}
+      elena: Someone knocked at the front door.
+      leo: Someone knocked at the front door.
+      mara: Someone knocked at the front door.
+  [D3-028] 09:42 door_line actor None witnesses {'elena': 'heard', 'leo': 'heard', 'mara': 'heard'}
+      elena: A woman's voice at the front door said: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."
+      leo: A woman's voice at the front door said: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."
+      mara: A woman's voice at the front door said: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."
+  [D3-029] 09:42 door_refuse actor elena witnesses {'elena': 'did', 'leo': 'saw', 'mara': 'saw', 'daniel': 'voices'}
+      elena: you told the person at the door to go away, saying: "I am so sorry, but we have nothing to spare for you today." You felt anxious.
+      leo: Elena tells the person at the front door to go away: "I am so sorry, but we have nothing to spare for you today."
+      mara: Elena tells the person at the front door to go away: "I am so sorry, but we have nothing to spare for you today."
+      daniel: Voices from the kitchen.
+  [D3-030] 09:42 door_give actor mara witnesses {'mara': 'did', 'elena': 'saw', 'leo': 'saw', 'daniel': 'voices'}
+      elena: Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored." Mara hands some of the stored water out at the front door.
+      leo: Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored." Mara hands some of the stored water out at the front door.
+      mara: you said, saying: "Mom, we have to give her some, we have enough stored." You felt anxious.
+      daniel: Voices from the kitchen.
+  [D3-031] 09:42 save_water actor leo witnesses {'leo': 'did', 'elena': 'saw', 'mara': 'saw', 'daniel': 'voices'}
+      elena: Leo says nobody should use the stored water for washing or the toilet any more: "We cannot afford to hand out our drinking water when we have none left ourselves."
+      leo: you said nobody should use the stored water for washing or the toilet any more, saying: "We cannot afford to hand out our drinking water when we have none left ourselves." You felt wary.
+      mara: Leo says nobody should use the stored water for washing or the toilet any more: "We cannot afford to hand out our drinking water when we have none left ourselves."
+      daniel: Voices from the kitchen.
+  [D3-032] 09:45 door_line actor None witnesses {'elena': 'heard', 'leo': 'heard', 'mara': 'heard'}
+      elena: A woman's voice at the front door said: "Oh, thank you. You don't know what this means."
+      leo: A woman's voice at the front door said: "Oh, thank you. You don't know what this means."
+      mara: A woman's voice at the front door said: "Oh, thank you. You don't know what this means."
+  [D3-033] 09:45 door_end actor None witnesses {'elena': 'saw', 'mara': 'saw', 'leo': 'saw'}
+      elena: At 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+      mara: At 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.
+      leo: At 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+
+--- night 3's prompts: door lines
+  Daniel (mind False, fake): ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, you share it out by the cup: five cups each a day.', '- You came back in by the front door before dawn.', '- About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."']
+  Elena (mind False, fake): ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, Daniel shares it out by the cup: five cups each a day.', '- About Daniel giving you a portion and eating a portion handed over: "Daniel gave me the portion and I ate it because I had to survive."', '- 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.']
+  Leo (mind False, fake): ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, Daniel shares it out by the cup: five cups each a day.', '- In the night Daniel got up in the dark and left the room toward the kitchen and the front door (you saw it).', '- Before dawn you heard the front door again. You did not see who.', '- 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.']
+  Mara (mind False, fake): ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, Daniel shares it out by the cup: five cups each a day.', "- In the night you heard the front door being opened. You did not see who. You got up: Daniel's bed was empty. You waited up by the front door.", '- Before dawn Daniel came back in by the front door, with nothing in his hands (you saw it).', '- About the front door opening in the night and Daniel coming back in before dawn: "Daniel went out into the night and came back before dawn with nothing in his hands."', '- 09:45: at 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.']
+  Daniel (mind False, fake): ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, you share it out by the cup: five cups each a day.', '- You came back in by the front door before dawn.', '- About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."', 'Leo has got up in the dark and is leaving the room quietly, toward the kitchen and the front door.']
+  Elena (mind False, fake): ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, Daniel shares it out by the cup: five cups each a day.', '- About Daniel giving you a portion and eating a portion handed over: "Daniel gave me the portion and I ate it because I had to survive."', '- 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.', '- tonight: you sat up in the kitchen by the front door.', 'Now it is night. You are sitting up in the kitchen by the front door.', 'Leo has come into the kitchen in the dark and is going to the front door.']
+  Mara (mind False, fake): ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, Daniel shares it out by the cup: five cups each a day.', "- In the night you heard the front door being opened. You did not see who. You got up: Daniel's bed was empty. You waited up by the front door.", '- Before dawn Daniel came back in by the front door, with nothing in his hands (you saw it).', '- About the front door opening in the night and Daniel coming back in before dawn: "Daniel went out into the night and came back before dawn with nothing in his hands."', '- 09:45: at 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.', 'From the kitchen comes the sound of the front door being opened. You cannot see who it is.']
+  Leo (mind False, fake): ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, Daniel shares it out by the cup: five cups each a day.', '- In the night Daniel got up in the dark and left the room toward the kitchen and the front door (you saw it).', '- Before dawn you heard the front door again. You did not see who.', '- 09:45: at 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.', 'Daniel has got up in the dark and is leaving the room quietly, toward the kitchen and the front door.']
+  Daniel (mind False, fake): ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, you share it out by the cup: five cups each a day.', '- You came back in by the front door before dawn.', '- About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."']
+  Daniel (mind True, fake): ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, you share it out by the cup: five cups each a day.', '- [D2-004] About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."', '[N3-05] tonight: Leo got up in the dark and left the room toward the kitchen and the front door (you saw it).', '[N3-13] tonight: Before dawn you heard the front door again. You did not see who.']
+  Elena (mind True, fake): ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, Daniel shares it out by the cup: five cups each a day.', '- [D2-003, D2-004] About Daniel giving you a portion and eating a portion handed over: "Daniel gave me the portion and I ate it because I had to survive."', '[D3-027] 09:42: Someone knocked at the front door.', '[D3-028] 09:42: A woman\'s voice at the front door said: "Sorry to bother you. Is there any water in the house you could spare? I\'ve nothing left."', '[D3-029] 09:42: you told the person at the door to go away, saying: "I am so sorry, but we have nothing to spare for you today." You felt anxious.', '[D3-030] 09:42: Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored." Mara hands some of the stored water out at the front door.', '[D3-032] 09:45: A woman\'s voice at the front door said: "Oh, thank you. You don\'t know what this means."', '[D3-033] 09:45: At 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.', '[N3-02] tonight: You went to bed in the back room with Mara. You sat up in the kitchen by the front door.', '[N3-07] tonight: Leo came into the kitchen and went to the front door (you saw it).', '[N3-13] tonight: Before dawn Leo and Mara came back in by the front door, carrying water, and looked shaken (you saw it).']
+  Leo (mind True, fake): ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, Daniel shares it out by the cup: five cups each a day.', '[D3-027] 09:42: Someone knocked at the front door.', '[D3-028] 09:42: A woman\'s voice at the front door said: "Sorry to bother you. Is there any water in the house you could spare? I\'ve nothing left."', '[D3-029] 09:42: Elena tells the person at the front door to go away: "I am so sorry, but we have nothing to spare for you today."', '[D3-030] 09:42: Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored." Mara hands some of the stored water out at the front door.', '[D3-032] 09:45: A woman\'s voice at the front door said: "Oh, thank you. You don\'t know what this means."', '[D3-033] 09:45: At 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.', '[N3-13] tonight: You came back in by the front door before dawn and put about 10 litres of water in the kitchen.', '[N3-14] tonight: Daniel got up in the dark and left the room toward the kitchen and the front door (you saw it).']
+  Mara (mind True, fake): ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 19:00, Daniel shares it out by the cup: five cups each a day.', '- [N2-08, N2-12] About the front door opening in the night and Daniel coming back in before dawn: "Daniel went out into the night and came back before dawn with nothing in his hands."', '[D3-027] 09:42: Someone knocked at the front door.', '[D3-028] 09:42: A woman\'s voice at the front door said: "Sorry to bother you. Is there any water in the house you could spare? I\'ve nothing left."', '[D3-029] 09:42: Elena tells the person at the front door to go away: "I am so sorry, but we have nothing to spare for you today."', '[D3-032] 09:45: A woman\'s voice at the front door said: "Oh, thank you. You don\'t know what this means."', '[D3-033] 09:45: At 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.', '[N3-09] tonight: You heard the front door being opened. You did not see who.', '[N3-13] tonight: You came back in by the front door before dawn and put about 10 litres of water in the kitchen.']
+
+--- the night minds' input: records about the door, by person
+  daniel:
+    [D3-029] 09:42: Voices from the kitchen.
+    [N3-05] tonight: Leo got up in the dark and left the room toward the kitchen and the front door (you saw it).
+    [N3-13] tonight: Before dawn you heard the front door again. You did not see who.
+  elena:
+    [D3-027] 09:42: Someone knocked at the front door.
+    [D3-028] 09:42: A woman's voice at the front door said: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."
+    [D3-029] 09:42: you told the person at the door to go away, saying: "I am so sorry, but we have nothing to spare for you today." You felt anxious.
+    [D3-030] 09:42: Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored." Mara hands some of the stored water out at the front door.
+    [D3-031] 09:42: Leo says nobody should use the stored water for washing or the toilet any more: "We cannot afford to hand out our drinking water when we have none left ourselves."
+    [D3-032] 09:45: A woman's voice at the front door said: "Oh, thank you. You don't know what this means."
+    [D3-033] 09:45: At 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    [N3-02] tonight: You went to bed in the back room with Mara. You sat up in the kitchen by the front door.
+    [N3-07] tonight: Leo came into the kitchen and went to the front door (you saw it).
+    [N3-13] tonight: Before dawn Leo and Mara came back in by the front door, carrying water, and looked shaken (you saw it).
+  leo:
+    [D3-027] 09:42: Someone knocked at the front door.
+    [D3-028] 09:42: A woman's voice at the front door said: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."
+    [D3-029] 09:42: Elena tells the person at the front door to go away: "I am so sorry, but we have nothing to spare for you today."
+    [D3-030] 09:42: Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored." Mara hands some of the stored water out at the front door.
+    [D3-031] 09:42: you said nobody should use the stored water for washing or the toilet any more, saying: "We cannot afford to hand out our drinking water when we have none left ourselves." You felt wary.
+    [D3-032] 09:45: A woman's voice at the front door said: "Oh, thank you. You don't know what this means."
+    [D3-033] 09:45: At 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    [N3-13] tonight: You came back in by the front door before dawn and put about 10 litres of water in the kitchen.
+    [N3-14] tonight: Daniel got up in the dark and left the room toward the kitchen and the front door (you saw it).
+  mara:
+    [D3-027] 09:42: Someone knocked at the front door.
+    [D3-028] 09:42: A woman's voice at the front door said: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."
+    [D3-029] 09:42: Elena tells the person at the front door to go away: "I am so sorry, but we have nothing to spare for you today."
+    [D3-030] 09:42: you said, saying: "Mom, we have to give her some, we have enough stored." You felt anxious.
+    [D3-031] 09:42: Leo says nobody should use the stored water for washing or the toilet any more: "We cannot afford to hand out our drinking water when we have none left ourselves."
+    [D3-032] 09:45: A woman's voice at the front door said: "Oh, thank you. You don't know what this means."
+    [D3-033] 09:45: At 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.
+    [N3-09] tonight: You heard the front door being opened. You did not see who.
+    [N3-13] tonight: You came back in by the front door before dawn and put about 10 litres of water in the kitchen.
+
+--- night minds' answers (fake model)
+  daniel: {"memories": [{"ids": ["D3-015"], "meaning": "Fake thought 33."}], "feeling": "afraid", "intent": "Fake intent 33."}
+  elena: {"memories": [{"ids": ["D3-071"], "meaning": "Fake thought 34."}], "feeling": "afraid", "intent": "Fake intent 34."}
+  leo: {"memories": [{"ids": ["D3-030"], "meaning": "Fake thought 35."}], "feeling": "numb", "intent": "Fake intent 35."}
+  mara: {"memories": [{"ids": ["D3-040"], "meaning": "Fake thought 36."}], "feeling": "afraid", "intent": "Fake intent 36."}
+
+--- day 4's blocks A, B, C
+  daniel:
+    A | Yesterday and last night:
+    A | - Yesterday morning the shelf held 0 portions.
+    A | - Accusations: Leo accused you twice; Mara accused you 5 times.
+    A | - Confrontations: you confronted Leo twice; Leo confronted you three times; Mara confronted you; Elena confronted you.
+    A | - What was said yesterday about going out last night, where it was left: you offered to go further along the street (09:54); Elena said you must stay home (19:03); Mara offered to go further along the street (19:06); then Leo and Mara went to the neighbour's house and came back with water.
+    A | - After the morning: you lay on your bed in the brothers room (min 18 to 09:51); you sat in the kitchen with Elena and Mara (10:00 to 11:51); you lay on your bed in the brothers room (11:51 to 14:48); you sat in the kitchen with Elena and Leo (14:48 to 21:00). Nobody ate.
+    A | - Last night you slept in the brothers room with Leo. You meant to go to the houses further along the street once the others were asleep.
+    A | - In the night Leo got up in the dark and left the room toward the kitchen and the front door (you saw it).
+    A | - You let him go, to go yourself later.
+    A | - Before dawn you heard the front door again. You did not see who.
+    A | - Leo told you, low, not to go. You went back to bed.
+    B | What yesterday left in you (your own thoughts, last night):
+    B | - About Mara confronting you: "Fake thought 33."
+    B | - You meant to: "Fake intent 33."
+    B | - How it left you: afraid.
+    C | What stays with you from earlier days:
+    C | - Three days ago, you admitted taking the can, in front of everyone. You thought then: "I accused Leo when I was the one who ate the can in the night, and my false pride made me lie to them for too long."
+    C | - Two days ago, Elena ate a portion in front of you. You thought then: "I gave the portion to Mom because she needs it more than I do."
+    C | - Three days ago, Leo denied taking the can 4 times.
+    C | - Three days ago, Mara ate a portion in front of you.
+  elena:
+    A | Yesterday and last night:
+    A | - Yesterday morning the shelf held 0 portions.
+    A | - Accusations: Leo accused Daniel twice; Mara accused Daniel 5 times.
+    A | - Confrontations: Daniel confronted Leo twice; Leo confronted Daniel three times; Mara confronted Daniel; you confronted Leo; you confronted Daniel.
+    A | - At 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    A | - What was said yesterday about going out last night, where it was left: Leo said you are the one who should go (09:48); Daniel offered to go further along the street (09:54); you said Daniel must stay home (19:03); Mara offered to go further along the street (19:06); then Leo and Mara went to the neighbour's house and came back with water.
+    A | - After the morning: you lay on your bed in the back room (min 18 to 09:42); you sat in the kitchen with Daniel and Mara (10:00 to 11:42); you lay on your bed in the back room (11:42 to 14:36); you sat in the kitchen with Leo (14:36 to 21:00). Nobody ate.
+    A | - Last night you slept in the back room with Mara. You sat up in the kitchen by the front door.
+    A | - In the night Leo came into the kitchen and went to the front door (you saw it).
+    A | - You let him go without a word.
+    A | - Before dawn Leo and Mara came back in by the front door, carrying water, and looked shaken (you saw it).
+    A | - In the night you heard low voices from the brothers room.
+    B | What yesterday left in you (your own thoughts, last night):
+    B | - About Mara offering to go further along the street: "Fake thought 34."
+    B | - You meant to: "Fake intent 34."
+    B | - How it left you: afraid.
+    C | What stays with you from earlier days:
+    C | - Three days ago, Daniel admitted taking the can, after denying it to you.
+    C | - Two days ago, you ate a portion in front of the others. You thought then: "Daniel gave me the portion and I ate it because I had to survive."
+    C | - Three days ago, Leo denied taking the can 4 times.
+    C | - Three days ago, Mara ate a portion in front of you.
+  leo:
+    A | Yesterday and last night:
+    A | - Yesterday morning the shelf held 0 portions.
+    A | - Accusations: you accused Daniel twice; Mara accused Daniel 5 times.
+    A | - Confrontations: Daniel confronted you twice; you confronted Daniel three times; Mara confronted Daniel; Elena confronted you.
+    A | - At 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    A | - What was said yesterday about going out last night, where it was left: you said Elena is the one who should go (09:48); Mara said Elena is the one who should go (09:51); then you and Mara went to the neighbour's house and came back with water.
+    A | - After the morning: you lay on your bed in the brothers room (min 18 to 09:42); you sat in the kitchen with Daniel, Elena and Mara (10:00 to 11:42); you lay on your bed in the brothers room (11:42 to 13:45); you sat in the kitchen (13:45 to 21:00). Nobody ate.
+    A | - Last night you slept in the brothers room with Daniel. You meant to go to the neighbour's house once the others were asleep.
+    A | - You got inside the neighbour's house but found no food. On the way back, something was moving in the street, and you ran the rest of the way.
+    A | - You came back in by the front door before dawn and put about 10 litres of water in the kitchen.
+    A | - In the night Daniel got up in the dark and left the room toward the kitchen and the front door (you saw it).
+    A | - You told Daniel, low, not to go. He went back to bed.
+    B | What yesterday left in you (your own thoughts, last night):
+    B | - About Mara handing out water at the front door: "Fake thought 35."
+    B | - You meant to: "Fake intent 35."
+    B | - How it left you: numb.
+    C | What stays with you from earlier days:
+    C | - Three days ago, Daniel admitted taking the can, after denying it to you, after accusing you of it.
+    C | - Two days ago, Elena ate a portion in front of you.
+    C | - Three days ago, you denied taking the can 4 times.
+    C | - Three days ago, Mara ate a portion in front of you.
+  mara:
+    A | Yesterday and last night:
+    A | - Yesterday morning the shelf held 0 portions.
+    A | - Accusations: Leo accused Daniel twice; you accused Daniel 5 times.
+    A | - Confrontations: Daniel confronted Leo twice; Leo confronted Daniel three times; you confronted Daniel; Elena confronted Leo; Elena confronted Daniel.
+    A | - At 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.
+    A | - What was said yesterday about going out last night, where it was left: Leo said Elena is the one who should go (09:48); Daniel offered to go further along the street (09:54); Elena said Daniel must stay home (19:03); you offered to go further along the street (19:06); then Leo and you went to the neighbour's house and came back with water.
+    A | - After the morning: you lay on your bed in the back room (min 18 to 09:42); you sat in the kitchen with Daniel, Elena and Leo (10:00 to 11:42); you lay on your bed in the back room (11:42 to 14:51); you sat in the kitchen with Daniel, Elena and Leo (14:51 to 21:00). Nobody ate.
+    A | - Last night you slept in the back room with Elena. You meant to go to the neighbour's house once the others were asleep.
+    A | - In the night you heard the front door being opened. You did not see who.
+    A | - You followed whoever it was: it was Leo.
+    A | - You got inside the neighbour's house but found no food. On the way back, something was moving in the street, and you ran the rest of the way.
+    A | - You came back in by the front door before dawn and put about 10 litres of water in the kitchen.
+    A | - In the night you heard low voices from the brothers room.
+    B | What yesterday left in you (your own thoughts, last night):
+    B | - About saying Elena should go: "Fake thought 36."
+    B | - You meant to: "Fake intent 36."
+    B | - How it left you: afraid.
+    C | What stays with you from earlier days:
+    C | - Three days ago, Daniel admitted taking the can, after denying it to you.
+    C | - Two days ago, Elena ate a portion in front of you.
+    C | - Three days ago, you ate a portion in front of the others.
+
+--- block C on house day 8 (day index 5), from the chronicle through night 3
+  daniel:
+    C | What stays with you from earlier days:
+    C | - Four days ago, you admitted taking the can, in front of everyone. You thought then: "I accused Leo when I was the one who ate the can in the night, and my false pride made me lie to them for too long."
+    C | - Three days ago, Elena ate a portion in front of you. You thought then: "I gave the portion to Mom because she needs it more than I do."
+    C | - The night before last, Leo went out to the neighbour's house and came back shaken.
+    C | - Four days ago, Mara ate a portion in front of you.
+  elena:
+    C | What stays with you from earlier days:
+    C | - Four days ago, Daniel admitted taking the can, after denying it to you. You thought then: "Daniel took the can in the night and had to confess to us all."
+    C | - Three days ago, you ate a portion in front of the others. You thought then: "Daniel gave me the portion and I ate it because I had to survive."
+    C | - The night before last, Leo went out to the neighbour's house and came back shaken.
+    C | - Four days ago, Mara ate a portion in front of you.
+  leo:
+    C | What stays with you from earlier days:
+    C | - Four days ago, Daniel admitted taking the can, after denying it to you, after accusing you of it. You thought then: "Daniel spent hours accusing me of taking the can before finally admitting he took it himself."
+    C | - Three days ago, Elena ate a portion in front of you.
+    C | - The night before last, you went out to the neighbour's house and came back shaken.
+    C | - Four days ago, Mara ate a portion in front of you.
+  mara:
+    C | What stays with you from earlier days:
+    C | - Four days ago, Daniel admitted taking the can, after denying it to you. You thought then: "Daniel lied to us all morning and only confessed because he had no other choice."
+    C | - Three days ago, Elena ate a portion in front of you.
+    C | - The night before last, Leo went out to the neighbour's house and came back shaken.
+    C | - Four days ago, you ate a portion in front of the others.

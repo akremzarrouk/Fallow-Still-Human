@@ -404,6 +404,9 @@ where a mistake would matter, whether the family hears a knock, is tested direct
    seed are fixed by the seed alone in W2a (nothing the family does moves them), so they can be **printed before the run**, as the weather
    was (`reports/days_v22.md:308`).
 2. **The minute `at`.** Only on a quiet day (day 3 on). Conditions: fewer than 52 asks spent, no visit yet today, someone awake or woken.
+   **Amended (`reports/door_memory_impl.md`, from `reports/door_after_facts.md` §1.2):** "fewer than 52 asks spent" is replaced: the day must be able to give the knock 6 asks without touching what
+   the evening (Q5) is still owed, `DAY_MAX` − asks spent − 8 (until Q5 has been checked) ≥ 6. So at most 42 spent
+   before 19:00, 50 after (`Quiet.knock_short`). With 52, a knock could take the evening's 8.
    Otherwise the visit is **deferred** to the next part (logged; W2a-1 counts deferrals).
 3. **The knock** is a stimulus of 70 dB at the front door. For each person: awake and not in the bathroom, `perceive` (§3.3); resting, a wake draw
    (§3.1). Whoever perceives it gets `p.door = {"state": "knocking"}`, which adds the `Now` line (§6.3) and the door options for anyone
@@ -589,11 +592,13 @@ quiet, a family that stays in is afraid, not prudent, and the family can find th
   nobody. 18 is 6 turns of 3 people, so a visitor who stays until they give up is answerable at every turn. A visit
   that is refused or given in the first turn still costs only that turn's asks (the fake probe:
   `runs/door_heard/probe_check.stdout.txt`, 3 to 17 door asks a scene).
-- **Amended (`reports/door_heard_impl.md`, from `reports/probe_door.md`):** **what 18 does to the day cap, not changed here.** `DAY_MAX` (56) and `KNOCK_UNDER` (52) are as before. A knock
+- **Amended (`reports/door_heard_impl.md`, from `reports/probe_door.md`):** **what 18 does to the day cap, not changed here.** `DAY_MAX` (56) and `KNOCK_UNDER` (52) are as before. (**Amended (`reports/door_memory_impl.md`, from `reports/door_after_facts.md` §1.2):**
+  `KNOCK_UNDER` is replaced by the rule of §4.2.2; the next sentence describes the rule before it.) A knock
   with 51 asks spent still begins, and the day cap then stops it after 5 asks; a door scene of 18 after 40 asks leaves
   Q5's evening none of its 8. Whether to raise the day cap, or defer a knock that cannot have its 18, is for the user.
 - **Why Q7 is not starved.** A knock is only between 07:30 and 17:30; Q5 starts at 19:00 (`quiet.py:48`), so Q5 comes after it. Where Q6 and Q7 meet, whichever begins
   first has its asks first. A visit that would begin with fewer than 52 asks spent is deferred, not run with no one to ask (§4.2.2).
+  (**Amended (`reports/door_memory_impl.md`, from `reports/door_after_facts.md` §1.2):** a visit is deferred unless the day can give it 6 asks beyond the evening's 8, §4.2.2.)
 - **v22's busiest day** (day 9): morning 24, Q2 8, Q6 8 (= 40 by 14:00), a knock at 14:00 adds ≤ 6 → 46, Q5 adds 8 → 54 ≤ 56. No starvation (B3, B12).
   **Amended (`reports/door_heard_impl.md`, from `reports/probe_door.md`):** with 18, a knock at 14:00 can add up to 16 before the day cap (→ 56), and then Q5 has none. Starvation is now
   possible on such a day.
@@ -602,13 +607,18 @@ quiet, a family that stays in is afraid, not prudent, and the family can find th
 
 | | v22 | W2a, expected | W2a, bound |
 |---|---|---|---|
-| Day-scene asks, days 3–10 | 342 | 342 + about 4 scenes × 4.5 = 360 | 342 + 8 × 6 = 390 (amended: 342 + 8 × 18 = 486) |
+| Day-scene asks, days 3–10 | 342 | 342 + about 4 scenes × 4.5 = 360 | 342 + 8 × 6 = 390 (amended: 342 + 8 × 18 = 486; amended again: 8 × 56 = 448, the day cap) |
 | Night asks, nights 3–9 | 32 | 32 (nights untouched) | 32 |
 | Night-mind asks, minds 3–9 | 28 | 28 | 28 |
 | **Live total** | **402** | **about 420** | **450** |
 
 **Amended (`reports/door_heard_impl.md`, from `reports/probe_door.md`):** the bound is now 486 + 32 + 28 = 546, over the run cap of 450, which is unchanged; the run would stop at 450 and
-resume from its cache. The expected total is not re-estimated here: it needs a scene's cost under the new rule, which
+resume from its cache.
+**Amended (`reports/door_memory_impl.md`, from `reports/door_after_facts.md` §1.2):** **recomputed: 448 + 32 + 28 = 508, still over the run cap of 450.** No day scene asks more than `DAY_MAX`
+(56), reserved or not (`Quiet.spent`), so days 3–10 ask at most 8 × 56 = 448, whatever the door does. 546 added the
+door's 18 to every v22 day without that cap, and so overstated the bound. The two changes of `door_memory_impl.md`
+lower what a door scene costs in a run (its Q7 stretch ends 2 turns after the visit; a knock needs 6 asks beyond the
+evening's 8), but not this bound, which the day cap sets. The run cap is not changed here. The expected total is not re-estimated here: it needs a scene's cost under the new rule, which
 only a run can give. The bound of 450 holds if the non-door asks do not exceed v22's. It is **enforced** by the run's own cap, set to 450, not 470 (`runs/v22/run_capped.py`); the run
 stops cleanly there and resumes from its cache. The busiest calendar day in v22 was 56 asks (day + night + mind, days 8 and 9; B11), so the day cap of 56 and the run cap
 are separate limits. A day scene stays far under the per-scene call cap of `config.json` (`max_calls_per_morning` 150).
@@ -699,6 +709,7 @@ households, trips among people, a model-written stranger, a standing line, a cha
 4. T4 days 1–2, nights 1–2 and day 3's first ask replay byte for byte from `cache/v16` (the premiss script, `reports/days_v22.md:316-318`); frozen v9–v14 replays are identical (18 of 18).
 5. T5 for any prompt, `block` is the same with and without a door state; the door lines total ≤ 140 tokens.
 6. T6 a knock at 07:30–17:30 only; ≤ 1 a day; deferred when 52 asks are spent; never in the bathroom; a resting person wakes by the draw.
+   (Amended: deferred unless the day can give it 6 asks beyond the evening's 8; `DoorAfterTest.test_b_…`.)
 7. T7 the door options exist only in a scene, in the kitchen; `door_give` only with water to give; `door_open` only when shut.
 8. T8 the Q7 stretch ≤ 6 asks, and the day ≤ 56. (Amended: a visit ≤ 18 door asks, and the day ≤ 56;
    `test_t8_a_visit_asks_at_most_18_at_the_door_and_a_day_at_most_56`.)

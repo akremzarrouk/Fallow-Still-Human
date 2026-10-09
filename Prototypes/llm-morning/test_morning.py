@@ -7247,12 +7247,13 @@ class KnockTest(unittest.TestCase):
         self.assertEqual([e["why"] for e in later], ["a knock has come today already"])
         self.assertGreaterEqual(v2["at"], self.at(4, 30))
         self.assertEqual(v2["deferrals"][0]["why"], "a knock has come today already")
-        # Deferred when 52 asks are spent.
+        # Deferred when 52 asks are spent: the day cannot give it 6 beyond the evening's 8 (reports/door_memory_impl.md;
+        # W2a deferred it from 52 on, test_morning.DoorAfterTest has the rule's edges).
         d, q, (v,) = self.door_day(None, [(120, "ask_food")])
         q.asks = 52
         q.tick(120)
         self.assertFalse(q.hear_knock(120, played=False))
-        self.assertEqual(v["deferrals"][-1]["why"], "52 asks are spent")
+        self.assertEqual(v["deferrals"][-1]["why"], "the day cannot give a knock 6 asks beyond the evening's 8")
         # Never into the bathroom; a resting person wakes by the draw; the kitchen hears the words.
         d, q, (v,) = self.door_day(None, [(120, "ask_food")])
         m = d.day3
@@ -7781,6 +7782,240 @@ class DoorHeardTest(unittest.TestCase):
         decided = [x for x in m.log if 120 <= x["minute"] < sc["end"] for dd in x["decisions"] if dd["mode"] == "model"]
         self.assertEqual(len(decided), 18)
         self.assertEqual(sc["door_asks"], 18)
+
+
+class SayingPolicy(PolicyFake):
+    """PolicyFake whose every answer has words, as the live answers at the door had (runs/probe_door2/scene1.json:
+    Mara's door_give said "Mom, we have to give her some, we have enough stored.")."""
+
+    def generate(self, system, prompt, schema=None):
+        text = super().generate(system, prompt, schema)
+        if schema is not None:
+            return text
+        got = json.loads(text)
+        if got["option"] != "silent" and not got["say"]:
+            got["say"] = f"Words of {asked_where(prompt)[0]} at {now_minute(prompt)}."
+        return json.dumps(got)
+
+
+class DoorMemoryTest(unittest.TestCase):
+    """reports/door_memory_impl.md (from reports/door_after_facts.md §3 and §4): when one sends the visitor away and
+    another gives anyway, each one's summary of the visit keeps both acts, in the order done, each only if they
+    perceived it; the actor's own line of an act at the door says what they did; block C has a key for a refusal.
+    Day-3 tests start from v16 seed 2 through night 2, replayed from cache/v16 with no API call."""
+    MODEL = QuietDayTest.MODEL
+    v16 = QuietDayTest.v16
+    setUp, tearDown, need, at = KnockTest.setUp, KnockTest.tearDown, KnockTest.need, KnockTest.at
+    door_day, scene, visit_turns = KnockTest.door_day, DoorHeardTest.scene, DoorHeardTest.visit_turns
+    handmade = DaysTest.handmade
+    # probe_door2's scene 1: h13 at the door at 09:42, Daniel in the brothers' room (reports/door_after_facts.md §2).
+    ROOMS = (("elena", "kitchen"), ("mara", "kitchen"), ("leo", "kitchen"), ("daniel", "brothers_room"))
+    KNOCK = 162
+    HEAD = "At 09:42 someone knocked at the front door: "
+
+    def scene1(self, acts):
+        """Scene 1 with `acts` {who: option} at the knock's minute; returns (morning, quiet, the ended visit)."""
+        policy = lambda who, minute, opts: acts.get(who) if minute == self.KNOCK else None
+        d, q, v = self.scene(SayingPolicy(policy), household="h13", minute=self.KNOCK, rooms=self.ROOMS)
+        self.visit_turns(q, self.KNOCK, turns=4)
+        self.assertIsNone(q.door, "the visit has not ended")
+        sc = q.door_scenes[-1]
+        self.assertEqual(sc["voice"], "A woman's voice", "the premise: h13's envoy is a woman")
+        done = [[a[1], a[2]] for a in sc["acts"] if a[0] == self.KNOCK]
+        want = [[w, o] for w, o in acts.items() if o.startswith("door_")]
+        self.assertEqual(sorted(done), sorted(want), "the premise: the acts at the knock's minute")
+        return d.day3, q, sc
+
+    # ---------- (a) a refusal and a give anyway: each summary keeps both ----------
+    def test_a_a_give_over_a_refusal_is_in_each_summary_with_the_refusal_in_the_order_done(self):
+        m, q, sc = self.scene1({"elena": "door_refuse", "mara": "door_give", "leo": "save_water"})
+        self.assertEqual([a[1] for a in sc["acts"]], ["elena", "mara"], "the premise: Elena acted first (§5)")
+        tail = "to go away, and {g} her about three litres of the stored water anyway."
+        self.assertEqual(sc["summary"]["elena"], self.HEAD + "you told a woman, who asked for water, "
+                         + tail.format(g="Mara handed"))
+        self.assertEqual(sc["summary"]["leo"], self.HEAD + "Elena told a woman, who asked for water, "
+                         + tail.format(g="Mara handed"))
+        self.assertEqual(sc["summary"]["mara"], self.HEAD + "Elena told a woman, who asked for water, "
+                         + tail.format(g="you handed"))
+        # Daniel, awake in the brothers' room here, heard only knocking: neither act is in his line. (In scene 1 he
+        # did not hear the knock and has no line: runs/door_after/trace.py full 1.)
+        self.assertEqual(sc["summary"]["daniel"], "At 09:42 you heard knocking at the front of the house.")
+        # The sure line is the summary's, and day 4's block A holds it (night.py carry_in_later).
+        self.assertIn("09:45: at 09:42 someone knocked at the front door: you told a woman", " ".join(
+            m.people["elena"].sure))
+
+    def test_a2_the_give_first_then_the_refusal_and_each_act_only_if_perceived(self):
+        # Called directly, in this order: Mara gives, then Elena sends the person away; Leo is in the back room for
+        # both, so he perceived neither and keeps the outcome's line.
+        d, q, v = self.scene(None, household="h13", minute=self.KNOCK,
+                             rooms=(("elena", "kitchen"), ("mara", "kitchen"), ("leo", "kitchen"),
+                                    ("daniel", "brothers_room")))
+        m = d.day3
+        self.assertTrue(q.hear_knock(self.KNOCK, played=False))
+        m.people["leo"].room = "back_room"
+        q.door_act(m.people["mara"], "door_give", self.KNOCK, "Here.")
+        q.door_act(m.people["elena"], "door_refuse", self.KNOCK, "Go.")
+        q.door_end(self.KNOCK + 3)
+        sc = q.door_scenes[-1]
+        self.assertEqual(sc["summary"]["elena"], self.HEAD + "Mara handed a woman, who asked for water, about three "
+                         "litres of the stored water, and then you told her to go away.")
+        self.assertEqual(sc["summary"]["mara"], self.HEAD + "you handed a woman, who asked for water, about three "
+                         "litres of the stored water, and then Elena told her to go away.")
+        self.assertEqual(sc["summary"]["leo"], self.HEAD + "Mara handed a woman, who asked for water, about three "
+                         "litres of the stored water.")
+
+    def test_a3_whoever_perceived_only_the_refusal_has_only_the_refusal(self):
+        # Mara gives while Leo is in the back room; Leo comes back and hears Elena send the person away.
+        d, q, v = self.scene(None, household="h13", minute=self.KNOCK, rooms=self.ROOMS)
+        m = d.day3
+        self.assertTrue(q.hear_knock(self.KNOCK, played=False))
+        m.people["leo"].room = "back_room"
+        q.door_act(m.people["mara"], "door_give", self.KNOCK, "Here.")
+        m.people["leo"].room = "kitchen"
+        q.door_act(m.people["elena"], "door_refuse", self.KNOCK, "Go.")
+        q.door_end(self.KNOCK + 3)
+        sc = q.door_scenes[-1]
+        self.assertEqual(sc["summary"]["leo"], self.HEAD + "Elena told a woman, who asked for water, to go away.")
+
+    # ---------- (b) a give alone and a refusal alone keep their wording ----------
+    def test_b_a_give_alone_and_a_refusal_alone_keep_their_summaries(self):
+        m, q, sc = self.scene1({"mara": "door_give", "leo": "save_water"})
+        gave = "a woman, who asked for water, about three litres of the stored water."
+        self.assertEqual(sc["summary"]["elena"], self.HEAD + "Mara handed " + gave)
+        self.assertEqual(sc["summary"]["leo"], self.HEAD + "Mara handed " + gave)
+        self.assertEqual(sc["summary"]["mara"], self.HEAD + "you handed " + gave)
+        m, q, sc = self.scene1({"elena": "door_refuse", "leo": "save_water"})
+        self.assertEqual(sc["summary"]["elena"], self.HEAD + "you told a woman, who asked for water, to go away.")
+        self.assertEqual(sc["summary"]["leo"], self.HEAD + "Elena told a woman, who asked for water, to go away.")
+        self.assertEqual(sc["summary"]["mara"], self.HEAD + "Elena told a woman, who asked for water, to go away.")
+
+    # ---------- (c) the actor's own line of an act at the door ----------
+    def test_c_maras_own_line_and_her_chronicle_view_of_her_give_say_she_handed_water_out(self):
+        m, q, sc = self.scene1({"elena": "door_refuse", "mara": "door_give", "leo": "save_water"})
+        words = next(a[3] for a in sc["acts"] if a[2] == "door_give")
+        self.assertTrue(words, "the premise: Mara spoke as she gave")
+        mine = [x for mm, x in m.people["mara"].memory if mm == self.KNOCK]
+        self.assertIn("you handed water out at the front door. You felt tense.", mine)
+        self.assertNotIn("you said. You felt tense.", mine)
+        chron = self.chron.Chronicle(2, m.culprit)
+        chron.add_day(m)
+        e = next(e for e in chron.events if e["kind"] == "door_give")
+        self.assertEqual(e["witnesses"]["mara"], "did")
+        self.assertEqual(e["views"]["mara"], f'you handed water out at the front door, saying: "{words}" You felt '
+                                             f'tense.')
+        # Elena's own refusal keeps its words too (it was in the table already).
+        e = next(e for e in chron.events if e["kind"] == "door_refuse")
+        self.assertTrue(e["views"]["elena"].startswith("you told the person at the door to go away, saying: "))
+
+    # ---------- (d) block C: a refusal at the door ----------
+    def test_d_block_c_keeps_a_refusal_at_the_door_when_it_is_the_heaviest(self):
+        M = importlib.import_module("memory")
+        self.assertEqual(M.WEIGHT.get("door_refuse"), 3)
+        self.assertEqual({k: M.WEIGHT[k] for k in ("door_give", "door_open")}, {"door_give": 4, "door_open": 3})
+        everyone = {p: "saw" for p in data.ORDER}
+        c = self.handmade([
+            {"id": "D1-001", "scene": "D1", "minute": 3, "kind": "door_refuse", "option": "door_refuse",
+             "actor": "elena", "witnesses": everyone | {"elena": "did"}},
+            {"id": "D1-002", "scene": "D1", "minute": 6, "kind": "confront", "option": "confront_leo",
+             "actor": "elena", "target": "leo", "witnesses": everyone | {"elena": "did"}},
+        ])
+        self.assertIn("Two days ago, Elena told someone at the front door to go away.",
+                      [x["line"] for x in M.block_c(c, "leo", 6)])
+        mine = [x for x in M.block_c(c, "elena", 6) if x["self"]]
+        self.assertEqual([x["line"] for x in mine], ["Two days ago, you told someone at the front door to go away."])
+        self.assertEqual(mine[0]["ids"], ["D1-001"])
+
+
+class DoorAfterTest(unittest.TestCase):
+    """reports/door_memory_impl.md, the door's stretch and the knock's budget (from reports/door_after_facts.md §1.2):
+    once a visit ends, its Q7 stretch closes by the end of the 2nd turn after the visit's last turn, so the door's 18 do
+    not pay for the rest of the morning's talk; and a knock comes only if the day can give it 6 asks beyond what the
+    evening (Q5) is still owed."""
+    MODEL = QuietDayTest.MODEL
+    v16 = QuietDayTest.v16
+    setUp, tearDown, need, at = KnockTest.setUp, KnockTest.tearDown, KnockTest.need, KnockTest.at
+    door_day = KnockTest.door_day
+
+    def noon_scene1(self):
+        """runs/door_after/trace.py noon 1, in this process: probe_door2's scene 1 (v16 seed 2 to day 3, its visitor at
+        09:42, the knock minute's asks answered from cache/probe_door2/scene1.json, every later ask by the fake model),
+        played to 12:00. Nothing is written in the repository."""
+        spec_ = importlib.util.spec_from_file_location(
+            "probe_door2_probe", os.path.join(HERE, "runs", "probe_door2", "probe.py"))
+        probe = importlib.util.module_from_spec(spec_)
+        spec_.loader.exec_module(probe)
+        path = os.path.join(self.dirs.root, "scene1.json")
+        shutil.copyfile(os.path.join(HERE, "cache", "probe_door2", "scene1.json"), path)
+        m, oracle = probe.day3(path, FakeClient(invalid_every=0, max_calls=10 ** 6))
+        self.assertEqual(oracle.live, 0)
+        probe.visitor(m, next(v for v in probe.VISITORS if v["scene"] == 1), 162)
+        real = self.quiet.Quiet.hear_knock
+
+        class Noon(Exception):
+            pass
+
+        def hear_knock(q, minute, played):
+            if minute >= 300:
+                raise Noon(minute)
+            return real(q, minute, played)
+        with mock.patch.object(self.quiet.Quiet, "hear_knock", hear_knock):
+            with self.assertRaises(Noon):
+                self.quiet.play(m)
+        return m, oracle
+
+    # ---------- (a) the Q7 stretch closes 2 turns after the visit ----------
+    def test_a_after_a_visit_its_stretch_asks_for_2_turns_at_most_and_the_10_00_q2_is_not_refused_for_the_budget(self):
+        m, oracle = self.noon_scene1()
+        q = m.quiet
+        self.assertGreaterEqual(oracle.from_cache, 3, "the premise: 09:42's asks are probe_door2's live answers")
+        sc = q.door_scenes[0]
+        self.assertEqual((sc["start"], sc["end"], sc["outcome"]), (162, 165, "given"))
+        last_turn = sc["end"] - data.MINUTES_PER_TURN               # 09:42: the last turn with the visitor there
+        latest = last_turn + 3 * data.MINUTES_PER_TURN              # the end of the 2nd turn after it: 09:51
+        q7 = [s for s in q.stretches if s["trigger"] == "Q7"]
+        self.assertEqual(len(q7), 1, q.stretches)
+        self.assertLessEqual(q7[0]["end"], latest, q7[0])
+        # No ask of the stretch after that: nobody is asked from 09:51 until another trigger starts the talk.
+        nxt = min([s["start"] for s in q.stretches if s["start"] > q7[0]["start"]] + [300])
+        asked = [(r["minute"], d["person"]) for r in m.log for d in r["decisions"]
+                 if latest <= r["minute"] < nxt and d["mode"] == "model"]
+        self.assertEqual(asked, [], q7)
+        # The quiet triggers from the visit to noon are not refused for the day's 40, and the grudge meeting the facts
+        # found refused at 10:00 (reports/door_after_facts.md §1.2) is played. (With the stretch over at 09:51, the
+        # house's next minutes move: the first Q2 check is at 09:51, not 10:00.)
+        q2 = [e for e in q.log if e["kind"] == "Q2" and sc["end"] <= e["minute"] < 300]
+        self.assertTrue(q2, "the premise: Q2 is checked between the visit and noon")
+        for e in q2 + [e for e in q.log if e["kind"] == "Q1" and sc["end"] <= e["minute"] < 300]:
+            self.assertNotIn("asks are spent", str(e.get("why")), e)
+        self.assertTrue([e for e in q2 if e["fired"]], [(e["minute"], e["fired"], e["why"]) for e in q2])
+
+    # ---------- (b) a knock needs 6 asks beyond the evening's ----------
+    def test_b_a_knock_is_deferred_unless_the_day_can_give_it_6_asks_beyond_the_evenings_owed_asks(self):
+        def knock_with(asks, evening_done=False):
+            d, q, (v,) = self.door_day(None, [(120, "ask_food")])
+            m = d.day3
+            q.tick(120)
+            for p in m.people.values():
+                q.end(p, 120, "test")
+                p.room = "kitchen"
+            q.asks, q.evening_done = asks, evening_done
+            return q, v, q.hear_knock(120, played=False)
+        day, evening = self.quiet.DAY_MAX, self.quiet.EVENING_ASKS
+        self.assertEqual((day, evening, self.quiet.DOOR_ASKS), (56, 8, 18))
+        # Before 19:00 the evening is owed its 8: 56 - 8 - 6 = 42 is the most a knock may find spent.
+        q, v, fired = knock_with(day - evening - 6)
+        self.assertTrue(fired, "with 42 spent, the day can give the knock 6 beyond the evening's 8")
+        q, v, fired = knock_with(day - evening - 5)
+        self.assertFalse(fired, "with 43 spent, the knock would take from the evening's 8")
+        self.assertTrue(v["deferrals"], v)
+        self.assertIn("6 asks", v["deferrals"][-1]["why"])
+        self.assertIn("evening", v["deferrals"][-1]["why"])
+        # Once Q5 has had its turn the evening is owed nothing: 50 spent leaves 6.
+        q, v, fired = knock_with(day - 6, evening_done=True)
+        self.assertTrue(fired, "after the evening, 50 spent leaves the knock 6")
+        q, v, fired = knock_with(day - 5, evening_done=True)
+        self.assertFalse(fired, "after the evening, 51 spent leaves the knock 5")
+        self.assertNotIn("evening", v["deferrals"][-1]["why"])
 
 
 if __name__ == "__main__":

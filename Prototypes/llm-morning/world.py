@@ -1810,7 +1810,10 @@ class Morning:
                     "save_water": "said nobody should use the stored water for washing or the toilet any more",
                     "ration_water": "said the water must be shared out by the cup from now on",
                     "door_call": "called out through the front door",
-                    "door_refuse": "told the person at the door to go away"}.get(kind, "said")
+                    "door_refuse": "told the person at the door to go away",
+                    # an act at the door with words (reports/door_memory_impl.md): what they did, not "said"
+                    "door_look": "looked through the gap in the boards", "door_open": "unbarred the front door",
+                    "door_give": "handed water out at the front door"}.get(kind, "said")
             if self.day != 4 and kind in TRIP_KINDS:
                 # Day 2's wording (reports/night_design.md, §6), for the speaker's own line.
                 mine = {"still_going": "said you still mean to go there tonight",

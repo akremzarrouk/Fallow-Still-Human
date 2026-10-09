@@ -24,6 +24,7 @@ PATTERNS = {"deny": "deny", "ask": "ask_who", "search": "search"}
 PATTERN_MIN = 3
 WEIGHT.update({k: WEIGHT["accuse"] for k in PATTERNS})
 WEIGHT.update({"door_give": 4, "door_open": 3})     # W2a (reports/w2_design.md, §6.3), est.
+WEIGHT["door_refuse"] = WEIGHT["door_open"]         # reports/door_memory_impl.md
 TIMES = {1: "", 2: " twice", 3: " three times"}
 
 
@@ -123,7 +124,7 @@ def block_c(chron, pid, day, away=()):
             key = ("share", None)
         elif kind in KIND_ACTS and target and (a == pid or target == pid):
             key = (kind, target)
-        elif kind in ("door_give", "door_open"):          # W2a: what someone did at the front door
+        elif kind in ("door_give", "door_open", "door_refuse"):      # W2a: what someone did at the front door
             key = (kind, None)
         elif kind == "stop" and target and (a == pid or target == pid):
             key = ("stop", target)
@@ -224,6 +225,8 @@ def person_line(chron, pid, q, key, other, evs, day):
         return f"{when}, {'you' if me else Q} handed out water to someone at the front door{again}."
     if key == "door_open":
         return f"{when}, {'you' if me else Q} opened the front door to someone who knocked{again}."
+    if key == "door_refuse":
+        return f"{when}, {'you' if me else Q} told someone at the front door to go away{again}."
     if key in PATTERNS:
         did = {"deny": "denied taking the can", "ask": "asked who took the can", "search": "searched for the can"}[key]
         return f"{when}, {'you' if me else Q} {did}{times(n)}."

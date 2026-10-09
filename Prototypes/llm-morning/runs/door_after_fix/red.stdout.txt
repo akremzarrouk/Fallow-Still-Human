@@ -1,0 +1,24 @@
+test_a_after_a_visit_its_stretch_asks_for_2_turns_at_most_and_the_10_00_q2_is_not_refused_for_the_budget (test_morning.DoorAfterTest.test_a_after_a_visit_its_stretch_asks_for_2_turns_at_most_and_the_10_00_q2_is_not_refused_for_the_budget) ... FAIL
+test_b_a_knock_is_deferred_unless_the_day_can_give_it_6_asks_beyond_the_evenings_owed_asks (test_morning.DoorAfterTest.test_b_a_knock_is_deferred_unless_the_day_can_give_it_6_asks_beyond_the_evenings_owed_asks) ... FAIL
+
+======================================================================
+FAIL: test_a_after_a_visit_its_stretch_asks_for_2_turns_at_most_and_the_10_00_q2_is_not_refused_for_the_budget (test_morning.DoorAfterTest.test_a_after_a_visit_its_stretch_asks_for_2_turns_at_most_and_the_10_00_q2_is_not_refused_for_the_budget)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7977, in test_a_after_a_visit_its_stretch_asks_for_2_turns_at_most_and_the_10_00_q2_is_not_refused_for_the_budget
+    self.assertLessEqual(q7[0]["end"], latest, q7[0])
+AssertionError: 183 not less than or equal to 171 : {'start': 162, 'end': 183, 'room': 'kitchen', 'trigger': 'Q7', 'asks': 18}
+
+======================================================================
+FAIL: test_b_a_knock_is_deferred_unless_the_day_can_give_it_6_asks_beyond_the_evenings_owed_asks (test_morning.DoorAfterTest.test_b_a_knock_is_deferred_unless_the_day_can_give_it_6_asks_beyond_the_evenings_owed_asks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8009, in test_b_a_knock_is_deferred_unless_the_day_can_give_it_6_asks_beyond_the_evenings_owed_asks
+    self.assertFalse(fired, "with 43 spent, the knock would take from the evening's 8")
+AssertionError: [{'kind': 'Q7', 'minute': 120, 'room': 'kitchen', 'awake': {'kitchen': ['daniel', 'elena', 'leo', 'mara']}, 'fired': True, 'asked': ['daniel', 'elena', 'leo', 'mara'], 'why': None, 'visit': 'v1', 'household': 'h2', 'purpose': 'ask_food'}] is not false : with 43 spent, the knock would take from the evening's 8
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.774s
+
+FAILED (failures=2)
+exit 1

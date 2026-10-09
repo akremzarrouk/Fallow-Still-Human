@@ -89,10 +89,14 @@ RAIN_VIEW = "You heard rain begin on the roof and against the boards."
 RAIN_ASKS = 8
 COLD_UNDER = 18             # °C indoors: the WHO reference [S17]; cold from F2 on (§4.3.3)
 # W2a, the knock (reports/w2_design.md, §4.2, §6.1): Q7 plays the door scene, at most once a day; no day asks more
-# than 56; a visit that would begin with 52 or more asks spent is deferred. Every turn the visitor is at the door,
-# everyone awake who perceives it is asked, up to 18 door asks a visit: 6 turns of 3 (reports/door_heard_impl.md; the
-# 6 of W2a ran out before the second knock, reports/probe_door.md §2).
-DOOR_ASKS, DAY_MAX, KNOCK_UNDER = 18, 56, 52
+# than 56. Every turn the visitor is at the door, everyone awake who perceives it is asked, up to 18 door asks a visit:
+# 6 turns of 3 (reports/door_heard_impl.md; the 6 of W2a ran out before the second knock, reports/probe_door.md §2).
+# A knock comes only if the day can give it KNOCK_NEEDS asks without touching the asks the evening (Q5) is still
+# owed: DAY_MAX - asks spent - EVENING_ASKS (until Q5 has been checked) >= 6; otherwise it is deferred. This replaces
+# W2a's "deferred at 52 asks spent", which let a knock take the evening's 8 (reports/door_memory_impl.md).
+# Once a visit has ended, its Q7 stretch plays at most AFTER_VISIT more turns: the door's 18 do not pay for the rest
+# of the day's talk (reports/door_after_facts.md §1.2: 15 asks after the visit, then every quiet trigger refused).
+DOOR_ASKS, DAY_MAX, KNOCK_NEEDS, AFTER_VISIT = 18, 56, 6, 2
 ASK_SLOTS = ("voice_ask_", "open_ask_", "again_")      # the visitor's lines that say what they need
 DOOR_KINDS = ("door_look", "door_call", "door_open", "door_give", "door_refuse")
 DOOR_HEARD = ("door_call", "door_open", "door_give", "door_refuse")     # what the person outside perceives
@@ -493,7 +497,7 @@ class Quiet:
                      "why": None, "visit": v["id"], "household": v["household"], "purpose": v["purpose"]}
             self.log.append(entry)
             why = ("a knock has come today already" if self.q7_done or self.door is not None
-                   else f"{KNOCK_UNDER} asks are spent" if self.asks >= KNOCK_UNDER else None)
+                   else self.knock_short())
             if why is None:
                 heard = self.knock_heard(v, 1, minute)
                 if not heard:
@@ -514,7 +518,10 @@ class Quiet:
                               "summary": {}, "q7_asks": 0, "unplayed_from": None,
                               # what each one perceived of the visitor (reports/door_heard_impl.md): the lines they
                               # heard, [minute, words, whether it said the need]; whether they saw them; door asks
-                              "heard_said": {}, "saw": [], "door_asks": 0, "by_knock": [[minute, dict(heard)]]}
+                              "heard_said": {}, "saw": [], "door_asks": 0, "by_knock": [[minute, dict(heard)]],
+                              # who perceived each act in "acts", by its index: the actor and everyone in their room
+                              # (reports/door_memory_impl.md); the visitor as a pronoun, for a second mention
+                              "perceived": [], "them": "her" if v["envoy"]["sex"] == "f" else "him"}
             sc["woken"] = [q for q in heard if q in self.woken_now]
             self.knock_percepts(sc, heard, minute, played)
             # The visitor speaks first, through the shut door, heard in words by whoever heard the knock in words.
@@ -540,6 +547,15 @@ class Quiet:
             fired.append(entry)
         self.door_views(minute)
         return fired
+
+    def knock_short(self):
+        """Why the day cannot give a knock KNOCK_NEEDS asks now without touching what the evening is still owed, or
+        None (reports/door_memory_impl.md)."""
+        owed = 0 if self.evening_done else EVENING_ASKS
+        if DAY_MAX - self.asks - owed >= KNOCK_NEEDS:
+            return None
+        return (f"the day cannot give a knock {KNOCK_NEEDS} asks beyond the evening's {owed}" if owed else
+                f"the day cannot give a knock {KNOCK_NEEDS} asks")
 
     def knock_heard(self, v, n, minute):
         """Who hears knock n of a visit (§3.1, §3.3): pid -> "words" or "heard". Never in the bathroom; someone
@@ -715,6 +731,7 @@ class Quiet:
         at = absolute(self.k, minute)
         v = self.visit(sc)
         sc["acts"].append([minute, p.id, kind, words])
+        sc["perceived"].append([p.id] + [q.id for q in self.m.others_here(p)])
         if p.id not in sc["at_door"]:
             sc["at_door"].append(p.id)
         if kind == "door_look":
@@ -799,10 +816,26 @@ class Quiet:
             them = sc["who"] if q in sc["saw"] else voiced if heard else "someone"
             heard_ask = any(x[2] for x in heard)
             asked = f", who asked for {good}," if heard_ask else ""
-            if sc["outcome"] == "given":
+            # A give over another's refusal (reports/door_memory_impl.md): both acts, in the order done, each only if
+            # q perceived it.
+            both = self.refused_and_given(sc, q)
+            if both:
+                (first, by1), (_, by2) = both
+                who1, who2 = ("you" if by1 == q else NAMES[by1]), ("you" if by2 == q else NAMES[by2])
+                her = sc["them"] if them != "someone" else "them"
+                if first == "door_refuse":
+                    did = (f"{who1} told {them}{asked} to go away, and {who2} handed {her} about three litres of the "
+                           f"stored water anyway")
+                else:
+                    did = (f"{who1} handed {them}{asked} about three litres of the stored water, and then {who2} told "
+                           f"{her} to go away")
+            elif sc["outcome"] == "given" and not self.perceived_refusal_only(sc, q):
                 g = sc["give"]["by"]
                 did = (f"you handed {them}{asked} about three litres of the stored water" if g == q else
                        f"{NAMES[g]} handed {them}{asked} about three litres of the stored water")
+            elif sc["outcome"] == "given":
+                r = self.refusal_seen(sc, q)[1]
+                did = f"you told {them}{asked} to go away" if r == q else f"{NAMES[r]} told {them}{asked} to go away"
             elif sc["outcome"] == "refused":
                 r = next(a[1] for a in sc["acts"] if a[2] == "door_refuse")
                 did = (f"you told {them}{asked} to go away" if r == q else f"{NAMES[r]} told {them}{asked} to go away")
@@ -824,6 +857,35 @@ class Quiet:
                                  "text": f"the visit ended: {sc['outcome']}"})
         self.door_scenes.append(sc)
         self.door = None
+
+    @staticmethod
+    def refusal_seen(sc, q):
+        """(index, by) of the first refusal at this visit that q perceived, or None."""
+        return next(((i, a[1]) for i, a in enumerate(sc["acts"])
+                     if a[2] == "door_refuse" and q in sc["perceived"][i]), None)
+
+    @staticmethod
+    def give_seen(sc, q):
+        """(index, by) of the give at this visit, if q perceived it, or None."""
+        if sc["give"] is None:
+            return None
+        i = next(i for i, a in enumerate(sc["acts"]) if a[2] == "door_give")
+        return (i, sc["acts"][i][1]) if q in sc["perceived"][i] else None
+
+    def refused_and_given(self, sc, q):
+        """A visit with a refusal and a give by different people, both perceived by q: [(kind, by), (kind, by)] in
+        the order done; otherwise None."""
+        r, g = self.refusal_seen(sc, q), self.give_seen(sc, q)
+        if r is None or g is None or r[1] == g[1]:
+            return None
+        if r[0] < g[0]:
+            return [("door_refuse", r[1]), ("door_give", g[1])]
+        return [("door_give", g[1]), ("door_refuse", r[1])]
+
+    def perceived_refusal_only(self, sc, q):
+        """A give over another's refusal, of which q perceived the refusal and not the give."""
+        r = self.refusal_seen(sc, q)
+        return (r is not None and r[1] != sc["give"]["by"] and self.give_seen(sc, q) is None)
 
     # ---------- reports/door_heard_impl.md: everyone who perceives the door is asked, up to 18 a visit ----------
     def door_asks(self, minute):
@@ -853,6 +915,16 @@ class Quiet:
     def door_unwatched(self, room):
         """Nobody awake in `room` perceives the door now (their `p.door`, as door_views wrote it)."""
         return not any(p.door is not None for p in self.people() if p.room == room and not self.resting(p.id))
+
+    def door_after_close(self, minute):
+        """The Q7 stretch's last turn after a visit (AFTER_VISIT turns after the visit's last): its talk ends, as when
+        the asks are spent, and nobody waits to be asked (reports/door_memory_impl.md)."""
+        for r in data.ROOMS:
+            if self.m.convos.active[r]:
+                self.m.convos.active[r] = False
+                self.m.convos.log.append((minute, r, "ended", f"the visit ended {AFTER_VISIT} turns ago"))
+        self.m.arrivals = []
+        self.pending.clear()
 
     def door_release(self, minute):
         """The Q7 stretch ends with nobody in its room at the door: its talk ends, and its unused asks are not held
@@ -1436,6 +1508,13 @@ def play(m, told=None):
             if told:
                 told(t)
             t += 1
+            # reports/door_memory_impl.md: a Q7 stretch ends at the latest at the end of the AFTER_VISIT-th turn after
+            # the visit's last turn. A visit ends (door_end) at the first turn after its last, so the turns after it
+            # are `ended`, `ended` + 3, ...; the stretch is over once AFTER_VISIT of them have been played.
+            ended = next((sc["end"] for sc in q.door_scenes if sc["visit"] == stretch.get("visit")), None)
+            if (stretch["trigger"] == "Q7" and q.door is None and ended is not None
+                    and t * data.MINUTES_PER_TURN >= ended + AFTER_VISIT * data.MINUTES_PER_TURN):
+                q.door_after_close(t * data.MINUTES_PER_TURN)
             if not any(m.convos.active.values()) and not m.arrivals and q.door is None:
                 q.close(stretch, t * data.MINUTES_PER_TURN)
                 stretch = None
@@ -1446,6 +1525,8 @@ def play(m, told=None):
             fired = [e for e in q.log if e["minute"] == minute and e["fired"]]
             first = next((e for e in fired if e["kind"] in ("Q5", "Q6", "Q7")), fired[0])
             stretch = {"start": minute, "end": None, "room": first["room"], "trigger": first["kind"]}
+            if first["kind"] == "Q7":
+                stretch["visit"] = first["visit"]
             if first["kind"] == "Q5":
                 q.begin(stretch, EVENING_ASKS, f"the evening's {EVENING_ASKS} asks are spent", reserved=True)
             elif first["kind"] == "Q6":

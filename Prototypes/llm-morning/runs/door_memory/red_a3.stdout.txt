@@ -1,0 +1,16 @@
+F
+======================================================================
+FAIL: test_a3_whoever_perceived_only_the_refusal_has_only_the_refusal (test_morning.DoorMemoryTest.test_a3_whoever_perceived_only_the_refusal_has_only_the_refusal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7877, in test_a3_whoever_perceived_only_the_refusal_has_only_the_refusal
+    self.assertEqual(sc["summary"]["leo"], self.HEAD + "Elena told a woman, who asked for water, to go away.")
+AssertionError: 'At 0[35 chars]oor: Mara handed a woman, who asked for water,[36 chars]ter.' != 'At 0[35 chars]oor: Elena told a woman, who asked for water, to go away.'
+- At 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
++ At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away.
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.355s
+
+FAILED (failures=1)

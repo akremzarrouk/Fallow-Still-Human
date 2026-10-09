@@ -1,0 +1,87 @@
+............................E..............................................EE.EEE............................................................................................................................C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py:5667: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\Akrem\\AppData\\Local\\Temp\\llm-morning-test-_1av5n25\\runs\\daniel_ate_it-seed2.transcript.json' mode='r' encoding='utf-8'>
+  tr = json.load(open(os.path.join(runs_dir, f"{name}.transcript.json"), encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py:5678: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\Akrem\\AppData\\Local\\Temp\\llm-morning-test-_1av5n25\\runs\\daniel_ate_it-seed2.md' mode='r' encoding='utf-8'>
+  story = open(os.path.join(runs_dir, f"{name}.md"), encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py:5692: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\Akrem\\AppData\\Local\\Temp\\llm-morning-test-dh6h5lfs\\runs\\daniel_ate_it-seed2.transcript.json' mode='r' encoding='utf-8'>
+  tr = json.load(open(os.path.join(runs_dir, f"{name}.transcript.json"), encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+...........................................................................................................
+======================================================================
+ERROR: test_n_t12_schema_plumbing (test_morning.DaysTest.test_n_t12_schema_plumbing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 4273, in test_n_t12_schema_plumbing
+    client = GeminiClient({**json.loads(read(CONFIG)), "min_seconds_between_calls": 0}, 1, api=Api([]),
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\gemini.py", line 65, in __init__
+    from google import genai
+ModuleNotFoundError: No module named 'google'
+
+======================================================================
+ERROR: test_calls_are_spaced (test_morning.GeminiClientTest.test_calls_are_spaced)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 4688, in test_calls_are_spaced
+    c = self.client([])
+        ^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 4679, in client
+    return GeminiClient(config, 1, api=StubApi(script), sleep=sleep, clock=lambda: self.now[0])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\gemini.py", line 65, in __init__
+    from google import genai
+ModuleNotFoundError: No module named 'google'
+
+======================================================================
+ERROR: test_daily_quota_stops_keeps_the_cache_and_resumes (test_morning.GeminiClientTest.test_daily_quota_stops_keeps_the_cache_and_resumes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 4711, in test_daily_quota_stops_keeps_the_cache_and_resumes
+    script = ["ok"] * 3 + [api_error(429, "RESOURCE_EXHAUSTED", PER_DAY)]
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 187, in api_error
+    from google.genai import errors
+ModuleNotFoundError: No module named 'google'
+
+======================================================================
+ERROR: test_per_minute_429_backs_off_and_retries (test_morning.GeminiClientTest.test_per_minute_429_backs_off_and_retries)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 4695, in test_per_minute_429_backs_off_and_retries
+    c = self.client([api_error(429, "RESOURCE_EXHAUSTED", PER_MINUTE),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 187, in api_error
+    from google.genai import errors
+ModuleNotFoundError: No module named 'google'
+
+======================================================================
+ERROR: test_repeated_429_gives_up_cleanly (test_morning.GeminiClientTest.test_repeated_429_gives_up_cleanly)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 4704, in test_repeated_429_gives_up_cleanly
+    c = self.client([api_error(429, "RESOURCE_EXHAUSTED", PER_MINUTE)] * 10, max_retries=2)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 187, in api_error
+    from google.genai import errors
+ModuleNotFoundError: No module named 'google'
+
+======================================================================
+ERROR: test_the_key_is_never_printed_or_saved (test_morning.GeminiClientTest.test_the_key_is_never_printed_or_saved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 4728, in test_the_key_is_never_printed_or_saved
+    cache_dir=self.dirs.cache, client=self.client([]))
+                                      ^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 4679, in client
+    return GeminiClient(config, 1, api=StubApi(script), sleep=sleep, clock=lambda: self.now[0])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\gemini.py", line 65, in __init__
+    from google import genai
+ModuleNotFoundError: No module named 'google'
+
+----------------------------------------------------------------------
+Ran 313 tests in 362.083s
+
+FAILED (errors=6)
+exit 1

@@ -1,0 +1,15 @@
+visit 09:42 to 09:45, given; door asks 3
+stretch 09:42 to 09:51 Q7 in kitchen: 9 asks
+stretch 10:27 to 10:33 Q2 in kitchen: 7 asks
+asked from the knock:
+  09:42: elena, mara, leo
+  09:45: elena, leo, mara, daniel
+  09:48: elena, leo
+  10:27: daniel, elena, mara, leo
+  10:30: elena, mara, daniel
+quiet log from 09:45:
+  09:51 Q2 fired False why a line between them 3 minutes before
+  10:27 Q2 fired True why None
+  10:27 Q2 fired True why None
+day's asks at 12:00: 40
+exit 0

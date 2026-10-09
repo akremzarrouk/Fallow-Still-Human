@@ -1,0 +1,11 @@
+test_a2_the_give_first_then_the_refusal_and_each_act_only_if_perceived (test_morning.DoorMemoryTest.test_a2_the_give_first_then_the_refusal_and_each_act_only_if_perceived) ... ok
+test_a3_whoever_perceived_only_the_refusal_has_only_the_refusal (test_morning.DoorMemoryTest.test_a3_whoever_perceived_only_the_refusal_has_only_the_refusal) ... ok
+test_a_a_give_over_a_refusal_is_in_each_summary_with_the_refusal_in_the_order_done (test_morning.DoorMemoryTest.test_a_a_give_over_a_refusal_is_in_each_summary_with_the_refusal_in_the_order_done) ... ok
+test_b_a_give_alone_and_a_refusal_alone_keep_their_summaries (test_morning.DoorMemoryTest.test_b_a_give_alone_and_a_refusal_alone_keep_their_summaries) ... ok
+test_c_maras_own_line_and_her_chronicle_view_of_her_give_say_she_handed_water_out (test_morning.DoorMemoryTest.test_c_maras_own_line_and_her_chronicle_view_of_her_give_say_she_handed_water_out) ... ok
+test_d_block_c_keeps_a_refusal_at_the_door_when_it_is_the_heaviest (test_morning.DoorMemoryTest.test_d_block_c_keeps_a_refusal_at_the_door_when_it_is_the_heaviest) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 2.723s
+
+OK

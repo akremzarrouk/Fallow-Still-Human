@@ -1,0 +1,14 @@
+scene 1:
+  09:42: 1. elena (drawn by the seed among equals); 2. mara (drawn by the seed among equals); 3. leo (the only one left to act here)
+  09:45: 1. elena (drawn by the seed among equals); 2. leo (asked aside by Elena); 3. mara (the only one left to act here)
+  09:48: 1. elena (just spoken to by Leo); 2. leo (just spoken to by Elena); 3. mara (the only one left to act here)
+  09:51: 1. elena (just spoken to by Leo); 2. mara (drawn by the seed among equals); 3. leo (the only one left to act here)
+  09:54: 1. elena (just spoken to by Mara); 2. daniel (just spoken to by Elena); 3. mara (the only one left to act here)
+  09:57: 1. elena (shows the strongest feeling here (angry)); 2. daniel (drawn by the seed among equals); 3. mara (the only one left to act here)
+scene 2:
+  09:42: 1. elena (drawn by the seed among equals); 2. mara (drawn by the seed among equals); 3. leo (the only one left to act here)
+  09:45: 1. elena (drawn by the seed among equals); 2. leo (drawn by the seed among equals); 3. mara (just spoken to by Leo)
+  09:48: 1. leo (shows the strongest feeling here (afraid)); 2. daniel (just spoken to by Leo); 3. mara (asked aside by Daniel); 4. elena (the only one left to act here)
+  09:51: 1. daniel (just spoken to by Mara); 2. elena (just spoken to by Daniel); 3. mara (drawn by the seed among equals); 4. leo (the only one left to act here)
+  09:54: 1. daniel (just spoken to by Elena); 2. elena (drawn by the seed among equals); 3. leo (the only one left to act here)
+  09:57: 1. leo (drawn by the seed among equals); 2. daniel (the only one left to act here)
