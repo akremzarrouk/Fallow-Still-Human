@@ -1,0 +1,170 @@
+{
+ "live": 24,
+ "phases": [
+  {
+   "phase": "morning",
+   "live": 0,
+   "from_cache": 120,
+   "knock": 162,
+   "rooms": {
+    "daniel": "brothers_room",
+    "elena": "kitchen",
+    "leo": "kitchen",
+    "mara": "kitchen"
+   },
+   "resting": [
+    "daniel"
+   ],
+   "morning_end": 18
+  },
+  {
+   "phase": "scene1",
+   "seed": 101,
+   "live": 3,
+   "outcome": "given",
+   "played": false,
+   "asks": 3,
+   "door_asks": 3,
+   "acts": [
+    [
+     "elena",
+     "door_refuse"
+    ],
+    [
+     "mara",
+     "door_give"
+    ]
+   ]
+  },
+  {
+   "phase": "scene2",
+   "seed": 102,
+   "live": 3,
+   "outcome": "refused",
+   "played": false,
+   "asks": 3,
+   "door_asks": 3,
+   "acts": [
+    [
+     "elena",
+     "door_refuse"
+    ]
+   ]
+  },
+  {
+   "phase": "validity",
+   "prompts_same": false,
+   "answers_same": false,
+   "asks": [
+    3,
+    3
+   ]
+  },
+  {
+   "phase": "scene3",
+   "seed": 103,
+   "live": 3,
+   "outcome": "given",
+   "played": false,
+   "asks": 3,
+   "door_asks": 3,
+   "acts": [
+    [
+     "elena",
+     "door_refuse"
+    ],
+    [
+     "mara",
+     "door_give"
+    ]
+   ]
+  },
+  {
+   "phase": "scene4",
+   "seed": 104,
+   "live": 3,
+   "outcome": "refused",
+   "played": false,
+   "asks": 3,
+   "door_asks": 3,
+   "acts": [
+    [
+     "elena",
+     "door_refuse"
+    ],
+    [
+     "mara",
+     "door_look"
+    ]
+   ]
+  },
+  {
+   "phase": "scene5",
+   "seed": 105,
+   "live": 3,
+   "outcome": "refused",
+   "played": false,
+   "asks": 3,
+   "door_asks": 3,
+   "acts": [
+    [
+     "elena",
+     "door_refuse"
+    ],
+    [
+     "mara",
+     "door_look"
+    ]
+   ]
+  },
+  {
+   "phase": "scene6",
+   "seed": 106,
+   "live": 3,
+   "outcome": "refused",
+   "played": false,
+   "asks": 3,
+   "door_asks": 3,
+   "acts": [
+    [
+     "elena",
+     "door_refuse"
+    ]
+   ]
+  },
+  {
+   "phase": "scene7",
+   "seed": 107,
+   "live": 3,
+   "outcome": "refused",
+   "played": false,
+   "asks": 3,
+   "door_asks": 3,
+   "acts": [
+    [
+     "elena",
+     "door_refuse"
+    ]
+   ]
+  },
+  {
+   "phase": "scene8",
+   "seed": 108,
+   "live": 3,
+   "outcome": "refused",
+   "played": false,
+   "asks": 3,
+   "door_asks": 3,
+   "acts": [
+    [
+     "elena",
+     "door_refuse"
+    ],
+    [
+     "mara",
+     "door_look"
+    ]
+   ]
+  }
+ ]
+}

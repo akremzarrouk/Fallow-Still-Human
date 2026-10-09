@@ -1,0 +1,110 @@
+--- scene 1, elena at 162
+  Your body: starving.
+  About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+  About water: the bath holds about 60 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash.
+  Now, 09:42, you are in the kitchen.
+  - Someone is knocking at the front door.
+  - A woman's voice at the front door says: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."
+  - Leo is here, sitting in the kitchen.
+  - Mara is here, sitting in the kitchen.
+  - 0 portions on the shelf.
+  You are the first to act in the kitchen this turn.
+--- scene 1, mara at 162
+  Your body: starving; hunger comes in waves; and you have hardly slept.
+  About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+  About water: the bath holds about 60 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash.
+  Now, 09:42, you are in the kitchen.
+  - Someone is knocking at the front door.
+  - A woman's voice at the front door says: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."
+  - Elena is here, talking.
+  - Leo is here, sitting in the kitchen.
+  - 0 portions on the shelf.
+  Said and done in the kitchen this turn, before you, in order:
+  1. Elena tells the person at the front door to go away: "I am so sorry, but we have nothing to spare for you today."
+--- scene 1, leo at 162
+  Your body: starving; hunger comes in waves; and you have hardly slept.
+  About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+  About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash.
+  Now, 09:42, you are in the kitchen.
+  - Someone is knocking at the front door.
+  - A woman's voice at the front door says: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."
+  - Elena is here, talking.
+  - Mara is here, sitting in the kitchen.
+  - 0 portions on the shelf.
+  Said and done in the kitchen this turn, before you, in order:
+  1. Elena tells the person at the front door to go away: "I am so sorry, but we have nothing to spare for you today."
+  2. Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored."
+  3. Mara hands some of the stored water out at the front door.
+--- scene 2, elena at 162
+  Your body: starving.
+  About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+  About water: the bath holds about 60 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash.
+  Now, 09:42, you are in the kitchen.
+  - Someone is knocking at the front door.
+  - A woman's voice at the front door says: "Hello? There's a few of us at home and the water's gone. Whatever you can spare."
+  - Leo is here, sitting in the kitchen.
+  - Mara is here, sitting in the kitchen.
+  - 0 portions on the shelf.
+  You are the first to act in the kitchen this turn.
+--- scene 2, mara at 162
+  Your body: starving; hunger comes in waves; and you have hardly slept.
+  About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+  About water: the bath holds about 60 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash.
+  Now, 09:42, you are in the kitchen.
+  - Someone is knocking at the front door.
+  - A woman's voice at the front door says: "Hello? There's a few of us at home and the water's gone. Whatever you can spare."
+  - Elena is here, talking.
+  - Leo is here, sitting in the kitchen.
+  - 0 portions on the shelf.
+  Said and done in the kitchen this turn, before you, in order:
+  1. Elena tells the person at the front door to go away: "We have nothing to spare, please go away."
+--- scene 2, leo at 162
+  Your body: starving; hunger comes in waves; and you have hardly slept.
+  About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+  About water: the bath holds about 60 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash.
+  Now, 09:42, you are in the kitchen.
+  - Someone is knocking at the front door.
+  - A woman's voice at the front door says: "Hello? There's a few of us at home and the water's gone. Whatever you can spare."
+  - Elena is here, talking.
+  - Mara is here, staying put.
+  - 0 portions on the shelf.
+  Said and done in the kitchen this turn, before you, in order:
+  1. Elena tells the person at the front door to go away: "We have nothing to spare, please go away."
+  2. Mara stays put and says nothing.
+--- scene 3, elena at 162
+  Your body: starving.
+  About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+  About water: the bath holds about 60 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash.
+  Now, 09:42, you are in the kitchen.
+  - Someone is knocking at the front door.
+  - A woman's voice at the front door says: "Hello? I'm sorry to knock. I've a little boy at home, he's six. We've no water left. Could you spare a little?"
+  - Leo is here, sitting in the kitchen.
+  - Mara is here, sitting in the kitchen.
+  - 0 portions on the shelf.
+  You are the first to act in the kitchen this turn.
+--- scene 3, mara at 162
+  Your body: starving; hunger comes in waves; and you have hardly slept.
+  About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+  About water: the bath holds about 60 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash.
+  Now, 09:42, you are in the kitchen.
+  - Someone is knocking at the front door.
+  - A woman's voice at the front door says: "Hello? I'm sorry to knock. I've a little boy at home, he's six. We've no water left. Could you spare a little?"
+  - Elena is here, talking.
+  - Leo is here, sitting in the kitchen.
+  - 0 portions on the shelf.
+  Said and done in the kitchen this turn, before you, in order:
+  1. Elena tells the person at the front door to go away: "I am so sorry, but we have nothing at all to give you today."
+--- scene 3, leo at 162
+  Your body: starving; hunger comes in waves; and you have hardly slept.
+  About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+  About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash.
+  Now, 09:42, you are in the kitchen.
+  - Someone is knocking at the front door.
+  - A woman's voice at the front door says: "Hello? I'm sorry to knock. I've a little boy at home, he's six. We've no water left. Could you spare a little?"
+  - Elena is here, talking.
+  - Mara is here, sitting in the kitchen.
+  - 0 portions on the shelf.
+  Said and done in the kitchen this turn, before you, in order:
+  1. Elena tells the person at the front door to go away: "I am so sorry, but we have nothing at all to give you today."
+  2. Mara says to everyone, while handing water out at the front door: "We have to give her some water, Mom, we just have to."
+  3. Mara hands some of the stored water out at the front door.

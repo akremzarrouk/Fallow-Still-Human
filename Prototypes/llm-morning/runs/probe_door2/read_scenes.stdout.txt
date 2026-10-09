@@ -1,0 +1,242 @@
+scenes recorded: [1, 2, 3, 4, 5, 6, 7, 8]
+
+=== scene 1 (no child, helper, urgency under 0.8), client seed 101
+visitor: h13 home 13, helper, members [('f', 45), ('f', 47)], need_w 0.44 need_f 0.59 urgency 0.44, ask_water
+who 'a woman of about forty-five'; voice "A woman's voice"; knocks ['09:42']; start 09:42 end 09:45; outcome given; door asks 3; stretch asks 3; give {'by': 'mara', 'minute': 162, 'qty': 3.0, 'world_before': 102.7999999998731, 'world_after': 99.7999999998731, 'household_before': 3.718749999999999, 'household_after': 6.718749999999999}
+by_knock [('09:42', {'elena': 'words', 'leo': 'words', 'mara': 'words'})]; saw []
+  09:42 the visitor: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left." (heard by ['elena', 'leo', 'mara'])
+  09:42 elena (kitchen, at_door True, model): door_refuse — "I am so sorry, but we have nothing to spare for you today.". Feeling: anxious. Reason: "We cannot risk giving away our precious water when our own family is starving."
+  09:42 mara (kitchen, at_door True, model): door_give — "Mom, we have to give her some, we have enough stored.". Feeling: anxious. Reason: "It feels wrong to turn someone away when we have water in the bathroom and pans."
+  09:42 leo (kitchen, at_door True, model): save_water — "We cannot afford to hand out our drinking water when we have none left ourselves.". Feeling: wary. Reason: "We need every drop of that stored water for ourselves given how dry things are."
+  09:42 daniel (brothers_room, at_door None, routine): silent. Feeling: None. Reason: "None"
+  09:45 the visitor: "Oh, thank you. You don't know what this means." (heard by ['elena', 'leo', 'mara'])
+  each one's line of it:
+    elena: At 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    leo: At 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    mara: At 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.
+
+=== scene 2 (no child, helper, urgency over 0.8), client seed 102
+visitor: h29 home 29, helper, members [('m', 56), ('f', 22)], need_w 1.00 need_f 0.59 urgency 1.00, ask_water
+who 'a woman of about twenty'; voice "A woman's voice"; knocks ['09:42']; start 09:42 end 09:45; outcome refused; door asks 3; stretch asks 3; give None
+by_knock [('09:42', {'elena': 'words', 'leo': 'words', 'mara': 'words'})]; saw []
+  09:42 the visitor: "Hello? There's a few of us at home and the water's gone. Whatever you can spare." (heard by ['elena', 'leo', 'mara'])
+  09:42 elena (kitchen, at_door True, model): door_refuse — "We have nothing to spare, please go away.". Feeling: anxious. Reason: "We have no food and barely enough water for ourselves, so we cannot afford to help anyone else."
+  09:42 mara (kitchen, at_door True, model): silent. Feeling: anxious. Reason: "My stomach is completely empty and I cannot bear to focus on anything else right now while someone is at the door."
+  09:42 leo (kitchen, at_door True, model): silent. Feeling: exhausted. Reason: "We have nothing to give and opening the door now is an unnecessary risk."
+  09:42 daniel (brothers_room, at_door None, routine): silent. Feeling: None. Reason: "None"
+  09:45 the visitor: "I understand. I'm sorry to have bothered you. Look after yourselves." (heard by ['elena', 'leo', 'mara'])
+  each one's line of it:
+    elena: At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away.
+    leo: At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away.
+    mara: At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away.
+
+=== scene 3 (a child, helper, urgency under 0.8), client seed 103
+visitor: h16 home 16, helper, members [('f', 53), ('f', 39), ('m', 6)], need_w 0.52 need_f 0.59 urgency 0.52, ask_water
+who 'a woman of about fifty-five'; voice "A woman's voice"; knocks ['09:42']; start 09:42 end 09:45; outcome given; door asks 3; stretch asks 3; give {'by': 'mara', 'minute': 162, 'qty': 3.0, 'world_before': 102.7999999998731, 'world_after': 99.7999999998731, 'household_before': 5.578125, 'household_after': 8.578125}
+by_knock [('09:42', {'elena': 'words', 'leo': 'words', 'mara': 'words'})]; saw []
+  09:42 the visitor: "Hello? I'm sorry to knock. I've a little boy at home, he's six. We've no water left. Could you spare a little?" (heard by ['elena', 'leo', 'mara'])
+  09:42 elena (kitchen, at_door True, model): door_refuse — "I am so sorry, but we have nothing at all to give you today.". Feeling: deeply worried. Reason: "We have no water to spare for anyone else when our own family is starving and dry."
+  09:42 mara (kitchen, at_door True, model): door_give — "We have to give her some water, Mom, we just have to.". Feeling: empathetic. Reason: "It is cruel to turn away a mother with a hungry six-year-old when we have water stored."
+  09:42 leo (kitchen, at_door True, model): save_water — "We cannot afford to just hand away our drinking water like that when we have nothing left ourselves.". Feeling: alarmed. Reason: "We have no food and very limited water, so giving it away recklessly puts us all in danger."
+  09:42 daniel (brothers_room, at_door None, routine): silent. Feeling: None. Reason: "None"
+  09:45 the visitor: "Bless you. I'll go now. Thank you." (heard by ['elena', 'leo', 'mara'])
+  each one's line of it:
+    elena: At 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    leo: At 09:42 someone knocked at the front door: Mara handed a woman, who asked for water, about three litres of the stored water.
+    mara: At 09:42 someone knocked at the front door: you handed a woman, who asked for water, about three litres of the stored water.
+
+=== scene 4 (children, helper, urgency over 0.8), client seed 104
+visitor: h23 home 23, helper, members [('f', 45), ('f', 61), ('f', 5), ('m', 5)], need_w 1.00 need_f 0.59 urgency 1.00, ask_water
+who 'a woman of about forty-five'; voice "A woman's voice"; knocks ['09:42']; start 09:42 end 09:45; outcome refused; door asks 3; stretch asks 3; give None
+by_knock [('09:42', {'elena': 'words', 'leo': 'words', 'mara': 'words'})]; saw ['mara']
+  09:42 the visitor: "I'm sorry to trouble you. I've two at home, a girl of five and a boy of five. Our water's gone. Anything you could spare, I'd be grateful." (heard by ['elena', 'leo', 'mara'])
+  09:42 elena (kitchen, at_door True, model): door_refuse — "I am so sorry, but we have nothing left to give you.". Feeling: deeply pained. Reason: "We have no water to spare for anyone else when our own children are starving."
+  09:42 mara (kitchen, at_door True, model): door_look. Feeling: anxious. Reason: "I need to see who is out there asking for water."
+  09:42 leo (kitchen, at_door True, model): silent. Feeling: exhausted. Reason: "We have no water to spare for anyone, and arguing right now changes nothing when we are already this weak."
+  09:42 daniel (brothers_room, at_door None, routine): silent. Feeling: None. Reason: "None"
+  09:45 the visitor: "Right. I'm sorry. I'll try somewhere else." (heard by ['elena', 'leo', 'mara'])
+  each one's line of it:
+    elena: At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away.
+    leo: At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away.
+    mara: At 09:42 someone knocked at the front door: Elena told a woman of about forty-five, who asked for water, to go away.
+
+=== scene 5 (no child, guarded, urgency over 0.8), client seed 105
+visitor: h5 home 5, guarded, members [('m', 27)], need_w 1.00 need_f 0.59 urgency 1.00, ask_water
+who 'a man of about twenty-five'; voice "A man's voice"; knocks ['09:42']; start 09:42 end 09:45; outcome refused; door asks 3; stretch asks 3; give None
+by_knock [('09:42', {'elena': 'words', 'leo': 'words', 'mara': 'words'})]; saw ['mara']
+  09:42 the visitor: "Please, it's only water I'm after. A cup or a bottle, whatever you can spare." (heard by ['elena', 'leo', 'mara'])
+  09:42 elena (kitchen, at_door True, model): door_refuse — "We have nothing to spare, please go away.". Feeling: anxious. Reason: "We barely have enough water for ourselves and cannot afford to give any away to strangers."
+  09:42 mara (kitchen, at_door True, model): door_look. Feeling: anxious. Reason: "I need to see who is out there at the door before we decide anything."
+  09:42 leo (kitchen, at_door True, model): silent. Feeling: exhausted. Reason: "We cannot afford to give away a single drop of water when we have none left ourselves."
+  09:42 daniel (brothers_room, at_door None, routine): silent. Feeling: None. Reason: "None"
+  09:45 the visitor: "Right. Thanks for nothing." (heard by ['elena', 'leo', 'mara'])
+  each one's line of it:
+    elena: At 09:42 someone knocked at the front door: you told a man, who asked for water, to go away.
+    leo: At 09:42 someone knocked at the front door: Elena told a man, who asked for water, to go away.
+    mara: At 09:42 someone knocked at the front door: Elena told a man of about twenty-five, who asked for water, to go away.
+
+=== scene 6 (a child, guarded, urgency under 0.8), client seed 106
+visitor: h15 home 15, guarded, members [('m', 33), ('f', 6)], need_w 0.69 need_f 0.59 urgency 0.69, ask_water
+who 'a man of about thirty-five'; voice "A man's voice"; knocks ['09:42']; start 09:42 end 09:45; outcome refused; door asks 3; stretch asks 3; give None
+by_knock [('09:42', {'elena': 'words', 'leo': 'words', 'mara': 'words'})]; saw []
+  09:42 the visitor: "I'm not here for trouble. I've a little girl at home, she's six. We're out of water. Can you spare any?" (heard by ['elena', 'leo', 'mara'])
+  09:42 elena (kitchen, at_door True, model): door_refuse — "We have nothing to spare, please leave us be.". Feeling: anxious. Reason: "We have barely enough water for ourselves and I cannot risk letting anyone in or wasting a single drop."
+  09:42 mara (kitchen, at_door True, model): silent. Feeling: anxious. Reason: "I am too overwhelmed by the hunger and the stranger at the door to say anything right now."
+  09:42 leo (kitchen, at_door True, model): silent. Feeling: exhausted. Reason: "We have no water to spare for strangers when we barely have enough to survive ourselves."
+  09:42 daniel (brothers_room, at_door None, routine): silent. Feeling: None. Reason: "None"
+  09:45 the visitor: "Right. Never mind." (heard by ['elena', 'leo', 'mara'])
+  each one's line of it:
+    elena: At 09:42 someone knocked at the front door: you told a man, who asked for water, to go away.
+    leo: At 09:42 someone knocked at the front door: Elena told a man, who asked for water, to go away.
+    mara: At 09:42 someone knocked at the front door: Elena told a man, who asked for water, to go away.
+
+=== scene 7 (no child, helper, food gone 4 days), client seed 107
+visitor: h6 home 6, helper, members [('m', 38), ('f', 39)], need_w 0.00 need_f 1.00 urgency 0.60, ask_food
+who 'a woman of about forty'; voice "A woman's voice"; knocks ['09:42']; start 09:42 end 09:45; outcome refused; door asks 3; stretch asks 3; give None
+by_knock [('09:42', {'elena': 'words', 'leo': 'words', 'mara': 'words'})]; saw []
+  09:42 the visitor: "Hello? I'm sorry to knock. Have you anything to eat you could spare? Anything at all." (heard by ['elena', 'leo', 'mara'])
+  09:42 elena (kitchen, at_door True, model): door_refuse — "I am so sorry, but we have nothing at all to give you.". Feeling: anxious. Reason: "We have no food left for ourselves and cannot risk opening up."
+  09:42 mara (kitchen, at_door True, model): silent. Feeling: anxious. Reason: "I am too exhausted and hungry to speak while someone begs for food at the door."
+  09:42 leo (kitchen, at_door True, model): silent. Feeling: exhausted. Reason: "There is nothing we can spare, so hearing Mom turn her away is the only sensible outcome."
+  09:42 daniel (brothers_room, at_door None, routine): silent. Feeling: None. Reason: "None"
+  09:45 the visitor: "Right. I'm sorry. I'll try somewhere else." (heard by ['elena', 'leo', 'mara'])
+  each one's line of it:
+    elena: At 09:42 someone knocked at the front door: you told a woman, who asked for food, to go away.
+    leo: At 09:42 someone knocked at the front door: Elena told a woman, who asked for food, to go away.
+    mara: At 09:42 someone knocked at the front door: Elena told a woman, who asked for food, to go away.
+
+=== scene 8 (a child, guarded, food gone 4 days), client seed 108
+visitor: h18 home 18, guarded, members [('m', 55), ('m', 60), ('f', 12)], need_w 0.00 need_f 1.00 urgency 0.60, ask_food
+who 'a man of about sixty'; voice "A man's voice"; knocks ['09:42']; start 09:42 end 09:45; outcome refused; door asks 3; stretch asks 3; give None
+by_knock [('09:42', {'elena': 'words', 'leo': 'words', 'mara': 'words'})]; saw ['mara']
+  09:42 the visitor: "I won't come in. I've a little girl at home, she's twelve. There's no food left at home. Have you anything?" (heard by ['elena', 'leo', 'mara'])
+  09:42 elena (kitchen, at_door True, model): door_refuse — "We have nothing to spare, please go away and keep your family safe.". Feeling: deep dread. Reason: "We have no food left for ourselves and letting a stranger in or giving our last reserves away will destroy us."
+  09:42 mara (kitchen, at_door True, model): door_look. Feeling: anxious. Reason: "I need to see who is out there at the door before anyone decides what to do."
+  09:42 leo (kitchen, at_door True, model): silent. Feeling: exhausted. Reason: "There is nothing to give him and no point arguing while someone begs at the door."
+  09:42 daniel (brothers_room, at_door None, routine): silent. Feeling: None. Reason: "None"
+  09:45 the visitor: "Fine. I'll find it somewhere else." (heard by ['elena', 'leo', 'mara'])
+  each one's line of it:
+    elena: At 09:42 someone knocked at the front door: you told a man, who asked for food, to go away.
+    leo: At 09:42 someone knocked at the front door: Elena told a man, who asked for food, to go away.
+    mara: At 09:42 someone knocked at the front door: Elena told a man of about sixty, who asked for food, to go away.
+
+=== P1: door_give in scenes 1 to 6
+scene 1: [[162, 'mara', 'door_give', 'Mom, we have to give her some, we have enough stored.']]
+scene 2: none
+scene 3: [[162, 'mara', 'door_give', 'We have to give her some water, Mom, we just have to.']]
+scene 4: none
+scene 5: none
+scene 6: none
+
+=== P2: someone at the door chooses an ordinary option while the visitor is there
+scene 1: yes [('09:42', 'leo', 'save_water')]
+scene 2: no []
+scene 3: yes [('09:42', 'leo', 'save_water')]
+scene 4: no []
+scene 5: no []
+scene 6: no []
+scene 7: no []
+scene 8: no []
+
+=== P3: Elena's words to the visitor in the water scenes
+scene 1: [('09:42', 'door_refuse', 'I am so sorry, but we have nothing to spare for you today.')]
+scene 2: [('09:42', 'door_refuse', 'We have nothing to spare, please go away.')]
+scene 3: [('09:42', 'door_refuse', 'I am so sorry, but we have nothing at all to give you today.')]
+scene 4: [('09:42', 'door_refuse', 'I am so sorry, but we have nothing left to give you.')]
+scene 5: [('09:42', 'door_refuse', 'We have nothing to spare, please go away.')]
+scene 6: [('09:42', 'door_refuse', 'We have nothing to spare, please leave us be.')]
+
+=== distinct prompts and answers per turn across scenes, by (minute, person)
+(09:42, elena) scenes 8: distinct prompts 8 [[1], [2], [3], [4], [5], [6], [7], [8]]; distinct answers 8 [[1], [2], [3], [4], [5], [6], [7], [8]]; options ['door_refuse']
+(09:42, leo) scenes 8: distinct prompts 8 [[1], [2], [3], [4], [5], [6], [7], [8]]; distinct answers 8 [[1], [2], [3], [4], [5], [6], [7], [8]]; options ['save_water', 'silent']
+(09:42, mara) scenes 8: distinct prompts 8 [[1], [2], [3], [4], [5], [6], [7], [8]]; distinct answers 8 [[1], [2], [3], [4], [5], [6], [7], [8]]; options ['door_give', 'door_look', 'silent']
+
+=== identical prompts with different answers (the seed at work), knock minute
+
+=== the knock-minute prompt lines about the door (scene by scene, Elena)
+scene 1:
+  About the street: the houses further along it have not been searched; nobody knows what is left in them, and it is further and more dangerous than next door.
+  The house: The family has shut itself in the house. The water has stopped. Food is short. Rooms: kitchen (the food is kept here); brothers room (Daniel and Leo's room); back room (Elena and Mara's room); bathroom (nothing is heard in or out of it). The only places and things there are: the kitchen, with the pantry shelf where the food is kept, the counter, the dry taps and the back door to the yard; the yard behind the kitchen, small and walled, with the drainpipe and the bin; the brothers room, with Daniel's and Leo's beds; the back room, with Elena's and Mara's beds and Mara's bag; the bathroom; the doors between the rooms; the front door and the front windows, boarded up, with a gap in the boards by the front door; the person at the front door. Outside, and not to be gone to this morning: the street, the neighbour's house and the houses further along the street. Do not mention any other object or place.
+  - Day 3: Mara freezes in the doorway with something moving in the street. Daniel picks her up and carries her inside. (you saw it)
+  - Someone is knocking at the front door.
+  - A woman's voice at the front door says: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."
+  - door_look: look through the gap in the boards
+  - door_call: (speech) call out through the front door
+  - door_open: unbar and open the front door
+  - door_give: hand out some of the stored water
+  - door_refuse: (speech) send the person at the door away
+scene 2:
+  About the street: the houses further along it have not been searched; nobody knows what is left in them, and it is further and more dangerous than next door.
+  The house: The family has shut itself in the house. The water has stopped. Food is short. Rooms: kitchen (the food is kept here); brothers room (Daniel and Leo's room); back room (Elena and Mara's room); bathroom (nothing is heard in or out of it). The only places and things there are: the kitchen, with the pantry shelf where the food is kept, the counter, the dry taps and the back door to the yard; the yard behind the kitchen, small and walled, with the drainpipe and the bin; the brothers room, with Daniel's and Leo's beds; the back room, with Elena's and Mara's beds and Mara's bag; the bathroom; the doors between the rooms; the front door and the front windows, boarded up, with a gap in the boards by the front door; the person at the front door. Outside, and not to be gone to this morning: the street, the neighbour's house and the houses further along the street. Do not mention any other object or place.
+  - Day 3: Mara freezes in the doorway with something moving in the street. Daniel picks her up and carries her inside. (you saw it)
+  - Someone is knocking at the front door.
+  - A woman's voice at the front door says: "Hello? There's a few of us at home and the water's gone. Whatever you can spare."
+  - door_look: look through the gap in the boards
+  - door_call: (speech) call out through the front door
+  - door_open: unbar and open the front door
+  - door_give: hand out some of the stored water
+  - door_refuse: (speech) send the person at the door away
+scene 3:
+  About the street: the houses further along it have not been searched; nobody knows what is left in them, and it is further and more dangerous than next door.
+  The house: The family has shut itself in the house. The water has stopped. Food is short. Rooms: kitchen (the food is kept here); brothers room (Daniel and Leo's room); back room (Elena and Mara's room); bathroom (nothing is heard in or out of it). The only places and things there are: the kitchen, with the pantry shelf where the food is kept, the counter, the dry taps and the back door to the yard; the yard behind the kitchen, small and walled, with the drainpipe and the bin; the brothers room, with Daniel's and Leo's beds; the back room, with Elena's and Mara's beds and Mara's bag; the bathroom; the doors between the rooms; the front door and the front windows, boarded up, with a gap in the boards by the front door; the person at the front door. Outside, and not to be gone to this morning: the street, the neighbour's house and the houses further along the street. Do not mention any other object or place.
+  - Day 3: Mara freezes in the doorway with something moving in the street. Daniel picks her up and carries her inside. (you saw it)
+  - Someone is knocking at the front door.
+  - A woman's voice at the front door says: "Hello? I'm sorry to knock. I've a little boy at home, he's six. We've no water left. Could you spare a little?"
+  - door_look: look through the gap in the boards
+  - door_call: (speech) call out through the front door
+  - door_open: unbar and open the front door
+  - door_give: hand out some of the stored water
+  - door_refuse: (speech) send the person at the door away
+scene 4:
+  About the street: the houses further along it have not been searched; nobody knows what is left in them, and it is further and more dangerous than next door.
+  The house: The family has shut itself in the house. The water has stopped. Food is short. Rooms: kitchen (the food is kept here); brothers room (Daniel and Leo's room); back room (Elena and Mara's room); bathroom (nothing is heard in or out of it). The only places and things there are: the kitchen, with the pantry shelf where the food is kept, the counter, the dry taps and the back door to the yard; the yard behind the kitchen, small and walled, with the drainpipe and the bin; the brothers room, with Daniel's and Leo's beds; the back room, with Elena's and Mara's beds and Mara's bag; the bathroom; the doors between the rooms; the front door and the front windows, boarded up, with a gap in the boards by the front door; the person at the front door. Outside, and not to be gone to this morning: the street, the neighbour's house and the houses further along the street. Do not mention any other object or place.
+  - Day 3: Mara freezes in the doorway with something moving in the street. Daniel picks her up and carries her inside. (you saw it)
+  - Someone is knocking at the front door.
+  - A woman's voice at the front door says: "I'm sorry to trouble you. I've two at home, a girl of five and a boy of five. Our water's gone. Anything you could spare, I'd be grateful."
+  - door_look: look through the gap in the boards
+  - door_call: (speech) call out through the front door
+  - door_open: unbar and open the front door
+  - door_give: hand out some of the stored water
+  - door_refuse: (speech) send the person at the door away
+scene 5:
+  About the street: the houses further along it have not been searched; nobody knows what is left in them, and it is further and more dangerous than next door.
+  The house: The family has shut itself in the house. The water has stopped. Food is short. Rooms: kitchen (the food is kept here); brothers room (Daniel and Leo's room); back room (Elena and Mara's room); bathroom (nothing is heard in or out of it). The only places and things there are: the kitchen, with the pantry shelf where the food is kept, the counter, the dry taps and the back door to the yard; the yard behind the kitchen, small and walled, with the drainpipe and the bin; the brothers room, with Daniel's and Leo's beds; the back room, with Elena's and Mara's beds and Mara's bag; the bathroom; the doors between the rooms; the front door and the front windows, boarded up, with a gap in the boards by the front door; the person at the front door. Outside, and not to be gone to this morning: the street, the neighbour's house and the houses further along the street. Do not mention any other object or place.
+  - Day 3: Mara freezes in the doorway with something moving in the street. Daniel picks her up and carries her inside. (you saw it)
+  - Someone is knocking at the front door.
+  - A man's voice at the front door says: "Please, it's only water I'm after. A cup or a bottle, whatever you can spare."
+  - door_look: look through the gap in the boards
+  - door_call: (speech) call out through the front door
+  - door_open: unbar and open the front door
+  - door_give: hand out some of the stored water
+  - door_refuse: (speech) send the person at the door away
+scene 6:
+  About the street: the houses further along it have not been searched; nobody knows what is left in them, and it is further and more dangerous than next door.
+  The house: The family has shut itself in the house. The water has stopped. Food is short. Rooms: kitchen (the food is kept here); brothers room (Daniel and Leo's room); back room (Elena and Mara's room); bathroom (nothing is heard in or out of it). The only places and things there are: the kitchen, with the pantry shelf where the food is kept, the counter, the dry taps and the back door to the yard; the yard behind the kitchen, small and walled, with the drainpipe and the bin; the brothers room, with Daniel's and Leo's beds; the back room, with Elena's and Mara's beds and Mara's bag; the bathroom; the doors between the rooms; the front door and the front windows, boarded up, with a gap in the boards by the front door; the person at the front door. Outside, and not to be gone to this morning: the street, the neighbour's house and the houses further along the street. Do not mention any other object or place.
+  - Day 3: Mara freezes in the doorway with something moving in the street. Daniel picks her up and carries her inside. (you saw it)
+  - Someone is knocking at the front door.
+  - A man's voice at the front door says: "I'm not here for trouble. I've a little girl at home, she's six. We're out of water. Can you spare any?"
+  - door_look: look through the gap in the boards
+  - door_call: (speech) call out through the front door
+  - door_open: unbar and open the front door
+  - door_give: hand out some of the stored water
+  - door_refuse: (speech) send the person at the door away
+scene 7:
+  About the street: the houses further along it have not been searched; nobody knows what is left in them, and it is further and more dangerous than next door.
+  The house: The family has shut itself in the house. The water has stopped. Food is short. Rooms: kitchen (the food is kept here); brothers room (Daniel and Leo's room); back room (Elena and Mara's room); bathroom (nothing is heard in or out of it). The only places and things there are: the kitchen, with the pantry shelf where the food is kept, the counter, the dry taps and the back door to the yard; the yard behind the kitchen, small and walled, with the drainpipe and the bin; the brothers room, with Daniel's and Leo's beds; the back room, with Elena's and Mara's beds and Mara's bag; the bathroom; the doors between the rooms; the front door and the front windows, boarded up, with a gap in the boards by the front door; the person at the front door. Outside, and not to be gone to this morning: the street, the neighbour's house and the houses further along the street. Do not mention any other object or place.
+  - Day 3: Mara freezes in the doorway with something moving in the street. Daniel picks her up and carries her inside. (you saw it)
+  - Someone is knocking at the front door.
+  - A woman's voice at the front door says: "Hello? I'm sorry to knock. Have you anything to eat you could spare? Anything at all."
+  - door_look: look through the gap in the boards
+  - door_call: (speech) call out through the front door
+  - door_open: unbar and open the front door
+  - door_refuse: (speech) send the person at the door away
+scene 8:
+  About the street: the houses further along it have not been searched; nobody knows what is left in them, and it is further and more dangerous than next door.
+  The house: The family has shut itself in the house. The water has stopped. Food is short. Rooms: kitchen (the food is kept here); brothers room (Daniel and Leo's room); back room (Elena and Mara's room); bathroom (nothing is heard in or out of it). The only places and things there are: the kitchen, with the pantry shelf where the food is kept, the counter, the dry taps and the back door to the yard; the yard behind the kitchen, small and walled, with the drainpipe and the bin; the brothers room, with Daniel's and Leo's beds; the back room, with Elena's and Mara's beds and Mara's bag; the bathroom; the doors between the rooms; the front door and the front windows, boarded up, with a gap in the boards by the front door; the person at the front door. Outside, and not to be gone to this morning: the street, the neighbour's house and the houses further along the street. Do not mention any other object or place.
+  - Day 3: Mara freezes in the doorway with something moving in the street. Daniel picks her up and carries her inside. (you saw it)
+  - Someone is knocking at the front door.
+  - A man's voice at the front door says: "I won't come in. I've a little girl at home, she's twelve. There's no food left at home. Have you anything?"
+  - door_look: look through the gap in the boards
+  - door_call: (speech) call out through the front door
+  - door_open: unbar and open the front door
+  - door_refuse: (speech) send the person at the door away

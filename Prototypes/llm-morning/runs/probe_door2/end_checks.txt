@@ -1,0 +1,15 @@
+plan sha256 now:  9ce64245a9f31b5b63a56192df492803ac767deb392670d79255a7a9bc349166 *reports/probe_door2_plan.md
+plan sha256 frozen: 9ce64245a9f31b5b63a56192df492803ac767deb392670d79255a7a9bc349166 *reports/probe_door2_plan.md
+probe sha256 now: 9984c695eace49e6b1b329a55ffc0d78d500c8de9f351e884a356ae893849a7d *runs/probe_door2/probe.py
+git diff --stat: []
+git diff --cached --stat: []
+git status --short:
+?? cache/probe_door2/
+?? reports/probe_door2_plan.md
+?? runs/probe_door2/
+?? runs/v6/daniel_ate_it-seed1.replay.md
+?? runs/v6/daniel_ate_it-seed2.replay.md
+?? runs/v6/daniel_ate_it-seed3.replay.md
+HEAD: 470cdfca019f455c2c41b83fe6bf1adf836bf763
+key search (grep -rlF over the repository, but .venv, __pycache__, .git, Library, node_modules): no file
+ledger: live 24 [('morning', 0), ('scene1', 3), ('scene2', 3), ('validity', False), ('scene3', 3), ('scene4', 3), ('scene5', 3), ('scene6', 3), ('scene7', 3), ('scene8', 3)]

@@ -1,0 +1,12 @@
+plan:  9ce64245a9f31b5b63a56192df492803ac767deb392670d79255a7a9bc349166 *reports/probe_door2_plan.md
+probe: 9984c695eace49e6b1b329a55ffc0d78d500c8de9f351e884a356ae893849a7d *runs/probe_door2/probe.py
+time:  2026-10-09T14:16:07Z
+HEAD:  470cdfca019f455c2c41b83fe6bf1adf836bf763
+git status --short:
+?? reports/probe_door2_plan.md
+?? runs/probe_door2/
+?? runs/v6/daniel_ate_it-seed1.replay.md
+?? runs/v6/daniel_ate_it-seed2.replay.md
+?? runs/v6/daniel_ate_it-seed3.replay.md
+cache/probe_door2 exists before the run: no
+phase-0 source: 897d2bcbb9c178e41cc0a51f1ef05e39d9746e101b5a431fe4fbcb3e44e98bd7 *cache/probe_door/gemini-3.5-flash-lite-daniel_ate_it-seed2.json

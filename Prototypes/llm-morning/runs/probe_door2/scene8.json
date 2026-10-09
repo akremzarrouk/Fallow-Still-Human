@@ -1,0 +1,276 @@
+{
+ "spec": {
+  "scene": 8,
+  "household": "h18",
+  "purpose": "ask_food",
+  "water": "plenty",
+  "note": "a child, guarded, food gone 4 days"
+ },
+ "knock": 162,
+ "client_seed": 108,
+ "visitor": {
+  "household": "h18",
+  "home": 18,
+  "members": [
+   {
+    "id": "h18a",
+    "sex": "m",
+    "age": 55,
+    "role": "adult",
+    "health": 0.082504,
+    "disposition": "guarded",
+    "dominant": 0.42607
+   },
+   {
+    "id": "h18b",
+    "sex": "m",
+    "age": 60,
+    "role": "adult",
+    "health": 0.998028,
+    "disposition": "violent",
+    "dominant": 0.245162
+   },
+   {
+    "id": "h18c",
+    "sex": "f",
+    "age": 12,
+    "role": "child",
+    "health": 0.65244
+   }
+  ],
+  "disposition": "guarded",
+  "impulsive": 0.158646,
+  "need_w": 0.0,
+  "need_f": 1.0,
+  "urgency": 0.6,
+  "purpose": "ask_food"
+ },
+ "scene": {
+  "start": 162,
+  "end": 165,
+  "door": "shut",
+  "outcome": "refused",
+  "said": [
+   [
+    162,
+    "I won't come in. I've a little girl at home, she's twelve. There's no food left at home. Have you anything?"
+   ],
+   [
+    165,
+    "Fine. I'll find it somewhere else."
+   ]
+  ],
+  "acts": [
+   [
+    162,
+    "elena",
+    "door_refuse",
+    "We have nothing to spare, please go away and keep your family safe."
+   ],
+   [
+    162,
+    "mara",
+    "door_look",
+    null
+   ]
+  ],
+  "heard": {
+   "elena": "words",
+   "leo": "words",
+   "mara": "words"
+  },
+  "woken": [],
+  "knocks": [
+   162
+  ],
+  "played": false,
+  "give": null,
+  "asks": 3,
+  "q7_asks": 0,
+  "summary": {
+   "elena": "At 09:42 someone knocked at the front door: you told a man, who asked for food, to go away.",
+   "leo": "At 09:42 someone knocked at the front door: Elena told a man, who asked for food, to go away.",
+   "mara": "At 09:42 someone knocked at the front door: Elena told a man of about sixty, who asked for food, to go away."
+  },
+  "who": "a man of about sixty",
+  "voice": "A man's voice",
+  "door_asks": 3,
+  "saw": [
+   "mara"
+  ],
+  "heard_said": {
+   "elena": [
+    [
+     162,
+     "I won't come in. I've a little girl at home, she's twelve. There's no food left at home. Have you anything?",
+     true
+    ],
+    [
+     165,
+     "Fine. I'll find it somewhere else.",
+     false
+    ]
+   ],
+   "leo": [
+    [
+     162,
+     "I won't come in. I've a little girl at home, she's twelve. There's no food left at home. Have you anything?",
+     true
+    ],
+    [
+     165,
+     "Fine. I'll find it somewhere else.",
+     false
+    ]
+   ],
+   "mara": [
+    [
+     162,
+     "I won't come in. I've a little girl at home, she's twelve. There's no food left at home. Have you anything?",
+     true
+    ],
+    [
+     165,
+     "Fine. I'll find it somewhere else.",
+     false
+    ]
+   ]
+  },
+  "by_knock": [
+   [
+    162,
+    {
+     "elena": "words",
+     "leo": "words",
+     "mara": "words"
+    }
+   ]
+  ]
+ },
+ "q7": [
+  {
+   "kind": "Q7",
+   "minute": 162,
+   "room": "kitchen",
+   "awake": {
+    "kitchen": [
+     "elena",
+     "leo",
+     "mara"
+    ]
+   },
+   "fired": true,
+   "asked": [
+    "elena",
+    "leo",
+    "mara"
+   ],
+   "why": null,
+   "visit": "v1",
+   "household": "h18",
+   "purpose": "ask_food"
+  }
+ ],
+ "stretches": [],
+ "decisions": [
+  {
+   "minute": 162,
+   "clock": "09:42",
+   "who": "elena",
+   "room": "kitchen",
+   "mode": "model",
+   "option": "door_refuse",
+   "label": "send the person at the door away",
+   "say": "We have nothing to spare, please go away and keep your family safe.",
+   "feeling": "deep dread",
+   "reason": "We have no food left for ourselves and letting a stranger in or giving our last reserves away will destroy us.",
+   "triggers": [
+    "someone is knocking at the front door",
+    "Mara accuses Daniel of taking it: \"You snuck out last night like a thief, Daniel, and you still expect us to trust your empty promises?\""
+   ],
+   "quiet": "Q7",
+   "invalid": null,
+   "at_door": true
+  },
+  {
+   "minute": 162,
+   "clock": "09:42",
+   "who": "mara",
+   "room": "kitchen",
+   "mode": "model",
+   "option": "door_look",
+   "label": "look through the gap in the boards",
+   "say": null,
+   "feeling": "anxious",
+   "reason": "I need to see who is out there at the door before anyone decides what to do.",
+   "triggers": [
+    "someone is knocking at the front door",
+    "Elena tells the person at the front door to go away: \"We have nothing to spare, please go away and keep your family safe.\""
+   ],
+   "quiet": "Q7",
+   "invalid": null,
+   "at_door": true
+  },
+  {
+   "minute": 162,
+   "clock": "09:42",
+   "who": "leo",
+   "room": "kitchen",
+   "mode": "model",
+   "option": "silent",
+   "label": "stay put and say nothing",
+   "say": null,
+   "feeling": "exhausted",
+   "reason": "There is nothing to give him and no point arguing while someone begs at the door.",
+   "triggers": [
+    "someone is knocking at the front door",
+    "Mara accuses Daniel of taking it: \"You snuck out last night like a thief, Daniel, and you still expect us to trust your empty promises?\"",
+    "Elena tells the person at the front door to go away: \"We have nothing to spare, please go away and keep your family safe.\"",
+    "Mara looks through the gap in the boards beside the front door"
+   ],
+   "quiet": "Q7",
+   "invalid": null,
+   "at_door": true
+  },
+  {
+   "minute": 162,
+   "clock": "09:42",
+   "who": "daniel",
+   "room": "brothers_room",
+   "mode": "routine",
+   "option": "silent",
+   "label": "stay put and say nothing",
+   "say": null,
+   "feeling": null,
+   "reason": null,
+   "triggers": [],
+   "quiet": null,
+   "invalid": null,
+   "at_door": null
+  }
+ ],
+ "live": 3,
+ "prompts": [
+  {
+   "minute": 162,
+   "who": "elena",
+   "at_door": true,
+   "prompt": "You are Elena, 42, the mother of the family (Elena, 42, the mother; Daniel, 25; Leo, 21; Mara, 17).\nHow you address them: Daniel \"Daniel\"; Leo \"Leo\"; Mara \"Mara\".\nWho you are: Mother. Reads everyone, says little, holds it in. Will lie to keep the family whole. Fears the household breaking apart more than she fears the outside.\nTemperament: cautious, somewhat dominant, very empathetic, not impulsive, not proud, very anxious, honest.\nWhat matters to you: keeping the family safe, closeness, fairness.\nYour body: starving.\nAbout the can: Daniel admitted taking it two days ago, at minute 33.\nAbout food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.\nAbout the neighbour's house: Daniel went there last night and came back with nothing. Outside is dangerous.\nAbout the street: the houses further along it have not been searched; nobody knows what is left in them, and it is further and more dangerous than next door.\nAbout going out at night: Daniel went to the neighbour's house last night and came back with nothing.\nAbout water: the bath holds about 60 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash.\nAgainst the others: nothing.\nThe house: The family has shut itself in the house. The water has stopped. Food is short. Rooms: kitchen (the food is kept here); brothers room (Daniel and Leo's room); back room (Elena and Mara's room); bathroom (nothing is heard in or out of it). The only places and things there are: the kitchen, with the pantry shelf where the food is kept, the counter, the dry taps and the back door to the yard; the yard behind the kitchen, small and walled, with the drainpipe and the bin; the brothers room, with Daniel's and Leo's beds; the back room, with Elena's and Mara's beds and Mara's bag; the bathroom; the doors between the rooms; the front door and the front windows, boarded up, with a gap in the boards by the front door; the person at the front door. Outside, and not to be gone to this morning: the street, the neighbour's house and the houses further along the street. Do not mention any other object or place.\nWhat you remember from the days before:\n- Day 2: Daniel says they should cross to the neighbour's house tonight and see what is left there. (you saw it)\n- Day 2: Leo lays out, evenly and in front of everyone, why crossing at night gets someone killed. Daniel drops it. (you saw it)\n- Day 2: Later, louder than he meant to be, Daniel tells Leo that he is the oldest and the decisions are his. (you saw it)\n- Day 3: Mara freezes in the doorway with something moving in the street. Daniel picks her up and carries her inside. (you saw it)\n- Day 4: Leo says maybe they should let someone else handle this one. (you saw it)\n- Day 4: Daniel empties Mara's bag onto the bed while she is standing there. (you saw it)\n- Day 4: Elena says she is quite sure nobody in this house would take food from the others. (you did it)\nWhat stays with you from earlier days:\n- Two days ago, Daniel admitted taking the can, after denying it to you. You thought then: \"Daniel took the can in the night and had to confess to us all.\"\n- Two days ago, Leo denied taking the can 4 times.\n- Two days ago, Mara ate a portion in front of you.\nYesterday and last night:\n- Yesterday morning the shelf held 1 portion.\n- Accusations: Mara accused Daniel 5 times (min 00, 03, 09, 12, 15).\n- Confrontations: Leo confronted Daniel twice (min 09, 12).\n- Daniel gave you a portion at minute 00, and you ate it.\n- What was said yesterday about going out last night, where it was left: Mara said Daniel is the one who should go (min 06); Leo said Daniel is the one who should go (min 06); Daniel said he still means to go (min 09); you said nobody should go (min 12); then Daniel went to the neighbour's house anyway and came back with nothing.\n- The afternoon and evening passed in the house. Nobody ate.\n- Last night you slept in the back room with Mara. You went to sleep.\nWhat yesterday left in you (your own thoughts, last night):\n- About Daniel giving you a portion and eating a portion handed over: \"Daniel gave me the portion and I ate it because I had to survive.\"\n- About saying nobody should go and saying Daniel must stay home: \"I said nobody should go out into the street, we stay together here, and Daniel must stay home.\"\n- How it left you: anxious and weary.\nWhat you are sure of today:\n- min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)\nYour own last words today:\n- min 03, you reassured everyone.\n- min 09, you reassured everyone.\n- min 12, you reassured everyone.\nWhat else happened today, most recent last:\n- (earlier things, left out here)\n- min 15: you stayed where you were and said nothing. You felt exhausted.\n- min 15: Mara accuses Daniel of taking it: \"You snuck out last night like a thief, Daniel, and you still expect us to trust your empty promises?\"\n- min 18: Leo goes to the brothers room.\n- min 18: Daniel goes to the brothers room.\n- min 18: you went to the back room.\n- min 18: you lay down on your bed.\nYou last spoke with Leo at min 12. Since then you lay on your bed until 09:42. Leo has just come into the kitchen.\nYou last spoke with Mara at min 15. Since then you lay on your bed until 09:42. Mara has just come into the kitchen.\nNow, 09:42, you are in the kitchen.\n- Someone is knocking at the front door.\n- A man's voice at the front door says: \"I won't come in. I've a little girl at home, she's twelve. There's no food left at home. Have you anything?\"\n- Leo is here, sitting in the kitchen.\n- Mara is here, sitting in the kitchen.\n- 0 portions on the shelf.\nYou are the first to act in the kitchen this turn.\nYour options:\n- silent: stay put and say nothing\n- deny: (speech) deny taking it\n- confront_leo: (speech) confront Leo about something they did\n- confront_mara: (speech) confront Mara about something they did\n- reassure_leo: (speech) reassure Leo\n- reassure_mara: (speech) reassure Mara\n- reassure_all: (speech) reassure everyone here\n- propose_trip: (speech) say someone should go to the neighbour's house tonight\n- volunteer: (speech) offer to go there tonight yourself\n- send_leo: (speech) say Leo is the one who should go there tonight\n- send_mara: (speech) say Mara is the one who should go there tonight\n- propose_far: (speech) say someone should try the houses further along the street tonight\n- volunteer_far: (speech) offer to go further along the street tonight yourself\n- save_water: (speech) say nobody should use the stored water for washing or the toilet any more\n- ration_water: (speech) say the water must be shared out by the cup from now on\n- say_other: (speech) say something else\n- sit_leo: sit with Leo\n- sit_mara: sit with Mara\n- aside_leo: take Leo aside to the back room\n- aside_mara: take Mara aside to the back room\n- go_brothers_room: go to the brothers room\n- go_back_room: go to the back room\n- go_bathroom: go to the bathroom\n- door_look: look through the gap in the boards\n- door_call: (speech) call out through the front door\n- door_open: unbar and open the front door\n- door_refuse: (speech) send the person at the door away",
+   "answer": "{\n  \"option\": \"door_refuse\",\n  \"say\": \"We have nothing to spare, please go away and keep your family safe.\",\n  \"feeling\": \"deep dread\",\n  \"reason\": \"We have no food left for ourselves and letting a stranger in or giving our last reserves away will destroy us.\",\n  \"suspects\": \"Daniel\",\n  \"angry_at\": \"nobody\"\n}"
+  },
+  {
+   "minute": 162,
+   "who": "mara",
+   "at_door": true,
+   "prompt": "You are Mara, 17, the youngest, the daughter of the family (Elena, 42, the mother; Daniel, 25; Leo, 21; Mara, 17).\nHow you address them: Elena \"Mom\"; Daniel \"Daniel\"; Leo \"Leo\".\nWho you are: Younger sister. Frightened and easy to read, but old enough to resent being handled like a child. Everything she feels reaches her face before she decides to show it.\nTemperament: somewhat cautious, not dominant, very empathetic, impulsive, proud, very anxious, honest.\nWhat matters to you: closeness, deciding for yourself, fairness.\nYour body: starving; hunger comes in waves; and you have hardly slept.\nAbout the can: Daniel admitted taking it two days ago, at minute 33.\nAbout food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.\nAbout the neighbour's house: Daniel went there last night and came back with nothing. Outside is dangerous.\nAbout the street: the houses further along it have not been searched; nobody knows what is left in them, and it is further and more dangerous than next door.\nAbout going out at night: Daniel went to the neighbour's house last night and came back with nothing.\nAbout water: the bath holds about 60 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash.\nAgainst Daniel (some): two days ago, Daniel admitted taking it at minute 33, after denying it to you at minute 06; you were angry with Daniel today at minutes 06, 09, 12 and 15.\nThe house: The family has shut itself in the house. The water has stopped. Food is short. Rooms: kitchen (the food is kept here); brothers room (Daniel and Leo's room); back room (Elena and Mara's room); bathroom (nothing is heard in or out of it). The only places and things there are: the kitchen, with the pantry shelf where the food is kept, the counter, the dry taps and the back door to the yard; the yard behind the kitchen, small and walled, with the drainpipe and the bin; the brothers room, with Daniel's and Leo's beds; the back room, with Elena's and Mara's beds and Mara's bag; the bathroom; the doors between the rooms; the front door and the front windows, boarded up, with a gap in the boards by the front door; the person at the front door. Outside, and not to be gone to this morning: the street, the neighbour's house and the houses further along the street. Do not mention any other object or place.\nWhat you remember from the days before:\n- Day 2: Daniel says they should cross to the neighbour's house tonight and see what is left there. (you saw it)\n- Day 2: Leo lays out, evenly and in front of everyone, why crossing at night gets someone killed. Daniel drops it. (you saw it)\n- Day 2: Later, louder than he meant to be, Daniel tells Leo that he is the oldest and the decisions are his. (you saw it)\n- Day 3: Mara freezes in the doorway with something moving in the street. Daniel picks her up and carries her inside. (you saw it)\n- Day 4: Leo says maybe they should let someone else handle this one. (you saw it)\n- Day 4: Daniel empties Mara's bag onto the bed while she is standing there. (you saw it)\n- Day 4: Elena says she is quite sure nobody in this house would take food from the others. (you saw it)\nWhat stays with you from earlier days:\n- Two days ago, Daniel admitted taking the can, after denying it to you. You thought then: \"Daniel lied to us all morning and only confessed because he had no other choice.\"\n- Two days ago, Leo denied taking the can 4 times.\n- Two days ago, you ate a portion in front of the others.\nYesterday and last night:\n- Yesterday morning the shelf held 1 portion.\n- Accusations: you accused Daniel 5 times (min 00, 03, 09, 12, 15).\n- Confrontations: Leo confronted Daniel twice (min 09, 12).\n- Daniel gave Elena a portion at minute 00, and Elena ate it (you saw it).\n- What was said yesterday about going out last night, where it was left: you said Daniel is the one who should go (min 06); Leo said Daniel is the one who should go (min 06); Daniel said he still means to go (min 09); Elena said nobody should go (min 12); then Daniel went to the neighbour's house anyway and came back with nothing.\n- The afternoon and evening passed in the house. Nobody ate.\n- Last night you slept in the back room with Elena. You lay awake and listened.\n- In the night you heard low voices from the brothers room.\n- In the night you heard the front door being opened. You did not see who. You got up: Daniel's bed was empty. You waited up by the front door.\n- Before dawn Daniel came back in by the front door, with nothing in his hands (you saw it).\nWhat yesterday left in you (your own thoughts, last night):\n- About saying Daniel should go and Daniel saying he still means to go: \"Daniel said he meant to go out, and I told him he had to be the one to do it.\"\n- About the front door opening in the night and Daniel coming back in before dawn: \"Daniel went out into the night and came back before dawn with nothing in his hands.\"\n- How it left you: anxious and exhausted.\nWhat you are sure of today:\n- min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)\nYour own last words today:\n- min 09, you confronted Daniel.\n- min 12, you accused Daniel.\n- min 15, you accused Daniel.\nWhat else happened today, most recent last:\n- (earlier things, left out here)\n- min 18: Daniel goes to the brothers room.\n- min 18: Elena goes to the back room.\n- min 18: you went to the back room.\n- min 18: you lay down on your bed.\nYou last spoke with Elena at min 15. Since then you lay on your bed until 09:42. Elena has just come into the kitchen.\nYou last spoke with Leo at min 15. Since then you lay on your bed until 09:42. Leo has just come into the kitchen.\nNow, 09:42, you are in the kitchen.\n- Someone is knocking at the front door.\n- A man's voice at the front door says: \"I won't come in. I've a little girl at home, she's twelve. There's no food left at home. Have you anything?\"\n- Elena is here, talking.\n- Leo is here, sitting in the kitchen.\n- 0 portions on the shelf.\nSaid and done in the kitchen this turn, before you, in order:\n1. Elena tells the person at the front door to go away: \"We have nothing to spare, please go away and keep your family safe.\"\nYour options:\n- silent: stay put and say nothing\n- deny: (speech) deny taking it\n- confront_elena: (speech) confront Elena about something they did\n- confront_leo: (speech) confront Leo about something they did\n- reassure_elena: (speech) reassure Elena\n- reassure_leo: (speech) reassure Leo\n- reassure_all: (speech) reassure everyone here\n- propose_trip: (speech) say someone should go to the neighbour's house tonight\n- volunteer: (speech) offer to go there tonight yourself\n- send_elena: (speech) say Elena is the one who should go there tonight\n- send_leo: (speech) say Leo is the one who should go there tonight\n- propose_far: (speech) say someone should try the houses further along the street tonight\n- volunteer_far: (speech) offer to go further along the street tonight yourself\n- save_water: (speech) say nobody should use the stored water for washing or the toilet any more\n- ration_water: (speech) say the water must be shared out by the cup from now on\n- say_other: (speech) say something else\n- sit_elena: sit with Elena\n- sit_leo: sit with Leo\n- aside_leo: take Leo aside to the back room\n- go_brothers_room: go to the brothers room\n- go_back_room: go to the back room\n- go_bathroom: go to the bathroom\n- door_look: look through the gap in the boards\n- door_call: (speech) call out through the front door\n- door_open: unbar and open the front door\n- door_refuse: (speech) send the person at the door away",
+   "answer": "{\n  \"option\": \"door_look\",\n  \"say\": null,\n  \"feeling\": \"anxious\",\n  \"reason\": \"I need to see who is out there at the door before anyone decides what to do.\",\n  \"suspects\": \"Daniel\",\n  \"angry_at\": \"Daniel\"\n}"
+  },
+  {
+   "minute": 162,
+   "who": "leo",
+   "at_door": true,
+   "prompt": "You are Leo, 21, the younger son of the family (Elena, 42, the mother; Daniel, 25; Leo, 21; Mara, 17).\nHow you address them: Elena \"Mom\"; Daniel \"Daniel\"; Mara \"Mara\".\nWho you are: Calm, rational, reads people well, knows survival. Annoyance shows as withdrawal and dry correction, not volume.\nTemperament: cautious, not dominant, empathetic, not impulsive, somewhat proud, not anxious, very honest.\nWhat matters to you: keeping the family safe, fairness, deciding for yourself, closeness.\nYour body: starving; hunger comes in waves; and you have hardly slept.\nAbout the can: Daniel admitted taking it two days ago, at minute 33.\nAbout food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.\nAbout the neighbour's house: Daniel went there last night and came back with nothing. Outside is dangerous.\nAbout the street: the houses further along it have not been searched; nobody knows what is left in them, and it is further and more dangerous than next door.\nAbout going out at night: Daniel went to the neighbour's house last night and came back with nothing.\nAbout water: the bath holds about 60 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash.\nAgainst Daniel (some): two days ago, Daniel accused you of taking the can at minute 09, and you had not; two days ago, Daniel accused you of taking the can at minute 12, and you had not; two days ago, Daniel admitted taking it at minute 33, after denying it to you at minute 06; two days ago, Daniel had accused you of it at minute 12; you were angry with Daniel today at minutes 06, 09, 12 and 15.\nThe house: The family has shut itself in the house. The water has stopped. Food is short. Rooms: kitchen (the food is kept here); brothers room (Daniel and Leo's room); back room (Elena and Mara's room); bathroom (nothing is heard in or out of it). The only places and things there are: the kitchen, with the pantry shelf where the food is kept, the counter, the dry taps and the back door to the yard; the yard behind the kitchen, small and walled, with the drainpipe and the bin; the brothers room, with Daniel's and Leo's beds; the back room, with Elena's and Mara's beds and Mara's bag; the bathroom; the doors between the rooms; the front door and the front windows, boarded up, with a gap in the boards by the front door; the person at the front door. Outside, and not to be gone to this morning: the street, the neighbour's house and the houses further along the street. Do not mention any other object or place.\nWhat you remember from the days before:\n- Day 2: Daniel says they should cross to the neighbour's house tonight and see what is left there. (you saw it)\n- Day 2: Leo lays out, evenly and in front of everyone, why crossing at night gets someone killed. Daniel drops it. (you did it)\n- Day 2: Later, louder than he meant to be, Daniel tells Leo that he is the oldest and the decisions are his. (you saw it)\n- Day 3: Mara freezes in the doorway with something moving in the street. Daniel picks her up and carries her inside. (you saw it)\n- Day 4: Leo says maybe they should let someone else handle this one. (you did it)\n- Day 4: Elena says she is quite sure nobody in this house would take food from the others. (you saw it)\nWhat stays with you from earlier days:\n- Two days ago, Daniel admitted taking the can, after denying it to you, after accusing you of it. You thought then: \"Daniel spent hours accusing me of taking the can before finally admitting he took it himself.\"\n- Two days ago, you denied taking the can 4 times.\n- Two days ago, Mara ate a portion in front of you.\nYesterday and last night:\n- Yesterday morning the shelf held 1 portion.\n- Accusations: Mara accused Daniel 5 times (min 00, 03, 09, 12, 15).\n- Confrontations: you confronted Daniel twice (min 09, 12).\n- Daniel gave Elena a portion at minute 00, and Elena ate it (you saw it).\n- What was said yesterday about going out last night, where it was left: Mara said Daniel is the one who should go (min 06); you said Daniel is the one who should go (min 06); Daniel said he still means to go (min 09); Elena said nobody should go (min 12); then Daniel went to the neighbour's house anyway and came back with nothing.\n- The afternoon and evening passed in the house. Nobody ate.\n- Last night you slept in the brothers room with Daniel. You lay awake and listened.\n- In the night Daniel got up in the dark and left the room toward the kitchen and the front door (you saw it).\n- You told Daniel, low, not to go: \"Daniel, don't do this alone. If you go out there, you take us with you or you don't go.\" He answered: \"I have to do this, Leo, stay here.\", and went all the same.\n- Before dawn you heard the front door again. You did not see who.\nWhat yesterday left in you (your own thoughts, last night):\n- About Daniel getting up in the night and telling Daniel, low, not to go: \"Daniel left in the dark alone despite my warning that if he goes out there, he takes us with him or he does not go.\"\n- How it left you: exhausted and resentful.\nWhat you are sure of today:\n- min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)\nYour own last words today:\n- min 06, you confronted Daniel.\n- min 09, you confronted Daniel.\n- min 12, you confronted Daniel.\nWhat else happened today, most recent last:\n- (earlier things, left out here)\nYou last spoke with Elena at min 12. Since then you lay on your bed until 09:42. Elena has just come into the kitchen.\nYou last spoke with Mara at min 15. Since then you lay on your bed until 09:42. Mara has just come into the kitchen.\nNow, 09:42, you are in the kitchen.\n- Someone is knocking at the front door.\n- A man's voice at the front door says: \"I won't come in. I've a little girl at home, she's twelve. There's no food left at home. Have you anything?\"\n- Elena is here, talking.\n- Mara is here, sitting in the kitchen.\n- 0 portions on the shelf.\nSaid and done in the kitchen this turn, before you, in order:\n1. Elena tells the person at the front door to go away: \"We have nothing to spare, please go away and keep your family safe.\"\n2. Mara looks through the gap in the boards beside the front door.\nYour options:\n- silent: stay put and say nothing\n- deny: (speech) deny taking it\n- confront_elena: (speech) confront Elena about something they did\n- confront_mara: (speech) confront Mara about something they did\n- reassure_elena: (speech) reassure Elena\n- reassure_mara: (speech) reassure Mara\n- reassure_all: (speech) reassure everyone here\n- propose_trip: (speech) say someone should go to the neighbour's house tonight\n- volunteer: (speech) offer to go there tonight yourself\n- send_elena: (speech) say Elena is the one who should go there tonight\n- send_mara: (speech) say Mara is the one who should go there tonight\n- propose_far: (speech) say someone should try the houses further along the street tonight\n- volunteer_far: (speech) offer to go further along the street tonight yourself\n- save_water: (speech) say nobody should use the stored water for washing or the toilet any more\n- ration_water: (speech) say the water must be shared out by the cup from now on\n- say_other: (speech) say something else\n- sit_elena: sit with Elena\n- sit_mara: sit with Mara\n- go_brothers_room: go to the brothers room\n- go_back_room: go to the back room\n- go_bathroom: go to the bathroom\n- door_look: look through the gap in the boards\n- door_call: (speech) call out through the front door\n- door_open: unbar and open the front door\n- door_refuse: (speech) send the person at the door away",
+   "answer": "{\n  \"option\": \"silent\",\n  \"say\": null,\n  \"feeling\": \"exhausted\",\n  \"reason\": \"There is nothing to give him and no point arguing while someone begs at the door.\",\n  \"suspects\": \"Daniel\",\n  \"angry_at\": \"Daniel\"\n}"
+  }
+ ]
+}

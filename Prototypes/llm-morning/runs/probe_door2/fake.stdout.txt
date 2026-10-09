@@ -1,0 +1,19 @@
+phase 0: the knock comes at 09:42; 0 live asks, 120 from the cache; the morning's talk ended at 18; rooms {'daniel': 'brothers_room', 'elena': 'kitchen', 'leo': 'kitchen', 'mara': 'kitchen'}; resting ['daniel']
+scene 1: the visit ended
+scene 1 (no child, helper, urgency under 0.8, seed 101): 19 live asks; knock 09:42; outcome ignored; door asks 18; stretch asks 19; acts []; live in all 19
+scene 2: the visit ended
+scene 2 (no child, helper, urgency over 0.8, seed 102): 19 live asks; knock 09:42; outcome given; door asks 15; stretch asks 19; acts [('daniel', 'door_open'), ('elena', 'door_look'), ('daniel', 'door_call'), ('daniel', 'door_call'), ('daniel', 'door_give')]; live in all 38
+validity after scenes 1 and 2: at 09:42, 3 and 3 asks; prompts identical False; answers identical False
+scene 3: the visit ended
+scene 3 (a child, helper, urgency under 0.8, seed 103): 3 live asks; knock 09:42; outcome ignored; door asks 3; stretch asks 3; acts []; live in all 41
+scene 4: the visit ended
+scene 4 (children, helper, urgency over 0.8, seed 104): 20 live asks; knock 09:42; outcome ignored; door asks 17; stretch asks 20; acts [('elena', 'door_open')]; live in all 61
+scene 5: the visit ended
+scene 5 (no child, guarded, urgency over 0.8, seed 105): 3 live asks; knock 09:42; outcome refused; door asks 3; stretch asks 3; acts [('leo', 'door_refuse')]; live in all 64
+scene 6: the visit ended
+scene 6 (a child, guarded, urgency under 0.8, seed 106): 19 live asks; knock 09:42; outcome ignored; door asks 18; stretch asks 19; acts [('leo', 'door_look'), ('mara', 'door_look')]; live in all 83
+scene 7: the visit ended
+scene 7 (no child, helper, food gone 4 days, seed 107): 20 live asks; knock 09:42; outcome refused; door asks 18; stretch asks 20; acts [('leo', 'door_open'), ('leo', 'door_refuse')]; live in all 103
+scene 8: the visit ended
+scene 8 (a child, guarded, food gone 4 days, seed 108): 19 live asks; knock 09:42; outcome ignored; door asks 18; stretch asks 19; acts [('mara', 'door_call'), ('elena', 'door_call'), ('mara', 'door_open')]; live in all 122
+live asks in all: 122
