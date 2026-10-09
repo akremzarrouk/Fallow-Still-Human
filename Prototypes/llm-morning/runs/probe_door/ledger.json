@@ -1,0 +1,224 @@
+{
+ "live": 72,
+ "phases": [
+  {
+   "phase": "morning",
+   "live": 24,
+   "knock": 162,
+   "rooms": {
+    "daniel": "brothers_room",
+    "elena": "kitchen",
+    "leo": "kitchen",
+    "mara": "kitchen"
+   },
+   "resting": [
+    "daniel"
+   ],
+   "morning_end": 18
+  },
+  {
+   "phase": "scene1",
+   "live": 6,
+   "outcome": "refused",
+   "played": false,
+   "asks": 6,
+   "acts": [
+    [
+     "elena",
+     "door_look"
+    ],
+    [
+     "mara",
+     "door_look"
+    ],
+    [
+     "elena",
+     "door_refuse"
+    ],
+    [
+     "leo",
+     "door_look"
+    ]
+   ]
+  },
+  {
+   "phase": "scene2",
+   "live": 6,
+   "outcome": "refused",
+   "played": false,
+   "asks": 6,
+   "acts": [
+    [
+     "elena",
+     "door_look"
+    ],
+    [
+     "mara",
+     "door_look"
+    ],
+    [
+     "elena",
+     "door_refuse"
+    ],
+    [
+     "leo",
+     "door_look"
+    ],
+    [
+     "mara",
+     "door_look"
+    ]
+   ]
+  },
+  {
+   "phase": "scene3",
+   "live": 6,
+   "outcome": "refused",
+   "played": false,
+   "asks": 6,
+   "acts": [
+    [
+     "elena",
+     "door_look"
+    ],
+    [
+     "mara",
+     "door_look"
+    ],
+    [
+     "elena",
+     "door_refuse"
+    ],
+    [
+     "leo",
+     "door_look"
+    ]
+   ]
+  },
+  {
+   "phase": "scene4",
+   "live": 6,
+   "outcome": "refused",
+   "played": false,
+   "asks": 6,
+   "acts": [
+    [
+     "elena",
+     "door_look"
+    ],
+    [
+     "mara",
+     "door_look"
+    ],
+    [
+     "elena",
+     "door_refuse"
+    ],
+    [
+     "leo",
+     "door_look"
+    ]
+   ]
+  },
+  {
+   "phase": "scene5",
+   "live": 6,
+   "outcome": "refused",
+   "played": false,
+   "asks": 6,
+   "acts": [
+    [
+     "elena",
+     "door_look"
+    ],
+    [
+     "mara",
+     "door_look"
+    ],
+    [
+     "elena",
+     "door_refuse"
+    ],
+    [
+     "leo",
+     "door_look"
+    ],
+    [
+     "mara",
+     "door_look"
+    ]
+   ]
+  },
+  {
+   "phase": "scene6",
+   "live": 6,
+   "outcome": "refused",
+   "played": false,
+   "asks": 6,
+   "acts": [
+    [
+     "elena",
+     "door_look"
+    ],
+    [
+     "mara",
+     "door_look"
+    ],
+    [
+     "elena",
+     "door_refuse"
+    ],
+    [
+     "leo",
+     "door_look"
+    ]
+   ]
+  },
+  {
+   "phase": "scene7",
+   "live": 6,
+   "outcome": "refused",
+   "played": false,
+   "asks": 6,
+   "acts": [
+    [
+     "elena",
+     "door_look"
+    ],
+    [
+     "mara",
+     "door_look"
+    ],
+    [
+     "elena",
+     "door_refuse"
+    ]
+   ]
+  },
+  {
+   "phase": "scene8",
+   "live": 6,
+   "outcome": "ignored",
+   "played": false,
+   "asks": 6,
+   "acts": [
+    [
+     "elena",
+     "door_look"
+    ],
+    [
+     "mara",
+     "door_look"
+    ],
+    [
+     "leo",
+     "door_look"
+    ],
+    [
+     "mara",
+     "door_look"
+    ]
+   ]
+  }
+ ]
+}

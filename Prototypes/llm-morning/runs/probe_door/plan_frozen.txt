@@ -1,0 +1,11 @@
+plan:  0eed9620db47c4b4053b856cb4837638e9cb9dd6f4bafca4ceee8da53747d4d7 *reports/probe_door_plan.md
+probe: 6d1c98c3728ba3c0b1a026a2afde51e21e2a32b063f262cc62eecd1591f951f4 *runs/probe_door/probe.py
+time:  2026-10-09T09:28:21Z
+HEAD:  4580896455866253f87e1027ebddf603cd0c525e
+git status --short:
+?? reports/probe_door_plan.md
+?? runs/probe_door/
+?? runs/v6/daniel_ate_it-seed1.replay.md
+?? runs/v6/daniel_ate_it-seed2.replay.md
+?? runs/v6/daniel_ate_it-seed3.replay.md
+cache/probe_door exists before the run: no
