@@ -1,7 +1,10 @@
 """Writes streetdata/lines.json, the stranger's words at the door in W2a (reports/w2_design.md, §4.3; amendment 3:
 at least 8 variants per slot). Run once from Prototypes/llm-morning/. Changed by reports/w2a_fixes.md, fix 4: a line
 that says the household heard voices is only for a household that did (none in W2a); a line that names a girl or a
-boy only for a household whose child is that sex, with neutral wording beside it."""
+boy only for a household whose child is that sex, with neutral wording beside it. Changed by
+reports/door_heard_impl.md (from reports/probe_door.md): the visitor speaks first, through the shut door, and a visitor
+with a child names the child and their age in that first line (`first`, by disposition: `by` helper or guarded; code
+puts the children in for `{kids}`); a parting line that refers to an ask is said only after one (`after`: ask)."""
 import json
 
 P = lambda *xs: [{"text": x} for x in xs]
@@ -10,6 +13,8 @@ O = lambda x: {"text": x, "with": "others"}
 G = lambda x: {"text": x, "with": "girl"}
 B = lambda x: {"text": x, "with": "boy"}
 V = lambda x: {"text": x, "with": "heard_voices"}
+K = lambda by, x: {"text": x, "with": "child", "first": True, "by": by}      # the first line at the knock, with a child
+A = lambda x: {"text": x, "after": "ask"}                                   # only after the visitor has asked
 slots = {
     "voice_ask_water": P(
         "Hello? I'm sorry to knock. I've run out of water. Could you spare a little? Even a cup would help.",
@@ -23,7 +28,13 @@ slots = {
         V("I heard voices, so I knocked. I've no water left. Anything you could spare, I'd be grateful."),
         G("Please, I've a little one at home and no water left to give her. Just a cup, if you can."),
         C("Please, I've a little one at home and no water left. Just a cup, if you can."),
-        O("Hello? There's a few of us at home and the water's gone. Whatever you can spare.")],
+        O("Hello? There's a few of us at home and the water's gone. Whatever you can spare."),
+        K("helper", "Hello? I'm sorry to knock. {kids} We've no water left. Could you spare a little?"),
+        K("helper", "Please, is anyone in? {kids} There's not a drop of water left. Just a cup would help."),
+        K("helper", "I'm sorry to trouble you. {kids} Our water's gone. Anything you could spare, I'd be grateful."),
+        K("guarded", "I'm not here for trouble. {kids} We're out of water. Can you spare any?"),
+        K("guarded", "Is anyone there? {kids} Our water's gone. A cup, that's all I'm asking."),
+        K("guarded", "I won't come in. {kids} There's no water left at home. Have you any?")],
     "voice_ask_food": P(
         "Hello? I'm sorry to knock. Have you anything to eat you could spare? Anything at all.",
         "I haven't eaten in days. I'm not asking for much. A tin, a bit of bread, whatever you have.",
@@ -35,7 +46,13 @@ slots = {
         "It's food I'm asking for. Only a little. I'm sorry, I know it's hard for everyone.") + [
         V("I heard voices, so I knocked. I've nothing left to eat. Could you spare a little?"),
         C("Please, my little one hasn't eaten properly in days. Anything you could spare, for the child."),
-        O("Hello? There's a few of us at home and the food's gone. Could you spare anything at all?")],
+        O("Hello? There's a few of us at home and the food's gone. Could you spare anything at all?"),
+        K("helper", "Hello? I'm sorry to knock. {kids} We've nothing left to eat. Could you spare a little?"),
+        K("helper", "Please, is anyone in? {kids} There's no food left at home. Anything at all would help."),
+        K("helper", "I'm sorry to trouble you. {kids} Our food's gone. Anything you could spare, I'd be grateful."),
+        K("guarded", "I'm not here for trouble. {kids} We've nothing to eat. Can you spare anything?"),
+        K("guarded", "Is anyone there? {kids} Our food's gone. A little, that's all I'm asking."),
+        K("guarded", "I won't come in. {kids} There's no food left at home. Have you anything?")],
     "open_ask_water": P(
         "Thank you for opening. I've had no water since yesterday. A bottle would see me through.",
         "Thank you. I didn't think anyone would open. Could you spare some water? Only a little.",
@@ -110,27 +127,30 @@ slots = {
     "refused_polite": P(
         "I understand. I'm sorry to have bothered you. Look after yourselves.",
         "All right. I understand. Take care in there.",
-        "That's all right. I'm sorry I asked. Goodbye.",
+        ) + [A("That's all right. I'm sorry I asked. Goodbye.")] + P(
         "I understand. Everyone's in the same boat. I'll go.",
         "Right. I'm sorry. I'll try somewhere else.",
         "Of course. I'm sorry I knocked. Take care.",
         "I understand. Good luck to you.",
-        "No, I understand. I'm sorry. I'll leave you be."),
+        ) + [A("No, I understand. I'm sorry. I'll leave you be.")],
     "refused_flat": P(
         "Right. Never mind.",
         "Fine.",
-        "Right. Thanks for nothing.",
+        ) + [A("Right. Thanks for nothing.")] + P(
         "I see. Well. I'll go, then.",
         "Suit yourselves.",
         "Right. I won't bother you again.",
-        "Fine. I'll find it somewhere else.",
+        ) + [A("Fine. I'll find it somewhere else.")] + P(
         "Right. Goodbye, then."),
 }
 doc = {"about": ("The stranger's words at the family's door in W2a (reports/w2_design.md, §4.3), written by hand once, "
                  "before any run. Code chooses a line by slot, by the visiting household (`with`: only for a household "
                  "with a child, with a girl, with a boy, of two or more, or that heard the family's voices), and by the string <seed>:street:<household>:visit<n>:<slot>. Rules: "
                  "at most 25 words; no digit, number word, weekday or house number; nothing the family's world does not "
-                 "have; a request, never a duty; a line states a need the household really has."),
+                 "have; a request, never a duty; a line states a need the household really has. A `first` line is said through the "
+                 "shut door at the first knock by a household with a child (`by`: helper, or guarded for any other "
+                 "disposition); code puts in `{kids}` a sentence naming each child and their age, which is true of the "
+                 "household (reports/door_heard_impl.md). A line `after` ask is said only once the visitor has asked."),
        "slots": slots}
 with open("streetdata/lines.json", "w", encoding="utf-8", newline="\n") as f:
     json.dump(doc, f, ensure_ascii=False, indent=1)

@@ -7291,9 +7291,10 @@ class KnockTest(unittest.TestCase):
             p.room = "kitchen"
         leo.room = "back_room"
         self.assertTrue(q.hear_knock(120, played=False))
-        self.assertEqual(ids(m, el), ["door_look", "door_call", "door_open", "door_refuse"])
+        # The stranger says what they need through the door with the knock (reports/door_heard_impl.md), so water to
+        # give puts door_give in from the first turn; with no water it is not offered.
+        self.assertEqual(ids(m, el), ["door_look", "door_call", "door_open", "door_give", "door_refuse"])
         self.assertEqual(ids(m, leo), [])
-        # Once the stranger has said what they need, water to give puts door_give in; with no water it is not offered.
         q.door_act(el, "door_call", 120, "Who is it?")
         q.door_after(120)
         q.door_before(123)
@@ -7326,15 +7327,19 @@ class KnockTest(unittest.TestCase):
         self.assertNotIn("door_give", ids(m, el))
 
     # ---------- T8: the cost ----------
-    def test_t8_a_q7_stretch_asks_at_most_6_and_a_day_at_most_56(self):
+    def test_t8_a_visit_asks_at_most_18_at_the_door_and_a_day_at_most_56(self):
+        # reports/door_heard_impl.md: the Q7 reserve of 6 is replaced by everyone at the door asked each turn, up to 18
+        # door asks a visit; the stretch's own cap (18) still holds everyone else's asks.
         d, q, (v,) = self.door_day(TalkFake(), [(300, "ask_water")])
         m = d.day3
         self.quiet.play(m)
         q7 = [s for s in q.stretches if s["trigger"] == "Q7"]
         knocks = [e for e in q.log if e["kind"] == "Q7" and e["fired"]]
         self.assertEqual(len(knocks), 1, q.log[-5:])
+        for sc in q.door_scenes:
+            self.assertLessEqual(sc["door_asks"], 18, sc)
         for s in q7:
-            self.assertLessEqual(s["asks"], 6, s)
+            self.assertLessEqual(s["asks"], 2 * 18 - 1, s)
         self.assertLessEqual(q.asks, 56)
         # The day cap holds whatever stretch is under way, reserved or not.
         q.cap, q.reserved, q.asks = None, True, 55
@@ -7342,7 +7347,7 @@ class KnockTest(unittest.TestCase):
         q.asks = 56
         self.assertTrue(q.spent())
         self.assertEqual(self.quiet.DAY_MAX, 56)
-        self.assertEqual(self.quiet.DOOR_ASKS, 6)
+        self.assertEqual(self.quiet.DOOR_ASKS, 18)
 
     # ---------- T9: the stranger's lines ----------
     def test_t9_every_strangers_line_is_short_plain_and_of_the_familys_world(self):
@@ -7488,7 +7493,7 @@ class KnockFixTest(unittest.TestCase):
             for mm, p in asked:
                 self.assertTrue(self.door_lines(p), f"a Q7 ask without the door in it, at {mm}:\n{p[-800:]}")
         sc = q.door_scenes[0]
-        self.assertLessEqual(sc["asks"], 6)
+        self.assertLessEqual(sc["door_asks"], 18)          # was 6 (reports/door_heard_impl.md)
         self.assertEqual(sc["outcome"], "ignored")
         self.assertIsNone(q.door)
         self.assertFalse(q.reserved)
@@ -7518,6 +7523,264 @@ class KnockFixTest(unittest.TestCase):
                         if re.search(r"\b(little one|child)\b", text, re.I):
                             self.assertTrue(kids, (seed, hid, text))
         self.assertGreater(len(seen), 60)
+
+
+class DoorRecording(PolicyFake):
+    """PolicyFake that keeps (who, minute, prompt) of every day decision."""
+
+    def __init__(self, policy):
+        super().__init__(policy)
+        self.prompts = []
+
+    def generate(self, system, prompt, schema=None):
+        if schema is None:
+            self.prompts.append((asked_where(prompt)[0], now_minute(prompt), prompt))
+        return super().generate(system, prompt, schema)
+
+
+class DoorHeardTest(unittest.TestCase):
+    """reports/door_heard_impl.md (from reports/probe_door.md): the visitor speaks through the shut door in the minute
+    of each knock; each one's record of the visit holds only what they perceived of it; a parting line that refers to
+    asking only after an ask; and every turn the visitor is at the door, everyone awake who perceives it is asked, up to
+    18 door asks a visit. Day-3 tests start from v16 seed 2 through night 2, replayed from cache/v16 with no API call."""
+    MODEL = QuietDayTest.MODEL
+    v16 = QuietDayTest.v16
+    setUp, tearDown, need, at = KnockTest.setUp, KnockTest.tearDown, KnockTest.need, KnockTest.at
+    door_day = KnockTest.door_day
+    # What a parting line says that only makes sense after the visitor has asked for something (reports/probe_door.md
+    # §2: "I'm sorry I asked", "No, I understand", and the two that answer an ask: "Thanks for nothing", "find it").
+    ASK_REF = re.compile(r"\b(ask|asked|asking)\b|no, i understand|thanks for nothing|find it somewhere", re.I)
+
+    def scene(self, client=None, household=None, purpose="ask_water", minute=120,
+              rooms=(("elena", "kitchen"), ("mara", "kitchen"), ("leo", "kitchen"), ("daniel", "bathroom"))):
+        """Day 3 at `minute`: everyone's routine ended, each put in a room, and one visit due now (by `household`, or
+        the first household of seed 2's street with no child)."""
+        street = self.need("street")
+        d, q, _ = self.door_day(client)
+        st = q.world.street
+        hid = household or next(h for h in sorted(st["households"], key=lambda h: st["households"][h]["home"])
+                                if not street.has_child(st["households"][h]))
+        v = street.make_visit(st, hid, self.at(3, minute), purpose)
+        m = d.day3
+        q.tick(minute)
+        for p in m.people.values():
+            q.end(p, minute, "test")
+        for pid, room in rooms:
+            m.people[pid].room = room
+        return d, q, v
+
+    def visit_turns(self, q, minute, turns=12, between=None):
+        """The knock at `minute` as play() makes it in quiet time: Q7's stretch, then played turns until the visitor
+        has gone (or `turns`). between(t): called before each turn."""
+        self.assertTrue(q.hear_knock(minute, played=False), "the knock was not heard")
+        stretch = {"start": minute, "end": None, "room": "kitchen", "trigger": "Q7"}
+        q.begin(stretch, self.quiet.DOOR_ASKS, "the door's asks are spent", reserved=True)
+        t = minute // data.MINUTES_PER_TURN
+        for t in range(t, t + turns):
+            if q.door is None:
+                break
+            if between:
+                between(t)
+            q.turn(t)
+        return stretch
+
+    @staticmethod
+    def heard_need(p, good="water"):
+        """Whether p heard the visitor say what they need, from p's own memory: a line through the door naming it."""
+        words = r"water|drink|cup" if good == "water" else r"food|eat|bread|hungry"
+        return any(re.search(r'voice at the front door says?: ".*\b(' + words + r')\b', x, re.I) for _, x in p.memory)
+
+    # ---------- (a) the visitor speaks first ----------
+    def test_a_the_visitors_first_line_is_in_the_prompt_of_everyone_who_heard_the_knock_in_words(self):
+        rec = DoorRecording(lambda who, minute, opts: None)
+        d, q, v = self.scene(rec, rooms=(("elena", "kitchen"), ("mara", "kitchen"), ("leo", "kitchen"),
+                                         ("daniel", "back_room")))
+        m = d.day3
+        self.visit_turns(q, 120, turns=1)
+        sc = q.door or q.door_scenes[-1]
+        words = sorted(pid for pid, how in sc["heard"].items() if how == "words")
+        self.assertEqual(words, ["elena", "leo", "mara"], sc["heard"])          # the premise: the kitchen hears words
+        self.assertEqual(sc["heard"].get("daniel"), "heard")
+        self.assertTrue(sc["said"], "the visitor said nothing at the knock")
+        said_at, text = sc["said"][0]
+        self.assertEqual(said_at, 120)
+        pool = [x["text"] for x in self.need("street").lines()["voice_ask_water"]]
+        self.assertIn(text, pool)
+        for pid in words:
+            got = [p for who, mm, p in rec.prompts if who == pid and mm == 120]
+            self.assertTrue(got, f"{pid} was not asked at the knock minute")
+            prompt = got[0]
+            self.assertIn(f'voice at the front door says: "{text}"', prompt)
+            self.assertLess(prompt.index("- Someone is knocking at the front door."), prompt.index(text))
+            self.assertIn(text, " ".join(x for _, x in m.people[pid].memory))
+        # Whoever heard only knocking did not hear the words.
+        self.assertNotIn(text, " ".join(x for _, x in m.people["daniel"].memory))
+        self.assertFalse([p for who, mm, p in rec.prompts if who == "daniel" and text in p])
+
+    # ---------- (b) a visitor with a child names the child and their age ----------
+    def test_b_a_child_visitors_first_line_names_the_child_and_their_age(self):
+        street = self.need("street")
+        d, q, v0 = self.scene(None)
+        v0["state"] = "done"                     # only the visits below come to the door
+        st = q.world.street
+        kids_of = {h: sorted((m for m in hh["drawn"]["members"] if m["role"] == "child"), key=lambda m: m["id"])
+                   for h, hh in st["households"].items()}
+        homes = sorted((h for h in kids_of if kids_of[h]), key=lambda h: st["households"][h]["home"])
+        self.assertGreaterEqual(len(homes), 3, "the premise: households with a child on seed 2's street")
+        firsts = []
+        for i, hid in enumerate(homes):
+            for purpose in ("ask_water", "ask_food"):
+                q.door, q.q7_done = None, False
+                minute = 120 + 6 * (2 * i + (purpose == "ask_food"))
+                q.tick(minute)
+                for p in q.m.people.values():
+                    q.end(p, minute, "test")
+                    p.room = "kitchen"
+                v = street.make_visit(st, hid, self.at(3, minute), purpose)
+                self.assertTrue(q.hear_knock(minute, played=False), (hid, purpose))
+                sc = q.door
+                self.assertTrue(sc["said"], f"the visitor from {hid} said nothing at the knock")
+                said_at, text = sc["said"][0]
+                self.assertEqual(said_at, minute)
+                for kid in kids_of[hid]:
+                    self.assertRegex(text, r"\b" + ("girl" if kid["sex"] == "f" else "boy") + r"s?\b", (hid, text))
+                    self.assertRegex(text, r"\b" + street.AGE_WORDS[kid["age"]] + r"\b", (hid, kid, text))
+                good = r"water|drink" if purpose == "ask_water" else r"food|eat"
+                self.assertRegex(text.lower(), good, text)
+                self.assertNotIn("{", text)
+                firsts.append(text)
+        self.assertGreater(len(set(firsts)), 3, firsts)
+
+    # ---------- (c) each one's record holds only what they perceived ----------
+    def records_hold_only_what_each_perceived(self, m, sc):
+        """Every line of the visit each person has (their summary, for block A; their sure lines): the need only if
+        they heard words saying it; the visitor's face only if they saw it."""
+        checked = 0
+        for pid in data.ORDER:
+            p = m.people[pid]
+            lines = ([sc["summary"][pid]] if pid in sc["summary"] else []) + \
+                [x for x in p.sure if "knocked at the front door" in x]
+            looked = any(a[1] == pid and a[2] == "door_look" for a in sc["acts"])
+            for line in lines:
+                checked += 1
+                if not self.heard_need(p):
+                    self.assertNotRegex(line, r"\basked\b|\bwater\b", (pid, line))
+                if not looked and sc["door"] != "open":
+                    self.assertNotIn(sc["who"], line, (pid, line))
+        return checked
+
+    def test_c_a_record_states_the_need_and_the_visitor_only_as_that_person_perceived_them(self):
+        # Elena sends the person away in the knock's minute; Mara looks; Leo only listens; Daniel, in the back room,
+        # hears only knocking.
+        def policy(who, minute, opts):
+            return {("elena", 120): "door_refuse", ("mara", 120): "door_look"}.get((who, minute))
+        d, q, v = self.scene(DoorRecording(policy), rooms=(("elena", "kitchen"), ("mara", "kitchen"),
+                                                           ("leo", "kitchen"), ("daniel", "back_room")))
+        m = d.day3
+        self.visit_turns(q, 120, turns=4)
+        self.assertIsNone(q.door, "the visit has not ended")
+        sc = q.door_scenes[-1]
+        self.assertEqual(sc["outcome"], "refused", sc["acts"])
+        self.assertEqual(sc["heard"].get("daniel"), "heard")
+        self.assertGreaterEqual(self.records_hold_only_what_each_perceived(m, sc), 4)
+        self.assertEqual(sc["summary"]["daniel"], "At 09:00 you heard knocking at the front of the house.")
+        # Whoever heard the ask through the door has it in their line: Elena heard it and sent the person away.
+        self.assertTrue(self.heard_need(m.people["elena"]))
+        self.assertIn("who asked for water", sc["summary"]["elena"])
+        # Leo heard the voice and did not look: he has the voice, not the face. Mara looked: she has the face.
+        self.assertNotIn(sc["who"], sc["summary"]["leo"])
+        self.assertIn(sc["voice"].split("'")[0].lower(), sc["summary"]["leo"].lower())
+        self.assertIn(sc["who"], sc["summary"]["mara"])
+        # Daniel heard only knocking, then came into the kitchen at 09:03 and looked: he saw the person and heard
+        # them speak, but never heard what they wanted.
+        def policy(who, minute, opts):
+            return {("elena", 123): "door_refuse", ("daniel", 123): "door_look"}.get((who, minute))
+        d, q, v = self.scene(DoorRecording(policy), rooms=(("elena", "kitchen"), ("mara", "kitchen"),
+                                                           ("leo", "kitchen"), ("daniel", "back_room")))
+        m = d.day3
+
+        def between(t):
+            if t == 41:
+                m.people["daniel"].room = "kitchen"
+        self.visit_turns(q, 120, turns=4, between=between)
+        self.assertIsNone(q.door, "the visit has not ended")
+        sc = q.door_scenes[-1]
+        self.assertEqual(sc["outcome"], "refused", sc["acts"])
+        self.assertIn(["daniel", "door_look"], [[a[1], a[2]] for a in sc["acts"]], "the premise: Daniel looked")
+        self.assertFalse(self.heard_need(m.people["daniel"]), "the premise: Daniel heard no ask")
+        self.assertIn(sc["who"], sc["summary"]["daniel"])
+        self.records_hold_only_what_each_perceived(m, sc)
+
+    def test_c2_someone_who_heard_the_ask_and_then_only_a_later_knock_keeps_the_ask_in_their_record(self):
+        # Mara hears the visitor's first line in the kitchen at 09:00, goes to the back room, and hears the second knock
+        # at 09:09 only as knocking through the wall (found in reports/door_heard_impl.md, the fake probe's scene 3).
+        def policy(who, minute, opts):
+            return "go_back_room" if (who, minute) == ("mara", 120) else "door_look"
+        d, q, v = self.scene(DoorRecording(policy))
+        m = d.day3
+        self.visit_turns(q, 120)
+        self.assertIsNone(q.door, "the visit has not ended")
+        sc = q.door_scenes[-1]
+        self.assertEqual(sc["knocks"], [120, 129])
+        self.assertEqual(sc["heard"].get("mara"), "heard", "the premise: Mara heard the second knock only as knocking")
+        self.assertTrue(self.heard_need(m.people["mara"]), "the premise: Mara heard the ask")
+        self.assertIn("asked for water", sc["summary"]["mara"])
+        self.assertTrue([x for x in m.people["mara"].sure if "knocked at the front door" in x])
+        self.records_hold_only_what_each_perceived(m, sc)
+
+    # ---------- (d) a parting line that refers to asking only after an ask ----------
+    def test_d_no_parting_line_that_refers_to_asking_without_an_ask(self):
+        street = self.need("street")
+        hit = set()
+        for seed in range(1, 11):
+            st = street.generate(seed)
+            for hid in st["households"]:
+                for n in range(1, 6):
+                    for slot in ("refused_polite", "refused_flat"):
+                        text = street.line(st, {"household": hid, "n": n}, slot)
+                        self.assertNotRegex(text, self.ASK_REF, (seed, hid, n, slot))
+                        asked = street.line(st, {"household": hid, "n": n, "asked": True}, slot)
+                        if self.ASK_REF.search(asked):
+                            hit.add(asked)
+        self.assertTrue(hit, "after an ask, the lines that refer to it are still said")
+        # In a scene, the refusal comes after the visitor's ask through the door, and the visit says so.
+        policy = lambda who, minute, opts: "door_refuse" if who == "elena" and minute == 120 else None
+        d, q, v = self.scene(DoorRecording(policy))
+        self.visit_turns(q, 120, turns=4)
+        sc = q.door_scenes[-1]
+        self.assertEqual(sc["outcome"], "refused")
+        self.assertTrue(v.get("asked"), "the visit does not record that its ask was said")
+        self.assertEqual([mm for mm, _ in sc["said"]], [120, 123])
+
+    # ---------- (e) every turn at the door, everyone who perceives it is asked, up to 18 ----------
+    def test_e_a_visitor_who_stays_6_turns_is_answered_after_the_second_knock_and_no_visit_asks_more_than_18(self):
+        rec = DoorRecording(lambda who, minute, opts: "door_look")
+        d, q, v = self.scene(rec)
+        m = d.day3
+        self.visit_turns(q, 120)
+        self.assertIsNone(q.door, "the visit has not ended")
+        sc = q.door_scenes[-1]
+        self.assertEqual(sc["outcome"], "ignored")
+        self.assertEqual(sc["knocks"], [120, 129])
+        self.assertEqual(sc["end"], 138)
+        # The door asks: the model asked of the three at the door (Daniel, in the bathroom, does not perceive it).
+        decided = [(rec_["minute"], dd["person"]) for rec_ in m.log for dd in rec_["decisions"]
+                   if 120 <= rec_["minute"] < 138 and dd["mode"] == "model" and dd["person"] != "daniel"]
+        after = sorted(x for x in decided if x[0] >= 129)
+        self.assertEqual(after, sorted((mm, pid) for mm in (129, 132, 135) for pid in ("elena", "leo", "mara")),
+                         decided)
+        self.assertEqual(len(decided), 18)
+        self.assertEqual(sc["door_asks"], 18)
+        self.assertEqual(self.quiet.DOOR_ASKS, 18)
+        # Four in the room for six turns would be 24: the visit stops at 18.
+        rec = DoorRecording(lambda who, minute, opts: "door_look")
+        d, q, v = self.scene(rec, rooms=tuple((pid, "kitchen") for pid in data.ORDER))
+        m = d.day3
+        self.visit_turns(q, 120)
+        sc = q.door_scenes[-1]
+        decided = [x for x in m.log if 120 <= x["minute"] < sc["end"] for dd in x["decisions"] if dd["mode"] == "model"]
+        self.assertEqual(len(decided), 18)
+        self.assertEqual(sc["door_asks"], 18)
 
 
 if __name__ == "__main__":

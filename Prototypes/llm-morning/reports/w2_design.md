@@ -12,6 +12,11 @@ touched. The only file added is this one. Paths are relative to `Prototypes/llm-
   otherwise. A number from the code cites `path:line`. A thing looked for and absent is **NOT FOUND**.
 - **Baselines** for the predictions were counted from `runs/v22` by read-only scripts; the commands, their output and the
   script are in §11 and the appendix.
+- **Amended (`reports/door_heard_impl.md`, from `reports/probe_door.md`):** the door scene as the probe found it did not show the family what a real visitor would.
+  The visitor now speaks first, in the minute of each knock (§4.2.5); each one's record of a visit holds only what they
+  perceived (§4.2.6); a parting line that refers to an ask comes only after one (§4.3); and the Q7 reserve of 6 is
+  replaced by everyone at the door asked each turn, up to 18 door asks a visit (§4.1, §4.2.4, §6.1, §6.2, §7.2, §8.2,
+  §8.3). Each place says what it was.
 - **How the design argues.** `CLAUDE.md:18-19` says to argue against a mechanism before proposing it. Each mechanism has a
   paragraph "Arguing against X first". `CLAUDE.md:16-17` says a metric is a clue and not the goal, so §8 also has a
   reading check that is not a number.
@@ -25,7 +30,7 @@ touched. The only file added is this one. Paths are relative to `Prototypes/llm-
 | 3 | The noticing rule | One function, `perceive(stimulus, observer)`, used both ways: sound by distance and walls, sight by viewpoint and distance. The family hears a knock, a shout, breaking wood; it sees through one gap in the boards. The street learns of the family only what leaves the house: voices, a door, a person in the yard, an answer at the door. W2a uses the knock only. |
 | 4 | Meetings | A knock is a scene: code decides who, when and what they want; the **model decides what the family does** (five door options); the stranger's words come from a **hand-authored line pool chosen by code**, never from the model, in W2a. A person met on a trip is W2c; someone seen from the gap is W2b. |
 | 5 | Word, rumours, trips | A deed is a fact that passes between households by `importance × ambiguity` and changes how they plan. A rumour of hope is a structured claim, true with chance 0.3 (est.), never confirmed by code. Trip risk is the people actually out, not `night.py:36-37` (32% scare, 6% not back, alone): about 3% a night trip at first (est.), rising as households run short. |
-| 6 | Cost | Door scenes: **≤ 6 asks, ≤ 1 a day, taken from a hard day cap of 56**. v22 spent 402 live asks; W2a expects about 420 and is held to 450 by the run cap. W2a's prompt lines total **≤ 122 estimated tokens** and sit **inside** `PROMPT_TOKEN_BUDGET`. |
+| 6 | Cost | Door scenes: **≤ 18 door asks a visit (was ≤ 6 asks; amended, §6.1), ≤ 1 a day, taken from a hard day cap of 56**. v22 spent 402 live asks; W2a expects about 420 and is held to 450 by the run cap. W2a's prompt lines total **≤ 122 estimated tokens** and sit **inside** `PROMPT_TOKEN_BUDGET`. |
 | 7 | Stages | W2a knock → W2b the street heard and seen → W2c trips among people → W2d danger at the house → W2e deeds and word → W2f rumours. Only W2a is specified: 1 new module, 3 data files, 11 existing files touched. |
 | 8 | W2a predictions | Ten, each with a counting rule and a v22 baseline. **W2a-2: at least half of the heard knocks (and at least 2) are answered, v22 baseline 0 of 0.** The result that proves W2a wrong is in §8.3. |
 
@@ -386,7 +391,7 @@ where a mistake would matter, whether the family hears a knock, is tested direct
 
 | Meeting | Stage | Code decides | Asks the model | What the stranger says, and who writes it | Asks |
 |---|---|---|---|---|---|
-| **A knock at the door** | W2a | who comes, when, what they need, how they react, what changes hands | the family: five door options, plus the family's ordinary options | **A hand-authored line from a pool, chosen by code** by purpose, urgency and temperament (§4.3) | ≤ 6 a scene, ≤ 1 a day |
+| **A knock at the door** | W2a | who comes, when, what they need, how they react, what changes hands | the family: five door options, plus the family's ordinary options | **A hand-authored line from a pool, chosen by code** by purpose, urgency and temperament (§4.3) | ≤ 18 door asks a visit (was ≤ 6 a scene; amended, §6.1), ≤ 1 a day |
 | **Someone seen from the gap** | W2b | whether anyone passes; what is seen (§3.3) | nobody, unless the house is already talking | nothing is said; a `Now` line of what is seen | 0 |
 | **A person met on a trip** | W2c | who is out and where; the outcome | the leaver (and a companion): 2 options | from the same pool kind (`street` slots); model-written only after the gate in §4.3 | ≤ 2 an encounter |
 | **A person at the back door, at night** | W2d | the approach, the noise | the sleepers and watchers | words only if the person speaks (`demand`, `plead` slots) | ≤ 4 an event |
@@ -406,10 +411,31 @@ where a mistake would matter, whether the family hears a knock, is tested direct
 4. **Q7.** `Quiet.hear_knock`, the sibling of `hear_rain` (`quiet.py:342-381`): if the house is already playing a stretch, the knock is a trigger
    inside it and its cap grows by the reserved allowance; otherwise it plays the **kitchen** if anyone awake is in it (the door is there), else the room with most awake
    (whose people then choose whether to go to the door), `begin(stretch, 6, reserved=True)` (`quiet.py:393-397`) and `ask`s everyone awake in that room.
+   - **Amended (`reports/door_heard_impl.md`, from `reports/probe_door.md`):** the stretch begins with `DOOR_ASKS` = 18, not 6. **Every played turn the visitor is at the door, everyone
+     awake who perceives the door (`p.door`) is asked** (`Quiet.door_asks`), whatever else they have to answer, until
+     the visit has made 18 door asks (`Quiet.door_full`). A door ask is limited by the visit's 18 and the day's 56, not
+     by the stretch's own cap, which still holds everyone else's asks (`Quiet.spent(p)`). A door ask is not a quiet ask:
+     it does not count against the day's 12 (`QUIET_ASKS`). How a visit ends is unchanged: given, refused, or gone after
+     6 turns with nothing from the house. *Why:* in `reports/probe_door.md` scene 8, two turns of three people spent the
+     6 asks; the man knocked again at 09:51 and nobody was asked, so a real family that had watched an old, thin man
+     stand at its door for nine minutes did nothing (§2 there). 18 is 6 turns of 3: a visitor who stays until they give
+     up is answerable at every turn, the second knock's included. A Q7 stretch that ends because nobody in its room
+     perceives the door (`reports/w2a_fixes.md` fix 3) still frees what is left; the turns after it are not played.
    Skipped, as Q6 is when `rain_action` is false for all (`world.py:738-740`; `reports/v22_fixes.md:79-83`), only if nobody is awake after the wake draws.
-5. **Played turns (3 minutes each).** What each option does:
+5. **The visitor speaks first.** **Amended (`reports/door_heard_impl.md`, from `reports/probe_door.md`):** in the minute of each knock, after the knock, the visitor says one line through the
+   shut door, heard in words by everyone who hears that knock in words (`Quiet.door_speak`). At the first knock it is a
+   `voice_ask` line; a visitor with a child names the child and their age in it (a `first` line, by disposition, §4.3).
+   At a later knock it is a short ask again (`insist` if urgency ≥ 0.8, else `again`), as after a call. *Was:* "the
+   visitor replies **next turn** with a `voice` line" only after a `door_call`, so a visitor who was not called to said
+   nothing until they were sent away. *Why:* in all eight scenes of `reports/probe_door.md` the stranger stood silent on
+   the step for a full turn; no need, no child and no "please" reached the family, and `door_give` was never offered.
+   A person who knocks on a boarded house where they have heard people calls out ("Hello? I'm sorry to knock…"); the
+   pool's `voice_ask` lines were written to be said through a shut door. This changes what the family is shown, as
+   §8.3's first row asks, not what the street does.
+   **Played turns (3 minutes each).** What each option does:
    - `door_look`: a sight percept to the actor (§3.3), nothing else changes.
-   - `door_call` (speech): the words go through the door; the visitor replies **next turn** with a `voice` line.
+   - `door_call` (speech): the words go through the door; the visitor replies **next turn** with a `voice` line (amended:
+     having spoken at the knock, an `insist` or `again` line).
    - `door_open`: this turn unbars it (O4); next turn the envoy is on the step, described, and says its `open` line.
    - `door_give`: only if the visitor asked for water and the house holds any; code moves `min(3 L, store)` out of the kitchen's tap water (then the bin,
      the order of `truth.py:91`) into the household's stock; the visitor says `given` and leaves.
@@ -418,6 +444,16 @@ where a mistake would matter, whether the family hears a knock, is tested direct
 6. **After.** The visit is a **deed** (§5.1) in `World`; the household's stock, *kind*, and *has_surplus* for no. 9 are updated; the chronicle gets
    `knock`, `door_line`, the family's door acts, and `door_end`; each person who was at the door gets one `sure` line of the outcome ("you handed a woman at
    the door two bottles of water"); the stretch closes.
+   - **Amended (`reports/door_heard_impl.md`, from `reports/probe_door.md`):** **each one's line holds only what they perceived.** The visitor's need ("who asked for water") is in a
+     person's sure line and next day's block A only if that person heard words saying it (a line of `voice_ask`,
+     `open_ask` or `again`); the visitor is described by their face ("a woman of about forty-five") only to someone who
+     looked or was in the kitchen with the door open, by their voice ("a woman") to someone who only heard them, and as
+     "someone" otherwise. Whoever heard any knock in words, or heard the visitor speak, has a line. *Was:* "who asked
+     for …" whenever the visitor had said anything (`quiet.py:750`, `if sc["said"]`), and the face for everyone if
+     anyone had looked. *Why:* in every refused scene of `reports/probe_door.md` the record said "you told a woman of
+     about forty-five, who asked for water, to go away" when she had asked for nothing: the code's truth in the
+     family's memory, the boundary `CLAUDE.md:21-24` draws. The kitchen's view of the door shows each person the last
+     line *they* heard, not the last line said.
 
 ### 4.3 The stranger's words
 
@@ -432,6 +468,14 @@ where a mistake would matter, whether the family hears a knock, is tested direct
   | `given` | after `door_give` | "God bless you. I won't forget this." |
   | `refused_polite` / `refused_flat` | after `door_refuse`, by temperament | "I understand. I'm sorry to have bothered you. Look after yourselves." / "Right. Never mind." |
 
+- **Amended (`reports/door_heard_impl.md`, from `reports/probe_door.md`):** **a `first` line** (in `voice_ask_water` and `voice_ask_food`, 6 each): said at the first knock by a household with a
+  child, 3 for a helper and 3 for any other disposition (guarded in register). Code puts in `{kids}` a sentence that
+  names each child and their age, true of the household: "I've a little boy at home, he's six." or "I've two at home,
+  a girl of five and a boy of five." The number words in it are the household's own, the one exception to "no number
+  word". **A line that refers to an ask** (`after: ask`: "I'm sorry I asked", "No, I understand. I'm sorry. I'll leave
+  you be.", "Thanks for nothing", "I'll find it somewhere else") is said only once the visitor has asked
+  (`street.line`, `v["asked"]`); `reports/probe_door.md` §2 found three of eight parting lines reading as if the family
+  had heard an ask that was never made.
 - **Rules for a line:** at most 25 words; no house number and no weekday; nothing outside the family's known world (no radio, no police);
   never says what the family should do or must feel (a request is allowed, a duty is not); it states a need the household really has
   (the envoy's `ask_water` means the household's `need_w` is above 0.5). A line is chosen by
@@ -534,26 +578,38 @@ quiet, a family that stays in is afraid, not prudent, and the family can find th
 | Q1/Q2 stretches, within the day's 40 | 8 each | 8 each | `quiet.py:43` |
 | Q5 the evening, reserved | ≤ 8 | ≤ 8 | `quiet.py:48` |
 | Q6 rain, reserved | ≤ 8 | ≤ 8 | `quiet.py:88` |
-| **Q7 the door, reserved** | none | **≤ 6, ≤ 1 a day** | new |
+| **Q7 the door, reserved** | none | **≤ 18 door asks a visit, ≤ 1 a day** (was ≤ 6; amended) | new |
 | **Day cap** | implicit 56 | **`DAY_MAX = 56`**, checked in `spent()` (`quiet.py:384-388`) | new; priority by time |
-| Worst case without the cap | 56 | 62 | |
+| Worst case without the cap | 56 | 62 (amended: 74; the cap holds it at 56) | |
 
 - **Why 6.** The first turn asks everyone awake in the room, 2.16 persons on average at a daylight minute (B7 in §11), the second asks those still engaged, so a
   scene costs about 4.5 asks (est.). A reserve of 6 covers two turns of three.
+- **Amended (`reports/door_heard_impl.md`, from `reports/probe_door.md`):** **why 18, not 6.** Two turns of three are not a visit: a visitor who waits knocks again after 3 turns and goes after
+  6. In `reports/probe_door.md` the 6 were spent by 09:45 in every scene; scene 8's second knock, at 09:51, asked
+  nobody. 18 is 6 turns of 3 people, so a visitor who stays until they give up is answerable at every turn. A visit
+  that is refused or given in the first turn still costs only that turn's asks (the fake probe:
+  `runs/door_heard/probe_check.stdout.txt`, 3 to 17 door asks a scene).
+- **Amended (`reports/door_heard_impl.md`, from `reports/probe_door.md`):** **what 18 does to the day cap, not changed here.** `DAY_MAX` (56) and `KNOCK_UNDER` (52) are as before. A knock
+  with 51 asks spent still begins, and the day cap then stops it after 5 asks; a door scene of 18 after 40 asks leaves
+  Q5's evening none of its 8. Whether to raise the day cap, or defer a knock that cannot have its 18, is for the user.
 - **Why Q7 is not starved.** A knock is only between 07:30 and 17:30; Q5 starts at 19:00 (`quiet.py:48`), so Q5 comes after it. Where Q6 and Q7 meet, whichever begins
   first has its asks first. A visit that would begin with fewer than 52 asks spent is deferred, not run with no one to ask (§4.2.2).
 - **v22's busiest day** (day 9): morning 24, Q2 8, Q6 8 (= 40 by 14:00), a knock at 14:00 adds ≤ 6 → 46, Q5 adds 8 → 54 ≤ 56. No starvation (B3, B12).
+  **Amended (`reports/door_heard_impl.md`, from `reports/probe_door.md`):** with 18, a knock at 14:00 can add up to 16 before the day cap (→ 56), and then Q5 has none. Starvation is now
+  possible on such a day.
 
 ### 6.2 A 10-day run
 
 | | v22 | W2a, expected | W2a, bound |
 |---|---|---|---|
-| Day-scene asks, days 3–10 | 342 | 342 + about 4 scenes × 4.5 = 360 | 342 + 8 × 6 = 390 |
+| Day-scene asks, days 3–10 | 342 | 342 + about 4 scenes × 4.5 = 360 | 342 + 8 × 6 = 390 (amended: 342 + 8 × 18 = 486) |
 | Night asks, nights 3–9 | 32 | 32 (nights untouched) | 32 |
 | Night-mind asks, minds 3–9 | 28 | 28 | 28 |
 | **Live total** | **402** | **about 420** | **450** |
 
-The bound of 450 holds if the non-door asks do not exceed v22's. It is **enforced** by the run's own cap, set to 450, not 470 (`runs/v22/run_capped.py`); the run
+**Amended (`reports/door_heard_impl.md`, from `reports/probe_door.md`):** the bound is now 486 + 32 + 28 = 546, over the run cap of 450, which is unchanged; the run would stop at 450 and
+resume from its cache. The expected total is not re-estimated here: it needs a scene's cost under the new rule, which
+only a run can give. The bound of 450 holds if the non-door asks do not exceed v22's. It is **enforced** by the run's own cap, set to 450, not 470 (`runs/v22/run_capped.py`); the run
 stops cleanly there and resumes from its cache. The busiest calendar day in v22 was 56 asks (day + night + mind, days 8 and 9; B11), so the day cap of 56 and the run cap
 are separate limits. A day scene stays far under the per-scene call cap of `config.json` (`max_calls_per_morning` 150).
 
@@ -625,7 +681,7 @@ households, trips among people, a model-written stranger, a standing line, a cha
 | File | Change |
 |---|---|
 | `truth.py` | `World.street` (the state, guarded by `Guarded`, `truth.py:34-45`); the street is advanced from `Quiet.tick`, **not** from `World.advance_to`, so the copy `next_change` makes (`truth.py:147-161`) stays cheap |
-| `quiet.py` | `Quiet.tick` (`:255`) advances the street; `world_events` (`:740`) and `next_event` (`:718`) add the next visit; `step` (`:702`) calls `hear_knock`, new (sibling of `hear_rain`, `:342`); `turn` (`:760`) the played branch; `play` (`:961`) starts the Q7 stretch with 6 reserved; `spent` (`:384`) gets `DAY_MAX`; `sense` (`:295`) sets `p.door`; `items` (`:919`) and `transcript` (`:945`) record the knock and the street log |
+| `quiet.py` | `Quiet.tick` (`:255`) advances the street; `world_events` (`:740`) and `next_event` (`:718`) add the next visit; `step` (`:702`) calls `hear_knock`, new (sibling of `hear_rain`, `:342`); `turn` (`:760`) the played branch; `play` (`:961`) starts the Q7 stretch with 6 reserved (amended: 18, and every turn of a visit asks whoever perceives the door, §4.2.4); `spent` (`:384`) gets `DAY_MAX`; `sense` (`:295`) sets `p.door`; `items` (`:919`) and `transcript` (`:945`) record the knock and the street log |
 | `world.py` | `Person.door` (`:304`); `options_for` (`:532`) the five door options (like the one at `:595-597`); `_prompt_for` (`:1086`) the door `Now` lines next to `:1123`; `apply` (`:1635`) the door kinds, with a case like `collect_rain`'s (`:1833-1844`); `KIND_DONE` (`:98`) and `line_text` (`:1577`) |
 | `talk.py` | `SPEECH` (`:8`) gets `door_call`, `door_refuse`; `act_of` (`:15`) leaves the door ids as their own kinds; `Newness` (`:64`) treats a door act as new the first time in a scene |
 | `data.py` | `HOUSE_THINGS` (`:135`): a variant for door scenes naming "the people at the door" (as `with_yard`, `:150`), because the house line says "Do not mention any other object or place" |
@@ -644,7 +700,8 @@ households, trips among people, a model-written stranger, a standing line, a cha
 5. T5 for any prompt, `block` is the same with and without a door state; the door lines total ≤ 140 tokens.
 6. T6 a knock at 07:30–17:30 only; ≤ 1 a day; deferred when 52 asks are spent; never in the bathroom; a resting person wakes by the draw.
 7. T7 the door options exist only in a scene, in the kitchen; `door_give` only with water to give; `door_open` only when shut.
-8. T8 the Q7 stretch ≤ 6 asks, and the day ≤ 56.
+8. T8 the Q7 stretch ≤ 6 asks, and the day ≤ 56. (Amended: a visit ≤ 18 door asks, and the day ≤ 56;
+   `test_t8_a_visit_asks_at_most_18_at_the_door_and_a_day_at_most_56`.)
 9. T9 every stranger's line in the pool is ≤ 25 words, has no digit or weekday, and no word from a list of what the house does not have.
 
 **The live test:** v16 seed 2, `--days 10`, `cache/v23` copied from `cache/v16` (as v22 did), through a capped runner at 450. The plan, with the printed first-visit
@@ -676,7 +733,7 @@ schedule and the scorer's sha256, is written and hashed **before** the first liv
 | **W2a-5** | **The house acts outward more than in v22.** At least 5 outward acts on at least 3 different days or nights, at least 3 of them door acts. | `went_out` and `got_up`/`at_door` once per leaver per night (`w1_score.py w11`), `collect_rain`, and the door acts above | **2** on 2 days (N5 `went_out`; D6 `collect_rain`), 1 by `w11` alone (B2) |
 | W2a-6 | **The loop gives way** (jointly with the v22 fixes, §8.4). At most 4 of the 32 person-days have an exact repeat, and at most 12 acts sit in repeated texts. No stranger's line is repeated word for word in the run more than once. | the exact-repeat rule over the 326-or-so speech acts of days 3–10 | **7 of 32; 24 acts; 9 distinct texts** (B4; equal to `reports/v22_gaps.md:117-123`) |
 | W2a-7 | **The talk reaches the person at the door.** On at least 60% of the days that follow or contain a heard knock, at least one speech act matches FOLK. | days d with a heard knock on d−1 or d; speech acts of d | **0 acts on 0 days** of 326 acts (B5b) |
-| **W2a-8** | **Cost is bounded.** Live asks of days 3–10 ≤ 450; each day-scene's asks ≤ 56; each Q7 stretch ≤ 6 asks; at most 1 a day. | `meta.answers_live`; `quiet.asks.day`; Q7 stretches | **402**; days ≤ 48; none (B3; §11 cmd 3) |
+| **W2a-8** | **Cost is bounded.** Live asks of days 3–10 ≤ 450; each day-scene's asks ≤ 56; each Q7 stretch ≤ 6 asks (amended: each visit ≤ 18 door asks); at most 1 a day. | `meta.answers_live`; `quiet.asks.day`; Q7 stretches | **402**; days ≤ 48; none (B3; §11 cmd 3) |
 | W2a-9 | **The prompt does not grow.** The largest estimate of any prompt ≤ 2650; the test T5 passes. | `estimate_tokens(system + prompt)` over the live prompts | **2602**, two prompts over 2600 (§11 cmd 3) |
 | W2a-10 | **Truth.** Every `door_give` changes the stores by the exact amount; each visitor's stated need matches its household's computed need; no `TruthLeak`; days 1–2 replay as before (T4). | the street log against the chronicle; the run finishing | n/a (no door events) |
 
@@ -693,7 +750,7 @@ move this number. W2a-9's 2650 is v22's 2602 plus 48 for the case in which nothi
 | W2a-2 holds, W2a-3 and W2a-4 fail | The family **talks to the door and keeps it shut**: a reason produces conversation, not an act. | The reason is too small, or the boards are too strong: a stranger who offers something (`trade`, W2b) is the next reason; read the scenes (§8.4) first |
 | W2a-2, 3 and 4 hold, W2a-5 fails | The door moves the house and the rest of it stays put. This is **not** W2a wrong: W2a gives no reason to go out (§7.2). | W2c (trips among people), W2f (a place to go) |
 | W2a-2 to W2a-5 hold, W2a-6 and W2a-7 fail | The door acts occur but do not displace the loop: the family keeps accusing | The reason is a side event. The loop is in the minds, and the next work is the memory (`reports/v22_gaps.md:262-269`), not more street |
-| W2a-8 or W2a-9 fails | A cost limit, not a hypothesis. Cut the Q7 reserve to 4 or drop `door_look`. | |
+| W2a-8 or W2a-9 fails | A cost limit, not a hypothesis. Cut the Q7 reserve to 4 or drop `door_look`. (Amended: cut the door asks a visit below 18, or drop `door_look`; with 18, W2a-8's 450 can be reached, §6.2.) | |
 
 **The hypothesis W2a tests:** *a stranger at the door with a stated need makes the house act at the door.* It is wrong if W2a-2, W2a-3 and W2a-4 all fail.
 

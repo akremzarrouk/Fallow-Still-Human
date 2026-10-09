@@ -1,0 +1,15 @@
+test_c2_someone_who_heard_the_ask_and_then_only_a_later_knock_keeps_the_ask_in_their_record (test_morning.DoorHeardTest.test_c2_someone_who_heard_the_ask_and_then_only_a_later_knock_keeps_the_ask_in_their_record) ... FAIL
+
+======================================================================
+FAIL: test_c2_someone_who_heard_the_ask_and_then_only_a_later_knock_keeps_the_ask_in_their_record (test_morning.DoorHeardTest.test_c2_someone_who_heard_the_ask_and_then_only_a_later_knock_keeps_the_ask_in_their_record)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7727, in test_c2_someone_who_heard_the_ask_and_then_only_a_later_knock_keeps_the_ask_in_their_record
+    self.assertIn("asked for water", sc["summary"]["mara"])
+AssertionError: 'asked for water' not found in 'At 09:00 you heard knocking at the front of the house.'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.624s
+
+FAILED (failures=1)
+exit 1

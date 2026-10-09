@@ -1,5 +1,5 @@
 {
- "about": "The stranger's words at the family's door in W2a (reports/w2_design.md, §4.3), written by hand once, before any run. Code chooses a line by slot, by the visiting household (`with`: only for a household with a child, with a girl, with a boy, of two or more, or that heard the family's voices), and by the string <seed>:street:<household>:visit<n>:<slot>. Rules: at most 25 words; no digit, number word, weekday or house number; nothing the family's world does not have; a request, never a duty; a line states a need the household really has.",
+ "about": "The stranger's words at the family's door in W2a (reports/w2_design.md, §4.3), written by hand once, before any run. Code chooses a line by slot, by the visiting household (`with`: only for a household with a child, with a girl, with a boy, of two or more, or that heard the family's voices), and by the string <seed>:street:<household>:visit<n>:<slot>. Rules: at most 25 words; no digit, number word, weekday or house number; nothing the family's world does not have; a request, never a duty; a line states a need the household really has. A `first` line is said through the shut door at the first knock by a household with a child (`by`: helper, or guarded for any other disposition); code puts in `{kids}` a sentence naming each child and their age, which is true of the household (reports/door_heard_impl.md). A line `after` ask is said only once the visitor has asked.",
  "slots": {
   "voice_ask_water": [
    {
@@ -41,6 +41,42 @@
    {
     "text": "Hello? There's a few of us at home and the water's gone. Whatever you can spare.",
     "with": "others"
+   },
+   {
+    "text": "Hello? I'm sorry to knock. {kids} We've no water left. Could you spare a little?",
+    "with": "child",
+    "first": true,
+    "by": "helper"
+   },
+   {
+    "text": "Please, is anyone in? {kids} There's not a drop of water left. Just a cup would help.",
+    "with": "child",
+    "first": true,
+    "by": "helper"
+   },
+   {
+    "text": "I'm sorry to trouble you. {kids} Our water's gone. Anything you could spare, I'd be grateful.",
+    "with": "child",
+    "first": true,
+    "by": "helper"
+   },
+   {
+    "text": "I'm not here for trouble. {kids} We're out of water. Can you spare any?",
+    "with": "child",
+    "first": true,
+    "by": "guarded"
+   },
+   {
+    "text": "Is anyone there? {kids} Our water's gone. A cup, that's all I'm asking.",
+    "with": "child",
+    "first": true,
+    "by": "guarded"
+   },
+   {
+    "text": "I won't come in. {kids} There's no water left at home. Have you any?",
+    "with": "child",
+    "first": true,
+    "by": "guarded"
    }
   ],
   "voice_ask_food": [
@@ -79,6 +115,42 @@
    {
     "text": "Hello? There's a few of us at home and the food's gone. Could you spare anything at all?",
     "with": "others"
+   },
+   {
+    "text": "Hello? I'm sorry to knock. {kids} We've nothing left to eat. Could you spare a little?",
+    "with": "child",
+    "first": true,
+    "by": "helper"
+   },
+   {
+    "text": "Please, is anyone in? {kids} There's no food left at home. Anything at all would help.",
+    "with": "child",
+    "first": true,
+    "by": "helper"
+   },
+   {
+    "text": "I'm sorry to trouble you. {kids} Our food's gone. Anything you could spare, I'd be grateful.",
+    "with": "child",
+    "first": true,
+    "by": "helper"
+   },
+   {
+    "text": "I'm not here for trouble. {kids} We've nothing to eat. Can you spare anything?",
+    "with": "child",
+    "first": true,
+    "by": "guarded"
+   },
+   {
+    "text": "Is anyone there? {kids} Our food's gone. A little, that's all I'm asking.",
+    "with": "child",
+    "first": true,
+    "by": "guarded"
+   },
+   {
+    "text": "I won't come in. {kids} There's no food left at home. Have you anything?",
+    "with": "child",
+    "first": true,
+    "by": "guarded"
    }
   ],
   "open_ask_water": [
@@ -303,7 +375,8 @@
     "text": "All right. I understand. Take care in there."
    },
    {
-    "text": "That's all right. I'm sorry I asked. Goodbye."
+    "text": "That's all right. I'm sorry I asked. Goodbye.",
+    "after": "ask"
    },
    {
     "text": "I understand. Everyone's in the same boat. I'll go."
@@ -318,7 +391,8 @@
     "text": "I understand. Good luck to you."
    },
    {
-    "text": "No, I understand. I'm sorry. I'll leave you be."
+    "text": "No, I understand. I'm sorry. I'll leave you be.",
+    "after": "ask"
    }
   ],
   "refused_flat": [
@@ -329,7 +403,8 @@
     "text": "Fine."
    },
    {
-    "text": "Right. Thanks for nothing."
+    "text": "Right. Thanks for nothing.",
+    "after": "ask"
    },
    {
     "text": "I see. Well. I'll go, then."
@@ -341,7 +416,8 @@
     "text": "Right. I won't bother you again."
    },
    {
-    "text": "Fine. I'll find it somewhere else."
+    "text": "Fine. I'll find it somewhere else.",
+    "after": "ask"
    },
    {
     "text": "Right. Goodbye, then."

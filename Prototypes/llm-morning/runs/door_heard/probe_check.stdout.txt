@@ -1,0 +1,79 @@
+phase 0: the knock comes at 09:42; 21 live asks; the morning's talk ended at 18; rooms {'daniel': 'brothers_room', 'elena': 'kitchen', 'leo': 'kitchen', 'mara': 'kitchen'}; resting ['daniel']
+scene 1: the visit ended
+scene 1 (no child, helper, urgency under 0.8): 3 live asks; knock 09:42, in played turns False; outcome refused; door asks 3; acts [('leo', 'door_refuse')]; live in all 24
+scene 2: the visit ended
+scene 2 (no child, helper, urgency over 0.8): 3 live asks; knock 09:42, in played turns False; outcome refused; door asks 3; acts [('elena', 'door_refuse')]; live in all 27
+scene 3: the visit ended
+scene 3 (a child, helper, urgency under 0.8): 19 live asks; knock 09:42, in played turns False; outcome ignored; door asks 19; acts [('daniel', 'door_open')]; live in all 46
+scene 4: the visit ended
+scene 4 (children, helper, urgency over 0.8): 10 live asks; knock 09:42, in played turns False; outcome refused; door asks 10; acts [('leo', 'door_look'), ('mara', 'door_refuse')]; live in all 56
+scene 5: the visit ended
+scene 5 (no child, guarded, urgency over 0.8): 3 live asks; knock 09:42, in played turns False; outcome ignored; door asks 3; acts []; live in all 59
+scene 6: the visit ended
+scene 6 (a child, guarded, urgency under 0.8): 14 live asks; knock 09:42, in played turns False; outcome refused; door asks 14; acts [('leo', 'door_look'), ('elena', 'door_refuse')]; live in all 73
+scene 7: the visit ended
+scene 7 (no child, helper, food gone 4 days): 3 live asks; knock 09:42, in played turns False; outcome refused; door asks 3; acts [('mara', 'door_refuse')]; live in all 76
+scene 8: the visit ended
+scene 8 (a child, guarded, food gone 4 days): 7 live asks; knock 09:42, in played turns False; outcome refused; door asks 7; acts [('elena', 'door_refuse')]; live in all 83
+live asks in all: 83
+probe.main() returned 0; scenes in C:\Users\Akrem\AppData\Local\Temp\probe_door_fake_mot530na
+scene 1 (no child, helper, urgency under 0.8): OK
+  first line at 09:42: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."
+  heard the knock in words: ['elena', 'leo', 'mara']; asked at 09:42: ['mara', 'elena', 'leo']; the words in their prompt: {'mara': True, 'elena': True, 'leo': True}
+  outcome refused; door asks 3; stretch asks 3; said [('09:45', "Of course. I'm sorry I knocked. Take care.")]
+  elena: At 09:42 someone knocked at the front door: Leo told a woman, who asked for water, to go away.
+  leo: At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away.
+  mara: At 09:42 someone knocked at the front door: Leo told a woman, who asked for water, to go away.
+scene 2 (no child, helper, urgency over 0.8): OK
+  first line at 09:42: "Hello? There's a few of us at home and the water's gone. Whatever you can spare."
+  heard the knock in words: ['elena', 'leo', 'mara']; asked at 09:42: ['mara', 'leo', 'elena']; the words in their prompt: {'mara': True, 'leo': True, 'elena': True}
+  outcome refused; door asks 3; stretch asks 3; said [('09:45', "I understand. I'm sorry to have bothered you. Look after yourselves.")]
+  elena: At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away.
+  leo: At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away.
+  mara: At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away.
+scene 3 (a child, helper, urgency under 0.8): OK
+  first line at 09:42: "Hello? I'm sorry to knock. I've a little boy at home, he's six. We've no water left. Could you spare a little?"
+  heard the knock in words: ['elena', 'leo', 'mara']; asked at 09:42: ['mara', 'elena', 'leo']; the words in their prompt: {'mara': True, 'elena': True, 'leo': True}
+  outcome ignored; door asks 17; stretch asks 19; said [('09:51', "I'm not going to cause trouble. It's only water I'm asking for."), ('09:57', 'Thank you. I know what it costs to open a door now. I just need some water.')]
+  daniel: At 09:42 someone knocked at the front door: a woman of about fifty-five asked for water and went away with nothing.
+  elena: At 09:42 someone knocked at the front door: a woman of about fifty-five asked for water and went away with nothing.
+  leo: At 09:42 someone knocked at the front door: a woman of about fifty-five asked for water and went away with nothing.
+  mara: At 09:42 someone knocked at the front door: a woman of about fifty-five asked for water and went away with nothing.
+scene 4 (children, helper, urgency over 0.8): OK
+  first line at 09:42: "I'm sorry to trouble you. I've two at home, a girl of five and a boy of five. Our water's gone. Anything you could spare, I'd be grateful."
+  heard the knock in words: ['elena', 'leo', 'mara']; asked at 09:42: ['mara', 'elena', 'leo']; the words in their prompt: {'mara': True, 'elena': True, 'leo': True}
+  outcome refused; door asks 8; stretch asks 10; said [('09:51', "Right. I'm sorry. I'll try somewhere else.")]
+  elena: At 09:42 someone knocked at the front door: Mara told a woman, who asked for water, to go away.
+  leo: At 09:42 someone knocked at the front door: Mara told a woman of about forty-five, who asked for water, to go away.
+  mara: At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away.
+scene 5 (no child, guarded, urgency over 0.8): OK
+  first line at 09:42: "Please, it's only water I'm after. A cup or a bottle, whatever you can spare."
+  heard the knock in words: ['elena', 'leo', 'mara']; asked at 09:42: ['mara', 'leo', 'elena']; the words in their prompt: {'mara': True, 'leo': True, 'elena': True}
+  outcome ignored; door asks 3; stretch asks 3; said [('09:51', "Please. I'm so thirsty I can hardly think. Just a little.")]
+  elena: At 09:42 someone knocked at the front door: a man asked for water and went away with nothing.
+  leo: At 09:42 someone knocked at the front door: a man asked for water and went away with nothing.
+  mara: At 09:42 someone knocked at the front door: a man asked for water and went away with nothing.
+  daniel: At 09:42 you heard knocking at the front of the house.
+scene 6 (a child, guarded, urgency under 0.8): OK
+  first line at 09:42: "I'm not here for trouble. I've a little girl at home, she's six. We're out of water. Can you spare any?"
+  heard the knock in words: ['elena', 'leo', 'mara']; asked at 09:42: ['mara', 'leo', 'elena']; the words in their prompt: {'mara': True, 'leo': True, 'elena': True}
+  outcome refused; door asks 12; stretch asks 14; said [('09:51', "I'll wait a moment, if that's all right. Just some water."), ('09:54', "Right. I won't bother you again.")]
+  elena: At 09:42 someone knocked at the front door: you told a man, who asked for water, to go away.
+  leo: At 09:42 someone knocked at the front door: Elena told a man of about thirty-five, who asked for water, to go away.
+  mara: At 09:42 someone knocked at the front door: Elena told a man, who asked for water, to go away.
+scene 7 (no child, helper, food gone 4 days): OK
+  first line at 09:42: "Hello? I'm sorry to knock. Have you anything to eat you could spare? Anything at all."
+  heard the knock in words: ['elena', 'leo', 'mara']; asked at 09:42: ['mara', 'elena', 'leo']; the words in their prompt: {'mara': True, 'elena': True, 'leo': True}
+  outcome refused; door asks 3; stretch asks 3; said [('09:45', "Right. I'm sorry. I'll try somewhere else.")]
+  elena: At 09:42 someone knocked at the front door: Mara told a woman, who asked for food, to go away.
+  leo: At 09:42 someone knocked at the front door: Mara told a woman, who asked for food, to go away.
+  mara: At 09:42 someone knocked at the front door: you told a woman, who asked for food, to go away.
+scene 8 (a child, guarded, food gone 4 days): OK
+  first line at 09:42: "I won't come in. I've a little girl at home, she's twelve. There's no food left at home. Have you anything?"
+  heard the knock in words: ['elena', 'leo', 'mara']; asked at 09:42: ['mara', 'elena', 'leo']; the words in their prompt: {'mara': True, 'elena': True, 'leo': True}
+  outcome refused; door asks 6; stretch asks 7; said [('09:48', "Fine. I'll find it somewhere else.")]
+  elena: At 09:42 someone knocked at the front door: you told a man, who asked for food, to go away.
+  leo: At 09:42 someone knocked at the front door: Elena told a man, who asked for food, to go away.
+  mara: At 09:42 someone knocked at the front door: Elena told a man, who asked for food, to go away.
+scenes without the visitor's words at the knock: 0
+exit 0

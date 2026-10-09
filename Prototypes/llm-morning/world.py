@@ -1480,9 +1480,13 @@ class Morning:
         the day's asks (quiet.py, §4)."""
         minute = t * data.MINUTES_PER_TURN
         if self.quiet is not None:
-            if self.quiet.spent():
+            if self.quiet.spent(p):
                 return None, self.quiet.spent_why()
+            full = self.quiet.door_full(p)          # a visit asks at most 18 of those at the door (door_heard_impl)
+            if full:
+                return None, full
             self.quiet.asks += 1
+            self.quiet.door_asked(p)
         seen = p.levels()
         prompt = self.prompt_for(p, t, opts, d.get("lull"), extra=extra)
         p.last_asked = minute
@@ -1531,7 +1535,7 @@ class Morning:
         # spent; and someone out of every conversation, or resting, has no inner moment.
         quiet = self.quiet
         pending = quiet.pending.pop(p.id, None) if quiet is not None else None
-        spent = quiet is not None and quiet.spent()
+        spent = quiet is not None and quiet.spent(p)
         inner_ok = quiet is None or pending is not None or (self.talking(p.room) and not quiet.resting(p.id))
         # The body's food moment comes before anything else (reports/body_design.md, §2.1).
         if not spent and self.food_due(p, t):

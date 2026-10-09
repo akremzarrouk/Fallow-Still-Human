@@ -88,9 +88,12 @@ RAIN_TRIGGER = "rain has started: you hear it on the roof and against the boards
 RAIN_VIEW = "You heard rain begin on the roof and against the boards."
 RAIN_ASKS = 8
 COLD_UNDER = 18             # °C indoors: the WHO reference [S17]; cold from F2 on (§4.3.3)
-# W2a, the knock (reports/w2_design.md, §4.2, §6.1): Q7 plays the door scene with 6 asks of its own, at most once a
-# day; no day asks more than 56; a visit that would begin with 52 or more asks spent is deferred.
-DOOR_ASKS, DAY_MAX, KNOCK_UNDER = 6, 56, 52
+# W2a, the knock (reports/w2_design.md, §4.2, §6.1): Q7 plays the door scene, at most once a day; no day asks more
+# than 56; a visit that would begin with 52 or more asks spent is deferred. Every turn the visitor is at the door,
+# everyone awake who perceives it is asked, up to 18 door asks a visit: 6 turns of 3 (reports/door_heard_impl.md; the
+# 6 of W2a ran out before the second knock, reports/probe_door.md §2).
+DOOR_ASKS, DAY_MAX, KNOCK_UNDER = 18, 56, 52
+ASK_SLOTS = ("voice_ask_", "open_ask_", "again_")      # the visitor's lines that say what they need
 DOOR_KINDS = ("door_look", "door_call", "door_open", "door_give", "door_refuse")
 DOOR_HEARD = ("door_call", "door_open", "door_give", "door_refuse")     # what the person outside perceives
 SECOND_KNOCK, GIVES_UP = 3, 6       # turns with nothing from the house: a second knock; they go away
@@ -401,11 +404,14 @@ class Quiet:
         return fired
 
     # ---------- the budget (§4) ----------
-    def spent(self):
+    def spent(self, p=None):
         """No more asks now: the day's 40, or the played stretch's own (fix 1). Q5's stretch has its own 8, past the
-        day's 40 (reports/facts_and_evening.md, fix 5). No day asks more than 56, reserved or not (W2a)."""
+        day's 40 (reports/facts_and_evening.md, fix 5). No day asks more than 56, reserved or not (W2a). A door ask of
+        p (p perceives the door, the visit's 18 not yet spent) is not limited by the stretch's own cap
+        (reports/door_heard_impl.md)."""
+        door = p is not None and self.door is not None and p.door is not None and not self.door_full(p)
         return (self.asks >= DAY_MAX or (self.asks >= DAY_ASKS and not self.reserved)
-                or (self.cap is not None and self.asks >= self.cap))
+                or (not door and self.cap is not None and self.asks >= self.cap))
 
     def spent_why(self):
         if self.asks >= DAY_MAX:
@@ -472,7 +478,8 @@ class Quiet:
     def hear_knock(self, minute, played):
         """Each visit to the front door due by `minute`. It is deferred (and logged) if a knock has come today
         already, if 52 asks are spent, or if nobody awake or woken hears it; otherwise the knock is heard and the door
-        scene begins. In played turns it is a trigger inside the stretch under way, whose cap grows by Q7's 6;
+        scene begins, and the visitor says their first line through the door. In played turns it is a trigger inside
+        the stretch under way, whose cap grows by Q7's 18;
         in a quiet stretch it is Q7: the kitchen is played if anyone awake is in it, else the room with most awake,
         and everyone awake there is asked."""
         w = self.world
@@ -504,9 +511,16 @@ class Quiet:
                               "silent": 0, "knocks": [minute], "queue": [], "outcome": None, "acts": [],
                               "heard": dict(heard), "woken": [], "at_door": [], "said": [], "who": who,
                               "voice": voice, "give": None, "asks_at": self.asks, "asks": None, "played": played,
-                              "summary": {}, "q7_asks": 0, "unplayed_from": None}
+                              "summary": {}, "q7_asks": 0, "unplayed_from": None,
+                              # what each one perceived of the visitor (reports/door_heard_impl.md): the lines they
+                              # heard, [minute, words, whether it said the need]; whether they saw them; door asks
+                              "heard_said": {}, "saw": [], "door_asks": 0, "by_knock": [[minute, dict(heard)]]}
             sc["woken"] = [q for q in heard if q in self.woken_now]
             self.knock_percepts(sc, heard, minute, played)
+            # The visitor speaks first, through the shut door, heard in words by whoever heard the knock in words.
+            slot, text = streetmod.first_words(self.world.street, v)
+            self.door_speak(sc, minute, slot, text, [q for q in sorted(heard, key=data.ORDER.index)
+                                                     if heard[q] == "words"], played)
             rooms = {}
             for q in sorted(heard, key=data.ORDER.index):
                 rooms.setdefault(self.m.people[q].room, []).append(q)
@@ -581,13 +595,23 @@ class Quiet:
         if sc is None:
             return
         v = self.visit(sc)
+        this_knock = next((h for mm, h in sc["by_knock"] if mm == minute), {})
         for p in self.people():
             if self.resting(p.id):
                 continue
             knock = minute in sc["knocks"]
+            # The visitor's words as p heard them (reports/door_heard_impl.md): the last line p heard, now or earlier.
+            mine = sc["heard_said"].get(p.id, [])
+            words = []
+            if mine:
+                said_at, text = mine[-1][0], mine[-1][1]
+                words = [f"- {sc['voice']} at the front door says: \"{text}\"" if said_at == minute else
+                         f"- Earlier, at {clock(said_at)}, {sc['voice'][0].lower() + sc['voice'][1:]} at the front "
+                         f"door said: \"{text}\""]
             if p.room != "kitchen":
-                if knock and sc["heard"].get(p.id) == "heard":
-                    p.door = {"lines": [f"- {KNOCK_WORDS['heard'][0]}"], "options": False}
+                if knock and p.id in this_knock:
+                    p.door = {"lines": [f"- {KNOCK_WORDS[this_knock[p.id]][0]}"]
+                              + [x for x in words if mine[-1][0] == minute], "options": False}
                 continue
             lines = []
             if sc.get("going") == minute:
@@ -598,15 +622,13 @@ class Quiet:
             if sc["door"] == "open":
                 lines.append(f"- The front door is open. {streetmod.looks(self.world.street, v, absolute(self.k, minute))[0].upper()}"
                              f"{streetmod.looks(self.world.street, v, absolute(self.k, minute))[1:]}, stands on the step.")
+                if p.id not in sc["saw"]:
+                    sc["saw"].append(p.id)
             elif knock:
-                lines.append(f"- {KNOCK_WORDS[sc['heard'].get(p.id, 'words')][0]}")
-            elif not sc["said"]:
+                lines.append(f"- {KNOCK_WORDS[this_knock.get(p.id, 'words')][0]}")
+            elif not mine:
                 lines.append(f"- Someone is at the front door; there was a knock at {clock(sc['knocks'][-1])}.")
-            if sc["said"]:
-                said_at, text = sc["said"][-1]
-                lines.append(f"- {sc['voice']} at the front door says: \"{text}\"" if said_at == minute else
-                             f"- Earlier, at {clock(said_at)}, {sc['voice'][0].lower() + sc['voice'][1:]} at the front "
-                             f"door said: \"{text}\"")
+            lines += words
             give = sc["need_known"] and sc["purpose"] == "ask_water" and self.water_to_give()
             p.door = {"lines": lines, "options": True, "door": "open" if sc["door"] == "open" else "shut",
                       "opening": sc["opening"], "give": give}
@@ -625,26 +647,15 @@ class Quiet:
         due, sc["queue"] = [x for x in sc["queue"] if x[0] <= minute], [x for x in sc["queue"] if x[0] > minute]
         for _, what, arg in due:
             if what == "voice":
-                text = streetmod.line(self.world.street, v, arg, sc["spoke"])
-                sc["spoke"] += 1
-                sc["said"].append((minute, text))
-                sc["need_known"] = True
-                heard = f"{sc['voice']} at the front door says: \"{text}\""
-                self.seq += 1
-                self.door_events.append({"minute": minute, "seq": self.seq, "kind": "door_line", "actor": None,
-                                         "words": text, "witnesses": {p.id: "heard" for p in kitchen},
-                                         "views": {p.id: f"{sc['voice']} at the front door said: \"{text}\""
-                                                   for p in kitchen},
-                                         "text": f"the person at the door ({arg}): \"{text}\""})
-                for p in kitchen:
-                    p.memory.append((minute, heard + "."))
-                    p.triggers.append((heard, True))
-                    self.m.started("kitchen", minute, "the person at the front door spoke", False)
+                self.door_speak(sc, minute, arg, streetmod.line(self.world.street, v, arg, sc["spoke"]),
+                                [p.id for p in kitchen], sc["unplayed_from"] is None)
             elif what == "open":
                 sc["door"], sc["opening"] = "open", False
                 seen = (f"The front door is open. {streetmod.looks(self.world.street, v, at)[0].upper()}"
                         f"{streetmod.looks(self.world.street, v, at)[1:]}, stands on the step.")
                 for p in kitchen:
+                    if p.id not in sc["saw"]:
+                        sc["saw"].append(p.id)
                     p.memory.append((minute, seen))
                     p.triggers.append((seen.rstrip("."), True))
                     self.m.started("kitchen", minute, "the front door opened", False)
@@ -652,8 +663,15 @@ class Quiet:
                 sc["knocks"].append(minute)
                 heard = self.knock_heard(v, len(sc["knocks"]), minute)
                 sc["heard"].update(heard)
+                sc["by_knock"].append([minute, dict(heard)])
                 sc["woken"] += [q for q in heard if q in self.woken_now]
                 self.knock_percepts(sc, heard, minute, True)
+                # With the knock, a short ask again through the door, heard by whoever heard this knock in words.
+                good = "water" if sc["purpose"] == "ask_water" else "food"
+                slot = f"insist_{good}" if streetmod.urgency(self.world.street, v) >= 0.8 else f"again_{good}"
+                self.door_speak(sc, minute, slot, streetmod.line(self.world.street, v, slot, sc["spoke"]),
+                                [q for q in sorted(heard, key=data.ORDER.index) if heard[q] == "words"],
+                                sc["unplayed_from"] is None)
             elif what == "leave":
                 sc["going"] = minute
                 seen = GOING if sc["door"] == "shut" else f"{sc['who'][0].upper() + sc['who'][1:]} goes away along the street."
@@ -662,6 +680,30 @@ class Quiet:
         self.door_views(minute)
         if sc.get("going") == minute:
             self.door_end(minute)
+
+    def door_speak(self, sc, minute, slot, text, listeners, played):
+        """The visitor says `text` (from `slot`) through the door, heard in words by `listeners` (reports/
+        door_heard_impl.md): each one's memory and record of it, and, in played turns, a trigger and the talk in their
+        room. A line of an ask slot says what they need; the visit then has asked."""
+        asks = slot.startswith(ASK_SLOTS)
+        sc["spoke"] += 1
+        sc["said"].append((minute, text))
+        sc["need_known"] = True
+        if asks:
+            self.visit(sc)["asked"] = True
+        heard = f"{sc['voice']} at the front door says: \"{text}\""
+        self.seq += 1
+        self.door_events.append({"minute": minute, "seq": self.seq, "kind": "door_line", "actor": None,
+                                 "words": text, "witnesses": {q: "heard" for q in listeners},
+                                 "views": {q: f"{sc['voice']} at the front door said: \"{text}\"" for q in listeners},
+                                 "text": f"the person at the door ({slot}): \"{text}\""})
+        for q in listeners:
+            p = self.m.people[q]
+            sc["heard_said"].setdefault(q, []).append([minute, text, asks])
+            p.memory.append((minute, heard + "."))
+            if played:
+                p.triggers.append((heard, True))
+                self.m.started(p.room, minute, "the person at the front door spoke", False)
 
     def door_act(self, p, kind, minute, words):
         """A family member's act at the door, from world.apply. Code does what the act does: a look gives a sight; an
@@ -676,6 +718,8 @@ class Quiet:
         if p.id not in sc["at_door"]:
             sc["at_door"].append(p.id)
         if kind == "door_look":
+            if p.id not in sc["saw"]:
+                sc["saw"].append(p.id)
             return f"you looked through the gap in the boards and saw {streetmod.looks(self.world.street, v, at)}, on the step."
         if kind == "door_open":
             sc["opening"] = True
@@ -741,13 +785,20 @@ class Quiet:
         if v["state"] != "done":
             streetmod.end_visit(st, v, sc["outcome"], 0.0, absolute(self.k, minute))
         good = "water" if sc["purpose"] == "ask_water" else "food"
-        who = sc["who"]
-        saw = sc["door"] == "open" or any(a[2] == "door_look" for a in sc["acts"])
-        witnesses = set(sc["at_door"]) | {q for q, how in sc["heard"].items() if how == "words"}
+        voiced = sc["voice"][:-len("'s voice")]                    # "A woman's voice": "a woman"
+        voiced = voiced[0].lower() + voiced[1:]
+        # Whoever was at the door, heard any knock in words, or heard the visitor speak (sc["heard"] holds only each
+        # one's last knock).
+        witnesses = (set(sc["at_door"]) | set(sc["heard_said"])
+                     | {q for _, h in sc["by_knock"] for q, how in h.items() if how == "words"})
         for q in sorted(witnesses, key=data.ORDER.index):
             p = self.m.people[q]
-            them = who if saw else "someone"
-            asked = f", who asked for {good}," if sc["said"] else ""
+            # Only what q perceived (reports/door_heard_impl.md): the face if they saw it, the voice if they heard it;
+            # the need only if they heard words saying it.
+            heard = sc["heard_said"].get(q, [])
+            them = sc["who"] if q in sc["saw"] else voiced if heard else "someone"
+            heard_ask = any(x[2] for x in heard)
+            asked = f", who asked for {good}," if heard_ask else ""
             if sc["outcome"] == "given":
                 g = sc["give"]["by"]
                 did = (f"you handed {them}{asked} about three litres of the stored water" if g == q else
@@ -755,10 +806,10 @@ class Quiet:
             elif sc["outcome"] == "refused":
                 r = next(a[1] for a in sc["acts"] if a[2] == "door_refuse")
                 did = (f"you told {them}{asked} to go away" if r == q else f"{NAMES[r]} told {them}{asked} to go away")
-            elif sc["said"]:
+            elif heard_ask:
                 did = f"{them} asked for {good} and went away with nothing"
             else:
-                did = f"nobody answered, and {them if saw else 'whoever it was'} went away"
+                did = f"nobody answered, and {them if them != 'someone' else 'whoever it was'} went away"
             line = f"At {clock(sc['start'])} someone knocked at the front door: {did}."
             sc["summary"][q] = line
             p.sure.append(f"{clock(minute)}: {line[0].lower() + line[1:]}")
@@ -773,6 +824,30 @@ class Quiet:
                                  "text": f"the visit ended: {sc['outcome']}"})
         self.door_scenes.append(sc)
         self.door = None
+
+    # ---------- reports/door_heard_impl.md: everyone who perceives the door is asked, up to 18 a visit ----------
+    def door_asks(self, minute):
+        """A played turn of the visit: everyone awake who perceives the door now (their `p.door`) is asked, whatever
+        else they have to answer, until the visit's DOOR_ASKS are spent. Not a quiet ask: it does not count against
+        the day's 12 (QUIET_ASKS)."""
+        if self.door is None or self.door_full():
+            return
+        for p in self.people():
+            if p.door is not None and not self.resting(p.id) and p.id not in self.pending:
+                self.pending[p.id] = {"kind": "Q7", "minute": minute, "texts": []}
+
+    def door_full(self, p=None):
+        """Why p, who perceives the door, cannot be asked for it any more (the visit's DOOR_ASKS are spent), or None.
+        Without p: whether they are spent."""
+        sc = self.door
+        if sc is None or (p is not None and p.door is None) or sc["door_asks"] < DOOR_ASKS:
+            return None
+        return f"the visit's {DOOR_ASKS} door asks are spent"
+
+    def door_asked(self, p):
+        """p has been asked while perceiving the door: one of the visit's door asks."""
+        if self.door is not None and p.door is not None:
+            self.door["door_asks"] += 1
 
     # ---------- reports/w2a_fixes.md, fix 3: a door nobody in the played room perceives ----------
     def door_unwatched(self, room):
@@ -1141,6 +1216,7 @@ class Quiet:
         self.hear_rain(minute, played=True)
         self.hear_knock(minute, played=True)
         self.door_before(minute)
+        self.door_asks(minute)
         self.run_out(minute)            # a rest out of the played room ends on time; the next routine waits
         self.m.turn(t)
         self.door_after(minute)

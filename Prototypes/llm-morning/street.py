@@ -647,11 +647,40 @@ def says_true(tag, hh):
 
 def line(state, v, slot, i=0):
     """A line of the pool for this visit's household (`with`: a child, or two or more), by the string
-    <seed>:street:<household>:visit<n>:<slot>."""
+    <seed>:street:<household>:visit<n>:<slot>. Never a first line (first_words), and a line that refers to an ask only
+    once the visitor has asked (`v["asked"]`; reports/door_heard_impl.md)."""
     hh = state["households"][v["household"]]
-    ok = [x for x in lines()[slot] if says_true(x.get("with"), hh)]
+    ok = [x for x in lines()[slot] if says_true(x.get("with"), hh) and not x.get("first")
+          and (x.get("after") != "ask" or v.get("asked"))]
     u = default_or(state)(f"{state['seed']}:street:{v['household']}:visit{v['n']}:{slot}" + (f":{i}" if i else ""))
     return ok[int(u * len(ok))]["text"]
+
+
+def kids_words(hh):
+    """A sentence naming each child of the household and their age, as their parent says it at a door: "I've a little
+    girl at home, she's six." / "I've two at home, a girl of five and a boy of seven." """
+    kids = sorted((m for m in hh["drawn"]["members"] if m["role"] == "child"), key=lambda m: (m["age"], m["id"]))
+    noun = lambda m: "girl" if m["sex"] == "f" else "boy"
+    if len(kids) == 1:
+        k = kids[0]
+        return f"I've a little {noun(k)} at home, {'she' if k['sex'] == 'f' else 'he'}'s {AGE_WORDS[k['age']]}."
+    each = [f"a {noun(k)} of {AGE_WORDS[k['age']]}" for k in kids]
+    many = {2: "two", 3: "three", 4: "four", 5: "five"}[len(kids)]
+    return f"I've {many} at home, {', '.join(each[:-1])} and {each[-1]}."
+
+
+def first_words(state, v):
+    """(slot, words) the visitor says through the shut door at the first knock (reports/door_heard_impl.md): with a
+    child, a `first` line of their disposition (helper, or guarded for any other) with the children named, by the
+    string <seed>:street:<household>:visit<n>:first; otherwise the slot's own line, as a reply to a call was."""
+    hh = state["households"][v["household"]]
+    slot = f"voice_ask_{'water' if v['purpose'] == 'ask_water' else 'food'}"
+    if not has_child(hh):
+        return slot, line(state, v, slot)
+    by = "helper" if hh["drawn"]["disposition"] == "helper" else "guarded"
+    ok = [x for x in lines()[slot] if x.get("first") and x["by"] == by]
+    u = default_or(state)(f"{state['seed']}:street:{v['household']}:visit{v['n']}:first")
+    return slot, ok[int(u * len(ok))]["text"].replace("{kids}", kids_words(hh))
 
 
 AGE_WORDS = {3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine", 10: "ten", 11: "eleven",
@@ -669,8 +698,8 @@ def who_words(m):
         noun = ("old woman" if m["sex"] == "f" else "old man") if m["age"] >= 65 else \
                ("woman" if m["sex"] == "f" else "man")
         age = AGE_WORDS[min(85, max(20, int(round(m["age"] / 5.0)) * 5))]
-    voice = {"girl": "A girl's voice", "boy": "A boy's voice"}.get(noun, f"A {noun}'s voice")
     article = "an" if noun[0] in "aeiou" else "a"
+    voice = f"{article.capitalize()} {noun}'s voice"           # "An old man's voice" (reports/door_heard_impl.md)
     return f"{article} {noun} of about {age}", voice
 
 
