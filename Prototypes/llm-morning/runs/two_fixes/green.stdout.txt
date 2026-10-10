@@ -1,0 +1,8 @@
+test_a_probe_after_scene1_elenas_memory_of_maras_door_give_gets_no_s8_warning (test_morning.TwoFixesTest.test_a_probe_after_scene1_elenas_memory_of_maras_door_give_gets_no_s8_warning) ... ok
+test_b_a_q1_at_17_39_with_50_spent_fires_with_no_trip_position_and_is_refused_with_one (test_morning.TwoFixesTest.test_b_a_q1_at_17_39_with_50_spent_fires_with_no_trip_position_and_is_refused_with_one) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.959s
+
+OK
+exit 0

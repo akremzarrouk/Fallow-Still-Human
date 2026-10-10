@@ -1,0 +1,44 @@
+test_a_probe_after_scene1_elenas_memory_of_maras_door_give_gets_no_s8_warning (test_morning.TwoFixesTest.test_a_probe_after_scene1_elenas_memory_of_maras_door_give_gets_no_s8_warning) ... FAIL
+test_b_a_q1_at_17_39_with_50_spent_fires_with_no_trip_position_and_is_refused_with_one (test_morning.TwoFixesTest.test_b_a_q1_at_17_39_with_50_spent_fires_with_no_trip_position_and_is_refused_with_one) ... FAIL
+
+======================================================================
+FAIL: test_a_probe_after_scene1_elenas_memory_of_maras_door_give_gets_no_s8_warning (test_morning.TwoFixesTest.test_a_probe_after_scene1_elenas_memory_of_maras_door_give_gets_no_s8_warning)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8141, in test_a_probe_after_scene1_elenas_memory_of_maras_door_give_gets_no_s8_warning
+    self.assertEqual((verdict, warnings), ("kept", []))
+AssertionError: Tuples differ: ('kept', [{'of': 'memory', 'text': 'Mara gave some [156 chars]t'}]) != ('kept', [])
+
+First differing element 1:
+[{'of': 'memory', 'text': 'Mara gave some [155 chars]nt'}]
+[]
+
+- ('kept',
++ ('kept', [])
+?         ++++
+
+-  [{'of': 'memory',
+-    'reason': 'S8 mara give: no such event',
+-    'text': 'Mara gave some of our stored water to a stranger at the door '
+-            'because she has a good heart, even though we have none left '
+-            'ourselves.'}])
+
+======================================================================
+FAIL: test_b_a_q1_at_17_39_with_50_spent_fires_with_no_trip_position_and_is_refused_with_one (test_morning.TwoFixesTest.test_b_a_q1_at_17_39_with_50_spent_fires_with_no_trip_position_and_is_refused_with_one)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8165, in test_b_a_q1_at_17_39_with_50_spent_fires_with_no_trip_position_and_is_refused_with_one
+    self.assertEqual([(f["kind"], f["asked"]) for f in fired], [("Q1", "daniel")], q.log[-1])
+AssertionError: Lists differ: [] != [('Q1', 'daniel')]
+
+Second list contains 1 additional elements.
+First extra element 0:
+('Q1', 'daniel')
+
+- []
++ [('Q1', 'daniel')] : {'kind': 'Q1', 'minute': 639, 'room': 'kitchen', 'who': 'daniel', 'need': 'fast', 'stage': 2, 'fired': False, 'asked': None, 'why': "50 asks spent and the evening's 8 still owed reach the day's 56", 'budget': "50 asks spent and the evening's 8 still owed reach the day's 56"}
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.339s
+
+FAILED (failures=2)

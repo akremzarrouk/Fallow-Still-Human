@@ -1,0 +1,52 @@
+F..F.....F...
+======================================================================
+FAIL: test_a_a_q2_before_the_evening_counts_only_ordinary_asks_against_40_and_leaves_the_evening_its_8 (test_morning.BudgetFixTest.test_a_a_q2_before_the_evening_counts_only_ordinary_asks_against_40_and_leaves_the_evening_its_8)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8057, in test_a_a_q2_before_the_evening_counts_only_ordinary_asks_against_40_and_leaves_the_evening_its_8
+    self.assertEqual(fired, [])
+AssertionError: Lists differ: [{'kind': 'Q2', 'minute': 260, 'room': 'ki[185 chars]one}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'kind': 'Q2', 'minute': 260, 'room': 'kitchen', 'pair': ['daniel', 'leo'], 'arrived': 'daniel', 'there': 'leo', 'grudges': {'daniel': 0, 'leo': 3}, 'last_line': 200, 'met_today': False, 'fired': True, 'asked': 'leo', 'why': None}
+
++ []
+- [{'arrived': 'daniel',
+-   'asked': 'leo',
+-   'fired': True,
+-   'grudges': {'daniel': 0, 'leo': 3},
+-   'kind': 'Q2',
+-   'last_line': 200,
+-   'met_today': False,
+-   'minute': 260,
+-   'pair': ['daniel', 'leo'],
+-   'room': 'kitchen',
+-   'there': 'leo',
+-   'why': None}]
+
+======================================================================
+FAIL: test_b_a_knock_is_deferred_unless_the_day_can_give_it_6_asks_beyond_the_evenings_owed_asks (test_morning.DoorAfterTest.test_b_a_knock_is_deferred_unless_the_day_can_give_it_6_asks_beyond_the_evenings_owed_asks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8009, in test_b_a_knock_is_deferred_unless_the_day_can_give_it_6_asks_beyond_the_evenings_owed_asks
+    self.assertFalse(fired, "with 43 spent, the knock would take from the evening's 8")
+AssertionError: [{'kind': 'Q7', 'minute': 120, 'room': 'kitchen', 'awake': {'kitchen': ['daniel', 'elena', 'leo', 'mara']}, 'fired': True, 'asked': ['daniel', 'elena', 'leo', 'mara'], 'why': None, 'visit': 'v1', 'household': 'h2', 'purpose': 'ask_food'}] is not false : with 43 spent, the knock would take from the evening's 8
+
+======================================================================
+FAIL: test_t6_a_knock_comes_by_day_once_a_day_never_into_the_bathroom_and_wakes_by_the_draw (test_morning.KnockTest.test_t6_a_knock_comes_by_day_once_a_day_never_into_the_bathroom_and_wakes_by_the_draw)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7256, in test_t6_a_knock_comes_by_day_once_a_day_never_into_the_bathroom_and_wakes_by_the_draw
+    self.assertEqual(v["deferrals"][-1]["why"], "the day cannot give a knock 6 asks beyond the evening's 8")
+AssertionError: 'the day cannot give a knock 6 asks' != "the day cannot give a knock 6 asks beyond the evening's 8"
+- the day cannot give a knock 6 asks
++ the day cannot give a knock 6 asks beyond the evening's 8
+?                                   +++++++++++++++++++++++
+
+
+----------------------------------------------------------------------
+Ran 13 tests in 12.980s
+
+FAILED (failures=3)
+exit 1

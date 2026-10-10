@@ -63,6 +63,14 @@ CONFIG = os.path.join(HERE, "config.json")
 SECRET = "SENTINEL-not-a-real-key-7731"
 
 
+def hold_trip_position(m, pid, minute):
+    """A trip position taken by pid at this minute, as a turn of the day's transcript records it: the evening (Q5) is
+    owed its 8 only while someone holds one (reports/two_fixes_impl.md)."""
+    m.transcript["turns"].append({"minute": minute, "acts": [
+        {"minute": minute, "who": pid, "room": m.people[pid].room, "option": "propose_trip", "words": None,
+         "audience": None, "mode": "test", "decided_at": [minute, 0], "said_at": [minute, 0], "came_of_it": None}]})
+
+
 class Dirs:
     def __init__(self):
         self.root = tempfile.mkdtemp(prefix="llm-morning-test-")
@@ -7248,8 +7256,10 @@ class KnockTest(unittest.TestCase):
         self.assertGreaterEqual(v2["at"], self.at(4, 30))
         self.assertEqual(v2["deferrals"][0]["why"], "a knock has come today already")
         # Deferred when 52 asks are spent: the day cannot give it 6 beyond the evening's 8 (reports/door_memory_impl.md;
-        # W2a deferred it from 52 on, test_morning.DoorAfterTest has the rule's edges).
+        # W2a deferred it from 52 on, test_morning.DoorAfterTest has the rule's edges). The 8 are owed only while
+        # someone holds a trip position (reports/two_fixes_impl.md): Leo has taken one.
         d, q, (v,) = self.door_day(None, [(120, "ask_food")])
+        hold_trip_position(d.day3, "leo", 117)
         q.asks = 52
         q.tick(120)
         self.assertFalse(q.hear_knock(120, played=False))
@@ -7998,6 +8008,7 @@ class DoorAfterTest(unittest.TestCase):
             for p in m.people.values():
                 q.end(p, 120, "test")
                 p.room = "kitchen"
+            hold_trip_position(m, "leo", 117)          # the evening is owed only while one is held (two_fixes_impl.md)
             q.asks, q.evening_done = asks, evening_done
             return q, v, q.hear_knock(120, played=False)
         day, evening = self.quiet.DAY_MAX, self.quiet.EVENING_ASKS
@@ -8046,6 +8057,7 @@ class BudgetFixTest(unittest.TestCase):
 
         def q2_with(ordinary, reserved):
             m, q = self.meeting()
+            hold_trip_position(m, "elena", 250)        # the evening is owed only while one is held (two_fixes_impl.md)
             q.asks, q.reserved_asks = ordinary + reserved, reserved
             self.assertFalse(q.evening_done)
             return q, q.arrive(m.people["daniel"], "kitchen", 260)        # 11:20, before 19:00
@@ -8100,6 +8112,71 @@ class BudgetFixTest(unittest.TestCase):
         self.assertEqual(seen[219][1:3], (24 + 20, False), seen)
         self.assertGreater(s["end"], 219, s)
         self.assertLessEqual(s["asks"], 20, s)
+
+
+
+class TwoFixesTest(unittest.TestCase):
+    """reports/two_fixes_impl.md (from reports/probe_after.md §3, findings 1 and 5): S8's "give" also matches a give at
+    the front door; and the evening's 8 are owed only while Q5 could still fire: before it is checked, and only while
+    someone holds a trip position today."""
+    MODEL = QuietDayTest.MODEL
+    v16 = QuietDayTest.v16
+    setUp, tearDown = KnockTest.setUp, KnockTest.tearDown
+
+    # ---------- (a) a true door give is not flagged ----------
+    def test_a_probe_after_scene1_elenas_memory_of_maras_door_give_gets_no_s8_warning(self):
+        with open(os.path.join(HERE, "runs", "probe_after", "scene1.json"), encoding="utf-8") as f:
+            r = json.load(f)
+        c = self.chron.Chronicle(2, "daniel")
+        for e in r["day3_events"]:
+            c.add({**e, "scene": "D3"})
+        shown = dict(r["mind_input"]["elena"]["records"])
+        mem = r["minds"]["elena"]["memories"][0]
+        self.assertEqual((mem["ids"], c.event("D3-030")["kind"], c.event("D3-030")["actor"]),
+                         (["D3-030", "D3-033"], "door_give", "mara"), "the premise")
+        self.assertEqual(r["minds"]["elena"]["warnings"][0]["reason"], "S8 mara give: no such event", "the premise")
+        warnings = []
+        verdict = self.mind.check_memory({"ids": mem["ids"], "meaning": mem["meaning"]}, "elena", shown, c, [],
+                                         warnings)
+        self.assertEqual((verdict, warnings), ("kept", []))
+        # Still caught: a give by someone who made none (D3-031 is Leo's, so S4 has nothing to say).
+        warnings = []
+        self.mind.check_memory({"ids": ["D3-030", "D3-031"], "meaning": "Leo gave the stranger some water."}, "elena",
+                               shown, c, [], warnings)
+        self.assertEqual([w["reason"] for w in warnings], ["S8 leo give: no such event"])
+
+    # ---------- (b) the evening's 8, owed only while Q5 could fire ----------
+    def test_b_a_q1_at_17_39_with_50_spent_fires_with_no_trip_position_and_is_refused_with_one(self):
+        def day():
+            m, q = (lambda d: (d.day3, d.day3.quiet))(self.v16())
+            for p in m.people.values():
+                q.end(p, 639, "test")
+                p.room = "kitchen"
+            q.asks, q.reserved_asks, q.evening_done = 50, 11, False       # scene 1's day 3: 11 of them the door's
+            trips = [a for t in m.transcript["turns"] for a in t["acts"]
+                     if world.act_of(a["option"])[0] in world.TRIP_KINDS]
+            self.assertEqual(trips, [], "the premise: nobody has taken a trip position today")
+            return m, q
+
+        self.assertEqual((self.quiet.EVENING, self.quiet.EVENING_ASKS, self.quiet.DAY_MAX), (720, 8, 56))
+        # No trip position at 17:39: Q5 cannot fire, nothing is owed; 50 spent (39 ordinary) leave room. Q1 fires.
+        m, q = day()
+        fired = q.ask_q1([("daniel", "fast", 2)], 639)
+        self.assertEqual([(f["kind"], f["asked"]) for f in fired], [("Q1", "daniel")], q.log[-1])
+        # A trip position held: the evening is owed its 8, and 50 + 8 reaches 56. Refused, naming the evening's 8.
+        m, q = day()
+        hold_trip_position(m, "leo", 600)
+        fired = q.ask_q1([("daniel", "fast", 2)], 639)
+        self.assertEqual(fired, [])
+        self.assertEqual((q.log[-1]["kind"], q.log[-1]["why"]),
+                         ("Q1", "50 asks spent and the evening's 8 still owed reach the day's 56"))
+        # A trip position taken later the same day: owed again from then on.
+        m, q = day()
+        self.assertEqual(len(q.ask_q1([("daniel", "fast", 2)], 639)), 1)
+        hold_trip_position(m, "leo", 642)
+        q.asks = 50
+        self.assertEqual(q.ask_q1([("leo", "fast", 2)], 645), [])
+        self.assertIn("the evening's 8", q.log[-1]["why"])
 
 
 if __name__ == "__main__":

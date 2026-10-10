@@ -92,7 +92,8 @@ COLD_UNDER = 18             # °C indoors: the WHO reference [S17]; cold from F2
 # than 56. Every turn the visitor is at the door, everyone awake who perceives it is asked, up to 18 door asks a visit:
 # 6 turns of 3 (reports/door_heard_impl.md; the 6 of W2a ran out before the second knock, reports/probe_door.md §2).
 # A knock comes only if the day can give it KNOCK_NEEDS asks without touching the asks the evening (Q5) is still
-# owed: DAY_MAX - asks spent - EVENING_ASKS (until Q5 has been checked) >= 6; otherwise it is deferred. This replaces
+# owed: DAY_MAX - asks spent - EVENING_ASKS (until Q5 has been checked, and only while someone holds a trip position
+# today: Quiet.evening_owed) >= 6; otherwise it is deferred. This replaces
 # W2a's "deferred at 52 asks spent", which let a knock take the evening's 8 (reports/door_memory_impl.md).
 # Once a visit has ended, its Q7 stretch plays at most AFTER_VISIT more turns: the door's 18 do not pay for the rest
 # of the day's talk (reports/door_after_facts.md §1.2: 15 asks after the visit, then every quiet trigger refused).
@@ -461,10 +462,10 @@ class Quiet:
 
     def budget(self, pid):
         """Why a quiet ask of pid cannot be made now, or None. The ordinary 40; then the day's 56, less what the
-        evening (Q5) is still owed (reports/budget_fix_impl.md)."""
+        evening (Q5) is still owed (reports/budget_fix_impl.md, reports/two_fixes_impl.md)."""
         if self.ordinary() >= DAY_ASKS:
             return f"the day's {DAY_ASKS} asks are spent"
-        owed = 0 if self.evening_done else EVENING_ASKS
+        owed = self.evening_owed()
         if self.asks + owed >= DAY_MAX:
             return (f"{self.asks} asks spent and the evening's {owed} still owed reach the day's {DAY_MAX}" if owed
                     else f"the day's {DAY_MAX} asks are spent")
@@ -573,7 +574,7 @@ class Quiet:
     def knock_short(self):
         """Why the day cannot give a knock KNOCK_NEEDS asks now without touching what the evening is still owed, or
         None (reports/door_memory_impl.md)."""
-        owed = 0 if self.evening_done else EVENING_ASKS
+        owed = self.evening_owed()
         if DAY_MAX - self.asks - owed >= KNOCK_NEEDS:
             return None
         return (f"the day cannot give a knock {KNOCK_NEEDS} asks beyond the evening's {owed}" if owed else
@@ -1158,6 +1159,21 @@ class Quiet:
             fired.append(entry)
         return fired
 
+    def trip_positions(self):
+        """Who took a trip position today: person -> their most recent trip act's (minute, seq)."""
+        last = {}
+        for turn in self.m.transcript["turns"]:
+            for a in turn["acts"]:
+                if act_of(a["option"])[0] in TRIP_KINDS:
+                    last[a["who"]] = max(last.get(a["who"], (-1, -1)), tuple(a["decided_at"]))
+        return last
+
+    def evening_owed(self):
+        """The asks the evening (Q5) is still owed: its 8 while Q5 could still fire, that is before it is checked and
+        only while someone holds a trip position today; else none (reports/probe_after.md §3, finding 5: a day with no
+        trip talk held back 8 asks for an evening ask that could not come). A position taken later owes them again."""
+        return EVENING_ASKS if not self.evening_done and self.trip_positions() else 0
+
     def evening(self, minute):
         """Q5 (reports/facts_and_evening.md, fix 5), once a day, at the first quiet minute from 19:00: if anyone took
         a trip position today and is awake in a room with someone else awake, the one whose trip act is the most
@@ -1165,11 +1181,7 @@ class Quiet:
         if self.evening_done or minute < EVENING:
             return []
         self.evening_done = True
-        last = {}
-        for turn in self.m.transcript["turns"]:
-            for a in turn["acts"]:
-                if act_of(a["option"])[0] in TRIP_KINDS:
-                    last[a["who"]] = max(last.get(a["who"], (-1, -1)), tuple(a["decided_at"]))
+        last = self.trip_positions()
         awake = {}
         for p in sorted(self.people(), key=lambda x: data.ORDER.index(x.id)):
             if not self.resting(p.id):

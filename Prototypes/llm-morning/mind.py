@@ -216,8 +216,8 @@ def matching(chron, pid, family, subject, can):
         return sum(1 for e in seen if e["kind"] == "street" and by(e) and e["outcome"]
                    and "shaken, with nothing" not in e["outcome"] and e["outcome"] != "not back by morning")
     kinds = {"admit": ("confess",), "deny": ("deny",), "accuse": ("accuse", "confront"), "go out": ("went_out",),
-             "come back": ("return",), "give": ("give",), "share": ("share",), "search": ("search", "search_done"),
-             "stop": ("stop",), "offer": ("volunteer",), "hide": ()}[family]
+             "come back": ("return",), "give": ("give", "door_give"), "share": ("share",),
+             "search": ("search", "search_done"), "stop": ("stop",), "offer": ("volunteer",), "hide": ()}[family]
     return sum(1 for e in seen if e["kind"] in kinds and by(e))
 
 
