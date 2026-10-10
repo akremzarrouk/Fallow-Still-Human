@@ -1,0 +1,44 @@
+{
+ "live": 95,
+ "phases": [
+  {
+   "phase": "scene1",
+   "seed": 101,
+   "live_before": 0,
+   "reached": "done",
+   "stopped": null,
+   "counts": {
+    "live": 32,
+    "from_cache": 123,
+    "api_requests": 32
+   },
+   "live_after": 32
+  },
+  {
+   "phase": "scene3",
+   "seed": 103,
+   "live_before": 32,
+   "reached": "done",
+   "stopped": null,
+   "counts": {
+    "live": 31,
+    "from_cache": 123,
+    "api_requests": 31
+   },
+   "live_after": 63
+  },
+  {
+   "phase": "scene4",
+   "seed": 104,
+   "live_before": 63,
+   "reached": "done",
+   "stopped": null,
+   "counts": {
+    "live": 32,
+    "from_cache": 123,
+    "api_requests": 32
+   },
+   "live_after": 95
+  }
+ ]
+}

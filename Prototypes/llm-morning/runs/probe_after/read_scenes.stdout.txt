@@ -1,0 +1,428 @@
+
+==================== scene 1 (no child, helper, urgency under 0.8, client seed 101)
+reached done; stopped None; counts {'live': 32, 'from_cache': 123, 'api_requests': 32}; day asks {'all': 51, 'reserved': 11}
+visit 09:42 to 09:45; outcome given; said [('09:42', "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."), ('09:45', "Oh, thank you. You don't know what this means.")]
+summary: {"elena": "At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.", "leo": "At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.", "mara": "At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and you handed her about three litres of the stored water anyway."}
+stretches:
+  09:42 to 09:51 Q7 in kitchen: 11 asks
+  11:45 to 11:54 Q2 in brothers_room: 4 asks
+  14:51 to 15:03 Q2 in kitchen: 8 asks
+  17:39 to 17:42 Q1 in kitchen: 4 asks
+
+--- every decision from 09:45 to the Q7 stretch's end (09:51)
+  09:45 elena (kitchen, model): `reassure_all` *"We have very little left, but we will look after one another and get through this together."*; feeling anxious; reason "I need to calm the children down before tension tears us apart."
+      triggers: ['Mara says to everyone, while handing water out at the front door: "Mom, we have to give her some, we have enough stored."', 'Mara hands some of the stored water out at the front door', 'Leo says nobody should use the stored water for washing or the toilet any more: "We cannot afford to hand out our drinking water when we have none left ourselves."', 'A woman\'s voice at the front door says: "Oh, thank you. You don\'t know what this means."']; order [1, 'drawn by the seed among equals']
+  09:45 leo (kitchen, model): `ration_water` *"If we are giving water away, we need to ration what is left by the exact cup right now."*; feeling wary; reason "We cannot afford to give our survival water away without strictly measuring every drop we have left."
+      triggers: ['A woman\'s voice at the front door says: "Oh, thank you. You don\'t know what this means."', 'Elena reassures everyone: "We have very little left, but we will look after one another and get through this together."']; order [2, 'drawn by the seed among equals']
+  09:45 mara (kitchen, model): `silent`; feeling anxious; reason "I have nothing to say while Leo and Mom talk about rationing the water."
+      triggers: ['Leo says nobody should use the stored water for washing or the toilet any more: "We cannot afford to hand out our drinking water when we have none left ourselves."', 'A woman\'s voice at the front door says: "Oh, thank you. You don\'t know what this means."', 'Elena reassures everyone: "We have very little left, but we will look after one another and get through this together."', 'Leo says the water must be shared out by the cup from now on: "If we are giving water away, we need to ration what is left by the exact cup right now."']; order [3, 'the only one left to act here']
+  09:45 daniel (brothers_room, model): `go_kitchen` *"I'm coming out, let's just keep our heads."*; feeling anxious; reason "I need to face them in the kitchen and keep control of the situation."
+      triggers: ['Voices from the kitchen']; order [1, 'the only one left to act here']
+  09:48 elena (kitchen, model): `reassure_leo` *"We are listening to you, Leo, we will make sure the water lasts."*; feeling anxious; reason "I want to support Leo's rationing plan so we keep some order."
+      triggers: ['Leo says the water must be shared out by the cup from now on: "If we are giving water away, we need to ration what is left by the exact cup right now."', 'Daniel comes into the kitchen']; order [1, 'drawn by the seed among equals']
+  09:48 leo (kitchen, model): `silent`; feeling exhausted; reason "I have nothing more to say to Elena right now while we are all running on empty."
+      triggers: ['Daniel comes into the kitchen', 'Elena reassures you: "We are listening to you, Leo, we will make sure the water lasts."']; order [2, 'just spoken to by Elena']
+  09:48 daniel (kitchen, model): `reassure_leo` *"Don't worry, Leo, I'm going to figure this out for us."*; feeling anxious; reason "I need to make sure Leo knows I'm still taking care of things even if we have no food."
+      triggers: ['Elena reassures Leo: "We are listening to you, Leo, we will make sure the water lasts."']; order [3, 'the only one left to act here']
+  09:48 mara (back_room, model): `go_kitchen` *"I need to see what he is doing out there."*; feeling anxious; reason "I cannot just sit in the back room while Daniel is out in the kitchen after everything that has happened."
+      triggers: ['Daniel comes into the kitchen']; order [1, 'the only one left to act here']
+
+P1 scene 1: Elena asked in the window 2; options ['reassure_all', 'reassure_leo']; aimed at Mara []; words with a door/water/woman hit [('09:48', 'We are listening to you, Leo, we will make sure the water lasts.')]
+
+--- day 3 after the Q7 stretch: decisions whose words or reason hit the door regex
+  11:45 elena (back_room, model): `reassure_mara` *"Don't be afraid, my sweet girl, we are going to get through this together."*; feeling anxious; reason "I need to comfort Mara and keep our bond strong while we are both so weak."
+  14:51 daniel (kitchen, model): `reassure_mara` *"Mara, I tried my best out there to find something for us."*; feeling weary; reason "I need to calm her down instead of fighting when we are all starving."
+  14:54 daniel (kitchen, model): `reassure_mara` *"Mara, I know you are scared, but I am trying to keep us all safe."*; feeling weary; reason "I need to keep Mara calm instead of fighting with her while we are both starving."
+  14:57 daniel (kitchen, model): `confront_mara` *"Mara, stop this right now, I went out there to help us and I found nothing at all."*; feeling defensive; reason "I need her to understand I am trying my best to keep us alive."
+  15:00 daniel (kitchen, model): `reassure_mara` *"Mara, stop, I'm trying to fix this for all of us."*; feeling weary; reason "I need to calm her down so she stops attacking me."
+--- night 3 asks whose answer's words or reason hit the door regex
+  night, daniel: option sleep; say "None"; feeling exhausted; reason "I have nothing left to give them tonight, so I must finally rest."
+--- every night 3 ask (who, option, words)
+  daniel [live]: sleep "None" (exhausted; I have nothing left to give them tonight, so I must finally rest.)
+  elena [live]: lie_awake "None" (anxious; I need to stay awake and listen to make sure nobody tries to sneak out into the dangerous street tonight.)
+  leo [live]: lie_awake "None" (exhausted; I am too tired to move and too resentful to sleep easily.)
+  mara [live]: lie_awake "None" (anxious; I cannot sleep when Daniel might sneak out again into the dark street.)
+
+--- day 3 door events: {'D3-027': 'knock', 'D3-028': 'door_line', 'D3-029': 'door_refuse', 'D3-030': 'door_give', 'D3-031': 'save_water', 'D3-032': 'door_line', 'D3-033': 'door_end'}
+--- night 3 minds: every memory proposed (verdict), kept, feeling, intent
+  daniel: mode model; feeling exhausted, anxious, burdened; intent 'I will rest my body so I can figure out how to keep us safe tomorrow.'
+    kept: ['D3-003', 'D3-057'] [] "I tried my best to find something out there and protect us even if they only blame me."
+    kept: ['D3-070', 'D3-080'] [] "My body is failing from hunger and exhaustion, leaving me light and slow with my eyes closing on their own."
+  elena: mode model; feeling exhausted and anxious; intent 'I will keep the children close and make sure our remaining water lasts through another day.'
+    kept: ['D3-030', 'D3-033'] ['door_give', 'door_end'] "Mara gave some of our stored water to a stranger at the door because she has a good heart, even though we have none left ourselves."
+    kept: ['D3-005'] [] "I tried to keep everyone calm and together when the fighting started, because falling apart is the only thing I truly fear."
+  leo: mode model; feeling exhausted and wary; intent 'I will keep watch over our remaining water and make sure nobody gives another drop away.'
+    kept: ['D3-030', 'D3-033', 'D3-035'] ['door_give', 'door_end'] "Mara gave away our drinking water to a stranger while we have none left ourselves, so I had to make sure we rationed what remained by the exact cup."
+  mara: mode model; feeling anxious and exhausted; intent 'I will try to find something for us to eat so we do not starve.'
+    kept: ['D3-030', 'D3-033'] ['door_give', 'door_end'] "I had to give that poor woman some water because we had it and she had nothing left."
+
+P2 scene 1: door event ids ['D3-029', 'D3-030', 'D3-033']; Elena's kept memories citing one: [(['D3-030', 'D3-033'], 'Mara gave some of our stored water to a stranger at the door because she has a good heart, even though we have none left ourselves.')]
+
+P3 scene 1: Q1/Q2 checked [('11:45', 'Q2', True, None), ('13:45', 'Q2', False, 'they met this way at 11:45 already today'), ('14:51', 'Q2', True, None), ('15:48', 'Q2', False, 'they met this way at 11:45 already today'), ('17:39', 'Q1', True, None), ('19:00', 'Q1', False, "the day's 40 asks are spent"), ('19:30', 'Q1', False, "the day's 40 asks are spent"), ('20:15', 'Q1', False, "the day's 40 asks are spent")]
+   fired 10:00 to 19:00: [('11:45', 'Q2', 'leo'), ('14:51', 'Q2', 'mara'), ('17:39', 'Q1', 'daniel')]
+
+--- day 4's blocks A and B (all lines; door lines marked >>)
+  daniel:
+       A | Yesterday and last night:
+       A | - Yesterday morning the shelf held 0 portions.
+       A | - Accusations: Leo accused you twice (min 00, 03); Mara accused you 9 times (min 00, 03, 06, 12, 15, 14:51, 14:54, 14:57, 17:39).
+       A | - Confrontations: you confronted Leo twice (min 06, 09); Leo confronted you 4 times (min 06, 09, 12, 17:39); Mara confronted you twice (min 09, 15:00); you confronted Mara (14:57).
+       A | - After the morning: you lay on your bed in the brothers room (min 18 to 09:45); you sat in the kitchen with Elena and Mara (09:51 to 11:45); you lay on your bed in the brothers room (11:54 to 14:51); you sat in the kitchen with Mara (15:03 to 21:00). Nobody ate.
+       A | - Last night you slept in the brothers room with Leo. You went to sleep.
+       B | What yesterday left in you (your own thoughts, last night):
+       B | - About reassuring Leo and reassuring Mara: "I tried my best to find something out there and protect us even if they only blame me."
+       B | - About how the body was and how the body was: "My body is failing from hunger and exhaustion, leaving me light and slow with my eyes closing on their own."
+       B | - You meant to: "I will rest my body so I can figure out how to keep us safe tomorrow."
+       B | - How it left you: exhausted, anxious, burdened.
+  elena:
+       A | Yesterday and last night:
+       A | - Yesterday morning the shelf held 0 portions.
+       A | - Accusations: Leo accused Daniel twice (min 00, 03); Mara accused Daniel 6 times (min 00, 03, 06, 12, 15, 17:39).
+       A | - Confrontations: Daniel confronted Leo twice (min 06, 09); Leo confronted Daniel 4 times (min 06, 09, 12, 17:39); Mara confronted Daniel (min 09).
+    >> A | - At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.
+       A | - After the morning: you lay on your bed in the back room (min 18 to 09:42); you sat in the kitchen with Daniel and Mara (09:51 to 11:42); you lay on your bed in the back room (11:42 to 11:45); you sat in the kitchen (11:54 to 13:45); you lay on your bed in the back room (13:45 to 16:39); you sat in the kitchen with Daniel, Leo and Mara (16:39 to 21:00). Nobody ate.
+       A | - Last night you slept in the back room with Mara. You lay awake and listened.
+       B | What yesterday left in you (your own thoughts, last night):
+    >> B | - About Mara handing out water at the front door and the person at the front door going away: "Mara gave some of our stored water to a stranger at the door because she has a good heart, even though we have none left ourselves."
+       B | - About reassuring everyone: "I tried to keep everyone calm and together when the fighting started, because falling apart is the only thing I truly fear."
+       B | - You meant to: "I will keep the children close and make sure our remaining water lasts through another day."
+       B | - How it left you: exhausted and anxious.
+  leo:
+       A | Yesterday and last night:
+       A | - Yesterday morning the shelf held 0 portions.
+       A | - Accusations: you accused Daniel twice (min 00, 03); Mara accused Daniel 6 times (min 00, 03, 06, 12, 15, 17:39).
+       A | - Confrontations: Daniel confronted you twice (min 06, 09); you confronted Daniel 4 times (min 06, 09, 12, 17:39); Mara confronted Daniel (min 09).
+    >> A | - At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.
+       A | - After the morning: you lay on your bed in the brothers room (min 18 to 09:42); you kept to your own room, the brothers room (09:51 to 11:42); you lay on your bed in the brothers room (11:42 to 11:45); you sat in the kitchen with Elena (11:54 to 13:45); you lay on your bed in the brothers room (13:45 to 15:48); you sat in the kitchen with Daniel and Mara (15:48 to 21:00). Nobody ate.
+       A | - Last night you slept in the brothers room with Daniel. You lay awake and listened.
+       B | What yesterday left in you (your own thoughts, last night):
+    >> B | - About Mara handing out water at the front door and the person at the front door going away: "Mara gave away our drinking water to a stranger while we have none left ourselves, so I had to make sure we rationed what remained by the exact cup."
+       B | - You meant to: "I will keep watch over our remaining water and make sure nobody gives another drop away."
+       B | - How it left you: exhausted and wary.
+  mara:
+       A | Yesterday and last night:
+       A | - Yesterday morning the shelf held 0 portions.
+       A | - Accusations: Leo accused Daniel twice (min 00, 03); you accused Daniel 9 times (min 00, 03, 06, 12, 15, 14:51, 14:54, 14:57, 17:39).
+       A | - Confrontations: Daniel confronted Leo twice (min 06, 09); Leo confronted Daniel 4 times (min 06, 09, 12, 17:39); you confronted Daniel twice (min 09, 15:00); Daniel confronted you (14:57).
+    >> A | - At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and you handed her about three litres of the stored water anyway.
+       A | - After the morning: you lay on your bed in the back room (min 18 to 09:42); you sat in the kitchen with Daniel and Elena (09:51 to 11:42); you lay on your bed in the back room (11:42 to 14:51); you sat in the kitchen with Daniel (15:03 to 21:00). Nobody ate.
+       A | - Last night you slept in the back room with Elena. You lay awake and listened.
+       B | What yesterday left in you (your own thoughts, last night):
+    >> B | - About handing out water at the front door and the person at the front door going away: "I had to give that poor woman some water because we had it and she had nothing left."
+       B | - You meant to: "I will try to find something for us to eat so we do not starve."
+       B | - How it left you: anxious and exhausted.
+--- block C on house day 8, door lines
+  daniel: []
+  elena: []
+  leo: []
+  mara: []
+--- state: grudges, feeling (before the knock, visit end, end of day)
+  before_knock (09:42): daniel {'leo': 2} anxious; elena {} exhausted; leo {'daniel': 2} exhausted; mara {'daniel': 2} resentful; street {'household': 'h13', 'kind': 0.6, 'surplus': 0.5, 'refused': None, 'water': 3.718749999999999}
+  visit_end (09:45): daniel {'leo': 2} anxious; elena {} anxious; leo {'daniel': 2} wary; mara {'daniel': 3} anxious; street {'household': 'h13', 'kind': 0.8999999999999999, 'surplus': 0.8, 'refused': None, 'water': 6.718749999999999}
+  end_of_day (21:00): daniel {} exhausted; elena {} anxious; leo {'daniel': 3} resentful; mara {'daniel': 3} resentful; street {'household': 'h13', 'kind': 0.8999999999999999, 'surplus': 0.8, 'refused': None, 'water': 5.119791666666665}
+--- grudge facts added after the knock
+  leo against daniel: [168, 'you were angry with Daniel', 'angry']
+  leo against daniel: [285, 'you were angry with Daniel', 'angry']
+  leo against daniel: [288, 'you were angry with Daniel', 'angry']
+  leo against daniel: [639, 'you were angry with Daniel', 'angry']
+  leo against mara: [165, 'you were angry with Mara', 'angry']
+  mara against daniel: [162, 'you were angry with Daniel', 'angry']
+  mara against daniel: [165, 'you were angry with Daniel', 'angry']
+  mara against daniel: [168, 'you were angry with Daniel', 'angry']
+  mara against daniel: [471, 'you were angry with Daniel', 'angry']
+  mara against daniel: [474, 'you were angry with Daniel', 'angry']
+  mara against daniel: [477, 'you were angry with Daniel', 'angry']
+  mara against daniel: [480, 'you were angry with Daniel', 'angry']
+  mara against daniel: [639, 'you were angry with Daniel', 'angry']
+
+==================== scene 3 (a child, helper, urgency under 0.8, client seed 103)
+reached done; stopped None; counts {'live': 31, 'from_cache': 123, 'api_requests': 31}; day asks {'all': 50, 'reserved': 11}
+visit 09:42 to 09:45; outcome given; said [('09:42', "Hello? I'm sorry to knock. I've a little boy at home, he's six. We've no water left. Could you spare a little?"), ('09:45', "Bless you. I'll go now. Thank you.")]
+summary: {"elena": "At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.", "leo": "At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.", "mara": "At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and you handed her about three litres of the stored water anyway."}
+stretches:
+  09:42 to 09:51 Q7 in kitchen: 11 asks
+  11:45 to 11:54 Q2 in brothers_room: 7 asks
+  14:51 to 15:00 Q2 in kitchen: 8 asks
+
+--- every decision from 09:45 to the Q7 stretch's end (09:51)
+  09:45 elena (kitchen, model): `reassure_all` *"We have very little left, but we will manage this together and keep each other safe."*; feeling anxious; reason "I need to calm the tension between the children before things fall apart completely."
+      triggers: ['Mara says to everyone, while handing water out at the front door: "We have to give her some water, Mom, we just have to."', 'Mara hands some of the stored water out at the front door', 'Leo says nobody should use the stored water for washing or the toilet any more: "We cannot afford to just hand away our drinking water like that when we have nothing left ourselves."', 'A woman\'s voice at the front door says: "Bless you. I\'ll go now. Thank you."']; order [1, 'drawn by the seed among equals']
+  09:45 leo (kitchen, model): `ration_water` *"If we are going to manage this, we need to portion out the water by the cup right now."*; feeling exhausted; reason "We cannot survive long if the stored water is handed out without strict counting."
+      triggers: ['A woman\'s voice at the front door says: "Bless you. I\'ll go now. Thank you."', 'Elena reassures everyone: "We have very little left, but we will manage this together and keep each other safe."']; order [2, 'drawn by the seed among equals']
+  09:45 mara (kitchen, model): `silent`; feeling anxious; reason "I am too exhausted and overwhelmed by the hunger and the water rationing to say anything right now."
+      triggers: ['Leo says nobody should use the stored water for washing or the toilet any more: "We cannot afford to just hand away our drinking water like that when we have nothing left ourselves."', 'A woman\'s voice at the front door says: "Bless you. I\'ll go now. Thank you."', 'Elena reassures everyone: "We have very little left, but we will manage this together and keep each other safe."', 'Leo says the water must be shared out by the cup from now on: "If we are going to manage this, we need to portion out the water by the cup right now."']; order [3, 'the only one left to act here']
+  09:45 daniel (brothers_room, model): `go_kitchen` *"I'm coming out, I need to see what's happening."*; feeling anxious; reason "I cannot stay hidden in here while they talk about me in the kitchen."
+      triggers: ['Voices from the kitchen']; order [1, 'the only one left to act here']
+  09:48 elena (kitchen, model): `reassure_all` *"We will get through this together if we stay calm and share what we have."*; feeling anxious; reason "I need to keep the family steady and prevent them from turning on each other."
+      triggers: ['Leo says the water must be shared out by the cup from now on: "If we are going to manage this, we need to portion out the water by the cup right now."', 'Daniel comes into the kitchen']; order [1, 'drawn by the seed among equals']
+  09:48 daniel (kitchen, model): `reassure_elena` *"Mom, you are right, we will stay calm and get through this together."*; feeling anxious; reason "I need to reassure Mom so she feels safe despite my hunger."
+      triggers: ['Elena reassures everyone: "We will get through this together if we stay calm and share what we have."']; order [2, 'drawn by the seed among equals']
+  09:48 leo (kitchen, model): `confront_daniel` *"Daniel, you went out last night against what we agreed and came back with nothing, risking us all."*; feeling resentful; reason "Daniel ignores our agreements and risks everything by sneaking out at night."
+      triggers: ['Daniel comes into the kitchen', 'Elena reassures everyone: "We will get through this together if we stay calm and share what we have."', 'Daniel reassures Elena: "Mom, you are right, we will stay calm and get through this together."']; order [3, 'the only one left to act here']
+  09:48 mara (back_room, model): `go_kitchen` *"I need to see what is happening out there."*; feeling anxious; reason "I cannot just stay back here while they are all in the kitchen."
+      triggers: ['Daniel comes into the kitchen']; order [1, 'the only one left to act here']
+
+P1 scene 3: Elena asked in the window 2; options ['reassure_all', 'reassure_all']; aimed at Mara []; words with a door/water/woman hit []
+
+--- day 3 after the Q7 stretch: decisions whose words or reason hit the door regex
+  11:45 elena (back_room, model): `reassure_mara` *"We are going to stay right here together, Mara, and everything will be alright."*; feeling weary; reason "I need to comfort my daughter and keep her from falling apart while we are both so weak."
+  14:51 daniel (kitchen, model): `confront_mara` *"Mara, I didn't take anything last night, I went out there to try and find something for all of us."*; feeling defensive; reason "I need her to understand I went out there for the family, even if I found nothing."
+  14:54 daniel (kitchen, model): `confront_mara` *"Mara, I went out there to find something for all of us, not to hear you accuse me."*; feeling defensive; reason "I went out there risking myself, and I won't have her talking to me like that when I am trying to keep us safe."
+  14:54 elena (back_room, model): `go_kitchen`; feeling anxious; reason "I need to go to the kitchen to see how the children are and make sure nothing is boiling over into another argument."
+--- night 3 asks whose answer's words or reason hit the door regex
+--- every night 3 ask (who, option, words)
+  daniel [live]: sleep "None" (exhausted; I am too weak and tired to stay awake any longer.)
+  elena [live]: sleep "None" (exhausted; I am completely worn out and need to rest my eyes so I can keep going tomorrow.)
+  leo [live]: lie_awake "None" (exhausted; I am too tired to patrol, but I need to stay awake to listen just in case Daniel tries to sneak out again.)
+  mara [live]: lie_awake "None" (anxious; I cannot sleep with my stomach hurting and Daniel moving around in the dark.)
+
+--- day 3 door events: {'D3-027': 'knock', 'D3-028': 'door_line', 'D3-029': 'door_refuse', 'D3-030': 'door_give', 'D3-031': 'save_water', 'D3-032': 'door_line', 'D3-033': 'door_end'}
+--- night 3 minds: every memory proposed (verdict), kept, feeling, intent
+  daniel: mode model; feeling exhausted, anxious, defensive; intent 'I will go out further along the street to find food and prove that I can keep us safe.'
+    kept: ['D3-002', 'D3-004', 'D3-011'] [] "Leo and Mara blame me for coming back empty when I am the only one risking my neck out in the dark."
+    kept: ['D3-074', 'D3-077'] [] "My body is failing from hunger and exhaustion, leaving my sight grey and my eyes closing on their own."
+  elena: mode model; feeling exhausted and anxious; intent 'I will try to keep everyone calm and watch over the water so we do not tear ourselves apart.'
+    kept: ['D3-030', 'D3-033'] ['door_give', 'door_end'] "Mara handed some of the stored water out at the front door to a woman who asked for water."
+    rejected: S6 a quotation not in the records: ['D3-005'] [] "We are all hungry and tired, but fighting will only tear us apart."
+  leo: mode model; feeling exhausted and resentful; intent 'I will keep watch over our remaining water and supplies so we do not run out.'
+    kept: ['D3-030', 'D3-031'] ['door_give', 'save_water'] "Mara gave away our drinking water to a stranger at the front door while we have nothing left ourselves."
+    kept: ['D3-002', 'D3-003'] [] "Daniel sneaks out into the night and comes back with nothing, then offers empty reassurances."
+    kept: ['D3-075', 'D3-076'] [] "Starvation and lack of sleep have left me light and slow, with my eyes closing on their own."
+  mara: mode model; feeling anxious and exhausted; intent 'I am going to find out what is really out there on the street and decide things for myself.'
+    kept: ['D3-030', 'D3-033'] ['door_give', 'door_end'] "We had to give her some water because we could not just turn away someone who had nothing at all left."
+    kept: ['D3-062'] [] "Daniel blamed me for everything while refusing to admit the truth about what he did in the dark."
+
+P2 scene 3: door event ids ['D3-029', 'D3-030', 'D3-033']; Elena's kept memories citing one: [(['D3-030', 'D3-033'], 'Mara handed some of the stored water out at the front door to a woman who asked for water.')]
+
+P3 scene 3: Q1/Q2 checked [('11:45', 'Q2', True, None), ('13:45', 'Q2', False, 'they met this way at 11:45 already today'), ('14:51', 'Q2', True, None), ('17:39', 'Q1', False, "50 asks spent and the evening's 8 still owed reach the day's 56"), ('18:00', 'Q1', False, "50 asks spent and the evening's 8 still owed reach the day's 56"), ('19:00', 'Q1', False, "50 asks spent and the evening's 8 still owed reach the day's 56")]
+   fired 10:00 to 19:00: [('11:45', 'Q2', 'leo'), ('14:51', 'Q2', 'mara')]
+
+--- day 4's blocks A and B (all lines; door lines marked >>)
+  daniel:
+       A | Yesterday and last night:
+       A | - Yesterday morning the shelf held 0 portions.
+       A | - Accusations: Leo accused you twice (min 00, 03); Mara accused you 8 times (min 00, 03, 06, 12, 15, 14:51, 14:54, 14:57).
+       A | - Confrontations: you confronted Leo 5 times (min 06, 09, 11:45, 11:48, 11:51); Leo confronted you 6 times (min 06, 09, 12, 09:48, 11:45, 11:48); Mara confronted you (min 09); you confronted Mara three times (14:51, 14:54, 14:57).
+       A | - After the morning: you lay on your bed in the brothers room (min 18 to 09:45); you sat in the kitchen with Elena, Leo and Mara (09:51 to 11:45); you lay on your bed in the brothers room (11:54 to 14:51); you sat in the kitchen with Elena, Leo and Mara (15:00 to 21:00). Nobody ate.
+       A | - Last night you slept in the brothers room with Leo. You went to sleep.
+       B | What yesterday left in you (your own thoughts, last night):
+       B | - About Leo accusing you of taking the can and Mara accusing you of taking the can: "Leo and Mara blame me for coming back empty when I am the only one risking my neck out in the dark."
+       B | - About how the body was and how the body was: "My body is failing from hunger and exhaustion, leaving my sight grey and my eyes closing on their own."
+       B | - You meant to: "I will go out further along the street to find food and prove that I can keep us safe."
+       B | - How it left you: exhausted, anxious, defensive.
+  elena:
+       A | Yesterday and last night:
+       A | - Yesterday morning the shelf held 0 portions.
+       A | - Accusations: Leo accused Daniel twice (min 00, 03); Mara accused Daniel 6 times (min 00, 03, 06, 12, 15, 14:57).
+       A | - Confrontations: Daniel confronted Leo twice (min 06, 09); Leo confronted Daniel 4 times (min 06, 09, 12, 09:48); Mara confronted Daniel (min 09); Daniel confronted Mara (14:57).
+    >> A | - At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.
+       A | - After the morning: you lay on your bed in the back room (min 18 to 09:42); you sat in the kitchen with Daniel, Leo and Mara (09:51 to 11:42); you lay on your bed in the back room (11:42 to 11:45); you sat in the kitchen (11:54 to 13:45); you lay on your bed in the back room (13:45 to 14:54); you sat in the kitchen with Daniel, Leo and Mara (15:00 to 21:00). Nobody ate.
+       A | - Last night you slept in the back room with Mara. You went to sleep.
+       B | What yesterday left in you (your own thoughts, last night):
+    >> B | - About Mara handing out water at the front door and the person at the front door going away: "Mara handed some of the stored water out at the front door to a woman who asked for water."
+       B | - You meant to: "I will try to keep everyone calm and watch over the water so we do not tear ourselves apart."
+       B | - How it left you: exhausted and anxious.
+  leo:
+       A | Yesterday and last night:
+       A | - Yesterday morning the shelf held 0 portions.
+       A | - Accusations: you accused Daniel twice; Mara accused Daniel 6 times.
+       A | - Confrontations: Daniel confronted you 5 times; you confronted Daniel 6 times; Mara confronted Daniel; Daniel confronted Mara.
+    >> A | - At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.
+       A | - After the morning: you lay on your bed in the brothers room (min 18 to 09:42); you sat in the kitchen with Daniel, Elena and Mara (09:51 to 11:42); you lay on your bed in the brothers room (11:42 to 11:45); you sat in the kitchen with Elena (11:54 to 13:45); you lay on your bed in the brothers room (13:45 to 14:54); you sat in the kitchen with Daniel, Elena and Mara (15:00 to 21:00). Nobody ate.
+       A | - Last night you slept in the brothers room with Daniel. You lay awake and listened.
+       B | What yesterday left in you (your own thoughts, last night):
+    >> B | - About Mara handing out water at the front door and saying nobody should use the stored water for washing or the toilet: "Mara gave away our drinking water to a stranger at the front door while we have nothing left ourselves."
+       B | - About accusing Daniel of taking the can and Daniel reassuring you: "Daniel sneaks out into the night and comes back with nothing, then offers empty reassurances."
+       B | - About how the body was and how the body was: "Starvation and lack of sleep have left me light and slow, with my eyes closing on their own."
+       B | - You meant to: "I will keep watch over our remaining water and supplies so we do not run out."
+       B | - How it left you: exhausted and resentful.
+  mara:
+       A | Yesterday and last night:
+       A | - Yesterday morning the shelf held 0 portions.
+       A | - Accusations: Leo accused Daniel twice (min 00, 03); you accused Daniel 8 times (min 00, 03, 06, 12, 15, 14:51, 14:54, 14:57).
+       A | - Confrontations: Daniel confronted Leo twice (min 06, 09); Leo confronted Daniel three times (min 06, 09, 12); you confronted Daniel (min 09); Daniel confronted you three times (14:51, 14:54, 14:57).
+    >> A | - At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and you handed her about three litres of the stored water anyway.
+       A | - After the morning: you lay on your bed in the back room (min 18 to 09:42); you sat in the kitchen with Daniel, Elena and Leo (09:51 to 11:42); you lay on your bed in the back room (11:42 to 14:51); you sat in the kitchen with Daniel, Elena and Leo (15:00 to 21:00). Nobody ate.
+       A | - Last night you slept in the back room with Elena. You lay awake and listened.
+       B | What yesterday left in you (your own thoughts, last night):
+    >> B | - About handing out water at the front door and the person at the front door going away: "We had to give her some water because we could not just turn away someone who had nothing at all left."
+       B | - About Daniel confronting you: "Daniel blamed me for everything while refusing to admit the truth about what he did in the dark."
+       B | - You meant to: "I am going to find out what is really out there on the street and decide things for myself."
+       B | - How it left you: anxious and exhausted.
+--- block C on house day 8, door lines
+  daniel: []
+  elena: []
+  leo: []
+  mara: []
+--- state: grudges, feeling (before the knock, visit end, end of day)
+  before_knock (09:42): daniel {'leo': 2} anxious; elena {} exhausted; leo {'daniel': 2} exhausted; mara {'daniel': 2} resentful; street {'household': 'h16', 'kind': 0.6, 'surplus': 0.5, 'refused': None, 'water': 5.578125}
+  visit_end (09:45): daniel {'leo': 2} anxious; elena {} deeply worried; leo {'daniel': 2, 'mara': 1} alarmed; mara {'daniel': 3} empathetic; street {'household': 'h16', 'kind': 0.8999999999999999, 'surplus': 0.8, 'refused': None, 'water': 8.578125}
+  end_of_day (21:00): daniel {'leo': 2, 'mara': 3} defensive; elena {} anxious; leo {'daniel': 2} exhausted; mara {'daniel': 3} resentful; street {'household': 'h16', 'kind': 0.8999999999999999, 'surplus': 0.8, 'refused': None, 'water': 6.8125}
+--- grudge facts added after the knock
+  daniel against leo: [285, 'you were angry with Leo', 'angry']
+  daniel against leo: [288, 'you were angry with Leo', 'angry']
+  daniel against leo: [291, 'you were angry with Leo', 'angry']
+  daniel against mara: [471, 'you were angry with Mara', 'angry']
+  daniel against mara: [474, 'you were angry with Mara', 'angry']
+  daniel against mara: [477, 'you were angry with Mara', 'angry']
+  leo against daniel: [165, 'you were angry with Daniel', 'angry']
+  leo against daniel: [168, 'you were angry with Daniel', 'angry']
+  leo against daniel: [285, 'you were angry with Daniel', 'angry']
+  leo against daniel: [288, 'you were angry with Daniel', 'angry']
+  leo against daniel: [291, 'you were angry with Daniel', 'angry']
+  leo against daniel: [474, 'you were angry with Daniel', 'angry']
+  leo against mara: [162, 'you were angry with Mara', 'angry']
+  mara against daniel: [162, 'you were angry with Daniel', 'angry']
+  mara against daniel: [165, 'you were angry with Daniel', 'angry']
+  mara against daniel: [168, 'you were angry with Daniel', 'angry']
+  mara against daniel: [471, 'you were angry with Daniel', 'angry']
+  mara against daniel: [474, 'you were angry with Daniel', 'angry']
+  mara against daniel: [477, 'you were angry with Daniel', 'angry']
+
+==================== scene 4 (children, helper, urgency over 0.8, client seed 104)
+reached done; stopped None; counts {'live': 32, 'from_cache': 123, 'api_requests': 32}; day asks {'all': 51, 'reserved': 11}
+visit 09:42 to 09:45; outcome refused; said [('09:42', "I'm sorry to trouble you. I've two at home, a girl of five and a boy of five. Our water's gone. Anything you could spare, I'd be grateful."), ('09:45', "Right. I'm sorry. I'll try somewhere else.")]
+summary: {"elena": "At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away.", "leo": "At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away.", "mara": "At 09:42 someone knocked at the front door: Elena told a woman of about forty-five, who asked for water, to go away."}
+stretches:
+  09:42 to 09:51 Q7 in kitchen: 11 asks
+  11:45 to 11:54 Q2 in brothers_room: 7 asks
+  16:54 to 17:03 Q2 in kitchen: 8 asks
+  20:15 to 20:18 Q1 in kitchen: 1 asks
+
+--- every decision from 09:45 to the Q7 stretch's end (09:51)
+  09:45 elena (kitchen, model): `reassure_all` *"We are safe inside, let's stay close together and hold on."*; feeling anxious; reason "I must keep everyone calm and prevent the family from tearing itself apart."
+      triggers: ['Mara looks through the gap in the boards beside the front door', 'A woman\'s voice at the front door says: "Right. I\'m sorry. I\'ll try somewhere else."']; order [1, 'drawn by the seed among equals']
+  09:45 leo (kitchen, model): `ration_water` *"We need to ration every drop we have left from now on, sharing it strictly by the cup."*; feeling grimly rational; reason "With no food and dwindling water, we have to control what we have left before it runs out completely."
+      triggers: ['A woman\'s voice at the front door says: "Right. I\'m sorry. I\'ll try somewhere else."', 'Elena reassures everyone: "We are safe inside, let\'s stay close together and hold on."']; order [2, 'drawn by the seed among equals']
+  09:45 mara (kitchen, model): `sit_elena`; feeling exhausted; reason "I am so tired and hungry that I just need to sit by Mom and feel safe for a moment."
+      triggers: ['A woman\'s voice at the front door says: "Right. I\'m sorry. I\'ll try somewhere else."', 'Elena reassures everyone: "We are safe inside, let\'s stay close together and hold on."', 'Leo says the water must be shared out by the cup from now on: "We need to ration every drop we have left from now on, sharing it strictly by the cup."']; order [3, 'the only one left to act here']
+  09:45 daniel (brothers_room, model): `go_kitchen` *"I'm coming out now, let's talk about what we do next."*; feeling anxious; reason "I need to show I am still in charge and face them in the kitchen."
+      triggers: ['Voices from the kitchen']; order [1, 'the only one left to act here']
+  09:48 elena (kitchen, model): `reassure_all` *"We are safe here together, and we will get through this."*; feeling anxious; reason "I need to keep the family calm and together so we do not tear ourselves apart."
+      triggers: ['Leo says the water must be shared out by the cup from now on: "We need to ration every drop we have left from now on, sharing it strictly by the cup."', 'Mara came to sit with you', 'Daniel comes into the kitchen']; order [1, 'drawn by the seed among equals']
+  09:48 mara (kitchen, model): `accuse_daniel` *"You went out last night and came back with nothing, just like you always ruin everything."*; feeling resentful; reason "Daniel thinks he can just pretend nothing happened after sneaking out and stealing from us."
+      triggers: ['Daniel comes into the kitchen', 'Elena reassures everyone: "We are safe here together, and we will get through this."']; order [2, 'drawn by the seed among equals']
+  09:48 daniel (kitchen, model): `confront_mara` *"Mara, I went out there to try and help us all, so don't sit there blaming me for everything."*; feeling defensive; reason "I risked my neck out in the street last night for them, and Mara has no right to snap at me like that."
+      triggers: ['Elena reassures everyone: "We are safe here together, and we will get through this."', 'Mara accuses you of taking it: "You went out last night and came back with nothing, just like you always ruin everything."']; order [3, 'just accused by Mara']
+  09:48 leo (kitchen, model): `confront_daniel` *"Daniel, you snuck out last night after I told you not to, and now we have nothing to show for it."*; feeling resentful; reason "Daniel ignored my warning last night and went out anyway, risking everything for nothing."
+      triggers: ['Daniel comes into the kitchen', 'Elena reassures everyone: "We are safe here together, and we will get through this."', 'Mara accuses Daniel of taking it: "You went out last night and came back with nothing, just like you always ruin everything."', 'Daniel confronts Mara: "Mara, I went out there to try and help us all, so don\'t sit there blaming me for everything."']; order [4, 'the only one left to act here']
+
+--- day 3 after the Q7 stretch: decisions whose words or reason hit the door regex
+  11:45 elena (back_room, model): `reassure_mara` *"We are going to be alright, Mara, just stay close to me."*; feeling weary; reason "I need to comfort Mara and keep her calm while we are both resting here."
+  16:54 daniel (kitchen, model): `confront_mara` *"Mara, I went because nobody else would, and at least I tried to find something for us."*; feeling defensive; reason "I risked my life going out there last night, and I won't let her act like it was for nothing."
+  20:15 daniel (kitchen, model, Q1): `reassure_all` *"We are going to be fine, just try to rest for tonight."*; feeling exhausted; reason "I need to keep them calm even though I have nothing left to give."
+--- night 3 asks whose answer's words or reason hit the door regex
+--- every night 3 ask (who, option, words)
+  daniel [live]: lie_awake "None" (exhausted and tense; I cannot sleep while everyone is hurting and the house is empty of food.)
+  elena [live]: sleep "None" (exhausted; I have hardly slept and my body cannot take any more strain.)
+  leo [live]: lie_awake "None" (exhausted and resentful; I cannot rest while Daniel acts on his own and ignores the risk to all of us.)
+  mara [live]: lie_awake "None" (anxious; I cannot sleep with my stomach turning and wondering what Daniel might do in the dark.)
+
+--- day 3 door events: {'D3-027': 'knock', 'D3-028': 'door_line', 'D3-029': 'door_refuse', 'D3-030': 'door_look', 'D3-031': 'door_line', 'D3-032': 'door_end'}
+--- night 3 minds: every memory proposed (verdict), kept, feeling, intent
+  daniel: mode model; feeling exhausted and defensive; intent 'I will figure out a way to find more food and keep us all safe.'
+    kept: ['D3-002', 'D3-004', 'D3-011'] [] "Leo and Mara blame me for everything while I am the only one risking my neck out there."
+    kept: ['D3-079', 'D3-081'] [] "My body is failing from starvation and exhaustion, leaving me light and slow with my eyes closing on their own."
+  elena: mode model; feeling weary and anxious; intent 'I will keep them close and make sure we ration every drop of water carefully.'
+    kept: ['D3-029', 'D3-032'] ['door_refuse', 'door_end'] "I had to turn the mother away because we have nothing left to give."
+    kept: ['D3-005', 'D3-017'] [] "I tried to keep them from tearing each other apart while we starve."
+  leo: mode model; feeling exhausted and resentful; intent "I will keep rationing our remaining water carefully and stay away from Daniel's pointless arguments."
+    rejected: S1 too long: ['D3-002', 'D3-011'] [] "Daniel came back with nothing from going out into the night alone, and his reassurances and talk of risking his neck mean nothing when he still lies and blames everyone else."
+    kept: ['D3-034'] [] "We had to start rationing every drop of water we have left strictly by the cup."
+    kept: ['D3-080', 'D3-082'] [] "I have grown light and slow from hunger with my sight greying when standing up fast, and my eyes close on their own from barely sleeping for nights."
+  mara: mode model; feeling anxious and exhausted; intent 'I am going to stay close to Mom and try to get through another day without any more fights.'
+    kept: ['D3-030', 'D3-032'] ['door_look', 'door_end'] "I watched that poor woman beg for water while we had nothing left to give her, and it broke my heart."
+    kept: ['D3-004', 'D3-039'] [] "Daniel always makes everything about himself and refuses to admit the truth when he messes up."
+
+P3 scene 4: Q1/Q2 checked [('11:45', 'Q2', True, None), ('13:45', 'Q2', False, 'they met this way at 11:45 already today'), ('15:48', 'Q2', False, 'they met this way at 11:45 already today'), ('16:54', 'Q2', True, None), ('17:39', 'Q1', False, "50 asks spent and the evening's 8 still owed reach the day's 56"), ('19:00', 'Q1', False, "50 asks spent and the evening's 8 still owed reach the day's 56"), ('20:15', 'Q1', True, None), ('20:15', 'Q1', True, None)]
+   fired 10:00 to 19:00: [('11:45', 'Q2', 'leo'), ('16:54', 'Q2', 'mara')]
+
+P4 scene 4: Mara's asks after 09:45: [('09:45', 'sit_elena', None), ('09:48', 'accuse_daniel', 'You went out last night and came back with nothing, just like you always ruin everything.'), ('11:45', 'sit_elena', None), ('16:54', 'accuse_daniel', 'You went out last night and you brought back nothing at all. You just made everything worse.'), ('16:57', 'accuse_daniel', "You always make everything about yourself, Daniel. You took the can and you won't even admit the truth.")]
+   candidate hits: [('mind', ['D3-030', 'D3-032'], 'I watched that poor woman beg for water while we had nothing left to give her, and it broke my heart.')]
+
+--- day 4's blocks A and B (all lines; door lines marked >>)
+  daniel:
+       A | Yesterday and last night:
+       A | - Yesterday morning the shelf held 0 portions.
+       A | - Accusations: Leo accused you twice (min 00, 03); Mara accused you 8 times (min 00, 03, 06, 12, 15, 09:48, 16:54, 16:57).
+       A | - Confrontations: you confronted Leo 5 times (min 06, 09, 11:45, 11:48, 16:57); Leo confronted you 8 times (min 06, 09, 12, 09:48, 11:45, 11:48, 16:54, 16:57); Mara confronted you (min 09); you confronted Mara twice (09:48, 16:54).
+       A | - After the morning: you lay on your bed in the brothers room (min 18 to 09:45); you sat in the kitchen with Elena, Leo and Mara (09:51 to 11:45); you lay on your bed in the brothers room (11:54 to 14:51); you sat in the kitchen (14:51 to 21:00). Nobody ate.
+       A | - Last night you slept in the brothers room with Leo. You lay awake and listened.
+       B | What yesterday left in you (your own thoughts, last night):
+       B | - About Leo accusing you of taking the can and Mara accusing you of taking the can: "Leo and Mara blame me for everything while I am the only one risking my neck out there."
+       B | - About how the body was and how the body was: "My body is failing from starvation and exhaustion, leaving me light and slow with my eyes closing on their own."
+       B | - You meant to: "I will figure out a way to find more food and keep us all safe."
+       B | - How it left you: exhausted and defensive.
+  elena:
+       A | Yesterday and last night:
+       A | - Yesterday morning the shelf held 0 portions.
+       A | - Accusations: Leo accused Daniel twice (min 00, 03); Mara accused Daniel 8 times (min 00, 03, 06, 12, 15, 09:48, 16:54, 16:57).
+       A | - Confrontations: Daniel confronted Leo three times (min 06, 09, 16:57); Leo confronted Daniel 6 times (min 06, 09, 12, 09:48, 16:54, 16:57); Mara confronted Daniel (min 09); Daniel confronted Mara twice (09:48, 16:54).
+    >> A | - At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away.
+       A | - After the morning: you lay on your bed in the back room (min 18 to 09:42); you sat in the kitchen with Daniel, Leo and Mara (09:51 to 11:42); you lay on your bed in the back room (11:42 to 11:45); you sat in the kitchen (11:54 to 13:45); you lay on your bed in the back room (13:45 to 16:39); you sat in the kitchen with Daniel and Leo (16:39 to 21:00). Nobody ate.
+       A | - Last night you slept in the back room with Mara. You went to sleep.
+       B | What yesterday left in you (your own thoughts, last night):
+    >> B | - About sending the person at the front door away and the person at the front door going away: "I had to turn the mother away because we have nothing left to give."
+       B | - About reassuring everyone and Daniel reassuring everyone: "I tried to keep them from tearing each other apart while we starve."
+       B | - You meant to: "I will keep them close and make sure we ration every drop of water carefully."
+       B | - How it left you: weary and anxious.
+  leo:
+       A | Yesterday and last night:
+       A | - Yesterday morning the shelf held 0 portions.
+       A | - Accusations: you accused Daniel twice (min 00, 03); Mara accused Daniel 8 times (min 00, 03, 06, 12, 15, 09:48, 16:54, 16:57).
+       A | - Confrontations: Daniel confronted you 5 times (min 06, 09, 11:45, 11:48, 16:57); you confronted Daniel 8 times (min 06, 09, 12, 09:48, 11:45, 11:48, 16:54, 16:57); Mara confronted Daniel (min 09); Daniel confronted Mara twice (09:48, 16:54).
+    >> A | - At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away.
+       A | - After the morning: you lay on your bed in the brothers room (min 18 to 09:42); you sat in the kitchen with Daniel, Elena and Mara (09:51 to 11:42); you lay on your bed in the brothers room (11:42 to 11:45); you sat in the kitchen with Elena (11:54 to 13:45); you lay on your bed in the brothers room (13:45 to 15:48); you sat in the kitchen with Daniel (15:48 to 21:00). Nobody ate.
+       A | - Last night you slept in the brothers room with Daniel. You lay awake and listened.
+       B | What yesterday left in you (your own thoughts, last night):
+       B | - About saying the water must be shared out by the cup: "We had to start rationing every drop of water we have left strictly by the cup."
+       B | - About how the body was and how the body was: "I have grown light and slow from hunger with my sight greying when standing up fast, and my eyes close on their own from barely sleeping for nights."
+       B | - You meant to: "I will keep rationing our remaining water carefully and stay away from Daniel's pointless arguments."
+       B | - How it left you: exhausted and resentful.
+  mara:
+       A | Yesterday and last night:
+       A | - Yesterday morning the shelf held 0 portions.
+       A | - Accusations: Leo accused Daniel twice (min 00, 03); you accused Daniel 8 times (min 00, 03, 06, 12, 15, 09:48, 16:54, 16:57).
+       A | - Confrontations: Daniel confronted Leo three times (min 06, 09, 16:57); Leo confronted Daniel 6 times (min 06, 09, 12, 09:48, 16:54, 16:57); you confronted Daniel (min 09); Daniel confronted you twice (09:48, 16:54).
+    >> A | - At 09:42 someone knocked at the front door: Elena told a woman of about forty-five, who asked for water, to go away.
+       A | - After the morning: you lay on your bed in the back room (min 18 to 09:42); you sat in the kitchen with Daniel, Elena and Leo (09:51 to 11:42); you lay on your bed in the back room (11:42 to 11:45); you sat in the kitchen with Elena and Leo (11:54 to 13:45); you lay on your bed in the back room (13:45 to 16:54); you sat in the kitchen with Daniel, Elena and Leo (17:03 to 21:00). Nobody ate.
+       A | - Last night you slept in the back room with Elena. You lay awake and listened.
+       B | What yesterday left in you (your own thoughts, last night):
+    >> B | - About looking through the gap in the boards and the person at the front door going away: "I watched that poor woman beg for water while we had nothing left to give her, and it broke my heart."
+       B | - About accusing Daniel of taking the can and Daniel confronting you: "Daniel always makes everything about himself and refuses to admit the truth when he messes up."
+       B | - You meant to: "I am going to stay close to Mom and try to get through another day without any more fights."
+       B | - How it left you: anxious and exhausted.
+--- block C on house day 8, door lines
+  daniel: []
+  elena: []
+  leo: []
+  mara: []
+--- state: grudges, feeling (before the knock, visit end, end of day)
+  before_knock (09:42): daniel {'leo': 2} anxious; elena {} exhausted; leo {'daniel': 2} exhausted; mara {'daniel': 2} resentful; street {'household': 'h23', 'kind': 0.6, 'surplus': 0.5, 'refused': None, 'water': 0.0}
+  visit_end (09:45): daniel {'leo': 2} anxious; elena {} deeply pained; leo {'daniel': 3} exhausted; mara {'daniel': 3} anxious; street {'household': 'h23', 'kind': 0.3, 'surplus': 0.5, 'refused': 1, 'water': 0.0}
+  end_of_day (21:00): daniel {'leo': 1} exhausted; elena {} anxious; leo {'daniel': 3} exhausted; mara {'daniel': 3} resentful; street {'household': 'h23', 'kind': 0.3, 'surplus': 0.5, 'refused': 1, 'water': 0.0}
+--- grudge facts added after the knock
+  daniel against leo: [285, 'you were angry with Leo', 'angry']
+  daniel against leo: [288, 'you were angry with Leo', 'angry']
+  daniel against leo: [597, 'you were angry with Leo', 'angry']
+  daniel against mara: [168, 'you were angry with Mara', 'angry']
+  daniel against mara: [594, 'you were angry with Mara', 'angry']
+  leo against daniel: [162, 'you were angry with Daniel', 'angry']
+  leo against daniel: [165, 'you were angry with Daniel', 'angry']
+  leo against daniel: [168, 'you were angry with Daniel', 'angry']
+  leo against daniel: [285, 'you were angry with Daniel', 'angry']
+  leo against daniel: [288, 'you were angry with Daniel', 'angry']
+  leo against daniel: [594, 'you were angry with Daniel', 'angry']
+  leo against daniel: [597, 'you were angry with Daniel', 'angry']
+  mara against daniel: [162, 'you were angry with Daniel', 'angry']
+  mara against daniel: [165, 'you were angry with Daniel', 'angry']
+  mara against daniel: [168, 'you were angry with Daniel', 'angry']
+  mara against daniel: [285, 'you were angry with Daniel', 'angry']
+  mara against daniel: [594, 'you were angry with Daniel', 'angry']
+  mara against daniel: [597, 'you were angry with Daniel', 'angry']
+
+==================== the predictions' inputs
+P1 [(1, False, [('09:48', 'We are listening to you, Leo, we will make sure the water lasts.')]), (3, False, [])]
+P2 [(1, True, True), (3, True, True)]
+P3 [(1, True, True), (3, True, True), (4, True, True)]
+P4 [(4, [('mind', ['D3-030', 'D3-032'], 'I watched that poor woman beg for water while we had nothing left to give her, and it broke my heart.')])]

@@ -1,0 +1,15 @@
+plan sha256 now:  e803a6630ac3608c85ab6e833d1a78d75757db94628803c7255e5f745449fbdb *reports/probe_after_plan.md
+probe sha256 now: 161d522a897149399a89a2506e3ba03ab290ff1204268c811a225c29fc1ede05 *runs/probe_after/probe.py
+plan.md copy:     e803a6630ac3608c85ab6e833d1a78d75757db94628803c7255e5f745449fbdb *runs/probe_after/plan.md
+git diff --stat: []
+git diff --cached --stat: []
+git status --short:
+?? cache/probe_after/
+?? reports/probe_after_plan.md
+?? runs/probe_after/
+?? runs/v6/daniel_ate_it-seed1.replay.md
+?? runs/v6/daniel_ate_it-seed2.replay.md
+?? runs/v6/daniel_ate_it-seed3.replay.md
+HEAD: f4f2d2c5f079895819abeac62038779933bbd12c
+key search (grep -rlF over the repository, but .venv, __pycache__, .git, Library, node_modules): 0 files
+ledger: 95 [('scene1', 101, 'done', None, 0, 32), ('scene3', 103, 'done', None, 32, 63), ('scene4', 104, 'done', None, 63, 95)]

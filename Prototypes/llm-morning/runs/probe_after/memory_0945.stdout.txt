@@ -1,0 +1,76 @@
+scene 1
+  mara 09:45 A woman's voice at the front door says: "Oh, thank you. You don't know what this means.".
+  mara 09:45 Footsteps go away along the street.
+  mara 09:45 Elena reassures everyone: "We have very little left, but we will look after one another and get through this together."
+  mara 09:45 Leo says the water must be shared out by the cup from now on: "If we are giving water away, we need to ration what is left by the exact cup right now."
+  mara 09:45 you stayed where you were and said nothing. You felt anxious.
+  mara 09:45 Voices from the brothers room.
+  mara 09:45 Daniel comes into the kitchen.
+  mara 09:45 Daniel gets up from his bed.
+  mara 09:48 you went to the back room.
+  mara 09:48 you said. You felt anxious.
+  mara 09:48 you went to the kitchen. You felt anxious.
+  mara 09:51 Leo goes to the brothers room.
+  elena 09:45 A woman's voice at the front door says: "Oh, thank you. You don't know what this means.".
+  elena 09:45 Footsteps go away along the street.
+  elena 09:45 you reassured everyone. You felt anxious.
+  elena 09:45 Leo says the water must be shared out by the cup from now on: "If we are giving water away, we need to ration what is left by the exact cup right now."
+  elena 09:45 Voices from the brothers room.
+  elena 09:45 Daniel comes into the kitchen.
+  elena 09:45 Daniel gets up from his bed.
+  elena 09:48 Mara goes to the back room.
+  elena 09:48 you reassured Leo. You felt anxious.
+  elena 09:48 Daniel reassures Leo: "Don't worry, Leo, I'm going to figure this out for us."
+  elena 09:48 Voices from the back room.
+  elena 09:48 Mara comes into the kitchen.
+  elena 09:51 Leo goes to the brothers room.
+scene 3
+  mara 09:45 A woman's voice at the front door says: "Bless you. I'll go now. Thank you.".
+  mara 09:45 Footsteps go away along the street.
+  mara 09:45 Elena reassures everyone: "We have very little left, but we will manage this together and keep each other safe."
+  mara 09:45 Leo says the water must be shared out by the cup from now on: "If we are going to manage this, we need to portion out the water by the cup right now."
+  mara 09:45 you stayed where you were and said nothing. You felt anxious.
+  mara 09:45 Voices from the brothers room.
+  mara 09:45 Daniel comes into the kitchen.
+  mara 09:45 Daniel gets up from his bed.
+  mara 09:48 you went to the back room.
+  mara 09:48 you said. You felt anxious.
+  mara 09:48 you went to the kitchen. You felt anxious.
+  elena 09:45 A woman's voice at the front door says: "Bless you. I'll go now. Thank you.".
+  elena 09:45 Footsteps go away along the street.
+  elena 09:45 you reassured everyone. You felt anxious.
+  elena 09:45 Leo says the water must be shared out by the cup from now on: "If we are going to manage this, we need to portion out the water by the cup right now."
+  elena 09:45 Voices from the brothers room.
+  elena 09:45 Daniel comes into the kitchen.
+  elena 09:45 Daniel gets up from his bed.
+  elena 09:48 Mara goes to the back room.
+  elena 09:48 you reassured everyone. You felt anxious.
+  elena 09:48 Daniel reassures you: "Mom, you are right, we will stay calm and get through this together."
+  elena 09:48 Leo confronts Daniel: "Daniel, you went out last night against what we agreed and came back with nothing, risking us all."
+  elena 09:48 Voices from the back room.
+  elena 09:48 Mara comes into the kitchen.
+scene 4
+  mara 09:45 A woman's voice at the front door says: "Right. I'm sorry. I'll try somewhere else.".
+  mara 09:45 Footsteps go away along the street.
+  mara 09:45 Elena reassures everyone: "We are safe inside, let's stay close together and hold on."
+  mara 09:45 Leo says the water must be shared out by the cup from now on: "We need to ration every drop we have left from now on, sharing it strictly by the cup."
+  mara 09:45 you sat with Elena. You felt exhausted.
+  mara 09:45 Voices from the brothers room.
+  mara 09:45 Daniel comes into the kitchen.
+  mara 09:45 Daniel gets up from his bed.
+  mara 09:48 Elena reassures everyone: "We are safe here together, and we will get through this."
+  mara 09:48 you accused Daniel. You felt resentful.
+  mara 09:48 Daniel confronts you: "Mara, I went out there to try and help us all, so don't sit there blaming me for everything."
+  mara 09:48 Leo confronts Daniel: "Daniel, you snuck out last night after I told you not to, and now we have nothing to show for it."
+  elena 09:45 A woman's voice at the front door says: "Right. I'm sorry. I'll try somewhere else.".
+  elena 09:45 Footsteps go away along the street.
+  elena 09:45 you reassured everyone. You felt anxious.
+  elena 09:45 Leo says the water must be shared out by the cup from now on: "We need to ration every drop we have left from now on, sharing it strictly by the cup."
+  elena 09:45 Mara comes and sits with you.
+  elena 09:45 Voices from the brothers room.
+  elena 09:45 Daniel comes into the kitchen.
+  elena 09:45 Daniel gets up from his bed.
+  elena 09:48 you reassured everyone. You felt anxious.
+  elena 09:48 Mara accuses Daniel of taking it: "You went out last night and came back with nothing, just like you always ruin everything."
+  elena 09:48 Daniel confronts Mara: "Mara, I went out there to try and help us all, so don't sit there blaming me for everything."
+  elena 09:48 Leo confronts Daniel: "Daniel, you snuck out last night after I told you not to, and now we have nothing to show for it."

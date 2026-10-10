@@ -1,0 +1,49 @@
+scene 1 (no child, helper, urgency under 0.8, client seed 101): reached done; counts {'live': 39, 'from_cache': 123, 'api_requests': 39}
+  visit 09:42 to 09:45; outcome given; acts [('09:42', 'elena', 'door_refuse'), ('09:42', 'mara', 'door_give')]
+  stretch 09:42 to 09:51 Q7 in kitchen: 9 asks
+  stretch 10:27 to 10:33 Q2 in kitchen: 8 asks
+  stretch 17:39 to 17:48 Q1 in kitchen: 8 asks
+  stretch 19:00 to 19:06 Q5 in kitchen: 7 asks
+  Q1 or Q2 fired 10:00 to 19:00: [('10:27', 'Q2', 'leo'), ('10:27', 'Q2', 'mara'), ('17:39', 'Q1', 'daniel')]
+  day 3 asks {'all': 56, 'reserved': 16}
+  night mind daniel: mode model; kept [(['D3-058'], 'Fake thought 36.')]
+  night mind elena: mode model; kept [(['D3-072'], 'Fake thought 37.')]
+  night mind leo: mode model; kept [(['D3-028'], 'Fake thought 38.')]
+  night mind mara: mode model; kept [(['D3-030'], 'Fake thought 39.')]
+  day 4 daniel A/B door lines: ['- You came back in by the front door before dawn.']
+  day 4 elena A/B door lines: ['- At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.', "- In the night you heard the front door being opened. You did not see who. You got up: Daniel's and Leo's beds were empty. You waited up by the front door.", '- Before dawn Daniel and Leo came back in by the front door, with nothing in their hands, and looked shaken (you saw it).']
+  day 4 leo A/B door lines: ['- At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.', '- In the night Daniel got up in the dark and left the room toward the kitchen and the front door (you woke and saw it).', '- You came back in by the front door before dawn.', '- About what the person at the front door said: "Fake thought 38."']
+  day 4 mara A/B door lines: ['- At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and you handed her about three litres of the stored water anyway.', '- About handing out water at the front door: "Fake thought 39."']
+scene 3 (a child, helper, urgency under 0.8, client seed 103): reached done; counts {'live': 41, 'from_cache': 123, 'api_requests': 41}
+  visit 09:42 to 09:45; outcome given; acts [('09:42', 'elena', 'door_refuse'), ('09:42', 'mara', 'door_give')]
+  stretch 09:42 to 09:51 Q7 in kitchen: 11 asks
+  stretch 09:51 to 10:00 Q2 in kitchen: 8 asks
+  stretch 11:45 to 12:00 Q2 in brothers_room: 8 asks
+  stretch 19:00 to 19:06 Q5 in kitchen: 5 asks
+  Q1 or Q2 fired 10:00 to 19:00: [('11:45', 'Q2', 'daniel')]
+  day 3 asks {'all': 56, 'reserved': 16}
+  night mind daniel: mode model; kept [(['D3-037'], 'Fake thought 38.')]
+  night mind elena: mode model; kept [(['D3-041'], 'Fake thought 39.')]
+  night mind leo: mode model; kept [(['D3-050'], 'Fake thought 40.')]
+  night mind mara: mode model; kept [(['D3-047'], 'Fake thought 41.')]
+  day 4 daniel A/B door lines: ['- In the night Leo got up in the dark and left the room toward the kitchen and the front door (you woke and saw it).', '- Before dawn you heard the front door again. You did not see who.']
+  day 4 elena A/B door lines: ['- At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.', '- Last night you slept in the back room with Mara. You sat up in the kitchen by the front door.', '- In the night Leo came into the kitchen and went to the front door (you saw it).', '- Before dawn Leo and Mara came back in by the front door, carrying food and water (you saw it).']
+  day 4 leo A/B door lines: ['- At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.', '- You came back in by the front door before dawn and put the 4 portions on the shelf and about 10 litres of water in the kitchen.']
+  day 4 mara A/B door lines: ['- At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and you handed her about three litres of the stored water anyway.', '- In the night you heard the front door being opened. You did not see who.', '- You came back in by the front door before dawn and put the 4 portions on the shelf and about 10 litres of water in the kitchen.']
+scene 4 (children, helper, urgency over 0.8, client seed 104): reached done; counts {'live': 37, 'from_cache': 123, 'api_requests': 37}
+  visit 09:42 to 09:45; outcome refused; acts [('09:42', 'elena', 'door_refuse'), ('09:42', 'mara', 'door_look')]
+  stretch 09:42 to 09:51 Q7 in kitchen: 11 asks
+  stretch 11:45 to 11:54 Q2 in brothers_room: 8 asks
+  stretch 11:54 to 12:03 Q2 in kitchen: 8 asks
+  stretch 19:00 to 19:06 Q5 in kitchen: 5 asks
+  Q1 or Q2 fired 10:00 to 19:00: [('11:45', 'Q2', 'leo'), ('11:54', 'Q2', 'mara')]
+  day 3 asks {'all': 56, 'reserved': 16}
+  night mind daniel: mode model; kept [(['D3-011'], 'Fake thought 34.')]
+  night mind elena: mode model; kept [(['D3-017'], 'Fake thought 35.')]
+  night mind leo: mode model; kept [(['D3-047'], 'Fake thought 36.')]
+  night mind mara: mode model; kept [(['D3-005'], 'Fake thought 37.')]
+  day 4 daniel A/B door lines: []
+  day 4 elena A/B door lines: ['- At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away.']
+  day 4 leo A/B door lines: ['- At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away.']
+  day 4 mara A/B door lines: ['- At 09:42 someone knocked at the front door: Elena told a woman of about forty-five, who asked for water, to go away.']
+live asks in all: 117

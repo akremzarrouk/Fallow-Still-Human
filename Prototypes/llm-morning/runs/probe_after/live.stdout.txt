@@ -1,0 +1,48 @@
+scene 1 (no child, helper, urgency under 0.8, client seed 101): reached done; counts {'live': 32, 'from_cache': 123, 'api_requests': 32}
+  visit 09:42 to 09:45; outcome given; acts [('09:42', 'elena', 'door_refuse'), ('09:42', 'mara', 'door_give')]
+  stretch 09:42 to 09:51 Q7 in kitchen: 11 asks
+  stretch 11:45 to 11:54 Q2 in brothers_room: 4 asks
+  stretch 14:51 to 15:03 Q2 in kitchen: 8 asks
+  stretch 17:39 to 17:42 Q1 in kitchen: 4 asks
+  Q1 or Q2 fired 10:00 to 19:00: [('11:45', 'Q2', 'leo'), ('14:51', 'Q2', 'mara'), ('17:39', 'Q1', 'daniel')]
+  day 3 asks {'all': 51, 'reserved': 11}
+  night mind daniel: mode model; kept [(['D3-003', 'D3-057'], 'I tried my best to find something out there and protect us even if they only blame me.'), (['D3-070', 'D3-080'], 'My body is failing from hunger and exhaustion, leaving me light and slow with my eyes closing on their own.')]
+  night mind elena: mode model; kept [(['D3-030', 'D3-033'], 'Mara gave some of our stored water to a stranger at the door because she has a good heart, even though we have none left ourselves.'), (['D3-005'], 'I tried to keep everyone calm and together when the fighting started, because falling apart is the only thing I truly fear.')]
+  night mind leo: mode model; kept [(['D3-030', 'D3-033', 'D3-035'], 'Mara gave away our drinking water to a stranger while we have none left ourselves, so I had to make sure we rationed what remained by the exact cup.')]
+  night mind mara: mode model; kept [(['D3-030', 'D3-033'], 'I had to give that poor woman some water because we had it and she had nothing left.')]
+  day 4 daniel A/B door lines: []
+  day 4 elena A/B door lines: ['- At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.', '- About Mara handing out water at the front door and the person at the front door going away: "Mara gave some of our stored water to a stranger at the door because she has a good heart, even though we have none left ourselves."']
+  day 4 leo A/B door lines: ['- At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.', '- About Mara handing out water at the front door and the person at the front door going away: "Mara gave away our drinking water to a stranger while we have none left ourselves, so I had to make sure we rationed what remained by the exact cup."']
+  day 4 mara A/B door lines: ['- At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and you handed her about three litres of the stored water anyway.', '- About handing out water at the front door and the person at the front door going away: "I had to give that poor woman some water because we had it and she had nothing left."']
+scene 3 (a child, helper, urgency under 0.8, client seed 103): reached done; counts {'live': 31, 'from_cache': 123, 'api_requests': 31}
+  visit 09:42 to 09:45; outcome given; acts [('09:42', 'elena', 'door_refuse'), ('09:42', 'mara', 'door_give')]
+  stretch 09:42 to 09:51 Q7 in kitchen: 11 asks
+  stretch 11:45 to 11:54 Q2 in brothers_room: 7 asks
+  stretch 14:51 to 15:00 Q2 in kitchen: 8 asks
+  Q1 or Q2 fired 10:00 to 19:00: [('11:45', 'Q2', 'leo'), ('14:51', 'Q2', 'mara')]
+  day 3 asks {'all': 50, 'reserved': 11}
+  night mind daniel: mode model; kept [(['D3-002', 'D3-004', 'D3-011'], 'Leo and Mara blame me for coming back empty when I am the only one risking my neck out in the dark.'), (['D3-074', 'D3-077'], 'My body is failing from hunger and exhaustion, leaving my sight grey and my eyes closing on their own.')]
+  night mind elena: mode model; kept [(['D3-030', 'D3-033'], 'Mara handed some of the stored water out at the front door to a woman who asked for water.')]
+  night mind leo: mode model; kept [(['D3-030', 'D3-031'], 'Mara gave away our drinking water to a stranger at the front door while we have nothing left ourselves.'), (['D3-002', 'D3-003'], 'Daniel sneaks out into the night and comes back with nothing, then offers empty reassurances.'), (['D3-075', 'D3-076'], 'Starvation and lack of sleep have left me light and slow, with my eyes closing on their own.')]
+  night mind mara: mode model; kept [(['D3-030', 'D3-033'], 'We had to give her some water because we could not just turn away someone who had nothing at all left.'), (['D3-062'], 'Daniel blamed me for everything while refusing to admit the truth about what he did in the dark.')]
+  day 4 daniel A/B door lines: []
+  day 4 elena A/B door lines: ['- At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.', '- About Mara handing out water at the front door and the person at the front door going away: "Mara handed some of the stored water out at the front door to a woman who asked for water."']
+  day 4 leo A/B door lines: ['- At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.', '- About Mara handing out water at the front door and saying nobody should use the stored water for washing or the toilet: "Mara gave away our drinking water to a stranger at the front door while we have nothing left ourselves."']
+  day 4 mara A/B door lines: ['- At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and you handed her about three litres of the stored water anyway.', '- About handing out water at the front door and the person at the front door going away: "We had to give her some water because we could not just turn away someone who had nothing at all left."']
+scene 4 (children, helper, urgency over 0.8, client seed 104): reached done; counts {'live': 32, 'from_cache': 123, 'api_requests': 32}
+  visit 09:42 to 09:45; outcome refused; acts [('09:42', 'elena', 'door_refuse'), ('09:42', 'mara', 'door_look')]
+  stretch 09:42 to 09:51 Q7 in kitchen: 11 asks
+  stretch 11:45 to 11:54 Q2 in brothers_room: 7 asks
+  stretch 16:54 to 17:03 Q2 in kitchen: 8 asks
+  stretch 20:15 to 20:18 Q1 in kitchen: 1 asks
+  Q1 or Q2 fired 10:00 to 19:00: [('11:45', 'Q2', 'leo'), ('16:54', 'Q2', 'mara')]
+  day 3 asks {'all': 51, 'reserved': 11}
+  night mind daniel: mode model; kept [(['D3-002', 'D3-004', 'D3-011'], 'Leo and Mara blame me for everything while I am the only one risking my neck out there.'), (['D3-079', 'D3-081'], 'My body is failing from starvation and exhaustion, leaving me light and slow with my eyes closing on their own.')]
+  night mind elena: mode model; kept [(['D3-029', 'D3-032'], 'I had to turn the mother away because we have nothing left to give.'), (['D3-005', 'D3-017'], 'I tried to keep them from tearing each other apart while we starve.')]
+  night mind leo: mode model; kept [(['D3-034'], 'We had to start rationing every drop of water we have left strictly by the cup.'), (['D3-080', 'D3-082'], 'I have grown light and slow from hunger with my sight greying when standing up fast, and my eyes close on their own from barely sleeping for nights.')]
+  night mind mara: mode model; kept [(['D3-030', 'D3-032'], 'I watched that poor woman beg for water while we had nothing left to give her, and it broke my heart.'), (['D3-004', 'D3-039'], 'Daniel always makes everything about himself and refuses to admit the truth when he messes up.')]
+  day 4 daniel A/B door lines: []
+  day 4 elena A/B door lines: ['- At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away.', '- About sending the person at the front door away and the person at the front door going away: "I had to turn the mother away because we have nothing left to give."']
+  day 4 leo A/B door lines: ['- At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away.']
+  day 4 mara A/B door lines: ['- At 09:42 someone knocked at the front door: Elena told a woman of about forty-five, who asked for water, to go away.', '- About looking through the gap in the boards and the person at the front door going away: "I watched that poor woman beg for water while we had nothing left to give her, and it broke my heart."']
+live asks in all: 95

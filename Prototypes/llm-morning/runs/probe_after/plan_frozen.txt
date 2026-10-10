@@ -1,0 +1,16 @@
+plan:  e803a6630ac3608c85ab6e833d1a78d75757db94628803c7255e5f745449fbdb *reports/probe_after_plan.md
+probe: 161d522a897149399a89a2506e3ba03ab290ff1204268c811a225c29fc1ede05 *runs/probe_after/probe.py
+time:  2026-10-09T22:55:49Z
+HEAD:  f4f2d2c5f079895819abeac62038779933bbd12c
+git status --short:
+?? reports/probe_after_plan.md
+?? runs/probe_after/
+?? runs/v6/daniel_ate_it-seed1.replay.md
+?? runs/v6/daniel_ate_it-seed2.replay.md
+?? runs/v6/daniel_ate_it-seed3.replay.md
+git diff --stat: 0 lines
+cache/probe_after exists before the run: no
+runs/probe_after/ledger.json exists before the run: no
+source: 7fc90092a0a7d4a015e294d8da25b006d98a26caa4e2c36bc2a183648d0ec1aa *cache/probe_door2/scene1.json
+source: 049a4e628dce48ff98f11fca257cacf79e5818f7682052e5da4c31da86346fec *cache/probe_door2/scene3.json
+source: 6dd8659e8e549ad0abdf17127a99be217fcb97123b9e01d3ee6f68a8d4629539 *cache/probe_door2/scene4.json
