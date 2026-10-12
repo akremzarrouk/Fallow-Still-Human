@@ -1,0 +1,47 @@
+cache/v16\gemini-3.5-flash-lite-daniel_ate_it-seed1.json: {'entries': 236, 'decisions': 224, 'say_other': 1}
+cache/v16\gemini-3.5-flash-lite-daniel_ate_it-seed2.json: {'entries': 147, 'decisions': 139, 'say_other': 0}
+cache/v16\gemini-3.5-flash-lite-daniel_ate_it-seed3.json: {'entries': 184, 'decisions': 176, 'say_other': 0}
+== cache/v16 total (with copies): {'entries': 567, 'decisions': 539, 'say_other': 1}
+cache/probe_door2\gemini-3.5-flash-lite-daniel_ate_it-seed2.json: {'entries': 171, 'decisions': 163, 'say_other': 0}
+cache/probe_door2\scene1.json: {'entries': 174, 'decisions': 166, 'say_other': 0}
+cache/probe_door2\scene2.json: {'entries': 174, 'decisions': 166, 'say_other': 0}
+cache/probe_door2\scene3.json: {'entries': 174, 'decisions': 166, 'say_other': 0}
+cache/probe_door2\scene4.json: {'entries': 174, 'decisions': 166, 'say_other': 0}
+cache/probe_door2\scene5.json: {'entries': 174, 'decisions': 166, 'say_other': 0}
+cache/probe_door2\scene6.json: {'entries': 174, 'decisions': 166, 'say_other': 0}
+cache/probe_door2\scene7.json: {'entries': 174, 'decisions': 166, 'say_other': 0}
+cache/probe_door2\scene8.json: {'entries': 174, 'decisions': 166, 'say_other': 0}
+== cache/probe_door2 total (with copies): {'entries': 1563, 'decisions': 1491, 'say_other': 0}
+cache/probe_after\scene1.json: {'entries': 206, 'decisions': 194, 'say_other': 0}
+cache/probe_after\scene3.json: {'entries': 205, 'decisions': 193, 'say_other': 0}
+cache/probe_after\scene4.json: {'entries': 206, 'decisions': 194, 'say_other': 0}
+== cache/probe_after total (with copies): {'entries': 617, 'decisions': 581, 'say_other': 0}
+== distinct cache keys over all three: 709; with an option: 669; say_other: 1
+  cache/v16\gemini-3.5-flash-lite-daniel_ate_it-seed1.json | Daniel | [] | say: 'I went out there and I survived, so I know we can find a way through this without arguing.'
+== distinct decisions whose prompt offered say_other: 608 of 669
+   its option line, as offered: ['- say_other: (speech) say something else']
+   the say_other answer's prompt, lines with a time or 'Now':
+     | On your conscience (a lot): you ate the can in the night, and nobody saw; yesterday, Elena reassured you, at minute 09; Elena reassured you, at minute 00; Elena reassured you, at minute 03; Elena reassured you, at minute 06.
+     | - Day 2: Daniel says they should cross to the neighbour's house tonight and see what is left there. (you did it)
+     | - Day 2: Leo lays out, evenly and in front of everyone, why crossing at night gets someone killed. Daniel drops it. (you saw it)
+     | - Day 2: Later, louder than he meant to be, Daniel tells Leo that he is the oldest and the decisions are his. (you did it)
+     | - Day 3: In the night Daniel eats a can standing at the counter in the dark. Nobody sees. (you did it)
+     | - Day 4: Leo says maybe they should let someone else handle this one. (you saw it)
+     | - Day 4: Daniel empties Mara's bag onto the bed while she is standing there. (you did it)
+     | - Day 4: Elena says she is quite sure nobody in this house would take food from the others. (you saw it)
+     | - Yesterday morning Elena counted the pantry and found one can fewer than she expected (you saw it).
+     | - You admitted at minute 03 that you took the can, in front of Elena, Leo and Mara.
+     | - Leo and Mara ate a portion each at minute 21 (you saw it).
+     | What you are sure of this morning:
+     | - min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)
+     | Your own last words this morning:
+     | What else happened this morning, most recent last:
+     | Now, minute 09, you are in the kitchen.
+   response: {
+  "option": "say_other",
+  "say": "I went out there and I survived, so I know we can find a way through this without arguing.",
+  "feeling": "anxious",
+  "reason": "I need to show them I am in control and keep us focused instead of fighting.",
+  "suspects": "nobody",
+  "angry_at": "nobody"
+}

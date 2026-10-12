@@ -1,0 +1,41 @@
+Daniel's asks recorded from the knock: 10 ([('day', '09:45'), ('day', '09:48'), ('day', '11:45'), ('day', '14:51'), ('day', '14:54'), ('day', '14:57'), ('day', '15:00'), ('day', '17:39'), ('night', None), ('mind', None)])
+
+day 09:45: water line: ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:45, Leo shares it out by the cup: five cups each a day.']
+  lines (but the fixed 'The house:' line) naming the door, a knock, a stranger, a woman, handing or 'go away': ['- You came back in by the front door before dawn.', '- About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."']
+
+day 09:48: water line: ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:45, Leo shares it out by the cup: five cups each a day.']
+  lines (but the fixed 'The house:' line) naming the door, a knock, a stranger, a woman, handing or 'go away': ['- You came back in by the front door before dawn.', '- About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."']
+
+day 11:45: water line: ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:45, Leo shares it out by the cup: five cups each a day.']
+  lines (but the fixed 'The house:' line) naming the door, a knock, a stranger, a woman, handing or 'go away': ['- You came back in by the front door before dawn.', '- About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."']
+
+day 14:51: water line: ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:45, Leo shares it out by the cup: five cups each a day.']
+  lines (but the fixed 'The house:' line) naming the door, a knock, a stranger, a woman, handing or 'go away': ['- You came back in by the front door before dawn.', '- About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."']
+
+day 14:54: water line: ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:45, Leo shares it out by the cup: five cups each a day.']
+  lines (but the fixed 'The house:' line) naming the door, a knock, a stranger, a woman, handing or 'go away': ['- You came back in by the front door before dawn.', '- About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."']
+
+day 14:57: water line: ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:45, Leo shares it out by the cup: five cups each a day.']
+  lines (but the fixed 'The house:' line) naming the door, a knock, a stranger, a woman, handing or 'go away': ['- You came back in by the front door before dawn.', '- About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."']
+
+day 15:00: water line: ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:45, Leo shares it out by the cup: five cups each a day.']
+  lines (but the fixed 'The house:' line) naming the door, a knock, a stranger, a woman, handing or 'go away': ['- You came back in by the front door before dawn.', '- About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."']
+
+day 17:39: water line: ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:45, Leo shares it out by the cup: five cups each a day.']
+  lines (but the fixed 'The house:' line) naming the door, a knock, a stranger, a woman, handing or 'go away': ['- You came back in by the front door before dawn.', '- About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."']
+
+night night: water line: ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:45, Leo shares it out by the cup: five cups each a day.']
+  lines (but the fixed 'The house:' line) naming the door, a knock, a stranger, a woman, handing or 'go away': ['- You came back in by the front door before dawn.', '- About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."', '- watch_door: sit up in the kitchen by the front door until morning, so nobody goes out without you knowing', "- go_next_door: wait until the others are asleep, then go out by the front door to the neighbour's house", "- go_further: wait until the others are asleep, then go out by the front door, past the neighbour's house, to the houses further along the street"]
+
+mind mind: water line: ['About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:45, Leo shares it out by the cup: five cups each a day.']
+  lines (but the fixed 'The house:' line) naming the door, a knock, a stranger, a woman, handing or 'go away': ['- [D2-004] About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."']
+
+Daniel's night-3 mind records (mind_input.daniel.records), those from 09:42 to 10:00:
+  [D3-029] 09:42: Voices from the kitchen.
+  [D3-036] 09:45: you said, saying: "I'm coming out, let's just keep our heads." You felt anxious.
+  [D3-037] 09:48: Elena reassures Leo: "We are listening to you, Leo, we will make sure the water lasts."
+  [D3-039] 09:48: Mara comes into the kitchen.
+  [D3-040] 09:51: Leo left the kitchen for the brothers room at 09:51.
+  [D3-041] 09:51: You sat in the kitchen from 09:51 to 11:45.
+  [D3-042] 09:51: Elena sat in the kitchen from 09:51 to 11:42.
+  [D3-043] 09:51: Mara sat in the kitchen from 09:51 to 11:42.

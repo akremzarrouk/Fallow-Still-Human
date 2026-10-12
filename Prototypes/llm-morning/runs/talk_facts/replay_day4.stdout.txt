@@ -1,0 +1,107 @@
+code: C:\Users\Akrem\AppData\Local\Temp\claude\C--Users-Akrem-Desktop-Projects-Fallow\60e3442f-ccfd-47f8-8c01-fffbba73a1d1\scratchpad\at_cb5b6bf\Prototypes\llm-morning
+replay reached: done; from_cache 155; live 0; api_requests 0
+day-4 blocks equal to runs/probe_after/scene1.json's: True
+night-3 mind answers equal to the saved ones: True
+
+day 4: m.day 7; quiet set up; away []
+
+== daniel
+  p.water['line'] at day 4 min 00: About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since yesterday, Leo shares it out by the cup: five cups each a day.
+  m.carry[daniel] (C + A + B, as next_day sets it):
+    | What stays with you from earlier days:
+    | - Three days ago, you admitted taking the can, in front of everyone. You thought then: "I accused Leo when I was the one who ate the can in the night, and my false pride made me lie to them for too long."
+    | - Two days ago, Elena ate a portion in front of you. You thought then: "I gave the portion to Mom because she needs it more than I do."
+    | - Three days ago, Leo denied taking the can 4 times.
+    | - Three days ago, Mara ate a portion in front of you.
+    | Yesterday and last night:
+    | - Yesterday morning the shelf held 0 portions.
+    | - Accusations: Leo accused you twice (min 00, 03); Mara accused you 9 times (min 00, 03, 06, 12, 15, 14:51, 14:54, 14:57, 17:39).
+    | - Confrontations: you confronted Leo twice (min 06, 09); Leo confronted you 4 times (min 06, 09, 12, 17:39); Mara confronted you twice (min 09, 15:00); you confronted Mara (14:57).
+    | - After the morning: you lay on your bed in the brothers room (min 18 to 09:45); you sat in the kitchen with Elena and Mara (09:51 to 11:45); you lay on your bed in the brothers room (11:54 to 14:51); you sat in the kitchen with Mara (15:03 to 21:00). Nobody ate.
+    | - Last night you slept in the brothers room with Leo. You went to sleep.
+    | What yesterday left in you (your own thoughts, last night):
+    | - About reassuring Leo and reassuring Mara: "I tried my best to find something out there and protect us even if they only blame me."
+    | - About how the body was and how the body was: "My body is failing from hunger and exhaustion, leaving me light and slow with my eyes closing on their own."
+    | - You meant to: "I will rest my body so I can figure out how to keep us safe tomorrow."
+    | - How it left you: exhausted, anxious, burdened.
+  prompt line 12/79: About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since yesterday, Leo shares it out by the cup: five cups each a day.
+  prompt line 16/79: What you remember from the days before:
+  prompt line 39/79: What yesterday left in you (your own thoughts, last night):
+  prompt line 54/79: Your options:
+
+== elena
+  p.water['line'] at day 4 min 00: About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since yesterday, Leo shares it out by the cup: five cups each a day.
+  m.carry[elena] (C + A + B, as next_day sets it):
+    | What stays with you from earlier days:
+    | - Three days ago, Daniel admitted taking the can, after denying it to you. You thought then: "Daniel took the can in the night and had to confess to us all."
+    | - Two days ago, you ate a portion in front of the others. You thought then: "Daniel gave me the portion and I ate it because I had to survive."
+    | - Three days ago, Leo denied taking the can 4 times.
+    | - Three days ago, Mara ate a portion in front of you.
+    | Yesterday and last night:
+    | - Yesterday morning the shelf held 0 portions.
+    | - Accusations: Leo accused Daniel twice (min 00, 03); Mara accused Daniel 6 times (min 00, 03, 06, 12, 15, 17:39).
+    | - Confrontations: Daniel confronted Leo twice (min 06, 09); Leo confronted Daniel 4 times (min 06, 09, 12, 17:39); Mara confronted Daniel (min 09).
+    | - At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.
+    | - After the morning: you lay on your bed in the back room (min 18 to 09:42); you sat in the kitchen with Daniel and Mara (09:51 to 11:42); you lay on your bed in the back room (11:42 to 11:45); you sat in the kitchen (11:54 to 13:45); you lay on your bed in the back room (13:45 to 16:39); you sat in the kitchen with Daniel, Leo and Mara (16:39 to 21:00). Nobody ate.
+    | - Last night you slept in the back room with Mara. You lay awake and listened.
+    | What yesterday left in you (your own thoughts, last night):
+    | - About Mara handing out water at the front door and the person at the front door going away: "Mara gave some of our stored water to a stranger at the door because she has a good heart, even though we have none left ourselves."
+    | - About reassuring everyone: "I tried to keep everyone calm and together when the fighting started, because falling apart is the only thing I truly fear."
+    | - You meant to: "I will keep the children close and make sure our remaining water lasts through another day."
+    | - How it left you: exhausted and anxious.
+  prompt line 12/82: About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since yesterday, Leo shares it out by the cup: five cups each a day.
+  prompt line 15/82: What you remember from the days before:
+  prompt line 40/82: What yesterday left in you (your own thoughts, last night):
+  prompt line 41/82: - About Mara handing out water at the front door and the person at the front door going away: "Mara gave some of our stored water to a stranger at the door because she has a good heart, even though we have none left ourselves."
+  prompt line 55/82: Your options:
+
+== leo
+  p.water['line'] at day 4 min 00: About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since yesterday, you share it out by the cup: five cups each a day.
+  m.carry[leo] (C + A + B, as next_day sets it):
+    | What stays with you from earlier days:
+    | - Three days ago, Daniel admitted taking the can, after denying it to you, after accusing you of it. You thought then: "Daniel spent hours accusing me of taking the can before finally admitting he took it himself."
+    | - Two days ago, Elena ate a portion in front of you.
+    | - Three days ago, you denied taking the can 4 times.
+    | - Three days ago, Mara ate a portion in front of you.
+    | Yesterday and last night:
+    | - Yesterday morning the shelf held 0 portions.
+    | - Accusations: you accused Daniel twice (min 00, 03); Mara accused Daniel 6 times (min 00, 03, 06, 12, 15, 17:39).
+    | - Confrontations: Daniel confronted you twice (min 06, 09); you confronted Daniel 4 times (min 06, 09, 12, 17:39); Mara confronted Daniel (min 09).
+    | - At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.
+    | - After the morning: you lay on your bed in the brothers room (min 18 to 09:42); you kept to your own room, the brothers room (09:51 to 11:42); you lay on your bed in the brothers room (11:42 to 11:45); you sat in the kitchen with Elena (11:54 to 13:45); you lay on your bed in the brothers room (13:45 to 15:48); you sat in the kitchen with Daniel and Mara (15:48 to 21:00). Nobody ate.
+    | - Last night you slept in the brothers room with Daniel. You lay awake and listened.
+    | What yesterday left in you (your own thoughts, last night):
+    | - About Mara handing out water at the front door and the person at the front door going away: "Mara gave away our drinking water to a stranger while we have none left ourselves, so I had to make sure we rationed what remained by the exact cup."
+    | - You meant to: "I will keep watch over our remaining water and make sure nobody gives another drop away."
+    | - How it left you: exhausted and wary.
+  prompt line 12/78: About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since yesterday, you share it out by the cup: five cups each a day.
+  prompt line 15/78: What you remember from the days before:
+  prompt line 38/78: What yesterday left in you (your own thoughts, last night):
+  prompt line 39/78: - About Mara handing out water at the front door and the person at the front door going away: "Mara gave away our drinking water to a stranger while we have none left ourselves, so I had to make sure we rationed what remained by the exact cup."
+  prompt line 52/78: Your options:
+
+== mara
+  p.water['line'] at day 4 min 00: About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since yesterday, Leo shares it out by the cup: five cups each a day.
+  m.carry[mara] (C + A + B, as next_day sets it):
+    | What stays with you from earlier days:
+    | - Three days ago, Daniel admitted taking the can, after denying it to you. You thought then: "Daniel lied to us all morning and only confessed because he had no other choice."
+    | - Two days ago, Elena ate a portion in front of you.
+    | - Three days ago, Leo denied taking the can 4 times.
+    | - Three days ago, you ate a portion in front of the others.
+    | Yesterday and last night:
+    | - Yesterday morning the shelf held 0 portions.
+    | - Accusations: Leo accused Daniel twice (min 00, 03); you accused Daniel 9 times (min 00, 03, 06, 12, 15, 14:51, 14:54, 14:57, 17:39).
+    | - Confrontations: Daniel confronted Leo twice (min 06, 09); Leo confronted Daniel 4 times (min 06, 09, 12, 17:39); you confronted Daniel twice (min 09, 15:00); Daniel confronted you (14:57).
+    | - At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and you handed her about three litres of the stored water anyway.
+    | - After the morning: you lay on your bed in the back room (min 18 to 09:42); you sat in the kitchen with Daniel and Elena (09:51 to 11:42); you lay on your bed in the back room (11:42 to 14:51); you sat in the kitchen with Daniel (15:03 to 21:00). Nobody ate.
+    | - Last night you slept in the back room with Elena. You lay awake and listened.
+    | What yesterday left in you (your own thoughts, last night):
+    | - About handing out water at the front door and the person at the front door going away: "I had to give that poor woman some water because we had it and she had nothing left."
+    | - You meant to: "I will try to find something for us to eat so we do not starve."
+    | - How it left you: anxious and exhausted.
+  prompt line 12/80: About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since yesterday, Leo shares it out by the cup: five cups each a day.
+  prompt line 15/80: What you remember from the days before:
+  prompt line 40/80: What yesterday left in you (your own thoughts, last night):
+  prompt line 41/80: - About handing out water at the front door and the person at the front door going away: "I had to give that poor woman some water because we had it and she had nothing left."
+  prompt line 54/80: Your options:
+exit 0

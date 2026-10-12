@@ -1,0 +1,11 @@
+runs/probe_after/scene1.json day3_events: id, kind, actor, witnesses
+  D3-027 knock None {'elena': 'heard', 'leo': 'heard', 'mara': 'heard'}
+  D3-028 door_line None {'elena': 'heard', 'leo': 'heard', 'mara': 'heard'}
+  D3-029 door_refuse elena {'elena': 'did', 'leo': 'saw', 'mara': 'saw', 'daniel': 'voices'}
+     daniel's view: Voices from the kitchen.
+  D3-030 door_give mara {'mara': 'did', 'elena': 'saw', 'leo': 'saw', 'daniel': 'voices'}
+     daniel's view: Voices from the kitchen.
+  D3-031 save_water leo {'leo': 'did', 'elena': 'saw', 'mara': 'saw', 'daniel': 'voices'}
+     daniel's view: Voices from the kitchen.
+  D3-032 door_line None {'elena': 'heard', 'leo': 'heard', 'mara': 'heard'}
+  D3-033 door_end None {'mara': 'saw', 'elena': 'saw', 'leo': 'saw'}
