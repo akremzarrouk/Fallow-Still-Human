@@ -374,4 +374,4 @@ Ran 41 tests in 0.060s
 OK
 ```
 
-Commit: `bec96974225d5cb9e7b708362cbeb2fee40d768c` ("Never checker: N9 (frozen silence) and turns[].showing, run 2"), 18 files: world.py, never_check.py, test_never_check.py, test_morning.py, runs/n9_showing/, cache/n9_showing/, investigations/never-check-run-2.md and its folder. (This line was added in a follow-up commit, because amending would have changed the hash.)
+The commit hash is given in the reply that delivered this section.
