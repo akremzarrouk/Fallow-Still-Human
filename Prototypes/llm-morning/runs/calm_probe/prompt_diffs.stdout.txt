@@ -1,0 +1,62 @@
+scene 1 elena 10:00 -> 10:30: 2 changed lines
+   -Now, 10:00, you are in the kitchen.
+   +Now, 10:30, you are in the kitchen.
+scene 1 elena 10:00 -> 11:00: 6 changed lines
+   -- 09:45: Voices from the brothers room.
+   -Now, 10:00, you are in the kitchen.
+   +You last spoke with Daniel at 09:48.
+   +You last spoke with Leo at 09:48.
+   +You last spoke with Mara at 09:48.
+   +Now, 11:00, you are in the kitchen.
+scene 1 leo 10:00 -> 10:30: 2 changed lines
+   -Now, 10:00, you are in the kitchen.
+   +Now, 10:30, you are in the kitchen.
+scene 1 leo 10:00 -> 11:00: 7 changed lines
+   -- Day 3: Mara freezes in the doorway with something moving in the street. Daniel picks her up and carries her inside. (you saw it)
+   -Now, 10:00, you are in the kitchen.
+   +You last spoke with Daniel at 09:48.
+   +You last spoke with Elena at 09:48.
+   +You last spoke with Mara at 09:48.
+   +Now, 11:00, you are in the kitchen.
+   +- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42
+scene 1 mara 10:00 -> 10:30: 2 changed lines
+   -Now, 10:00, you are in the kitchen.
+   +Now, 10:30, you are in the kitchen.
+scene 1 mara 10:00 -> 11:00: 5 changed lines
+   -Now, 10:00, you are in the kitchen.
+   +You last spoke with Daniel at 09:48.
+   +You last spoke with Elena at 09:48.
+   +You last spoke with Leo at 09:48.
+   +Now, 11:00, you are in the kitchen.
+scene 3 elena 10:00 -> 10:30: 2 changed lines
+   -Now, 10:00, you are in the kitchen.
+   +Now, 10:30, you are in the kitchen.
+scene 3 elena 10:00 -> 11:00: 6 changed lines
+   -- 09:45: Voices from the brothers room.
+   -Now, 10:00, you are in the kitchen.
+   +You last spoke with Daniel at 09:48.
+   +You last spoke with Leo at 09:48.
+   +You last spoke with Mara at 09:48.
+   +Now, 11:00, you are in the kitchen.
+scene 3 leo 10:00 -> 10:30: 2 changed lines
+   -Now, 10:00, you are in the kitchen.
+   +Now, 10:30, you are in the kitchen.
+scene 3 leo 10:00 -> 11:00: 7 changed lines
+   -- Day 3: Mara cries in the night. Elena sits with her until it stops. (you heard it)
+   -- 09:48: you accused Daniel. You felt exhausted.
+   -Now, 10:00, you are in the kitchen.
+   +You last spoke with Daniel at 09:48.
+   +You last spoke with Elena at 09:48.
+   +You last spoke with Mara at 09:48.
+   +Now, 11:00, you are in the kitchen.
+scene 3 mara 10:00 -> 10:30: 2 changed lines
+   -Now, 10:00, you are in the kitchen.
+   +Now, 10:30, you are in the kitchen.
+scene 3 mara 10:00 -> 11:00: 7 changed lines
+   -- 09:48: Elena reassures everyone: "We are all together here and we will get through this."
+   -Now, 10:00, you are in the kitchen.
+   +You last spoke with Daniel at 09:48.
+   +You last spoke with Elena at 09:48.
+   +You last spoke with Leo at 09:48.
+   +Now, 11:00, you are in the kitchen.
+   +- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42

@@ -1,0 +1,31 @@
+scene 1 (client seed 201): replay {'live': 0, 'from_cache': 131, 'api_requests': 0}; calm asks {'live': 9, 'from_cache': 0, 'api_requests': 9}; stopped None
+  decisions after 09:45 in the replay: [('09:45', 'elena', 'model'), ('09:45', 'leo', 'model'), ('09:45', 'mara', 'model'), ('09:45', 'daniel', 'model'), ('09:48', 'leo', 'model'), ('09:48', 'elena', 'model'), ('09:48', 'mara', 'model'), ('09:48', 'daniel', 'model')]
+  how each minute was reached: {'10:00': 'after the quiet step at that minute (a trigger fired: False)', '10:30': 'inside a quiet jump from 10:00 to 11:15, its needs ticked at the minute (lines crossed: [])', '11:00': 'inside a quiet jump from 10:30 to 11:15, its needs ticked at the minute (lines crossed: [])'}
+  10:00: Daniel in kitchen (resting False); here {'elena': (False, True), 'leo': (False, True), 'mara': (False, True)}
+    elena: topic options ['tell_daniel_visit']; chose reassure_all (valid True); say 'We have survived this long by staying together, and we will get through today if we do not turn on each other.'
+    leo: topic options []; chose silent (valid True); say None
+    mara: topic options ['tell_daniel_visit']; chose accuse_daniel (valid True); say 'You went out there and came back with nothing, just like you always do when you mess everything up.'
+  10:30: Daniel in kitchen (resting False); here {'elena': (False, True), 'leo': (False, True), 'mara': (False, True)}
+    elena: topic options ['tell_daniel_visit']; chose reassure_all (valid True); say 'We have no food left and water is short, but we will not survive by turning on each other.'
+    leo: topic options []; chose silent (valid True); say None
+    mara: topic options ['tell_daniel_visit']; chose accuse_daniel (valid True); say 'You went out and came back with nothing, and you still have the nerve to lecture me.'
+  11:00: Daniel in kitchen (resting False); here {'elena': (False, True), 'leo': (False, True), 'mara': (False, True)}
+    elena: topic options ['tell_daniel_visit']; chose reassure_all (valid True); say "We are going to stay together and we will get through this day. Please, let's not fight."
+    leo: topic options ['tell_daniel_visit']; chose silent (valid True); say None
+    mara: topic options ['tell_daniel_visit']; chose accuse_daniel (valid True); say 'You went out there and came back with nothing, just like you always do.'
+scene 3 (client seed 202): replay {'live': 0, 'from_cache': 131, 'api_requests': 0}; calm asks {'live': 9, 'from_cache': 0, 'api_requests': 9}; stopped None
+  decisions after 09:45 in the replay: [('09:45', 'elena', 'model'), ('09:45', 'leo', 'model'), ('09:45', 'mara', 'model'), ('09:45', 'daniel', 'model'), ('09:48', 'elena', 'model'), ('09:48', 'mara', 'model'), ('09:48', 'daniel', 'model'), ('09:48', 'leo', 'model')]
+  how each minute was reached: {'10:00': 'after the quiet step at that minute (a trigger fired: False)', '10:30': 'inside a quiet jump from 10:00 to 11:15, its needs ticked at the minute (lines crossed: [])', '11:00': 'inside a quiet jump from 10:30 to 11:15, its needs ticked at the minute (lines crossed: [])'}
+  10:00: Daniel in kitchen (resting False); here {'elena': (False, True), 'leo': (False, True), 'mara': (False, True)}
+    elena: topic options ['tell_daniel_visit']; chose reassure_all (valid True); say 'We are going to stay right here together and we will get through this day safely.'
+    leo: topic options ['tell_daniel_visit']; chose accuse_daniel (valid True); say "Daniel, you're the one who sneaks out and makes things worse, so don't pretend you care about the rules."
+    mara: topic options []; chose accuse_daniel (valid True); say "You went out behind our backs and you still haven't explained why you took our food in the first place, Daniel."
+  10:30: Daniel in kitchen (resting False); here {'elena': (False, True), 'leo': (False, True), 'mara': (False, True)}
+    elena: topic options ['tell_daniel_visit']; chose reassure_all (valid True); say 'We are going to stay right here and look after each other, everything will be all right.'
+    leo: topic options ['tell_daniel_visit']; chose silent (valid True); say None
+    mara: topic options []; chose accuse_daniel (valid True); say "Daniel, you didn't help anyone last night, you just made things worse for all of us."
+  11:00: Daniel in kitchen (resting False); here {'elena': (False, True), 'leo': (False, True), 'mara': (False, True)}
+    elena: topic options ['tell_daniel_visit']; chose reassure_all (valid True); say 'We are going to stay right here together and we will get through this. No one is going out.'
+    leo: topic options ['tell_daniel_visit']; chose accuse_daniel (valid True); say "Daniel, you went out last night against everyone's word and brought back nothing. You always make the reckless choice."
+    mara: topic options ['tell_daniel_visit']; chose accuse_daniel (valid True); say "You went out behind our backs and still couldn't bring anything back for us, Daniel."
+live asks in all: 18

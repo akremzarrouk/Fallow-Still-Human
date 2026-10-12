@@ -1,0 +1,31 @@
+scene 1 (client seed 201): replay {'live': 0, 'from_cache': 131, 'api_requests': 0}; calm asks {'live': 9, 'from_cache': 0, 'api_requests': 9}; stopped None
+  decisions after 09:45 in the replay: [('09:45', 'elena', 'model'), ('09:45', 'leo', 'model'), ('09:45', 'mara', 'model'), ('09:45', 'daniel', 'model'), ('09:48', 'leo', 'model'), ('09:48', 'elena', 'model'), ('09:48', 'mara', 'model'), ('09:48', 'daniel', 'model')]
+  how each minute was reached: {'10:00': 'after the quiet step at that minute (a trigger fired: False)', '10:30': 'inside a quiet jump from 10:00 to 11:15, its needs ticked at the minute (lines crossed: [])', '11:00': 'inside a quiet jump from 10:30 to 11:15, its needs ticked at the minute (lines crossed: [])'}
+  10:00: Daniel in kitchen (resting False); here {'elena': (False, True), 'leo': (False, True), 'mara': (False, True)}
+    elena: topic options ['tell_daniel_visit']; chose reassure_all (valid True); say '[fake line 1]'
+    leo: topic options []; chose go_brothers_room (valid True); say None
+    mara: topic options ['tell_daniel_visit']; chose aside_elena (valid True); say None
+  10:30: Daniel in kitchen (resting False); here {'elena': (False, True), 'leo': (False, True), 'mara': (False, True)}
+    elena: topic options ['tell_daniel_visit']; chose say_other (valid True); say '[fake line 4]'
+    leo: topic options []; chose reassure_mara (valid True); say '[fake line 5]'
+    mara: topic options ['tell_daniel_visit']; chose say_other (valid True); say '[fake line 6]'
+  11:00: Daniel in kitchen (resting False); here {'elena': (False, True), 'leo': (False, True), 'mara': (False, True)}
+    elena: topic options ['tell_daniel_visit']; chose tell_daniel_visit (valid True); say '[fake line 7]'
+    leo: topic options ['tell_daniel_visit']; chose volunteer (valid True); say '[fake line 8]'
+    mara: topic options ['tell_daniel_visit']; chose confront_leo (valid True); say '[fake line 9]'
+scene 3 (client seed 202): replay {'live': 0, 'from_cache': 131, 'api_requests': 0}; calm asks {'live': 9, 'from_cache': 0, 'api_requests': 9}; stopped None
+  decisions after 09:45 in the replay: [('09:45', 'elena', 'model'), ('09:45', 'leo', 'model'), ('09:45', 'mara', 'model'), ('09:45', 'daniel', 'model'), ('09:48', 'elena', 'model'), ('09:48', 'mara', 'model'), ('09:48', 'daniel', 'model'), ('09:48', 'leo', 'model')]
+  how each minute was reached: {'10:00': 'after the quiet step at that minute (a trigger fired: False)', '10:30': 'inside a quiet jump from 10:00 to 11:15, its needs ticked at the minute (lines crossed: [])', '11:00': 'inside a quiet jump from 10:30 to 11:15, its needs ticked at the minute (lines crossed: [])'}
+  10:00: Daniel in kitchen (resting False); here {'elena': (False, True), 'leo': (False, True), 'mara': (False, True)}
+    elena: topic options ['tell_daniel_visit']; chose reassure_leo (valid True); say '[fake line 1]'
+    leo: topic options ['tell_daniel_visit']; chose deny (valid True); say '[fake line 2]'
+    mara: topic options []; chose silent (valid True); say None
+  10:30: Daniel in kitchen (resting False); here {'elena': (False, True), 'leo': (False, True), 'mara': (False, True)}
+    elena: topic options ['tell_daniel_visit']; chose reassure_all (valid True); say '[fake line 4]'
+    leo: topic options ['tell_daniel_visit']; chose send_mara (valid True); say '[fake line 5]'
+    mara: topic options []; chose silent (valid True); say None
+  11:00: Daniel in kitchen (resting False); here {'elena': (False, True), 'leo': (False, True), 'mara': (False, True)}
+    elena: topic options ['tell_daniel_visit']; chose reassure_daniel (valid True); say '[fake line 7]'
+    leo: topic options ['tell_daniel_visit']; chose reassure_all (valid True); say '[fake line 8]'
+    mara: topic options ['tell_daniel_visit']; chose confront_leo (valid True); say '[fake line 9]'
+live asks in all: 18
