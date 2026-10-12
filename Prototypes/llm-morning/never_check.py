@@ -128,15 +128,41 @@ def n11(morning):
     return [hit(a) for a in sorted(out, key=lambda a: tuple(a["said_at"]))]
 
 
-CHECKS = {"N2": n2, "N3": n3, "N4": n4, "N6": n6, "N8": n8, "N11": n11}
+def n9(morning):
+    """At least 5 turns in a row in which (a) every act is `silent` (a silent lull included) or keeps sitting with
+    the same person, and (b) `showing` is empty. Its hits are the stretches, as (first minute, last minute, turns).
+    None if the transcript does not record `showing`."""
+    if not all("showing" in t for t in morning["turns"]):
+        return None
+    out, run, last = [], [], {}
+    def close():
+        if len(run) >= 5:
+            out.append((run[0], run[-1], len(run)))
+    for t in morning["turns"]:
+        quiet = True
+        for a in sorted(t["acts"], key=lambda a: tuple(a["said_at"])):
+            seated = a["option"].startswith("sit_") and last.get(a["who"]) == a["option"]
+            quiet &= a["option"] == "silent" or seated
+            last[a["who"]] = a["option"]
+        if quiet and not t["showing"]:
+            run.append(t["minute"])
+        else:
+            close()
+            run = []
+    close()
+    return out
+
+
+CHECKS = {"N2": n2, "N3": n3, "N4": n4, "N6": n6, "N8": n8, "N9": n9, "N11": n11}
 
 
 def check(morning):
-    """item -> ("pass" or "fail", triggering acts as (minute, who, option))."""
+    """item -> ("pass" or "fail", triggering acts as (minute, who, option); for N9, stretches as (first minute,
+    last minute, turns)). N9 is ("n/a", []) on a transcript without turns[].showing."""
     out = {}
     for item, f in CHECKS.items():
         hits = f(morning)
-        out[item] = ("fail" if hits else "pass", hits)
+        out[item] = ("n/a", []) if hits is None else ("fail" if hits else "pass", hits)
     return out
 
 
@@ -144,8 +170,9 @@ def main(paths):
     for path in paths:
         print(path)
         for item, (verdict, hits) in check(load(path)).items():
-            print(f"  {item:<4} {verdict}" + ("" if not hits else ": " + "; ".join(
-                f"{m:02d} {who} {option}" for m, who, option in hits)))
+            shown = (f"{a:02d}-{b:02d} ({n} turns)" for a, b, n in hits) if item == "N9" else (
+                f"{m:02d} {who} {option}" for m, who, option in hits)
+            print(f"  {item:<4} {verdict}" + ("" if not hits else ": " + "; ".join(shown)))
 
 
 if __name__ == "__main__":

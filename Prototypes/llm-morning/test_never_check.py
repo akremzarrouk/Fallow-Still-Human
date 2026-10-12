@@ -210,5 +210,77 @@ class SyntheticTraces(unittest.TestCase):
         self.assertPasses(broken, "N11")
 
 
+# ---- N9: frozen silence (needs turns[].showing) ------------------------------------------------------------
+
+# Day 1 of the same three mornings, replayed from the cache on the code that records turns[].showing
+# (runs/n9_showing/replay_day1.py; investigations/never-check-run-2.md): with `showing` stripped, day1.turns
+# hashes equal design §2's.
+SHOWING_REPLAYS = {name: os.path.join(HERE, "runs", "n9_showing", os.path.basename(path))
+                   for name, path in REPLAYS.items()}
+# The silent stretches whose verdict the design rests on H's reading (§3, N9): printed, not asserted.
+STRETCHES = {"S2": (54, 72), "S3": (33, 51)}
+
+
+def quiet_turns(minutes, showing=None, acts_at=None):
+    """A morning with Elena's question at minute 0 and the given minutes all silent, each turn's showing
+    from `showing` (minute -> ids, default nobody); `acts_at` replaces a minute's acts."""
+    showing, acts_at = showing or {}, acts_at or {}
+    turns = [{"minute": 0, "rooms": {"kitchen": list(ALL)}, "acts": [OPENING], "showing": []}]
+    seq = 1
+    for m in minutes:
+        acts = acts_at.get(m)
+        if acts is None:
+            acts = []
+            for p in ALL:
+                seq += 1
+                acts.append(act(m, seq, p, "silent", mode="routine", suspects=None))
+        turns.append({"minute": m, "rooms": {"kitchen": list(ALL)}, "acts": acts, "showing": showing.get(m, [])})
+    return {"seed": 0, "scenario": "daniel_ate_it", "culprit": "daniel", "turns": turns}
+
+
+class FrozenSilence(unittest.TestCase):
+    def test_S1_N9_fails(self):
+        verdict, hits = never_check.check(never_check.load(SHOWING_REPLAYS["S1"]))["N9"]
+        self.assertEqual(verdict, "fail", hits)
+
+    def test_S2_S3_showing_across_the_silent_stretches(self):
+        """No verdict asserted: prints each turn of the stretch, its acts' options and whose feeling shows."""
+        for name, (first, last) in STRETCHES.items():
+            m = never_check.load(SHOWING_REPLAYS[name])
+            print(f"\n{name} minutes {first:02d}-{last:02d}:")
+            for t in m["turns"]:
+                if first <= t["minute"] <= last:
+                    self.assertIn("showing", t)
+                    acts = ", ".join(f"{a['who']} {a['option']}" + ("" if a["mode"] == "routine" else " (model)")
+                                     for a in t["acts"])
+                    print(f"  {t['minute']:02d} showing {t['showing']} | {acts}")
+
+    def test_five_silent_turns_with_no_face_showing_fail(self):
+        verdict, hits = never_check.check(quiet_turns([3, 6, 9, 12, 15]))["N9"]
+        self.assertEqual((verdict, hits), ("fail", [(3, 15, 5)]))
+
+    def test_a_face_that_shows_breaks_the_stretch(self):
+        m = quiet_turns([3, 6, 9, 12, 15], showing={9: ["mara"]})
+        self.assertEqual(never_check.check(m)["N9"], ("pass", []))
+
+    def test_keeping_seated_and_a_silent_lull_count_as_silence(self):
+        sit = [act(3, 2, "elena", "sit_mara")] + [act(3, 2 + i, p, "silent", mode="routine", suspects=None)
+                                                    for i, p in enumerate(["daniel", "leo", "mara"], 1)]
+        kept = [act(m, 10 + m, "elena", "sit_mara") for m in (6, 9, 12, 15, 18)]
+        acts_at = {3: sit}
+        for a in kept:
+            acts_at[a["minute"]] = [a] + [act(a["minute"], 50 + a["minute"] + i, p, "silent", mode="routine",
+                                              suspects=None) for i, p in enumerate(["daniel", "leo", "mara"])]
+        lull = dict(act(12, 99, "leo", "silent"), lull=3)
+        acts_at[12] = [a for a in acts_at[12] if a["who"] != "leo"] + [lull]
+        verdict, hits = never_check.check(quiet_turns([3, 6, 9, 12, 15, 18], acts_at=acts_at))["N9"]
+        # Minute 3 is Elena sitting down (not yet keeping seated); 6 to 18 are five quiet turns.
+        self.assertEqual((verdict, hits), ("fail", [(6, 18, 5)]))
+
+    def test_a_transcript_without_showing_is_not_decided(self):
+        verdict, hits = never_check.check(never_check.load(REPLAYS["S1"]))["N9"]
+        self.assertEqual((verdict, hits), ("n/a", []))
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,10 @@
+S1 seed 1: from cache 55, live 0, API 0
+  day1.turns sha256 stripped cf9f5f36c4 | runs/v18 cf9f5f36c4 | design §2 cf9f5f36c4 | MATCH
+  every turn has showing: True; other day1 keys equal to runs/v18: {'seed': True, 'scenario': True, 'culprit': True, 'final_rooms': True, 'final_state': True, 'convo_log': True, 'trip': True}
+S2 seed 2: from cache 53, live 0, API 0
+  day1.turns sha256 stripped db5de15235 | runs/v22 db5de15235 | design §2 db5de15235 | MATCH
+  every turn has showing: True; other day1 keys equal to runs/v22: {'seed': True, 'scenario': True, 'culprit': True, 'final_rooms': True, 'final_state': True, 'convo_log': True, 'trip': True}
+S3 seed 3: from cache 45, live 0, API 0
+  day1.turns sha256 stripped 36b4a4a0ff | runs/v20 36b4a4a0ff | design §2 36b4a4a0ff | MATCH
+  every turn has showing: True; other day1 keys equal to runs/v20: {'seed': True, 'scenario': True, 'culprit': True, 'final_rooms': True, 'final_state': True, 'convo_log': True, 'trip': True}
+ALL MATCH
