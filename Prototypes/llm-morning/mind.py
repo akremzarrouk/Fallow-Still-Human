@@ -81,6 +81,11 @@ def records(chron, pid, k):
         out.append(r)
         if fold:
             folds[fold] = r
+    # What pid was told on day k (reports/talk_design.md, A4): each belief, as a record of the event it ends on (the
+    # visit's end), stamped at the minute told, its text the claim with its source.
+    for b in getattr(chron, "beliefs", {}).get(pid, ()):
+        if b["k"] == k and b["about"]:
+            out.append({"id": b["about"][-1], "text": f"{clock(b['minute'])}: {b['claim']}", "n": 1, "at": b["minute"]})
     out.sort(key=lambda r: (r["at"] is None, r["at"] or 0))
     return [(r["id"], r["text"] + (f' Then {r["n"] - 1} more time{"s" if r["n"] > 2 else ""}, to {clock(r["to"])}; '
                                    f'last: "{r["last"]}"' if r["n"] > 1 else "")) for r in out]
@@ -199,7 +204,7 @@ def verb_at(toks, j):
 def matching(chron, pid, family, subject, can):
     """How many events of this family by `subject` (None: anyone) `pid` perceived, on any day."""
     known = chron.knows_culprit(pid)
-    seen = [e for e in chron.events if pid in e["witnesses"]]
+    seen = [e for e in chron.events if chron.knows(pid, e["id"])]        # perceived, or a belief's (A4)
 
     def by(e):
         return subject is None or e["actor"] == subject or subject in (e["members"] or [])
@@ -282,7 +287,7 @@ def check_memory(m, pid, shown, chron, carried, warnings=None):
         return "rejected: S1 more than one sentence"
     for i in ids:
         e = chron.event(i)
-        if i not in shown or e is None or pid not in e["witnesses"]:
+        if i not in shown or e is None or not chron.knows(pid, i):         # perceived, or a belief's (A4)
             return f"rejected: S2 {i}"
     toks = tokens(meaning)
     for i, w in enumerate(toks):

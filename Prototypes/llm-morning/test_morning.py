@@ -8179,5 +8179,299 @@ class TwoFixesTest(unittest.TestCase):
         self.assertIn("the evening's 8", q.log[-1]["why"])
 
 
+
+class TalkTest(unittest.TestCase):
+    """reports/talk_design.md, as amended by the user (A1-A4): the door visit as a topic (talk_visit,
+    tell_<names>_visit), its fading rules F1-F5, the claim built from the teller's own view, the belief store, the tell
+    event, the night mind's and block A's readers, and the T1 warning. Day-3 tests replay probe_after's scenes from
+    cache/probe_door2 to 09:42 (v16 seed 2, its visitor at 09:42); later asks are answered by PolicyFake."""
+    MODEL = QuietDayTest.MODEL
+    v16 = QuietDayTest.v16
+    setUp, tearDown, need = KnockTest.setUp, KnockTest.tearDown, KnockTest.need
+    END = 165               # 09:45: the visit ends (door_end) in scenes 1, 3 and 4
+    TELLERS = {1: "elena", 3: "leo", 4: "mara"}
+    CLAIMS = {          # reports/talk_design.md §2.2, word for word
+        1: "Elena told you that at 09:42 a woman knocked at the front door and asked for water; that Elena herself "
+           "told her to go away, and that Mara handed her about three litres of the stored water anyway.",
+        3: "Leo told you that at 09:42 a woman knocked at the front door and asked for water for her boy of six; that "
+           "Elena told her to go away, and that Mara handed her about three litres of the stored water anyway.",
+        4: "Mara told you that at 09:42 a woman of about forty-five knocked at the front door and asked for water for "
+           "her girl and boy of five; that Elena told her to go away."}
+    shared = None
+
+    @staticmethod
+    def topic_options(prompt):
+        return re.findall(r"^- ((?:talk|tell)_\w+):", prompt.split("Your options:")[-1], flags=re.M)
+
+    def probe(self):
+        spec_ = importlib.util.spec_from_file_location("probe_after_probe", os.path.join(HERE, "runs", "probe_after",
+                                                                                          "probe.py"))
+        probe = importlib.util.module_from_spec(spec_)
+        spec_.loader.exec_module(probe)
+        return probe
+
+    def scene(self, k, policy=None, stop=None, root=None):
+        """probe_after's scene k: v16 seed 2 to day 3, its visitor at 09:42, every ask to 09:42 from
+        cache/probe_door2/scene<k>.json and every later one by PolicyFake(policy); played to `stop` (a minute), or to
+        the day's end. Returns (m, oracle, chron, client)."""
+        probe = self.probe()
+        path = os.path.join(root or self.dirs.root, f"scene{k}.json")
+        shutil.copyfile(os.path.join(HERE, "cache", "probe_door2", f"scene{k}.json"), path)
+        client = PolicyFake(policy or (lambda who, minute, opts: None))
+        m, oracle, chron = probe.day3(path, client)
+        probe.visitor(m, next(v for v in probe.VISITORS if v["scene"] == k), probe.KNOCK)
+        if stop is None:
+            self.quiet.play(m)
+        else:
+            real = self.quiet.Quiet.hear_knock
+
+            class Stop(Exception):
+                pass
+
+            def hear_knock(q, minute, played):
+                if minute >= stop:
+                    raise Stop(minute)
+                return real(q, minute, played)
+            with mock.patch.object(self.quiet.Quiet, "hear_knock", hear_knock):
+                with self.assertRaises(Stop):
+                    self.quiet.play(m)
+        self.assertTrue(all(mm is None or mm >= self.END for mm, _ in client.asked),
+                        "the premise: every ask to 09:42 comes from the cache")
+        return m, oracle, chron, client
+
+    @staticmethod
+    def elena_tells(who, minute, opts):
+        """Daniel comes into the kitchen when he can; Elena tells him of the visit when it is offered."""
+        if who == "daniel" and "go_kitchen" in opts:
+            return "go_kitchen"
+        if who == "elena" and "tell_daniel_visit" in opts:
+            return "tell_daniel_visit"
+        return None
+
+    def told_day(self):
+        """Scene 1 played to the end of day 3 with elena_tells, then night 3, its night minds and day 4 set up: run
+        once for the class (in a folder of its own, removed at the end)."""
+        if TalkTest.shared is None:
+            root = tempfile.mkdtemp()
+            try:
+                m, oracle, chron, client = self.scene(1, self.elena_tells, root=root)
+                before = [(e["kind"], dict(e["witnesses"])) for e in m.quiet.door_events]
+                chron.add_day(m)
+                n3 = self.night.Night(m, oracle, number=3, house=chron.house_state()).run()
+                chron.add_night(n3)
+                nm = self.mind.NightMind(n3, chron, oracle)
+                mind_input = nm.prompt_for(m.people["daniel"])
+                nm.run()
+                d4 = self.night.next_day(m, n3, oracle, chronicle=chron)
+            finally:
+                shutil.rmtree(root, ignore_errors=True)
+            TalkTest.shared = dict(m=m, chron=chron, client=client, before=before, n3=n3, mind_input=mind_input, d4=d4)
+        return TalkTest.shared
+
+    # ---------- (a) nothing changes before a visit ends ----------
+    def test_a_v16_replays_with_0_requests_and_no_topic_option_appears_before_a_visit_ends(self):
+        """v16 as far as it replays (test_v16_through_night_2_is_unchanged, test_v16_seed_1_until_w5): seeds 2 and 3
+        through night 2 and mind 2; seed 1 through day 1, night 1 and mind 1 (its day 2 has the far street since W5)."""
+        real = gemini.Oracle.ask
+        for seed in (1, 2, 3):
+            prompts = []
+
+            def ask(o, system, prompt, schema=None, prompts=prompts):
+                prompts.append(prompt)
+                return real(o, system, prompt, schema)
+            with mock.patch.object(gemini.Oracle, "ask", ask):
+                if seed == 1:
+                    name = "daniel_ate_it-seed1"
+                    copy = os.path.join(self.dirs.root, f"{self.MODEL}-{name}.json")
+                    shutil.copyfile(os.path.join(V16_CACHE, f"{self.MODEL}-{name}.json"), copy)
+                    oracle = Oracle(Cache(copy), self.MODEL, 1, client=None, replay=True)    # a miss raises
+                    chron = self.chron.Chronicle(1, "daniel")
+                    day1 = Morning(oracle, 1)
+                    for t in range(day1.turns):
+                        day1.turn(t)
+                    day1.finish()
+                    chron.add_day(day1)
+                    n1 = self.night.Night(day1, oracle, number=1).run()
+                    chron.add_night(n1)
+                    self.mind.NightMind(n1, chron, oracle).run()
+                    self.assertEqual((oracle.live, oracle.api_requests), (0, 0))
+                    people = n1.people.values()
+                else:
+                    d = self.v16(seed)              # asserts 0 live asks and 0 client requests through night 2
+                    people = d.day3.people.values()
+            self.assertGreater(len(prompts), 50, seed)
+            self.assertEqual([x for x in prompts if self.topic_options(x)], [], seed)
+            for p in people:
+                self.assertEqual((getattr(p, "topics", None), getattr(p, "beliefs", None)), ({}, []), (seed, p.id))
+        # Scene 1: no topic option in any prompt before the visit ends at 09:45; from then, it is offered.
+        prompts = []
+
+        def ask(o, system, prompt, schema=None):
+            prompts.append(prompt)
+            return real(o, system, prompt, schema)
+        with mock.patch.object(gemini.Oracle, "ask", ask):
+            self.scene(1, self.elena_tells, stop=171)
+        day = [(now_minute(x), self.topic_options(x)) for x in prompts if now_minute(x) is not None]
+        self.assertEqual([(mm, o) for mm, o in day if mm < self.END and o], [])
+        self.assertTrue([(mm, o) for mm, o in day if mm >= self.END and o], [mm for mm, _ in day])
+
+    # ---------- (b) the fading rules ----------
+    def test_b_each_fading_rule_f1_to_f5(self):
+        T = self.need("topics")
+        m, *_ = self.scene(1, stop=168)
+        q, P = m.quiet, m.people
+        key = next(iter(P["elena"].topics))
+        opened = P["elena"].topics[key]["opened"]
+        self.assertEqual(opened, self.END)
+        for p in P.values():
+            q.end(p, 168, "test")
+            p.room = "kitchen"
+        self.assertEqual((T.TALK_WINDOW, T.COOLDOWN, T.PER_DAY, T.ROOM_QUIET), (360, 60, 2, 30))
+
+        def ids(pid, minute, others):
+            return [o.id for o in T.options(m, P[pid], [P[x] for x in others], minute)]
+        # F1: talk for 6 hours from the visit's end; tell all day, and the next day; nothing on the day after that.
+        self.assertEqual(ids("leo", opened + 357, ["elena", "mara"]), ["talk_visit"])
+        self.assertEqual(ids("leo", opened + 360, ["elena", "mara"]), [])
+        self.assertEqual(ids("leo", opened + 600, ["daniel"]), ["tell_daniel_visit"])
+        q.k += 1
+        try:
+            self.assertEqual(ids("leo", 100, ["daniel"]), ["tell_daniel_visit"])
+            self.assertEqual(ids("leo", 100, ["elena"]), [])
+            q.k += 1
+            self.assertEqual(ids("leo", 100, ["daniel"]), [])
+        finally:
+            q.k -= 2
+        # F2: after a choice, none of the topic's options for 60 minutes.
+        M = opened + 10
+        T.chose(m, P["leo"], key, M)
+        self.assertEqual(ids("leo", M + 57, ["daniel"]), [])
+        self.assertEqual(ids("leo", M + 60, ["daniel"]), ["tell_daniel_visit"])
+        # F3: at most 2 choices of one topic a day; another person is not held back.
+        T.chose(m, P["leo"], key, M + 60)
+        self.assertEqual(ids("leo", M + 120, ["daniel"]), [])
+        self.assertEqual(ids("leo", M + 300, ["elena"]), [])
+        self.assertEqual(ids("mara", M + 120, ["daniel"]), ["tell_daniel_visit"])
+        # F4: once anyone raises it in a room, talk is not offered there for 30 minutes; tell is not held back.
+        N = M + 200
+        T.chose(m, P["mara"], key, N)
+        self.assertEqual(ids("elena", N + 27, ["leo"]), [])
+        self.assertEqual(ids("elena", N + 27, ["daniel"]), ["tell_daniel_visit"])
+        self.assertEqual(ids("elena", N + 30, ["leo"]), ["talk_visit"])
+        P["elena"].room = "back_room"
+        self.assertEqual(ids("elena", N + 27, ["leo"]), ["talk_visit"])
+        P["elena"].room = "kitchen"
+        # F5: once the listener knows it, tell to them closes for everyone.
+        T.tell(m, P["elena"], ["daniel"], key, N + 40, "A woman came to the front door asking for water.")
+        self.assertEqual(ids("mara", N + 71, ["daniel"]), ["talk_visit"])
+        self.assertEqual(ids("mara", N + 71, ["daniel", "leo"]), ["talk_visit"])
+        self.assertEqual(len(P["daniel"].beliefs), 1)
+
+    # ---------- (c) the claims ----------
+    def test_c_the_claims_for_daniel_are_section_2_2s_and_hold_nothing_their_teller_did_not_perceive(self):
+        T = self.need("topics")
+        street = self.need("street")
+        for k in (1, 3, 4):
+            m, *_ = self.scene(k, stop=168)
+            sc = m.quiet.door_scenes[0]
+            teller = m.people[self.TELLERS[k]]
+            key = next(iter(teller.topics))
+            self.assertEqual(T.claim(teller.topics[key], teller.id, "daniel", m.day), self.CLAIMS[k], k)
+            # Every first-hand teller's claim: each thing in it, only if they perceived it.
+            hh = m.quiet.world.street["households"][sc["household"]]
+            kids = street.kids_words(hh) if street.has_child(hh) else None
+            for pid in ("elena", "leo", "mara"):
+                entry = m.people[pid].topics.get(key)
+                self.assertTrue(entry and entry["account"], (k, pid))
+                c = T.claim(entry, pid, "daniel", m.day)
+                heard = [x[1] for x in sc["heard_said"].get(pid, [])]
+                self.assertEqual(sc["who"] in c, pid in sc["saw"], (k, pid, c))
+                self.assertEqual(" for her " in c or " for his " in c, bool(kids) and any(kids in x for x in heard),
+                                 (k, pid, c))
+                self.assertEqual("asked for water" in c, any(x[2] for x in sc["heard_said"].get(pid, [])), (k, pid))
+                self.assertEqual("handed" in c, self.quiet.Quiet.give_seen(sc, pid) is not None, (k, pid, c))
+                self.assertEqual("to go away" in c, self.quiet.Quiet.refusal_seen(sc, pid) is not None, (k, pid, c))
+                self.assertTrue(c.startswith(f"{data.PEOPLE[pid]['name']} told you that "), c)
+                self.assertNotIn("Daniel", c)
+
+    # ---------- (d) the tell: a belief, and the witnesses unchanged ----------
+    def test_d_after_a_tell_the_door_events_witnesses_are_unchanged_and_the_listener_holds_the_claim(self):
+        T = self.need("topics")
+        r = self.told_day()
+        m, chron = r["m"], r["chron"]
+        dan, elena = m.people["daniel"], m.people["elena"]
+        self.assertEqual(len(dan.beliefs), 1, [t["minute"] for t in getattr(m, "tells", [])])
+        b = dan.beliefs[0]
+        key = next(iter(elena.topics))
+        self.assertEqual(b["claim"], T.claim(elena.topics[key], "elena", "daniel", m.day))
+        self.assertEqual(b["claim"], self.CLAIMS[1])
+        self.assertEqual((b["owner"], b["source"], b["how"]), ("daniel", "elena", "told"))
+        # The door events' witnesses: as they were at the visit's end, in the quiet log and in the chronicle.
+        self.assertEqual([(e["kind"], dict(e["witnesses"])) for e in m.quiet.door_events], r["before"])
+        door = [e for e in chron.events if e["scene"] == "D3" and e["kind"] in ("knock", "door_line", "door_refuse",
+                                                                                 "door_give", "door_end")]
+        self.assertEqual([e["witnesses"].get("daniel") for e in door],
+                         [None, None, "voices", "voices", None, None], [(e["id"], e["kind"]) for e in door])
+        self.assertNotIn("told", {how for e in chron.events for how in e["witnesses"].values()})
+        # The tell is an event of its own; the belief is about the door events Elena's account names.
+        tell = [e for e in chron.events if e["kind"] == "tell"]
+        self.assertEqual([(e["actor"], e["members"], e["minute"]) for e in tell], [("elena", ["daniel"], b["minute"])])
+        about = [chron.event(i)["kind"] for i in b["about"]]
+        self.assertEqual(about, ["door_refuse", "door_give", "door_end"])
+        self.assertEqual(chron.beliefs["daniel"], [b])
+
+    # ---------- (e) the night mind ----------
+    def test_e_the_listeners_night_mind_shows_the_belief_and_a_memory_citing_it_is_not_warned(self):
+        self.need("topics")
+        r = self.told_day()
+        m, chron = r["m"], r["chron"]
+        b = m.people["daniel"].beliefs[0]
+        prompt, shown = r["mind_input"]
+        end = b["about"][-1]
+        line = f"{data.clock(b['minute'])}: {b['claim']}"
+        self.assertEqual(shown.get(end), line)
+        self.assertIn(f"[{end}] {line}", prompt)
+        warnings = []
+        verdict = self.mind.check_memory({"ids": [end], "meaning": "Mara gave some of our stored water to a woman at "
+                                                                   "the front door."}, "daniel", shown, chron, [],
+                                         warnings)
+        self.assertEqual((verdict, warnings), ("kept", []))
+        # Only Daniel holds the belief: night 2's records do not show it, and day 3's shows it once, at its minute.
+        self.assertNotIn(end, dict(self.mind.records(chron, "daniel", 2)))
+        self.assertEqual([t for i, t in self.mind.records(chron, "daniel", 3) if i == end], [line])
+
+    # ---------- (f) block A ----------
+    def test_f_the_next_mornings_block_a_holds_the_yesterday_at_line(self):
+        self.need("topics")
+        r = self.told_day()
+        b = r["m"].people["daniel"].beliefs[0]
+        line = f"- Yesterday at {data.clock(b['minute'])}, {b['claim']}"
+        self.assertIn(line, r["d4"].blocks["daniel"]["A"])
+        self.assertFalse([x for x in r["d4"].blocks["elena"]["A"] if x.startswith("- Yesterday at ")])
+        self.assertNotIn(b["claim"], "\n".join(r["d4"].blocks["daniel"]["C"]))
+
+    # ---------- (g) T1 ----------
+    def test_g_t1_warns_when_a_tells_words_name_nothing_of_the_topic(self):
+        T = self.need("topics")
+        r = self.told_day()
+        m = r["m"]
+        tells = m.tells
+        entry = next(iter(m.people["elena"].topics.values()))
+        # The run's one tell: its record holds T1's verdict on its own words. (The fake's words, "Words of elena at
+        # <minute>.", name Elena, who acted at the door, so they name something of the topic.)
+        self.assertEqual([(t["teller"], t["listeners"], t["warnings"]) for t in tells],
+                         [("elena", ["daniel"], T.t1(entry, tells[0]["words"]))])
+        self.assertEqual(T.t1(entry, tells[0]["words"]), [])
+        # Words that name nothing of the visit: warned. Words that name it, or name an actor as the teller calls them
+        # (Mara calls Elena "Mom"): not.
+        self.assertEqual(T.t1(entry, "I am so tired, let us all sit down together."),
+                         ["T1 the words name nothing of the topic"])
+        self.assertEqual(T.t1(entry, "Words of nobody in particular."), ["T1 the words name nothing of the topic"])
+        mara = next(iter(m.people["mara"].topics.values()))
+        self.assertEqual(T.t1(mara, "Mom said no, but I could not just let her go."), [])
+        self.assertEqual(T.t1(entry, "A woman came to the front door asking for water."), [])
+        self.assertEqual(T.t1(entry, "Mara gave her some water, and I could not stop it."), [])
+        self.assertEqual(T.t1(entry, "We never gave her any water, Daniel."), ["T1 the words deny the outcome"])
+
 if __name__ == "__main__":
     unittest.main()

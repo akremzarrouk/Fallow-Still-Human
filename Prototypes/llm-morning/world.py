@@ -32,6 +32,7 @@ import random
 import re
 
 import data
+import topics
 from talk import SPEECH, TRIP_WHY, Conversations, Newness, act_of, aimed_at
 
 NAMES = {p: data.PEOPLE[p]["name"] for p in data.ORDER}
@@ -116,6 +117,8 @@ KIND_DONE = {   # what a run of one kind of act looks like, told to the person w
     "door_look": "looked through the gap in the boards", "door_call": "called out through the front door",       # W2a
     "door_open": "opened the front door", "door_give": "handed out water at the front door",
     "door_refuse": "told the person at the door to go away",
+    "talk": "talked about something that happened earlier",                                  # reports/talk_design.md
+    "tell": "told someone something they had missed",
 }
 DOOR_KINDS = ("door_look", "door_call", "door_open", "door_give", "door_refuse")
 
@@ -382,6 +385,11 @@ class Person:
         # W2a (reports/w2_design.md, §4.2): what they perceive of the front door now, written by the code (quiet.py):
         # {"lines", "options", "door", "opening", "give"}; None when nothing is there for them.
         self.door = None
+        # reports/talk_design.md (amended): the topics they know (topics.py: key -> their own account, or that they
+        # were told), when they chose one (key -> [(day k, minute)]), and their beliefs: what they were told, by whom.
+        self.topics = {}
+        self.topic_said = {}
+        self.beliefs = []
 
     def grudge(self, against):
         return self.grudges.setdefault(against, Grudge())
@@ -447,6 +455,10 @@ class Morning:
         self.voices_heard = {}
         self.blocks = {}            # day 2 on: person -> the memory blocks A, B and C (reports/days_design.md, §3)
         self.quiet = None           # day 3 on: the quiet layer (quiet.py), which plays the day to bedtime
+        self.now = None             # during a turn: its minute
+        self.topic_raised = {}      # (room, topic) -> the minute someone last raised it there (topics.py, F4)
+        self.tells = []             # every tell: who told whom, the claims, the words, T1's warnings (topics.py)
+        self.topic_line = None      # during a talk or tell act: its option's act (topic, referent, listeners)
         if day != 4:
             return                  # day 2's opening is set up by next_day
         for p in self.people.values():
@@ -576,6 +588,7 @@ class Morning:
                 opts.append(Option("ration_water", "say the water must be shared out by the cup from now on", True,
                                    kind="ration_water"))
             opts.append(Option("say_other", "say something else", True, kind="say"))
+            opts += topics.options(self, p, others, self.now)     # reports/talk_design.md: from day 3, a visit
             for q in others:
                 if q.activity["kind"] in ("searching", "walking"):
                     continue
@@ -1102,6 +1115,7 @@ class Morning:
                 "volunteer": "offered to go there tonight",
                 "object": "said you should not be the one to go" if target else "said nobody should go",
                 "back": "said you should be the one to go", "decline": "said they will not be the one to go",
+                "talk": "talked about something that happened earlier", "tell": "told someone something they had missed",
                 }.get(h["kind"], "spoke to everyone")
 
     def prompt_for(self, p, t, opts, lull=None, night=None, extra=None):
@@ -1184,6 +1198,8 @@ class Morning:
         morning += [f"tonight: {x}" for x in p.tonight]
         sure = "from today" if when == "today" and minute is None else when     # "from today" at night only
         pinned = [f"What you are sure of {sure}:"] + [f"- {x}" for x in p.sure]
+        # What they were told today (reports/talk_design.md, A4): each belief, from the store, on its day and night.
+        pinned += [f"- {data.clock(b['minute'])}: {b['claim']}" for b in p.beliefs if b["day"] == self.day]
         if p.said_lines:
             pinned += [f"Your own last words {when}:"] + [f"- {x}" for x in p.said_lines[-3:]]
         carry = self.carry.get(p.id, [])
@@ -1211,6 +1227,8 @@ class Morning:
             # which the trip block already counts once the trip concern has started.
             block += sum(len(x) + 1 for x in head + now if x.startswith("About water:") or x in W1_NOW)
             block += sum(len(x) + 1 for o, x in zip(opts, tail[1:]) if o.id in W1_OPTIONS)
+            # The topic options (reports/talk_design.md §5) sit outside the budget: they never push a memory out.
+            block += sum(len(x) + 1 for o, x in zip(opts, tail[1:]) if act_of(o.id)[0] in ("talk", "tell"))
             if not self.trip:
                 block += len(data.YARD[1]) - len(data.YARD[0])
         cut = False
@@ -1346,6 +1364,7 @@ class Morning:
 
     def turn(self, t):
         minute = t * data.MINUTES_PER_TURN
+        self.now = minute
         record = {"minute": minute, "decisions": [], "events": [], "convo": [], "guilt": [],
                   "grudges": []}
         self.trip_now = self.start_trip(minute)     # before anyone acts (reports/trip_design.md, §1)
@@ -1649,6 +1668,12 @@ class Morning:
                     else f"{p.name} speaks to the person on the step")
         elif kind == "door_refuse":
             gist = f"{p.name} tells the person at the front door to go away"
+        elif kind == "talk" and self.topic_line:            # reports/talk_design.md
+            gist = f"{p.name} talks about {self.topic_line['referent']}"
+        elif kind == "tell" and self.topic_line:
+            told = ["you" if listener is not None and x == listener.id else NAMES[x]
+                    for x in self.topic_line["listeners"]]
+            gist = f"{p.name} tells {data._and(told)} about {self.topic_line['referent']}"
         elif while_doing:
             gist = f"{p.name} says to {aimed or 'everyone'}, while {while_doing}"
         else:
@@ -1715,6 +1740,11 @@ class Morning:
         door_line = None
         if kind in DOOR_KINDS and self.quiet is not None:       # W2a: what the act does at the door (quiet.py)
             door_line = self.quiet.door_act(p, kind, minute, d.get("say"))
+        self.topic_line = opt.act if kind in ("talk", "tell") else None
+        if kind == "tell":                  # reports/talk_design.md: each listener gets a belief (topics.py, A3)
+            d["tell"] = topics.tell(self, p, opt.act["listeners"], opt.act["topic"], minute, d.get("say"))
+        elif kind == "talk":
+            topics.chose(self, p, opt.act["topic"], minute)
         words = d.get("say")
         if words:
             doing = {"door_look": "looking through the gap in the boards", "door_open": "unbarring the front door",
@@ -1736,7 +1766,8 @@ class Morning:
             text = self.line_text(p, spoken_kind, target if aimed else None, words, None,
                                   None if opt.speech else doing, opt.id)
             self.said.append({"minute": minute, "room": data.ROOMS[room], "who": p.name,
-                              "to": target.name if aimed else "everyone", "text": text,
+                              "to": (target.name if aimed else data._and([NAMES[x] for x in opt.act["listeners"]])
+                                     if kind == "tell" else "everyone"), "text": text,
                               "words": words, "new": new, "why": why})
             so_far.append(text)
             for q in seen:
@@ -1745,7 +1776,7 @@ class Morning:
                 self.perceive(q, minute, heard, trigger=(heard, new))
                 q.heard.append({"seq": self.seq, "who": p.id, "kind": spoken_kind,
                                 "target": target_id if aimed else None})
-                if aimed and q is target:
+                if (aimed and q is target) or (kind == "tell" and q.id in opt.act["listeners"]):
                     q.addressed = {"seq": self.seq, "who": p.id, "accused": kind == "accuse"}
                 if kind in ("ask", "accuse"):
                     q.heard_question = True
@@ -1813,7 +1844,11 @@ class Morning:
                     "door_refuse": "told the person at the door to go away",
                     # an act at the door with words (reports/door_memory_impl.md): what they did, not "said"
                     "door_look": "looked through the gap in the boards", "door_open": "unbarred the front door",
-                    "door_give": "handed water out at the front door"}.get(kind, "said")
+                    "door_give": "handed water out at the front door",
+                    # reports/talk_design.md: a topic, as the speaker perceived it
+                    "talk": f"talked about {opt.act.get('referent')}",
+                    "tell": (f"told {data._and([NAMES[x] for x in opt.act['listeners']])} about "
+                             f"{opt.act['referent']}" if kind == "tell" else None)}.get(kind, "said")
             if self.day != 4 and kind in TRIP_KINDS:
                 # Day 2's wording (reports/night_design.md, §6), for the speaker's own line.
                 mine = {"still_going": "said you still mean to go there tonight",

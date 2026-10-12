@@ -1067,6 +1067,9 @@ def carry_in_later(prev, n, p, short=False, minutes=True):
     for sc in (q.door_scenes if q is not None else []):
         if p.id in sc["summary"]:
             out.append(sc["summary"][p.id])
+    for b in p.beliefs:                     # reports/talk_design.md, A4: what they were told yesterday, and by whom
+        if b["day"] == prev.day:
+            out.append(f"Yesterday at {data.clock(b['minute'])}, {b['claim']}")
     plan = prev.heard_plan(p)                                                     # Y7
     if plan:            # said yesterday, about last night (reports/facts_and_evening.md, fix 4), and what came of it
         out.append("What was said yesterday about going out last night, where it was left: "

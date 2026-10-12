@@ -10,7 +10,8 @@ SPEECH = ("ask", "deny", "accuse", "confess", "reassure", "say",
           "propose_far", "volunteer_far",                           # and further along the street (stage B, W5)
           "confront",       # from the night on (reports/food_confront_impl.md)
           "save_water", "ration_water",     # the water's rule, from day 3 (reports/world_design.md, §4.2.3)
-          "door_call", "door_refuse")       # words at the front door (reports/w2_design.md, §4.2; W2a)
+          "door_call", "door_refuse",       # words at the front door (reports/w2_design.md, §4.2; W2a)
+          "talk", "tell")                   # a topic from earlier, and news for who missed it (talk_design.md)
 
 
 def act_of(option):
@@ -31,6 +32,10 @@ def act_of(option):
         return "object", None
     if option == "say_other":
         return "say", None
+    if option.startswith("talk_"):          # reports/talk_design.md: talk_<topic>, tell_<names>_<topic>
+        return "talk", None
+    if option.startswith("tell_"):
+        return "tell", None
     if option == "reassure_all":
         return "reassure", None
     if option == "keep_searching":
@@ -105,6 +110,11 @@ class Newness:
             new = ("door", kind) not in taken
             taken.add(("door", kind))
             return new, "an answer at the door" if new else "an answer at the door they had given before"
+        if kind in ("talk", "tell"):    # reports/talk_design.md: new the first time, per speaker and option
+            new = (kind, option) not in taken
+            taken.add((kind, option))
+            what = "something from earlier" if kind == "talk" else "news for someone who had missed it"
+            return new, what if new else what + " they had raised before"
         if kind in TRIP_WHY:
             stance = (kind, target)
             new = stance not in taken

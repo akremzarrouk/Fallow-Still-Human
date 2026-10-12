@@ -3,6 +3,28 @@
 Mode: design. No code, no tests, no live call. Paths are from `Prototypes/llm-morning/`; line numbers are at HEAD
 65fee7c.
 
+## Amended by the user
+
+These amendments, given by the user before implementation, override the text below wherever they differ. Each section
+they change is marked *Amended (A…)* under its heading.
+
+- **(A1) Topics in v1: the door visit only.** The topic table stays generic, so that food is one entry later.
+- **(A2) No Q8 in v1.** Telling happens only at asks that happen anyway.
+- **(A3) No `told` witness kind.**
+  - The listener's claim goes into a **per-person belief store**: owner, claim text, about (event ids), source (the
+    teller), minute, how (`"told"`).
+  - The chronicle's witnesses stay "who perceived it".
+  - The tell act is a chronicle event of its own, as designed.
+- **(A4) Who reads beliefs.**
+  - The night mind shows a person's beliefs of that day as records stamped at the minute told. S2 lets them be
+    cited, and S8 counts a belief's events as known to its owner.
+  - Block A carries each one next morning ("Yesterday at HH:MM, Elena told you that ...").
+  - Block C does not read beliefs in v1.
+  - Beliefs persist on the person, but are shown only on their day, that night and next morning.
+
+**Sections changed:** Summary of decisions (rows 1, 2, 5), §1.1, §1.3, §2.2, §2.3, §2.4, §2.5, §4, §5, §7.3, §7.4,
+§8, §9.
+
 ## Why
 
 `reports/talk_facts.md` found that no option carries a topic or is built from the past (§2). `say_other` was offered
@@ -46,6 +68,8 @@ doc exists elsewhere, items 2 and 3 should be checked against it before implemen
 
 ## Summary of decisions
 
+*Amended (A1-A4): row 1 is the visit only; row 2 has no `told` witness kind and no Q8, the claim is a belief; row 5 has no Q8.*
+
 | # | Decision |
 |---|---|
 | 1 | **Topics.** From day 3 on (quiet days only), two kinds of event of the same day can become a topic: a **visit to the front door** (one topic per visit) and **food taken from the shelf** (eat, a portion given, a share). A person is offered a topic only if they perceived it, or were told it. **At most 2 topic options in a prompt.** Fading is by code: per speaker, 60 minutes off after choosing it and **at most 2 choices of one topic a day**; per room, 30 minutes off after anyone raises it; talk closes 6 hours after the topic opens and at the end of its day. |
@@ -64,6 +88,8 @@ would skip the minutes a real family talks most (§7.1).
 ## 1. Bringing something up
 
 ### 1.1 Which events can become a topic
+
+*Amended (A1): only the `visit` row is built in v1. The table stays generic; `food` is a later entry.*
 
 **Decision.** Two kinds of event of the current day, from day 3 on (`m.quiet is not None`):
 
@@ -114,6 +140,8 @@ raises it. Their referent says only what they perceived ("the knocking at the fr
 first-hand account is required (§2.1).
 
 ### 1.3 How many in a prompt
+
+*Amended (A1): with the visit only, a prompt holds at most one topic option in v1. The cap of 2 and the ranking stay in the code for later topics.*
 
 **Decision.** At most **2** topic options in a prompt, and at most **one option per topic**:
 - `tell_<names>_<T>` if someone present lacks T;
@@ -182,6 +210,8 @@ A cap of 2 is unhuman. Hiding the option for 60 minutes also hides it at the mom
 
 ### 2.2 What the listener keeps: a claim, marked with its source
 
+*Amended (A3): the claim is kept in the listener's belief store, not as a sure line. The day's prompts show it among "What you are sure of" from the store.*
+
 **Decision.** The code builds the claim from **the teller's own view**, never from the world.
 
 For a visit, it is the teller's door summary (`quiet.py:834-871`, built for the teller as viewpoint), rendered for the
@@ -218,6 +248,8 @@ and shared out the food).
   and nothing in the code treats it as Daniel's own sight (§2.4).
 
 ### 2.3 Where it lands
+
+*Amended (A3, A4): no `told` witness kind; the events told of keep their witnesses. The claim is a belief (owner, claim, about, source, minute, how). The night mind's records, S2, S8 and block A read the belief store; block C does not. The site table below is not needed: no witness list changes.*
 
 | Where | What |
 |---|---|
@@ -261,6 +293,8 @@ and each site above uses the one in its row.
 
 ### 2.4 The listener's own view afterwards
 
+*Amended (A3): "their records say told" becomes: their night-mind record of it is the belief, stamped at the minute told.*
+
 **Decision.** Once told, the listener **knows** T:
 - they may `talk` about it (§1.2);
 - `tell` to them closes (F5);
@@ -277,6 +311,8 @@ woman with Daniel in the room, and Daniel hears those words as speech. Two diffe
 belong with v2's claims that can differ from views (§3).
 
 ### 2.5 Q8: the knower is asked when the one who missed it comes in
+
+*Amended (A2): not in v1.*
 
 **Decision.** A new quiet trigger, Q8, built like Q2 (`quiet.py`'s `arrive`):
 - **When:** q comes into a room, or wakes from rest in one, and an awake p there knows an open topic T first-hand
@@ -352,6 +388,8 @@ the day's telling has been seen to work.
 
 ## 4. Option labels
 
+*Amended (A1): only the visit's referents apply in v1.*
+
 **Decision.**
 
 | Option | id | Label (exact form) |
@@ -399,6 +437,8 @@ Never first.
 ---
 
 ## 5. Cost
+
+*Amended (A2, A3): no Q8, so no asks are added; the claim is shown from the belief store, at the same length.*
 
 **Prompt length**, from `estimate_tokens` (`world.py:135-137`; §10, command 4):
 
@@ -478,6 +518,8 @@ not played.
 
 ### 7.3 Predictions (frozen before any live call)
 
+*Amended (A3): in P1, "Daniel holds `told` on that door_end event" becomes "Daniel holds a belief whose about includes that door_end event".*
+
 Each counts over the run's records (`runs/talk_probe/scene<k>.json`, as `probe_after`'s). "Day 3" means from 09:45 to
 the end of the day's last turn. "Night 3" means its night asks and night minds.
 
@@ -495,6 +537,8 @@ touch claims about the stores (§3).
 
 ### 7.4 Live-ask budget
 
+*Amended (A2): no Q8 stretch; the expected count is 32 to 40 a scene, the caps are unchanged.*
+
 - **The quota:** 500 requests a day free (`CLAUDE.md:5-6`).
 - **The baseline:** `probe_after` made 95 live asks: 32, 31 and 32. Each scene is the rest of day 3, night 3's 4 asks
   and 4 night minds.
@@ -509,6 +553,8 @@ touch claims about the stores (§3).
 
 ## 8. Left for later
 
+*Amended (A1-A4): food as a topic, Q8, and beliefs in block C join this list.*
+
 | What | Why not v1 |
 |---|---|
 | Claims that differ from the view: partial tells, lies, two accounts | §3. Needs the claim to be its own state, apart from truth. |
@@ -521,6 +567,8 @@ touch claims about the stores (§3).
 | Other topic kinds (a quarrel, a fear, a rule made) | §1.1. They have options already, or reach everyone already. |
 
 ## 9. Decisions for the user
+
+*Amended: decisions 2 (Q8) and 4 (food) were taken by A2 and A1. The vision doc (5) is unchanged.*
 
 1. **The replay point (§7.1).** This design replays to 09:42 and goes live from 09:45. To replay to 09:51 as the brief
    says, topics would have to stay closed until the Q7 stretch ends, which I argue against.

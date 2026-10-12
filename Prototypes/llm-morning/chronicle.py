@@ -7,6 +7,7 @@ night minds' answers are kept beside it (`minds`), never among the events: they 
 facts, not facts.
 """
 import data
+import topics
 from talk import SPEECH, act_of
 from world import NAMES, day_index
 
@@ -60,6 +61,9 @@ def gist(e, pid):
         "door_look": "looking through the gap in the boards", "door_call": "calling out through the front door",
         "door_open": "opening the front door", "door_give": "handing out water at the front door",
         "door_refuse": "sending the person at the front door away"}
+    if kind in ("talk", "tell"):                            # reports/talk_design.md
+        phrase = topics.gist(e, pid)
+        return phrase if actor == pid else f"{NAMES[actor]} {phrase}"
     phrase = phrases.get(kind, kind)
     if kind in ("door", "gap", "street"):
         return phrase
@@ -101,6 +105,9 @@ class Chronicle:
                                   "why": "the scenario says who took the can, if anyone"}}
         self.by_id = {}
         self.minds = {}             # night number -> person -> the night mind's checked answer (mind.py)
+        # person -> their beliefs (reports/talk_design.md, A3): what they were told, kept on the person (world.Person)
+        # and indexed here once the day is over, with the ids of the events each is about. Not events.
+        self.beliefs = {}
         self.nights = []            # the Night objects, in order (not saved)
         self._house = None
 
@@ -110,6 +117,11 @@ class Chronicle:
 
     def perceived(self, pid):
         return [e for e in self.events if pid in e["witnesses"]]
+
+    def knows(self, pid, eid):
+        """pid perceived the event, or holds a belief about it (reports/talk_design.md, A4: S2 and S8 read this)."""
+        e = self.by_id.get(eid)
+        return e is not None and (pid in e["witnesses"] or any(eid in b["about"] for b in self.beliefs.get(pid, ())))
 
     def knows_culprit(self, pid):
         """Who took the can, as `pid` knows it: themselves, or a confession they perceived."""
@@ -126,7 +138,11 @@ class Chronicle:
         return self._house
 
     def to_json(self):
-        return {"scenes": self.scenes, "events": self.events, "fixed": self.fixed, "open": self.open}
+        out = {"scenes": self.scenes, "events": self.events, "fixed": self.fixed, "open": self.open}
+        if self.beliefs:                                    # reports/talk_design.md: only once someone was told
+            out["beliefs"] = {q: [{k: v for k, v in b.items() if k != "refs"} for b in bs]
+                              for q, bs in self.beliefs.items()}
+        return out
 
     # ---------- writing ----------
     def add(self, e):
@@ -209,6 +225,7 @@ class Chronicle:
                 texts.update({q: f"Voices from the {data.ROOMS[r]}." for q, r in heard.items() if q not in texts})
                 e = self.add({"id": new_id(), "scene": sid, "minute": turn["minute"], "kind": kind,
                               "option": a["option"], "actor": a["who"], "target": target, "words": a["words"],
+                              "members": topics.listeners_of(a["option"]) if kind == "tell" else None,
                               "room": a["room"], "witnesses": witnesses,
                               "text": text or f"{NAMES[a['who']]} {came}".strip(), "effects": effects, "views": texts})
                 if a["words"] and kind in SPEECH:
@@ -218,6 +235,15 @@ class Chronicle:
             if len(ids) > 1:
                 for i in ids:
                     self.by_id[i]["group"] = list(ids)
+        # The day's beliefs (reports/talk_design.md, A3): each gets the ids of the events it is about, now that they
+        # have ids, and is indexed by its owner.
+        for q in data.ORDER:
+            for b in m.people[q].beliefs:
+                if b["day"] == m.day and not b["about"]:
+                    b["about"] = [next(e["id"] for e in self.events if e["scene"] == scene and e["kind"] == kind
+                                       and e["actor"] == actor and e["minute"] == mm)
+                                  for kind, actor, mm, scene in b["refs"]]
+                    self.beliefs.setdefault(q, []).append(b)
 
     def add_night(self, n):
         """A finished night, after its gap: the gap, then every event of the night with the line each person

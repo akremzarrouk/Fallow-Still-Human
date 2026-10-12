@@ -19,6 +19,7 @@ import random
 
 import data
 import street as streetmod
+import topics
 import water
 from talk import act_of
 from world import NAMES, TRIP_KINDS, day_index, when_words
@@ -869,9 +870,14 @@ class Quiet:
             line = f"At {clock(sc['start'])} someone knocked at the front door: {did}."
             sc["summary"][q] = line
             p.sure.append(f"{clock(minute)}: {line[0].lower() + line[1:]}")
+            # The visit is a topic for them from now (reports/talk_design.md, A1), with their own account of it.
+            account = self.visit_account(sc, q, them, heard_ask, good, minute)
+            p.topics[f"visit:{sc['visit']}"] = topics.visit_entry(q, self.k, self.m.day, sc, account, minute)
         for q, how in sc["heard"].items():
             if q not in sc["summary"]:
                 sc["summary"][q] = f"At {clock(sc['start'])} you heard knocking at the front of the house."
+                self.m.people[q].topics[f"visit:{sc['visit']}"] = topics.visit_entry(q, self.k, self.m.day, sc, None,
+                                                                                      minute)
         self.seq += 1
         self.door_events.append({"minute": minute, "seq": self.seq, "kind": "door_end", "actor": None,
                                  "outcome": sc["outcome"],
@@ -880,6 +886,31 @@ class Quiet:
                                  "text": f"the visit ended: {sc['outcome']}"})
         self.door_scenes.append(sc)
         self.door = None
+
+    def visit_account(self, sc, q, them, heard_ask, good, end):
+        """q's own account of a visit that has ended (reports/talk_design.md §2.2), for the claims of their tells: the
+        visitor as q perceived them, whether q heard them ask and heard them name their children, and each act at the
+        door that q perceived, in the order done; refs: the events it is about (the acts, then the visit's end)."""
+        r, g = self.refusal_seen(sc, q), self.give_seen(sc, q)
+        seen = ([("door_refuse", *r)] if r else []) + ([("door_give", *g)] if g else [])      # (kind, index, by)
+        if len(seen) == 2 and seen[0][2] == seen[1][2]:     # one person refused, then gave: the give is what came of it
+            seen = [x for x in seen if x[0] == "door_give"]
+        seen.sort(key=lambda x: x[1])
+        acts = [(kind, by, sc["acts"][i][0]) for kind, i, by in seen]
+        hh = self.world.street["households"][sc["household"]]
+        heard = [x[1] for x in sc["heard_said"].get(q, [])]
+        kids = None
+        if streetmod.has_child(hh) and any(streetmod.kids_words(hh) in x for x in heard):
+            ks = sorted((x for x in hh["drawn"]["members"] if x["role"] == "child"), key=lambda x: (x["age"], x["id"]))
+            noun = {"f": "girl", "m": "boy"}
+            if len({x["age"] for x in ks}) == 1:
+                each = f"{data._and([noun[x['sex']] for x in ks])} of {streetmod.AGE_WORDS[ks[0]['age']]}"
+            else:
+                each = data._and([f"{noun[x['sex']]} of {streetmod.AGE_WORDS[x['age']]}" for x in ks])
+            kids = f"{'her' if sc['them'] == 'her' else 'his'} {each}"
+        scene = f"D{self.k}"
+        return {"who": them, "pronoun": sc["them"], "asked": heard_ask, "good": good, "kids": kids, "acts": acts,
+                "refs": [(kind, by, mm, scene) for kind, by, mm in acts] + [("door_end", None, end, scene)]}
 
     @staticmethod
     def refusal_seen(sc, q):

@@ -1,0 +1,94 @@
+test_a_v16_replays_with_0_requests_and_no_topic_option_appears_before_a_visit_ends (test_morning.TalkTest.test_a_v16_replays_with_0_requests_and_no_topic_option_appears_before_a_visit_ends)
+v16 as far as it replays (test_v16_through_night_2_is_unchanged, test_v16_seed_1_until_w5): seeds 2 and 3 ... FAIL
+test_b_each_fading_rule_f1_to_f5 (test_morning.TalkTest.test_b_each_fading_rule_f1_to_f5) ... FAIL
+test_c_the_claims_for_daniel_are_section_2_2s_and_hold_nothing_their_teller_did_not_perceive (test_morning.TalkTest.test_c_the_claims_for_daniel_are_section_2_2s_and_hold_nothing_their_teller_did_not_perceive) ... FAIL
+test_d_after_a_tell_the_door_events_witnesses_are_unchanged_and_the_listener_holds_the_claim (test_morning.TalkTest.test_d_after_a_tell_the_door_events_witnesses_are_unchanged_and_the_listener_holds_the_claim) ... FAIL
+test_e_the_listeners_night_mind_shows_the_belief_and_a_memory_citing_it_is_not_warned (test_morning.TalkTest.test_e_the_listeners_night_mind_shows_the_belief_and_a_memory_citing_it_is_not_warned) ... FAIL
+test_f_the_next_mornings_block_a_holds_the_yesterday_at_line (test_morning.TalkTest.test_f_the_next_mornings_block_a_holds_the_yesterday_at_line) ... FAIL
+test_g_t1_warns_when_a_tells_words_name_nothing_of_the_topic (test_morning.TalkTest.test_g_t1_warns_when_a_tells_words_name_nothing_of_the_topic) ... FAIL
+
+======================================================================
+FAIL: test_a_v16_replays_with_0_requests_and_no_topic_option_appears_before_a_visit_ends (test_morning.TalkTest.test_a_v16_replays_with_0_requests_and_no_topic_option_appears_before_a_visit_ends)
+v16 as far as it replays (test_v16_through_night_2_is_unchanged, test_v16_seed_1_until_w5): seeds 2 and 3
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8305, in test_a_v16_replays_with_0_requests_and_no_topic_option_appears_before_a_visit_ends
+    self.assertEqual((getattr(p, "topics", None), getattr(p, "beliefs", None)), ({}, []), (seed, p.id))
+AssertionError: Tuples differ: (None, None) != ({}, [])
+
+First differing element 0:
+None
+{}
+
+- (None, None)
++ ({}, []) : (1, 'daniel')
+
+======================================================================
+FAIL: test_b_each_fading_rule_f1_to_f5 (test_morning.TalkTest.test_b_each_fading_rule_f1_to_f5)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8320, in test_b_each_fading_rule_f1_to_f5
+    T = self.need("topics")
+        ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7053, in need
+    self.assertIsNotNone(importlib.util.find_spec(name), f"{name}.py is not built")
+AssertionError: unexpectedly None : topics.py is not built
+
+======================================================================
+FAIL: test_c_the_claims_for_daniel_are_section_2_2s_and_hold_nothing_their_teller_did_not_perceive (test_morning.TalkTest.test_c_the_claims_for_daniel_are_section_2_2s_and_hold_nothing_their_teller_did_not_perceive)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8372, in test_c_the_claims_for_daniel_are_section_2_2s_and_hold_nothing_their_teller_did_not_perceive
+    T = self.need("topics")
+        ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7053, in need
+    self.assertIsNotNone(importlib.util.find_spec(name), f"{name}.py is not built")
+AssertionError: unexpectedly None : topics.py is not built
+
+======================================================================
+FAIL: test_d_after_a_tell_the_door_events_witnesses_are_unchanged_and_the_listener_holds_the_claim (test_morning.TalkTest.test_d_after_a_tell_the_door_events_witnesses_are_unchanged_and_the_listener_holds_the_claim)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8399, in test_d_after_a_tell_the_door_events_witnesses_are_unchanged_and_the_listener_holds_the_claim
+    T = self.need("topics")
+        ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7053, in need
+    self.assertIsNotNone(importlib.util.find_spec(name), f"{name}.py is not built")
+AssertionError: unexpectedly None : topics.py is not built
+
+======================================================================
+FAIL: test_e_the_listeners_night_mind_shows_the_belief_and_a_memory_citing_it_is_not_warned (test_morning.TalkTest.test_e_the_listeners_night_mind_shows_the_belief_and_a_memory_citing_it_is_not_warned)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8425, in test_e_the_listeners_night_mind_shows_the_belief_and_a_memory_citing_it_is_not_warned
+    self.need("topics")
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7053, in need
+    self.assertIsNotNone(importlib.util.find_spec(name), f"{name}.py is not built")
+AssertionError: unexpectedly None : topics.py is not built
+
+======================================================================
+FAIL: test_f_the_next_mornings_block_a_holds_the_yesterday_at_line (test_morning.TalkTest.test_f_the_next_mornings_block_a_holds_the_yesterday_at_line)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8445, in test_f_the_next_mornings_block_a_holds_the_yesterday_at_line
+    self.need("topics")
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7053, in need
+    self.assertIsNotNone(importlib.util.find_spec(name), f"{name}.py is not built")
+AssertionError: unexpectedly None : topics.py is not built
+
+======================================================================
+FAIL: test_g_t1_warns_when_a_tells_words_name_nothing_of_the_topic (test_morning.TalkTest.test_g_t1_warns_when_a_tells_words_name_nothing_of_the_topic)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8455, in test_g_t1_warns_when_a_tells_words_name_nothing_of_the_topic
+    T = self.need("topics")
+        ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 7053, in need
+    self.assertIsNotNone(importlib.util.find_spec(name), f"{name}.py is not built")
+AssertionError: unexpectedly None : topics.py is not built
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.121s
+
+FAILED (failures=7)
+exit 1
