@@ -1472,9 +1472,6 @@ class Morning:
             p.hunger = min(1.0, p.hunger + 0.004 * data.MINUTES_PER_TURN * p.sheet["hunger_rate"])
         record["portions"] = self.portions
         self.log.append(record)
-        # Whose feeling shows at the end of the turn, all acts applied (recorded only; for the N9 check,
-        # design/never-checker-design.md).
-        tturn["showing"] = [q.id for q in self.people.values() if self.shown(q, t)]
         self.transcript["turns"].append(tturn)
 
     def ask_model(self, p, t, opts, d, extra=None):

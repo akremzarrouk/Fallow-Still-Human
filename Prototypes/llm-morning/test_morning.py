@@ -976,19 +976,10 @@ def frozen(version, module):
     return loaded
 
 
-def without_showing(transcript):
-    """A transcript as JSON would hold it, without the `showing` key that every turn has since the N9 check
-    (design/never-checker-design.md): recorded only, it changes no act and no minute."""
-    tr = json.loads(json.dumps(transcript))
-    for turn in tr["turns"]:
-        turn.pop("showing", None)
-    return tr
-
-
 def without_lull(transcript):
-    """A transcript as JSON would hold it, without the `lull` key that every act has since v9,
-    the `trip_moment` key that every act has since v11 and the `showing` key that every turn has since N9."""
-    tr = without_showing(transcript)
+    """A transcript as JSON would hold it, without the `lull` key that every act has since v9
+    and the `trip_moment` key that every act has since v11."""
+    tr = json.loads(json.dumps(transcript))
     for turn in tr["turns"]:
         for a in turn["acts"]:
             a.pop("lull", None)
@@ -2422,7 +2413,7 @@ class NightTest(unittest.TestCase):
             day1, oracle = self.v11_day1(seed)
             text = render(day1, seed, V6_MODEL, f"python morning.py --seed {seed}")
             self.assertEqual(text.encode("utf-8"), read(os.path.join(V11_RUNS, name + ".md"), "rb"), seed)
-            self.assertEqual(without_showing(day1.transcript),
+            self.assertEqual(json.loads(json.dumps(day1.transcript)),
                              json.loads(read(os.path.join(V11_RUNS, name + ".transcript.json"))), seed)
             self.assertEqual((oracle.from_cache, oracle.api_requests), (served, 0), seed)
             rec = Recorder(oracle)
@@ -3757,7 +3748,7 @@ class DaysTest(unittest.TestCase):
             chron.add_day(day1)
             text = render(day1, seed, V6_MODEL, f"python morning.py --seed {seed}")
             self.assertEqual(text.encode("utf-8"), read(os.path.join(V11_RUNS, name + ".md"), "rb"), seed)
-            self.assertEqual(without_showing(day1.transcript),
+            self.assertEqual(json.loads(json.dumps(day1.transcript)),
                              json.loads(read(os.path.join(V11_RUNS, name + ".transcript.json"))), seed)
             self.assertEqual((oracle.from_cache, oracle.api_requests), (served, 0), seed)
             self.assertTrue(chron.events and all(e["scene"] == "D1" for e in chron.events), seed)
