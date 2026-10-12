@@ -1,0 +1,19 @@
+plan sha256 now:   b70eab2e6c2624a9b0803b72c72a67b96b2086b63d9548d50ab868a1c32a6dd9 *reports/talk_probe_plan.md
+probe sha256 now:  05d092792557281b00a4356ae115b9510eec3f0eae88a9f7ea93d26c56f58208 *runs/talk_probe/probe.py
+reader sha256 now: ce5d612a747a45a4d07326ea55355ebfa1b159266abd69bb4c897e71ab8e6222 *runs/talk_probe/read_talk.py
+plan copy equal:   yes
+git diff --stat: []
+git diff --cached --stat: []
+git status --short:
+?? cache/n9_cause/
+?? cache/talk_probe/
+?? reports/talk_probe_plan.md
+?? runs/n9_cause/
+?? runs/talk_probe/
+?? runs/v6/daniel_ate_it-seed1.replay.md
+?? runs/v6/daniel_ate_it-seed2.replay.md
+?? runs/v6/daniel_ate_it-seed3.replay.md
+?? ../../investigations/
+HEAD: 095931a22c78b831a8ff439594cfc9ceeb8ac549
+key search (grep -rlF over the repository, but .venv, __pycache__, .git, Library, node_modules): 0 files
+ledger: 96 [('scene1', 101, 'done', None, 0, 32), ('scene3', 103, 'done', None, 32, 64), ('scene4', 104, 'done', None, 64, 96)]

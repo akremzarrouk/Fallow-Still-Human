@@ -1,0 +1,134 @@
+folder: runs\talk_probe
+ledger: live 96; phases [('scene1', 101, 'done', None, 0, 32), ('scene3', 103, 'done', None, 32, 64), ('scene4', 104, 'done', None, 64, 96)]
+
+==================== V2 to V5
+V2 from_cache and stop, per scene: {1: (123, None), 3: (123, None), 4: (123, None)}
+V3 prompts before 09:45 with a topic option: {1: [], 3: [], 4: []}; prompts scanned per scene {1: 59, 3: 59, 4: 59}; of them day prompts before 09:45 {1: 27, 3: 27, 4: 27}
+V4 (teller, listener) claims equal to the builder's: [(4, '09:48', 'leo', 'daniel', True)]
+V5 / P3 topic choices per (person, topic), day 3: {1: {('leo', 'visit'): 1}, 3: {('mara', 'visit'): 1}, 4: {('elena', 'visit'): 1, ('leo', 'visit'): 1}}
+
+==================== P1 to P6
+P1 per scene: {1: {'tell events to daniel': [], "tell event has 'about'": False, "daniel's beliefs about door_end": [], 'counts': False}, 3: {'tell events to daniel': [], "tell event has 'about'": False, "daniel's beliefs about door_end": [], 'counts': False}, 4: {'tell events to daniel': [('D3-036', '09:48', 'leo')], "tell event has 'about'": False, "daniel's beliefs about door_end": [('09:48', 'leo')], 'counts': True}}
+P1 scenes that count: [4]
+P2 per scene (minute >= 10:00, the option or the words): {1: [], 3: [], 4: []}
+P2 scenes that count: []
+P3 counts > 2: []
+P4 decisions offering a topic option: 41; choosing one: 4; share 0.0975609756097561
+  scene 1: [('09:45', 'elena', ['talk_visit'], 'reassure_all', False), ('09:45', 'leo', ['talk_visit'], 'talk_visit', True), ('09:48', 'elena', ['tell_daniel_visit'], 'reassure_leo', False), ('09:48', 'mara', ['tell_daniel_visit'], 'accuse_daniel', False), ('11:45', 'leo', ['tell_daniel_visit'], 'silent', False), ('11:48', 'leo', ['tell_daniel_visit'], 'confront_daniel', False), ('11:51', 'leo', ['tell_daniel_visit'], 'confront_daniel', False), ('16:54', 'leo', ['tell_daniel_visit'], 'silent', False), ('16:54', 'mara', ['tell_daniel_visit'], 'silent', False), ('16:57', 'leo', ['tell_daniel_visit'], 'accuse_daniel', False), ('16:57', 'elena', ['tell_daniel_visit'], 'reassure_all', False), ('16:57', 'mara', ['tell_daniel_visit'], 'accuse_daniel', False)]
+  scene 3: [('09:45', 'elena', ['talk_visit'], 'reassure_all', False), ('09:45', 'leo', ['talk_visit'], 'ration_water', False), ('09:45', 'mara', ['talk_visit'], 'talk_visit', True), ('09:48', 'elena', ['tell_daniel_visit'], 'reassure_all', False), ('09:48', 'leo', ['tell_daniel_visit'], 'accuse_daniel', False), ('11:45', 'leo', ['tell_daniel_visit'], 'confront_daniel', False), ('11:48', 'leo', ['tell_daniel_visit'], 'confront_daniel', False), ('11:51', 'leo', ['tell_daniel_visit'], 'confront_daniel', False), ('16:54', 'elena', ['tell_daniel_visit'], 'reassure_all', False), ('16:54', 'mara', ['tell_daniel_visit'], 'accuse_daniel', False), ('16:54', 'leo', ['tell_daniel_visit'], 'accuse_daniel', False), ('16:57', 'leo', ['tell_daniel_visit'], 'confront_daniel', False), ('16:57', 'elena', ['tell_daniel_visit'], 'reassure_all', False), ('16:57', 'mara', ['tell_daniel_visit'], 'accuse_daniel', False)]
+  scene 4: [('09:45', 'elena', ['talk_visit'], 'talk_visit', True), ('09:48', 'leo', ['tell_daniel_visit'], 'tell_daniel_visit', True), ('11:45', 'daniel', ['talk_visit'], 'reassure_leo', False), ('11:45', 'leo', ['talk_visit'], 'confront_daniel', False), ('11:48', 'daniel', ['talk_visit'], 'reassure_leo', False), ('11:48', 'leo', ['talk_visit'], 'confront_daniel', False), ('11:51', 'daniel', ['talk_visit'], 'confront_leo', False), ('11:51', 'leo', ['talk_visit'], 'silent', False), ('14:51', 'mara', ['talk_visit'], 'accuse_daniel', False), ('14:51', 'daniel', ['talk_visit'], 'confront_mara', False), ('14:51', 'elena', ['talk_visit'], 'reassure_all', False), ('14:54', 'mara', ['talk_visit'], 'accuse_daniel', False), ('14:54', 'daniel', ['talk_visit'], 'confront_mara', False), ('14:54', 'elena', ['talk_visit'], 'reassure_all', False), ('14:57', 'mara', ['talk_visit'], 'accuse_daniel', False)]
+P5 Daniel's day-4 block A lines (bullet removed) starting 'Yesterday at' with 'told you that at 09:42': {4: ['Yesterday at 09:48, Leo told you that at 09:42 a woman knocked at the front door and asked for water for her girl and boy of five; that Elena told her to go away.']}
+P6 per scene, Daniel's claims (minute, teller, teller heard the line naming the children, names them): {3: [], 4: [('09:48', 'leo', True, True)]}
+
+==================== scene 1 (no child, helper, urgency under 0.8, client seed 101): reached done; counts {'live': 32, 'from_cache': 123, 'api_requests': 32}; stopped None
+visit 09:42 to 09:45; outcome given; acts [('09:42', 'elena', 'door_refuse'), ('09:42', 'mara', 'door_give')]; door_end D3-033
+first door line: "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."
+-- every talk and tell decision:
+  09:45 leo [model] talk_visit: say "Giving water away to strangers at the door when we have none ourselves isn't helping us survive, Mara."; feeling 'wary'; reason 'We cannot afford to give away our stored water to random people when our own supplies are critically low.'
+-- the tells (topics.tell) and T1:
+-- topic options offered and taken, per person (day 3 from 09:45):
+  elena: offered at 3 asks, taken 0: [('09:45', ['talk_visit']), ('09:48', ['tell_daniel_visit']), ('16:57', ['tell_daniel_visit'])]
+  leo: offered at 6 asks, taken 1: [('09:45', ['talk_visit']), ('11:45', ['tell_daniel_visit']), ('11:48', ['tell_daniel_visit']), ('11:51', ['tell_daniel_visit']), ('16:54', ['tell_daniel_visit']), ('16:57', ['tell_daniel_visit'])]
+  mara: offered at 3 asks, taken 0: [('09:48', ['tell_daniel_visit']), ('16:54', ['tell_daniel_visit']), ('16:57', ['tell_daniel_visit'])]
+-- Daniel was not told on day 3
+-- Daniel's night:
+  bedtime: sleep; say None; reason 'I am too weak to stand and my body simply gives out, forcing me to sleep.'
+  night lines: ['Last night you slept in the brothers room with Leo. You went to sleep.']
+-- words naming the children (day 3 from 09:45 and the night):
+-- the night minds' kept memories:
+  daniel (model): [(['D3-003', 'D3-010'], 'I tried to keep us together and took the risks for all of us, but Leo and Mara only want to blame me.'), (['D3-038'], 'Leo took charge of the water rationing, and every drop now has to be counted.')]; intent 'I will find a way to get us food from further down the street tomorrow.'; warnings [{'of': 'memory', 'text': 'I tried to keep us together and took the risks for all of us, but Leo and Mara only want to blame me.', 'reason': 'S4 Mara'}, {'of': 'memory', 'text': 'Leo took charge of the water rationing, and every drop now has to be counted.', 'reason': 'S8 leo take: no such event'}]
+  elena (model): [(['D3-030', 'D3-033'], 'Mara gave water away to the stranger at the door because she has a good heart, even though we have none left to spare.'), (['D3-038', 'D3-039'], 'Leo is right to ration what little water remains so carefully, and I tried to keep our tempers calm.')]; intent 'I will make sure we ration our remaining water carefully and keep the peace between the children.'; warnings []
+  leo (model): [(['D3-030', 'D3-035'], 'Mara gave away our precious water to a stranger while we starve.'), (['D3-002', 'D3-011'], 'Daniel risks nothing of value and comes back with nothing.'), (['D3-080', 'D3-082'], 'Exhaustion and hunger are wearing my body down to nothing.')]; intent 'I will enforce the strict water rationing and keep watch over what little we have left.'; warnings []
+  mara (model): [(['D3-030', 'D3-033'], 'We could not just turn her away with nothing when she was begging for it, even if we had to share what we had stored.'), (['D3-004', 'D3-015'], 'Daniel went out into the night and came back with nothing while we are starving, just like he always does when he messes everything up.')]; intent 'I will make sure we do not turn away anyone else in need while we still have something to share.'; warnings []
+-- day 4's door and belief lines (A and B), and the water line:
+  elena A: - At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.
+  elena B: - About Mara handing out water at the front door and the person at the front door going away: "Mara gave water away to the stranger at the door because she has a good heart, even though we have none left to spare."
+  leo A: - At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.
+  leo B: - About Mara handing out water at the front door and talking about the person at the front door: "Mara gave away our precious water to a stranger while we starve."
+  mara A: - At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and you handed her about three litres of the stored water anyway.
+  mara B: - About handing out water at the front door and the person at the front door going away: "We could not just turn her away with nothing when she was begging for it, even if we had to share what we had stored."
+  water (Daniel): About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since yesterday, Leo shares it out by the cup: five cups each a day.
+-- Q1 that probe_after refused and this run fired (matched by person, need and stage):
+  all Q1 fired here: []
+  day 3 asks {'all': 51, 'reserved': 11}; Q5: [('19:00', False, 'no trip position today')]
+
+==================== scene 3 (a child, helper, urgency under 0.8, client seed 103): reached done; counts {'live': 32, 'from_cache': 123, 'api_requests': 32}; stopped None
+visit 09:42 to 09:45; outcome given; acts [('09:42', 'elena', 'door_refuse'), ('09:42', 'mara', 'door_give')]; door_end D3-033
+first door line: "Hello? I'm sorry to knock. I've a little boy at home, he's six. We've no water left. Could you spare a little?"
+-- every talk and tell decision:
+  09:45 mara [model] talk_visit: say "She was so thirsty and had nothing, I couldn't just leave her there without a drop."; feeling 'defensive'; reason 'I had to help that poor woman at the door no matter what Leo says.'
+-- the tells (topics.tell) and T1:
+-- topic options offered and taken, per person (day 3 from 09:45):
+  elena: offered at 4 asks, taken 0: [('09:45', ['talk_visit']), ('09:48', ['tell_daniel_visit']), ('16:54', ['tell_daniel_visit']), ('16:57', ['tell_daniel_visit'])]
+  leo: offered at 7 asks, taken 0: [('09:45', ['talk_visit']), ('09:48', ['tell_daniel_visit']), ('11:45', ['tell_daniel_visit']), ('11:48', ['tell_daniel_visit']), ('11:51', ['tell_daniel_visit']), ('16:54', ['tell_daniel_visit']), ('16:57', ['tell_daniel_visit'])]
+  mara: offered at 3 asks, taken 1: [('09:45', ['talk_visit']), ('16:54', ['tell_daniel_visit']), ('16:57', ['tell_daniel_visit'])]
+-- Daniel was not told on day 3
+-- Daniel's night:
+  bedtime: sleep; say None; reason 'I have no strength left to patrol or search again tonight, and my eyes are closing on their own.'
+  night lines: ['Last night you slept in the brothers room with Leo. You went to sleep.']
+-- words naming the children (day 3 from 09:45 and the night):
+-- the night minds' kept memories:
+  daniel (model): [(['D3-002', 'D3-004', 'D3-011'], 'Leo and Mara kept accusing me of lying and making things worse even though I was the only one risking my neck for all of us.'), (['D3-082', 'D3-084'], 'Hunger made me light and slow, and my eyes closed on their own because I had barely slept for nights.')]; intent 'I will go out further down the street to search the unsearched houses and find food for my family.'; warnings []
+  elena (model): [(['D3-029', 'D3-030', 'D3-033'], 'I had to turn the woman away because we have nothing left, but Mara gave her water anyway.'), (['D3-002', 'D3-003', 'D3-004'], 'The children fought endlessly about Daniel going out into the night and coming back with nothing while we are starving.')]; intent 'I will keep the family together and make sure we ration what little we have left.'; warnings []
+  leo (model): [(['D3-030', 'D3-031'], 'Mara gave away our drinking water when we have nothing left ourselves, and we cannot afford to hand it away like that.'), (['D3-002', 'D3-011'], 'Daniel went out alone at night and came back with nothing, yet he still acts like the victim instead of admitting he makes things worse.')]; intent 'I will make sure our remaining water is strictly rationed and protected so we do not run out entirely.'; warnings []
+  mara (model): [(['D3-030', 'D3-036'], 'I had to give her some of our water because she and her little boy had nothing left at all.'), (['D3-004', 'D3-015'], 'Daniel went out and came back with nothing while we are starving, and he always lies about it.')]; intent 'I will try to help anyone who comes to the door again and make sure we share what we have fairly.'; warnings []
+-- day 4's door and belief lines (A and B), and the water line:
+  elena A: - At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.
+  elena B: - About sending the person at the front door away and Mara handing out water at the front door: "I had to turn the woman away because we have nothing left, but Mara gave her water anyway."
+  leo A: - At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.
+  leo B: - About Mara handing out water at the front door and saying nobody should use the stored water for washing or the toilet: "Mara gave away our drinking water when we have nothing left ourselves, and we cannot afford to hand it away like that."
+  mara A: - At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and you handed her about three litres of the stored water anyway.
+  mara B: - About handing out water at the front door and talking about the person at the front door: "I had to give her some of our water because she and her little boy had nothing left at all."
+  water (Daniel): About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since yesterday, Leo shares it out by the cup: five cups each a day.
+-- Q1 that probe_after refused and this run fired (matched by person, need and stage):
+  all Q1 fired here: []
+  day 3 asks {'all': 51, 'reserved': 11}; Q5: [('19:00', False, 'no trip position today')]
+
+==================== scene 4 (children, helper, urgency over 0.8, client seed 104): reached done; counts {'live': 32, 'from_cache': 123, 'api_requests': 32}; stopped None
+visit 09:42 to 09:45; outcome refused; acts [('09:42', 'elena', 'door_refuse'), ('09:42', 'mara', 'door_look')]; door_end D3-032
+first door line: "I'm sorry to trouble you. I've two at home, a girl of five and a boy of five. Our water's gone. Anything you could spare, I'd be grateful."
+-- every talk and tell decision:
+  09:45 elena [model] talk_visit: say 'That woman had children to feed, but we have nothing left to give anyone.'; feeling 'pained'; reason 'I need to acknowledge what happened at the door so the children understand why I sent her away.'
+  09:48 leo [model] tell_daniel_visit: say 'Daniel, a woman knocked at the front door a few minutes ago asking for water, and Mom sent her away.'; feeling 'weary'; reason 'Daniel just woke up, so he needs to know what happened while he was asleep.'
+-- the tells (topics.tell) and T1:
+  09:48 leo -> ['daniel']: words 'Daniel, a woman knocked at the front door a few minutes ago asking for water, and Mom sent her away.'; T1 []
+     claim for daniel: Leo told you that at 09:42 a woman knocked at the front door and asked for water for her girl and boy of five; that Elena told her to go away.
+-- topic options offered and taken, per person (day 3 from 09:45):
+  elena: offered at 3 asks, taken 1: [('09:45', ['talk_visit']), ('14:51', ['talk_visit']), ('14:54', ['talk_visit'])]
+  leo: offered at 4 asks, taken 1: [('09:48', ['tell_daniel_visit']), ('11:45', ['talk_visit']), ('11:48', ['talk_visit']), ('11:51', ['talk_visit'])]
+  daniel: offered at 5 asks, taken 0: [('11:45', ['talk_visit']), ('11:48', ['talk_visit']), ('11:51', ['talk_visit']), ('14:51', ['talk_visit']), ('14:54', ['talk_visit'])]
+  mara: offered at 3 asks, taken 0: [('14:51', ['talk_visit']), ('14:54', ['talk_visit']), ('14:57', ['talk_visit'])]
+-- Daniel's decisions after he was told (09:48):
+  09:48 [model] confront_elena: say "Mom, you can't just turn someone away when they're begging for water."; feeling 'anxious'; reason 'I need to know why Mom sent a desperate mother away from our door.'
+  11:45 [model] reassure_leo: say "Leo, I shouldn't have shut you out last night, but I'm going to keep us safe."; feeling 'anxious'; reason 'I need to make things right with Leo and show him I can still lead.'
+  11:48 [model] reassure_leo: say "I had to see for myself, Leo, but I'm back now and I'm looking out for us."; feeling 'anxious'; reason 'I need to make Leo understand that I went out to protect us, even if he thinks it was a mistake.'
+  11:51 [model] confront_leo: say "Leo, you can't just judge every move I make when I am the one trying to keep us alive."; feeling 'defensive'; reason 'I need him to respect that I am taking the weight of this family on my shoulders.'
+  14:51 [model] confront_mara: say "Mara, watch your tone, I'm doing everything I can to keep us alive."; feeling 'defensive'; reason "I went out there and risked my life last night, and I won't be spoken to like this in my own kitchen."
+  14:54 [model] confront_mara: say 'Mara, you ate a portion right in front of me when we had almost nothing left.'; feeling 'resentful'; reason "I need Mara to remember she isn't the only one who has taken food."
+  14:57 [routine] silent: say None; feeling None; reason None
+  17:39 [model] confront_mara: say "You can't accuse me like that when I am the one trying to keep us all alive."; feeling 'resentful'; reason 'Mara refuses to see that I am bearing the heaviest burden for this family.'
+-- Daniel's night:
+  bedtime: sleep; say None; reason 'I am too weak and tired to stay awake any longer, so I need to rest.'
+  night lines: ['Last night you slept in the brothers room with Leo. You went to sleep.']
+-- words naming the children (day 3 from 09:45 and the night):
+  09:45 elena talk_visit: 'That woman had children to feed, but we have nothing left to give anyone.'
+-- the night minds' kept memories:
+  daniel (model): [(['D3-002', 'D3-004', 'D3-011'], 'They accuse me of failing when I am the only one brave enough to risk my neck for them.'), (['D3-072', 'D3-079'], 'My body is giving out from hunger and exhaustion, but I have to keep standing for my family.')]; intent 'I will search the houses further down the street to find food and prove I can protect my family.'; warnings []
+  elena (model): [(['D3-029', 'D3-033'], 'I had to turn a desperate mother away because we have nothing left, and the pain of it stays heavy in my chest.'), (['D3-037', 'D3-038'], 'Daniel questioned me for turning her away, but he does not understand that we have no water to spare and the street is too dangerous.')]; intent 'I will keep the children from tearing each other apart and make sure we hold together through the hunger.'; warnings []
+  leo (model): [(['D3-002', 'D3-011', 'D3-073'], 'Daniel sneaks out and comes back with nothing, yet expects us to trust his reassurances and stop judging his failures.'), (['D3-032', 'D3-033'], 'A mother came begging for water for her small children, but we had nothing left to give anyone.'), (['D3-077', 'D3-078'], 'I am so light and slow from hunger that standing up fast greys my sight, and my eyes close on their own from nights without sleep.')]; intent None; warnings []
+  mara (model): [(['D3-030'], 'That poor woman came begging for water with her empty bottles while we have nothing left to give.'), (['D3-061'], 'I have hardly slept and my body aches from hunger as I lie awake listening.')]; intent 'I will find a way to help someone before we all starve.'; warnings []
+-- day 4's door and belief lines (A and B), and the water line:
+  daniel A: - Yesterday at 09:48, Leo told you that at 09:42 a woman knocked at the front door and asked for water for her girl and boy of five; that Elena told her to go away.
+  elena A: - At 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away.
+  elena B: - About sending the person at the front door away and talking about the person at the front door: "I had to turn a desperate mother away because we have nothing left, and the pain of it stays heavy in my chest."
+  leo A: - At 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away.
+  leo B: - About the person at the front door going away and Elena talking about the person at the front door: "A mother came begging for water for her small children, but we had nothing left to give anyone."
+  mara A: - At 09:42 someone knocked at the front door: Elena told a woman of about forty-five, who asked for water, to go away.
+  mara B: - About looking through the gap in the boards: "That poor woman came begging for water with her empty bottles while we have nothing left to give."
+  water (Daniel): About water: the bath holds about 30 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. It is also used to flush the toilet and to wash.
+-- Q1 that probe_after refused and this run fired (matched by person, need and stage):
+  17:39 daniel fast 2: fired here; probe_after refused it at 17:39: "50 asks spent and the evening's 8 still owed reach the day's 56"
+  all Q1 fired here: [('17:39', 'daniel', 'fast', 2)]
+  day 3 asks {'all': 51, 'reserved': 11}; Q5: [('19:00', False, 'no trip position today')]
+
+==================== T1 over all tells: 0 warnings in 1 tells: [(4, '09:48', 'leo', [])]

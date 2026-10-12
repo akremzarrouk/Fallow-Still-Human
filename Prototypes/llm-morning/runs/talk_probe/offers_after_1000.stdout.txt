@@ -1,0 +1,4 @@
+scene 1: 8 [(285, 'leo'), (288, 'leo'), (291, 'leo'), (594, 'leo'), (594, 'mara'), (597, 'leo'), (597, 'elena'), (597, 'mara')]
+scene 3: 9 [(285, 'leo'), (288, 'leo'), (291, 'leo'), (594, 'elena'), (594, 'mara'), (594, 'leo'), (597, 'leo'), (597, 'elena'), (597, 'mara')]
+scene 4: 13 [(285, 'daniel'), (285, 'leo'), (288, 'daniel'), (288, 'leo'), (291, 'daniel'), (291, 'leo'), (471, 'mara'), (471, 'daniel'), (471, 'elena'), (474, 'mara'), (474, 'daniel'), (474, 'elena'), (477, 'mara')]
+total 30

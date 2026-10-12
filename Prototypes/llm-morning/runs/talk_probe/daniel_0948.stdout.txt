@@ -1,0 +1,13 @@
+Daniel's asks at 09:48: 1
+  | - You came back in by the front door before dawn.
+  | - 09:48: Leo told you that at 09:42 a woman knocked at the front door and asked for water for her girl and boy of five; that Elena told her to go away.
+  | Said and done in the kitchen this turn, before you, in order:
+  | 1. Leo tells Daniel about the woman at the front door at 09:42: "Daniel, a woman knocked at the front door a few minutes ago asking for water, and Mom sent her away."
+  answer: {
+  "option": "confront_elena",
+  "say": "Mom, you can't just turn someone away when they're begging for water.",
+  "feeling": "anxious",
+  "reason": "I need to know why Mom sent a desperate mother away from our door.",
+  "suspects": "nobody",
+  "angry_at": "Elena"
+}
