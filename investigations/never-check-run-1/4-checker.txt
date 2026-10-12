@@ -1,0 +1,21 @@
+runs/v18/daniel_ate_it-seed1.transcript.json
+  N2   pass
+  N3   pass
+  N4   pass
+  N6   pass
+  N8   pass
+  N11  pass
+runs/v22/daniel_ate_it-seed2.transcript.json
+  N2   pass
+  N3   pass
+  N4   pass
+  N6   pass
+  N8   pass
+  N11  fail: 03 elena reassure_all; 06 elena reassure_all; 12 elena reassure_all; 30 elena reassure_all
+runs/v20/daniel_ate_it-seed3.transcript.json
+  N2   pass
+  N3   pass
+  N4   pass
+  N6   pass
+  N8   pass
+  N11  fail: 00 daniel deny; 03 daniel deny; 06 daniel deny; 09 mara ask_who; 18 daniel deny; 21 mara ask_who; 21 daniel deny; 24 mara ask_who; 33 daniel deny; 54 mara ask_who

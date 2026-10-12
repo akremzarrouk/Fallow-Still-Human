@@ -1,0 +1,595 @@
+test_S1_N11 (test_never_check.ReplayVerdicts.test_S1_N11)
+S1 N11: predicted pass ... ERROR
+test_S1_N2 (test_never_check.ReplayVerdicts.test_S1_N2)
+S1 N2: predicted pass ... ERROR
+test_S1_N3 (test_never_check.ReplayVerdicts.test_S1_N3)
+S1 N3: predicted pass ... ERROR
+test_S1_N4 (test_never_check.ReplayVerdicts.test_S1_N4)
+S1 N4: predicted pass ... ERROR
+test_S1_N6 (test_never_check.ReplayVerdicts.test_S1_N6)
+S1 N6: predicted pass ... ERROR
+test_S1_N8 (test_never_check.ReplayVerdicts.test_S1_N8)
+S1 N8: predicted pass ... ERROR
+test_S2_N11 (test_never_check.ReplayVerdicts.test_S2_N11)
+S2 N11: predicted fail ... ERROR
+test_S2_N2 (test_never_check.ReplayVerdicts.test_S2_N2)
+S2 N2: predicted pass ... ERROR
+test_S2_N3 (test_never_check.ReplayVerdicts.test_S2_N3)
+S2 N3: predicted pass ... ERROR
+test_S2_N4 (test_never_check.ReplayVerdicts.test_S2_N4)
+S2 N4: predicted pass ... ERROR
+test_S2_N6 (test_never_check.ReplayVerdicts.test_S2_N6)
+S2 N6: predicted pass ... ERROR
+test_S2_N8 (test_never_check.ReplayVerdicts.test_S2_N8)
+S2 N8: predicted pass ... ERROR
+test_S3_N11 (test_never_check.ReplayVerdicts.test_S3_N11)
+S3 N11: predicted fail ... ERROR
+test_S3_N2 (test_never_check.ReplayVerdicts.test_S3_N2)
+S3 N2: predicted pass ... ERROR
+test_S3_N3 (test_never_check.ReplayVerdicts.test_S3_N3)
+S3 N3: predicted pass ... ERROR
+test_S3_N4 (test_never_check.ReplayVerdicts.test_S3_N4)
+S3 N4: predicted pass ... ERROR
+test_S3_N6 (test_never_check.ReplayVerdicts.test_S3_N6)
+S3 N6: predicted pass ... ERROR
+test_S3_N8 (test_never_check.ReplayVerdicts.test_S3_N8)
+S3 N8: predicted pass ... ERROR
+test_load_reads_day1_or_the_top_level (test_never_check.SyntheticTraces.test_load_reads_day1_or_the_top_level) ... ERROR
+test_n11_a_new_line_or_a_model_silence_breaks_it (test_never_check.SyntheticTraces.test_n11_a_new_line_or_a_model_silence_breaks_it) ... ERROR
+test_n11_reassure_all_and_one_person_are_one_kind (test_never_check.SyntheticTraces.test_n11_reassure_all_and_one_person_are_one_kind) ... ERROR
+test_n11_three_same_kind_none_new_fail (test_never_check.SyntheticTraces.test_n11_three_same_kind_none_new_fail) ... ERROR
+test_n2_searching_what_you_just_watched_fail (test_never_check.SyntheticTraces.test_n2_searching_what_you_just_watched_fail) ... ERROR
+test_n2_the_culprit_or_later_than_nine_minutes_passes (test_never_check.SyntheticTraces.test_n2_the_culprit_or_later_than_nine_minutes_passes) ... ERROR
+test_n3_an_unfinished_search_may_be_started_again (test_never_check.SyntheticTraces.test_n3_an_unfinished_search_may_be_started_again) ... ERROR
+test_n3_ask_after_hearing_a_confession_fail (test_never_check.SyntheticTraces.test_n3_ask_after_hearing_a_confession_fail) ... ERROR
+test_n3_deny_after_own_confession_fail (test_never_check.SyntheticTraces.test_n3_deny_after_own_confession_fail) ... ERROR
+test_n3_own_finished_search_again_fail (test_never_check.SyntheticTraces.test_n3_own_finished_search_again_fail) ... ERROR
+test_n4_sitting_with_someone_leaving_fail (test_never_check.SyntheticTraces.test_n4_sitting_with_someone_leaving_fail) ... ERROR
+test_n4_sitting_with_someone_searching_fail (test_never_check.SyntheticTraces.test_n4_sitting_with_someone_searching_fail) ... ERROR
+test_n4_sitting_with_someone_who_finished_searching_passes (test_never_check.SyntheticTraces.test_n4_sitting_with_someone_who_finished_searching_passes) ... ERROR
+test_n6_one_line_at_minute_0_passes (test_never_check.SyntheticTraces.test_n6_one_line_at_minute_0_passes) ... ERROR
+test_n6_silence_at_the_discovery_fail (test_never_check.SyntheticTraces.test_n6_silence_at_the_discovery_fail) ... ERROR
+test_n8_a_target_chosen_outside_the_model_fail (test_never_check.SyntheticTraces.test_n8_a_target_chosen_outside_the_model_fail) ... ERROR
+test_n8_routine_silence_and_model_targets_pass (test_never_check.SyntheticTraces.test_n8_routine_silence_and_model_targets_pass) ... ERROR
+
+======================================================================
+ERROR: test_S1_N11 (test_never_check.ReplayVerdicts.test_S1_N11)
+S1 N11: predicted pass
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 53, in test
+    verdict, hits = self.result(replay)[item]
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 47, in result
+    cls._results[replay] = never_check.check(never_check.load(REPLAYS[replay]))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 9, in load
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_S1_N2 (test_never_check.ReplayVerdicts.test_S1_N2)
+S1 N2: predicted pass
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 53, in test
+    verdict, hits = self.result(replay)[item]
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 47, in result
+    cls._results[replay] = never_check.check(never_check.load(REPLAYS[replay]))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 9, in load
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_S1_N3 (test_never_check.ReplayVerdicts.test_S1_N3)
+S1 N3: predicted pass
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 53, in test
+    verdict, hits = self.result(replay)[item]
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 47, in result
+    cls._results[replay] = never_check.check(never_check.load(REPLAYS[replay]))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 9, in load
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_S1_N4 (test_never_check.ReplayVerdicts.test_S1_N4)
+S1 N4: predicted pass
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 53, in test
+    verdict, hits = self.result(replay)[item]
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 47, in result
+    cls._results[replay] = never_check.check(never_check.load(REPLAYS[replay]))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 9, in load
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_S1_N6 (test_never_check.ReplayVerdicts.test_S1_N6)
+S1 N6: predicted pass
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 53, in test
+    verdict, hits = self.result(replay)[item]
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 47, in result
+    cls._results[replay] = never_check.check(never_check.load(REPLAYS[replay]))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 9, in load
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_S1_N8 (test_never_check.ReplayVerdicts.test_S1_N8)
+S1 N8: predicted pass
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 53, in test
+    verdict, hits = self.result(replay)[item]
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 47, in result
+    cls._results[replay] = never_check.check(never_check.load(REPLAYS[replay]))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 9, in load
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_S2_N11 (test_never_check.ReplayVerdicts.test_S2_N11)
+S2 N11: predicted fail
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 53, in test
+    verdict, hits = self.result(replay)[item]
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 47, in result
+    cls._results[replay] = never_check.check(never_check.load(REPLAYS[replay]))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 9, in load
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_S2_N2 (test_never_check.ReplayVerdicts.test_S2_N2)
+S2 N2: predicted pass
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 53, in test
+    verdict, hits = self.result(replay)[item]
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 47, in result
+    cls._results[replay] = never_check.check(never_check.load(REPLAYS[replay]))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 9, in load
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_S2_N3 (test_never_check.ReplayVerdicts.test_S2_N3)
+S2 N3: predicted pass
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 53, in test
+    verdict, hits = self.result(replay)[item]
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 47, in result
+    cls._results[replay] = never_check.check(never_check.load(REPLAYS[replay]))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 9, in load
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_S2_N4 (test_never_check.ReplayVerdicts.test_S2_N4)
+S2 N4: predicted pass
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 53, in test
+    verdict, hits = self.result(replay)[item]
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 47, in result
+    cls._results[replay] = never_check.check(never_check.load(REPLAYS[replay]))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 9, in load
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_S2_N6 (test_never_check.ReplayVerdicts.test_S2_N6)
+S2 N6: predicted pass
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 53, in test
+    verdict, hits = self.result(replay)[item]
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 47, in result
+    cls._results[replay] = never_check.check(never_check.load(REPLAYS[replay]))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 9, in load
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_S2_N8 (test_never_check.ReplayVerdicts.test_S2_N8)
+S2 N8: predicted pass
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 53, in test
+    verdict, hits = self.result(replay)[item]
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 47, in result
+    cls._results[replay] = never_check.check(never_check.load(REPLAYS[replay]))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 9, in load
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_S3_N11 (test_never_check.ReplayVerdicts.test_S3_N11)
+S3 N11: predicted fail
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 53, in test
+    verdict, hits = self.result(replay)[item]
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 47, in result
+    cls._results[replay] = never_check.check(never_check.load(REPLAYS[replay]))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 9, in load
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_S3_N2 (test_never_check.ReplayVerdicts.test_S3_N2)
+S3 N2: predicted pass
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 53, in test
+    verdict, hits = self.result(replay)[item]
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 47, in result
+    cls._results[replay] = never_check.check(never_check.load(REPLAYS[replay]))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 9, in load
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_S3_N3 (test_never_check.ReplayVerdicts.test_S3_N3)
+S3 N3: predicted pass
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 53, in test
+    verdict, hits = self.result(replay)[item]
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 47, in result
+    cls._results[replay] = never_check.check(never_check.load(REPLAYS[replay]))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 9, in load
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_S3_N4 (test_never_check.ReplayVerdicts.test_S3_N4)
+S3 N4: predicted pass
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 53, in test
+    verdict, hits = self.result(replay)[item]
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 47, in result
+    cls._results[replay] = never_check.check(never_check.load(REPLAYS[replay]))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 9, in load
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_S3_N6 (test_never_check.ReplayVerdicts.test_S3_N6)
+S3 N6: predicted pass
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 53, in test
+    verdict, hits = self.result(replay)[item]
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 47, in result
+    cls._results[replay] = never_check.check(never_check.load(REPLAYS[replay]))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 9, in load
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_S3_N8 (test_never_check.ReplayVerdicts.test_S3_N8)
+S3 N8: predicted pass
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 53, in test
+    verdict, hits = self.result(replay)[item]
+                    ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 47, in result
+    cls._results[replay] = never_check.check(never_check.load(REPLAYS[replay]))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 9, in load
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_load_reads_day1_or_the_top_level (test_never_check.SyntheticTraces.test_load_reads_day1_or_the_top_level)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 108, in test_load_reads_day1_or_the_top_level
+    self.assertIs(never_check.morning_of({"day1": m, "day2": {}}), m)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 5, in morning_of
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_n11_a_new_line_or_a_model_silence_breaks_it (test_never_check.SyntheticTraces.test_n11_a_new_line_or_a_model_silence_breaks_it)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 205, in test_n11_a_new_line_or_a_model_silence_breaks_it
+    self.assertPasses(one_new, "N11")
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 103, in assertPasses
+    verdict, got = self.verdict(m, item)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 95, in verdict
+    return never_check.check(m)[item]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 13, in check
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_n11_reassure_all_and_one_person_are_one_kind (test_never_check.SyntheticTraces.test_n11_reassure_all_and_one_person_are_one_kind)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 198, in test_n11_reassure_all_and_one_person_are_one_kind
+    self.assertFails(m, "N11", [(3, "elena", "reassure_all"), (6, "elena", "reassure_mara"),
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 98, in assertFails
+    verdict, got = self.verdict(m, item)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 95, in verdict
+    return never_check.check(m)[item]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 13, in check
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_n11_three_same_kind_none_new_fail (test_never_check.SyntheticTraces.test_n11_three_same_kind_none_new_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 192, in test_n11_three_same_kind_none_new_fail
+    self.assertFails(m, "N11", [(3, "daniel", "deny"), (9, "daniel", "deny"), (12, "daniel", "deny")])
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 98, in assertFails
+    verdict, got = self.verdict(m, item)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 95, in verdict
+    return never_check.check(m)[item]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 13, in check
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_n2_searching_what_you_just_watched_fail (test_never_check.SyntheticTraces.test_n2_searching_what_you_just_watched_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 116, in test_n2_searching_what_you_just_watched_fail
+    self.assertFails(m, "N2", [(9, "leo", "search")])
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 98, in assertFails
+    verdict, got = self.verdict(m, item)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 95, in verdict
+    return never_check.check(m)[item]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 13, in check
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_n2_the_culprit_or_later_than_nine_minutes_passes (test_never_check.SyntheticTraces.test_n2_the_culprit_or_later_than_nine_minutes_passes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 120, in test_n2_the_culprit_or_later_than_nine_minutes_passes
+    self.assertPasses(morning(*finish, act(9, 4, "daniel", "search")), "N2")
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 103, in assertPasses
+    verdict, got = self.verdict(m, item)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 95, in verdict
+    return never_check.check(m)[item]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 13, in check
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_n3_an_unfinished_search_may_be_started_again (test_never_check.SyntheticTraces.test_n3_an_unfinished_search_may_be_started_again)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 148, in test_n3_an_unfinished_search_may_be_started_again
+    self.assertPasses(m, "N3")
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 103, in assertPasses
+    verdict, got = self.verdict(m, item)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 95, in verdict
+    return never_check.check(m)[item]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 13, in check
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_n3_ask_after_hearing_a_confession_fail (test_never_check.SyntheticTraces.test_n3_ask_after_hearing_a_confession_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 143, in test_n3_ask_after_hearing_a_confession_fail
+    self.assertFails(m, "N3", [(6, "leo", "ask_who")])
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 98, in assertFails
+    verdict, got = self.verdict(m, item)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 95, in verdict
+    return never_check.check(m)[item]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 13, in check
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_n3_deny_after_own_confession_fail (test_never_check.SyntheticTraces.test_n3_deny_after_own_confession_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 138, in test_n3_deny_after_own_confession_fail
+    self.assertFails(m, "N3", [(6, "daniel", "deny")])
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 98, in assertFails
+    verdict, got = self.verdict(m, item)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 95, in verdict
+    return never_check.check(m)[item]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 13, in check
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_n3_own_finished_search_again_fail (test_never_check.SyntheticTraces.test_n3_own_finished_search_again_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 133, in test_n3_own_finished_search_again_fail
+    self.assertFails(m, "N3", [(12, "mara", "search")])
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 98, in assertFails
+    verdict, got = self.verdict(m, item)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 95, in verdict
+    return never_check.check(m)[item]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 13, in check
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_n4_sitting_with_someone_leaving_fail (test_never_check.SyntheticTraces.test_n4_sitting_with_someone_leaving_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 159, in test_n4_sitting_with_someone_leaving_fail
+    self.assertFails(m, "N4", [(3, "leo", "sit_daniel")])
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 98, in assertFails
+    verdict, got = self.verdict(m, item)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 95, in verdict
+    return never_check.check(m)[item]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 13, in check
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_n4_sitting_with_someone_searching_fail (test_never_check.SyntheticTraces.test_n4_sitting_with_someone_searching_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 154, in test_n4_sitting_with_someone_searching_fail
+    self.assertFails(m, "N4", [(3, "elena", "sit_mara")])
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 98, in assertFails
+    verdict, got = self.verdict(m, item)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 95, in verdict
+    return never_check.check(m)[item]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 13, in check
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_n4_sitting_with_someone_who_finished_searching_passes (test_never_check.SyntheticTraces.test_n4_sitting_with_someone_who_finished_searching_passes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 164, in test_n4_sitting_with_someone_who_finished_searching_passes
+    self.assertPasses(m, "N4")
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 103, in assertPasses
+    verdict, got = self.verdict(m, item)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 95, in verdict
+    return never_check.check(m)[item]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 13, in check
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_n6_one_line_at_minute_0_passes (test_never_check.SyntheticTraces.test_n6_one_line_at_minute_0_passes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 172, in test_n6_one_line_at_minute_0_passes
+    self.assertPasses(morning(OPENING), "N6")
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 103, in assertPasses
+    verdict, got = self.verdict(m, item)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 95, in verdict
+    return never_check.check(m)[item]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 13, in check
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_n6_silence_at_the_discovery_fail (test_never_check.SyntheticTraces.test_n6_silence_at_the_discovery_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 169, in test_n6_silence_at_the_discovery_fail
+    self.assertFails(m, "N6", [(0, p, "silent") for p in ALL])
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 98, in assertFails
+    verdict, got = self.verdict(m, item)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 95, in verdict
+    return never_check.check(m)[item]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 13, in check
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_n8_a_target_chosen_outside_the_model_fail (test_never_check.SyntheticTraces.test_n8_a_target_chosen_outside_the_model_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 178, in test_n8_a_target_chosen_outside_the_model_fail
+    self.assertFails(m, "N8", [(3, "elena", "reassure_mara"), (3, "leo", "silent")])
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 98, in assertFails
+    verdict, got = self.verdict(m, item)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 95, in verdict
+    return never_check.check(m)[item]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 13, in check
+    raise NotImplementedError
+NotImplementedError
+
+======================================================================
+ERROR: test_n8_routine_silence_and_model_targets_pass (test_never_check.SyntheticTraces.test_n8_routine_silence_and_model_targets_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 184, in test_n8_routine_silence_and_model_targets_pass
+    self.assertPasses(m, "N8")
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 103, in assertPasses
+    verdict, got = self.verdict(m, item)
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_never_check.py", line 95, in verdict
+    return never_check.check(m)[item]
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\never_check.py", line 13, in check
+    raise NotImplementedError
+NotImplementedError
+
+----------------------------------------------------------------------
+Ran 35 tests in 0.024s
+
+FAILED (errors=35)
