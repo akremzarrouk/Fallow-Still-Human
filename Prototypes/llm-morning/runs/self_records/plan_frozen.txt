@@ -1,0 +1,16 @@
+plan:  c6db6b4c9c28d622140cabcf9ccd2677184d31e69688f35455f65398ffbdd02c *reports/self_records_plan.md
+probe: 3d541b7849384d86c89c81d5788703c7956f2f7e24fbd79a95c941e4aeeae7ae *runs/self_records/probe.py
+time:  2026-10-13T10:53:52Z
+HEAD:  14d1f3c9e982f9f6870f8432c2399267637ef4b4
+git status --short:
+?? cache/n9_cause/
+?? reports/self_records_plan.md
+?? runs/n9_cause/
+?? runs/self_records/
+?? runs/v6/daniel_ate_it-seed1.replay.md
+?? runs/v6/daniel_ate_it-seed2.replay.md
+?? runs/v6/daniel_ate_it-seed3.replay.md
+?? ../../investigations/
+git diff --stat: 0 lines
+cache/self_records exists before the run: no
+runs/self_records/ledger.json exists before the run: no

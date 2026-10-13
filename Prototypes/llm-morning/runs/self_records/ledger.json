@@ -1,0 +1,29 @@
+{
+ "live": 54,
+ "phases": [
+  {
+   "phase": "scene1",
+   "seed": 201,
+   "live_before": 0,
+   "stopped": null,
+   "counts": {
+    "live": 27,
+    "from_cache": 0,
+    "api_requests": 27
+   },
+   "live_after": 27
+  },
+  {
+   "phase": "scene3",
+   "seed": 202,
+   "live_before": 27,
+   "stopped": null,
+   "counts": {
+    "live": 27,
+    "from_cache": 0,
+    "api_requests": 27
+   },
+   "live_after": 54
+  }
+ ]
+}

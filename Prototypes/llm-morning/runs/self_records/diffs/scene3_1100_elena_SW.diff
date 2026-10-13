@@ -1,0 +1,16 @@
+--- calm_probe scene3 11:00 elena
++++ SW scene3 11:00 elena
+@@ -28,4 +28,4 @@
+ - Yesterday morning the shelf held 1 portion.
+-- Accusations: Mara accused Daniel 5 times (min 00, 03, 09, 12, 15).
+-- Confrontations: Leo confronted Daniel twice (min 09, 12).
++- Mara accused Daniel of taking it.
++- Leo confronted Daniel.
+ - Daniel gave you a portion at minute 00, and you ate it.
+@@ -41,6 +41,2 @@
+ - 09:45: at 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.
+-Your own last words today:
+-- 09:42, you told the person at the door to go away.
+-- 09:45, you reassured everyone.
+-- 09:48, you reassured everyone.
+ What else happened today, most recent last:

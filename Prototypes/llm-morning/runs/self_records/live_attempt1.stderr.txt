@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\runs\self_records\probe.py", line 298, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\runs\self_records\probe.py", line 268, in main
+    inner = FakeClient(invalid_every=0, max_calls=10 ** 6) if args.fake else GeminiClient(config, seed)
+                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\gemini.py", line 65, in __init__
+    from google import genai
+ModuleNotFoundError: No module named 'google'

@@ -1,0 +1,16 @@
+--- calm_probe scene3 11:00 leo
++++ S scene3 11:00 leo
+@@ -12,4 +12,4 @@
+ About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dry. Since 09:45, you share it out by the cup: five cups each a day.
+-Against Daniel (a lot): two days ago, Daniel accused you of taking the can at minute 09, and you had not; two days ago, Daniel accused you of taking the can at minute 12, and you had not; two days ago, Daniel admitted taking it at minute 33, after denying it to you at minute 06; two days ago, Daniel had accused you of it at minute 12; you were angry with Daniel today at minutes 09, 12 and 15, and at 09:48.
+-Against Mara (a little): two days ago, Mara ate a portion in front of you at minute 54, while you were hungry; you were angry with Mara today at 09:42.
++Against Daniel (a lot): two days ago, Daniel accused you of taking the can at minute 09, and you had not; two days ago, Daniel accused you of taking the can at minute 12, and you had not; two days ago, Daniel admitted taking it at minute 33, after denying it to you at minute 06; two days ago, Daniel had accused you of it at minute 12.
++Against Mara (a little): two days ago, Mara ate a portion in front of you at minute 54, while you were hungry.
+ The house: The family has shut itself in the house. The water has stopped. Food is short. Rooms: kitchen (the food is kept here); brothers room (Daniel and Leo's room); back room (Elena and Mara's room); bathroom (nothing is heard in or out of it). The only places and things there are: the kitchen, with the pantry shelf where the food is kept, the counter, the dry taps and the back door to the yard; the yard behind the kitchen, small and walled, with the drainpipe and the bin; the brothers room, with Daniel's and Leo's beds; the back room, with Elena's and Mara's beds and Mara's bag; the bathroom; the doors between the rooms; the front door and the front windows, boarded up. Outside, and not to be gone to this morning: the street, the neighbour's house and the houses further along the street. Do not mention any other object or place.
+@@ -28,4 +28,4 @@
+ - Yesterday morning the shelf held 1 portion.
+-- Accusations: Mara accused Daniel 5 times (min 00, 03, 09, 12, 15).
+-- Confrontations: you confronted Daniel twice (min 09, 12).
++- Mara accused Daniel of taking it.
++- You confronted Daniel.
+ - Daniel gave Elena a portion at minute 00, and Elena ate it (you saw it).

@@ -1,0 +1,59 @@
+scene 1 (client seed 201):
+  S  scene 1 10:00 elena: -2 +2 lines; live; chose reassure_all (valid True; calm_probe reassure_all); say "Let's not fight among ourselves; we only have each other to rely on right now."
+  W  scene 1 10:00 elena: -4 +0 lines; live; chose reassure_all (valid True; calm_probe reassure_all); say "We have to stay calm and stop fighting, shouting at each other won't put food on the shelf."
+  SW scene 1 10:00 elena: -6 +2 lines; live; chose reassure_all (valid True; calm_probe reassure_all); say 'We must not fight among ourselves. We will get through this together if we stay calm.'
+  S  scene 1 10:00 leo  : -4 +4 lines; live; chose silent (valid True; calm_probe silent); say None
+  W  scene 1 10:00 leo  : -4 +0 lines; live; chose silent (valid True; calm_probe silent); say None
+  SW scene 1 10:00 leo  : -8 +4 lines; live; chose silent (valid True; calm_probe silent); say None
+  S  scene 1 10:00 mara : -4 +3 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say 'You went out and came back with nothing, Daniel, because you always make things worse.'
+  W  scene 1 10:00 mara : -4 +0 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say 'You went out and came back with nothing, Daniel, because you always ruin everything.'
+  SW scene 1 10:00 mara : -8 +3 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say 'You went out last night and came back with nothing, just like you always ruin everything.'
+  S  scene 1 10:30 elena: -2 +2 lines; live; chose reassure_all (valid True; calm_probe reassure_all); say "We are going to stay together and we will get through this. Let's not turn on each other."
+  W  scene 1 10:30 elena: -4 +0 lines; live; chose reassure_all (valid True; calm_probe reassure_all); say "We have to stay calm and look after each other, fighting won't help us find a way through this."
+  SW scene 1 10:30 elena: -6 +2 lines; live; chose reassure_all (valid True; calm_probe reassure_all); say "We have to stay calm and look after each other, fighting won't help us now."
+  S  scene 1 10:30 leo  : -4 +4 lines; live; chose confront_daniel (valid True; calm_probe silent); say "Daniel, sneaking out last night didn't help anyone and it nearly got you killed."
+  W  scene 1 10:30 leo  : -4 +0 lines; live; chose silent (valid True; calm_probe silent); say None
+  SW scene 1 10:30 leo  : -8 +4 lines; live; chose silent (valid True; calm_probe silent); say None
+  S  scene 1 10:30 mara : -4 +3 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say 'You went out there and came back with nothing, but you are still the one who took the food before.'
+  W  scene 1 10:30 mara : -4 +0 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say 'You went out and came back with nothing, Daniel, because you always ruin everything.'
+  SW scene 1 10:30 mara : -8 +3 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say 'You went out there last night and came back with nothing, just like you always ruin things.'
+  S  scene 1 11:00 elena: -2 +2 lines; live; chose reassure_all (valid True; calm_probe reassure_all); say 'We are all hungry and tired, but we must stay calm and not turn on each other.'
+  W  scene 1 11:00 elena: -4 +0 lines; live; chose reassure_all (valid True; calm_probe reassure_all); say 'We are all hungry and tired, but fighting will only tear us apart. We have to stay together and hold on.'
+  SW scene 1 11:00 elena: -6 +2 lines; live; chose reassure_all (valid True; calm_probe reassure_all); say 'We are going to get through this together without fighting. Let us just stay calm.'
+  S  scene 1 11:00 leo  : -4 +4 lines; live; chose silent (valid True; calm_probe silent); say None
+  W  scene 1 11:00 leo  : -4 +0 lines; live; chose silent (valid True; calm_probe silent); say None
+  SW scene 1 11:00 leo  : -8 +4 lines; live; chose silent (valid True; calm_probe silent); say None
+  S  scene 1 11:00 mara : -4 +3 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say 'You went out there last night and came back with nothing, Daniel, because you always make things worse.'
+  W  scene 1 11:00 mara : -4 +0 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say 'You went out and came back with nothing, Daniel, because you always ruin everything.'
+  SW scene 1 11:00 mara : -8 +3 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say 'You went out there in the middle of the night and came back with nothing, just like you always do.'
+scene 1: 27 rows; counts {'live': 27, 'from_cache': 0, 'api_requests': 27}; stopped None
+scene 3 (client seed 202):
+  S  scene 3 10:00 elena: -2 +2 lines; live; chose reassure_all (valid True; calm_probe reassure_all); say 'We are all hungry and tired, but fighting will only tear us apart.'
+  W  scene 3 10:00 elena: -4 +0 lines; live; chose reassure_all (valid True; calm_probe reassure_all); say 'We are not going to tear each other apart over empty shelves. We will stay together and get through this.'
+  SW scene 3 10:00 elena: -6 +2 lines; live; chose reassure_all (valid True; calm_probe reassure_all); say 'We are not going to fall apart over this. We stay together and we will get through today.'
+  S  scene 3 10:00 leo  : -4 +4 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say 'Daniel, you went out last night behind our backs and you brought back nothing for anyone.'
+  W  scene 3 10:00 leo  : -4 +0 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say 'Daniel, you went out there last night and came back with nothing, just like you always do when you act on your own.'
+  SW scene 3 10:00 leo  : -8 +4 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say 'Daniel, you went out into the dark last night and came back with nothing, putting us all at risk for no reason.'
+  S  scene 3 10:00 mara : -4 +3 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say "You went out in the dark and you still didn't bring anything back for us. You just make everything worse."
+  W  scene 3 10:00 mara : -4 +0 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say "You went out behind our backs and you still haven't explained why you lied to us in the first place, Daniel!"
+  SW scene 3 10:00 mara : -8 +3 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say 'You went out there and came back with nothing, Daniel, because you only care about yourself.'
+  S  scene 3 10:30 elena: -2 +2 lines; live; chose reassure_all (valid True; calm_probe reassure_all); say 'We are going to get through this together, just calm down and stay here.'
+  W  scene 3 10:30 elena: -4 +0 lines; live; chose reassure_all (valid True; calm_probe reassure_all); say 'We are not going to tear each other apart. We will stay together and get through this.'
+  SW scene 3 10:30 elena: -6 +2 lines; live; chose reassure_all (valid True; calm_probe reassure_all); say 'We are going to get through this together without turning on each other. Let us just stay calm.'
+  S  scene 3 10:30 leo  : -4 +4 lines; live; chose accuse_daniel (valid True; calm_probe silent); say "Daniel, you went out last night and came back with nothing while we are starving. Don't act like you didn't."
+  W  scene 3 10:30 leo  : -4 +0 lines; live; chose accuse_daniel (valid True; calm_probe silent); say 'Daniel, you went out last night like you always do, and now we have nothing left.'
+  SW scene 3 10:30 leo  : -8 +4 lines; live; chose accuse_daniel (valid True; calm_probe silent); say 'Daniel, you went out there last night and came back with nothing while we starve. This is on you.'
+  S  scene 3 10:30 mara : -4 +3 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say 'You went out last night and came back with nothing, just like you always do when you make things worse.'
+  W  scene 3 10:30 mara : -4 +0 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say 'You went out there last night and you still have not given back what you took from us.'
+  SW scene 3 10:30 mara : -8 +3 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say "You went out behind our backs and you still haven't explained why you took our food before!"
+  S  scene 3 11:00 elena: -2 +2 lines; live; chose reassure_all (valid True; calm_probe reassure_all); say 'We are going to stay right here and look after each other. No one is going anywhere.'
+  W  scene 3 11:00 elena: -4 +0 lines; live; chose reassure_all (valid True; calm_probe reassure_all); say 'We are going to stay right here and look after each other. No one is going anywhere.'
+  SW scene 3 11:00 elena: -6 +2 lines; live; chose silent (valid True; calm_probe reassure_all); say None
+  S  scene 3 11:00 leo  : -4 +4 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say 'Daniel, you went out there last night and came back with nothing while we are starving.'
+  W  scene 3 11:00 leo  : -4 +0 lines; live; chose silent (valid True; calm_probe accuse_daniel); say None
+  SW scene 3 11:00 leo  : -8 +4 lines; live; chose silent (valid True; calm_probe accuse_daniel); say None
+  S  scene 3 11:00 mara : -4 +3 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say 'You went out there last night and came back with nothing, Daniel. You are the reason we have nothing left.'
+  W  scene 3 11:00 mara : -4 +0 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say 'You went out into the night and came back with nothing, Daniel. You always ruin everything.'
+  SW scene 3 11:00 mara : -8 +3 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say "You went out there last night and you still won't admit what you did to us."
+scene 3: 27 rows; counts {'live': 27, 'from_cache': 0, 'api_requests': 27}; stopped None
+live asks in all: 54

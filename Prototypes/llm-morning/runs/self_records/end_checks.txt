@@ -1,0 +1,10 @@
+plan sha256 now:  c6db6b4c9c28d622140cabcf9ccd2677184d31e69688f35455f65398ffbdd02c *reports/self_records_plan.md
+probe sha256 now: 3d541b7849384d86c89c81d5788703c7956f2f7e24fbd79a95c941e4aeeae7ae *runs/self_records/probe.py
+plan copy equal:  yes
+git diff --stat: []
+git diff --cached --stat: []
+HEAD: 14d1f3c9e982f9f6870f8432c2399267637ef4b4
+key search (grep -rlF over the repository, but .venv, __pycache__, .git, Library, node_modules): 0 files
+ledger: {"live":54,"phases":[{"phase":"scene1","seed":201,"live_before":0,"stopped":null,"counts":{"live":27,"from_cache":0,"api_requests":27},"live_after":27},{"phase":"scene3","seed":202,"live_before":27,"stopped":null,"counts":{"live":27,"from_cache":0,"api_requests":27},"live_after":54}]}
+diff files: 54; unchanged: 0
+cache entries: [27, 27]

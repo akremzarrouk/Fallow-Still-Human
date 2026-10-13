@@ -1,0 +1,59 @@
+scene 1 (client seed 201):
+  S  scene 1 10:00 elena: -2 +2 lines; live; chose sit_leo (valid True; calm_probe reassure_all); say None
+  W  scene 1 10:00 elena: -4 +0 lines; live; chose aside_leo (valid True; calm_probe reassure_all); say None
+  SW scene 1 10:00 elena: -6 +2 lines; live; chose propose_trip (valid True; calm_probe reassure_all); say '[fake line 3]'
+  S  scene 1 10:00 leo  : -4 +4 lines; live; chose sit_elena (valid True; calm_probe silent); say None
+  W  scene 1 10:00 leo  : -4 +0 lines; live; chose reassure_daniel (valid True; calm_probe silent); say '[fake line 5]'
+  SW scene 1 10:00 leo  : -8 +4 lines; live; chose silent (valid True; calm_probe silent); say None
+  S  scene 1 10:00 mara : -4 +3 lines; live; chose aside_leo (valid True; calm_probe accuse_daniel); say None
+  W  scene 1 10:00 mara : -4 +0 lines; live; chose go_bathroom (valid True; calm_probe accuse_daniel); say None
+  SW scene 1 10:00 mara : -8 +3 lines; live; chose volunteer (valid True; calm_probe accuse_daniel); say '[fake line 9]'
+  S  scene 1 10:30 elena: -2 +2 lines; live; chose sit_daniel (valid True; calm_probe reassure_all); say None
+  W  scene 1 10:30 elena: -4 +0 lines; live; chose sit_mara (valid True; calm_probe reassure_all); say None
+  SW scene 1 10:30 elena: -6 +2 lines; live; chose accuse_daniel (valid True; calm_probe reassure_all); say '[fake line 12]'
+  S  scene 1 10:30 leo  : -4 +4 lines; live; chose go_brothers_room (valid True; calm_probe silent); say None
+  W  scene 1 10:30 leo  : -4 +0 lines; live; chose accuse_daniel (valid True; calm_probe silent); say '[fake line 14]'
+  SW scene 1 10:30 leo  : -8 +4 lines; live; chose reassure_all (valid True; calm_probe silent); say '[fake line 15]'
+  S  scene 1 10:30 mara : -4 +3 lines; live; chose propose_far (valid True; calm_probe accuse_daniel); say '[fake line 16]'
+  W  scene 1 10:30 mara : -4 +0 lines; live; chose confront_elena (valid True; calm_probe accuse_daniel); say '[fake line 17]'
+  SW scene 1 10:30 mara : -8 +3 lines; live; chose sit_leo (valid True; calm_probe accuse_daniel); say None
+  S  scene 1 11:00 elena: -2 +2 lines; live; chose sit_mara (valid True; calm_probe reassure_all); say None
+  W  scene 1 11:00 elena: -4 +0 lines; live; chose go_bathroom (valid True; calm_probe reassure_all); say None
+  SW scene 1 11:00 elena: -6 +2 lines; live; chose volunteer (valid True; calm_probe reassure_all); say '[fake line 21]'
+  S  scene 1 11:00 leo  : -4 +4 lines; live; chose reassure_all (valid True; calm_probe silent); say '[fake line 22]'
+  W  scene 1 11:00 leo  : -4 +0 lines; live; chose propose_far (valid True; calm_probe silent); say '[fake line 23]'
+  SW scene 1 11:00 leo  : -8 +4 lines; live; chose propose_trip (valid True; calm_probe silent); say '[fake line 24]'
+  S  scene 1 11:00 mara : -4 +3 lines; live; chose confront_elena (valid True; calm_probe accuse_daniel); say '[fake line 25]'
+  W  scene 1 11:00 mara : -4 +0 lines; live; chose reassure_all (valid True; calm_probe accuse_daniel); say '[fake line 26]'
+  SW scene 1 11:00 mara : -8 +3 lines; live; chose reassure_elena (valid True; calm_probe accuse_daniel); say '[fake line 27]'
+scene 1: 27 rows; counts {'live': 27, 'from_cache': 0, 'api_requests': 27}; stopped None
+scene 3 (client seed 202):
+  S  scene 3 10:00 elena: -2 +2 lines; live; chose sit_daniel (valid True; calm_probe reassure_all); say None
+  W  scene 3 10:00 elena: -4 +0 lines; live; chose say_other (valid True; calm_probe reassure_all); say '[fake line 2]'
+  SW scene 3 10:00 elena: -6 +2 lines; live; chose reassure_leo (valid True; calm_probe reassure_all); say '[fake line 3]'
+  S  scene 3 10:00 leo  : -4 +4 lines; live; chose reassure_elena (valid True; calm_probe accuse_daniel); say '[fake line 4]'
+  W  scene 3 10:00 leo  : -4 +0 lines; live; chose sit_elena (valid True; calm_probe accuse_daniel); say None
+  SW scene 3 10:00 leo  : -8 +4 lines; live; chose propose_far (valid True; calm_probe accuse_daniel); say '[fake line 6]'
+  S  scene 3 10:00 mara : -4 +3 lines; live; chose aside_daniel (valid True; calm_probe accuse_daniel); say None
+  W  scene 3 10:00 mara : -4 +0 lines; live; chose reassure_all (valid True; calm_probe accuse_daniel); say '[fake line 8]'
+  SW scene 3 10:00 mara : -8 +3 lines; live; chose say_other (valid True; calm_probe accuse_daniel); say '[fake line 9]'
+  S  scene 3 10:30 elena: -2 +2 lines; live; chose sit_leo (valid True; calm_probe reassure_all); say None
+  W  scene 3 10:30 elena: -4 +0 lines; live; chose deny (valid True; calm_probe reassure_all); say '[fake line 11]'
+  SW scene 3 10:30 elena: -6 +2 lines; live; chose deny (valid True; calm_probe reassure_all); say '[fake line 12]'
+  S  scene 3 10:30 leo  : -4 +4 lines; live; chose confront_daniel (valid True; calm_probe silent); say '[fake line 13]'
+  W  scene 3 10:30 leo  : -4 +0 lines; live; chose confront_mara (valid True; calm_probe silent); say '[fake line 14]'
+  SW scene 3 10:30 leo  : -8 +4 lines; live; chose deny (valid True; calm_probe silent); say '[fake line 15]'
+  S  scene 3 10:30 mara : -4 +3 lines; live; chose volunteer (valid True; calm_probe accuse_daniel); say '[fake line 16]'
+  W  scene 3 10:30 mara : -4 +0 lines; live; chose propose_trip (valid True; calm_probe accuse_daniel); say '[fake line 17]'
+  SW scene 3 10:30 mara : -8 +3 lines; live; chose reassure_leo (valid True; calm_probe accuse_daniel); say '[fake line 18]'
+  S  scene 3 11:00 elena: -2 +2 lines; live; chose reassure_daniel (valid True; calm_probe reassure_all); say '[fake line 19]'
+  W  scene 3 11:00 elena: -4 +0 lines; live; chose volunteer (valid True; calm_probe reassure_all); say '[fake line 20]'
+  SW scene 3 11:00 elena: -6 +2 lines; live; chose tell_daniel_visit (valid True; calm_probe reassure_all); say '[fake line 21]'
+  S  scene 3 11:00 leo  : -4 +4 lines; live; chose say_other (valid True; calm_probe accuse_daniel); say '[fake line 22]'
+  W  scene 3 11:00 leo  : -4 +0 lines; live; chose send_daniel (valid True; calm_probe accuse_daniel); say '[fake line 23]'
+  SW scene 3 11:00 leo  : -8 +4 lines; live; chose volunteer (valid True; calm_probe accuse_daniel); say '[fake line 24]'
+  S  scene 3 11:00 mara : -4 +3 lines; live; chose sit_elena (valid True; calm_probe accuse_daniel); say None
+  W  scene 3 11:00 mara : -4 +0 lines; live; chose go_back_room (valid True; calm_probe accuse_daniel); say None
+  SW scene 3 11:00 mara : -8 +3 lines; live; chose accuse_daniel (valid True; calm_probe accuse_daniel); say '[fake line 27]'
+scene 3: 27 rows; counts {'live': 27, 'from_cache': 0, 'api_requests': 27}; stopped None
+live asks in all: 54
