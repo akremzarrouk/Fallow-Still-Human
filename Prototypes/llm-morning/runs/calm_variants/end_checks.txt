@@ -1,0 +1,8 @@
+plan sha256 now:  9712011a8bb30437bae2eaa039bd4a1346cc6b33211ccdfa4b4d2119235418be *reports/calm_variants_plan.md
+probe sha256 now: 0cccf82653ddde6ada020c36a5eaa5219e9cb92bb36f3ef624c3e0bb90c5ce8d *runs/calm_variants/probe.py
+plan copy equal:  yes
+git diff --stat: []
+git diff --cached --stat: []
+HEAD: eeff330704aab78986e26729e7aef9ff2696c0f6
+key search (grep -rlF over the repository, but .venv, __pycache__, .git, Library, node_modules): 0 files
+ledger: {"live":46,"phases":[{"phase":"scene1","seed":201,"live_before":0,"stopped":null,"replay":{"live":0,"from_cache":131,"api_requests":0},"calm":{"live":23,"from_cache":0,"api_requests":23},"live_after":23},{"phase":"scene3","seed":202,"live_before":23,"stopped":null,"replay":{"live":0,"from_cache":131,"api_requests":0},"calm":{"live":23,"from_cache":0,"api_requests":23},"live_after":46}]}

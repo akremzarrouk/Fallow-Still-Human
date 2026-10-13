@@ -1,0 +1,103 @@
+scene 1 (client seed 201): replay {'live': 0, 'from_cache': 131, 'api_requests': 0}; variant asks {'live': 23, 'from_cache': 0, 'api_requests': 23}; stopped None
+  decisions after 09:45 in the replay: [('09:45', 'elena', 'model'), ('09:45', 'leo', 'model'), ('09:45', 'mara', 'model'), ('09:45', 'daniel', 'model'), ('09:48', 'leo', 'model'), ('09:48', 'elena', 'model'), ('09:48', 'mara', 'model'), ('09:48', 'daniel', 'model')]
+  how each minute was reached: {'10:00': 'after the quiet step at that minute (a trigger fired: False)', '10:30': 'inside a quiet jump from 10:00 to 11:15, its needs ticked at the minute (lines crossed: [])', '11:00': 'inside a quiet jump from 10:30 to 11:15, its needs ticked at the minute (lines crossed: [])'}
+  10:00: Daniel in kitchen (resting False); here {'elena': (False, True, 'sitting in the kitchen'), 'leo': (False, True, 'sitting in the kitchen'), 'mara': (False, True, 'sitting in the kitchen')}
+    T  elena: live; tell at 19 of 28; chose send_daniel (valid True; calm_probe reassure_all); say '[fake line 1]'
+       T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+    O  elena: live; tell at 1 of 28; chose tell_daniel_visit (valid True; calm_probe reassure_all); say '[fake line 2]'
+    TO elena: live; tell at 1 of 28; chose say_other (valid True; calm_probe reassure_all); say '[fake line 3]'
+       T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+    T  leo: live; tell at None of 27; chose deny (valid True; calm_probe silent); say '[fake line 4]'
+       T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+    O  leo: calm_probe's answer: the same prompt, not asked again; tell at None of 27; chose silent (valid True; calm_probe silent); say None
+    TO leo: T's answer: the same prompt, not asked again; tell at None of 27; chose deny (valid True; calm_probe silent); say '[fake line 4]'
+       T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+    T  mara: live; tell at 18 of 27; chose aside_leo (valid True; calm_probe accuse_daniel); say None
+       T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+    O  mara: live; tell at 1 of 27; chose deny (valid True; calm_probe accuse_daniel); say '[fake line 6]'
+    TO mara: live; tell at 1 of 27; chose accuse_daniel (valid True; calm_probe accuse_daniel); say '[fake line 7]'
+       T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+  10:30: Daniel in kitchen (resting False); here {'elena': (False, True, 'sitting in the kitchen'), 'leo': (False, True, 'sitting in the kitchen'), 'mara': (False, True, 'sitting in the kitchen')}
+    T  elena: live; tell at 19 of 28; chose go_back_room (valid True; calm_probe reassure_all); say None
+       T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+    O  elena: live; tell at 1 of 28; chose tell_daniel_visit (valid True; calm_probe reassure_all); say '[fake line 9]'
+    TO elena: live; tell at 1 of 28; chose aside_leo (valid True; calm_probe reassure_all); say None
+       T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+    T  leo: live; tell at None of 27; chose propose_trip (valid True; calm_probe silent); say '[fake line 11]'
+       T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+    O  leo: calm_probe's answer: the same prompt, not asked again; tell at None of 27; chose silent (valid True; calm_probe silent); say None
+    TO leo: T's answer: the same prompt, not asked again; tell at None of 27; chose propose_trip (valid True; calm_probe silent); say '[fake line 11]'
+       T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+    T  mara: live; tell at 18 of 27; chose volunteer_far (valid True; calm_probe accuse_daniel); say '[fake line 12]'
+       T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+    O  mara: live; tell at 1 of 27; chose silent (valid True; calm_probe accuse_daniel); say None
+    TO mara: live; tell at 1 of 27; chose aside_daniel (valid True; calm_probe accuse_daniel); say None
+       T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+  11:00: Daniel in kitchen (resting False); here {'elena': (False, True, 'sitting in the kitchen'), 'leo': (False, True, 'sitting in the kitchen'), 'mara': (False, True, 'sitting in the kitchen')}
+    T  elena: live; tell at 19 of 28; chose send_mara (valid True; calm_probe reassure_all); say '[fake line 15]'
+       T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+    O  elena: live; tell at 1 of 28; chose tell_daniel_visit (valid True; calm_probe reassure_all); say '[fake line 16]'
+    TO elena: live; tell at 1 of 28; chose send_leo (valid True; calm_probe reassure_all); say '[fake line 17]'
+       T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+    T  leo: live; tell at 19 of 28; chose volunteer (valid True; calm_probe silent); say '[fake line 18]'
+       T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+    O  leo: live; tell at 1 of 28; chose propose_far (valid True; calm_probe silent); say '[fake line 19]'
+    TO leo: live; tell at 1 of 28; chose volunteer (valid True; calm_probe silent); say '[fake line 20]'
+       T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+    T  mara: live; tell at 18 of 27; chose send_elena (valid True; calm_probe accuse_daniel); say '[fake line 21]'
+       T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+    O  mara: live; tell at 1 of 27; chose sit_daniel (valid True; calm_probe accuse_daniel); say None
+    TO mara: live; tell at 1 of 27; chose sit_daniel (valid True; calm_probe accuse_daniel); say None
+       T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+scene 3 (client seed 202): replay {'live': 0, 'from_cache': 131, 'api_requests': 0}; variant asks {'live': 23, 'from_cache': 0, 'api_requests': 23}; stopped None
+  decisions after 09:45 in the replay: [('09:45', 'elena', 'model'), ('09:45', 'leo', 'model'), ('09:45', 'mara', 'model'), ('09:45', 'daniel', 'model'), ('09:48', 'elena', 'model'), ('09:48', 'mara', 'model'), ('09:48', 'daniel', 'model'), ('09:48', 'leo', 'model')]
+  how each minute was reached: {'10:00': 'after the quiet step at that minute (a trigger fired: False)', '10:30': 'inside a quiet jump from 10:00 to 11:15, its needs ticked at the minute (lines crossed: [])', '11:00': 'inside a quiet jump from 10:30 to 11:15, its needs ticked at the minute (lines crossed: [])'}
+  10:00: Daniel in kitchen (resting False); here {'elena': (False, True, 'sitting in the kitchen'), 'leo': (False, True, 'sitting in the kitchen'), 'mara': (False, True, 'sitting in the kitchen')}
+    T  elena: live; tell at 19 of 28; chose propose_trip (valid True; calm_probe reassure_all); say '[fake line 1]'
+       T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+    O  elena: live; tell at 1 of 28; chose go_brothers_room (valid True; calm_probe reassure_all); say None
+    TO elena: live; tell at 1 of 28; chose volunteer (valid True; calm_probe reassure_all); say '[fake line 3]'
+       T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+    T  leo: live; tell at 18 of 27; chose send_mara (valid True; calm_probe accuse_daniel); say '[fake line 4]'
+       T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+    O  leo: live; tell at 1 of 27; chose propose_trip (valid True; calm_probe accuse_daniel); say '[fake line 5]'
+    TO leo: live; tell at 1 of 27; chose silent (valid True; calm_probe accuse_daniel); say None
+       T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+    T  mara: live; tell at None of 26; chose aside_leo (valid True; calm_probe accuse_daniel); say None
+       T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+    O  mara: calm_probe's answer: the same prompt, not asked again; tell at None of 26; chose accuse_daniel (valid True; calm_probe accuse_daniel); say "You went out behind our backs and you still haven't explained why you took our food in the first place, Daniel."
+    TO mara: T's answer: the same prompt, not asked again; tell at None of 26; chose aside_leo (valid True; calm_probe accuse_daniel); say None
+       T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+  10:30: Daniel in kitchen (resting False); here {'elena': (False, True, 'sitting in the kitchen'), 'leo': (False, True, 'sitting in the kitchen'), 'mara': (False, True, 'sitting in the kitchen')}
+    T  elena: live; tell at 19 of 28; chose volunteer (valid True; calm_probe reassure_all); say '[fake line 8]'
+       T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+    O  elena: live; tell at 1 of 28; chose propose_far (valid True; calm_probe reassure_all); say '[fake line 9]'
+    TO elena: live; tell at 1 of 28; chose send_leo (valid True; calm_probe reassure_all); say '[fake line 10]'
+       T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+    T  leo: live; tell at 18 of 27; chose go_back_room (valid True; calm_probe silent); say None
+       T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+    O  leo: live; tell at 1 of 27; chose confront_elena (valid True; calm_probe silent); say '[fake line 12]'
+    TO leo: live; tell at 1 of 27; chose go_back_room (valid True; calm_probe silent); say None
+       T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+    T  mara: live; tell at None of 26; chose propose_trip (valid True; calm_probe accuse_daniel); say '[fake line 14]'
+       T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+    O  mara: calm_probe's answer: the same prompt, not asked again; tell at None of 26; chose accuse_daniel (valid True; calm_probe accuse_daniel); say "Daniel, you didn't help anyone last night, you just made things worse for all of us."
+    TO mara: T's answer: the same prompt, not asked again; tell at None of 26; chose propose_trip (valid True; calm_probe accuse_daniel); say '[fake line 14]'
+       T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+  11:00: Daniel in kitchen (resting False); here {'elena': (False, True, 'sitting in the kitchen'), 'leo': (False, True, 'sitting in the kitchen'), 'mara': (False, True, 'sitting in the kitchen')}
+    T  elena: live; tell at 19 of 28; chose say_other (valid True; calm_probe reassure_all); say '[fake line 15]'
+       T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+    O  elena: live; tell at 1 of 28; chose volunteer (valid True; calm_probe reassure_all); say '[fake line 16]'
+    TO elena: live; tell at 1 of 28; chose propose_far (valid True; calm_probe reassure_all); say '[fake line 17]'
+       T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+    T  leo: live; tell at 18 of 27; chose sit_elena (valid True; calm_probe accuse_daniel); say None
+       T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+    O  leo: live; tell at 1 of 27; chose send_elena (valid True; calm_probe accuse_daniel); say '[fake line 19]'
+    TO leo: live; tell at 1 of 27; chose silent (valid True; calm_probe accuse_daniel); say None
+       T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+    T  mara: live; tell at 18 of 27; chose send_daniel (valid True; calm_probe accuse_daniel); say '[fake line 21]'
+       T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+    O  mara: live; tell at 1 of 27; chose aside_leo (valid True; calm_probe accuse_daniel); say None
+    TO mara: live; tell at 1 of 27; chose send_leo (valid True; calm_probe accuse_daniel); say '[fake line 23]'
+       T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+live asks in all: 46

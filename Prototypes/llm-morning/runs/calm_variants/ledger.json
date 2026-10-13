@@ -1,0 +1,39 @@
+{
+ "live": 46,
+ "phases": [
+  {
+   "phase": "scene1",
+   "seed": 201,
+   "live_before": 0,
+   "stopped": null,
+   "replay": {
+    "live": 0,
+    "from_cache": 131,
+    "api_requests": 0
+   },
+   "calm": {
+    "live": 23,
+    "from_cache": 0,
+    "api_requests": 23
+   },
+   "live_after": 23
+  },
+  {
+   "phase": "scene3",
+   "seed": 202,
+   "live_before": 23,
+   "stopped": null,
+   "replay": {
+    "live": 0,
+    "from_cache": 131,
+    "api_requests": 0
+   },
+   "calm": {
+    "live": 23,
+    "from_cache": 0,
+    "api_requests": 23
+   },
+   "live_after": 46
+  }
+ ]
+}

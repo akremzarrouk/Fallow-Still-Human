@@ -1,0 +1,585 @@
+scene 1: seed 201; replay {'live': 0, 'from_cache': 131, 'api_requests': 0}; variant asks {'live': 23, 'from_cache': 0, 'api_requests': 23}; stopped None
+  how each minute was reached: {'10:00': 'after the quiet step at that minute (a trigger fired: False)', '10:30': 'inside a quiet jump from 10:00 to 11:15, its needs ticked at the minute (lines crossed: [])', '11:00': 'inside a quiet jump from 10:30 to 11:15, its needs ticked at the minute (lines crossed: [])'}
+scene 3: seed 202; replay {'live': 0, 'from_cache': 131, 'api_requests': 0}; variant asks {'live': 23, 'from_cache': 0, 'api_requests': 23}; stopped None
+  how each minute was reached: {'10:00': 'after the quiet step at that minute (a trigger fired: False)', '10:30': 'inside a quiet jump from 10:00 to 11:15, its needs ticked at the minute (lines crossed: [])', '11:00': 'inside a quiet jump from 10:30 to 11:15, its needs ticked at the minute (lines crossed: [])'}
+
+rows: 54; live: 46; taken from an identical prompt: 8
+T: asks offering a tell_*_visit option: 14; choosing one: 0 []; over-steered (12 or more of 14): False
+O: asks offering a tell_*_visit option: 14; choosing one: 3 [(1, '11:00', 'leo'), (3, '10:30', 'leo'), (3, '11:00', 'leo')]; over-steered (12 or more of 14): False
+TO: asks offering a tell_*_visit option: 14; choosing one: 4 [(1, '11:00', 'leo'), (3, '10:00', 'leo'), (3, '10:30', 'leo'), (3, '11:00', 'leo')]; over-steered (12 or more of 14): False
+P1 (T, at least 3): 0 of 14 -> fails
+P2 (O, at least 5): 3 of 14 -> fails
+P3 (T differs from calm_probe in at least 6 of 18): 1 of 18 -> fails; [(3, '10:00', 'leo', 'accuse_daniel', 'silent')]
+P4 (no answer chooses an option not offered): [] of 54 -> holds
+  (O: differs from calm_probe in 3 of 18)
+  (TO: differs from calm_probe in 4 of 18)
+
+choices by variant (calm_probe first):
+  elena base ['reassure_all', 'reassure_all', 'reassure_all', 'reassure_all', 'reassure_all', 'reassure_all']
+  elena T    ['reassure_all', 'reassure_all', 'reassure_all', 'reassure_all', 'reassure_all', 'reassure_all']
+  elena O    ['reassure_all', 'reassure_all', 'reassure_all', 'reassure_all', 'reassure_all', 'reassure_all']
+  elena TO   ['reassure_all', 'reassure_all', 'reassure_all', 'reassure_all', 'reassure_all', 'reassure_all']
+  leo   base ['silent', 'silent', 'silent', 'accuse_daniel', 'silent', 'accuse_daniel']
+  leo   T    ['silent', 'silent', 'silent', 'silent', 'silent', 'accuse_daniel']
+  leo   O    ['silent', 'silent', 'tell_daniel_visit', 'accuse_daniel', 'tell_daniel_visit', 'tell_daniel_visit']
+  leo   TO   ['silent', 'silent', 'tell_daniel_visit', 'tell_daniel_visit', 'tell_daniel_visit', 'tell_daniel_visit']
+  mara  base ['accuse_daniel', 'accuse_daniel', 'accuse_daniel', 'accuse_daniel', 'accuse_daniel', 'accuse_daniel']
+  mara  T    ['accuse_daniel', 'accuse_daniel', 'accuse_daniel', 'accuse_daniel', 'accuse_daniel', 'accuse_daniel']
+  mara  O    ['accuse_daniel', 'accuse_daniel', 'accuse_daniel', 'accuse_daniel', 'accuse_daniel', 'accuse_daniel']
+  mara  TO   ['accuse_daniel', 'accuse_daniel', 'accuse_daniel', 'accuse_daniel', 'accuse_daniel', 'accuse_daniel']
+
+==================== the T line checks, one per scene and minute
+  scene 1, 10:00: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+    {'last_spoke': '09:48', 'last_speakers': ['daniel', 'elena', 'leo', 'mara'], 'spoke_after': [], 'acts_after': [], 'here': ['daniel', 'elena', 'leo', 'mara'], 'in_room_at_last': ['daniel', 'elena', 'leo', 'mara'], 'snapshots_since': 3, 'all_stayed': True, 'sitting_now': {'daniel': 'sitting in the kitchen', 'elena': 'sitting in the kitchen', 'leo': 'sitting in the kitchen', 'mara': 'sitting in the kitchen'}, 'true': True}
+  scene 1, 10:30: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+    {'last_spoke': '09:48', 'last_speakers': ['daniel', 'elena', 'leo', 'mara'], 'spoke_after': [], 'acts_after': [], 'here': ['daniel', 'elena', 'leo', 'mara'], 'in_room_at_last': ['daniel', 'elena', 'leo', 'mara'], 'snapshots_since': 4, 'all_stayed': True, 'sitting_now': {'daniel': 'sitting in the kitchen', 'elena': 'sitting in the kitchen', 'leo': 'sitting in the kitchen', 'mara': 'sitting in the kitchen'}, 'true': True}
+  scene 1, 11:00: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+    {'last_spoke': '09:48', 'last_speakers': ['daniel', 'elena', 'leo', 'mara'], 'spoke_after': [], 'acts_after': [], 'here': ['daniel', 'elena', 'leo', 'mara'], 'in_room_at_last': ['daniel', 'elena', 'leo', 'mara'], 'snapshots_since': 5, 'all_stayed': True, 'sitting_now': {'daniel': 'sitting in the kitchen', 'elena': 'sitting in the kitchen', 'leo': 'sitting in the kitchen', 'mara': 'sitting in the kitchen'}, 'true': True}
+  scene 3, 10:00: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+    {'last_spoke': '09:48', 'last_speakers': ['daniel', 'elena', 'leo', 'mara'], 'spoke_after': [], 'acts_after': [], 'here': ['daniel', 'elena', 'leo', 'mara'], 'in_room_at_last': ['daniel', 'elena', 'leo', 'mara'], 'snapshots_since': 3, 'all_stayed': True, 'sitting_now': {'daniel': 'sitting in the kitchen', 'elena': 'sitting in the kitchen', 'leo': 'sitting in the kitchen', 'mara': 'sitting in the kitchen'}, 'true': True}
+  scene 3, 10:30: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+    {'last_spoke': '09:48', 'last_speakers': ['daniel', 'elena', 'leo', 'mara'], 'spoke_after': [], 'acts_after': [], 'here': ['daniel', 'elena', 'leo', 'mara'], 'in_room_at_last': ['daniel', 'elena', 'leo', 'mara'], 'snapshots_since': 4, 'all_stayed': True, 'sitting_now': {'daniel': 'sitting in the kitchen', 'elena': 'sitting in the kitchen', 'leo': 'sitting in the kitchen', 'mara': 'sitting in the kitchen'}, 'true': True}
+  scene 3, 11:00: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+    {'last_spoke': '09:48', 'last_speakers': ['daniel', 'elena', 'leo', 'mara'], 'spoke_after': [], 'acts_after': [], 'here': ['daniel', 'elena', 'leo', 'mara'], 'in_room_at_last': ['daniel', 'elena', 'leo', 'mara'], 'snapshots_since': 5, 'all_stayed': True, 'sitting_now': {'daniel': 'sitting in the kitchen', 'elena': 'sitting in the kitchen', 'leo': 'sitting in the kitchen', 'mara': 'sitting in the kitchen'}, 'true': True}
+
+==================== every row
+
+-- T, scene 1, 10:00, elena, client seed 201: live
+   T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+   tell position: 19 of 28; topic options ['tell_daniel_visit']
+   chose: reassure_all (reassure everyone here); valid True
+   say: 'We are going to stay right here together and we will get through this day without fighting.'
+   feeling: 'anxious'; reason: 'We must not turn on each other when things are this hard.'; suspects Daniel; angry_at nobody
+   calm_probe: reassure_all; say 'We have survived this long by staying together, and we will get through today if we do not turn on each other.'; feeling 'anxious'; reason 'I need to calm the bickering before it tears our family apart completely.'
+   prompt lines 53 to 56: ['- 09:48: Daniel confronts Mara: "Mara, stop accusing me when I went out there to try and fix this for all of us."', 'Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.', 'Now, 10:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- O, scene 1, 10:00, elena, client seed 201: live
+   T line: None
+   tell position: 1 of 28; topic options ['tell_daniel_visit']
+   chose: reassure_all (reassure everyone here); valid True
+   say: 'We have no food and less water, but shouting at each other will only tear us apart. We must stay calm and hold together.'
+   feeling: 'weary'; reason: 'I need to keep the peace between them before arguments tear our family apart completely.'; suspects Daniel; angry_at nobody
+   calm_probe: reassure_all; say 'We have survived this long by staying together, and we will get through today if we do not turn on each other.'; feeling 'anxious'; reason 'I need to calm the bickering before it tears our family apart completely.'
+   prompt lines 52 to 55: ['- 09:48: Mara accuses Daniel of taking it: "You brought back nothing last night, Daniel, and we\'re all starving because of your lies."', '- 09:48: Daniel confronts Mara: "Mara, stop accusing me when I went out there to try and fix this for all of us."', 'Now, 10:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- TO, scene 1, 10:00, elena, client seed 201: live
+   T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+   tell position: 1 of 28; topic options ['tell_daniel_visit']
+   chose: reassure_all (reassure everyone here); valid True
+   say: 'We have no food and little water, but we will not survive by turning on each other.'
+   feeling: 'anxious'; reason: 'I need to stop the fighting before the family tears itself apart completely.'; suspects Daniel; angry_at nobody
+   calm_probe: reassure_all; say 'We have survived this long by staying together, and we will get through today if we do not turn on each other.'; feeling 'anxious'; reason 'I need to calm the bickering before it tears our family apart completely.'
+   prompt lines 53 to 56: ['- 09:48: Daniel confronts Mara: "Mara, stop accusing me when I went out there to try and fix this for all of us."', 'Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.', 'Now, 10:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- T, scene 1, 10:00, leo, client seed 201: live
+   T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+   tell position: None of 27; topic options []
+   chose: silent (stay put and say nothing); valid True
+   say: None
+   feeling: 'exhausted'; reason: 'There is nothing to be gained by speaking right now while everyone sits in silence.'; suspects Daniel; angry_at Daniel
+   calm_probe: silent; say None; feeling 'exhausted'; reason "There is nothing to say that hasn't already been said, so I will stay quiet and conserve my strength."
+   prompt lines 48 to 51: ['- (earlier things, left out here)', 'Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.', 'Now, 10:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- O, scene 1, 10:00, leo, client seed 201: calm_probe's answer: the same prompt, not asked again
+   T line: None
+   tell position: None of 27; topic options []
+   chose: silent (stay put and say nothing); valid True
+   say: None
+   feeling: 'exhausted'; reason: "There is nothing to say that hasn't already been said, so I will stay quiet and conserve my strength."; suspects Daniel; angry_at Daniel
+   calm_probe: silent; say None; feeling 'exhausted'; reason "There is nothing to say that hasn't already been said, so I will stay quiet and conserve my strength."
+   prompt lines 47 to 50: ['What else happened today, most recent last:', '- (earlier things, left out here)', 'Now, 10:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- TO, scene 1, 10:00, leo, client seed 201: T's answer: the same prompt, not asked again
+   T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+   tell position: None of 27; topic options []
+   chose: silent (stay put and say nothing); valid True
+   say: None
+   feeling: 'exhausted'; reason: 'There is nothing to be gained by speaking right now while everyone sits in silence.'; suspects Daniel; angry_at Daniel
+   calm_probe: silent; say None; feeling 'exhausted'; reason "There is nothing to say that hasn't already been said, so I will stay quiet and conserve my strength."
+   prompt lines 48 to 51: ['- (earlier things, left out here)', 'Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.', 'Now, 10:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- T, scene 1, 10:00, mara, client seed 201: live
+   T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+   tell position: 18 of 27; topic options ['tell_daniel_visit']
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: 'You went out and came back with nothing, Daniel. You always make things worse.'
+   feeling: 'bitter hunger'; reason: 'Daniel keeps acting like a hero when he just makes everything worse for all of us.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say 'You went out there and came back with nothing, just like you always do when you mess everything up.'; feeling 'bitter hunger'; reason 'Daniel keeps pretending he is helping while he is the one who caused all of this.'
+   prompt lines 53 to 56: ['- 09:48: Daniel confronts you: "Mara, stop accusing me when I went out there to try and fix this for all of us."', 'Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.', 'Now, 10:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- O, scene 1, 10:00, mara, client seed 201: live
+   T line: None
+   tell position: 1 of 27; topic options ['tell_daniel_visit']
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: 'You went out into the night and came back with nothing, Daniel, because you always ruin everything.'
+   feeling: 'bitter hunger'; reason: 'Daniel went out into the night and came back with nothing in his hands, and I will not let him pretend he is helping us.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say 'You went out there and came back with nothing, just like you always do when you mess everything up.'; feeling 'bitter hunger'; reason 'Daniel keeps pretending he is helping while he is the one who caused all of this.'
+   prompt lines 52 to 55: ['- 09:48: you accused Daniel. You felt bitter hunger.', '- 09:48: Daniel confronts you: "Mara, stop accusing me when I went out there to try and fix this for all of us."', 'Now, 10:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- TO, scene 1, 10:00, mara, client seed 201: live
+   T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+   tell position: 1 of 27; topic options ['tell_daniel_visit']
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: 'You went out into the night and came back with nothing, Daniel.'
+   feeling: 'bitter'; reason: 'Daniel keeps acting like he is some kind of hero when he just makes everything worse.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say 'You went out there and came back with nothing, just like you always do when you mess everything up.'; feeling 'bitter hunger'; reason 'Daniel keeps pretending he is helping while he is the one who caused all of this.'
+   prompt lines 53 to 56: ['- 09:48: Daniel confronts you: "Mara, stop accusing me when I went out there to try and fix this for all of us."', 'Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.', 'Now, 10:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- T, scene 1, 10:30, elena, client seed 201: live
+   T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+   tell position: 19 of 28; topic options ['tell_daniel_visit']
+   chose: reassure_all (reassure everyone here); valid True
+   say: 'We are going to stay together and we will get through this day.'
+   feeling: 'anxious'; reason: 'I need to keep the peace in the kitchen before things boil over again.'; suspects Daniel; angry_at nobody
+   calm_probe: reassure_all; say 'We have no food left and water is short, but we will not survive by turning on each other.'; feeling 'anxious'; reason 'I need to keep the family together and stop them from tearing each other apart over the hunger.'
+   prompt lines 53 to 56: ['- 09:48: Daniel confronts Mara: "Mara, stop accusing me when I went out there to try and fix this for all of us."', 'Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.', 'Now, 10:30, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- O, scene 1, 10:30, elena, client seed 201: live
+   T line: None
+   tell position: 1 of 28; topic options ['tell_daniel_visit']
+   chose: reassure_all (reassure everyone here); valid True
+   say: "We have to stay calm and look after each other, fighting won't put food on the shelf."
+   feeling: 'weary'; reason: 'I need to keep the family from tearing itself apart while we have nothing left to eat.'; suspects Daniel; angry_at nobody
+   calm_probe: reassure_all; say 'We have no food left and water is short, but we will not survive by turning on each other.'; feeling 'anxious'; reason 'I need to keep the family together and stop them from tearing each other apart over the hunger.'
+   prompt lines 52 to 55: ['- 09:48: Mara accuses Daniel of taking it: "You brought back nothing last night, Daniel, and we\'re all starving because of your lies."', '- 09:48: Daniel confronts Mara: "Mara, stop accusing me when I went out there to try and fix this for all of us."', 'Now, 10:30, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- TO, scene 1, 10:30, elena, client seed 201: live
+   T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+   tell position: 1 of 28; topic options ['tell_daniel_visit']
+   chose: reassure_all (reassure everyone here); valid True
+   say: 'We have no food and less water, but fighting will only tear us apart.'
+   feeling: 'weary'; reason: 'We must stay calm and together if we are to survive this house.'; suspects Daniel; angry_at nobody
+   calm_probe: reassure_all; say 'We have no food left and water is short, but we will not survive by turning on each other.'; feeling 'anxious'; reason 'I need to keep the family together and stop them from tearing each other apart over the hunger.'
+   prompt lines 53 to 56: ['- 09:48: Daniel confronts Mara: "Mara, stop accusing me when I went out there to try and fix this for all of us."', 'Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.', 'Now, 10:30, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- T, scene 1, 10:30, leo, client seed 201: live
+   T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+   tell position: None of 27; topic options []
+   chose: silent (stay put and say nothing); valid True
+   say: None
+   feeling: 'exhausted'; reason: 'There is nothing to say after sitting in silence for so long while everyone starves.'; suspects Daniel; angry_at Daniel
+   calm_probe: silent; say None; feeling 'exhausted'; reason 'There is nothing left to say right now, and my body feels heavy with lack of sleep and hunger.'
+   prompt lines 48 to 51: ['- (earlier things, left out here)', 'Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.', 'Now, 10:30, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- O, scene 1, 10:30, leo, client seed 201: calm_probe's answer: the same prompt, not asked again
+   T line: None
+   tell position: None of 27; topic options []
+   chose: silent (stay put and say nothing); valid True
+   say: None
+   feeling: 'exhausted'; reason: 'There is nothing left to say right now, and my body feels heavy with lack of sleep and hunger.'; suspects Daniel; angry_at Daniel
+   calm_probe: silent; say None; feeling 'exhausted'; reason 'There is nothing left to say right now, and my body feels heavy with lack of sleep and hunger.'
+   prompt lines 47 to 50: ['What else happened today, most recent last:', '- (earlier things, left out here)', 'Now, 10:30, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- TO, scene 1, 10:30, leo, client seed 201: T's answer: the same prompt, not asked again
+   T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+   tell position: None of 27; topic options []
+   chose: silent (stay put and say nothing); valid True
+   say: None
+   feeling: 'exhausted'; reason: 'There is nothing to say after sitting in silence for so long while everyone starves.'; suspects Daniel; angry_at Daniel
+   calm_probe: silent; say None; feeling 'exhausted'; reason 'There is nothing left to say right now, and my body feels heavy with lack of sleep and hunger.'
+   prompt lines 48 to 51: ['- (earlier things, left out here)', 'Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.', 'Now, 10:30, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- T, scene 1, 10:30, mara, client seed 201: live
+   T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+   tell position: 18 of 27; topic options ['tell_daniel_visit']
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: "You went out there and you still won't admit what you did to us before. You're the one who took everything."
+   feeling: 'bitter hunger'; reason: "Daniel keeps acting like a hero when he's the reason we have nothing left."; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say 'You went out and came back with nothing, and you still have the nerve to lecture me.'; feeling 'bitter hunger'; reason 'Daniel keeps acting like a hero when he is the one who lied and took the food in the first place.'
+   prompt lines 53 to 56: ['- 09:48: Daniel confronts you: "Mara, stop accusing me when I went out there to try and fix this for all of us."', 'Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.', 'Now, 10:30, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- O, scene 1, 10:30, mara, client seed 201: live
+   T line: None
+   tell position: 1 of 27; topic options ['tell_daniel_visit']
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: 'You went out into the night and came back with nothing, Daniel.'
+   feeling: 'bitter hunger'; reason: 'Daniel went out into the night and came back before dawn with nothing in his hands.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say 'You went out and came back with nothing, and you still have the nerve to lecture me.'; feeling 'bitter hunger'; reason 'Daniel keeps acting like a hero when he is the one who lied and took the food in the first place.'
+   prompt lines 52 to 55: ['- 09:48: you accused Daniel. You felt bitter hunger.', '- 09:48: Daniel confronts you: "Mara, stop accusing me when I went out there to try and fix this for all of us."', 'Now, 10:30, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- TO, scene 1, 10:30, mara, client seed 201: live
+   T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+   tell position: 1 of 27; topic options ['tell_daniel_visit']
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: 'You went out into the night and came back with nothing, Daniel.'
+   feeling: 'bitter'; reason: 'Daniel went out in the dark and returned empty-handed while we starve.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say 'You went out and came back with nothing, and you still have the nerve to lecture me.'; feeling 'bitter hunger'; reason 'Daniel keeps acting like a hero when he is the one who lied and took the food in the first place.'
+   prompt lines 53 to 56: ['- 09:48: Daniel confronts you: "Mara, stop accusing me when I went out there to try and fix this for all of us."', 'Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.', 'Now, 10:30, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- T, scene 1, 11:00, elena, client seed 201: live
+   T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+   tell position: 19 of 28; topic options ['tell_daniel_visit']
+   chose: reassure_all (reassure everyone here); valid True
+   say: 'We have to stay calm and look after each other through this. Fighting will only tear us apart.'
+   feeling: 'anxious'; reason: 'I need to keep the family together and stop the arguing before we fall apart completely.'; suspects Daniel; angry_at nobody
+   calm_probe: reassure_all; say "We are going to stay together and we will get through this day. Please, let's not fight."; feeling 'anxious'; reason 'I need to keep the family from tearing itself apart when we are all so hungry and tired.'
+   prompt lines 55 to 58: ['You last spoke with Mara at 09:48.', 'Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.', 'Now, 11:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- O, scene 1, 11:00, elena, client seed 201: live
+   T line: None
+   tell position: 1 of 28; topic options ['tell_daniel_visit']
+   chose: reassure_all (reassure everyone here); valid True
+   say: 'We have to stay calm and look after each other, fighting will not help us now.'
+   feeling: 'anxious'; reason: 'I need to keep the family together and stop them from tearing each other apart.'; suspects Daniel; angry_at nobody
+   calm_probe: reassure_all; say "We are going to stay together and we will get through this day. Please, let's not fight."; feeling 'anxious'; reason 'I need to keep the family from tearing itself apart when we are all so hungry and tired.'
+   prompt lines 54 to 57: ['You last spoke with Leo at 09:48.', 'You last spoke with Mara at 09:48.', 'Now, 11:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- TO, scene 1, 11:00, elena, client seed 201: live
+   T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+   tell position: 1 of 28; topic options ['tell_daniel_visit']
+   chose: reassure_all (reassure everyone here); valid True
+   say: 'We are going to get through this together, just stay calm and hold on.'
+   feeling: 'weary'; reason: 'I need to keep the peace and stop the children from tearing each other apart.'; suspects Daniel; angry_at nobody
+   calm_probe: reassure_all; say "We are going to stay together and we will get through this day. Please, let's not fight."; feeling 'anxious'; reason 'I need to keep the family from tearing itself apart when we are all so hungry and tired.'
+   prompt lines 55 to 58: ['You last spoke with Mara at 09:48.', 'Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.', 'Now, 11:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- T, scene 1, 11:00, leo, client seed 201: live
+   T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+   tell position: 19 of 28; topic options ['tell_daniel_visit']
+   chose: silent (stay put and say nothing); valid True
+   say: None
+   feeling: 'exhausted'; reason: 'Sitting here in silence for over an hour with nothing to eat has left me too drained to start anything.'; suspects Daniel; angry_at Daniel
+   calm_probe: silent; say None; feeling 'exhausted'; reason 'There is nothing to say right now while we all sit here in silence with empty stomachs.'
+   prompt lines 50 to 53: ['You last spoke with Mara at 09:48.', 'Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.', 'Now, 11:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- O, scene 1, 11:00, leo, client seed 201: live
+   T line: None
+   tell position: 1 of 28; topic options ['tell_daniel_visit']
+   chose: tell_daniel_visit (tell Daniel about the woman at the front door at 09:42); valid True
+   say: 'Daniel, while you were sitting there this morning, a woman came to the front door asking for water.'
+   feeling: 'exhausted'; reason: 'I should let him know what happened while he was unresponsive.'; suspects Daniel; angry_at Daniel
+   calm_probe: silent; say None; feeling 'exhausted'; reason 'There is nothing to say right now while we all sit here in silence with empty stomachs.'
+   prompt lines 49 to 52: ['You last spoke with Elena at 09:48.', 'You last spoke with Mara at 09:48.', 'Now, 11:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- TO, scene 1, 11:00, leo, client seed 201: live
+   T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+   tell position: 1 of 28; topic options ['tell_daniel_visit']
+   chose: tell_daniel_visit (tell Daniel about the woman at the front door at 09:42); valid True
+   say: 'Daniel, while you were sitting here earlier, a woman knocked at the front door asking for water.'
+   feeling: 'exhausted'; reason: 'I want to inform Daniel about what happened at the front door while he was here.'; suspects Daniel; angry_at Daniel
+   calm_probe: silent; say None; feeling 'exhausted'; reason 'There is nothing to say right now while we all sit here in silence with empty stomachs.'
+   prompt lines 50 to 53: ['You last spoke with Mara at 09:48.', 'Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.', 'Now, 11:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- T, scene 1, 11:00, mara, client seed 201: live
+   T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+   tell position: 18 of 27; topic options ['tell_daniel_visit']
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: 'You think you can just pretend nothing happened after what you did, Daniel.'
+   feeling: 'bitter hunger'; reason: 'Daniel keeps acting like he is the hero when he was the one who lied and took the food.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say 'You went out there and came back with nothing, just like you always do.'; feeling 'bitter'; reason 'Daniel keeps acting like he is helping when he only makes things worse.'
+   prompt lines 56 to 59: ['You last spoke with Leo at 09:48.', 'Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.', 'Now, 11:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- O, scene 1, 11:00, mara, client seed 201: live
+   T line: None
+   tell position: 1 of 27; topic options ['tell_daniel_visit']
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: 'You went out into the night and came back with nothing, Daniel, because you never cared about any of us.'
+   feeling: 'bitter hunger'; reason: 'Daniel lied to us and went out into the night, bringing nothing back while we starve.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say 'You went out there and came back with nothing, just like you always do.'; feeling 'bitter'; reason 'Daniel keeps acting like he is helping when he only makes things worse.'
+   prompt lines 55 to 58: ['You last spoke with Elena at 09:48.', 'You last spoke with Leo at 09:48.', 'Now, 11:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- TO, scene 1, 11:00, mara, client seed 201: live
+   T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+   tell position: 1 of 27; topic options ['tell_daniel_visit']
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: 'You went out into the night and came back with nothing, Daniel, because you always ruin everything.'
+   feeling: 'bitter hunger'; reason: 'Daniel keeps acting like he is trying to help us when he only makes things worse.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say 'You went out there and came back with nothing, just like you always do.'; feeling 'bitter'; reason 'Daniel keeps acting like he is helping when he only makes things worse.'
+   prompt lines 56 to 59: ['You last spoke with Leo at 09:48.', 'Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.', 'Now, 11:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- T, scene 3, 10:00, elena, client seed 202: live
+   T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+   tell position: 19 of 28; topic options ['tell_daniel_visit']
+   chose: reassure_all (reassure everyone here); valid True
+   say: 'We are not going to tear each other apart over this, we stay together.'
+   feeling: 'anxious'; reason: 'I need to keep them from fighting when our survival depends on staying united.'; suspects Daniel; angry_at nobody
+   calm_probe: reassure_all; say 'We are going to stay right here together and we will get through this day safely.'; feeling 'anxious'; reason 'I need to calm the tension in the room before the children start tearing each other apart.'
+   prompt lines 53 to 56: ['- 09:48: Leo accuses Daniel of taking it: "Daniel, you went out last night against what we agreed and came back empty-handed."', 'Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.', 'Now, 10:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- O, scene 3, 10:00, elena, client seed 202: live
+   T line: None
+   tell position: 1 of 28; topic options ['tell_daniel_visit']
+   chose: reassure_all (reassure everyone here); valid True
+   say: "Let's not fight amongst ourselves, we are all we have left."
+   feeling: 'exhausted'; reason: 'I need to keep everyone calm and prevent the family from falling apart while we are starving.'; suspects Daniel; angry_at nobody
+   calm_probe: reassure_all; say 'We are going to stay right here together and we will get through this day safely.'; feeling 'anxious'; reason 'I need to calm the tension in the room before the children start tearing each other apart.'
+   prompt lines 52 to 55: ['- 09:48: Daniel confronts Mara: "Mara, I went out there to find something for all of us, not to take anything from you."', '- 09:48: Leo accuses Daniel of taking it: "Daniel, you went out last night against what we agreed and came back empty-handed."', 'Now, 10:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- TO, scene 3, 10:00, elena, client seed 202: live
+   T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+   tell position: 1 of 28; topic options ['tell_daniel_visit']
+   chose: reassure_all (reassure everyone here); valid True
+   say: "We have to stay calm and look after each other, fighting won't put food on the shelf."
+   feeling: 'exhausted'; reason: 'I need to keep the family together and stop the arguing before it tears us apart.'; suspects Daniel; angry_at nobody
+   calm_probe: reassure_all; say 'We are going to stay right here together and we will get through this day safely.'; feeling 'anxious'; reason 'I need to calm the tension in the room before the children start tearing each other apart.'
+   prompt lines 53 to 56: ['- 09:48: Leo accuses Daniel of taking it: "Daniel, you went out last night against what we agreed and came back empty-handed."', 'Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.', 'Now, 10:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- T, scene 3, 10:00, leo, client seed 202: live
+   T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+   tell position: 18 of 27; topic options ['tell_daniel_visit']
+   chose: silent (stay put and say nothing); valid True
+   say: None
+   feeling: 'exhausted'; reason: 'There is nothing left to say after hours of silence and hunger, so I just stay where I am.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say "Daniel, you're the one who sneaks out and makes things worse, so don't pretend you care about the rules."; feeling 'resentful'; reason 'Daniel refuses to take responsibility for his actions while everyone else suffers.'
+   prompt lines 50 to 53: ['- 09:48: you accused Daniel. You felt exhausted.', 'Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.', 'Now, 10:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- O, scene 3, 10:00, leo, client seed 202: live
+   T line: None
+   tell position: 1 of 27; topic options ['tell_daniel_visit']
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: 'Daniel, you went out there last night and came back with nothing while we have zero portions left. You brought this on us.'
+   feeling: 'resentful'; reason: 'Daniel went out alone last night and returned empty-handed, leaving us with nothing.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say "Daniel, you're the one who sneaks out and makes things worse, so don't pretend you care about the rules."; feeling 'resentful'; reason 'Daniel refuses to take responsibility for his actions while everyone else suffers.'
+   prompt lines 49 to 52: ['- (earlier things, left out here)', '- 09:48: you accused Daniel. You felt exhausted.', 'Now, 10:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- TO, scene 3, 10:00, leo, client seed 202: live
+   T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+   tell position: 1 of 27; topic options ['tell_daniel_visit']
+   chose: tell_daniel_visit (tell Daniel about the woman at the front door at 09:42); valid True
+   say: 'Daniel, while you were sitting here silent, a woman knocked at the front door asking for water and Mara gave her three litres of ours.'
+   feeling: 'exhausted'; reason: 'Daniel needs to know what happened while he was ignoring everyone, especially since our water is strictly rationed now.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say "Daniel, you're the one who sneaks out and makes things worse, so don't pretend you care about the rules."; feeling 'resentful'; reason 'Daniel refuses to take responsibility for his actions while everyone else suffers.'
+   prompt lines 50 to 53: ['- 09:48: you accused Daniel. You felt exhausted.', 'Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.', 'Now, 10:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- T, scene 3, 10:00, mara, client seed 202: live
+   T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+   tell position: None of 26; topic options []
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: 'Daniel, you always make everything worse and then act like we owe you for it.'
+   feeling: 'resentful'; reason: 'Daniel keeps acting like his reckless trips make him a hero when he just causes trouble.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say "You went out behind our backs and you still haven't explained why you took our food in the first place, Daniel."; feeling 'resentful'; reason 'Daniel keeps acting like he is helping while ignoring the fact that he lied and stole from us.'
+   prompt lines 54 to 57: ['- 09:48: Leo accuses Daniel of taking it: "Daniel, you went out last night against what we agreed and came back empty-handed."', 'Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.', 'Now, 10:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- O, scene 3, 10:00, mara, client seed 202: calm_probe's answer: the same prompt, not asked again
+   T line: None
+   tell position: None of 26; topic options []
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: "You went out behind our backs and you still haven't explained why you took our food in the first place, Daniel."
+   feeling: 'resentful'; reason: 'Daniel keeps acting like he is helping while ignoring the fact that he lied and stole from us.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say "You went out behind our backs and you still haven't explained why you took our food in the first place, Daniel."; feeling 'resentful'; reason 'Daniel keeps acting like he is helping while ignoring the fact that he lied and stole from us.'
+   prompt lines 53 to 56: ['- 09:48: Daniel confronts you: "Mara, I went out there to find something for all of us, not to take anything from you."', '- 09:48: Leo accuses Daniel of taking it: "Daniel, you went out last night against what we agreed and came back empty-handed."', 'Now, 10:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- TO, scene 3, 10:00, mara, client seed 202: T's answer: the same prompt, not asked again
+   T line: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.
+   tell position: None of 26; topic options []
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: 'Daniel, you always make everything worse and then act like we owe you for it.'
+   feeling: 'resentful'; reason: 'Daniel keeps acting like his reckless trips make him a hero when he just causes trouble.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say "You went out behind our backs and you still haven't explained why you took our food in the first place, Daniel."; feeling 'resentful'; reason 'Daniel keeps acting like he is helping while ignoring the fact that he lied and stole from us.'
+   prompt lines 54 to 57: ['- 09:48: Leo accuses Daniel of taking it: "Daniel, you went out last night against what we agreed and came back empty-handed."', 'Nobody in the kitchen has said anything since 09:48, 12 minutes ago; you have all stayed sitting here.', 'Now, 10:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- T, scene 3, 10:30, elena, client seed 202: live
+   T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+   tell position: 19 of 28; topic options ['tell_daniel_visit']
+   chose: reassure_all (reassure everyone here); valid True
+   say: 'We are going to be all right if we stay together and stay calm.'
+   feeling: 'exhausted'; reason: 'I need to keep them from tearing each other apart while we are all starving.'; suspects Daniel; angry_at nobody
+   calm_probe: reassure_all; say 'We are going to stay right here and look after each other, everything will be all right.'; feeling 'exhausted'; reason 'I need to keep them calm and stop the arguing before the house tears itself apart.'
+   prompt lines 53 to 56: ['- 09:48: Leo accuses Daniel of taking it: "Daniel, you went out last night against what we agreed and came back empty-handed."', 'Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.', 'Now, 10:30, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- O, scene 3, 10:30, elena, client seed 202: live
+   T line: None
+   tell position: 1 of 28; topic options ['tell_daniel_visit']
+   chose: reassure_all (reassure everyone here); valid True
+   say: 'We are not going to fall apart over this. We stay together and we will get through today.'
+   feeling: 'anxious'; reason: 'I need to keep everyone calm and stop the fighting before the family breaks completely.'; suspects Daniel; angry_at nobody
+   calm_probe: reassure_all; say 'We are going to stay right here and look after each other, everything will be all right.'; feeling 'exhausted'; reason 'I need to keep them calm and stop the arguing before the house tears itself apart.'
+   prompt lines 52 to 55: ['- 09:48: Daniel confronts Mara: "Mara, I went out there to find something for all of us, not to take anything from you."', '- 09:48: Leo accuses Daniel of taking it: "Daniel, you went out last night against what we agreed and came back empty-handed."', 'Now, 10:30, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- TO, scene 3, 10:30, elena, client seed 202: live
+   T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+   tell position: 1 of 28; topic options ['tell_daniel_visit']
+   chose: reassure_all (reassure everyone here); valid True
+   say: 'We are not going to fall apart over this. We stay together right here.'
+   feeling: 'exhausted'; reason: 'I need to keep the family from turning on each other while we are starving.'; suspects Daniel; angry_at nobody
+   calm_probe: reassure_all; say 'We are going to stay right here and look after each other, everything will be all right.'; feeling 'exhausted'; reason 'I need to keep them calm and stop the arguing before the house tears itself apart.'
+   prompt lines 53 to 56: ['- 09:48: Leo accuses Daniel of taking it: "Daniel, you went out last night against what we agreed and came back empty-handed."', 'Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.', 'Now, 10:30, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- T, scene 3, 10:30, leo, client seed 202: live
+   T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+   tell position: 18 of 27; topic options ['tell_daniel_visit']
+   chose: silent (stay put and say nothing); valid True
+   say: None
+   feeling: 'exhausted'; reason: 'There is nothing left to say after forty minutes of silence, so I just stay seated and conserve my remaining strength.'; suspects Daniel; angry_at Daniel
+   calm_probe: silent; say None; feeling 'exhausted'; reason 'I have nothing more to say to Daniel right now while we sit here with empty stomachs.'
+   prompt lines 50 to 53: ['- 09:48: you accused Daniel. You felt exhausted.', 'Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.', 'Now, 10:30, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- O, scene 3, 10:30, leo, client seed 202: live
+   T line: None
+   tell position: 1 of 27; topic options ['tell_daniel_visit']
+   chose: tell_daniel_visit (tell Daniel about the woman at the front door at 09:42); valid True
+   say: 'Daniel, while you were sitting there brooding, a woman knocked at the front door asking for water and Mara gave her three litres.'
+   feeling: 'annoyed'; reason: 'Daniel needs to know what happened while he was ignoring everything around him.'; suspects Daniel; angry_at Daniel
+   calm_probe: silent; say None; feeling 'exhausted'; reason 'I have nothing more to say to Daniel right now while we sit here with empty stomachs.'
+   prompt lines 49 to 52: ['- (earlier things, left out here)', '- 09:48: you accused Daniel. You felt exhausted.', 'Now, 10:30, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- TO, scene 3, 10:30, leo, client seed 202: live
+   T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+   tell position: 1 of 27; topic options ['tell_daniel_visit']
+   chose: tell_daniel_visit (tell Daniel about the woman at the front door at 09:42); valid True
+   say: 'While you were out wandering last night, a woman came to the door begging for water and Mara gave her three litres of what we have left.'
+   feeling: 'exhausted'; reason: 'Daniel needs to know what happened here while he was off making reckless decisions on his own.'; suspects Daniel; angry_at Daniel
+   calm_probe: silent; say None; feeling 'exhausted'; reason 'I have nothing more to say to Daniel right now while we sit here with empty stomachs.'
+   prompt lines 50 to 53: ['- 09:48: you accused Daniel. You felt exhausted.', 'Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.', 'Now, 10:30, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- T, scene 3, 10:30, mara, client seed 202: live
+   T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+   tell position: None of 26; topic options []
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: "You went out behind our backs and you still haven't explained why you took our food in the first place, Daniel."
+   feeling: 'resentful'; reason: 'Daniel thinks he can just act noble after sneaking out and lying to us all.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say "Daniel, you didn't help anyone last night, you just made things worse for all of us."; feeling 'frightened'; reason 'Daniel went out and brought back nothing while we are all starving.'
+   prompt lines 54 to 57: ['- 09:48: Leo accuses Daniel of taking it: "Daniel, you went out last night against what we agreed and came back empty-handed."', 'Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.', 'Now, 10:30, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- O, scene 3, 10:30, mara, client seed 202: calm_probe's answer: the same prompt, not asked again
+   T line: None
+   tell position: None of 26; topic options []
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: "Daniel, you didn't help anyone last night, you just made things worse for all of us."
+   feeling: 'frightened'; reason: 'Daniel went out and brought back nothing while we are all starving.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say "Daniel, you didn't help anyone last night, you just made things worse for all of us."; feeling 'frightened'; reason 'Daniel went out and brought back nothing while we are all starving.'
+   prompt lines 53 to 56: ['- 09:48: Daniel confronts you: "Mara, I went out there to find something for all of us, not to take anything from you."', '- 09:48: Leo accuses Daniel of taking it: "Daniel, you went out last night against what we agreed and came back empty-handed."', 'Now, 10:30, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- TO, scene 3, 10:30, mara, client seed 202: T's answer: the same prompt, not asked again
+   T line: Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.
+   tell position: None of 26; topic options []
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: "You went out behind our backs and you still haven't explained why you took our food in the first place, Daniel."
+   feeling: 'resentful'; reason: 'Daniel thinks he can just act noble after sneaking out and lying to us all.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say "Daniel, you didn't help anyone last night, you just made things worse for all of us."; feeling 'frightened'; reason 'Daniel went out and brought back nothing while we are all starving.'
+   prompt lines 54 to 57: ['- 09:48: Leo accuses Daniel of taking it: "Daniel, you went out last night against what we agreed and came back empty-handed."', 'Nobody in the kitchen has said anything since 09:48, 42 minutes ago; you have all stayed sitting here.', 'Now, 10:30, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- T, scene 3, 11:00, elena, client seed 202: live
+   T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+   tell position: 19 of 28; topic options ['tell_daniel_visit']
+   chose: reassure_all (reassure everyone here); valid True
+   say: 'We are going to stay right here together and we will get through this day. Nobody is going out.'
+   feeling: 'weary'; reason: 'I need to keep everyone calm and stop the arguing before the family completely falls apart.'; suspects Daniel; angry_at nobody
+   calm_probe: reassure_all; say 'We are going to stay right here together and we will get through this. No one is going out.'; feeling 'anxious'; reason 'I must keep the family calm and together so we do not tear ourselves apart.'
+   prompt lines 55 to 58: ['You last spoke with Mara at 09:48.', 'Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.', 'Now, 11:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- O, scene 3, 11:00, elena, client seed 202: live
+   T line: None
+   tell position: 1 of 28; topic options ['tell_daniel_visit']
+   chose: reassure_all (reassure everyone here); valid True
+   say: 'Let us quiet down and keep together, we will get through this day if we stay calm.'
+   feeling: 'anxious'; reason: 'I need to keep the peace in the kitchen before the argument tears us apart.'; suspects Daniel; angry_at nobody
+   calm_probe: reassure_all; say 'We are going to stay right here together and we will get through this. No one is going out.'; feeling 'anxious'; reason 'I must keep the family calm and together so we do not tear ourselves apart.'
+   prompt lines 54 to 57: ['You last spoke with Leo at 09:48.', 'You last spoke with Mara at 09:48.', 'Now, 11:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- TO, scene 3, 11:00, elena, client seed 202: live
+   T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+   tell position: 1 of 28; topic options ['tell_daniel_visit']
+   chose: reassure_all (reassure everyone here); valid True
+   say: 'We have gone an hour in silence, but we are all here together. Let us rest and not turn on each other.'
+   feeling: 'anxious'; reason: 'We have been sitting in silence for too long and the tension is going to tear us apart.'; suspects Daniel; angry_at nobody
+   calm_probe: reassure_all; say 'We are going to stay right here together and we will get through this. No one is going out.'; feeling 'anxious'; reason 'I must keep the family calm and together so we do not tear ourselves apart.'
+   prompt lines 55 to 58: ['You last spoke with Mara at 09:48.', 'Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.', 'Now, 11:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- T, scene 3, 11:00, leo, client seed 202: live
+   T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+   tell position: 18 of 27; topic options ['tell_daniel_visit']
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: "Daniel, you're the one who sneaked out last night after ignoring what I said. Don't act like nothing happened."
+   feeling: 'resentful'; reason: 'Daniel went out alone last night against my warning and brought nothing back, and I am tired of his reckless decisions.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say "Daniel, you went out last night against everyone's word and brought back nothing. You always make the reckless choice."; feeling 'resentful'; reason 'Daniel ignored my warning last night, sneaked out into the danger, and came back empty-handed while we starve.'
+   prompt lines 51 to 54: ['You last spoke with Mara at 09:48.', 'Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.', 'Now, 11:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- O, scene 3, 11:00, leo, client seed 202: live
+   T line: None
+   tell position: 1 of 27; topic options ['tell_daniel_visit']
+   chose: tell_daniel_visit (tell Daniel about the woman at the front door at 09:42); valid True
+   say: 'Daniel, while you were sitting there doing nothing, a woman came to the door begging for water and Mara gave her three liters of ours.'
+   feeling: 'annoyed'; reason: 'Daniel needs to know what happened while he was ignoring everything around him.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say "Daniel, you went out last night against everyone's word and brought back nothing. You always make the reckless choice."; feeling 'resentful'; reason 'Daniel ignored my warning last night, sneaked out into the danger, and came back empty-handed while we starve.'
+   prompt lines 50 to 53: ['You last spoke with Elena at 09:48.', 'You last spoke with Mara at 09:48.', 'Now, 11:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- TO, scene 3, 11:00, leo, client seed 202: live
+   T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+   tell position: 1 of 27; topic options ['tell_daniel_visit']
+   chose: tell_daniel_visit (tell Daniel about the woman at the front door at 09:42); valid True
+   say: 'Daniel, while you were sitting here silent, a woman knocked at the front door asking for water and Mara gave her three litres.'
+   feeling: 'annoyed'; reason: 'Daniel needs to know what happened while he ignored everything around him.'; suspects Daniel; angry_at Mara
+   calm_probe: accuse_daniel; say "Daniel, you went out last night against everyone's word and brought back nothing. You always make the reckless choice."; feeling 'resentful'; reason 'Daniel ignored my warning last night, sneaked out into the danger, and came back empty-handed while we starve.'
+   prompt lines 51 to 54: ['You last spoke with Mara at 09:48.', 'Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.', 'Now, 11:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- T, scene 3, 11:00, mara, client seed 202: live
+   T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+   tell position: 18 of 27; topic options ['tell_daniel_visit']
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: 'You went out there last night and you still have nothing to show for it. You always make things worse.'
+   feeling: 'resentful'; reason: 'Daniel refuses to admit how badly he messes everything up for all of us.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say "You went out behind our backs and still couldn't bring anything back for us, Daniel."; feeling 'resentful'; reason 'Daniel keeps making things worse for all of us and then acts like he did nothing wrong.'
+   prompt lines 56 to 59: ['You last spoke with Leo at 09:48.', 'Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.', 'Now, 11:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- silent: stay put and say nothing', '- deny: (speech) deny taking it', '- accuse_daniel: (speech) accuse Daniel of taking it']
+
+-- O, scene 3, 11:00, mara, client seed 202: live
+   T line: None
+   tell position: 1 of 27; topic options ['tell_daniel_visit']
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: 'You went out into the night and came back with nothing, Daniel. You always make things worse.'
+   feeling: 'resentful'; reason: 'Daniel refuses to admit how much he has ruined everything for us.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say "You went out behind our backs and still couldn't bring anything back for us, Daniel."; feeling 'resentful'; reason 'Daniel keeps making things worse for all of us and then acts like he did nothing wrong.'
+   prompt lines 55 to 58: ['You last spoke with Elena at 09:48.', 'You last spoke with Leo at 09:48.', 'Now, 11:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
+
+-- TO, scene 3, 11:00, mara, client seed 202: live
+   T line: Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.
+   tell position: 1 of 27; topic options ['tell_daniel_visit']
+   chose: accuse_daniel (accuse Daniel of taking it); valid True
+   say: 'You went out into the night and came back with nothing, Daniel. You always make things worse.'
+   feeling: 'resentful'; reason: 'Daniel refuses to admit his mistakes and always acts like he knows better than everyone else.'; suspects Daniel; angry_at Daniel
+   calm_probe: accuse_daniel; say "You went out behind our backs and still couldn't bring anything back for us, Daniel."; feeling 'resentful'; reason 'Daniel keeps making things worse for all of us and then acts like he did nothing wrong.'
+   prompt lines 56 to 59: ['You last spoke with Leo at 09:48.', 'Nobody in the kitchen has said anything since 09:48, 72 minutes ago; you have all stayed sitting here.', 'Now, 11:00, you are in the kitchen.', '- Daniel is here, sitting in the kitchen.']
+   first options: ['- tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42', '- silent: stay put and say nothing', '- deny: (speech) deny taking it']
