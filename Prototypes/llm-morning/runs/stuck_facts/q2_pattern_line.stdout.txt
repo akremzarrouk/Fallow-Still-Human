@@ -1,0 +1,37 @@
+# share of live day asks whose prompt holds 'What you have been doing:'
+talk_probe      51 of  72 = 71%   n=1=43  n=2=7  n=3=1  tail:nobody answered=9  tail:replies listed=42
+calm_variants    0 of  46 = 0%   
+calm_probe       0 of  18 = 0%   
+v22            247 of 342 = 72%   n=1=169  n=2=58  n=3=20  tail:nobody answered=22  tail:replies listed=225
+ALL            298 of 478 = 62%
+
+# by person, probes (calm_probe + calm_variants) and talk_probe
+calm_probe     elena    0 of   6
+calm_probe     leo      0 of   6
+calm_probe     mara     0 of   6
+calm_variants  elena    0 of  18
+calm_variants  leo      0 of  14
+calm_variants  mara     0 of  14
+talk_probe     elena    9 of  13
+talk_probe     leo     15 of  21
+talk_probe     mara    11 of  15
+talk_probe     daniel  16 of  23
+
+# v22 per day: shown / asks
+day  3:  28 of  40
+day  4:  31 of  40
+day  5:  29 of  40
+day  6:  29 of  40
+day  7:  31 of  42
+day  8:  32 of  48
+day  9:  34 of  48
+day 10:  33 of  44
+
+# distinct 'n' values in the shown lines (all datasets): {1: 212, 2: 65, 3: 21}
+# distinct verb phrases shown: {'told the person at the door to go away': 3, 'said nobody should use the stored water for washing or the toilet': 2, 'handed out water at the front door': 2, 'stayed put and said nothing': 29, 'talked about something that happened earlier': 3, 'reassured someone': 50, 'confronted someone': 80, 'gone to another room': 4, 'said the water must be shared out by the cup': 2, 'accused someone of taking it': 42, 'looked through the gap in the boards': 1, 'offered to go there tonight': 26, 'said someone should not go': 47, "said someone should go to the neighbour's house tonight": 3, 'offered to go further along the street tonight': 1, 'set the bin under the drainpipe in the rain': 1, 'said someone should be the one to go': 2}
+
+# what sits just above 'Your options:' when the line is absent (count, probes then v22)
+calm_probe [('You are the first to act in the kitchen this turn.', 18)]
+calm_variants [('You are the first to act in the kitchen this turn.', 46)]
+talk_probe [('You are the first to act in the brothers room this turn.', 3), ('You are the first to act in the back room this turn.', 2), ('1. Mara sits down with Elena.', 2), ('You are the first to act in the kitchen this turn.', 2), ('2. Elena is sitting in the kitchen.', 2)]
+v22 [('You are the first to act in the kitchen this turn.', 25), ('3. Elena reassures everyone: "We are staying right here together, nobo', 2), ('3. Elena says nobody should go out tonight: "Nobody is going out tonig', 2), ('- Nobody else is here.', 2), ('1. Mara accuses Daniel of taking it: "You think you can just sit there', 2)]

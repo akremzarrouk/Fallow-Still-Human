@@ -1,0 +1,6 @@
+$ git rev-parse --short HEAD
+a24ae82
+$ (cwd = Prototypes/llm-morning at HEAD) python runs/stuck_facts/collect_v22.py cache/v22/gemini-3.5-flash-lite-daniel_ate_it-seed2.json <scratchpad>/asks_v22_at_head.json
+replay exit 3 asks 100
+answer type str
+exit 0

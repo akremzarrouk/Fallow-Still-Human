@@ -1,0 +1,28 @@
+## talk_probe scene 4 mara 14:51 (chose accuse_daniel); the line is line 64 of 91, 28 from the end
+   What you have been doing: you have stayed put and said nothing, 3 turns in a row.
+   In that time nobody has said anything to you or to everyone.
+
+## talk_probe scene 4 leo 11:51 (chose silent); the line is line 63 of 83, 21 from the end
+   What you have been doing: you have confronted someone, 2 turns in a row.
+   In that time: Daniel reassured you, then confronted you.
+   Answered you differently from one time to the next: Daniel.
+
+## talk_probe scene 1 daniel 09:45 (chose go_kitchen); the line is line 67 of 73, 7 from the end
+   What you have been doing: you have stayed put and said nothing, 1 turn in a row.
+   In that time nobody has said anything to you or to everyone.
+
+## talk_probe scene 1 elena 09:45 (chose reassure_all); the line is line 61 of 87, 27 from the end
+   What you have been doing: you have told the person at the door to go away, 1 turn in a row.
+   In that time: Mara spoke to everyone; Leo spoke to everyone.
+   Nobody answered you differently from one time to the next.
+
+## v22 scene day3 mara minute 09 (chose accuse_daniel); the line is line 63 of 90, 28 from the end
+   What you have been doing: you have confronted someone, 3 turns in a row.
+   In that time: Elena reassured everyone, then reassured everyone, then reassured everyone; Daniel reassured everyone, then reassured everyone.
+   Nobody answered you differently from one time to the next.
+
+## v22 scene day10 daniel minute 09 (chose still_going); the line is line 53 of 83, 31 from the end
+   What you have been doing: you have offered to go there tonight, 2 turns in a row.
+   In that time: Mara said you should not be the one to go, then confronted you; Leo said you should not be the one to go, then confronted you; Elena said nobody should go, then said you should not be the one to go.
+   Answered you differently from one time to the next: Mara, Leo, Elena.
+

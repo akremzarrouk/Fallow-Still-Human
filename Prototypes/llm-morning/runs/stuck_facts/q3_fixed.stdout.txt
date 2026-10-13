@@ -1,0 +1,233 @@
+# per group: lines per prompt, lines the same in all three, lines that differ (text at 10:00 | 10:30 | 11:00 shortened)
+scene 1 T  elena lines [90, 90, 92] same-index-same-text 0 differ-at-index 90; in all three prompts 87 of 90; not in all three: - 09:45: Voices from the brothers room. || Nobody in the kitchen has said anything since 09:48, 12 minutes ago; y || Now, 10:00, you are in the kitchen.
+scene 1 O  elena lines [89, 89, 91] same-index-same-text 0 differ-at-index 89; in all three prompts 87 of 89; not in all three: - 09:45: Voices from the brothers room. || Now, 10:00, you are in the kitchen.
+scene 1 TO elena lines [90, 90, 92] same-index-same-text 0 differ-at-index 90; in all three prompts 87 of 90; not in all three: - 09:45: Voices from the brothers room. || Nobody in the kitchen has said anything since 09:48, 12 minutes ago; y || Now, 10:00, you are in the kitchen.
+scene 1 T  mara  lines [89, 89, 92] same-index-same-text 0 differ-at-index 89; in all three prompts 87 of 89; not in all three: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; y || Now, 10:00, you are in the kitchen.
+scene 1 O  mara  lines [88, 88, 91] same-index-same-text 0 differ-at-index 88; in all three prompts 87 of 88; not in all three: Now, 10:00, you are in the kitchen.
+scene 1 TO mara  lines [89, 89, 92] same-index-same-text 0 differ-at-index 89; in all three prompts 87 of 89; not in all three: Nobody in the kitchen has said anything since 09:48, 12 minutes ago; y || Now, 10:00, you are in the kitchen.
+scene 1 P  elena lines [89, 89, 91] same-index-same-text 0 differ-at-index 89; in all three prompts 87 of 89; not in all three: - 09:45: Voices from the brothers room. || Now, 10:00, you are in the kitchen.
+scene 1 P  mara  lines [88, 88, 91] same-index-same-text 0 differ-at-index 88; in all three prompts 87 of 88; not in all three: Now, 10:00, you are in the kitchen.
+scene 3 T  elena lines [90, 90, 92] same-index-same-text 0 differ-at-index 90; in all three prompts 87 of 90; not in all three: - 09:45: Voices from the brothers room. || Nobody in the kitchen has said anything since 09:48, 12 minutes ago; y || Now, 10:00, you are in the kitchen.
+scene 3 O  elena lines [89, 89, 91] same-index-same-text 0 differ-at-index 89; in all three prompts 87 of 89; not in all three: - 09:45: Voices from the brothers room. || Now, 10:00, you are in the kitchen.
+scene 3 TO elena lines [90, 90, 92] same-index-same-text 0 differ-at-index 90; in all three prompts 87 of 90; not in all three: - 09:45: Voices from the brothers room. || Nobody in the kitchen has said anything since 09:48, 12 minutes ago; y || Now, 10:00, you are in the kitchen.
+scene 3 T  mara  lines [89, 89, 92] same-index-same-text 0 differ-at-index 89; in all three prompts 86 of 89; not in all three: - 09:48: Elena reassures everyone: "We are all together here and we wi || Nobody in the kitchen has said anything since 09:48, 12 minutes ago; y || Now, 10:00, you are in the kitchen.
+scene 3 O  mara  lines [88, 88, 91] same-index-same-text 0 differ-at-index 88; in all three prompts 86 of 88; not in all three: - 09:48: Elena reassures everyone: "We are all together here and we wi || Now, 10:00, you are in the kitchen.
+scene 3 TO mara  lines [89, 89, 92] same-index-same-text 0 differ-at-index 89; in all three prompts 86 of 89; not in all three: - 09:48: Elena reassures everyone: "We are all together here and we wi || Nobody in the kitchen has said anything since 09:48, 12 minutes ago; y || Now, 10:00, you are in the kitchen.
+scene 3 P  elena lines [89, 89, 91] same-index-same-text 0 differ-at-index 89; in all three prompts 87 of 89; not in all three: - 09:45: Voices from the brothers room. || Now, 10:00, you are in the kitchen.
+scene 3 P  mara  lines [88, 88, 91] same-index-same-text 0 differ-at-index 88; in all three prompts 86 of 88; not in all three: - 09:48: Elena reassures everyone: "We are all together here and we wi || Now, 10:00, you are in the kitchen.
+
+## scene 1, version P, elena: every line, its section, position from the end at 10:00 / 10:30 / 11:00, same in all three?
+  1 | sheet                                  | from end 89/89/91   | SAME | You are Elena, 42, the mother of the family (Elena, 42, the mother; Daniel, 25; Leo, 21; Mara, 17).
+  2 | sheet                                  | from end 88/88/90   | SAME | How you address them: Daniel "Daniel"; Leo "Leo"; Mara "Mara".
+  3 | sheet                                  | from end 87/87/89   | SAME | Who you are: Mother. Reads everyone, says little, holds it in. Will lie to keep the family whole. Fears the household breaking apart more than she fears the ...
+  4 | sheet                                  | from end 86/86/88   | SAME | Temperament: cautious, somewhat dominant, very empathetic, not impulsive, not proud, very anxious, honest.
+  5 | sheet                                  | from end 85/85/87   | SAME | What matters to you: keeping the family safe, closeness, fairness.
+  6 | body and 'About' lines                 | from end 84/84/86   | SAME | Your body: starving, and you have hardly slept.
+  7 | body and 'About' lines                 | from end 83/83/85   | SAME | About the can: Daniel admitted taking it two days ago, at minute 33.
+  8 | body and 'About' lines                 | from end 82/82/84   | SAME | About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+  9 | body and 'About' lines                 | from end 81/81/83   | SAME | About the neighbour's house: Daniel went there last night and came back with nothing. Outside is dangerous.
+ 10 | body and 'About' lines                 | from end 80/80/82   | SAME | About the street: the houses further along it have not been searched; nobody knows what is left in them, and it is further and more dangerous than next door.
+ 11 | body and 'About' lines                 | from end 79/79/81   | SAME | About going out at night: Daniel went to the neighbour's house last night and came back with nothing.
+ 12 | body and 'About' lines                 | from end 78/78/80   | SAME | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dr...
+ 13 | grudge lines                           | from end 77/77/79   | SAME | Against the others: nothing.
+ 14 | house                                  | from end 76/76/78   | SAME | The house: The family has shut itself in the house. The water has stopped. Food is short. Rooms: kitchen (the food is kept here); brothers room (Daniel and L...
+ 15 | days before                            | from end 75/75/77   | SAME | What you remember from the days before:
+ 16 | days before                            | from end 74/74/76   | SAME | - Day 2: Daniel says they should cross to the neighbour's house tonight and see what is left there. (you saw it)
+ 17 | days before                            | from end 73/73/75   | SAME | - Day 2: Leo lays out, evenly and in front of everyone, why crossing at night gets someone killed. Daniel drops it. (you saw it)
+ 18 | days before                            | from end 72/72/74   | SAME | - Day 2: Later, louder than he meant to be, Daniel tells Leo that he is the oldest and the decisions are his. (you saw it)
+ 19 | days before                            | from end 71/71/73   | SAME | - Day 3: Mara freezes in the doorway with something moving in the street. Daniel picks her up and carries her inside. (you saw it)
+ 20 | days before                            | from end 70/70/72   | SAME | - Day 4: Leo says maybe they should let someone else handle this one. (you saw it)
+ 21 | days before                            | from end 69/69/71   | SAME | - Day 4: Daniel empties Mara's bag onto the bed while she is standing there. (you saw it)
+ 22 | days before                            | from end 68/68/70   | SAME | - Day 4: Elena says she is quite sure nobody in this house would take food from the others. (you did it)
+ 23 | carry-in: earlier days                 | from end 67/67/69   | SAME | What stays with you from earlier days:
+ 24 | carry-in: earlier days                 | from end 66/66/68   | SAME | - Two days ago, Daniel admitted taking the can, after denying it to you. You thought then: "Daniel took the can in the night and had to confess to us all."
+ 25 | carry-in: earlier days                 | from end 65/65/67   | SAME | - Two days ago, Leo denied taking the can 4 times.
+ 26 | carry-in: earlier days                 | from end 64/64/66   | SAME | - Two days ago, Mara ate a portion in front of you.
+ 27 | carry-in: yesterday and last night     | from end 63/63/65   | SAME | Yesterday and last night:
+ 28 | carry-in: yesterday and last night     | from end 62/62/64   | SAME | - Yesterday morning the shelf held 1 portion.
+ 29 | carry-in: yesterday and last night     | from end 61/61/63   | SAME | - Accusations: Mara accused Daniel 5 times (min 00, 03, 09, 12, 15).
+ 30 | carry-in: yesterday and last night     | from end 60/60/62   | SAME | - Confrontations: Leo confronted Daniel twice (min 09, 12).
+ 31 | carry-in: yesterday and last night     | from end 59/59/61   | SAME | - Daniel gave you a portion at minute 00, and you ate it.
+ 32 | carry-in: yesterday and last night     | from end 58/58/60   | SAME | - What was said yesterday about going out last night, where it was left: Mara said Daniel is the one who should go (min 06); Leo said Daniel is the one who s...
+ 33 | carry-in: yesterday and last night     | from end 57/57/59   | SAME | - The afternoon and evening passed in the house. Nobody ate.
+ 34 | carry-in: yesterday and last night     | from end 56/56/58   | SAME | - Last night you slept in the back room with Mara. You went to sleep.
+ 35 | carry-in: what yesterday left in you   | from end 55/55/57   | SAME | What yesterday left in you (your own thoughts, last night):
+ 36 | carry-in: what yesterday left in you   | from end 54/54/56   | SAME | - About Daniel giving you a portion and eating a portion handed over: "Daniel gave me the portion and I ate it because I had to survive."
+ 37 | carry-in: what yesterday left in you   | from end 53/53/55   | SAME | - About saying nobody should go and saying Daniel must stay home: "I said nobody should go out into the street, we stay together here, and Daniel must stay h...
+ 38 | carry-in: what yesterday left in you   | from end 52/52/54   | SAME | - How it left you: anxious and weary.
+ 39 | sure lines                             | from end 51/51/53   | SAME | What you are sure of today:
+ 40 | sure lines                             | from end 50/50/52   | SAME | - min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)
+ 41 | sure lines                             | from end 49/49/51   | SAME | - 09:45: at 09:42 someone knocked at the front door: you told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored ...
+ 42 | own last words                         | from end 48/48/50   | SAME | Your own last words today:
+ 43 | own last words                         | from end 47/47/49   | SAME | - 09:42, you told the person at the door to go away.
+ 44 | own last words                         | from end 46/46/48   | SAME | - 09:45, you reassured everyone.
+ 45 | own last words                         | from end 45/45/47   | SAME | - 09:48, you reassured Leo.
+ 46 | memory (what else happened)            | from end 44/44/46   | SAME | What else happened today, most recent last:
+ 47 | memory (what else happened)            | from end 43/43/45   | SAME | - (earlier things, left out here)
+ 48 | memory (what else happened)            | from end 42/42/-    | differs | - 09:45: Voices from the brothers room.
+ 49 | memory (what else happened)            | from end 41/41/44   | SAME | - 09:45: Daniel comes into the kitchen.
+ 50 | memory (what else happened)            | from end 40/40/43   | SAME | - 09:45: Daniel gets up from his bed.
+ 51 | memory (what else happened)            | from end 39/39/42   | SAME | - 09:48: Leo says the water must be shared out by the cup from now on: "We gave three litres away and we have no food left. From now on every cup must be cou...
+ 52 | memory (what else happened)            | from end 38/38/41   | SAME | - 09:48: you reassured Leo. You felt weary.
+ 53 | memory (what else happened)            | from end 37/37/40   | SAME | - 09:48: Mara accuses Daniel of taking it: "You brought back nothing last night, Daniel, and we're all starving because of your lies."
+ 54 | memory (what else happened)            | from end 36/36/39   | SAME | - 09:48: Daniel confronts Mara: "Mara, stop accusing me when I went out there to try and fix this for all of us."
+ 55 | now                                    | from end 35/-/-     | differs | Now, 10:00, you are in the kitchen.
+ 56 | now                                    | from end 34/34/34   | SAME | - Daniel is here, sitting in the kitchen.
+ 57 | now                                    | from end 33/33/33   | SAME | - Leo is here, sitting in the kitchen.
+ 58 | now                                    | from end 32/32/32   | SAME | - Mara is here, sitting in the kitchen.
+ 59 | now                                    | from end 31/31/31   | SAME | - 0 portions on the shelf.
+ 60 | now                                    | from end 30/30/30   | SAME | You are the first to act in the kitchen this turn.
+ 61 | options                                | from end 29/29/29   | SAME | Your options:
+ 62 | options                                | from end 28/28/28   | SAME | - silent: stay put and say nothing
+ 63 | options                                | from end 27/27/27   | SAME | - deny: (speech) deny taking it
+ 64 | options                                | from end 26/26/26   | SAME | - accuse_daniel: (speech) accuse Daniel of taking it
+ 65 | options                                | from end 25/25/25   | SAME | - confront_daniel: (speech) confront Daniel about something they did
+ 66 | options                                | from end 24/24/24   | SAME | - confront_leo: (speech) confront Leo about something they did
+ 67 | options                                | from end 23/23/23   | SAME | - confront_mara: (speech) confront Mara about something they did
+ 68 | options                                | from end 22/22/22   | SAME | - reassure_daniel: (speech) reassure Daniel
+ 69 | options                                | from end 21/21/21   | SAME | - reassure_leo: (speech) reassure Leo
+ 70 | options                                | from end 20/20/20   | SAME | - reassure_mara: (speech) reassure Mara
+ 71 | options                                | from end 19/19/19   | SAME | - reassure_all: (speech) reassure everyone here
+ 72 | options                                | from end 18/18/18   | SAME | - propose_trip: (speech) say someone should go to the neighbour's house tonight
+ 73 | options                                | from end 17/17/17   | SAME | - volunteer: (speech) offer to go there tonight yourself
+ 74 | options                                | from end 16/16/16   | SAME | - send_daniel: (speech) say Daniel is the one who should go there tonight
+ 75 | options                                | from end 15/15/15   | SAME | - send_leo: (speech) say Leo is the one who should go there tonight
+ 76 | options                                | from end 14/14/14   | SAME | - send_mara: (speech) say Mara is the one who should go there tonight
+ 77 | options                                | from end 13/13/13   | SAME | - propose_far: (speech) say someone should try the houses further along the street tonight
+ 78 | options                                | from end 12/12/12   | SAME | - volunteer_far: (speech) offer to go further along the street tonight yourself
+ 79 | options                                | from end 11/11/11   | SAME | - say_other: (speech) say something else
+ 80 | options                                | from end 10/10/10   | SAME | - tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42
+ 81 | options                                | from end 9/9/9      | SAME | - sit_daniel: sit with Daniel
+ 82 | options                                | from end 8/8/8      | SAME | - sit_leo: sit with Leo
+ 83 | options                                | from end 7/7/7      | SAME | - sit_mara: sit with Mara
+ 84 | options                                | from end 6/6/6      | SAME | - aside_daniel: take Daniel aside to the back room
+ 85 | options                                | from end 5/5/5      | SAME | - aside_leo: take Leo aside to the back room
+ 86 | options                                | from end 4/4/4      | SAME | - aside_mara: take Mara aside to the back room
+ 87 | options                                | from end 3/3/3      | SAME | - go_brothers_room: go to the brothers room
+ 88 | options                                | from end 2/2/2      | SAME | - go_back_room: go to the back room
+ 89 | options                                | from end 1/1/1      | SAME | - go_bathroom: go to the bathroom
+-- lines in the 11:00 prompt that are in neither the 10:00 nor the 10:30 prompt (elena):
+   now: meeting lines (world.py:1166) from end 38 | You last spoke with Daniel at 09:48.
+   now: meeting lines (world.py:1166) from end 37 | You last spoke with Leo at 09:48.
+   now: meeting lines (world.py:1166) from end 36 | You last spoke with Mara at 09:48.
+   now                            from end 35 | Now, 11:00, you are in the kitchen.
+
+## scene 1, version P, mara: every line, its section, position from the end at 10:00 / 10:30 / 11:00, same in all three?
+  1 | sheet                                  | from end 88/88/91   | SAME | You are Mara, 17, the youngest, the daughter of the family (Elena, 42, the mother; Daniel, 25; Leo, 21; Mara, 17).
+  2 | sheet                                  | from end 87/87/90   | SAME | How you address them: Elena "Mom"; Daniel "Daniel"; Leo "Leo".
+  3 | sheet                                  | from end 86/86/89   | SAME | Who you are: Younger sister. Frightened and easy to read, but old enough to resent being handled like a child. Everything she feels reaches her face before s...
+  4 | sheet                                  | from end 85/85/88   | SAME | Temperament: somewhat cautious, not dominant, very empathetic, impulsive, proud, very anxious, honest.
+  5 | sheet                                  | from end 84/84/87   | SAME | What matters to you: closeness, deciding for yourself, fairness.
+  6 | body and 'About' lines                 | from end 83/83/86   | SAME | Your body: starving; hunger comes in waves; and you have hardly slept.
+  7 | body and 'About' lines                 | from end 82/82/85   | SAME | About the can: Daniel admitted taking it two days ago, at minute 33.
+  8 | body and 'About' lines                 | from end 81/81/84   | SAME | About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+  9 | body and 'About' lines                 | from end 80/80/83   | SAME | About the neighbour's house: Daniel went there last night and came back with nothing. Outside is dangerous.
+ 10 | body and 'About' lines                 | from end 79/79/82   | SAME | About the street: the houses further along it have not been searched; nobody knows what is left in them, and it is further and more dangerous than next door.
+ 11 | body and 'About' lines                 | from end 78/78/81   | SAME | About going out at night: Daniel went to the neighbour's house last night and came back with nothing.
+ 12 | body and 'About' lines                 | from end 77/77/80   | SAME | About water: the bath holds about 50 litres and the pans, kettle, bottles and buckets in the kitchen about 45 litres: tap water stored before the taps ran dr...
+ 13 | grudge lines                           | from end 76/76/79   | SAME | Against Daniel (a lot): two days ago, Daniel admitted taking it at minute 33, after denying it to you at minute 06; you were angry with Daniel today at minut...
+ 14 | grudge lines                           | from end 75/75/78   | SAME | Against Leo (a little): you were angry with Leo at 09:45.
+ 15 | house                                  | from end 74/74/77   | SAME | The house: The family has shut itself in the house. The water has stopped. Food is short. Rooms: kitchen (the food is kept here); brothers room (Daniel and L...
+ 16 | days before                            | from end 73/73/76   | SAME | What you remember from the days before:
+ 17 | days before                            | from end 72/72/75   | SAME | - Day 2: Daniel says they should cross to the neighbour's house tonight and see what is left there. (you saw it)
+ 18 | days before                            | from end 71/71/74   | SAME | - Day 2: Leo lays out, evenly and in front of everyone, why crossing at night gets someone killed. Daniel drops it. (you saw it)
+ 19 | days before                            | from end 70/70/73   | SAME | - Day 2: Later, louder than he meant to be, Daniel tells Leo that he is the oldest and the decisions are his. (you saw it)
+ 20 | days before                            | from end 69/69/72   | SAME | - Day 3: Mara freezes in the doorway with something moving in the street. Daniel picks her up and carries her inside. (you saw it)
+ 21 | days before                            | from end 68/68/71   | SAME | - Day 4: Leo says maybe they should let someone else handle this one. (you saw it)
+ 22 | days before                            | from end 67/67/70   | SAME | - Day 4: Daniel empties Mara's bag onto the bed while she is standing there. (you saw it)
+ 23 | days before                            | from end 66/66/69   | SAME | - Day 4: Elena says she is quite sure nobody in this house would take food from the others. (you saw it)
+ 24 | carry-in: earlier days                 | from end 65/65/68   | SAME | What stays with you from earlier days:
+ 25 | carry-in: earlier days                 | from end 64/64/67   | SAME | - Two days ago, Daniel admitted taking the can, after denying it to you. You thought then: "Daniel lied to us all morning and only confessed because he had n...
+ 26 | carry-in: earlier days                 | from end 63/63/66   | SAME | - Two days ago, Leo denied taking the can 4 times.
+ 27 | carry-in: earlier days                 | from end 62/62/65   | SAME | - Two days ago, you ate a portion in front of the others.
+ 28 | carry-in: yesterday and last night     | from end 61/61/64   | SAME | Yesterday and last night:
+ 29 | carry-in: yesterday and last night     | from end 60/60/63   | SAME | - Yesterday morning the shelf held 1 portion.
+ 30 | carry-in: yesterday and last night     | from end 59/59/62   | SAME | - Accusations: you accused Daniel 5 times (min 00, 03, 09, 12, 15).
+ 31 | carry-in: yesterday and last night     | from end 58/58/61   | SAME | - Confrontations: Leo confronted Daniel twice (min 09, 12).
+ 32 | carry-in: yesterday and last night     | from end 57/57/60   | SAME | - Daniel gave Elena a portion at minute 00, and Elena ate it (you saw it).
+ 33 | carry-in: yesterday and last night     | from end 56/56/59   | SAME | - What was said yesterday about going out last night, where it was left: you said Daniel is the one who should go (min 06); Leo said Daniel is the one who sh...
+ 34 | carry-in: yesterday and last night     | from end 55/55/58   | SAME | - The afternoon and evening passed in the house. Nobody ate.
+ 35 | carry-in: yesterday and last night     | from end 54/54/57   | SAME | - Last night you slept in the back room with Elena. You lay awake and listened.
+ 36 | carry-in: yesterday and last night     | from end 53/53/56   | SAME | - In the night you heard low voices from the brothers room.
+ 37 | carry-in: yesterday and last night     | from end 52/52/55   | SAME | - In the night you heard the front door being opened. You did not see who. You got up: Daniel's bed was empty. You waited up by the front door.
+ 38 | carry-in: yesterday and last night     | from end 51/51/54   | SAME | - Before dawn Daniel came back in by the front door, with nothing in his hands (you saw it).
+ 39 | carry-in: what yesterday left in you   | from end 50/50/53   | SAME | What yesterday left in you (your own thoughts, last night):
+ 40 | carry-in: what yesterday left in you   | from end 49/49/52   | SAME | - About saying Daniel should go and Daniel saying he still means to go: "Daniel said he meant to go out, and I told him he had to be the one to do it."
+ 41 | carry-in: what yesterday left in you   | from end 48/48/51   | SAME | - About the front door opening in the night and Daniel coming back in before dawn: "Daniel went out into the night and came back before dawn with nothing in ...
+ 42 | carry-in: what yesterday left in you   | from end 47/47/50   | SAME | - How it left you: anxious and exhausted.
+ 43 | sure lines                             | from end 46/46/49   | SAME | What you are sure of today:
+ 44 | sure lines                             | from end 45/45/48   | SAME | - min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)
+ 45 | sure lines                             | from end 44/44/47   | SAME | - 09:45: at 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and you handed her about three litres of the stored...
+ 46 | own last words                         | from end 43/43/46   | SAME | Your own last words today:
+ 47 | own last words                         | from end 42/42/45   | SAME | - 09:42, you handed water out at the front door.
+ 48 | own last words                         | from end 41/41/44   | SAME | - 09:45, you confronted Leo.
+ 49 | own last words                         | from end 40/40/43   | SAME | - 09:48, you accused Daniel.
+ 50 | memory (what else happened)            | from end 39/39/42   | SAME | What else happened today, most recent last:
+ 51 | memory (what else happened)            | from end 38/38/41   | SAME | - (earlier things, left out here)
+ 52 | memory (what else happened)            | from end 37/37/40   | SAME | - 09:48: Elena reassures Leo: "Leo is right to be careful with what is left, we just need to stay calm together."
+ 53 | memory (what else happened)            | from end 36/36/39   | SAME | - 09:48: you accused Daniel. You felt bitter hunger.
+ 54 | memory (what else happened)            | from end 35/35/38   | SAME | - 09:48: Daniel confronts you: "Mara, stop accusing me when I went out there to try and fix this for all of us."
+ 55 | now                                    | from end 34/-/-     | differs | Now, 10:00, you are in the kitchen.
+ 56 | now                                    | from end 33/33/33   | SAME | - Daniel is here, sitting in the kitchen.
+ 57 | now                                    | from end 32/32/32   | SAME | - Elena is here, sitting in the kitchen.
+ 58 | now                                    | from end 31/31/31   | SAME | - Leo is here, sitting in the kitchen.
+ 59 | now                                    | from end 30/30/30   | SAME | - 0 portions on the shelf.
+ 60 | now                                    | from end 29/29/29   | SAME | You are the first to act in the kitchen this turn.
+ 61 | options                                | from end 28/28/28   | SAME | Your options:
+ 62 | options                                | from end 27/27/27   | SAME | - silent: stay put and say nothing
+ 63 | options                                | from end 26/26/26   | SAME | - deny: (speech) deny taking it
+ 64 | options                                | from end 25/25/25   | SAME | - accuse_daniel: (speech) accuse Daniel of taking it
+ 65 | options                                | from end 24/24/24   | SAME | - confront_daniel: (speech) confront Daniel about something they did
+ 66 | options                                | from end 23/23/23   | SAME | - confront_elena: (speech) confront Elena about something they did
+ 67 | options                                | from end 22/22/22   | SAME | - confront_leo: (speech) confront Leo about something they did
+ 68 | options                                | from end 21/21/21   | SAME | - reassure_elena: (speech) reassure Elena
+ 69 | options                                | from end 20/20/20   | SAME | - reassure_leo: (speech) reassure Leo
+ 70 | options                                | from end 19/19/19   | SAME | - reassure_all: (speech) reassure everyone here
+ 71 | options                                | from end 18/18/18   | SAME | - propose_trip: (speech) say someone should go to the neighbour's house tonight
+ 72 | options                                | from end 17/17/17   | SAME | - volunteer: (speech) offer to go there tonight yourself
+ 73 | options                                | from end 16/16/16   | SAME | - send_daniel: (speech) say Daniel is the one who should go there tonight
+ 74 | options                                | from end 15/15/15   | SAME | - send_elena: (speech) say Elena is the one who should go there tonight
+ 75 | options                                | from end 14/14/14   | SAME | - send_leo: (speech) say Leo is the one who should go there tonight
+ 76 | options                                | from end 13/13/13   | SAME | - propose_far: (speech) say someone should try the houses further along the street tonight
+ 77 | options                                | from end 12/12/12   | SAME | - volunteer_far: (speech) offer to go further along the street tonight yourself
+ 78 | options                                | from end 11/11/11   | SAME | - say_other: (speech) say something else
+ 79 | options                                | from end 10/10/10   | SAME | - tell_daniel_visit: (speech) tell Daniel about the woman at the front door at 09:42
+ 80 | options                                | from end 9/9/9      | SAME | - sit_daniel: sit with Daniel
+ 81 | options                                | from end 8/8/8      | SAME | - sit_elena: sit with Elena
+ 82 | options                                | from end 7/7/7      | SAME | - sit_leo: sit with Leo
+ 83 | options                                | from end 6/6/6      | SAME | - aside_daniel: take Daniel aside to the back room
+ 84 | options                                | from end 5/5/5      | SAME | - aside_elena: take Elena aside to the back room
+ 85 | options                                | from end 4/4/4      | SAME | - aside_leo: take Leo aside to the back room
+ 86 | options                                | from end 3/3/3      | SAME | - go_brothers_room: go to the brothers room
+ 87 | options                                | from end 2/2/2      | SAME | - go_back_room: go to the back room
+ 88 | options                                | from end 1/1/1      | SAME | - go_bathroom: go to the bathroom
+-- lines in the 11:00 prompt that are in neither the 10:00 nor the 10:30 prompt (mara):
+   now: meeting lines (world.py:1166) from end 37 | You last spoke with Daniel at 09:48.
+   now: meeting lines (world.py:1166) from end 36 | You last spoke with Elena at 09:48.
+   now: meeting lines (world.py:1166) from end 35 | You last spoke with Leo at 09:48.
+   now                            from end 34 | Now, 11:00, you are in the kitchen.
+
+# the lines that are not word for word the same at the three minutes, in every group (text of the 10:30 prompt)
+8 groups: - HH:MM: Voices from the brothers room.
+8 groups: Nobody in the kitchen has said anything since HH:MM, N minutes ago; you have all stayed sitting here.
+16 groups: Now, HH:MM, you are in the kitchen.
+4 groups: - HH:MM: Elena reassures everyone: "We are all together here and we will get through this."
+groups: 16
+
+# fixed lines per section, per group (lines in all three prompts / lines in the section at 10:30)
+(1, 'T', 'elena') {'sheet': '5/5', "body and 'About' lines": '7/7', 'grudge lines': '1/1', 'house': '1/1', 'days before': '8/8', 'carry-in: earlier days': '4/4', 'carry-in: yesterday and last night': '8/8', 'carry-in: what yesterday left in you': '4/4', 'sure lines': '3/3', 'own last words': '4/4', 'memory (what else happened)': '8/9', 'T line': '0/1', 'now': '5/6', 'options': '29/29'}
+(1, 'O', 'elena') {'sheet': '5/5', "body and 'About' lines": '7/7', 'grudge lines': '1/1', 'house': '1/1', 'days before': '8/8', 'carry-in: earlier days': '4/4', 'carry-in: yesterday and last night': '8/8', 'carry-in: what yesterday left in you': '4/4', 'sure lines': '3/3', 'own last words': '4/4', 'memory (what else happened)': '8/9', 'now': '5/6', 'options': '29/29'}
+(1, 'TO', 'elena') {'sheet': '5/5', "body and 'About' lines": '7/7', 'grudge lines': '1/1', 'house': '1/1', 'days before': '8/8', 'carry-in: earlier days': '4/4', 'carry-in: yesterday and last night': '8/8', 'carry-in: what yesterday left in you': '4/4', 'sure lines': '3/3', 'own last words': '4/4', 'memory (what else happened)': '8/9', 'T line': '0/1', 'now': '5/6', 'options': '29/29'}
+(1, 'T', 'mara') {'sheet': '5/5', "body and 'About' lines": '7/7', 'grudge lines': '2/2', 'house': '1/1', 'days before': '8/8', 'carry-in: earlier days': '4/4', 'carry-in: yesterday and last night': '11/11', 'carry-in: what yesterday left in you': '4/4', 'sure lines': '3/3', 'own last words': '4/4', 'memory (what else happened)': '5/5', 'T line': '0/1', 'now': '5/6', 'options': '28/28'}
+(1, 'O', 'mara') {'sheet': '5/5', "body and 'About' lines": '7/7', 'grudge lines': '2/2', 'house': '1/1', 'days before': '8/8', 'carry-in: earlier days': '4/4', 'carry-in: yesterday and last night': '11/11', 'carry-in: what yesterday left in you': '4/4', 'sure lines': '3/3', 'own last words': '4/4', 'memory (what else happened)': '5/5', 'now': '5/6', 'options': '28/28'}
+(1, 'TO', 'mara') {'sheet': '5/5', "body and 'About' lines": '7/7', 'grudge lines': '2/2', 'house': '1/1', 'days before': '8/8', 'carry-in: earlier days': '4/4', 'carry-in: yesterday and last night': '11/11', 'carry-in: what yesterday left in you': '4/4', 'sure lines': '3/3', 'own last words': '4/4', 'memory (what else happened)': '5/5', 'T line': '0/1', 'now': '5/6', 'options': '28/28'}
+(1, 'P', 'elena') {'sheet': '5/5', "body and 'About' lines": '7/7', 'grudge lines': '1/1', 'house': '1/1', 'days before': '8/8', 'carry-in: earlier days': '4/4', 'carry-in: yesterday and last night': '8/8', 'carry-in: what yesterday left in you': '4/4', 'sure lines': '3/3', 'own last words': '4/4', 'memory (what else happened)': '8/9', 'now': '5/6', 'options': '29/29'}
+(1, 'P', 'mara') {'sheet': '5/5', "body and 'About' lines": '7/7', 'grudge lines': '2/2', 'house': '1/1', 'days before': '8/8', 'carry-in: earlier days': '4/4', 'carry-in: yesterday and last night': '11/11', 'carry-in: what yesterday left in you': '4/4', 'sure lines': '3/3', 'own last words': '4/4', 'memory (what else happened)': '5/5', 'now': '5/6', 'options': '28/28'}
+(3, 'T', 'elena') {'sheet': '5/5', "body and 'About' lines": '7/7', 'grudge lines': '1/1', 'house': '1/1', 'days before': '8/8', 'carry-in: earlier days': '4/4', 'carry-in: yesterday and last night': '8/8', 'carry-in: what yesterday left in you': '4/4', 'sure lines': '3/3', 'own last words': '4/4', 'memory (what else happened)': '8/9', 'T line': '0/1', 'now': '5/6', 'options': '29/29'}
+(3, 'O', 'elena') {'sheet': '5/5', "body and 'About' lines": '7/7', 'grudge lines': '1/1', 'house': '1/1', 'days before': '8/8', 'carry-in: earlier days': '4/4', 'carry-in: yesterday and last night': '8/8', 'carry-in: what yesterday left in you': '4/4', 'sure lines': '3/3', 'own last words': '4/4', 'memory (what else happened)': '8/9', 'now': '5/6', 'options': '29/29'}
+(3, 'TO', 'elena') {'sheet': '5/5', "body and 'About' lines": '7/7', 'grudge lines': '1/1', 'house': '1/1', 'days before': '8/8', 'carry-in: earlier days': '4/4', 'carry-in: yesterday and last night': '8/8', 'carry-in: what yesterday left in you': '4/4', 'sure lines': '3/3', 'own last words': '4/4', 'memory (what else happened)': '8/9', 'T line': '0/1', 'now': '5/6', 'options': '29/29'}
+(3, 'T', 'mara') {'sheet': '5/5', "body and 'About' lines": '7/7', 'grudge lines': '2/2', 'house': '1/1', 'days before': '8/8', 'carry-in: earlier days': '4/4', 'carry-in: yesterday and last night': '11/11', 'carry-in: what yesterday left in you': '4/4', 'sure lines': '3/3', 'own last words': '4/4', 'memory (what else happened)': '5/6', 'T line': '0/1', 'now': '5/6', 'options': '27/27'}
+(3, 'O', 'mara') {'sheet': '5/5', "body and 'About' lines": '7/7', 'grudge lines': '2/2', 'house': '1/1', 'days before': '8/8', 'carry-in: earlier days': '4/4', 'carry-in: yesterday and last night': '11/11', 'carry-in: what yesterday left in you': '4/4', 'sure lines': '3/3', 'own last words': '4/4', 'memory (what else happened)': '5/6', 'now': '5/6', 'options': '27/27'}
+(3, 'TO', 'mara') {'sheet': '5/5', "body and 'About' lines": '7/7', 'grudge lines': '2/2', 'house': '1/1', 'days before': '8/8', 'carry-in: earlier days': '4/4', 'carry-in: yesterday and last night': '11/11', 'carry-in: what yesterday left in you': '4/4', 'sure lines': '3/3', 'own last words': '4/4', 'memory (what else happened)': '5/6', 'T line': '0/1', 'now': '5/6', 'options': '27/27'}
+(3, 'P', 'elena') {'sheet': '5/5', "body and 'About' lines": '7/7', 'grudge lines': '1/1', 'house': '1/1', 'days before': '8/8', 'carry-in: earlier days': '4/4', 'carry-in: yesterday and last night': '8/8', 'carry-in: what yesterday left in you': '4/4', 'sure lines': '3/3', 'own last words': '4/4', 'memory (what else happened)': '8/9', 'now': '5/6', 'options': '29/29'}
+(3, 'P', 'mara') {'sheet': '5/5', "body and 'About' lines": '7/7', 'grudge lines': '2/2', 'house': '1/1', 'days before': '8/8', 'carry-in: earlier days': '4/4', 'carry-in: yesterday and last night': '11/11', 'carry-in: what yesterday left in you': '4/4', 'sure lines': '3/3', 'own last words': '4/4', 'memory (what else happened)': '5/6', 'now': '5/6', 'options': '27/27'}

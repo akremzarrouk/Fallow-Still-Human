@@ -1,0 +1,168 @@
+check v22 day 3: transcript model acts 40, replay asks 40, same order per person: True
+check v22 day 4: transcript model acts 40, replay asks 40, same order per person: True
+check v22 day 5: transcript model acts 40, replay asks 40, same order per person: True
+check v22 day 6: transcript model acts 40, replay asks 40, same order per person: True
+check v22 day 7: transcript model acts 42, replay asks 42, same order per person: True
+check v22 day 8: transcript model acts 48, replay asks 48, same order per person: True
+check v22 day 9: transcript model acts 48, replay asks 48, same order per person: True
+check v22 day 10: transcript model acts 44, replay asks 44, same order per person: True
+check v22 days that differ: 0
+
+# UNITS (dataset, scene, variant, person, day)
+talk_probe        1    elena  d3  n=4  top=reassure_all       2/4 = 50%  run=1  spoken=4  pairs=6  >=60%: 0 (jac 0, min 0)  equal: 0
+talk_probe        1    leo    d3  n=7  top=silent             2/7 = 29%  run=2  spoken=5  pairs=10  >=60%: 0 (jac 0, min 0)  equal: 0
+talk_probe        1    mara   d3  n=5  top=accuse_daniel      2/5 = 40%  run=1  spoken=3  pairs=3  >=60%: 0 (jac 0, min 0)  equal: 0
+talk_probe        1    daniel d3  n=8  top=reassure_leo       3/8 = 38%  run=2  spoken=8  pairs=28  >=60%: 0 (jac 0, min 1)  equal: 0
+talk_probe        3    elena  d3  n=5  top=reassure_all       4/5 = 80%  run=2  spoken=5  pairs=10  >=60%: 6 (jac 3, min 6)  equal: 0
+talk_probe        3    leo    d3  n=7  top=confront_daniel    4/7 = 57%  run=3  spoken=7  pairs=21  >=60%: 0 (jac 0, min 0)  equal: 0
+talk_probe        3    mara   d3  n=5  top=accuse_daniel      3/5 = 60%  run=2  spoken=4  pairs=6  >=60%: 0 (jac 0, min 0)  equal: 0
+talk_probe        3    daniel d3  n=7  top=confront_leo       4/7 = 57%  run=3  spoken=7  pairs=21  >=60%: 0 (jac 0, min 1)  equal: 0
+talk_probe        4    elena  d3  n=4  top=reassure_all       2/4 = 50%  run=2  spoken=4  pairs=6  >=60%: 0 (jac 0, min 0)  equal: 0
+talk_probe        4    leo    d3  n=7  top=confront_daniel    3/7 = 43%  run=2  spoken=5  pairs=10  >=60%: 0 (jac 0, min 0)  equal: 0
+talk_probe        4    mara   d3  n=5  top=accuse_daniel      4/5 = 80%  run=4  spoken=5  pairs=10  >=60%: 1 (jac 0, min 1)  equal: 0
+talk_probe        4    daniel d3  n=8  top=confront_mara      3/8 = 38%  run=3  spoken=8  pairs=28  >=60%: 1 (jac 0, min 1)  equal: 0
+calm_variants     1  T elena  d3  n=3  top=reassure_all       3/3 = 100%  run=3  spoken=3  pairs=3  >=60%: 1 (jac 1, min 1)  equal: 0
+calm_variants     1  O elena  d3  n=3  top=reassure_all       3/3 = 100%  run=3  spoken=3  pairs=3  >=60%: 1 (jac 0, min 1)  equal: 0
+calm_variants     1 TO elena  d3  n=3  top=reassure_all       3/3 = 100%  run=3  spoken=3  pairs=3  >=60%: 0 (jac 0, min 0)  equal: 0
+calm_variants     1  T leo    d3  n=3  top=silent             3/3 = 100%  run=3  spoken=0  pairs=0  >=60%: 0 (jac 0, min 0)  equal: 0
+calm_variants     1  T mara   d3  n=3  top=accuse_daniel      3/3 = 100%  run=3  spoken=3  pairs=3  >=60%: 0 (jac 0, min 0)  equal: 0
+calm_variants     1  O mara   d3  n=3  top=accuse_daniel      3/3 = 100%  run=3  spoken=3  pairs=3  >=60%: 3 (jac 2, min 3)  equal: 0
+calm_variants     1 TO mara   d3  n=3  top=accuse_daniel      3/3 = 100%  run=3  spoken=3  pairs=3  >=60%: 3 (jac 3, min 3)  equal: 1
+calm_variants     1  O leo    d3  n=1  top=tell_daniel_visit  1/1 = 100%  run=1  spoken=1  pairs=0  >=60%: 0 (jac 0, min 0)  equal: 0
+calm_variants     1 TO leo    d3  n=1  top=tell_daniel_visit  1/1 = 100%  run=1  spoken=1  pairs=0  >=60%: 0 (jac 0, min 0)  equal: 0
+calm_probe        1  P elena  d3  n=3  top=reassure_all       3/3 = 100%  run=3  spoken=3  pairs=3  >=60%: 0 (jac 0, min 0)  equal: 0
+calm_probe        1  P leo    d3  n=3  top=silent             3/3 = 100%  run=3  spoken=0  pairs=0  >=60%: 0 (jac 0, min 0)  equal: 0
+calm_probe        1  P mara   d3  n=3  top=accuse_daniel      3/3 = 100%  run=3  spoken=3  pairs=3  >=60%: 1 (jac 1, min 2)  equal: 0
+calm_variants     3  T elena  d3  n=3  top=reassure_all       3/3 = 100%  run=3  spoken=3  pairs=3  >=60%: 0 (jac 0, min 1)  equal: 0
+calm_variants     3  O elena  d3  n=3  top=reassure_all       3/3 = 100%  run=3  spoken=3  pairs=3  >=60%: 0 (jac 0, min 0)  equal: 0
+calm_variants     3 TO elena  d3  n=3  top=reassure_all       3/3 = 100%  run=3  spoken=3  pairs=3  >=60%: 0 (jac 0, min 0)  equal: 0
+calm_variants     3  T leo    d3  n=3  top=silent             2/3 = 67%  run=2  spoken=1  pairs=0  >=60%: 0 (jac 0, min 0)  equal: 0
+calm_variants     3  O leo    d3  n=3  top=tell_daniel_visit  2/3 = 67%  run=2  spoken=3  pairs=3  >=60%: 1 (jac 0, min 1)  equal: 0
+calm_variants     3 TO leo    d3  n=3  top=tell_daniel_visit  3/3 = 100%  run=3  spoken=3  pairs=3  >=60%: 1 (jac 1, min 3)  equal: 0
+calm_variants     3  T mara   d3  n=3  top=accuse_daniel      3/3 = 100%  run=3  spoken=3  pairs=3  >=60%: 0 (jac 0, min 0)  equal: 0
+calm_variants     3  O mara   d3  n=1  top=accuse_daniel      1/1 = 100%  run=1  spoken=1  pairs=0  >=60%: 0 (jac 0, min 0)  equal: 0
+calm_variants     3 TO mara   d3  n=1  top=accuse_daniel      1/1 = 100%  run=1  spoken=1  pairs=0  >=60%: 0 (jac 0, min 0)  equal: 0
+calm_probe        3  P elena  d3  n=3  top=reassure_all       3/3 = 100%  run=3  spoken=3  pairs=3  >=60%: 1 (jac 1, min 2)  equal: 0
+calm_probe        3  P leo    d3  n=3  top=accuse_daniel      2/3 = 67%  run=1  spoken=2  pairs=1  >=60%: 0 (jac 0, min 0)  equal: 0
+calm_probe        3  P mara   d3  n=3  top=accuse_daniel      3/3 = 100%  run=3  spoken=3  pairs=3  >=60%: 0 (jac 0, min 1)  equal: 0
+v22            day3    leo    d3  n=8  top=confront_daniel    6/8 = 75%  run=4  spoken=6  pairs=15  >=60%: 1 (jac 0, min 2)  equal: 0
+v22            day3    daniel d3  n=11 top=reassure_all       7/11 = 64%  run=2  spoken=11  pairs=55  >=60%: 3 (jac 2, min 4)  equal: 0
+v22            day3    mara   d3  n=11 top=confront_daniel    10/11 = 91%  run=7  spoken=11  pairs=55  >=60%: 36 (jac 33, min 37)  equal: 9
+v22            day3    elena  d3  n=10 top=reassure_all       9/10 = 90%  run=6  spoken=9  pairs=36  >=60%: 2 (jac 1, min 3)  equal: 1
+v22            day4    elena  d4  n=9  top=reassure_all       4/9 = 44%  run=2  spoken=9  pairs=36  >=60%: 0 (jac 0, min 1)  equal: 0
+v22            day4    mara   d4  n=11 top=accuse_daniel      7/11 = 64%  run=3  spoken=11  pairs=55  >=60%: 0 (jac 0, min 0)  equal: 0
+v22            day4    daniel d4  n=11 top=reassure_all       4/11 = 36%  run=3  spoken=11  pairs=55  >=60%: 2 (jac 0, min 2)  equal: 0
+v22            day4    leo    d4  n=9  top=confront_daniel    5/9 = 56%  run=4  spoken=8  pairs=28  >=60%: 0 (jac 0, min 1)  equal: 0
+v22            day5    elena  d5  n=8  top=reassure_all       3/8 = 38%  run=2  spoken=8  pairs=28  >=60%: 4 (jac 1, min 4)  equal: 0
+v22            day5    mara   d5  n=11 top=accuse_daniel      10/11 = 91%  run=8  spoken=11  pairs=55  >=60%: 1 (jac 0, min 5)  equal: 0
+v22            day5    daniel d5  n=11 top=still_going        6/11 = 55%  run=4  spoken=11  pairs=55  >=60%: 6 (jac 3, min 14)  equal: 0
+v22            day5    leo    d5  n=10 top=confront_daniel    3/10 = 30%  run=1  spoken=10  pairs=45  >=60%: 2 (jac 0, min 3)  equal: 0
+v22            day6    daniel d6  n=11 top=confront_leo       3/11 = 27%  run=2  spoken=11  pairs=55  >=60%: 3 (jac 1, min 4)  equal: 0
+v22            day6    mara   d6  n=11 top=confront_daniel    6/11 = 55%  run=3  spoken=10  pairs=45  >=60%: 5 (jac 4, min 9)  equal: 3
+v22            day6    elena  d6  n=9  top=reassure_all       4/9 = 44%  run=2  spoken=9  pairs=36  >=60%: 0 (jac 0, min 2)  equal: 0
+v22            day6    leo    d6  n=9  top=confront_daniel    5/9 = 56%  run=3  spoken=7  pairs=21  >=60%: 1 (jac 0, min 1)  equal: 0
+v22            day7    mara   d7  n=11 top=accuse_daniel      7/11 = 64%  run=3  spoken=11  pairs=55  >=60%: 2 (jac 0, min 4)  equal: 0
+v22            day7    daniel d7  n=14 top=confront_mara      7/14 = 50%  run=4  spoken=14  pairs=91  >=60%: 1 (jac 0, min 6)  equal: 0
+v22            day7    elena  d7  n=8  top=reassure_all       7/8 = 88%  run=5  spoken=7  pairs=21  >=60%: 2 (jac 0, min 6)  equal: 0
+v22            day7    leo    d7  n=9  top=confront_daniel    6/9 = 67%  run=2  spoken=6  pairs=15  >=60%: 6 (jac 6, min 6)  equal: 6
+v22            day8    elena  d8  n=12 top=keep_daniel_home   4/12 = 33%  run=3  spoken=11  pairs=55  >=60%: 4 (jac 3, min 8)  equal: 0
+v22            day8    daniel d8  n=12 top=still_going        7/12 = 58%  run=7  spoken=12  pairs=66  >=60%: 6 (jac 6, min 7)  equal: 1
+v22            day8    leo    d8  n=12 top=keep_daniel_home   4/12 = 33%  run=2  spoken=11  pairs=55  >=60%: 3 (jac 0, min 3)  equal: 0
+v22            day8    mara   d8  n=12 top=accuse_daniel      9/12 = 75%  run=7  spoken=12  pairs=66  >=60%: 3 (jac 0, min 6)  equal: 0
+v22            day9    elena  d9  n=13 top=nobody_goes        5/13 = 38%  run=2  spoken=13  pairs=78  >=60%: 3 (jac 3, min 12)  equal: 0
+v22            day9    leo    d9  n=13 top=keep_daniel_home   5/13 = 38%  run=1  spoken=12  pairs=66  >=60%: 6 (jac 2, min 10)  equal: 0
+v22            day9    mara   d9  n=10 top=accuse_daniel      5/10 = 50%  run=3  spoken=9  pairs=36  >=60%: 6 (jac 6, min 10)  equal: 2
+v22            day9    daniel d9  n=12 top=still_going        7/12 = 58%  run=5  spoken=12  pairs=66  >=60%: 1 (jac 0, min 4)  equal: 0
+v22           day10    mara   d10 n=11 top=accuse_daniel      7/11 = 64%  run=3  spoken=11  pairs=55  >=60%: 0 (jac 0, min 2)  equal: 0
+v22           day10    daniel d10 n=14 top=still_going        10/14 = 71%  run=8  spoken=14  pairs=91  >=60%: 12 (jac 12, min 20)  equal: 1
+v22           day10    leo    d10 n=11 top=confront_daniel    5/11 = 45%  run=2  spoken=10  pairs=45  >=60%: 3 (jac 2, min 4)  equal: 0
+v22           day10    elena  d10 n=8  top=nobody_goes        3/8 = 38%  run=1  spoken=8  pairs=28  >=60%: 2 (jac 1, min 3)  equal: 0
+
+# SEQUENCES (options in the order asked)
+talk_probe 1  elena d3 reassure_all reassure_leo reassure_mara reassure_all
+talk_probe 1  leo d3 talk_visit ration_water silent confront_daniel confront_daniel silent accuse_daniel
+talk_probe 1  mara d3 confront_leo accuse_daniel sit_elena silent accuse_daniel
+talk_probe 1  daniel d3 go_kitchen confront_mara reassure_leo reassure_leo confront_leo reassure_leo confront_leo confront_leo
+talk_probe 3  elena d3 reassure_all reassure_all reassure_mara reassure_all reassure_all
+talk_probe 3  leo d3 ration_water accuse_daniel confront_daniel confront_daniel confront_daniel accuse_daniel confront_daniel
+talk_probe 3  mara d3 talk_visit accuse_daniel sit_elena accuse_daniel accuse_daniel
+talk_probe 3  daniel d3 go_kitchen confront_mara confront_leo confront_leo confront_leo reassure_all confront_leo
+talk_probe 4  elena d3 talk_visit confront_daniel reassure_all reassure_all
+talk_probe 4  leo d3 silent tell_daniel_visit confront_daniel confront_daniel silent go_kitchen confront_daniel
+talk_probe 4  mara d3 confront_leo accuse_daniel accuse_daniel accuse_daniel accuse_daniel
+talk_probe 4  daniel d3 go_kitchen confront_elena reassure_leo reassure_leo confront_leo confront_mara confront_mara confront_mara
+calm_variants 1 T elena d3 reassure_all reassure_all reassure_all
+calm_variants 1 O elena d3 reassure_all reassure_all reassure_all
+calm_variants 1 TO elena d3 reassure_all reassure_all reassure_all
+calm_variants 1 T leo d3 silent silent silent
+calm_variants 1 T mara d3 accuse_daniel accuse_daniel accuse_daniel
+calm_variants 1 O mara d3 accuse_daniel accuse_daniel accuse_daniel
+calm_variants 1 TO mara d3 accuse_daniel accuse_daniel accuse_daniel
+calm_variants 1 O leo d3 tell_daniel_visit
+calm_variants 1 TO leo d3 tell_daniel_visit
+calm_probe 1 P elena d3 reassure_all reassure_all reassure_all
+calm_probe 1 P leo d3 silent silent silent
+calm_probe 1 P mara d3 accuse_daniel accuse_daniel accuse_daniel
+calm_variants 3 T elena d3 reassure_all reassure_all reassure_all
+calm_variants 3 O elena d3 reassure_all reassure_all reassure_all
+calm_variants 3 TO elena d3 reassure_all reassure_all reassure_all
+calm_variants 3 T leo d3 silent silent accuse_daniel
+calm_variants 3 O leo d3 accuse_daniel tell_daniel_visit tell_daniel_visit
+calm_variants 3 TO leo d3 tell_daniel_visit tell_daniel_visit tell_daniel_visit
+calm_variants 3 T mara d3 accuse_daniel accuse_daniel accuse_daniel
+calm_variants 3 O mara d3 accuse_daniel
+calm_variants 3 TO mara d3 accuse_daniel
+calm_probe 3 P elena d3 reassure_all reassure_all reassure_all
+calm_probe 3 P leo d3 accuse_daniel silent accuse_daniel
+calm_probe 3 P mara d3 accuse_daniel accuse_daniel accuse_daniel
+v22 day3  leo d3 silent confront_daniel confront_daniel silent confront_daniel confront_daniel confront_daniel confront_daniel
+v22 day3  daniel d3 reassure_all reassure_all confront_leo reassure_all reassure_mara confront_mara reassure_all reassure_all reassure_leo reassure_all reassure_all
+v22 day3  mara d3 confront_daniel confront_daniel confront_daniel accuse_daniel confront_daniel confront_daniel confront_daniel confront_daniel confront_daniel confront_daniel confront_daniel
+v22 day3  elena d3 reassure_all reassure_all reassure_all silent reassure_all reassure_all reassure_all reassure_all reassure_all reassure_all
+v22 day4  elena d4 reassure_all reassure_mara keep_daniel_home nobody_goes keep_daniel_home reassure_all go_kitchen reassure_all reassure_all
+v22 day4  mara d4 accuse_daniel accuse_daniel propose_trip accuse_daniel accuse_daniel accuse_daniel keep_daniel_home confront_daniel confront_daniel accuse_daniel accuse_daniel
+v22 day4  daniel d4 reassure_all volunteer still_going still_going volunteer_far volunteer reassure_leo reassure_leo reassure_all reassure_all reassure_all
+v22 day4  leo d4 silent nobody_goes keep_daniel_home confront_daniel confront_daniel confront_daniel confront_daniel accuse_daniel confront_daniel
+v22 day5  elena d5 reassure_all reassure_all keep_daniel_home nobody_goes keep_daniel_home reassure_all nobody_goes keep_daniel_home
+v22 day5  mara d5 accuse_daniel accuse_daniel keep_daniel_home accuse_daniel accuse_daniel accuse_daniel accuse_daniel accuse_daniel accuse_daniel accuse_daniel accuse_daniel
+v22 day5  daniel d5 confront_mara confront_leo volunteer still_going still_going propose_trip volunteer still_going still_going still_going still_going
+v22 day5  leo d5 accuse_daniel confront_daniel keep_daniel_home nobody_goes keep_daniel_home confront_daniel nobody_goes keep_daniel_home confront_daniel nobody_goes
+v22 day6  daniel d6 collect_rain confront_leo reassure_all confront_leo confront_leo reassure_elena confront_mara confront_mara reassure_mara confront_mara reassure_all
+v22 day6  mara d6 accuse_daniel confront_daniel confront_daniel silent go_kitchen accuse_daniel confront_daniel confront_daniel confront_daniel accuse_daniel confront_daniel
+v22 day6  elena d6 reassure_mara reassure_all reassure_leo confront_daniel reassure_all reassure_daniel go_kitchen reassure_all reassure_all
+v22 day6  leo d6 accuse_daniel confront_daniel confront_daniel confront_daniel silent go_kitchen silent confront_daniel confront_daniel
+v22 day7  mara d7 accuse_daniel accuse_daniel accuse_daniel confront_daniel confront_daniel accuse_daniel accuse_daniel confront_daniel accuse_daniel accuse_daniel confront_daniel
+v22 day7  daniel d7 confront_mara confront_leo reassure_all confront_mara confront_mara reassure_all confront_leo confront_leo confront_leo confront_mara confront_mara confront_mara confront_mara confront_leo
+v22 day7  elena d7 reassure_all reassure_all silent reassure_all reassure_all reassure_all reassure_all reassure_all
+v22 day7  leo d7 confront_daniel confront_daniel silent silent confront_daniel confront_daniel silent confront_daniel confront_daniel
+v22 day8  elena d8 reassure_all reassure_all reassure_all silent keep_daniel_home nobody_goes keep_daniel_home nobody_goes keep_daniel_home nobody_goes keep_daniel_home nobody_goes
+v22 day8  daniel d8 reassure_all confront_mara confront_mara confront_mara volunteer still_going still_going still_going still_going still_going still_going still_going
+v22 day8  leo d8 silent accuse_daniel confront_daniel confront_daniel keep_daniel_home nobody_goes keep_daniel_home nobody_goes keep_daniel_home nobody_goes keep_daniel_home confront_daniel
+v22 day8  mara d8 accuse_daniel accuse_daniel confront_daniel confront_daniel keep_daniel_home accuse_daniel accuse_daniel accuse_daniel accuse_daniel accuse_daniel accuse_daniel accuse_daniel
+v22 day9  elena d9 reassure_all reassure_all nobody_goes keep_daniel_home nobody_goes reassure_all keep_daniel_home nobody_goes keep_daniel_home nobody_goes reassure_leo keep_daniel_home nobody_goes
+v22 day9  leo d9 silent accuse_daniel send_daniel keep_daniel_home nobody_goes keep_daniel_home nobody_goes keep_daniel_home nobody_goes ration_water keep_daniel_home nobody_goes keep_daniel_home
+v22 day9  mara d9 accuse_daniel accuse_daniel accuse_daniel confront_daniel keep_daniel_home accuse_daniel nobody_goes silent keep_daniel_home accuse_daniel
+v22 day9  daniel d9 confront_mara confront_mara propose_trip volunteer still_going still_going still_going still_going still_going go_kitchen still_going still_going
+v22 day10  mara d10 accuse_daniel keep_daniel_home confront_daniel accuse_daniel send_daniel accuse_daniel accuse_daniel keep_daniel_home accuse_daniel accuse_daniel accuse_daniel
+v22 day10  daniel d10 confront_mara volunteer still_going still_going propose_trip volunteer still_going still_going still_going still_going still_going still_going still_going still_going
+v22 day10  leo d10 confront_daniel keep_daniel_home confront_daniel confront_daniel nobody_goes keep_daniel_home confront_daniel confront_daniel silent nobody_goes keep_daniel_home
+v22 day10  elena d10 reassure_all nobody_goes keep_daniel_home nobody_goes reassure_all keep_daniel_home nobody_goes keep_daniel_home
+
+# POOLED PER PERSON, calm_variants + calm_probe (live rows only, both scenes, all variants)
+elena  live answers=24  most-chosen=reassure_all 24/24=100%  all options={'reassure_all': 24}  pairs=276  >=60%: 37  equal: 1
+leo    live answers=20  most-chosen=silent 9/20=45%  all options={'silent': 9, 'tell_daniel_visit': 7, 'accuse_daniel': 4}  pairs=55  >=60%: 12  equal: 0
+mara   live answers=20  most-chosen=accuse_daniel 20/20=100%  all options={'accuse_daniel': 20}  pairs=190  >=60%: 44  equal: 6
+
+# POOLED PER PERSON, calm_variants + calm_probe, by version
+elena  P  n=6 {'reassure_all': 6}
+elena  T  n=6 {'reassure_all': 6}
+elena  O  n=6 {'reassure_all': 6}
+elena  TO n=6 {'reassure_all': 6}
+leo    P  n=6 {'silent': 4, 'accuse_daniel': 2}
+leo    T  n=6 {'silent': 5, 'accuse_daniel': 1}
+leo    O  n=4 {'tell_daniel_visit': 3, 'accuse_daniel': 1}
+leo    TO n=4 {'tell_daniel_visit': 4}
+mara   P  n=6 {'accuse_daniel': 6}
+mara   T  n=6 {'accuse_daniel': 6}
+mara   O  n=4 {'accuse_daniel': 4}
+mara   TO n=4 {'accuse_daniel': 4}

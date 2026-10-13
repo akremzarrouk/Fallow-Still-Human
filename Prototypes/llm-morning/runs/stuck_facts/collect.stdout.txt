@@ -1,0 +1,9 @@
+records 136
+('talk_probe', 1, 'live day asks', 24, 'in cache with same option', 24)
+('talk_probe', 3, 'live day asks', 24, 'in cache with same option', 24)
+('talk_probe', 4, 'live day asks', 24, 'in cache with same option', 24)
+('calm_variants', 1, 'live asks', 23, 'in cache with same option', 23)
+('calm_probe', 1, 'live asks', 9, 'in cache with same option', 9)
+('calm_variants', 3, 'live asks', 23, 'in cache with same option', 23)
+('calm_probe', 3, 'live asks', 9, 'in cache with same option', 9)
+Counter({('talk_probe', 1): 24, ('talk_probe', 3): 24, ('talk_probe', 4): 24, ('calm_variants', 1): 23, ('calm_variants', 3): 23, ('calm_probe', 1): 9, ('calm_probe', 3): 9})

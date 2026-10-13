@@ -1,0 +1,6 @@
+$ (cwd = Prototypes/llm-morning at HEAD a24ae82) python runs/stuck_facts/state_probe.py <scratchpad>/state_at_head.json
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\runs\calm_probe\probe.py", line 60, in generate
+    raise Stop("a replayed ask missed the talk probe's cache")
+calm_probe_probe.Stop: a replayed ask missed the talk probe's cache
+exit 1

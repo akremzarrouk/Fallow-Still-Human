@@ -1,0 +1,41 @@
+$ grep -n "history\|held_back\|n >= 3" world.py | head -30
+329:        self.history = []           # one {"t", "kind", "seq"} per turn: what they did
+542:        if not p.history:
+544:        kind, n = p.history[-1]["kind"], 0
+545:        for h in reversed(p.history):
+628:        if kind in SPEECH and n >= 3:
+930:        d = {"person": p.id, "triggers": triggers, "offered": len(opts), "held_back": None,
+953:             "held_back": None, "given_by": p.id}
+1089:        first = p.history[-n]["seq"]
+1482:                if p.history:            # seen as part of the act that moved them (reports/days_design.md, §4.2)
+1483:                    view = self.views.setdefault(p.history[-1]["seq"], {})
+1575:             "held_back": kind if kind in SPEECH and n >= 3 else None}
+1623:             "held_back": None}
+1728:        p.history.append({"t": t, "kind": kind, "seq": self.seq})
+
+$ grep -n -i "repeat\|in a row\|cooldown\|COOLDOWN\|PER_DAY\|ROOM_QUIET" world.py quiet.py topics.py talk.py mind.py night.py
+world.py:8:room this turn. A room's conversation ends after two full turns in a row with nothing
+world.py:540:    def repeating(self, p):
+world.py:541:        """(kind, how many turns in a row) of their latest acts."""
+world.py:626:        # A speech act used three turns in a row is not offered a fourth time.
+world.py:627:        kind, n = self.repeating(p)
+world.py:1084:        """How many turns in a row they have done the same kind of act, and how the others
+world.py:1086:        kind, n = self.repeating(p)
+world.py:1090:        out = [f"What you have been doing: you have {KIND_DONE[kind]}, {n} turn{'s' if n > 1 else ''} in a row."]
+world.py:1573:        kind, n = self.repeating(p)
+quiet.py:1040:        # Hours pass in a routine: what they did before it is not "in a row" with what they do after (world.pattern).
+topics.py:20:COOLDOWN = 60               # F2: after p chooses T's options, none of them is offered to p for 60 minutes
+topics.py:21:PER_DAY = 2                 # F3: p chooses T's options at most twice a day
+topics.py:22:ROOM_QUIET = 30             # F4: after anyone raises T in a room, talk_<T> is not offered there for 30 minutes
+topics.py:125:        if said and minute - said[-1] < COOLDOWN:                                   # F2
+topics.py:127:        if len(said) >= PER_DAY:                                                    # F3
+topics.py:133:              and minute - m.topic_raised.get((p.room, key), -10 ** 9) >= ROOM_QUIET):  # F4
+talk.py:135:    full turns in a row with nothing new, or fewer than two people left, end it."""
+talk.py:168:                                         f"{self.quiet_turns} full turns in a row with nothing new"))
+mind.py:322:        return "rejected: S9 a repeat"
+
+$ sed -n 40,62p world.py | grep -n -i repeat     (the SYSTEM and NIGHT_SYSTEM text)
+NOT FOUND (no match)
+
+$ grep -n "opts = \[o for o in opts" world.py quiet.py topics.py night.py
+world.py:629:            opts = [o for o in opts if act_of(o.id)[0] != kind]

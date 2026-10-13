@@ -1,0 +1,61 @@
+# 1. prompts that say 3 turns in a row
+asks with n=3: 21; of them with an option of that kind still offered: 4
+  those still offered, by kind: {'silent': 4} | kinds in SPEECH (talk.py:8-14): ['accuse', 'confront', 'object', 'reassure', 'volunteer'] | kinds not in SPEECH: ['silent']
+  asks with n=3 of a SPEECH kind: 17 | of them with an option of that kind still offered: 0
+by dataset: {'talk_probe': 1, 'v22': 20}
+kinds held back: {'silent': 4, 'confront': 3, 'reassure': 3, 'volunteer': 3, 'object': 5, 'accuse': 3}
+asks with n > 3:  0
+what the person chose at the asks with n=3: {'accuse': 4, 'silent': 3, 'volunteer_far': 1, 'reassure': 4, 'object': 1, 'propose': 2, 'confront': 5, 'volunteer': 1}
+n shown, all asks: {1: 212, 2: 65, 3: 21, None: 180}
+
+# 2. runs of 4 or more of the same option (consecutive asks of one person on one day): clock, option, n shown
+talk_probe 4 mara d3: accuse_daniel x4: 09:48:1  14:51:3  14:54:1  14:57:2
+v22 day3 leo d3: confront_daniel x4: 10:30:-  10:33:1  17:39:-  17:42:1
+v22 day3 mara d3: confront_daniel x7: min 12:1  min 15:1  min 18:2  10:30:-  10:33:1  17:39:-  17:42:1
+v22 day3 elena d3: reassure_all x6: min 12:1  min 15:1  10:30:-  10:33:1  17:39:-  17:42:1
+v22 day4 leo d4: confront_daniel x4: min 12:2  min 15:1  11:00:-  11:03:1
+v22 day5 mara d5: accuse_daniel x8: min 09:1  min 12:1  min 15:2  10:03:-  10:06:1  10:09:2  19:00:-  19:03:1
+v22 day5 daniel d5: still_going x4: 10:06:1  10:09:2  19:00:-  19:03:1
+v22 day7 daniel d7: confront_mara x4: 10:36:-  10:39:1  10:42:2  17:18:-
+v22 day7 elena d7: reassure_all x5: min 09:1  min 12:1  min 15:2  17:18:-  17:21:1
+v22 day8 daniel d8: still_going x7: min 15:1  09:51:-  09:54:1  16:45:-  16:48:1  19:00:-  19:03:1
+v22 day8 mara d8: accuse_daniel x7: min 15:1  09:51:-  09:54:1  16:45:-  16:48:1  19:00:-  19:03:1
+v22 day9 daniel d9: still_going x5: min 12:1  min 15:2  09:51:-  09:54:1  09:57:2
+v22 day10 daniel d10: still_going x8: 09:18:-  09:21:1  09:24:2  09:48:-  09:51:1  09:54:2  19:00:-  19:03:1
+
+# 3. asks that repeated the same OPTION as the same person's previous ask that day: what the prompt showed
+('calm_probe', 'line absent') 8
+('calm_variants', 'line absent') 23
+('talk_probe', 'line absent') 1
+('talk_probe', 'n=1') 13
+('talk_probe', 'n=2') 3
+('talk_probe', 'n=3') 1
+('v22', 'line absent') 23
+('v22', 'n=1') 69
+('v22', 'n=2') 23
+('v22', 'n=3') 2
+total repeats of a speech option on the next ask: 166
+
+# 4. Elena, v22 day 3: every ask, the line shown, whether any reassure option was offered, and what she did
+minute 00  reassure_all  reassure options offered: 4  | (no 'What you have been doing' line)
+minute 03  reassure_all  reassure options offered: 4  | What you have been doing: you have reassured someone, 1 turn in a row.
+minute 06  reassure_all  reassure options offered: 4  | What you have been doing: you have reassured someone, 2 turns in a row.
+minute 09  silent        reassure options offered: 0  | What you have been doing: you have reassured someone, 3 turns in a row.
+minute 12  reassure_all  reassure options offered: 3  | What you have been doing: you have stayed put and said nothing, 1 turn in a row.
+minute 15  reassure_all  reassure options offered: 3  | What you have been doing: you have reassured someone, 1 turn in a row.
+10:30      reassure_all  reassure options offered: 4  | (no 'What you have been doing' line)
+10:33      reassure_all  reassure options offered: 4  | What you have been doing: you have reassured someone, 1 turn in a row.
+17:39      reassure_all  reassure options offered: 4  | (no 'What you have been doing' line)
+17:42      reassure_all  reassure options offered: 4  | What you have been doing: you have reassured someone, 1 turn in a row.
+
+# 5. the calm probe's world at the 24 person-minutes (state_probe.json): the last history entry, repeating(), guard
+rows: 24 | last history entry is 'routine': 24 | repeating(p) = ('routine', 1): 24 | pattern(p) is empty: 24 | guard would apply: 0
+elena scene 1 10:30 history tail (t, kind, seq): [[4, 'reassure', 20], [5, 'silent', 22], [6, 'routine', None], [54, 'routine', None], [54, 'door_refuse', 25], [55, 'reassure', 29], [56, 'reassure', 34], [57, 'routine', None]]
+mara scene 1 10:30 history tail (t, kind, seq): [[4, 'accuse', 18], [5, 'accuse', 24], [6, 'routine', None], [54, 'routine', None], [54, 'door_give', 26], [55, 'confront', 31], [56, 'accuse', 35], [57, 'routine', None]]
+
+# 6. Elena, talk_probe scene 3 (five answers of the kind reassure): clock, option, line shown
+09:45  reassure_all    reassure options offered: 3  | What you have been doing: you have told the person at the door to go away, 1 turn in a row.
+09:48  reassure_all    reassure options offered: 4  | What you have been doing: you have reassured someone, 1 turn in a row.
+11:45  reassure_mara   reassure options offered: 1  | (no 'What you have been doing' line)
+16:54  reassure_all    reassure options offered: 4  | (no 'What you have been doing' line)
+16:57  reassure_all    reassure options offered: 4  | What you have been doing: you have reassured someone, 1 turn in a row.

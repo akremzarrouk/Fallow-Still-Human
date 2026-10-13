@@ -1,0 +1,16 @@
+HEAD: a24ae82bf606bc6d31cebdd19688fc975e2baffb
+git diff --stat (tracked files): []
+git diff --cached --stat: []
+git status --short:
+?? Prototypes/llm-morning/cache/n9_cause/
+?? Prototypes/llm-morning/reports/stuck_facts.md
+?? Prototypes/llm-morning/runs/n9_cause/
+?? Prototypes/llm-morning/runs/stuck_facts/
+?? Prototypes/llm-morning/runs/v6/daniel_ate_it-seed1.replay.md
+?? Prototypes/llm-morning/runs/v6/daniel_ate_it-seed2.replay.md
+?? Prototypes/llm-morning/runs/v6/daniel_ate_it-seed3.replay.md
+?? investigations/
+no GEMINI_API_KEY in any stuck_facts script's environment: every script ran as 'env -u GEMINI_API_KEY ...' (collect.py and collect_v22.py assert it)
+key search (grep -rlF over the repository, but .venv, __pycache__, .git, node_modules): 0 files
+cache/ files changed by this work: [?? Prototypes/llm-morning/cache/n9_cause/ ] (cache/n9_cause was untracked before)
+files in runs/stuck_facts: 48

@@ -1,0 +1,1562 @@
+[
+ {
+  "scene": 1,
+  "clock": "10:00",
+  "who": "daniel",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    3,
+    "confront",
+    13
+   ],
+   [
+    4,
+    "reassure",
+    17
+   ],
+   [
+    5,
+    "reassure",
+    21
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "silent",
+    28
+   ],
+   [
+    55,
+    "go",
+    32
+   ],
+   [
+    56,
+    "confront",
+    36
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 11,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "min 15, you reassured everyone.",
+   "09:45, you said.",
+   "09:48, you confronted Mara."
+  ]
+ },
+ {
+  "scene": 1,
+  "clock": "10:00",
+  "who": "elena",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    4,
+    "reassure",
+    20
+   ],
+   [
+    5,
+    "silent",
+    22
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "door_refuse",
+    25
+   ],
+   [
+    55,
+    "reassure",
+    29
+   ],
+   [
+    56,
+    "reassure",
+    34
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 12,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "09:42, you told the person at the door to go away.",
+   "09:45, you reassured everyone.",
+   "09:48, you reassured Leo."
+  ]
+ },
+ {
+  "scene": 1,
+  "clock": "10:00",
+  "who": "leo",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    5,
+    "silent",
+    23
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "save_water",
+    27
+   ],
+   [
+    55,
+    "talk",
+    30
+   ],
+   [
+    56,
+    "ration_water",
+    33
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 13,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "09:42, you said nobody should use the stored water for washing or the toilet any more.",
+   "09:45, you talked about the woman at the front door at 09:42.",
+   "09:48, you said the water must be shared out by the cup from now on."
+  ]
+ },
+ {
+  "scene": 1,
+  "clock": "10:00",
+  "who": "mara",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    4,
+    "accuse",
+    18
+   ],
+   [
+    5,
+    "accuse",
+    24
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "door_give",
+    26
+   ],
+   [
+    55,
+    "confront",
+    31
+   ],
+   [
+    56,
+    "accuse",
+    35
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 12,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "09:42, you handed water out at the front door.",
+   "09:45, you confronted Leo.",
+   "09:48, you accused Daniel."
+  ]
+ },
+ {
+  "scene": 1,
+  "clock": "10:30",
+  "who": "daniel",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    3,
+    "confront",
+    13
+   ],
+   [
+    4,
+    "reassure",
+    17
+   ],
+   [
+    5,
+    "reassure",
+    21
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "silent",
+    28
+   ],
+   [
+    55,
+    "go",
+    32
+   ],
+   [
+    56,
+    "confront",
+    36
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 11,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "min 15, you reassured everyone.",
+   "09:45, you said.",
+   "09:48, you confronted Mara."
+  ]
+ },
+ {
+  "scene": 1,
+  "clock": "10:30",
+  "who": "elena",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    4,
+    "reassure",
+    20
+   ],
+   [
+    5,
+    "silent",
+    22
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "door_refuse",
+    25
+   ],
+   [
+    55,
+    "reassure",
+    29
+   ],
+   [
+    56,
+    "reassure",
+    34
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 12,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "09:42, you told the person at the door to go away.",
+   "09:45, you reassured everyone.",
+   "09:48, you reassured Leo."
+  ]
+ },
+ {
+  "scene": 1,
+  "clock": "10:30",
+  "who": "leo",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    5,
+    "silent",
+    23
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "save_water",
+    27
+   ],
+   [
+    55,
+    "talk",
+    30
+   ],
+   [
+    56,
+    "ration_water",
+    33
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 13,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "09:42, you said nobody should use the stored water for washing or the toilet any more.",
+   "09:45, you talked about the woman at the front door at 09:42.",
+   "09:48, you said the water must be shared out by the cup from now on."
+  ]
+ },
+ {
+  "scene": 1,
+  "clock": "10:30",
+  "who": "mara",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    4,
+    "accuse",
+    18
+   ],
+   [
+    5,
+    "accuse",
+    24
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "door_give",
+    26
+   ],
+   [
+    55,
+    "confront",
+    31
+   ],
+   [
+    56,
+    "accuse",
+    35
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 12,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "09:42, you handed water out at the front door.",
+   "09:45, you confronted Leo.",
+   "09:48, you accused Daniel."
+  ]
+ },
+ {
+  "scene": 1,
+  "clock": "11:00",
+  "who": "daniel",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    3,
+    "confront",
+    13
+   ],
+   [
+    4,
+    "reassure",
+    17
+   ],
+   [
+    5,
+    "reassure",
+    21
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "silent",
+    28
+   ],
+   [
+    55,
+    "go",
+    32
+   ],
+   [
+    56,
+    "confront",
+    36
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 11,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "min 15, you reassured everyone.",
+   "09:45, you said.",
+   "09:48, you confronted Mara."
+  ]
+ },
+ {
+  "scene": 1,
+  "clock": "11:00",
+  "who": "elena",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    4,
+    "reassure",
+    20
+   ],
+   [
+    5,
+    "silent",
+    22
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "door_refuse",
+    25
+   ],
+   [
+    55,
+    "reassure",
+    29
+   ],
+   [
+    56,
+    "reassure",
+    34
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 12,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "09:42, you told the person at the door to go away.",
+   "09:45, you reassured everyone.",
+   "09:48, you reassured Leo."
+  ]
+ },
+ {
+  "scene": 1,
+  "clock": "11:00",
+  "who": "leo",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    5,
+    "silent",
+    23
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "save_water",
+    27
+   ],
+   [
+    55,
+    "talk",
+    30
+   ],
+   [
+    56,
+    "ration_water",
+    33
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 13,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "09:42, you said nobody should use the stored water for washing or the toilet any more.",
+   "09:45, you talked about the woman at the front door at 09:42.",
+   "09:48, you said the water must be shared out by the cup from now on."
+  ]
+ },
+ {
+  "scene": 1,
+  "clock": "11:00",
+  "who": "mara",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    4,
+    "accuse",
+    18
+   ],
+   [
+    5,
+    "accuse",
+    24
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "door_give",
+    26
+   ],
+   [
+    55,
+    "confront",
+    31
+   ],
+   [
+    56,
+    "accuse",
+    35
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 12,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "09:42, you handed water out at the front door.",
+   "09:45, you confronted Leo.",
+   "09:48, you accused Daniel."
+  ]
+ },
+ {
+  "scene": 3,
+  "clock": "10:00",
+  "who": "daniel",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    3,
+    "confront",
+    13
+   ],
+   [
+    4,
+    "reassure",
+    17
+   ],
+   [
+    5,
+    "reassure",
+    21
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "silent",
+    28
+   ],
+   [
+    55,
+    "go",
+    32
+   ],
+   [
+    56,
+    "confront",
+    35
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 11,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "min 15, you reassured everyone.",
+   "09:45, you said.",
+   "09:48, you confronted Mara."
+  ]
+ },
+ {
+  "scene": 3,
+  "clock": "10:00",
+  "who": "elena",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    4,
+    "reassure",
+    20
+   ],
+   [
+    5,
+    "silent",
+    22
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "door_refuse",
+    25
+   ],
+   [
+    55,
+    "reassure",
+    29
+   ],
+   [
+    56,
+    "reassure",
+    33
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 12,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "09:42, you told the person at the door to go away.",
+   "09:45, you reassured everyone.",
+   "09:48, you reassured everyone."
+  ]
+ },
+ {
+  "scene": 3,
+  "clock": "10:00",
+  "who": "leo",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    5,
+    "silent",
+    23
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "save_water",
+    27
+   ],
+   [
+    55,
+    "ration_water",
+    30
+   ],
+   [
+    56,
+    "accuse",
+    36
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 13,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "09:42, you said nobody should use the stored water for washing or the toilet any more.",
+   "09:45, you said the water must be shared out by the cup from now on.",
+   "09:48, you accused Daniel."
+  ]
+ },
+ {
+  "scene": 3,
+  "clock": "10:00",
+  "who": "mara",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    4,
+    "accuse",
+    18
+   ],
+   [
+    5,
+    "accuse",
+    24
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "door_give",
+    26
+   ],
+   [
+    55,
+    "talk",
+    31
+   ],
+   [
+    56,
+    "accuse",
+    34
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 12,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "09:42, you handed water out at the front door.",
+   "09:45, you talked about the woman at the front door at 09:42.",
+   "09:48, you accused Daniel."
+  ]
+ },
+ {
+  "scene": 3,
+  "clock": "10:30",
+  "who": "daniel",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    3,
+    "confront",
+    13
+   ],
+   [
+    4,
+    "reassure",
+    17
+   ],
+   [
+    5,
+    "reassure",
+    21
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "silent",
+    28
+   ],
+   [
+    55,
+    "go",
+    32
+   ],
+   [
+    56,
+    "confront",
+    35
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 11,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "min 15, you reassured everyone.",
+   "09:45, you said.",
+   "09:48, you confronted Mara."
+  ]
+ },
+ {
+  "scene": 3,
+  "clock": "10:30",
+  "who": "elena",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    4,
+    "reassure",
+    20
+   ],
+   [
+    5,
+    "silent",
+    22
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "door_refuse",
+    25
+   ],
+   [
+    55,
+    "reassure",
+    29
+   ],
+   [
+    56,
+    "reassure",
+    33
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 12,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "09:42, you told the person at the door to go away.",
+   "09:45, you reassured everyone.",
+   "09:48, you reassured everyone."
+  ]
+ },
+ {
+  "scene": 3,
+  "clock": "10:30",
+  "who": "leo",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    5,
+    "silent",
+    23
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "save_water",
+    27
+   ],
+   [
+    55,
+    "ration_water",
+    30
+   ],
+   [
+    56,
+    "accuse",
+    36
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 13,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "09:42, you said nobody should use the stored water for washing or the toilet any more.",
+   "09:45, you said the water must be shared out by the cup from now on.",
+   "09:48, you accused Daniel."
+  ]
+ },
+ {
+  "scene": 3,
+  "clock": "10:30",
+  "who": "mara",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    4,
+    "accuse",
+    18
+   ],
+   [
+    5,
+    "accuse",
+    24
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "door_give",
+    26
+   ],
+   [
+    55,
+    "talk",
+    31
+   ],
+   [
+    56,
+    "accuse",
+    34
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 12,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "09:42, you handed water out at the front door.",
+   "09:45, you talked about the woman at the front door at 09:42.",
+   "09:48, you accused Daniel."
+  ]
+ },
+ {
+  "scene": 3,
+  "clock": "11:00",
+  "who": "daniel",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    3,
+    "confront",
+    13
+   ],
+   [
+    4,
+    "reassure",
+    17
+   ],
+   [
+    5,
+    "reassure",
+    21
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "silent",
+    28
+   ],
+   [
+    55,
+    "go",
+    32
+   ],
+   [
+    56,
+    "confront",
+    35
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 11,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "min 15, you reassured everyone.",
+   "09:45, you said.",
+   "09:48, you confronted Mara."
+  ]
+ },
+ {
+  "scene": 3,
+  "clock": "11:00",
+  "who": "elena",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    4,
+    "reassure",
+    20
+   ],
+   [
+    5,
+    "silent",
+    22
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "door_refuse",
+    25
+   ],
+   [
+    55,
+    "reassure",
+    29
+   ],
+   [
+    56,
+    "reassure",
+    33
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 12,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "09:42, you told the person at the door to go away.",
+   "09:45, you reassured everyone.",
+   "09:48, you reassured everyone."
+  ]
+ },
+ {
+  "scene": 3,
+  "clock": "11:00",
+  "who": "leo",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    5,
+    "silent",
+    23
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "save_water",
+    27
+   ],
+   [
+    55,
+    "ration_water",
+    30
+   ],
+   [
+    56,
+    "accuse",
+    36
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 13,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "09:42, you said nobody should use the stored water for washing or the toilet any more.",
+   "09:45, you said the water must be shared out by the cup from now on.",
+   "09:48, you accused Daniel."
+  ]
+ },
+ {
+  "scene": 3,
+  "clock": "11:00",
+  "who": "mara",
+  "resting": false,
+  "activity": {
+   "kind": "idle",
+   "label": "sitting in the kitchen"
+  },
+  "history_tail": [
+   [
+    4,
+    "accuse",
+    18
+   ],
+   [
+    5,
+    "accuse",
+    24
+   ],
+   [
+    6,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "routine",
+    null
+   ],
+   [
+    54,
+    "door_give",
+    26
+   ],
+   [
+    55,
+    "talk",
+    31
+   ],
+   [
+    56,
+    "accuse",
+    34
+   ],
+   [
+    57,
+    "routine",
+    null
+   ]
+  ],
+  "history_len": 12,
+  "repeating": [
+   "routine",
+   1
+  ],
+  "pattern": [],
+  "guard_would_apply": false,
+  "options_of_that_kind": [],
+  "said_lines": [
+   "09:42, you handed water out at the front door.",
+   "09:45, you talked about the woman at the front door at 09:42.",
+   "09:48, you accused Daniel."
+  ]
+ }
+]
