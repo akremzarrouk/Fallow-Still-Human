@@ -1,0 +1,38 @@
+E
+======================================================================
+ERROR: test_e_on_the_next_day_the_line_says_yesterday_and_gives_no_arrival_time (test_morning.TellFixTest.test_e_on_the_next_day_the_line_says_yesterday_and_gives_no_arrival_time)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8608, in test_e_on_the_next_day_the_line_says_yesterday_and_gives_no_arrival_time
+    self.quiet.play(d4)
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\quiet.py", line 1589, in play
+    q.turn(t)
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\quiet.py", line 1375, in turn
+    self.m.turn(t)
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\world.py", line 1428, in turn
+    d = self.decide(p, t)
+        ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\world.py", line 1594, in decide
+    choice, why = self.ask_model(p, t, opts, d)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\world.py", line 1516, in ask_model
+    prompt = self.prompt_for(p, t, opts, d.get("lull"), extra=extra)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\world.py", line 1127, in prompt_for
+    return self._prompt_for(p, t, opts, lull, night, extra)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\world.py", line 1191, in _prompt_for
+    return self.prompt_parts(p, opts, head, now, system, "today" if late else "this morning", minute)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\world.py", line 1206, in prompt_parts
+    where = [f"- {x}" for x in topics.whereabouts(self, p, opts)] if self.quiet is not None else []
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\topics.py", line 160, in whereabouts
+    sc = next(s for s in m.quiet.door_scenes if f"visit:{s['visit']}" == t["key"])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+StopIteration
+
+----------------------------------------------------------------------
+Ran 1 test in 0.929s
+
+FAILED (errors=1)

@@ -21,6 +21,7 @@ COOLDOWN = 60               # F2: after p chooses T's options, none of them is o
 PER_DAY = 2                 # F3: p chooses T's options at most twice a day
 ROOM_QUIET = 30             # F4: after anyone raises T in a room, talk_<T> is not offered there for 30 minutes
 MAX_OPTIONS = 2             # §1.3: at most 2 topic options in a prompt
+DOOR_ROOM = "kitchen"       # the door scene is played in the kitchen (quiet.Quiet.door_views, door_before)
 T1_NOTHING = "T1 the words name nothing of the topic"
 T1_DENIES = "T1 the words deny the outcome"
 NEGATION = r"(?:not|never|no|nothing|didn't|did not|don't|wasn't|n't)"
@@ -40,7 +41,8 @@ def visit_entry(q, k, day, sc, account, minute):
     None for someone who only heard knocking."""
     return {"key": f"visit:{sc['visit']}", "kind": "visit", "holder": q, "k": k, "day": day, "opened": minute,
             "start": sc["start"], "first": account is not None, "account": account,
-            "who": account["who"] if account else None}
+            "who": account["who"] if account else None,
+            "rooms": dict(sc["rooms"])}         # where each one was at the knock: for a teller's whereabouts line
 
 
 def told_entry(source, listener):
@@ -144,6 +146,33 @@ def options(m, p, others, minute):
         else:
             out.append(Option(f"talk_{suffix}", f"talk about {ref}", True, kind="talk", topic=t["key"],
                                 referent=ref))
+    return out
+
+
+def whereabouts(m, p, opts):
+    """While a tell is offered to p (reports/tell_fix_impl.md), one line per listener of what p perceived of where they
+    were: not in the room of the door scene when the visitor came, if p was in it at the knock and they were not; and,
+    on the visit's own day, when they came in, if p perceived that. Gone once the listener knows the topic (F5 closes
+    the tell)."""
+    out = []
+    for o in opts:
+        if o.act.get("kind") != "tell":
+            continue
+        t = p.topics[o.act["topic"]]
+        if t["rooms"].get(p.id) != DOOR_ROOM:
+            continue
+        visitor = "someone" if t["who"] == "someone" else f"the {noun(t['who'])}"
+        room = data.ROOMS[DOOR_ROOM]
+        ago = when(t, m.day).strip()                        # "" on its day, "yesterday" the next (F1)
+        for x in o.act["listeners"]:
+            if t["rooms"].get(x) == DOOR_ROOM:
+                continue
+            line = f"{name(x)} was not in the {room} when {visitor} came to the door" + (f" {ago}" if ago else "")
+            came = None if ago else next((mm for mm, text in p.memory if mm >= t["start"]
+                                          and text == f"{name(x)} comes into the {room}."), None)
+            if came is not None:
+                line += f"; {data.PRONOUNS[x]['he']} came in at {data.clock(came)}"
+            out.append(line + ".")
     return out
 
 

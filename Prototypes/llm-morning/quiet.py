@@ -544,7 +544,9 @@ class Quiet:
                               "heard_said": {}, "saw": [], "door_asks": 0, "by_knock": [[minute, dict(heard)]],
                               # who perceived each act in "acts", by its index: the actor and everyone in their room
                               # (reports/door_memory_impl.md); the visitor as a pronoun, for a second mention
-                              "perceived": [], "them": "her" if v["envoy"]["sex"] == "f" else "him"}
+                              "perceived": [], "them": "her" if v["envoy"]["sex"] == "f" else "him",
+                              # where each one was at the knock (reports/tell_fix_impl.md: a teller's whereabouts line)
+                              "rooms": {q.id: q.room for q in self.m.people.values()}}
             sc["woken"] = [q for q in heard if q in self.woken_now]
             self.knock_percepts(sc, heard, minute, played)
             # The visitor speaks first, through the shut door, heard in words by whoever heard the knock in words.

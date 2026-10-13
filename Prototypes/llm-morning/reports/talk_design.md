@@ -25,6 +25,13 @@ they change is marked *Amended (A…)* under its heading.
 **Sections changed:** Summary of decisions (rows 1, 2, 5), §1.1, §1.3, §2.2, §2.3, §2.4, §2.5, §4, §5, §7.3, §7.4,
 §8, §9.
 
+**Amended later, by the user (tell fix, `reports/tell_fix_impl.md`):** the topic options now come **first** in the option
+list (§1.3, §4, Summary row 4), and while a tell is offered its teller's prompt says where each listener was, as the
+teller perceived it (§4). Why: `reports/calm_variants.md`. With `tell_daniel_visit` moved from 18th or 19th to 1st, Leo
+told Daniel in 7 of his 8 offers (0 of 4 at 18th or 19th); nobody else moved: Elena and Mara told in none of their
+offers at any position. All 7 tells placed Daniel wrongly ("while you were sitting there"), and the teller's prompt had
+no line on where Daniel was at 09:42.
+
 ## Why
 
 `reports/talk_facts.md` found that no option carries a topic or is built from the past (§2). `say_other` was offered
@@ -75,7 +82,7 @@ doc exists elsewhere, items 2 and 3 should be checked against it before implemen
 | 1 | **Topics.** From day 3 on (quiet days only), two kinds of event of the same day can become a topic: a **visit to the front door** (one topic per visit) and **food taken from the shelf** (eat, a portion given, a share). A person is offered a topic only if they perceived it, or were told it. **At most 2 topic options in a prompt.** Fading is by code: per speaker, 60 minutes off after choosing it and **at most 2 choices of one topic a day**; per room, 30 minutes off after anyone raises it; talk closes 6 hours after the topic opens and at the end of its day. |
 | 2 | **Tell.** Offered when the speaker perceived the event first-hand, and someone awake in the room has neither perceived it nor been told. The listener keeps the words as speech, and a **claim built by code from the teller's own view**, marked "{Teller} told you that …", as a sure line. The chronicle gets a `tell` event and a new witness kind **`told`** on the events told of. The night mind shows it as a record stamped at the telling. Block A carries the claim next morning. A new quiet trigger, **Q8**, asks the knower once when the one who missed it comes in. |
 | 3 | **Words versus claim.** In v1, choosing `tell_…` is choosing to tell what one saw: the claim is the teller's view whatever the words say. A mismatch between words and claim is logged as a warning only. Softening, leaving out and lying are left for a later version, where a claim can differ from the view. |
-| 4 | **Labels.** `talk about {referent}` and `tell {Names} about {referent}`. The referent names only what the speaker perceived: never the outcome, the children, a judgment or their own earlier words. Topic options sit in a fixed place, after `say_other`, never first. |
+| 4 | **Labels.** `talk about {referent}` and `tell {Names} about {referent}`. The referent names only what the speaker perceived: never the outcome, the children, a judgment or their own earlier words. Topic options sit in a fixed place, ~~after `say_other`, never first~~ **first in the list** (tell fix). |
 | 5 | **Cost.** At most about 44 tokens of options in a prompt, kept outside the trimming budget. About 57 tokens for each claim a listener holds. One night-mind record and one block-A line for each told topic. No new asks from the options themselves. Q8 adds at most one stretch per (topic, listener) a day, inside the existing 40 and 56. |
 
 **Deviation from the brief:** the frozen cases replay from cache **through 09:42, not 09:51**. Under this design the
@@ -142,6 +149,10 @@ first-hand account is required (§2.1).
 ### 1.3 How many in a prompt
 
 *Amended (A1): with the visit only, a prompt holds at most one topic option in v1. The cap of 2 and the ranking stay in the code for later topics.*
+
+*Amended (tell fix, `reports/tell_fix_impl.md`): this order is now also their place: the topic options are the first
+options in the list, in this order, and no other option moves (`reports/calm_variants.md`: at the top, Leo told in 7 of
+8 offers; at 18th or 19th, in 0 of 4).*
 
 **Decision.** At most **2** topic options in a prompt, and at most **one option per topic**:
 - `tell_<names>_<T>` if someone present lacks T;
@@ -415,8 +426,22 @@ Both are marked `(speech)`, so `say` holds the words (`world.py:1180`, `43-46`).
 - the speaker's own earlier words (L2);
 - a count ("again", L3).
 
-**Place:** topic options come right after `say_other` in the list, in the order of §1.3, before `sit_` and `aside_`.
-Never first.
+**Place:** ~~topic options come right after `say_other` in the list, in the order of §1.3, before `sit_` and
+`aside_`. Never first.~~
+
+*Amended (tell fix, `reports/tell_fix_impl.md`):* **topic options come first in the list**, in the order of §1.3; every
+other option keeps its place relative to the rest. **Why** (`reports/calm_variants.md`, variant O):
+- With `tell_daniel_visit` moved from 18th or 19th to 1st, and nothing else changed, Leo told Daniel in 3 of his 4
+  offers (7 of 8 with variant TO), against 0 of 4 at 18th or 19th.
+- Nobody else moved: Elena reassured and Mara accused in all their asks, at either position. So the place does not
+  make everyone tell. It lets the one with a reason to tell do it.
+- The worry below (order steers) is real, and was measured: no variant was over-steered (at most 4 of 14 tells).
+
+*Also amended (tell fix):* while a `tell_<names>_<T>` is offered to p, p's sure block holds, per listener, what p
+perceived of where they were: "<Name> was not in the kitchen when the woman came to the door", with "; <he|she> came
+in at HH:MM" only if p perceived that arrival. It goes once the listener knows T (F5 closes the tell). Why: all 7 tells
+in `calm_variants.md` placed Daniel wrongly ("while you were sitting there"), and the teller's prompt said nothing of
+where he had been. The line states a situation, not an act: it names no option and tells nobody to speak.
 
 **Argument against.**
 - *Every label is an act; "tell Daniel about …" tells the model that Daniel does not know, and invites telling* (L1).
@@ -426,7 +451,9 @@ Never first.
 **Why it stands.**
 - **An option is an act by nature;** L1 is about lines that are not options. The food probe's lesson was that a
   *situation line* naming eating made everyone eat, and that *order* steers. So no situation line is added ("Daniel
-  missed the visit" is not written anywhere), and the topic options get a fixed middle place.
+  missed the visit" is not written anywhere), and the topic options get a fixed middle place. *(Tell fix: the
+  place is now first, see above. The whereabouts line does imply that the listener missed it; it is shown only while
+  the tell is already offered, so it adds no act the option list does not already hold.)*
 - **"tell {Names}" is the minimum that makes the option mean telling.** Who is absent from the knowledge is a fact
   the label must carry; how it matters is not.
 - **The children are in the claim and in the memory** of those who heard them. A label that named them would weight

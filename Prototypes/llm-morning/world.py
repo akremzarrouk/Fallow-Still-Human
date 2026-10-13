@@ -550,6 +550,7 @@ class Morning:
 
     def options_for(self, p):
         opts = []
+        lead = []           # the topic options, first in the list (reports/tell_fix_impl.md)
         others = self.others_here(p)
         room = data.ROOMS[p.room]
         opts.append(Option("silent", "stay put and say nothing", kind="silent"))
@@ -588,7 +589,7 @@ class Morning:
                 opts.append(Option("ration_water", "say the water must be shared out by the cup from now on", True,
                                    kind="ration_water"))
             opts.append(Option("say_other", "say something else", True, kind="say"))
-            opts += topics.options(self, p, others, self.now)     # reports/talk_design.md: from day 3, a visit
+            lead = topics.options(self, p, others, self.now)      # reports/talk_design.md: from day 3, a visit
             for q in others:
                 if q.activity["kind"] in ("searching", "walking"):
                     continue
@@ -621,6 +622,7 @@ class Morning:
             opts.append(Option("eat", "eat one of the portions", kind="eat"))
             if others:
                 opts.append(Option("share", "share out what is left among everyone here", kind="share"))
+        opts = lead + opts
         # A speech act used three turns in a row is not offered a fourth time.
         kind, n = self.repeating(p)
         if kind in SPEECH and n >= 3:
@@ -1200,6 +1202,9 @@ class Morning:
         pinned = [f"What you are sure of {sure}:"] + [f"- {x}" for x in p.sure]
         # What they were told today (reports/talk_design.md, A4): each belief, from the store, on its day and night.
         pinned += [f"- {data.clock(b['minute'])}: {b['claim']}" for b in p.beliefs if b["day"] == self.day]
+        # While a tell is offered: where each listener was, as the teller perceived it (reports/tell_fix_impl.md).
+        where = [f"- {x}" for x in topics.whereabouts(self, p, opts)] if self.quiet is not None else []
+        pinned += where
         if p.said_lines:
             pinned += [f"Your own last words {when}:"] + [f"- {x}" for x in p.said_lines[-3:]]
         carry = self.carry.get(p.id, [])
@@ -1229,6 +1234,7 @@ class Morning:
             block += sum(len(x) + 1 for o, x in zip(opts, tail[1:]) if o.id in W1_OPTIONS)
             # The topic options (reports/talk_design.md §5) sit outside the budget: they never push a memory out.
             block += sum(len(x) + 1 for o, x in zip(opts, tail[1:]) if act_of(o.id)[0] in ("talk", "tell"))
+            block += sum(len(x) + 1 for x in where)          # and so do the lines that come with a tell
             if not self.trip:
                 block += len(data.YARD[1]) - len(data.YARD[0])
         cut = False

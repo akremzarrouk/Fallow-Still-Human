@@ -8473,5 +8473,148 @@ class TalkTest(unittest.TestCase):
         self.assertEqual(T.t1(entry, "Mara gave her some water, and I could not stop it."), [])
         self.assertEqual(T.t1(entry, "We never gave her any water, Daniel."), ["T1 the words deny the outcome"])
 
+
+class TellFixTest(unittest.TestCase):
+    """reports/tell_fix_impl.md (from reports/calm_variants.md): the topic options come first in the option list, and
+    while a tell is offered its teller's prompt says, for each listener, only what the teller perceived of where they
+    were when the visitor came to the door. Day-3 scenes are TalkTest's: probe_after's, replayed to 09:42, PolicyFake
+    after."""
+    MODEL, v16, END = TalkTest.MODEL, TalkTest.v16, TalkTest.END
+    setUp, tearDown, need = KnockTest.setUp, KnockTest.tearDown, KnockTest.need
+    probe, scene, topic_options = TalkTest.probe, TalkTest.scene, staticmethod(TalkTest.topic_options)
+    WHERE = "was not in the kitchen when"
+
+    @staticmethod
+    def daniel_comes_in(who, minute, opts):
+        """Daniel comes into the kitchen when he can; nobody tells."""
+        return "go_kitchen" if who == "daniel" and "go_kitchen" in opts else None
+
+    def prompts_of(self, k, policy, stop):
+        """Scene k played to `stop` under `policy`: (m, every day prompt sent, in order)."""
+        prompts = []
+        real = gemini.Oracle.ask
+
+        def ask(o, system, prompt, schema=None):
+            prompts.append(prompt)
+            return real(o, system, prompt, schema)
+        with mock.patch.object(gemini.Oracle, "ask", ask):
+            m, *_ = self.scene(k, policy, stop=stop)
+        return m, [x for x in prompts if now_minute(x) is not None]
+
+    @staticmethod
+    def sure_block(prompt):
+        lines = prompt.splitlines()
+        i = next(i for i, x in enumerate(lines) if x.startswith("What you are sure of "))
+        j = next(j for j in range(i + 1, len(lines)) if not lines[j].startswith("- "))
+        return lines[i + 1:j]
+
+    # ---------- (a) the topic options come first ----------
+    def test_a_in_scene_1_at_0948_elenas_options_start_with_the_tell_and_the_rest_keep_their_order(self):
+        topics = self.need("topics")
+        seen = []
+        real = world.Morning.options_for
+
+        def options_for(w, p):
+            opts = real(w, p)
+            with mock.patch.object(topics, "options", lambda *a, **kw: []):
+                former = real(w, p)                 # the same moment with no topic option: the rest, in order
+            seen.append((p.id, w.now, [o.id for o in opts], [o.id for o in former]))
+            return opts
+        with mock.patch.object(world.Morning, "options_for", options_for):
+            self.scene(1, self.daniel_comes_in, stop=171)
+        at = [(ids, former) for who, now, ids, former in seen if (who, now) == ("elena", 168)]
+        self.assertTrue(at, "the premise: Elena is asked at 09:48")
+        for ids, former in at:
+            self.assertEqual(ids[0], "tell_daniel_visit", ids)
+            self.assertEqual(ids, ["tell_daniel_visit"] + former)
+        # Everywhere: the topic options first, in §1.3's order, and nothing else moved.
+        for who, now, ids, former in seen:
+            n = len([x for x in ids if x.startswith(("talk_", "tell_"))])
+            self.assertEqual(ids[n:], former, (who, now))
+
+    # ---------- (b) the whereabouts line, in the teller's prompt only ----------
+    def test_b_leos_prompt_in_scene_3_holds_the_whereabouts_line_and_daniels_does_not(self):
+        self.need("topics")
+        m, prompts = self.prompts_of(3, self.daniel_comes_in, 171)
+        leo = [x for x in prompts if asked_where(x)[0] == "leo" and "tell_daniel_visit" in self.topic_options(x)]
+        self.assertTrue(leo, "the premise: the tell is offered to Leo")
+        for x in leo:
+            self.assertIn("- Daniel was not in the kitchen when the woman came to the door; he came in at 09:45.",
+                          self.sure_block(x))
+        dan = [x for x in prompts if asked_where(x)[0] == "daniel" and now_minute(x) >= self.END]
+        self.assertTrue(dan, "the premise: Daniel is asked after the visit")
+        self.assertEqual([x for x in dan if self.WHERE in x], [])
+
+    # ---------- (c) no arrival the teller did not perceive ----------
+    def test_c_the_line_says_nothing_of_coming_in_when_the_teller_did_not_see_the_arrival(self):
+        self.need("topics")
+
+        def leo_misses_it(who, minute, opts):
+            """At 09:45 Daniel comes into the kitchen as Leo leaves it for the brothers room: Leo does not see him
+            come in. Leo comes back at 09:51 (a routine), where Daniel is."""
+            if who == "daniel" and "go_kitchen" in opts:
+                return "go_kitchen"
+            return "go_brothers_room" if (who, minute) == ("leo", self.END) else None
+        m, prompts = self.prompts_of(1, leo_misses_it, 177)
+        self.assertNotIn("Daniel comes into the kitchen.", [x for _, x in m.people["leo"].memory])
+        leo = [x for x in prompts if asked_where(x)[0] == "leo" and "tell_daniel_visit" in self.topic_options(x)]
+        self.assertTrue(leo, "the premise: the tell is offered to Leo, back in the kitchen")
+        for x in leo:
+            self.assertIn("- Daniel was not in the kitchen when the woman came to the door.", self.sure_block(x))
+            self.assertNotIn("came in at", x)
+
+    # ---------- (d) once told, the line goes ----------
+    def test_d_after_daniel_is_told_the_line_is_gone_and_his_claim_is_talk_impls(self):
+        self.need("topics")
+        m, prompts = self.prompts_of(1, TalkTest.elena_tells, None)        # the whole of day 3
+        tells = [(t["teller"], t["minute"]) for t in m.tells]
+        self.assertEqual(tells, [("elena", 168)])
+        i = next(i for i, x in enumerate(prompts) if asked_where(x)[:2] == ("elena", 168))     # the prompt she told at
+        before = [x for x in prompts[:i + 1] if "tell_daniel_visit" in self.topic_options(x)]
+        self.assertTrue(before and all(self.WHERE in x for x in before), "the premise: the line, while the tell is open")
+        after = prompts[i + 1:]
+        self.assertTrue(after, "the premise: asks after the tell")
+        self.assertEqual([x for x in after if self.WHERE in x], [])
+        self.assertEqual([b["claim"] for b in m.people["daniel"].beliefs], [TalkTest.CLAIMS[1]])
+
+    # ---------- (e) the next day: the tell is still offered (F1), the line says "yesterday" ----------
+    def test_e_on_the_next_day_the_line_says_yesterday_and_gives_no_arrival_time(self):
+        self.need("topics")
+        root = tempfile.mkdtemp()
+        try:
+            m, oracle, chron, client = self.scene(1, self.daniel_comes_in, root=root)     # nobody tells, all day
+            chron.add_day(m)
+            n3 = self.night.Night(m, oracle, number=3, house=chron.house_state()).run()
+            chron.add_night(n3)
+            self.mind.NightMind(n3, chron, oracle).run()
+            d4 = self.night.next_day(m, n3, oracle, chronicle=chron)
+            prompts = []
+            real = gemini.Oracle.ask
+
+            def ask(o, system, prompt, schema=None):
+                prompts.append(prompt)
+                return real(o, system, prompt, schema)
+
+            class Stop(Exception):
+                pass
+
+            def hear_knock(q, minute, played):
+                if minute >= 30:
+                    raise Stop(minute)
+                return []
+            with mock.patch.object(gemini.Oracle, "ask", ask), \
+                    mock.patch.object(self.quiet.Quiet, "hear_knock", hear_knock):
+                with self.assertRaises(Stop):
+                    self.quiet.play(d4)
+        finally:
+            shutil.rmtree(root, ignore_errors=True)
+        offered = [x for x in prompts if now_minute(x) is not None and "tell_daniel_visit" in self.topic_options(x)]
+        self.assertTrue(offered, "the premise: the tell is offered on day 4")
+        for x in offered:
+            self.assertIn("- Daniel was not in the kitchen when the woman came to the door yesterday.",
+                          self.sure_block(x))
+            self.assertNotIn("came in at", x)
+
+
 if __name__ == "__main__":
     unittest.main()

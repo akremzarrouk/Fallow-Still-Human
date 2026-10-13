@@ -1,0 +1,11 @@
+test_a_in_scene_1_at_0948_elenas_options_start_with_the_tell_and_the_rest_keep_their_order (test_morning.TellFixTest.test_a_in_scene_1_at_0948_elenas_options_start_with_the_tell_and_the_rest_keep_their_order) ... ok
+test_b_leos_prompt_in_scene_3_holds_the_whereabouts_line_and_daniels_does_not (test_morning.TellFixTest.test_b_leos_prompt_in_scene_3_holds_the_whereabouts_line_and_daniels_does_not) ... ok
+test_c_the_line_says_nothing_of_coming_in_when_the_teller_did_not_see_the_arrival (test_morning.TellFixTest.test_c_the_line_says_nothing_of_coming_in_when_the_teller_did_not_see_the_arrival) ... ok
+test_d_after_daniel_is_told_the_line_is_gone_and_his_claim_is_talk_impls (test_morning.TellFixTest.test_d_after_daniel_is_told_the_line_is_gone_and_his_claim_is_talk_impls) ... ok
+test_e_on_the_next_day_the_line_says_yesterday_and_gives_no_arrival_time (test_morning.TellFixTest.test_e_on_the_next_day_the_line_says_yesterday_and_gives_no_arrival_time) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 3.540s
+
+OK
+exit 0

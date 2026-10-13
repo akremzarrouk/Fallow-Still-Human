@@ -1,0 +1,54 @@
+test_a_in_scene_1_at_0948_elenas_options_start_with_the_tell_and_the_rest_keep_their_order (test_morning.TellFixTest.test_a_in_scene_1_at_0948_elenas_options_start_with_the_tell_and_the_rest_keep_their_order) ... FAIL
+test_b_leos_prompt_in_scene_3_holds_the_whereabouts_line_and_daniels_does_not (test_morning.TellFixTest.test_b_leos_prompt_in_scene_3_holds_the_whereabouts_line_and_daniels_does_not) ... FAIL
+test_c_the_line_says_nothing_of_coming_in_when_the_teller_did_not_see_the_arrival (test_morning.TellFixTest.test_c_the_line_says_nothing_of_coming_in_when_the_teller_did_not_see_the_arrival) ... FAIL
+test_d_after_daniel_is_told_the_line_is_gone_and_his_claim_is_talk_impls (test_morning.TellFixTest.test_d_after_daniel_is_told_the_line_is_gone_and_his_claim_is_talk_impls) ... FAIL
+test_e_on_the_next_day_the_line_says_yesterday_and_gives_no_arrival_time (test_morning.TellFixTest.test_e_on_the_next_day_the_line_says_yesterday_and_gives_no_arrival_time) ... FAIL
+
+======================================================================
+FAIL: test_a_in_scene_1_at_0948_elenas_options_start_with_the_tell_and_the_rest_keep_their_order (test_morning.TellFixTest.test_a_in_scene_1_at_0948_elenas_options_start_with_the_tell_and_the_rest_keep_their_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8528, in test_a_in_scene_1_at_0948_elenas_options_start_with_the_tell_and_the_rest_keep_their_order
+    self.assertEqual(ids[0], "tell_daniel_visit", ids)
+AssertionError: 'silent' != 'tell_daniel_visit'
+- silent
++ tell_daniel_visit
+ : ['silent', 'deny', 'accuse_daniel', 'confront_daniel', 'confront_leo', 'reassure_daniel', 'reassure_leo', 'reassure_all', 'propose_trip', 'volunteer', 'send_daniel', 'send_leo', 'propose_far', 'volunteer_far', 'ration_water', 'say_other', 'tell_daniel_visit', 'sit_daniel', 'sit_leo', 'aside_daniel', 'aside_leo', 'go_brothers_room', 'go_back_room', 'go_bathroom']
+
+======================================================================
+FAIL: test_b_leos_prompt_in_scene_3_holds_the_whereabouts_line_and_daniels_does_not (test_morning.TellFixTest.test_b_leos_prompt_in_scene_3_holds_the_whereabouts_line_and_daniels_does_not)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8542, in test_b_leos_prompt_in_scene_3_holds_the_whereabouts_line_and_daniels_does_not
+    self.assertIn("- Daniel was not in the kitchen when the woman came to the door; he came in at 09:45.",
+AssertionError: '- Daniel was not in the kitchen when the woman came to the door; he came in at 09:45.' not found in ['- min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)', '- 09:45: at 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.']
+
+======================================================================
+FAIL: test_c_the_line_says_nothing_of_coming_in_when_the_teller_did_not_see_the_arrival (test_morning.TellFixTest.test_c_the_line_says_nothing_of_coming_in_when_the_teller_did_not_see_the_arrival)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8563, in test_c_the_line_says_nothing_of_coming_in_when_the_teller_did_not_see_the_arrival
+    self.assertIn("- Daniel was not in the kitchen when the woman came to the door.", self.sure_block(x))
+AssertionError: '- Daniel was not in the kitchen when the woman came to the door.' not found in ['- min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)', '- 09:45: at 09:42 someone knocked at the front door: Elena told a woman, who asked for water, to go away, and Mara handed her about three litres of the stored water anyway.']
+
+======================================================================
+FAIL: test_d_after_daniel_is_told_the_line_is_gone_and_his_claim_is_talk_impls (test_morning.TellFixTest.test_d_after_daniel_is_told_the_line_is_gone_and_his_claim_is_talk_impls)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8574, in test_d_after_daniel_is_told_the_line_is_gone_and_his_claim_is_talk_impls
+    self.assertTrue(before and all(self.WHERE in x for x in before), "the premise: the line, while the tell is open")
+AssertionError: False is not true : the premise: the line, while the tell is open
+
+======================================================================
+FAIL: test_e_on_the_next_day_the_line_says_yesterday_and_gives_no_arrival_time (test_morning.TellFixTest.test_e_on_the_next_day_the_line_says_yesterday_and_gives_no_arrival_time)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 8614, in test_e_on_the_next_day_the_line_says_yesterday_and_gives_no_arrival_time
+    self.assertIn("- Daniel was not in the kitchen when the woman came to the door yesterday.",
+AssertionError: '- Daniel was not in the kitchen when the woman came to the door yesterday.' not found in ['- min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)']
+
+----------------------------------------------------------------------
+Ran 5 tests in 3.468s
+
+FAILED (failures=5)
+exit 1

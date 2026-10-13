@@ -1,0 +1,62 @@
+E
+======================================================================
+ERROR: test_a_ten_day_fake_run_never_reads_world_in_a_prompt (test_morning.PhysicalLayerTest.test_a_ten_day_fake_run_never_reads_world_in_a_prompt)
+The guard is on for the whole run; litres in a prompt are only what an eye sees (multiples of 5); no body
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 6458, in test_a_ten_day_fake_run_never_reads_world_in_a_prompt
+    (meta, code), out = fake_morning(self.dirs, seed=2, days=10)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 92, in fake_morning
+    return quiet_run(seed, fake=True, config_path=CONFIG, runs_dir=dirs.runs, cache_dir=dirs.cache, **k)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 87, in quiet_run
+    result = run(*a, quiet=False, **k)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\morning.py", line 290, in run
+    day_k = scene(f"day{k}", lambda prev=prev, n_k=n_k, k=k: day_after(prev, n_k, f"day {k} "))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\morning.py", line 236, in scene
+    out = step()
+          ^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\morning.py", line 290, in <lambda>
+    day_k = scene(f"day{k}", lambda prev=prev, n_k=n_k, k=k: day_after(prev, n_k, f"day {k} "))
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\morning.py", line 264, in day_after
+    morning_turns(m, tag)
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\morning.py", line 159, in morning_turns
+    return quiet_day(m, tag)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\morning.py", line 183, in quiet_day
+    quietday.play(m, turn_told)
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\quiet.py", line 1589, in play
+    q.turn(t)
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\quiet.py", line 1375, in turn
+    self.m.turn(t)
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\world.py", line 1428, in turn
+    d = self.decide(p, t)
+        ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\world.py", line 1594, in decide
+    choice, why = self.ask_model(p, t, opts, d)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\world.py", line 1516, in ask_model
+    prompt = self.prompt_for(p, t, opts, d.get("lull"), extra=extra)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\world.py", line 1127, in prompt_for
+    return self._prompt_for(p, t, opts, lull, night, extra)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\world.py", line 1191, in _prompt_for
+    return self.prompt_parts(p, opts, head, now, system, "today" if late else "this morning", minute)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\world.py", line 1206, in prompt_parts
+    where = [f"- {x}" for x in topics.whereabouts(self, p, opts)] if self.quiet is not None else []
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\topics.py", line 160, in whereabouts
+    sc = next(s for s in m.quiet.door_scenes if f"visit:{s['visit']}" == t["key"])
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+StopIteration
+
+----------------------------------------------------------------------
+Ran 1 test in 6.853s
+
+FAILED (errors=1)
