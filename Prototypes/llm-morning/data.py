@@ -178,7 +178,8 @@ GAP = "The afternoon and evening passed in the house. Nobody ate."
 
 # What everyone learns when the trip concern starts (reports/trip_design.md, §2.1): conclusions
 # the code draws, told after their "About the can:" line.
-ABOUT_FOOD = "About food: there is no food in the house for tomorrow."
+# True next to the shelf's count, whatever it is (reports/play_fix1.md, fix 5).
+ABOUT_FOOD = "About food: there is no food in the house but what is on the shelf; once it is eaten, there is nothing."
 ABOUT_NEIGHBOUR = ("About the neighbour's house: its people left in the first days and nobody has been "
                    "inside since, so there may be food there. Outside is dangerous.")
 

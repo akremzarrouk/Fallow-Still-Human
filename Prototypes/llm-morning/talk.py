@@ -17,7 +17,7 @@ SPEECH = ("ask", "deny", "accuse", "confess", "reassure", "say",
 def act_of(option):
     """(kind, target) of an option id. Kinds group options that are the same kind of act:
     reassuring one person or everyone is `reassure`, starting or carrying on a search is
-    `search`. The target is a person for accuse, reassure, sit, back and object, a room for go.
+    `search`. The target is a person for accuse, reassure, sit, back, object and say_to, a room for go.
     The trip's options (reports/trip_design.md, §3.3): proposing it, volunteering, objecting
     to it or to one person going, backing one person to go, and declining to go. Day 2 words them
     anew (reports/night_design.md, §6) with the same kinds: nobody_goes, keep_<q>_home, send_<q>,
@@ -32,6 +32,8 @@ def act_of(option):
         return "object", None
     if option == "say_other":
         return "say", None
+    if option.startswith("say_to_"):        # words to one person, with no meaning about the can (play_fix1.md, fix 2)
+        return "say", option[len("say_to_"):]
     if option.startswith("talk_"):          # reports/talk_design.md: talk_<topic>, tell_<names>_<topic>
         return "talk", None
     if option.startswith("tell_"):
@@ -57,7 +59,7 @@ def act_of(option):
 def aimed_at(option):
     """The person a line is aimed at, or None for a line to everyone in the room."""
     kind, target = act_of(option)
-    return target if kind in ("accuse", "reassure", "aside", "back", "object", "confront") else None
+    return target if kind in ("accuse", "reassure", "aside", "back", "object", "confront", "say") else None
 
 
 # What a position on the trip is, for the story (reports/trip_design.md, §3.3).

@@ -19,6 +19,7 @@ SILENT_WORDS = "Staying silent means saying nothing"
 UNKNOWN = "Choose one of the options"
 NIGHT_WORDS = "At night only a (speech) option is said aloud"
 CAN_STANCE = ("About the can (", "About the can: you have not settled")     # a stance the model's answers built (§1.3)
+HEARD_CONFESSION = (" admitted taking the can: ", "(you heard it)")    # a sure line the heard line already shows
 
 
 def tidy(words):
@@ -86,10 +87,19 @@ class Player:
         mark = self._marks.get(m.day)
         return mark is None or self.counts(p) != mark
 
-    def chose(self, m, view, choice):
+    def chose(self, m, view, choice, opt):
         """Their answer was taken (world.Morning.player_choice): its words are echoed with their act on the next
-        screen (reports/play_s3.md)."""
-        self._said = (m.day, view["minute"], choice["say"]) if choice.get("say") and view["minute"] is not None             else None
+        screen (reports/play_s3.md); speech as to whom it was said (reports/play_fix1.md, fix 1)."""
+        from talk import act_of, aimed_at
+        if not choice.get("say") or view["minute"] is None:
+            self._said = None
+            return
+        to = None
+        if opt.speech:
+            aim = aimed_at(opt.id)
+            to = m.spoken_to(m.people[self.pid], act_of(opt.id)[0], m.people[aim] if aim else None, None,
+                             opt.act.get("listeners"))
+        self._said = (m.day, view["minute"], choice["say"], to)
 
     # ---------- the screen ----------
     def screen(self, m, p, view, kind, message=None):
@@ -113,20 +123,28 @@ class Player:
         lines += view["body"]
         first = m.day not in self._shown
         i, j, b = self._shown.get(m.day, (0, 0, 0))
-        # What they are sure of first, at the same minute: the count, the morning's opening, a search's end.
-        new = [data.unstamp(x) for x in view["sure"][j:]]
-        new += [(x["minute"], x["claim"]) for x in view["beliefs"][b:]]
-        mine = [(mm, x) for mm, x in view["memory"][i:]]
+        # A minute's lines in the order they happened (reports/play_fix1.md, fix 4): a sure line goes after the memory
+        # lines that came before it, so day 1's count comes first; a heard confession's sure line is left out, as its
+        # heard line shows it. Beliefs come first at their minute.
+        after = view.get("sure_after") or [0] * len(view["sure"])
+        new = []
+        for n in range(j, len(view["sure"])):
+            mm, x = data.unstamp(view["sure"][n])
+            if not (HEARD_CONFESSION[0] in x and x.endswith(HEARD_CONFESSION[1])):
+                new.append(((mm, after[n], 0), mm, x))
+        new += [((x["minute"], -1, 0), x["minute"], x["claim"]) for x in view["beliefs"][b:]]
+        mine = [((mm, n, 1), mm, x) for n, (mm, x) in enumerate(view["memory"][i:], i)]
         if self._said and self._said[0] == m.day:       # their own act's line, with the words they typed
-            n = next((n for n, (mm, x) in enumerate(mine) if mm == self._said[1] and x.startswith("you ")), None)
+            n = next((n for n, (_, mm, x) in enumerate(mine) if mm == self._said[1] and x.startswith("you ")), None)
             if n is not None:
-                mm, x = mine[n]
-                said = x.rstrip(".")
-                mine[n] = (mm, f'{said}: "{self._said[2]}"' if said == "you said" else
-                           f'{said}, saying: "{self._said[2]}"')
+                key, mm, x = mine[n]
+                said, words, to = x.rstrip("."), self._said[2], self._said[3]
+                mine[n] = (key, mm, f'you, {to}: "{words}"' if to else f'{said}: "{words}"' if said == "you said"
+                           else f'{said}, saying: "{words}"')
             self._said = None
         new += mine
-        new.sort(key=lambda x: -1 if x[0] is None else x[0])
+        new.sort(key=lambda x: (-1 if x[1] is None else x[1],) + x[0][1:])
+        new = [(mm, x) for _, mm, x in new]
         out = ([f"  {x}" for x in view["carry"]] if first else []) + \
               [f"  {data.clock(mm) if mm is not None else '':6}  {x}".rstrip() for mm, x in new]
         if out:

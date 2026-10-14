@@ -27,6 +27,7 @@ Time passing (reports/night_design.md): a Morning is day 1 (house day 4) or day 
 Day 2 starts from the people as the night left them (night.py), with what each of them carries
 in as a block of facts outside the prompt budget, and words the trip's options anew.
 """
+import copy
 import json
 import random
 import re
@@ -87,9 +88,6 @@ LULL_EVERY = 12              # minutes since a person was last asked before a lu
 TRIP_HUNGER = 2              # the hunger level ("very hungry") that starts the trip concern
 TRIP_ON = True               # the trip concern (reports/trip_design.md); off only in tests
 TRIP_KINDS = tuple(TRIP_WHY)  # propose, volunteer, object, back, decline; propose_far, volunteer_far (stage B)
-# What others hear of a far position (reports/facts_and_evening.md, fix 1; on every day: household_knowledge.md, fix 2).
-FAR_GIST = {"volunteer_far": "{name} offers to go further along the street tonight",
-            "propose_far": "{name} says someone should try the houses further along the street tonight"}
 # The body's food moment on day 2 (reports/body_design.md, §2): the chance a turn, at impulsive 0.5,
 # by when they last ate; and the minutes between one person's moments.
 FOOD_RATE = {"before yesterday": 0.07, "yesterday": 0.035}
@@ -319,7 +317,42 @@ class Option:
         self.id, self.label, self.speech, self.act = id, label, speech, act
 
 
+class Sure(list):
+    """A person's sure lines. after[i] is how many of their memory lines came before line i, so that the player's screen
+    shows a minute's lines in the order they happened (reports/play_fix1.md, fix 4)."""
+
+    def __init__(self, person, lines=()):
+        super().__init__(lines)
+        self.person = person
+        self.after = [len(person.memory)] * len(self)
+
+    def append(self, line):
+        self.after.append(len(self.person.memory))
+        super().append(line)
+
+    def __copy__(self):
+        out = Sure(self.person, self)
+        out.after = list(self.after)
+        return out
+
+    def __deepcopy__(self, memo):
+        out = Sure.__new__(Sure)
+        memo[id(self)] = out
+        list.extend(out, copy.deepcopy(list(self), memo))
+        out.person = copy.deepcopy(self.person, memo)
+        out.after = list(self.after)
+        return out
+
+
 class Person:
+    @property
+    def sure(self):
+        return self._sure
+
+    @sure.setter
+    def sure(self, lines):
+        self._sure = Sure(self, lines)
+
     def __init__(self, pid, scenario=data.DEFAULT_SCENARIO):
         d = data.PEOPLE[pid]
         culprit = data.culprit(scenario)
@@ -575,8 +608,9 @@ class Morning:
             if not p.knows_culprit:
                 opts.append(Option("ask_who", "ask everyone here who took the can", True, kind="ask"))
             # Once it has been admitted, it cannot be taken back: the one who admitted it no
-            # longer denies it or blames anyone, and whoever heard it knows who it was.
-            if p.heard_question and not p.confessed:
+            # longer denies it or blames anyone, and whoever heard it knows who it was, so has
+            # nothing to deny (reports/play_fix1.md, fix 3). The one who took it may still lie.
+            if p.heard_question and not p.confessed and p.knows_culprit in (None, p.id):
                 opts.append(Option("deny", "deny taking it", True, kind="deny"))
             for q in others:
                 if p.confessed or (p.knows_culprit and p.id != p.knows_culprit and q.id != p.knows_culprit):
@@ -606,6 +640,9 @@ class Morning:
                 opts.append(Option("ration_water", "say the water must be shared out by the cup from now on", True,
                                    kind="ration_water"))
             opts.append(Option("say_other", "say something else", True, kind="say"))
+            # Words to one person, with no meaning about the can: they are spoken to (reports/play_fix1.md, fix 2).
+            for q in others:
+                opts.append(Option(f"say_to_{q.id}", f"say something to {q.name}", True, kind="say", target=q.id))
             lead = topics.options(self, p, others, self.now)      # reports/talk_design.md: from day 3, a visit
             for q in others:
                 if q.activity["kind"] in ("searching", "walking"):
@@ -1137,7 +1174,7 @@ class Morning:
         return {"ask": "asked who took the can", "deny": "denied taking it",
                 "accuse": f"accused {target or 'someone'}", "confess": "admitted taking it",
                 "confront": f"confronted {target or 'someone'}",
-                "reassure": f"reassured {target or 'everyone'}", "say": "spoke to everyone",
+                "reassure": f"reassured {target or 'everyone'}", "say": f"spoke to {target or 'everyone'}",
                 "propose": "said someone should go to the neighbour's house tonight",
                 "volunteer": "offered to go there tonight",
                 "object": "said you should not be the one to go" if target else "said nobody should go",
@@ -1217,7 +1254,7 @@ class Morning:
         so_far = self.so_far[p.room] if self.so_far is not None else []
         if so_far:
             now.append(f"Said and done in the {room} this turn, before you, in order:")
-            now += [f"{i}. {x}" for i, x in enumerate(so_far, 1)]
+            now += [f"{i}. {x if isinstance(x, str) else x.get(p.id, x[None])}" for i, x in enumerate(so_far, 1)]
         elif others and not screen:
             now.append(f"You are the first to act in the {room} this turn.")
         if not screen:
@@ -1693,7 +1730,7 @@ class Morning:
                                playermod.check(answer, opts, night=night is not None))
             if choice:
                 self.player.waiting = False
-                self.player.chose(self, view, choice)
+                self.player.chose(self, view, choice, next(o for o in opts if o.id == choice["option"]))
                 return {**choice, "mode": "player"}
 
     def player_view(self, p, t, opts, night=None, extra=None):
@@ -1711,7 +1748,7 @@ class Morning:
             return {"day": day_index(self.day), "minute": minute, "room": p.room,
                     "body": [x for x in inside if x.startswith(("Your body:", "Since you last decided"))],
                     "know": [x for x in inside if x.startswith("About ") and not x.startswith(playermod.CAN_STANCE)],
-                    "now": now, "memory": list(p.memory), "sure": list(p.sure),
+                    "now": now, "memory": list(p.memory), "sure": list(p.sure), "sure_after": list(p.sure.after),
                     "beliefs": [b for b in p.beliefs if b["day"] == self.day],
                     "carry": list(self.carry.get(p.id, [])), "backstory": list(p.backstory),
                     "options": [(o.id, o.label, o.speech) for o in opts]}
@@ -1751,71 +1788,32 @@ class Morning:
         if trigger:
             q.triggers.append(trigger)
 
-    def line_text(self, p, kind, target, words, listener, while_doing=None, option=None):
-        aimed = ("you" if listener is not None and target is listener else target.name) if target else None
-        if kind in FAR_GIST:                    # on every day (reports/household_knowledge.md, fix 2)
-            gist = FAR_GIST[kind].format(name=p.name)
-        elif self.day != 4 and kind in TRIP_KINDS:
-            gist = self.trip_gist(p, kind, aimed, option)
-        elif kind == "ask":
-            gist = f"{p.name} asks everyone who took the can"
-        elif kind == "deny":
-            gist = f"{p.name} denies taking it, to everyone"
-        elif kind == "accuse":
-            gist = f"{p.name} accuses {aimed} of taking it"
-        elif kind == "confront":
-            gist = f"{p.name} confronts {aimed}"
-        elif kind == "confess":
-            gist = f"{p.name} admits taking it, to everyone"
-        elif kind == "reassure":
-            gist = f"{p.name} reassures {aimed or 'everyone'}"
-        elif kind == "propose":
-            gist = f"{p.name} says someone should go to the neighbour's house tonight"
-        elif kind == "volunteer":
-            gist = f"{p.name} offers to go to the neighbour's house tonight"
-        elif kind == "object":
-            gist = (f"{p.name} says {aimed} should not be the one to go" if aimed
-                    else f"{p.name} says nobody should go out tonight")
-        elif kind == "back":
-            gist = f"{p.name} says {aimed} should be the one to go"
-        elif kind == "decline":
-            gist = f"{p.name} says {data.PRONOUNS[p.id]['he']} will not be the one to go"
-        elif kind == "save_water":
-            gist = f"{p.name} says nobody should use the stored water for washing or the toilet any more"
-        elif kind == "ration_water":
-            gist = f"{p.name} says the water must be shared out by the cup from now on"
-        elif kind == "door_call":
-            gist = (f"{p.name} calls out through the front door" if p.door is None or p.door.get("door") != "open"
-                    else f"{p.name} speaks to the person on the step")
-        elif kind == "door_refuse":
-            gist = f"{p.name} tells the person at the front door to go away"
-        elif kind == "talk" and self.topic_line:            # reports/talk_design.md
-            gist = f"{p.name} talks about {self.topic_line['referent']}"
-        elif kind == "tell" and self.topic_line:
-            told = ["you" if listener is not None and x == listener.id else NAMES[x]
-                    for x in self.topic_line["listeners"]]
-            gist = f"{p.name} tells {data._and(told)} about {self.topic_line['referent']}"
-        elif while_doing:
-            gist = f"{p.name} says to {aimed or 'everyone'}, while {while_doing}"
-        else:
-            gist = f"{p.name} says to everyone"
-        return f"{gist}: \"{words}\""
+    def spoken_to(self, p, kind, target, listener, listeners=None):
+        """To whom p's line was said, as `listener` names it: "to you", "to <name>" or "to everyone"; a tell's listeners;
+        at the front door, through it or to the person there (reports/play_fix1.md, fix 1)."""
+        if kind == "tell" and listeners:
+            told = ["you" if listener is not None and x == listener.id else NAMES[x] for x in listeners]
+            return f"to {data._and(told)}"
+        if kind == "door_refuse":
+            return "to the person at the front door"
+        if kind == "door_call":
+            return ("through the front door" if p.door is None or p.door.get("door") != "open"
+                    else "to the person on the step")
+        if target is not None:
+            return "to you" if listener is not None and target is listener else f"to {target.name}"
+        return "to everyone"
 
-    @staticmethod
-    def trip_gist(p, kind, aimed, option):
-        """What others hear of a position on day 2 (reports/night_design.md, §6)."""
-        he = data.PRONOUNS[p.id]["he"]
-        if kind == "propose":
-            return f"{p.name} says someone should go to the neighbour's house tonight"
-        if option == "still_going":
-            return f"{p.name} says {he} still means to go tonight"
-        if kind == "volunteer":
-            return f"{p.name} offers to go to the neighbour's house tonight"
-        if kind == "object":
-            return f"{p.name} says {aimed} must stay home tonight" if aimed else f"{p.name} says nobody should go out tonight"
-        if kind == "back":
-            return f"{p.name} says {aimed} {'are' if aimed == 'you' else 'is'} the one who should go"
-        return f"{p.name} says {he} will not go"
+    def line_text(self, p, kind, target, words, listener, while_doing=None, speech=True):
+        """A line with words, as `listener` hears it (None: as the transcript keeps it). Speech is heard as words: who
+        spoke, to whom and the words, never the act's gist; the act still drives every effect (reports/play_fix1.md,
+        fix 1). Words said while doing something else are heard as said while doing it."""
+        if speech:
+            listeners = self.topic_line.get("listeners") if self.topic_line else None
+            return f"{p.name}, {self.spoken_to(p, kind, target, listener, listeners)}: \"{words}\""
+        aimed = ("you" if listener is not None and target is listener else target.name) if target else None
+        if while_doing:
+            return f"{p.name} says to {aimed or 'everyone'}, while {while_doing}: \"{words}\""
+        return f"{p.name} says to everyone: \"{words}\""
 
     def started_by(self, room, minute, why, d):
         self.started(room, minute, why, bool(d.get("inner_kinds")))
@@ -1887,15 +1885,17 @@ class Morning:
             if new:
                 self.started_by(room, minute, f"{p.name}: {why}", d)
             text = self.line_text(p, spoken_kind, target if aimed else None, words, None,
-                                  None if opt.speech else doing, opt.id)
+                                  None if opt.speech else doing, opt.speech)
             self.said.append({"minute": minute, "room": data.ROOMS[room], "who": p.name,
                               "to": (target.name if aimed else data._and([NAMES[x] for x in opt.act["listeners"]])
                                      if kind == "tell" else "everyone"), "text": text,
                               "words": words, "new": new, "why": why})
-            so_far.append(text)
+            line = {None: text}         # this turn's line as each one here heard it ("you" to whom it was said)
+            so_far.append(line)
             for q in seen:
                 heard = self.line_text(p, spoken_kind, target if aimed else None, words, q,
-                                       None if opt.speech else doing, opt.id)
+                                       None if opt.speech else doing, opt.speech)
+                line[q.id] = heard
                 self.perceive(q, minute, heard, trigger=(heard, new))
                 q.heard.append({"seq": self.seq, "who": p.id, "kind": spoken_kind,
                                 "target": target_id if aimed else None})
@@ -1953,6 +1953,7 @@ class Morning:
                     "accuse": f"accused {target.name if target else ''}", "confess": "admitted taking it",
                     "confront": f"confronted {target.name if target else ''}",
                     "reassure": f"reassured {target.name if aimed else 'everyone'}",
+                    "say": f"spoke to {target.name}" if aimed else "said",
                     "propose": "said someone should go to the neighbour's house tonight",
                     "volunteer": "offered to go there tonight",
                     "object": (f"said {target.name} should not be the one to go" if target

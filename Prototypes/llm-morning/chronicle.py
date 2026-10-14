@@ -31,7 +31,8 @@ def gist(e, pid):
         "opening": "the count of the pantry" if e["scene"] == "D1" else "everyone coming into the kitchen",
         "ask": "asking who took the can", "deny": "denying taking it", "accuse": f"accusing {t} of taking the can",
         "confess": "admitting taking the can", "confront": f"confronting {t}",
-        "reassure": f"reassuring {t}" if target else "reassuring everyone", "say": "speaking to everyone",
+        "reassure": f"reassuring {t}" if target else "reassuring everyone",
+        "say": f"speaking to {t}" if target else "speaking to everyone",
         "propose": "saying someone should go to the neighbour's house",
         "volunteer": (f"saying {pronoun} still means to go" if option == "still_going"
                       else "offering to go to the neighbour's house"),
@@ -211,7 +212,7 @@ class Chronicle:
                 if came.startswith("went through the room and found nothing"):
                     kind = "search_done"
                 # The person an act is aimed at, if one: never a room (go_<room>) or everyone (reassure_all).
-                if kind not in ("accuse", "reassure", "confront", "back", "object", "give", "sit", "aside") \
+                if kind not in ("accuse", "reassure", "confront", "back", "object", "give", "sit", "aside", "say") \
                         or target not in data.PEOPLE:
                     target = None
                 effects = {}
