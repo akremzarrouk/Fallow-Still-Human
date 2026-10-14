@@ -1,0 +1,44 @@
+daniel_ate_it_leo_heard-seed2: model gemini-3.5-flash-lite, fresh; cache cache\v7\gemini-3.5-flash-lite-daniel_ate_it_leo_heard-seed2.json holds 48 answers
+  min 00: model asked for 4; so far 1 live, 3 cached, 1 API requests
+  min 03: model asked for 4; so far 2 live, 6 cached, 2 API requests
+  min 15: model asked for 1; so far 3 live, 6 cached, 3 API requests
+  min 30: model asked for 2; so far 5 live, 6 cached, 5 API requests
+  min 33: model asked for 4; so far 9 live, 6 cached, 9 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 36: model asked for 4; so far 13 live, 6 cached, 14 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 39: model asked for 4; so far 17 live, 6 cached, 19 API requests
+  min 42: model asked for 3; so far 20 live, 6 cached, 22 API requests
+  min 45: model asked for 4; so far 24 live, 6 cached, 26 API requests
+  min 48: model asked for 3; so far 27 live, 6 cached, 29 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 10s, retry 2/6
+  min 51: model asked for 4; so far 31 live, 6 cached, 35 API requests
+  min 54: model asked for 2; so far 33 live, 6 cached, 37 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 57: model asked for 3; so far 36 live, 6 cached, 41 API requests
+  min 60: model asked for 3; so far 39 live, 6 cached, 44 API requests
+  min 63: model asked for 4; so far 43 live, 6 cached, 48 API requests
+  min 66: model asked for 4; so far 47 live, 6 cached, 52 API requests
+  min 69: model asked for 3; so far 50 live, 6 cached, 55 API requests
+  min 72: model asked for 4; so far 54 live, 6 cached, 59 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 75: model asked for 4; so far 58 live, 6 cached, 64 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 78: model asked for 2; so far 60 live, 6 cached, 67 API requests
+  min 87: model asked for 1; so far 61 live, 6 cached, 68 API requests
+
+wrote runs/v7/daniel_ate_it_leo_heard-seed2.md
+  api_requests: 68
+  answers_live: 61
+  answers_from_cache: 6
+  model_decisions: 60
+  fallbacks: 7
+  routine_decisions: 53
+  lines_spoken: 43
+  inner_moments: 8
+  private_talks: 0
+  max_prompt_tokens_estimated: 1400
+  max_prompt_tokens_counted_by_api: 1400
+  run_seconds: 1189.6
+  story_sha256: 44ae136b6748f3043c5f2f46ec7cc4ad91826ccf290dddfae78e4b6634ad57ff

@@ -1,0 +1,40 @@
+=== resume/run Mon Sep 28 21:23:28 WCAST 2026
+daniel_ate_it-seed3: model gemini-3.5-flash-lite, fresh; cache cache\v7\gemini-3.5-flash-lite-daniel_ate_it-seed3.json holds 0 answers
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 00: model asked for 4; so far 4 live, 0 cached, 5 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 03: model asked for 3; so far 7 live, 0 cached, 9 API requests
+  min 15: model asked for 1; so far 8 live, 0 cached, 10 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 18: model asked for 3; so far 11 live, 0 cached, 14 API requests
+  min 24: model asked for 1; so far 12 live, 0 cached, 15 API requests
+  min 30: model asked for 1; so far 13 live, 0 cached, 16 API requests
+  min 33: model asked for 2; so far 15 live, 0 cached, 18 API requests
+  min 42: model asked for 1; so far 16 live, 0 cached, 19 API requests
+  min 51: model asked for 1; so far 17 live, 0 cached, 20 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 54: model asked for 1; so far 18 live, 0 cached, 22 API requests
+  min 63: model asked for 1; so far 19 live, 0 cached, 23 API requests
+  min 66: model asked for 1; so far 20 live, 0 cached, 24 API requests
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+    [503 UNAVAILABLE] waiting 5s, retry 1/6
+  min 75: model asked for 2; so far 22 live, 0 cached, 28 API requests
+  min 78: model asked for 3; so far 25 live, 0 cached, 31 API requests
+  min 81: model asked for 2; so far 27 live, 0 cached, 33 API requests
+  min 84: model asked for 3; so far 30 live, 0 cached, 36 API requests
+  min 87: model asked for 3; so far 33 live, 0 cached, 39 API requests
+
+wrote runs/v7/daniel_ate_it-seed3.md
+  api_requests: 39
+  answers_live: 33
+  answers_from_cache: 0
+  model_decisions: 21
+  fallbacks: 12
+  routine_decisions: 87
+  lines_spoken: 15
+  inner_moments: 12
+  private_talks: 0
+  max_prompt_tokens_estimated: 1400
+  max_prompt_tokens_counted_by_api: 1348
+  run_seconds: 824.8
+  story_sha256: 61414248f48ed7034a772009379b21d2a3712f79c0bd5deda6fe2461ba812d09

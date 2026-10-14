@@ -1,0 +1,4032 @@
+{
+ "seed": 2,
+ "scenario": "daniel_ate_it",
+ "culprit": "daniel",
+ "turns": [
+  {
+   "minute": 0,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 0,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "ask_who",
+     "words": "One can is gone from the shelf. Did one of you take it?",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      0,
+      1
+     ],
+     "said_at": [
+      0,
+      1
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara.",
+     "new": true,
+     "new_why": "a question",
+     "inner": null,
+     "thought": "The can is missing and everyone is standing right here in the kitchen staring at the empty spot on the shelf. If I accuse someone right now, the tension will snap this family into pieces, which I cannot allow to happen. I need to ask them directly and calmly so nobody feels cornered yet.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 0,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take anything, I swear.",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      0,
+      2
+     ],
+     "said_at": [
+      0,
+      2
+     ],
+     "came_of_it": "said to Daniel, Elena, Leo.",
+     "new": false,
+     "new_why": "a denial with no new accusation to answer",
+     "inner": null,
+     "thought": "Mom is looking at us like we are all thieves, and I can feel my face getting hot already. I need to let them know I didn't touch it, but my voice might shake if I try to yell. I will just say I didn't do it.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 0,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take the can, Mom. None of us would do that.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      0,
+      3
+     ],
+     "said_at": [
+      0,
+      3
+     ],
+     "came_of_it": "said to Elena, Leo, Mara.",
+     "new": false,
+     "new_why": "a denial with no new accusation to answer",
+     "inner": null,
+     "thought": "I know I ate the can in the dark last night, but I cannot let them think I am a thief or lose their respect. If I confess, they will look at me with pity or anger, and I need to stay in control. I have to deny it firmly to keep the peace and protect my authority as the eldest.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 0,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take the can either.",
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      0,
+      4
+     ],
+     "said_at": [
+      0,
+      4
+     ],
+     "came_of_it": "said to Daniel, Elena, Mara.",
+     "new": false,
+     "new_why": "a denial with no new accusation to answer",
+     "inner": null,
+     "thought": "I need to deny taking the can myself since everyone else is doing so, and keep a cool head. Pointing fingers without proof solves nothing and only worsens the tension. I will state clearly that I didn't touch it.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 3,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 3,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_all",
+     "words": "We are staying together. We will figure this out without tearing ourselves apart.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      3,
+      5
+     ],
+     "said_at": [
+      3,
+      5
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara.",
+     "new": false,
+     "new_why": "reassurance",
+     "inner": null,
+     "thought": "Everyone has denied taking it and I still do not know who to believe. I must keep the peace before mistrust tears us apart completely. I will reassure everyone that we will get through this.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 3,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      3,
+      6
+     ],
+     "said_at": [
+      3,
+      6
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": "Mom is trying to keep the peace, which is right, but accusing each other gets us nowhere. Someone took the can, but without proof, pushing the issue right now will only make things worse. I will stay quiet and observe how they react.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 3,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "fallback",
+     "decided_at": [
+      3,
+      7
+     ],
+     "said_at": [
+      3,
+      7
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 3,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      3,
+      8
+     ],
+     "said_at": [
+      3,
+      8
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": "Mom is trying to keep everyone calm, but I can feel the tension rising and my stomach is completely empty. I know I ate that can in the dark, but if I admit it now, they will look at me like a monster who stole from his own family. I have to keep up the front to protect my position as the eldest and keep everyone from tearing each other apart.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 6,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 6,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      6,
+      9
+     ],
+     "said_at": [
+      6,
+      9
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 6,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      6,
+      10
+     ],
+     "said_at": [
+      6,
+      10
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 6,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      6,
+      11
+     ],
+     "said_at": [
+      6,
+      11
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 6,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      6,
+      12
+     ],
+     "said_at": [
+      6,
+      12
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 9,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 9,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      9,
+      13
+     ],
+     "said_at": [
+      9,
+      13
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 9,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      9,
+      14
+     ],
+     "said_at": [
+      9,
+      14
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 9,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      9,
+      15
+     ],
+     "said_at": [
+      9,
+      15
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 9,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      9,
+      16
+     ],
+     "said_at": [
+      9,
+      16
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 12,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 12,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      12,
+      17
+     ],
+     "said_at": [
+      12,
+      17
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 12,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      12,
+      18
+     ],
+     "said_at": [
+      12,
+      18
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 12,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      12,
+      19
+     ],
+     "said_at": [
+      12,
+      19
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 12,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      12,
+      20
+     ],
+     "said_at": [
+      12,
+      20
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 15,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 15,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      15,
+      21
+     ],
+     "said_at": [
+      15,
+      21
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 15,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "search",
+     "words": "I'm going to take a proper look around here.",
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      15,
+      22
+     ],
+     "said_at": [
+      15,
+      22
+     ],
+     "came_of_it": "started going through the room.",
+     "new": false,
+     "new_why": "a remark (the rules cannot tell what free words add)",
+     "inner": [
+      "hunger"
+     ],
+     "thought": "The silence in the kitchen is getting heavy as everyone just stands there watching the remaining cans. I am getting genuinely hungry, but arguing about who took it isn't going to fix anything right now. I should look around properly to see if there is any trace of where it went before accusations start flying again.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 15,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      15,
+      23
+     ],
+     "said_at": [
+      15,
+      23
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 15,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      15,
+      24
+     ],
+     "said_at": [
+      15,
+      24
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 18,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 18,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      18,
+      25
+     ],
+     "said_at": [
+      18,
+      25
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 18,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      18,
+      26
+     ],
+     "said_at": [
+      18,
+      26
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 18,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "keep_searching",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      18,
+      27
+     ],
+     "said_at": [
+      18,
+      27
+     ],
+     "came_of_it": "went through the room and found nothing.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 18,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "go_back_room",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      18,
+      28
+     ],
+     "said_at": [
+      18,
+      28
+     ],
+     "came_of_it": "went to the back room.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": "I can't just stand here while Leo tears through the kitchen looking at us like we're thieves. My stomach is twisting into knots and everyone is watching me because I'm the youngest. I need to get out of this room before I snap.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": "back_room"
+    }
+   ]
+  },
+  {
+   "minute": 21,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo"
+    ],
+    "brothers_room": [],
+    "back_room": [
+     "mara"
+    ],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 21,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      21,
+      29
+     ],
+     "said_at": [
+      21,
+      29
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 21,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      21,
+      30
+     ],
+     "said_at": [
+      21,
+      30
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": "Mom is worried and Leo is watching us all closely. I know I ate that can myself, but I cannot admit it without looking like a fool or a thief. I should stay silent and keep up my guard so no one suspects the truth.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 21,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_all",
+     "words": "We are still a family, and we will get through this hunger together without turning on each other.",
+     "audience": [
+      "daniel",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      21,
+      31
+     ],
+     "said_at": [
+      21,
+      31
+     ],
+     "came_of_it": "said to Daniel, Leo.",
+     "new": false,
+     "new_why": "reassurance",
+     "inner": null,
+     "thought": "I need to keep them calm and together, but the hunger is growing and the tension is right beneath the surface. If I accuse anyone without proof, we will break apart from the inside, which is what I fear most. I will reassure them again so they know we are standing as one.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 21,
+     "who": "mara",
+     "room": "back_room",
+     "option": "silent",
+     "words": null,
+     "audience": [],
+     "mode": "routine",
+     "decided_at": [
+      21,
+      32
+     ],
+     "said_at": [
+      21,
+      32
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 24,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo"
+    ],
+    "brothers_room": [],
+    "back_room": [
+     "mara"
+    ],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 24,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "fallback",
+     "decided_at": [
+      24,
+      33
+     ],
+     "said_at": [
+      24,
+      33
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 24,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "reassure_all",
+     "words": "Mom is right, we need to stay calm and not accuse each other over a mistake.",
+     "audience": [
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      24,
+      34
+     ],
+     "said_at": [
+      24,
+      34
+     ],
+     "came_of_it": "said to Elena, Leo.",
+     "new": false,
+     "new_why": "reassurance",
+     "inner": null,
+     "thought": "Mom just tried to calm everyone down, but the tension is thick enough to cut with a knife and Leo is still poking around suspiciously. I know I ate the stupid can, but I can't let them tear each other apart over it or think I'm a thief. I need to keep the peace and look like the responsible eldest brother.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 24,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_all",
+     "words": "Let us just breathe and stay together, we can get through this hunger.",
+     "audience": [
+      "daniel",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      24,
+      35
+     ],
+     "said_at": [
+      24,
+      35
+     ],
+     "came_of_it": "said to Daniel, Leo.",
+     "new": false,
+     "new_why": "reassurance",
+     "inner": null,
+     "thought": "Daniel is trying to keep the peace just like I am, which only makes me worry more about what they are hiding beneath the surface. If I push too hard about the missing can, someone might snap and break everything we have left. I need to keep us steady a little longer.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 24,
+     "who": "mara",
+     "room": "back_room",
+     "option": "silent",
+     "words": null,
+     "audience": [],
+     "mode": "routine",
+     "decided_at": [
+      24,
+      36
+     ],
+     "said_at": [
+      24,
+      36
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 27,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo"
+    ],
+    "brothers_room": [],
+    "back_room": [
+     "mara"
+    ],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 27,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      27,
+      37
+     ],
+     "said_at": [
+      27,
+      37
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 27,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      27,
+      38
+     ],
+     "said_at": [
+      27,
+      38
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 27,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      27,
+      39
+     ],
+     "said_at": [
+      27,
+      39
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 27,
+     "who": "mara",
+     "room": "back_room",
+     "option": "silent",
+     "words": null,
+     "audience": [],
+     "mode": "routine",
+     "decided_at": [
+      27,
+      40
+     ],
+     "said_at": [
+      27,
+      40
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 30,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo"
+    ],
+    "brothers_room": [],
+    "back_room": [
+     "mara"
+    ],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 30,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      30,
+      41
+     ],
+     "said_at": [
+      30,
+      41
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 30,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_all",
+     "words": "We are going to be alright, let us just keep holding on together.",
+     "audience": [
+      "daniel",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      30,
+      42
+     ],
+     "said_at": [
+      30,
+      42
+     ],
+     "came_of_it": "said to Daniel, Leo.",
+     "new": false,
+     "new_why": "reassurance",
+     "inner": [
+      "hunger"
+     ],
+     "thought": "The hunger is gnawing at my stomach, but the tension in the room is what truly threatens to tear us apart. If I accuse anyone or start searching, the fragile peace we are holding onto will shatter completely. I must keep everyone calm and together, no matter how empty my belly feels.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 30,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      30,
+      43
+     ],
+     "said_at": [
+      30,
+      43
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 30,
+     "who": "mara",
+     "room": "back_room",
+     "option": "silent",
+     "words": null,
+     "audience": [],
+     "mode": "routine",
+     "decided_at": [
+      30,
+      44
+     ],
+     "said_at": [
+      30,
+      44
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 33,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo"
+    ],
+    "brothers_room": [],
+    "back_room": [
+     "mara"
+    ],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 33,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      33,
+      45
+     ],
+     "said_at": [
+      33,
+      45
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 33,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      33,
+      46
+     ],
+     "said_at": [
+      33,
+      46
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 33,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "reassure_all",
+     "words": "We are going to be fine, nobody needs to worry while I am here.",
+     "audience": [
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      33,
+      47
+     ],
+     "said_at": [
+      33,
+      47
+     ],
+     "came_of_it": "said to Elena, Leo.",
+     "new": false,
+     "new_why": "reassurance",
+     "inner": [
+      "hunger"
+     ],
+     "thought": "My stomach is burning with hunger and everyone is just staring at the pantry shelf in silence. I have to keep showing strength as the eldest so nobody suspects me or panics further. I will tell them again that we are fine and keep control of the room.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 33,
+     "who": "mara",
+     "room": "back_room",
+     "option": "silent",
+     "words": null,
+     "audience": [],
+     "mode": "routine",
+     "decided_at": [
+      33,
+      48
+     ],
+     "said_at": [
+      33,
+      48
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 36,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo"
+    ],
+    "brothers_room": [],
+    "back_room": [
+     "mara"
+    ],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 36,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      36,
+      49
+     ],
+     "said_at": [
+      36,
+      49
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 36,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      36,
+      50
+     ],
+     "said_at": [
+      36,
+      50
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 36,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      36,
+      51
+     ],
+     "said_at": [
+      36,
+      51
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 36,
+     "who": "mara",
+     "room": "back_room",
+     "option": "silent",
+     "words": null,
+     "audience": [],
+     "mode": "routine",
+     "decided_at": [
+      36,
+      52
+     ],
+     "said_at": [
+      36,
+      52
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 39,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo"
+    ],
+    "brothers_room": [],
+    "back_room": [
+     "mara"
+    ],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 39,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      39,
+      53
+     ],
+     "said_at": [
+      39,
+      53
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 39,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      39,
+      54
+     ],
+     "said_at": [
+      39,
+      54
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 39,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      39,
+      55
+     ],
+     "said_at": [
+      39,
+      55
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 39,
+     "who": "mara",
+     "room": "back_room",
+     "option": "silent",
+     "words": null,
+     "audience": [],
+     "mode": "routine",
+     "decided_at": [
+      39,
+      56
+     ],
+     "said_at": [
+      39,
+      56
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 42,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo"
+    ],
+    "brothers_room": [],
+    "back_room": [
+     "mara"
+    ],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 42,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      42,
+      57
+     ],
+     "said_at": [
+      42,
+      57
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 42,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      42,
+      58
+     ],
+     "said_at": [
+      42,
+      58
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 42,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      42,
+      59
+     ],
+     "said_at": [
+      42,
+      59
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 42,
+     "who": "mara",
+     "room": "back_room",
+     "option": "silent",
+     "words": null,
+     "audience": [],
+     "mode": "routine",
+     "decided_at": [
+      42,
+      60
+     ],
+     "said_at": [
+      42,
+      60
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 45,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo"
+    ],
+    "brothers_room": [],
+    "back_room": [
+     "mara"
+    ],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 45,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      45,
+      61
+     ],
+     "said_at": [
+      45,
+      61
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 45,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      45,
+      62
+     ],
+     "said_at": [
+      45,
+      62
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 45,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      45,
+      63
+     ],
+     "said_at": [
+      45,
+      63
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 45,
+     "who": "mara",
+     "room": "back_room",
+     "option": "silent",
+     "words": null,
+     "audience": [],
+     "mode": "routine",
+     "decided_at": [
+      45,
+      64
+     ],
+     "said_at": [
+      45,
+      64
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 48,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo"
+    ],
+    "brothers_room": [],
+    "back_room": [
+     "mara"
+    ],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 48,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      48,
+      65
+     ],
+     "said_at": [
+      48,
+      65
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 48,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      48,
+      66
+     ],
+     "said_at": [
+      48,
+      66
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 48,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      48,
+      67
+     ],
+     "said_at": [
+      48,
+      67
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 48,
+     "who": "mara",
+     "room": "back_room",
+     "option": "silent",
+     "words": null,
+     "audience": [],
+     "mode": "routine",
+     "decided_at": [
+      48,
+      68
+     ],
+     "said_at": [
+      48,
+      68
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 51,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo"
+    ],
+    "brothers_room": [],
+    "back_room": [
+     "mara"
+    ],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 51,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      51,
+      69
+     ],
+     "said_at": [
+      51,
+      69
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 51,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      51,
+      70
+     ],
+     "said_at": [
+      51,
+      70
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 51,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      51,
+      71
+     ],
+     "said_at": [
+      51,
+      71
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 51,
+     "who": "mara",
+     "room": "back_room",
+     "option": "silent",
+     "words": null,
+     "audience": [],
+     "mode": "routine",
+     "decided_at": [
+      51,
+      72
+     ],
+     "said_at": [
+      51,
+      72
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 54,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo"
+    ],
+    "brothers_room": [],
+    "back_room": [
+     "mara"
+    ],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 54,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      54,
+      73
+     ],
+     "said_at": [
+      54,
+      73
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 54,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      54,
+      74
+     ],
+     "said_at": [
+      54,
+      74
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 54,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      54,
+      75
+     ],
+     "said_at": [
+      54,
+      75
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 54,
+     "who": "mara",
+     "room": "back_room",
+     "option": "go_kitchen",
+     "words": "I'm coming out, I just want to see.",
+     "audience": [],
+     "mode": "model",
+     "decided_at": [
+      54,
+      76
+     ],
+     "said_at": [
+      54,
+      76
+     ],
+     "came_of_it": "went to the kitchen.",
+     "new": false,
+     "new_why": "a remark (the rules cannot tell what free words add)",
+     "inner": [
+      "hunger"
+     ],
+     "thought": "I've been sitting here in the back room by myself for so long, and my stomach feels entirely hollow. I can't just stay hidden away while they are all out there, or they'll keep thinking I'm hiding something. I need to go see what's happening in the kitchen.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": "kitchen"
+    }
+   ]
+  },
+  {
+   "minute": 57,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 57,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      57,
+      77
+     ],
+     "said_at": [
+      57,
+      77
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 57,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "reassure_all",
+     "words": "We are all on edge, but we are going to get through this together.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      57,
+      78
+     ],
+     "said_at": [
+      57,
+      78
+     ],
+     "came_of_it": "said to Elena, Leo, Mara.",
+     "new": false,
+     "new_why": "reassurance",
+     "inner": null,
+     "thought": "Mara is standing right here in the kitchen after coming out of the back room, and the tension in the room is suffocating. I know I ate that can myself in the dead of night, so keeping the peace is the only way to prevent everyone from tearing each other apart. I need to make sure nobody panics or does anything rash while we are all starving.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 57,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_all",
+     "words": "Let us just hold on to each other and stay calm, we will get through this.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      57,
+      79
+     ],
+     "said_at": [
+      57,
+      79
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara.",
+     "new": false,
+     "new_why": "reassurance",
+     "inner": null,
+     "thought": "I need to keep them calm before the hunger makes them snap at one another. If I speak too much or accuse someone, the fragile peace we have will shatter completely. I must hold us together just a little longer.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 57,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "ask_who",
+     "words": "Can we stop pretending everything is fine and figure out who actually took the can?",
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      57,
+      80
+     ],
+     "said_at": [
+      57,
+      80
+     ],
+     "came_of_it": "said to Daniel, Elena, Mara.",
+     "new": true,
+     "new_why": "a question",
+     "inner": null,
+     "thought": "Everyone keeps repeating empty reassurances while we are all starving and eyeing each other with suspicion. Constant platitudes do nothing to find the missing food or solve our actual problem. I should ask directly who took it rather than pretending everything is fine.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 60,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 60,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      60,
+      81
+     ],
+     "said_at": [
+      60,
+      81
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 60,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "reassure_all",
+     "words": "We are all stressed out, but accusing each other is not going to put food back on the shelf.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      60,
+      82
+     ],
+     "said_at": [
+      60,
+      82
+     ],
+     "came_of_it": "said to Elena, Leo, Mara.",
+     "new": false,
+     "new_why": "reassurance",
+     "inner": null,
+     "thought": "Leo is pushing the issue and refusing to drop it, which threatens my control over the situation. I need to keep everyone calm and assert my leadership without letting them suspect the truth. I will tell them again that we must stay united and drop the accusations.",
+     "suspects": "nobody",
+     "angry_at": "Leo",
+     "moved_to": null
+    },
+    {
+     "minute": 60,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      60,
+      83
+     ],
+     "said_at": [
+      60,
+      83
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": "Leo is pushing for an answer, but pointing fingers will only tear us apart from the inside. We are all starving, and the fear of losing each other is worse than the hunger itself. I must keep us together, even if the silence hurts.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 60,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "search",
+     "words": "I am going to look right here to prove I did not touch it.",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      60,
+      84
+     ],
+     "said_at": [
+      60,
+      84
+     ],
+     "came_of_it": "started going through the room.",
+     "new": false,
+     "new_why": "a remark (the rules cannot tell what free words add)",
+     "inner": null,
+     "thought": "My stomach is completely empty and I feel so weak, but everyone keeps talking in circles while looking at each other sideways. I want to search the kitchen myself to prove I had nothing to do with it and find out the truth.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 63,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 63,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "keep_searching",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      63,
+      85
+     ],
+     "said_at": [
+      63,
+      85
+     ],
+     "came_of_it": "went through the room and found nothing.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 63,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "fallback",
+     "decided_at": [
+      63,
+      86
+     ],
+     "said_at": [
+      63,
+      86
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 63,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      63,
+      87
+     ],
+     "said_at": [
+      63,
+      87
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": "Mara is tearing through the kitchen to prove her innocence, while Daniel is talking and Mom stays quiet. I am starving, but accusing anyone without proof is useless and unfair. I should just stay put and observe how they react as the hunger presses harder on everyone.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 63,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take any food, Mara, and you won't find anything looking there.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      63,
+      88
+     ],
+     "said_at": [
+      63,
+      88
+     ],
+     "came_of_it": "said to Elena, Leo, Mara.",
+     "new": false,
+     "new_why": "a denial with no new accusation to answer",
+     "inner": null,
+     "thought": "Mara is still rummaging through the kitchen while everyone watches in tense silence. I know damn well she will not find anything because I ate the can myself, but I cannot let them suspect me or I will lose all authority here. I have to keep up a strong front and make sure no one starts pointing fingers at me.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 66,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 66,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "ask_who",
+     "words": "If none of us took it, then where did the can go?",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      66,
+      89
+     ],
+     "said_at": [
+      66,
+      89
+     ],
+     "came_of_it": "said to Daniel, Elena, Leo.",
+     "new": true,
+     "new_why": "a question",
+     "inner": null,
+     "thought": "Daniel keeps telling me I won't find anything, but I have to look because I can't stand them all looking at me like I stole it. My stomach hurts from hunger, and I just want someone to admit the truth so this stops. I need to ask them directly who took it.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 66,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "fallback",
+     "decided_at": [
+      66,
+      90
+     ],
+     "said_at": [
+      66,
+      90
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 66,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "Shouting at each other isn't going to make the can reappear, Mara.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      66,
+      91
+     ],
+     "said_at": [
+      66,
+      91
+     ],
+     "came_of_it": "said to Elena, Leo, Mara.",
+     "new": false,
+     "new_why": "a denial with no new accusation to answer",
+     "inner": null,
+     "thought": "Mara keeps pressing the issue and I cannot let them suspect me, or I will lose all authority here. I must hold my ground and keep everyone calm so nobody looks too closely at me. I will tell them that shouting won't answer where it went.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 66,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "ask_who",
+     "words": "Let's stop arguing in circles and look at the facts instead of pointing fingers.",
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      66,
+      92
+     ],
+     "said_at": [
+      66,
+      92
+     ],
+     "came_of_it": "said to Daniel, Elena, Mara.",
+     "new": false,
+     "new_why": "a question they had asked before",
+     "inner": null,
+     "thought": "The tension in the kitchen is rising, with everyone talking in circles while the food remains untouched and hunger gnaws at my stomach. Accusing anyone without proof is pointless, and standing here in silence isn't helping resolve the underlying issue. It is better to address the group directly and calmly to steer us back to logic.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 69,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 69,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_all",
+     "words": "Let us just hold on to each other and stay calm, we will get through this.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      69,
+      93
+     ],
+     "said_at": [
+      69,
+      93
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara.",
+     "new": false,
+     "new_why": "reassurance",
+     "inner": null,
+     "thought": "The kids are arguing and pointing fingers, and the tension in the room is unbearable. If I don't say something to calm them down, this family will tear itself apart over a single can. I need to keep us together, so I will offer words of comfort.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 69,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "fallback",
+     "decided_at": [
+      69,
+      94
+     ],
+     "said_at": [
+      69,
+      94
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 69,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "ask_who",
+     "words": "If we keep ignoring what is right in front of us, there won't be anyone left to calm down.",
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      69,
+      95
+     ],
+     "said_at": [
+      69,
+      95
+     ],
+     "came_of_it": "said to Daniel, Elena, Mara.",
+     "new": false,
+     "new_why": "a question they had asked before",
+     "inner": null,
+     "thought": "Arguing in circles is getting us nowhere and wasting precious energy we don't have. I need to get everyone to focus on the reality of our situation instead of empty reassurances. Let's look at the facts before we all starve.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 69,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "accuse_leo",
+     "words": "Stop acting like you are the only one worried, Leo, you are just looking for someone to blame because you cannot handle the tension.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      69,
+      96
+     ],
+     "said_at": [
+      69,
+      96
+     ],
+     "came_of_it": "said to Elena, Leo, Mara.",
+     "new": true,
+     "new_why": "an accusation",
+     "inner": null,
+     "thought": "Leo keeps pushing the issue when we are all starving and stressed, and I cannot let them think I am the weak link or a thief. I have to keep my authority and shut down these accusations before someone actually looks at me.",
+     "suspects": "nobody",
+     "angry_at": "Leo",
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 72,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 72,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I didn't take the can, Daniel, and accusing me doesn't make it appear.",
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      72,
+      97
+     ],
+     "said_at": [
+      72,
+      97
+     ],
+     "came_of_it": "said to Daniel, Elena, Mara.",
+     "new": true,
+     "new_why": "a denial of a new accusation",
+     "inner": null,
+     "thought": "Daniel keeps pointing fingers at me, but shouting won't solve anything when we are all this hungry. I need to keep my composure and look at the actual facts before the tension breaks us completely.",
+     "suspects": "nobody",
+     "angry_at": "Daniel",
+     "moved_to": null
+    },
+    {
+     "minute": 72,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_all",
+     "words": "Let us just hold on to each other and stay calm, we will get through this.",
+     "audience": [
+      "daniel",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      72,
+      98
+     ],
+     "said_at": [
+      72,
+      98
+     ],
+     "came_of_it": "said to Daniel, Leo, Mara.",
+     "new": false,
+     "new_why": "reassurance",
+     "inner": null,
+     "thought": "Daniel and Leo are bickering again and the tension in the room is suffocating. I need to keep them from tearing each other apart before this house falls completely to pieces. Repeating my comfort is small, but if I stop holding them together, nothing else will.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 72,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      72,
+      99
+     ],
+     "said_at": [
+      72,
+      99
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": "I know I ate it myself, but I cannot admit it now after blaming Leo so fiercely. If I confess, my authority is gone forever and they will hate me for lying. I have to keep up the front to protect them, even if it feels suffocating.",
+     "suspects": "Leo",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 72,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "ask_who",
+     "words": "Why are we fighting each other when there is hardly any food left?",
+     "audience": [
+      "daniel",
+      "elena",
+      "leo"
+     ],
+     "mode": "model",
+     "decided_at": [
+      72,
+      100
+     ],
+     "said_at": [
+      72,
+      100
+     ],
+     "came_of_it": "said to Daniel, Elena, Leo.",
+     "new": false,
+     "new_why": "a question they had asked before",
+     "inner": null,
+     "thought": "I am so hungry my stomach hurts, and everyone is just shouting and pointing fingers at each other. Leo says he didn't do it, but Daniel won't let up, and I can't take the screaming anymore. I have to say something before they tear us all apart.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 75,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "leo",
+     "mara"
+    ],
+    "brothers_room": [],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 75,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I already told you all, I didn't take the food, and staring at the shelf won't change that.",
+     "audience": [
+      "elena",
+      "leo",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      75,
+      101
+     ],
+     "said_at": [
+      75,
+      101
+     ],
+     "came_of_it": "said to Elena, Leo, Mara.",
+     "new": false,
+     "new_why": "a denial with no new accusation to answer",
+     "inner": null,
+     "thought": "I cannot let them tear each other apart over a mistake I made, but I am terrified of looking weak in front of everyone. If I confess now, they will never trust me to lead or protect them again. I must keep my ground and deflect their attention so the focus shifts away from me.",
+     "suspects": "Leo",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 75,
+     "who": "leo",
+     "room": "kitchen",
+     "option": "go_brothers_room",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      75,
+      102
+     ],
+     "said_at": [
+      75,
+      102
+     ],
+     "came_of_it": "went to the brothers room.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": "Daniel is still defensive and the accusations are going nowhere. Arguing won't feed us or solve the mystery of the missing can. I should step away from this circular confrontation before it gets worse.",
+     "suspects": "nobody",
+     "angry_at": "Daniel",
+     "moved_to": "brothers_room"
+    },
+    {
+     "minute": 75,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "model",
+     "decided_at": [
+      75,
+      103
+     ],
+     "said_at": [
+      75,
+      103
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": "My stomach is completely empty and everyone keeps looking at me like I am hiding something just because I am the youngest. I cannot stand them treating me like a child, but I am too scared and hungry to fight them right now. I just want some fairness.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 75,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "reassure_mara",
+     "words": "Mara, look at me, we are going to get through this together.",
+     "audience": [
+      "daniel",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      75,
+      104
+     ],
+     "said_at": [
+      75,
+      104
+     ],
+     "came_of_it": "said to Daniel, Mara.",
+     "new": false,
+     "new_why": "reassurance",
+     "inner": null,
+     "thought": "I need to keep the peace and prevent everyone from turning on each other while hunger gnaws at us. Since Daniel is defensive and Mara is hurt, I should offer comfort to Mara to keep her from shutting down entirely. Keeping us close matters more than finding a culprit right this second.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 78,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "mara"
+    ],
+    "brothers_room": [
+     "leo"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 78,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "ask_who",
+     "words": "If none of you took it, then please tell me how it could just vanish into thin air.",
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "model",
+     "decided_at": [
+      78,
+      105
+     ],
+     "said_at": [
+      78,
+      105
+     ],
+     "came_of_it": "said to Daniel, Elena.",
+     "new": false,
+     "new_why": "a question they had asked before",
+     "inner": null,
+     "thought": "I feel so empty inside and everyone keeps looking at me like I might have done something wrong. Mom tried to comfort me, but my stomach hurts from hunger and I just want this nightmare to end. I should speak up again so they don't think I am hiding anything.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 78,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "It didn't vanish, Mara, we are just all losing our minds in this heat.",
+     "audience": [
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      78,
+      106
+     ],
+     "said_at": [
+      78,
+      106
+     ],
+     "came_of_it": "said to Elena, Mara.",
+     "new": false,
+     "new_why": "a denial with no new accusation to answer",
+     "inner": null,
+     "thought": "I cannot confess or everyone will look at me with disgust, especially after I already blamed Leo. I must hold my ground and act like the eldest who is keeping order, even though my stomach is hollow and my nerves are fraying. I will deny it again to keep the suspicion off me.",
+     "suspects": "nobody",
+     "angry_at": "Leo",
+     "moved_to": null
+    },
+    {
+     "minute": 78,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "say_other",
+     "words": "Yelling at each other will not bring the food back, we need to breathe and stay together.",
+     "audience": [
+      "daniel",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      78,
+      107
+     ],
+     "said_at": [
+      78,
+      107
+     ],
+     "came_of_it": "said to Daniel, Mara.",
+     "new": false,
+     "new_why": "a remark (the rules cannot tell what free words add)",
+     "inner": null,
+     "thought": "Mara is getting frantic and Daniel is defensive, and I cannot bear to watch them tear each other apart over a single can. If I keep reassuring them like a broken record, they will stop listening to me entirely, but accusations right now will only fracture us further. I need to ground us before this house breaks down completely.",
+     "suspects": "nobody",
+     "angry_at": "nobody",
+     "moved_to": null
+    },
+    {
+     "minute": 78,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "search",
+     "words": null,
+     "audience": [],
+     "mode": "model",
+     "decided_at": [
+      78,
+      108
+     ],
+     "said_at": [
+      78,
+      108
+     ],
+     "came_of_it": "started going through the room.",
+     "new": null,
+     "new_why": null,
+     "inner": [
+      "grudge"
+     ],
+     "thought": "Daniel is still pushing the blame onto me, which is completely irrational and unhelpful given how hungry we all are. I need to make sure the room I share with him isn't hiding anything before I go back out there to face them again. A quick search here is the only logical next step.",
+     "suspects": "nobody",
+     "angry_at": "Daniel",
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 81,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "mara"
+    ],
+    "brothers_room": [
+     "leo"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 81,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      81,
+      109
+     ],
+     "said_at": [
+      81,
+      109
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 81,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      81,
+      110
+     ],
+     "said_at": [
+      81,
+      110
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 81,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "deny",
+     "words": "I told you, I didn't touch anything, and I'm not going to sit here and be accused again.",
+     "audience": [
+      "elena",
+      "mara"
+     ],
+     "mode": "model",
+     "decided_at": [
+      81,
+      111
+     ],
+     "said_at": [
+      81,
+      111
+     ],
+     "came_of_it": "said to Elena, Mara.",
+     "new": false,
+     "new_why": "a denial with no new accusation to answer",
+     "inner": [
+      "grudge"
+     ],
+     "thought": "I cannot keep standing here while they look at me like that, but I still cannot bring myself to admit the truth. If I confess now, they will never trust me again, especially after I shouted at Leo. I have to keep my ground so they do not see how terrified I am.",
+     "suspects": "nobody",
+     "angry_at": "Leo",
+     "moved_to": null
+    },
+    {
+     "minute": 81,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "keep_searching",
+     "words": null,
+     "audience": [],
+     "mode": "routine",
+     "decided_at": [
+      81,
+      112
+     ],
+     "said_at": [
+      81,
+      112
+     ],
+     "came_of_it": "went through the room and found nothing.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 84,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "mara"
+    ],
+    "brothers_room": [
+     "leo"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 84,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      84,
+      113
+     ],
+     "said_at": [
+      84,
+      113
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 84,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      84,
+      114
+     ],
+     "said_at": [
+      84,
+      114
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 84,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      84,
+      115
+     ],
+     "said_at": [
+      84,
+      115
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 84,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [],
+     "mode": "routine",
+     "decided_at": [
+      84,
+      116
+     ],
+     "said_at": [
+      84,
+      116
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    }
+   ]
+  },
+  {
+   "minute": 87,
+   "rooms": {
+    "kitchen": [
+     "daniel",
+     "elena",
+     "mara"
+    ],
+    "brothers_room": [
+     "leo"
+    ],
+    "back_room": [],
+    "bathroom": []
+   },
+   "acts": [
+    {
+     "minute": 87,
+     "who": "elena",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      87,
+      117
+     ],
+     "said_at": [
+      87,
+      117
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 87,
+     "who": "daniel",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "elena",
+      "mara"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      87,
+      118
+     ],
+     "said_at": [
+      87,
+      118
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 87,
+     "who": "mara",
+     "room": "kitchen",
+     "option": "silent",
+     "words": null,
+     "audience": [
+      "daniel",
+      "elena"
+     ],
+     "mode": "routine",
+     "decided_at": [
+      87,
+      119
+     ],
+     "said_at": [
+      87,
+      119
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    },
+    {
+     "minute": 87,
+     "who": "leo",
+     "room": "brothers_room",
+     "option": "silent",
+     "words": null,
+     "audience": [],
+     "mode": "routine",
+     "decided_at": [
+      87,
+      120
+     ],
+     "said_at": [
+      87,
+      120
+     ],
+     "came_of_it": "stayed where they were.",
+     "new": null,
+     "new_why": null,
+     "inner": null,
+     "thought": null,
+     "suspects": null,
+     "angry_at": null,
+     "moved_to": null
+    }
+   ]
+  }
+ ],
+ "final_rooms": {
+  "kitchen": [
+   "daniel",
+   "elena",
+   "mara"
+  ],
+  "brothers_room": [
+   "leo"
+  ],
+  "back_room": [],
+  "bathroom": []
+ },
+ "final_state": {
+  "daniel": {
+   "suspicion": [
+    "leo",
+    1
+   ],
+   "grudges": {
+    "leo": {
+     "strength": 3,
+     "events": [
+      [
+       60,
+       "you were angry with Leo",
+       "angry"
+      ],
+      [
+       69,
+       "you were angry with Leo",
+       "angry"
+      ],
+      [
+       78,
+       "you were angry with Leo",
+       "angry"
+      ],
+      [
+       81,
+       "you were angry with Leo",
+       "angry"
+      ]
+     ]
+    }
+   },
+   "guilt": 2,
+   "guilt_events": [
+    [
+     69,
+     "you accused Leo of what you did, at minute 69"
+    ]
+   ]
+  },
+  "elena": {
+   "suspicion": [
+    null,
+    0
+   ],
+   "grudges": {},
+   "guilt": null,
+   "guilt_events": []
+  },
+  "leo": {
+   "suspicion": [
+    null,
+    0
+   ],
+   "grudges": {
+    "daniel": {
+     "strength": 3,
+     "events": [
+      [
+       69,
+       "Daniel accused you of taking the can at minute 69, and you had not",
+       "event"
+      ],
+      [
+       72,
+       "you were angry with Daniel",
+       "angry"
+      ],
+      [
+       75,
+       "you were angry with Daniel",
+       "angry"
+      ],
+      [
+       78,
+       "you were angry with Daniel",
+       "angry"
+      ]
+     ]
+    }
+   },
+   "guilt": null,
+   "guilt_events": []
+  },
+  "mara": {
+   "suspicion": [
+    null,
+    0
+   ],
+   "grudges": {},
+   "guilt": null,
+   "guilt_events": []
+  }
+ },
+ "convo_log": [
+  {
+   "minute": 0,
+   "room": "kitchen",
+   "what": "started",
+   "why": "the count came up short",
+   "by_inner": false
+  },
+  {
+   "minute": 9,
+   "room": "kitchen",
+   "what": "ended",
+   "why": "2 full turns in a row with nothing new",
+   "by_inner": null
+  },
+  {
+   "minute": 18,
+   "room": "kitchen",
+   "what": "started",
+   "why": "Leo finished searching the kitchen and found nothing",
+   "by_inner": false
+  },
+  {
+   "minute": 27,
+   "room": "kitchen",
+   "what": "ended",
+   "why": "2 full turns in a row with nothing new",
+   "by_inner": null
+  },
+  {
+   "minute": 57,
+   "room": "kitchen",
+   "what": "started",
+   "why": "Mara came in",
+   "by_inner": true
+  },
+  {
+   "minute": 81,
+   "room": "kitchen",
+   "what": "ended",
+   "why": "2 full turns in a row with nothing new",
+   "by_inner": null
+  }
+ ]
+}

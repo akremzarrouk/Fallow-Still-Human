@@ -1,0 +1,30 @@
+== Daniel: mode model invalid None; prompt 2132 est, 2270 api; 28 records, 2 earlier lines
+   feeling 'exhausted and resolved' (kept); intent 'I will figure out our next move for food now that the neighbour house had nothing.' (kept)
+   MEMORY ['D2-022', 'D2-027', 'N2-06'] 'I had to own up to what I did and fix my mistake by going out despite Leo telling me to stay.' -> kept
+      [D2-022] min 33: you admitted aloud that you took the can, in front of Elena, Leo, Mara, saying: "I took the can in the night, I'm the one who ate it."
+      [D2-027] min 36: Leo confronts you: "You accused me of taking it multiple times while knowing full well you were the one who stole it." Then 2 more times, to min 54; last: "You caused all this argument over nothing, Daniel."
+      [N2-06] tonight: Leo told you, low, not to go: "Daniel, stop. You are not going out there." You answered: "I have to do this, Leo, stay back.", and went all the same.
+== Elena: mode model invalid None; prompt 1918 est, 2042 api; 29 records, 0 earlier lines
+   feeling 'terrified and exhausted' (kept); intent 'I will check on Daniel and make sure everyone is still here safe in the house.' (kept)
+   MEMORY ['D2-022', 'D2-023'] 'Daniel told the truth and I comforted him because keeping us together matters more than the lie.' -> kept
+      [D2-022] min 33: Daniel admitted taking the can: "I took the can in the night, I'm the one who ate it." (you heard it)
+      [D2-023] min 33: you reassured Daniel, saying: "It's all right, Daniel, thank you for telling the truth." You felt anxious.
+   MEMORY ['N2-08', 'N2-13'] 'Someone went out into the dark and came back before dawn and I stayed in bed while my children took risks.' -> kept
+      [N2-08] tonight: You heard the front door being opened. You did not see who.
+      [N2-13] tonight: Before dawn you heard the front door again. You did not see who.
+== Leo: mode model invalid None; prompt 2206 est, 2342 api; 28 records, 2 earlier lines
+   feeling 'exhausted and wary' (kept); intent 'I will check the front door and see if Daniel came back inside.' (kept)
+   MEMORY ['D2-022', 'D2-027'] 'Daniel pointed fingers at me for days while knowing he was the one who stole the food.' -> kept
+      [D2-022] min 33: Daniel admitted taking the can: "I took the can in the night, I'm the one who ate it." (you heard it)
+      [D2-027] min 36: you confronted Daniel, saying: "You accused me of taking it multiple times while knowing full well you were the one who stole it." You felt resentful. Then 2 more times, to min 54; last: "You caused all this argument over nothing, Daniel."
+   MEMORY ['N2-05', 'N2-06'] 'Daniel ignored my warning in the dark and went out through the front door anyway.' -> kept
+      [N2-05] tonight: Daniel got up in the dark and left the room toward the kitchen and the front door (you saw it).
+      [N2-06] tonight: You told Daniel, low, not to go: "Daniel, stop. You are not going out there." He answered: "I have to do this, Leo, stay back.", and went all the same.
+== Mara: mode model invalid None; prompt 2071 est, 2211 api; 28 records, 2 earlier lines
+   feeling 'exhausted and anxious' (kept); intent 'I will ask Daniel why he risked going out into the street with nothing to show for it.' (kept)
+   MEMORY ['D2-022', 'D2-026'] 'Daniel lied to us and took the food himself, and I cannot just forget how he made us fight over nothing.' -> kept
+      [D2-022] min 33: Daniel admitted taking the can: "I took the can in the night, I'm the one who ate it." (you heard it)
+      [D2-026] min 36: you confronted Daniel, saying: "You lied to us for days and now you just say sorry like it is nothing?" You felt resentful. Then 4 more times, to min 57; last: "You can't just decide this on your own like you own everything, Daniel."
+   MEMORY ['N2-08', 'N2-13'] 'I waited by the front door all night until Daniel came back in with empty hands.' -> kept
+      [N2-08] tonight: You heard the front door being opened. You did not see who. You got up: Daniel's bed was empty. You waited up by the front door.
+      [N2-13] tonight: Before dawn Daniel came back in by the front door, with nothing in his hands (you saw it).

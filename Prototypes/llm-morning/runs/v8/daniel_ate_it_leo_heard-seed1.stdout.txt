@@ -1,0 +1,34 @@
+daniel_ate_it_leo_heard-seed1: model gemini-3.5-flash-lite, fresh; cache cache\v8\gemini-3.5-flash-lite-daniel_ate_it_leo_heard-seed1.json holds 45 answers
+  min 00: model asked for 4; so far 1 live, 3 cached, 1 API requests
+  min 03: model asked for 4; so far 4 live, 4 cached, 4 API requests
+  min 06: model asked for 4; so far 8 live, 4 cached, 8 API requests
+  min 15: model asked for 1; so far 9 live, 4 cached, 9 API requests
+  min 21: model asked for 4; so far 13 live, 4 cached, 13 API requests
+  min 24: model asked for 3; so far 16 live, 4 cached, 16 API requests
+  min 27: model asked for 4; so far 20 live, 4 cached, 20 API requests
+  min 30: model asked for 3; so far 23 live, 4 cached, 23 API requests
+  min 33: model asked for 4; so far 27 live, 4 cached, 27 API requests
+  min 36: model asked for 4; so far 31 live, 4 cached, 31 API requests
+  min 39: model asked for 4; so far 35 live, 4 cached, 35 API requests
+  min 45: model asked for 4; so far 39 live, 4 cached, 39 API requests
+  min 48: model asked for 4; so far 43 live, 4 cached, 43 API requests
+  min 54: model asked for 1; so far 44 live, 4 cached, 44 API requests
+  min 63: model asked for 3; so far 47 live, 4 cached, 47 API requests
+  min 66: model asked for 3; so far 50 live, 4 cached, 50 API requests
+  min 69: model asked for 1; so far 51 live, 4 cached, 51 API requests
+  min 78: model asked for 1; so far 52 live, 4 cached, 52 API requests
+
+wrote runs/v8/daniel_ate_it_leo_heard-seed1.md
+  api_requests: 52
+  answers_live: 52
+  answers_from_cache: 4
+  model_decisions: 56
+  fallbacks: 0
+  routine_decisions: 64
+  lines_spoken: 39
+  inner_moments: 4
+  private_talks: 0
+  max_prompt_tokens_estimated: 1400
+  max_prompt_tokens_counted_by_api: 1359
+  run_seconds: 243.9
+  story_sha256: 16cb7c584abd232a9ac88e217b775abb7cfbe63ab5ac7b8a1f6cf88e22931d91

@@ -1,0 +1,4 @@
+seed 1 mind 1 elena memory: produced again True; verdict kept; in their v16-only prompts: 6 day, 1 night, 1 mind
+seed 1 mind 1 mara intent: produced again True; verdict kept; in their v16-only prompts: 6 day, 1 night, 0 mind
+seed 1 mind 2 daniel memory: produced again False; verdict None; in their v16-only prompts: 0 day, 0 night, 0 mind
+seed 3 mind 2 elena memory: produced again True; verdict kept; in their v16-only prompts: 6 day, 0 night, 0 mind

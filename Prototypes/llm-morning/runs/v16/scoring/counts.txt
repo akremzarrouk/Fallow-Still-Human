@@ -1,0 +1,30 @@
+seed 1: total asks 161 (live 92, cached 69), API 92; seconds 411.2; max est 2105 api 2183; sha b78be352c959b73dbb9140f340c32932964840adaa90e507d9f19709044fb4a0
+  day1   asks  55 (meta None) api   0 cached  55 fallbacks 0 max est 1726 api 1668
+  night  asks   8 (meta 8) api   0 cached   8 fallbacks 0 max est 1604 api 1556
+  mind1  asks   4 (meta 4) api   0 cached   4 fallbacks 0 max est 2050 api 2183 proposed 7 kept 7 rejected 0
+  day2   asks  23 (meta 23) api  21 cached   2 fallbacks 0 max est 2099 api 1990 model 23 routine 97 lines 20 inner 1 trip_acts 0 food 0 give 0
+  night2 asks   4 (meta 4) api   4 cached   0 fallbacks 0 max est 1979 api 1874
+  mind2  asks   4 (meta 4) api   4 cached   0 fallbacks 0 max est 1178 api 1166 proposed 6 kept 3 rejected 3
+  day3   asks  63 (meta 63) api  63 cached   0 fallbacks 0 max est 2105 api 2000 model 63 routine 57 lines 61 inner 1 trip_acts 23 food 0 give 0
+  M6 sum 106 (API 92); leavers ['daniel'] ['back with nothing']; leavers2 [] []; away1 [] away2 []; house 0 left2 0
+  M3 day2 max est 2099 (api 1990), day3 max est 2105 (api 2000), ratio 1.003
+seed 2: total asks 120 (live 24, cached 96), API 24; seconds 111.8; max est 2165 api 2082; sha ab087493b022d9a4abdff10311c0f5728f33be5cd4dd407ba5ed4675f7cf9cb3
+  day1   asks  53 (meta None) api   0 cached  53 fallbacks 0 max est 1742 api 1709
+  night  asks   4 (meta 4) api   0 cached   4 fallbacks 0 max est 1607 api 1560
+  mind1  asks   4 (meta 4) api   0 cached   4 fallbacks 0 max est 1881 api 2052 proposed 7 kept 6 rejected 1
+  day2   asks  24 (meta 24) api   0 cached  24 fallbacks 0 max est 2085 api 2012 model 24 routine 97 lines 19 inner 2 trip_acts 7 food 1 give 1
+  night2 asks   7 (meta 7) api   0 cached   7 fallbacks 0 max est 1972 api 1902
+  mind2  asks   4 (meta 4) api   0 cached   4 fallbacks 0 max est 1398 api 1436 proposed 10 kept 7 rejected 3
+  day3   asks  24 (meta 24) api  24 cached   0 fallbacks 0 max est 2165 api 2082 model 24 routine 96 lines 23 inner 0 trip_acts 0 food 0 give 0
+  M6 sum 67 (API 24); leavers [] []; leavers2 ['daniel'] ['back with nothing']; away1 [] away2 []; house 0 left2 0
+  M3 day2 max est 2085 (api 2012), day3 max est 2165 (api 2082), ratio 1.038
+seed 3: total asks 160 (live 25, cached 135), API 25; seconds 112.0; max est 2214 api 2342; sha a6d2930cf7a618e674c5cd3c6ca40b6c3b451ae135146f9085990319559b3d66
+  day1   asks  45 (meta None) api   0 cached  45 fallbacks 0 max est 1702 api 1653
+  night  asks   4 (meta 4) api   0 cached   4 fallbacks 0 max est 1606 api 1540
+  mind1  asks   4 (meta 4) api   0 cached   4 fallbacks 0 max est 1204 api 1253 proposed 7 kept 6 rejected 1
+  day2   asks  70 (meta 70) api   0 cached  70 fallbacks 0 max est 2037 api 1942 model 70 routine 50 lines 51 inner 3 trip_acts 16 food 2 give 0
+  night2 asks   8 (meta 8) api   0 cached   8 fallbacks 0 max est 1917 api 1841
+  mind2  asks   4 (meta 4) api   0 cached   4 fallbacks 0 max est 2206 api 2342 proposed 7 kept 7 rejected 0
+  day3   asks  25 (meta 25) api  25 cached   0 fallbacks 0 max est 2214 api 2136 model 25 routine 95 lines 23 inner 1 trip_acts 0 food 0 give 0
+  M6 sum 115 (API 25); leavers [] []; leavers2 ['daniel'] ['back with nothing']; away1 [] away2 []; house 0 left2 0
+  M3 day2 max est 2037 (api 1942), day3 max est 2214 (api 2136), ratio 1.087

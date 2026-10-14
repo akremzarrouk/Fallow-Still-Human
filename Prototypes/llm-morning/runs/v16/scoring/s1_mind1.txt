@@ -1,0 +1,28 @@
+== Daniel: mode model invalid None; prompt 2050 est, 2183 api; 33 records, 0 earlier lines
+   feeling 'anxious and determined' (kept); intent 'I will figure out a way to get food for my family before they wake up and realize what I did.' (kept)
+   MEMORY ['N1-06', 'N1-12'] "I went out in the dark because it was my place as the eldest, and the street gave me no trouble even though the neighbour's house had nothing." -> kept
+      [N1-06] tonight: Leo told you, low, not to go: "Daniel, stop, you are not going out there tonight." You answered: "I have to do this, Leo, stay here and watch them.", and went all the same.
+      [N1-12] tonight: You got inside the neighbour's house and found no food there. Nothing troubled you in the street.
+== Elena: mode model invalid None; prompt 1972 est, 2104 api; 33 records, 0 earlier lines
+   feeling 'deeply anxious' (kept); intent 'I will make sure we stay together and keep Daniel safe today.' (kept)
+   MEMORY ['D1-006', 'D1-009'] 'Daniel confessed to taking the can and I told him we would get through this together.' -> kept
+      [D1-006] min 03: Daniel admitted taking the can: "I took it in the night, Mom. I was starving and I just ate it." (you heard it)
+      [D1-009] min 06: you reassured Daniel, saying: "It is alright, Daniel. We will get through this together." You felt relieved. Then 1 more time, to min 09; last: "You are going to be alright, Daniel. We will figure this out together."
+   MEMORY ['N1-08', 'N1-13'] "I heard the front door open in the night and found Daniel's bed empty before he returned with nothing in his hands." -> kept
+      [N1-08] tonight: You heard the front door being opened. You did not see who. You got up: Daniel's bed was empty. You waited up by the front door.
+      [N1-13] tonight: Before dawn Daniel came back in by the front door, with nothing in his hands (you saw it).
+== Leo: mode model invalid None; prompt 1984 est, 2115 api; 33 records, 0 earlier lines
+   feeling 'tense and watchful' (kept); intent 'I will check the front and see if Daniel came back safely.' (kept)
+   MEMORY ['D1-006', 'D1-007'] 'Daniel took the food in the night because he was starving, but there is no use in punishing him now that it is done.' -> kept
+      [D1-006] min 03: Daniel admitted taking the can: "I took it in the night, Mom. I was starving and I just ate it." (you heard it)
+      [D1-007] min 06: you reassured Daniel, saying: "It is done, Daniel. Just don't do it behind our backs again." You felt calm.
+   MEMORY ['N1-05', 'N1-06', 'N1-13'] 'Daniel left the house in the dark despite everything we said, and I only heard the front door open again before dawn.' -> kept
+      [N1-05] tonight: Daniel got up in the dark and left the room toward the kitchen and the front door (you saw it).
+      [N1-06] tonight: You told Daniel, low, not to go: "Daniel, stop, you are not going out there tonight." He answered: "I have to do this, Leo, stay here and watch them.", and went all the same.
+      [N1-13] tonight: Before dawn you heard the front door again. You did not see who.
+== Mara: mode model invalid None; prompt 1999 est, 2141 api; 33 records, 0 earlier lines
+   feeling 'anxious and hungry' (kept); intent 'I am going to ask Daniel why he went out into the night and came back with nothing.' (kept)
+   MEMORY ['D1-012'] 'Leo ate a portion right in front of me while I was starving.' -> kept
+      [D1-012] min 21: Leo ate one of the portions (you saw it), saying: "I need to eat something, we all do."
+   MEMORY ['N1-13'] 'Daniel came back through the front door before dawn with nothing in his hands.' -> kept
+      [N1-13] tonight: Before dawn Daniel came back in by the front door, with nothing in his hands (you saw it).

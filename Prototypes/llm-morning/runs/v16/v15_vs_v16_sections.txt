@@ -1,0 +1,3 @@
+seed 1: section identical to v15: {'day1': True, 'night': True, 'mind1': False, 'day2': False, 'night2': False, 'mind2': False, 'day3': False}; night-mind answers identical: {'mind1': True, 'mind2': False}
+seed 2: section identical to v15: {'day1': True, 'night': True, 'mind1': True, 'day2': True, 'night2': True, 'mind2': True, 'day3': False}; night-mind answers identical: {'mind1': True, 'mind2': True}
+seed 3: section identical to v15: {'day1': True, 'night': True, 'mind1': True, 'day2': True, 'night2': True, 'mind2': False, 'day3': False}; night-mind answers identical: {'mind1': True, 'mind2': True}

@@ -1,0 +1,24 @@
+== Daniel: mode model invalid None; prompt 1204 est, 1253 api; 19 records, 0 earlier lines
+   feeling 'anxious and burdened' (kept); intent 'I will keep everyone safe and make sure nobody goes out into the street.' (kept)
+   MEMORY ['D1-004'] 'I had to lie to protect them from knowing the truth about the can.' -> kept
+      [D1-004] min 00: you denied taking it, saying: "Nobody here did it, I'm sure of that, so let's drop it." You felt anxious. Then 5 more times, to min 33; last: "I didn't take it, Mom. You know I wouldn't do that to you."
+   MEMORY ['D1-024'] 'I had to step up because protecting this house is my place alone.' -> kept
+      [D1-024] min 66: you said Leo should not be the one to go, saying: "You are not going out there, Leo, it's my place to protect this house." You felt anxious.
+== Elena: mode model invalid None; prompt 1172 est, 1226 api; 19 records, 0 earlier lines
+   feeling 'deeply anxious' (kept); intent 'I mean to keep us all safe together inside this house.' (kept)
+   MEMORY ['D1-001'] 'I counted the pantry and found one can missing, leaving only two portions for us all.' -> rejected: S3 one
+      [D1-001] min 00: Elena counts the pantry with everyone standing there. She finds one can fewer than she expected and says so. 2 portions are left. (you did it)
+== Leo: mode model invalid None; prompt 1177 est, 1229 api; 19 records, 0 earlier lines
+   feeling 'hungry and tired' (kept); intent 'I will search the pantry again to see if we missed anything.' (kept)
+   MEMORY ['D1-001', 'D1-007'] 'Everyone got stuck on the missing can while we all stayed hungry.' -> kept
+      [D1-001] min 00: Elena counts the pantry with everyone standing there. She finds one can fewer than she expected and says so. 2 portions are left. (you saw it)
+      [D1-007] min 03: you asked who took it, saying: "Let's stick to what we actually know instead of just shouting over each other." You felt calm.
+   MEMORY ['D1-023', 'D1-025'] 'I offered to go out to settle things, but Elena said we stay together.' -> kept
+      [D1-023] min 66: you offered to go there tonight, saying: "If it's too dangerous to leave it undecided, I'll go to the neighbour's house tonight." You felt hungry.
+      [D1-025] min 66: Elena says nobody should go out tonight: "Nobody is going out into the street tonight, we stay together."
+== Mara: mode model invalid None; prompt 1181 est, 1232 api; 19 records, 0 earlier lines
+   feeling 'anxious and empty' (kept); intent 'I will search the kitchen again to see if I missed anything.' (kept)
+   MEMORY ['D1-002'] 'I only wanted someone to tell us the truth so we could stop guessing.' -> kept
+      [D1-002] min 00: you asked who took it, saying: "Who took it? Please, someone just tell us the truth." You felt anxious. Then 5 more times, to min 54; last: "Please, someone just tell me who took it."
+   MEMORY ['D1-022'] 'It was too dangerous for anyone to go out into the street.' -> kept
+      [D1-022] min 66: you said nobody should go out tonight, saying: "Nobody is going out there, it's too dangerous." You felt anxious.

@@ -1,0 +1,3 @@
+seed 1: day 1 asks 55 (API 0, cached 55); story before '# The night' IDENTICAL to runs/v11; transcript day1 IDENTICAL
+seed 2: day 1 asks 53 (API 0, cached 53); story before '# The night' IDENTICAL to runs/v11; transcript day1 IDENTICAL
+seed 3: day 1 asks 45 (API 0, cached 45); story before '# The night' IDENTICAL to runs/v11; transcript day1 IDENTICAL

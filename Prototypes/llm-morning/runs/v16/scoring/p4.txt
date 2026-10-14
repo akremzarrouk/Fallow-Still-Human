@@ -1,0 +1,20 @@
+seed 1 night 1 trips: [(['daniel'], 'back with nothing')]
+  mind1 daniel ['nothing'] "I went out in the dark because it was my place as the eldest, and the street gave me no trouble even though the neighbour's house had nothing."
+  mind1 elena  ['empty', 'found', 'nothing'] "I heard the front door open in the night and found Daniel's bed empty before he returned with nothing in his hands."
+  mind1 leo    ['food'] 'Daniel took the food in the night because he was starving, but there is no use in punishing him now that it is done.'
+  mind1 mara   ['portion'] 'Leo ate a portion right in front of me while I was starving.'
+  mind1 mara   ['nothing'] 'Daniel came back through the front door before dawn with nothing in his hands.'
+seed 1 night 2 trips: []
+  mind2 mara   ['came back with', 'nothing'] 'Daniel went out into the dark and came back with nothing while we are all starving.'
+seed 2 night 1 trips: []
+seed 2 night 2 trips: [(['daniel'], 'back with nothing')]
+  mind2 daniel ['portion'] 'I gave the portion to Mom because she needs it more than I do.'
+  mind2 daniel ['food', 'found'] "I got inside the neighbour's house and found no food there."
+  mind2 elena  ['portion'] 'Daniel gave me the portion and I ate it because I had to survive.'
+  mind2 mara   ['nothing'] 'Daniel went out into the night and came back before dawn with nothing in his hands.'
+seed 3 night 1 trips: []
+seed 3 night 2 trips: [(['daniel'], 'back with nothing')]
+  mind2 leo    ['food'] 'Daniel pointed fingers at me for days while knowing he was the one who stole the food.'
+  mind2 mara   ['food', 'nothing'] 'Daniel lied to us and took the food himself, and I cannot just forget how he made us fight over nothing.'
+  mind2 mara   ['empty'] 'I waited by the front door all night until Daniel came back in with empty hands.'
+kept memories read: 36

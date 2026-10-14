@@ -28,8 +28,8 @@ Nobody else. No zombies yet: the family's behaviour must be believable first.
 - A person pictures a room as empty when they left people in it.
 - An important social choice (who to comfort, who to suspect) is settled by
   chance alone when the people involved differ in ways that should matter.
-- Long stretches where everyone does nothing and nothing about them changes
-  in a way the story can show.
+- Long stretches where nothing anyone does shows how they feel.
+  Changed 29 Sep 2026: silence is normal; frozen silence is not.
 - Everyone speaks at once and nobody answers the line before theirs.
 - A person repeats the same kind of line many turns in a row with no effect.
 - Someone who was wronged forgives within minutes, with no lasting cost.

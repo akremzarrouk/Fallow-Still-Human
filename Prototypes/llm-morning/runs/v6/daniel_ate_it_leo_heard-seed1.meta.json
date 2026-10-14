@@ -1,0 +1,20 @@
+{
+ "model": "gemini-3.5-flash-lite",
+ "scenario": "daniel_ate_it_leo_heard",
+ "seed": 1,
+ "replay": false,
+ "api_requests": 38,
+ "answers_live": 38,
+ "answers_from_cache": 6,
+ "model_decisions": 44,
+ "fallbacks": 0,
+ "routine_decisions": 76,
+ "lines_spoken": 26,
+ "inner_moments": 6,
+ "private_talks": 0,
+ "max_prompt_tokens_estimated": 1400,
+ "max_prompt_tokens_counted_by_api": 1367,
+ "run_seconds": 533.4,
+ "story": "runs/v6/daniel_ate_it_leo_heard-seed1.md",
+ "story_sha256": "c74400814c78875a85a1e2ed505d5fcf061b3d32a5f3349b6d860452e2694d05"
+}

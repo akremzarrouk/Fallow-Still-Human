@@ -1,0 +1,32 @@
+daniel_ate_it-seed1: model gemini-3.5-flash-lite, fresh; cache cache\v6\gemini-3.5-flash-lite-daniel_ate_it-seed1.json holds 0 answers
+  min 00: model asked for 4; so far 4 live, 0 cached, 4 API requests
+  min 03: model asked for 4; so far 8 live, 0 cached, 8 API requests
+  min 06: model asked for 4; so far 12 live, 0 cached, 12 API requests
+  min 09: model asked for 2; so far 14 live, 0 cached, 14 API requests
+  min 12: model asked for 4; so far 18 live, 0 cached, 18 API requests
+  min 15: model asked for 4; so far 22 live, 0 cached, 22 API requests
+  min 18: model asked for 4; so far 26 live, 0 cached, 26 API requests
+  min 21: model asked for 2; so far 28 live, 0 cached, 28 API requests
+  min 24: model asked for 4; so far 32 live, 0 cached, 32 API requests
+  min 27: model asked for 4; so far 36 live, 0 cached, 36 API requests
+  min 30: model asked for 4; so far 40 live, 0 cached, 40 API requests
+  min 33: model asked for 1; so far 41 live, 0 cached, 41 API requests
+  min 54: model asked for 1; so far 42 live, 0 cached, 42 API requests
+  min 63: model asked for 1; so far 43 live, 0 cached, 43 API requests
+  min 66: model asked for 1; so far 44 live, 0 cached, 44 API requests
+  min 75: model asked for 1; so far 45 live, 0 cached, 45 API requests
+
+wrote runs/v6/daniel_ate_it-seed1.md
+  api_requests: 45
+  answers_live: 45
+  answers_from_cache: 0
+  model_decisions: 45
+  fallbacks: 0
+  routine_decisions: 75
+  lines_spoken: 28
+  inner_moments: 7
+  private_talks: 0
+  max_prompt_tokens_estimated: 1400
+  max_prompt_tokens_counted_by_api: 1354
+  run_seconds: 199.2
+  story_sha256: facdcf437f38666fb6892f836973d9d38a2bc9e487faabb87139b52755fdae0c

@@ -1,0 +1,37 @@
+daniel_ate_it_leo_heard-seed2: model gemini-3.5-flash-lite, fresh; cache cache\v8\gemini-3.5-flash-lite-daniel_ate_it_leo_heard-seed2.json holds 66 answers
+  min 00: model asked for 4; so far 1 live, 3 cached, 1 API requests
+  min 03: model asked for 4; so far 5 live, 3 cached, 5 API requests
+  min 06: model asked for 3; so far 8 live, 3 cached, 8 API requests
+  min 09: model asked for 3; so far 11 live, 3 cached, 11 API requests
+  min 12: model asked for 4; so far 15 live, 3 cached, 15 API requests
+  min 15: model asked for 4; so far 19 live, 3 cached, 19 API requests
+  min 18: model asked for 4; so far 23 live, 3 cached, 23 API requests
+  min 21: model asked for 4; so far 27 live, 3 cached, 27 API requests
+  min 24: model asked for 4; so far 31 live, 3 cached, 31 API requests
+  min 27: model asked for 3; so far 34 live, 3 cached, 34 API requests
+  min 30: model asked for 4; so far 38 live, 3 cached, 38 API requests
+  min 33: model asked for 4; so far 42 live, 3 cached, 42 API requests
+  min 36: model asked for 2; so far 44 live, 3 cached, 44 API requests
+  min 54: model asked for 1; so far 45 live, 3 cached, 45 API requests
+  min 63: model asked for 1; so far 46 live, 3 cached, 46 API requests
+  min 66: model asked for 1; so far 47 live, 3 cached, 47 API requests
+  min 75: model asked for 1; so far 48 live, 3 cached, 48 API requests
+  min 78: model asked for 4; so far 52 live, 3 cached, 52 API requests
+  min 81: model asked for 4; so far 56 live, 3 cached, 56 API requests
+  min 84: model asked for 4; so far 60 live, 3 cached, 60 API requests
+  min 87: model asked for 4; so far 64 live, 3 cached, 64 API requests
+
+wrote runs/v8/daniel_ate_it_leo_heard-seed2.md
+  api_requests: 64
+  answers_live: 64
+  answers_from_cache: 3
+  model_decisions: 67
+  fallbacks: 0
+  routine_decisions: 53
+  lines_spoken: 50
+  inner_moments: 7
+  private_talks: 0
+  max_prompt_tokens_estimated: 1400
+  max_prompt_tokens_counted_by_api: 1364
+  run_seconds: 284.7
+  story_sha256: bf93bdb7540a2eade17102ec9cee05700c005ea4e4fd0d4f356c275e282c9d55

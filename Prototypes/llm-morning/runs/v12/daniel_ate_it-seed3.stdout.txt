@@ -1,0 +1,80 @@
+daniel_ate_it-seed3: model gemini-3.5-flash-lite, fresh; cache cache\v12\gemini-3.5-flash-lite-daniel_ate_it-seed3.json holds 51 answers
+  min 00: model asked for 4; so far 0 live, 4 cached, 0 API requests
+  min 03: model asked for 4; so far 0 live, 8 cached, 0 API requests
+  min 06: model asked for 3; so far 0 live, 11 cached, 0 API requests
+  min 09: model asked for 3; so far 0 live, 14 cached, 0 API requests
+  min 15: model asked for 1; so far 0 live, 15 cached, 0 API requests
+  min 18: model asked for 1; so far 0 live, 16 cached, 0 API requests
+  min 21: model asked for 4; so far 0 live, 20 cached, 0 API requests
+  min 24: model asked for 3; so far 0 live, 23 cached, 0 API requests
+  min 30: model asked for 1; so far 0 live, 24 cached, 0 API requests
+  min 33: model asked for 1; so far 0 live, 25 cached, 0 API requests
+  min 54: model asked for 1; so far 0 live, 26 cached, 0 API requests
+  min 63: model asked for 1; so far 0 live, 27 cached, 0 API requests
+  min 66: model asked for 4; so far 0 live, 31 cached, 0 API requests
+  min 69: model asked for 4; so far 0 live, 35 cached, 0 API requests
+  min 72: model asked for 3; so far 0 live, 38 cached, 0 API requests
+  min 75: model asked for 3; so far 0 live, 41 cached, 0 API requests
+  min 78: model asked for 3; so far 0 live, 44 cached, 0 API requests
+  min 81: model asked for 1; so far 0 live, 45 cached, 0 API requests
+  night: model asked for 4; so far 4 live, 45 cached, 4 API requests
+  day 2 min 00: model asked for 4; so far 8 live, 45 cached, 8 API requests
+  day 2 min 03: model asked for 4; so far 12 live, 45 cached, 12 API requests
+  day 2 min 06: model asked for 3; so far 15 live, 45 cached, 15 API requests
+  day 2 min 09: model asked for 3; so far 18 live, 45 cached, 18 API requests
+  day 2 min 12: model asked for 4; so far 22 live, 45 cached, 22 API requests
+  day 2 min 15: model asked for 3; so far 25 live, 45 cached, 25 API requests
+  day 2 min 18: model asked for 4; so far 29 live, 45 cached, 29 API requests
+  day 2 min 21: model asked for 4; so far 33 live, 45 cached, 33 API requests
+  day 2 min 24: model asked for 3; so far 36 live, 45 cached, 36 API requests
+  day 2 min 27: model asked for 4; so far 40 live, 45 cached, 40 API requests
+  day 2 min 30: model asked for 4; so far 44 live, 45 cached, 44 API requests
+  day 2 min 33: model asked for 4; so far 48 live, 45 cached, 48 API requests
+  day 2 min 36: model asked for 4; so far 52 live, 45 cached, 52 API requests
+  day 2 min 39: model asked for 1; so far 53 live, 45 cached, 53 API requests
+  day 2 min 48: model asked for 1; so far 54 live, 45 cached, 54 API requests
+  day 2 min 57: model asked for 1; so far 55 live, 45 cached, 55 API requests
+
+wrote runs/v12/daniel_ate_it-seed3.md
+  api_requests: 55
+  answers_live: 55
+  answers_from_cache: 45
+  day1 api_requests: 0
+  day1 answers_live: 0
+  day1 answers_from_cache: 45
+  day1 model_decisions: 45
+  day1 fallbacks: 0
+  day1 routine_decisions: 75
+  day1 lines_spoken: 23
+  day1 inner_moments: 5
+  day1 lull_moments: 0
+  day1 private_talks: 0
+  day1 trip_minute: 30
+  day1 trip_acts: 6
+  day1 max_prompt_tokens_estimated: 1702
+  day1 max_prompt_tokens_counted_by_api: 1653
+  night_asks: 4
+  night_api_requests: 4
+  leavers: []
+  outcome: []
+  night house: 0; away: []
+  day2 api_requests: 51
+  day2 answers_live: 51
+  day2 answers_from_cache: 0
+  day2 model_decisions: 51
+  day2 fallbacks: 0
+  day2 routine_decisions: 69
+  day2 lines_spoken: 43
+  day2 inner_moments: 3
+  day2 lull_moments: 0
+  day2 private_talks: 0
+  day2 trip_minute: 0
+  day2 trip_acts: 29
+  day2 max_prompt_tokens_estimated: 1938
+  day2 max_prompt_tokens_counted_by_api: 1880
+  day2_asks: 51
+  day2_api_requests: 51
+  max_prompt_tokens_estimated: 1938
+  max_prompt_tokens_counted_by_api: 1880
+  run_seconds: 244.1
+  story_sha256: 6269ec980b121097d4820c4c7953b28ef543955cd2342b43a906b6206a98a69a

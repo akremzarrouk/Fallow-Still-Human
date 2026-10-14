@@ -1,0 +1,59 @@
+== seed 1 day 2
+convo_log: [(0, 'kitchen', 'started', 'the family is together in the kitchen for the first time since last night'), (9, 'kitchen', 'ended', '2 full turns in a row with nothing new'), (9, 'kitchen', 'started', 'Leo: an accusation'), (18, 'kitchen', 'ended', '2 full turns in a row with nothing new')]
+kitchen conversation 00-09: 10 spoken lines; speakers {'daniel': 3, 'leo': 2, 'elena': 3, 'mara': 2}; aimed at {'daniel': 7}
+   Daniel: ['reassure_all', 'reassure_all', 'reassure_all']
+   Leo: ['confront_daniel', 'confront_daniel']
+   Elena: ['reassure_daniel', 'reassure_daniel', 'reassure_daniel']
+   Mara: ['confront_daniel', 'confront_daniel']
+kitchen conversation 09-18: 10 spoken lines; speakers {'leo': 2, 'mara': 3, 'elena': 3, 'daniel': 2}; aimed at {'daniel': 8, 'leo': 1}
+   Leo: ['accuse_daniel', 'accuse_daniel']
+   Mara: ['accuse_daniel', 'confront_daniel', 'confront_daniel']
+   Elena: ['confront_daniel', 'reassure_daniel', 'reassure_daniel']
+   Daniel: ['reassure_all', 'reassure_leo']
+== seed 1 day 3
+convo_log: [(0, 'kitchen', 'started', 'the family is together in the kitchen for the first time since last night'), (27, 'kitchen', 'ended', '2 full turns in a row with nothing new'), (27, 'kitchen', 'started', 'Mara: a refusal to go'), (48, 'kitchen', 'ended', '2 full turns in a row with nothing new')]
+kitchen conversation 00-27: 35 spoken lines; speakers {'daniel': 9, 'elena': 8, 'mara': 9, 'leo': 9}; aimed at {'daniel': 5, 'mara': 8}
+   Daniel: ['reassure_all', 'reassure_all', 'volunteer', 'still_going', 'still_going', 'confront_mara', 'keep_mara_home', 'confront_mara', 'confront_mara']
+   Elena: ['reassure_all', 'reassure_daniel', 'keep_daniel_home', 'keep_mara_home', 'nobody_goes', 'keep_mara_home', 'reassure_mara', 'reassure_mara']
+   Mara: ['accuse_daniel', 'accuse_daniel', 'volunteer', 'still_going', 'still_going', 'propose_trip', 'volunteer', 'still_going', 'still_going']
+   Leo: ['accuse_daniel', 'accuse_daniel', 'nobody_goes', 'keep_daniel_home', 'nobody_goes', 'confront_mara', 'keep_mara_home', 'confront_mara', 'confront_mara']
+kitchen conversation 27-48: 26 spoken lines; speakers {'mara': 7, 'elena': 6, 'leo': 6, 'daniel': 7}; aimed at {'daniel': 11, 'mara': 2, 'leo': 1}
+   Mara: ['refuse_to_go', 'accuse_daniel', 'accuse_daniel', 'accuse_daniel', 'confront_daniel', 'accuse_daniel', 'accuse_daniel']
+   Elena: ['nobody_goes', 'reassure_all', 'reassure_all', 'reassure_all', 'reassure_all', 'reassure_all']
+   Leo: ['nobody_goes', 'accuse_daniel', 'confront_daniel', 'accuse_daniel', 'accuse_daniel', 'accuse_daniel']
+   Daniel: ['nobody_goes', 'confront_mara', 'confront_leo', 'reassure_all', 'reassure_all', 'confront_mara', 'reassure_all']
+== seed 2 day 2
+convo_log: [(0, 'kitchen', 'started', 'the family is together in the kitchen for the first time since last night'), (18, 'kitchen', 'ended', '2 full turns in a row with nothing new')]
+kitchen conversation 00-18: 19 spoken lines; speakers {'mara': 6, 'daniel': 5, 'elena': 5, 'leo': 3}; aimed at {'daniel': 9, 'elena': 1}
+   Mara: ['accuse_daniel', 'accuse_daniel', 'send_daniel', 'accuse_daniel', 'accuse_daniel', 'accuse_daniel']
+   Daniel: ['give_elena', 'volunteer', 'still_going', 'reassure_all', 'reassure_all']
+   Elena: ['eat_given', 'nobody_goes', 'keep_daniel_home', 'nobody_goes', 'reassure_all']
+   Leo: ['send_daniel', 'confront_daniel', 'confront_daniel']
+== seed 2 day 3
+convo_log: [(0, 'kitchen', 'started', 'the family is together in the kitchen for the first time since last night'), (18, 'kitchen', 'ended', '2 full turns in a row with nothing new')]
+kitchen conversation 00-18: 23 spoken lines; speakers {'leo': 5, 'daniel': 6, 'mara': 6, 'elena': 6}; aimed at {'daniel': 12, 'leo': 2}
+   Leo: ['accuse_daniel', 'confront_daniel', 'confront_daniel', 'confront_daniel', 'confront_daniel']
+   Daniel: ['confront_leo', 'reassure_all', 'reassure_all', 'confront_leo', 'reassure_all', 'reassure_all']
+   Mara: ['confront_daniel', 'confront_daniel', 'confront_daniel', 'accuse_daniel', 'accuse_daniel', 'confront_daniel']
+   Elena: ['reassure_all', 'reassure_all', 'reassure_all', 'confront_daniel', 'reassure_all', 'reassure_all']
+== seed 3 day 2
+convo_log: [(0, 'kitchen', 'started', 'the family is together in the kitchen for the first time since last night'), (9, 'kitchen', 'ended', '2 full turns in a row with nothing new'), (9, 'kitchen', 'started', 'Mara ate one of the portions'), (18, 'kitchen', 'ended', '2 full turns in a row with nothing new'), (18, 'kitchen', 'started', 'Leo ate one of the portions'), (60, 'kitchen', 'ended', '2 full turns in a row with nothing new')]
+kitchen conversation 00-09: 7 spoken lines; speakers {'mara': 2, 'elena': 2, 'daniel': 2, 'leo': 1}; aimed at {}
+   Mara: ['ask_who', 'ask_who']
+   Elena: ['reassure_all', 'reassure_all']
+   Daniel: ['deny', 'deny']
+   Leo: ['deny']
+kitchen conversation 09-18: 1 spoken lines; speakers {'mara': 1}; aimed at {}
+   Mara: ['eat']
+kitchen conversation 18-60: 42 spoken lines; speakers {'leo': 11, 'daniel': 13, 'mara': 10, 'elena': 8}; aimed at {'leo': 8, 'daniel': 13, 'mara': 1}
+   Leo: ['eat', 'deny', 'deny', 'deny', 'confront_daniel', 'confront_daniel', 'send_daniel', 'keep_daniel_home', 'send_daniel', 'confront_daniel', 'keep_daniel_home']
+   Daniel: ['accuse_leo', 'accuse_leo', 'accuse_leo', 'accuse_leo', 'confess', 'reassure_mara', 'confront_leo', 'volunteer', 'still_going', 'still_going', 'propose_trip', 'volunteer', 'still_going']
+   Mara: ['accuse_leo', 'accuse_leo', 'accuse_leo', 'accuse_daniel', 'confront_daniel', 'confront_daniel', 'send_daniel', 'confront_daniel', 'confront_daniel', 'confront_daniel']
+   Elena: ['reassure_all', 'reassure_daniel', 'reassure_all', 'nobody_goes', 'keep_daniel_home', 'nobody_goes', 'keep_daniel_home', 'nobody_goes']
+== seed 3 day 3
+convo_log: [(0, 'kitchen', 'started', 'the family is together in the kitchen for the first time since last night'), (18, 'kitchen', 'ended', '2 full turns in a row with nothing new')]
+kitchen conversation 00-18: 22 spoken lines; speakers {'daniel': 6, 'mara': 5, 'leo': 5, 'elena': 6}; aimed at {'daniel': 15, 'leo': 1, 'mara': 2, 'elena': 1}
+   Daniel: ['reassure_all', 'reassure_all', 'confront_leo', 'confront_mara', 'reassure_elena', 'confront_mara']
+   Mara: ['confront_daniel', 'confront_daniel', 'confront_daniel', 'confront_daniel', 'confront_daniel']
+   Leo: ['confront_daniel', 'confront_daniel', 'confront_daniel', 'confront_daniel', 'confront_daniel']
+   Elena: ['reassure_daniel', 'reassure_daniel', 'reassure_daniel', 'confront_daniel', 'reassure_daniel', 'reassure_all']

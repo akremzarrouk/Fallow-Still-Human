@@ -1,0 +1,22 @@
+daniel_ate_it-seed1: model gemini-3.5-flash-lite, replay from cache only; cache cache\v16\gemini-3.5-flash-lite-daniel_ate_it-seed1.json holds 144 answers
+  min 00: model asked for 4; so far 0 live, 4 cached, 0 API requests
+  min 03: model asked for 4; so far 0 live, 8 cached, 0 API requests
+  min 06: model asked for 4; so far 0 live, 12 cached, 0 API requests
+  min 09: model asked for 4; so far 0 live, 16 cached, 0 API requests
+  min 12: model asked for 3; so far 0 live, 19 cached, 0 API requests
+  min 21: model asked for 3; so far 0 live, 22 cached, 0 API requests
+  min 24: model asked for 4; so far 0 live, 26 cached, 0 API requests
+  min 27: model asked for 4; so far 0 live, 30 cached, 0 API requests
+  min 30: model asked for 4; so far 0 live, 34 cached, 0 API requests
+  min 33: model asked for 4; so far 0 live, 38 cached, 0 API requests
+  min 36: model asked for 4; so far 0 live, 42 cached, 0 API requests
+  min 39: model asked for 4; so far 0 live, 46 cached, 0 API requests
+  min 42: model asked for 4; so far 0 live, 50 cached, 0 API requests
+  min 45: model asked for 3; so far 0 live, 53 cached, 0 API requests
+  min 66: model asked for 1; so far 0 live, 54 cached, 0 API requests
+  min 75: model asked for 1; so far 0 live, 55 cached, 0 API requests
+  night 1: model asked for 8; so far 0 live, 63 cached, 0 API requests
+  night 1, the night mind: model asked for 4; so far 0 live, 67 cached, 0 API requests
+
+stopped: replay found a prompt with no cached answer, so this morning cannot be replayed from the cache.
+Answers received so far (144) are kept in cache\v16\gemini-3.5-flash-lite-daniel_ate_it-seed1.json.

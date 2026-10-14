@@ -1,0 +1,37 @@
+daniel_ate_it-seed2: model gemini-3.5-flash-lite, fresh; cache cache\v6\gemini-3.5-flash-lite-daniel_ate_it-seed2.json holds 0 answers
+  min 00: model asked for 4; so far 4 live, 0 cached, 4 API requests
+  min 03: model asked for 4; so far 8 live, 0 cached, 8 API requests
+  min 06: model asked for 3; so far 11 live, 0 cached, 11 API requests
+  min 09: model asked for 2; so far 13 live, 0 cached, 13 API requests
+  min 12: model asked for 4; so far 17 live, 0 cached, 17 API requests
+  min 15: model asked for 4; so far 21 live, 0 cached, 21 API requests
+  min 18: model asked for 4; so far 25 live, 0 cached, 25 API requests
+  min 21: model asked for 3; so far 28 live, 0 cached, 28 API requests
+  min 24: model asked for 4; so far 32 live, 0 cached, 32 API requests
+  min 27: model asked for 4; so far 36 live, 0 cached, 36 API requests
+  min 30: model asked for 4; so far 40 live, 0 cached, 40 API requests
+  min 33: model asked for 4; so far 44 live, 0 cached, 44 API requests
+  min 36: model asked for 4; so far 48 live, 0 cached, 48 API requests
+  min 39: model asked for 4; so far 52 live, 0 cached, 52 API requests
+  min 42: model asked for 1; so far 53 live, 0 cached, 53 API requests
+  min 51: model asked for 1; so far 54 live, 0 cached, 54 API requests
+  min 54: model asked for 1; so far 55 live, 0 cached, 55 API requests
+  min 63: model asked for 2; so far 57 live, 0 cached, 57 API requests
+  min 66: model asked for 4; so far 61 live, 0 cached, 61 API requests
+  min 69: model asked for 4; so far 65 live, 0 cached, 65 API requests
+  min 78: model asked for 1; so far 66 live, 0 cached, 66 API requests
+
+wrote runs/v6/daniel_ate_it-seed2.md
+  api_requests: 66
+  answers_live: 66
+  answers_from_cache: 0
+  model_decisions: 66
+  fallbacks: 0
+  routine_decisions: 54
+  lines_spoken: 48
+  inner_moments: 5
+  private_talks: 0
+  max_prompt_tokens_estimated: 1400
+  max_prompt_tokens_counted_by_api: 1371
+  run_seconds: 293.7
+  story_sha256: 1ee05b8e272e58a3937ba7364dd85d39c6b6db064462df489ff8e1583b4e3d3b

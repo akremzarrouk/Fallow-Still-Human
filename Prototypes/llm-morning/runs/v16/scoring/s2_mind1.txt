@@ -1,0 +1,26 @@
+== Daniel: mode model invalid None; prompt 1866 est, 2036 api; 32 records, 0 earlier lines
+   feeling 'ashamed and anxious' (kept); intent "I will find a safe way for us to get food tomorrow without risking anyone's life." (kept)
+   MEMORY ['D1-008', 'D1-022'] 'I accused Leo when I was the one who ate the can in the night, and my false pride made me lie to them for too long.' -> kept
+      [D1-008] min 03: you accused Leo, saying: "Leo, you were up late last night too. Are you sure you didn't grab it?" You felt anxious. Then 2 more times, to min 12; last: "You're lying, Leo, I know it was you. Just admit it."
+      [D1-022] min 33: you admitted aloud that you took the can, in front of Elena, Leo, Mara, saying: "I took it in the night, I'm sorry."
+   MEMORY ['D1-043'] 'I had to protect my family and stop anyone from going out into the dangerous street tonight.' -> rejected: S5 tonight
+      [D1-043] min 51: you said nobody should go out tonight, saying: "Mom is right, nobody is stepping foot out there tonight." You felt anxious.
+== Elena: mode model invalid None; prompt 1807 est, 1972 api; 32 records, 0 earlier lines
+   feeling 'anxious and exhausted' (kept); intent 'I will keep them close and safe inside where we belong.' (kept)
+   MEMORY ['D1-022'] 'Daniel took the can in the night and had to confess to us all.' -> kept
+      [D1-022] min 33: Daniel admitted taking the can: "I took it in the night, I'm sorry." (you heard it)
+   MEMORY ['D1-042'] 'I said I will not go out there, because none of us are going into the street.' -> kept
+      [D1-042] min 51: you said you will not be the one to go, saying: "I will not go out there, none of us are going into the street." You felt deeply anxious.
+== Leo: mode model invalid None; prompt 1881 est, 2052 api; 32 records, 0 earlier lines
+   feeling 'resentful and exhausted' (kept); intent 'I intend to keep my distance from Daniel and watch our supplies closely.' (kept)
+   MEMORY ['D1-008', 'D1-022'] 'Daniel spent hours accusing me of taking the can before finally admitting he took it himself.' -> kept
+      [D1-008] min 03: Daniel accuses you of taking it: "Leo, you were up late last night too. Are you sure you didn't grab it?" Then 2 more times, to min 12; last: "You're lying, Leo, I know it was you. Just admit it."
+      [D1-022] min 33: Daniel admitted taking the can: "I took it in the night, I'm sorry." (you heard it)
+== Mara: mode model invalid None; prompt 1831 est, 2009 api; 32 records, 0 earlier lines
+   feeling 'hungry and anxious' (kept); intent "I will keep close to Mom and watch Daniel so he doesn't lie to us again." (kept)
+   MEMORY ['D1-004', 'D1-022'] 'Daniel lied to us all morning and only confessed because he had no other choice.' -> kept
+      [D1-004] min 00: Daniel denies taking it, to everyone: "I didn't take any can, Mom. Nobody here did this." Then 1 more time, to min 06; last: "I didn't take anything either, Leo, so don't look at me like that."
+      [D1-022] min 33: Daniel admitted taking the can: "I took it in the night, I'm sorry." (you heard it)
+   MEMORY ['D1-030', 'D1-040'] "I wanted to help by going to the neighbour's house, but Mom shouldn't be the one to take that risk either." -> kept
+      [D1-030] min 39: you offered to go there tonight, saying: "I can go to the neighbour's house tonight, I am not afraid to do it." You felt anxious.
+      [D1-040] min 48: you said Elena should not be the one to go, saying: "Mom, you can't go out there, it's too dangerous." You felt scared.

@@ -1,0 +1,113 @@
+## What each of them carried in
+
+Each block is printed as their prompts carry it, with the opening of the morning and their lines about the food and the neighbour's house.
+
+**Daniel**
+
+```
+What stays with you from earlier days:
+- Two days ago, you admitted taking the can, in front of everyone. You thought then: "I accused Leo when I was the one who ate the can in the night, and my false pride made me lie to them for too long."
+- Two days ago, Leo denied taking the can 4 times.
+- Two days ago, Mara ate a portion in front of you.
+Yesterday and last night:
+- Yesterday morning the shelf held 1 portion.
+- Accusations: Mara accused you 5 times (min 00, 03, 09, 12, 15).
+- Confrontations: Leo confronted you twice (min 09, 12).
+- You gave Elena a portion at minute 00, and Elena ate it.
+- About going to the neighbour's house last night, where it was left: Mara said you are the one who should go (min 06); Leo said you are the one who should go (min 06); you said you still mean to go (min 09); Elena said nobody should go (min 12).
+- The afternoon and evening passed in the house. Nobody ate.
+- Last night you slept in the brothers room with Leo. You meant to go to the neighbour's house once the others were asleep.
+- Leo told you, low, not to go: "Daniel, don't do this alone. If you go out there, you take us with you or you don't go." You answered: "I have to do this, Leo, stay here.", and went all the same.
+- You got inside the neighbour's house and found no food there. Nothing troubled you in the street.
+- You came back in by the front door before dawn.
+What yesterday left in you (your own thoughts, last night):
+- About Elena eating a portion handed over: "I gave the portion to Mom because she needs it more than I do."
+- About the neighbour's house and the street: "I got inside the neighbour's house and found no food there."
+- You meant to: "I will face whatever they say to me in the morning and try to keep us all alive."
+- How it left you: empty and weary.
+min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)
+About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+About the neighbour's house: you went in last night and found no food there. Outside is dangerous.
+```
+
+**Elena**
+
+```
+What stays with you from earlier days:
+- Two days ago, Daniel admitted taking the can, after denying it to you. You thought then: "Daniel took the can in the night and had to confess to us all."
+- Two days ago, Leo denied taking the can 4 times.
+- Two days ago, Mara ate a portion in front of you.
+Yesterday and last night:
+- Yesterday morning the shelf held 1 portion.
+- Accusations: Mara accused Daniel 5 times (min 00, 03, 09, 12, 15).
+- Confrontations: Leo confronted Daniel twice (min 09, 12).
+- Daniel gave you a portion at minute 00, and you ate it.
+- About going to the neighbour's house last night, where it was left: Mara said Daniel is the one who should go (min 06); Leo said Daniel is the one who should go (min 06); Daniel said he still means to go (min 09); you said nobody should go (min 12).
+- The afternoon and evening passed in the house. Nobody ate.
+- Last night you slept in the back room with Mara. You went to sleep.
+What yesterday left in you (your own thoughts, last night):
+- About Daniel giving you a portion and eating a portion handed over: "Daniel gave me the portion and I ate it because I had to survive."
+- About saying nobody should go and saying Daniel must stay home: "I said nobody should go out into the street, we stay together here, and Daniel must stay home."
+- You meant to: "I will make sure nobody leaves the house and we stay together safely."
+- How it left you: anxious and weary.
+min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)
+About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+About the neighbour's house: its people left in the first days, so there may be food there. Outside is dangerous.
+```
+
+**Leo**
+
+```
+What stays with you from earlier days:
+- Two days ago, Daniel admitted taking the can, after denying it to you, after accusing you of it. You thought then: "Daniel spent hours accusing me of taking the can before finally admitting he took it himself."
+- Two days ago, you denied taking the can 4 times.
+- Two days ago, Mara ate a portion in front of you.
+Yesterday and last night:
+- Yesterday morning the shelf held 1 portion.
+- Accusations: Mara accused Daniel 5 times (min 00, 03, 09, 12, 15).
+- Confrontations: you confronted Daniel twice (min 09, 12).
+- Daniel gave Elena a portion at minute 00, and Elena ate it (you saw it).
+- About going to the neighbour's house last night, where it was left: Mara said Daniel is the one who should go (min 06); you said Daniel is the one who should go (min 06); Daniel said he still means to go (min 09); Elena said nobody should go (min 12).
+- The afternoon and evening passed in the house. Nobody ate.
+- Last night you slept in the brothers room with Daniel. You lay awake and listened.
+- In the night Daniel got up in the dark and left the room toward the kitchen and the front door (you saw it).
+- You told Daniel, low, not to go: "Daniel, don't do this alone. If you go out there, you take us with you or you don't go." He answered: "I have to do this, Leo, stay here.", and went all the same.
+- Before dawn you heard the front door again. You did not see who.
+What yesterday left in you (your own thoughts, last night):
+- About Daniel getting up in the night and telling Daniel, low, not to go: "Daniel left in the dark alone despite my warning that if he goes out there, he takes us with him or he does not go."
+- You meant to: "I will find out if Daniel came back through that door and what he brought us."
+- How it left you: exhausted and resentful.
+min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)
+About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+About the neighbour's house: Daniel went there last night and came back with nothing. Outside is dangerous.
+```
+
+**Mara**
+
+```
+What stays with you from earlier days:
+- Two days ago, Daniel admitted taking the can, after denying it to you. You thought then: "Daniel lied to us all morning and only confessed because he had no other choice."
+- Two days ago, Leo denied taking the can 4 times.
+- Two days ago, you ate a portion in front of the others.
+Yesterday and last night:
+- Yesterday morning the shelf held 1 portion.
+- Accusations: you accused Daniel 5 times (min 00, 03, 09, 12, 15).
+- Confrontations: Leo confronted Daniel twice (min 09, 12).
+- Daniel gave Elena a portion at minute 00, and Elena ate it (you saw it).
+- About going to the neighbour's house last night, where it was left: you said Daniel is the one who should go (min 06); Leo said Daniel is the one who should go (min 06); Daniel said he still means to go (min 09); Elena said nobody should go (min 12).
+- The afternoon and evening passed in the house. Nobody ate.
+- Last night you slept in the back room with Elena. You lay awake and listened.
+- In the night you heard low voices from the brothers room.
+- In the night you heard the front door being opened. You did not see who. You got up: Daniel's bed was empty. You waited up by the front door.
+- Before dawn Daniel came back in by the front door, with nothing in his hands (you saw it).
+What yesterday left in you (your own thoughts, last night):
+- About saying Daniel should go and Daniel saying he still means to go: "Daniel said he meant to go out, and I told him he had to be the one to do it."
+- About the front door opening in the night and Daniel coming back in before dawn: "Daniel went out into the night and came back before dawn with nothing in his hands."
+- You meant to: "I will ask Daniel why he went out into the street with nothing to show for it."
+- How it left you: anxious and exhausted.
+min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)
+About food: the shelf holds 0 portions, and there is no other food in the house, so there is nothing to eat today.
+About the neighbour's house: Daniel went there last night and came back with nothing. Outside is dangerous.
+```
+
+

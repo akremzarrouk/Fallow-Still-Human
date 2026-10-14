@@ -1,0 +1,67 @@
+{
+ "model": "gemini-3.5-flash-lite",
+ "scenario": "daniel_ate_it",
+ "seed": 1,
+ "replay": false,
+ "api_requests": 33,
+ "answers_live": 33,
+ "answers_from_cache": 58,
+ "day1": {
+  "api_requests": 0,
+  "answers_live": 0,
+  "answers_from_cache": 55,
+  "model_decisions": 55,
+  "fallbacks": 0,
+  "routine_decisions": 65,
+  "lines_spoken": 39,
+  "inner_moments": 6,
+  "lull_moments": 0,
+  "private_talks": 0,
+  "trip_minute": 24,
+  "trip_acts": 23,
+  "max_prompt_tokens_estimated": 1726,
+  "max_prompt_tokens_counted_by_api": 1668
+ },
+ "night_asks": 8,
+ "night_api_requests": 5,
+ "leavers": [
+  "daniel"
+ ],
+ "outcome": [
+  "back with nothing"
+ ],
+ "night": {
+  "api_requests": 5,
+  "answers_live": 5,
+  "answers_from_cache": 3,
+  "max_prompt_tokens_counted_by_api": 1556,
+  "house": 0,
+  "away": [],
+  "max_prompt_tokens_estimated": 1604
+ },
+ "day2_asks": 28,
+ "day2_api_requests": 28,
+ "day2": {
+  "api_requests": 28,
+  "answers_live": 28,
+  "answers_from_cache": 0,
+  "model_decisions": 28,
+  "fallbacks": 0,
+  "routine_decisions": 92,
+  "lines_spoken": 25,
+  "inner_moments": 0,
+  "lull_moments": 0,
+  "private_talks": 0,
+  "trip_minute": 0,
+  "trip_acts": 9,
+  "max_prompt_tokens_estimated": 1993,
+  "max_prompt_tokens_counted_by_api": 1908,
+  "food_moments": 0,
+  "give_answers": 0
+ },
+ "max_prompt_tokens_estimated": 1993,
+ "max_prompt_tokens_counted_by_api": 1908,
+ "run_seconds": 145.0,
+ "story": "runs/v13/daniel_ate_it-seed1.md",
+ "story_sha256": "b9c7bcba2a267418d4106303c96bc19b4204bfc160b60796bada2406c327504c"
+}

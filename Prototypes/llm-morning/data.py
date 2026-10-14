@@ -88,6 +88,24 @@ HOUSE_THINGS = (
     "between the rooms; the front door and the front windows, boarded up. Outside, and not "
     "to be gone to: the street and the neighbour's house. Do not mention any other object "
     "or place.")
+# After the trip concern starts (reports/trip_design.md, §2.2): the trip the options speak of is
+# tonight, and nobody goes out this morning.
+HOUSE_THINGS_AFTER_TRIP = HOUSE_THINGS.replace("Outside, and not to be gone to:",
+                                               "Outside, and not to be gone to this morning:")
+assert HOUSE_THINGS_AFTER_TRIP != HOUSE_THINGS
+# At night (reports/night_design.md, §3.2): tonight is when the plan said someone might go, so the
+# line no longer forbids it.
+HOUSE_THINGS_NIGHT = HOUSE_THINGS.replace("Outside, and not to be gone to:", "Outside:")
+assert HOUSE_THINGS_NIGHT != HOUSE_THINGS
+
+# The afternoon, skipped (reports/night_design.md, §2).
+GAP = "The afternoon and evening passed in the house. Nobody ate."
+
+# What everyone learns when the trip concern starts (reports/trip_design.md, §2.1): conclusions
+# the code draws, told after their "About the can:" line.
+ABOUT_FOOD = "About food: there is no food in the house for tomorrow."
+ABOUT_NEIGHBOUR = ("About the neighbour's house: its people left in the first days and nobody has been "
+                   "inside since, so there may be food there. Outside is dangerous.")
 
 # How each of them speaks to the others.
 ADDRESS = {
@@ -114,6 +132,15 @@ SCENARIOS = {
         "culprit": None,
         "night": None,
     },
+}
+# Not in the shipped data: daniel_ate_it, and Leo heard the night from his bed but did not see
+# who (reports/witness_design.md). It is told to Leo alone, at the end of his "About the can:"
+# line (reports/witness_probe.md, variant B), so it names nobody he did not see. It says what
+# follows from it too, so the model is not left to work that out (reports/belief_line_impl.md).
+SCENARIOS["daniel_ate_it_leo_heard"] = {
+    **SCENARIOS["daniel_ate_it"],
+    "about_the_can": {"leo": "Last night you woke and heard someone open a can in the kitchen, so "
+                             "someone in this house took it in the night. You did not see who."},
 }
 DEFAULT_SCENARIO = "daniel_ate_it"
 
@@ -152,16 +179,30 @@ _BACKSTORY = [
     (4, "Elena says she is quite sure nobody in this house would take food from the others.",
      {**EVERYONE_SAW, "elena": "did"}),
 ]
+# Day 2's argument about crossing to the neighbour's house. Once the trip concern has started,
+# trimming a prompt never drops these (reports/trip_design.md, §2.3).
+TRIP_MEMORIES = tuple(e[1] for e in _BACKSTORY[3:6])
 
 
 def backstory(scenario):
-    """The days before, with this scenario's night in its place (or no night at all)."""
-    night = SCENARIOS[scenario]["night"]
-    return [night if e is NIGHT else e for e in _BACKSTORY if e is not NIGHT or night]
+    """The days before, with this scenario's night in its place (or no night at all), followed
+    by the scenario's own events of that night, if it has any."""
+    s = SCENARIOS[scenario]
+    night = ([s["night"]] if s["night"] else []) + s.get("after_night", [])
+    return [x for e in _BACKSTORY for x in (night if e is NIGHT else [e])]
 
 
 def culprit(scenario):
     """Who took the can in this scenario, or None."""
     return SCENARIOS[scenario]["culprit"]
 
-OPENING = "Elena counts the pantry with everyone standing there. A can that should be on the shelf is not. 2 portions are left."
+
+def about_the_can(scenario, pid):
+    """What else this person knows of the night in this scenario, told after their "About the
+    can:" line; or None."""
+    return SCENARIOS[scenario].get("about_the_can", {}).get(pid)
+
+# What everyone saw at the start: Elena's count and what she said about it. It is true in every
+# scenario, miscount included, where nothing was taken.
+OPENING = ("Elena counts the pantry with everyone standing there. She finds one can fewer than she "
+           "expected and says so. 2 portions are left.")

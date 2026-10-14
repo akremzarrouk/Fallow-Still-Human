@@ -1,0 +1,47 @@
+daniel_ate_it-seed3: model gemini-3.5-flash-lite, replay from cache only; cache cache\v16\gemini-3.5-flash-lite-daniel_ate_it-seed3.json holds 159 answers
+  min 00: model asked for 4; so far 0 live, 4 cached, 0 API requests
+  min 03: model asked for 4; so far 0 live, 8 cached, 0 API requests
+  min 06: model asked for 3; so far 0 live, 11 cached, 0 API requests
+  min 09: model asked for 3; so far 0 live, 14 cached, 0 API requests
+  min 15: model asked for 1; so far 0 live, 15 cached, 0 API requests
+  min 18: model asked for 1; so far 0 live, 16 cached, 0 API requests
+  min 21: model asked for 4; so far 0 live, 20 cached, 0 API requests
+  min 24: model asked for 3; so far 0 live, 23 cached, 0 API requests
+  min 30: model asked for 1; so far 0 live, 24 cached, 0 API requests
+  min 33: model asked for 1; so far 0 live, 25 cached, 0 API requests
+  min 54: model asked for 1; so far 0 live, 26 cached, 0 API requests
+  min 63: model asked for 1; so far 0 live, 27 cached, 0 API requests
+  min 66: model asked for 4; so far 0 live, 31 cached, 0 API requests
+  min 69: model asked for 4; so far 0 live, 35 cached, 0 API requests
+  min 72: model asked for 3; so far 0 live, 38 cached, 0 API requests
+  min 75: model asked for 3; so far 0 live, 41 cached, 0 API requests
+  min 78: model asked for 3; so far 0 live, 44 cached, 0 API requests
+  min 81: model asked for 1; so far 0 live, 45 cached, 0 API requests
+  night 1: model asked for 4; so far 0 live, 49 cached, 0 API requests
+  night 1, the night mind: model asked for 4; so far 0 live, 53 cached, 0 API requests
+  day 2 min 00: model asked for 4; so far 0 live, 57 cached, 0 API requests
+  day 2 min 03: model asked for 4; so far 0 live, 61 cached, 0 API requests
+  day 2 min 06: model asked for 2; so far 0 live, 63 cached, 0 API requests
+  day 2 min 09: model asked for 2; so far 0 live, 65 cached, 0 API requests
+  day 2 min 12: model asked for 2; so far 0 live, 67 cached, 0 API requests
+  day 2 min 18: model asked for 2; so far 0 live, 69 cached, 0 API requests
+  day 2 min 21: model asked for 4; so far 0 live, 73 cached, 0 API requests
+  day 2 min 24: model asked for 4; so far 0 live, 77 cached, 0 API requests
+  day 2 min 27: model asked for 4; so far 0 live, 81 cached, 0 API requests
+  day 2 min 30: model asked for 4; so far 0 live, 85 cached, 0 API requests
+  day 2 min 33: model asked for 4; so far 0 live, 89 cached, 0 API requests
+  day 2 min 36: model asked for 4; so far 0 live, 93 cached, 0 API requests
+  day 2 min 39: model asked for 4; so far 0 live, 97 cached, 0 API requests
+  day 2 min 42: model asked for 4; so far 0 live, 101 cached, 0 API requests
+  day 2 min 45: model asked for 4; so far 0 live, 105 cached, 0 API requests
+  day 2 min 48: model asked for 4; so far 0 live, 109 cached, 0 API requests
+  day 2 min 51: model asked for 4; so far 0 live, 113 cached, 0 API requests
+  day 2 min 54: model asked for 4; so far 0 live, 117 cached, 0 API requests
+  day 2 min 57: model asked for 4; so far 0 live, 121 cached, 0 API requests
+  day 2 min 75: model asked for 1; so far 0 live, 122 cached, 0 API requests
+  day 2 min 81: model asked for 1; so far 0 live, 123 cached, 0 API requests
+  night 2: model asked for 8; so far 0 live, 131 cached, 0 API requests
+  night 2, the night mind: model asked for 4; so far 0 live, 135 cached, 0 API requests
+
+stopped: replay found a prompt with no cached answer, so this morning cannot be replayed from the cache.
+Answers received so far (159) are kept in cache\v16\gemini-3.5-flash-lite-daniel_ate_it-seed3.json.
