@@ -174,6 +174,17 @@ def outward(feeling):
     return strength(feeling) > 0
 
 
+def face_word(feeling):
+    """The word of a feeling that a face shows: the first word holding one of the strongest SHOWN stems in it, as the
+    player's screen writes a face (reports/play_design.md §1.4, L4). "guilty and terrified" shows "terrified"."""
+    f = (feeling or "").lower()
+    level = max((lv for lv, stems in SHOWN.items() if any(x in f for x in stems)), default=0)
+    for word in re.findall(r"[a-z']+", f):
+        if any(x in word for x in SHOWN.get(level, ())):
+            return word
+    return feeling
+
+
 def hunger_level(h):
     return 0 if h < 0.5 else 1 if h < 0.7 else 2 if h < 0.85 else 3
 
@@ -407,11 +418,13 @@ class Person:
 
 
 class Morning:
-    def __init__(self, oracle, seed=0, scenario=data.DEFAULT_SCENARIO, day=4):
+    def __init__(self, oracle, seed=0, scenario=data.DEFAULT_SCENARIO, day=4, player=None):
         """day 4: the morning of the count (day 1). day 5: the next morning (day 2), which
-        `Morning.next_day` sets up from day 1 and the night."""
+        `Morning.next_day` sets up from day 1 and the night. player: whoever plays one of them (player.py,
+        reports/play_design.md), or None: the model decides for everyone, as it always has."""
         self.oracle = oracle
         self.day = day
+        self.player = player
         self.away = set()           # day 2: who did not come back in the night
         self.street = {}            # stage B, W5: person -> their "About the street:" line, once next door is empty
         self.outings = {}           # a quiet day: person -> their "About going out at night:" line (facts_and_evening)
@@ -490,6 +503,10 @@ class Morning:
     def started(self, room, minute, why, by_inner):
         if self.convos.new_thing(room, minute, why):
             self.start_by_inner.append(by_inner)
+
+    def is_player(self, p):
+        """p is played by the player (reports/play_design.md), not the model."""
+        return getattr(self, "player", None) is not None and p.id == self.player.pid
 
     # ---------- who is where ----------
     def others_here(self, p):
@@ -623,9 +640,10 @@ class Morning:
             if others:
                 opts.append(Option("share", "share out what is left among everyone here", kind="share"))
         opts = lead + opts
-        # A speech act used three turns in a row is not offered a fourth time.
+        # A speech act used three turns in a row is not offered a fourth time: a guard against the model's loops, so
+        # not for the player, who may say a thing a fourth time as anyone can (reports/play_s1.md, C9).
         kind, n = self.repeating(p)
-        if kind in SPEECH and n >= 3:
+        if kind in SPEECH and n >= 3 and not self.is_player(p):
             opts = [o for o in opts if act_of(o.id)[0] != kind]
         return opts
 
@@ -952,6 +970,10 @@ class Morning:
         d = {"person": q.id, "triggers": list(dict.fromkeys(triggers)), "offered": len(opts),
              "held_back": None, "given_by": p.id}
         self.holding = (q.id, p.id)             # while q decides, the portion is in q's hand
+        if self.is_player(q):
+            d = self.played(q, t, opts, d, "given", f"{p.name} has just handed you one of the portions.")
+            self.holding = None
+            return d
         choice, why = self.ask_model(q, t, opts, d, f"{p.name} has just handed you one of the portions.")
         self.holding = None
         if not choice:
@@ -1003,7 +1025,10 @@ class Morning:
         record["guilt"].append((minute, culprit.guilt, story))
 
     def add_grudge(self, holder, against, minute, fact, story, record):
-        """Something `against` did to `holder`. Remembered as a fact, and a step up."""
+        """Something `against` did to `holder`. Remembered as a fact, and a step up. Never for the player's person,
+        whose grudges are the player's (reports/play_design.md §3); what was done to them is in their lines."""
+        if self.is_player(holder):
+            return
         holder.grudge(against.id).rise(minute, fact)
         record["grudges"].append((minute, holder.id, against.id, holder.grudges[against.id].strength, story))
 
@@ -1159,9 +1184,19 @@ class Morning:
         head += [f"The house: {data.HOUSE} {house}"]
         if night is not None:
             return self.prompt_parts(p, opts, head, list(night), system, "today", minute)
-        room = data.ROOMS[p.room]
         # A quiet day from minute 90 on (reports/meeting_fixes.md): a meeting after an hour apart gets its own lines,
         # just before "Now", and the headings say "today".
+        late = self.quiet is not None and minute >= data.CLOCK_FROM
+        now = self.now_lines(p, t, minute, lull)
+        if extra:
+            now.append(extra)
+        return self.prompt_parts(p, opts, head, now, system, "today" if late else "this morning", minute)
+
+    def now_lines(self, p, t, minute, lull=None, screen=False):
+        """What p perceives now, by day: the prompt's lines from "Now" to the pattern block. screen: the player's
+        screen (reports/play_design.md §1.2-§1.4): a face names only the word that shows (L4), and the lines that are
+        the model's aids (who acts first, the pattern block) are left out."""
+        room = data.ROOMS[p.room]
         late = self.quiet is not None and minute >= data.CLOCK_FROM
         now = self.quiet.meeting_lines(p, minute) + self.quiet.evening_lines(p, minute) if late else []
         now += [f"Now, {data.minute_words(minute)}, you are in the {room}."]
@@ -1173,7 +1208,7 @@ class Morning:
         if not others:
             now.append("- Nobody else is here.")
         for q in others:
-            look = f" {q.name} looks {q.feeling}." if self.shown(q, t) else ""
+            look = f" {q.name} looks {face_word(q.feeling) if screen else q.feeling}." if self.shown(q, t) else ""
             now.append(f"- {q.name} is here, {q.activity['label']}.{look}")
         if p.room == "kitchen":
             now.append(f"- {self.portions} portion{'s' if self.portions != 1 else ''} on the shelf.")
@@ -1183,12 +1218,11 @@ class Morning:
         if so_far:
             now.append(f"Said and done in the {room} this turn, before you, in order:")
             now += [f"{i}. {x}" for i, x in enumerate(so_far, 1)]
-        elif others:
+        elif others and not screen:
             now.append(f"You are the first to act in the {room} this turn.")
-        now += self.pattern(p)
-        if extra:
-            now.append(extra)
-        return self.prompt_parts(p, opts, head, now, system, "today" if late else "this morning", minute)
+        if not screen:
+            now += self.pattern(p)
+        return now
 
     def prompt_parts(self, p, opts, head, now, system, when, minute):
         """The rest of the prompt, trimmed to the budget. when: "this morning", or "today" at
@@ -1392,6 +1426,8 @@ class Morning:
             self.acted.add(p.id)
             before = {q.id: (len(q.memory), len(q.sure)) for q in self.people.values()}
             d["came_of_it"] = self.apply(p, opt, d, t, voices, record)
+            if self.is_player(p):           # what reaches them from now on is new for "wait" (player.py)
+                self.player.mark(self, p)
             # What each person got of this act, in their own lines (reports/days_design.md, §2.3, §4.2).
             got = {}
             for q in self.people.values():
@@ -1555,6 +1591,8 @@ class Morning:
         d["grudge_note"] = "; ".join(changes) or "no grudges"
 
     def decide(self, p, t):
+        if self.is_player(p):
+            return self.decide_player(p, t)
         minute = t * data.MINUTES_PER_TURN
         # From day 3 (quiet.py): a quiet trigger's ask waiting for them; nobody is asked once the day's asks are
         # spent; and someone out of every conversation, or resting, has no inner moment.
@@ -1603,6 +1641,80 @@ class Morning:
         d["_opt"] = opt
         return d
 
+    # ---------- the player (player.py; reports/play_design.md §1 to §4.1) ----------
+    def decide_player(self, p, t):
+        """The player decides for p every played turn (§4.1), unless their standing order is "wait" and nothing has
+        reached p since their last act: then p keeps their routine, as anyone not asked does. No food, inner or lull
+        moment, and no answer to read: nothing the player does moves a level of p's (§3)."""
+        quiet = self.quiet
+        pending = quiet.pending.pop(p.id, None) if quiet is not None else None
+        if pending:
+            quiet.asked(p.id)
+        opts = self.options_for(p)
+        reached = bool(p.triggers) or self.player.reached(self, p)
+        triggers = self.social_triggers(p, t)
+        p.triggers = []
+        d = {"person": p.id, "triggers": triggers, "offered": len(opts), "held_back": None}
+        if pending:
+            d["quiet"] = pending["kind"]
+        if p.id in self.trip_now:
+            d["trip_moment"] = self.trip["minute"]
+            d["trip_why"] = "; ".join(self.trip["why"])
+        if self.player.waiting and not reached:
+            d.update(mode="routine", option=self.routine(p, opts), say=None)
+        else:
+            d.update(self.player_choice(p, t, opts, "turn"))
+        opt = next(o for o in opts if o.id == d["option"])
+        d["label"] = opt.label
+        d["_opt"] = opt
+        return d
+
+    def played(self, q, t, opts, d, kind, extra):
+        """An aside or a handed portion, for the player's person (§2.4): the player's answer, not the model's."""
+        d.update(self.player_choice(q, t, opts, kind, extra=extra))
+        opt = next(o for o in opts if o.id == d["option"])
+        d["label"] = opt.label
+        d["_opt"] = opt
+        return d
+
+    def player_choice(self, p, t, opts, kind, night=None, extra=None):
+        """Shows the player p's screen and asks again until their answer can be used (player.check); nothing happens
+        meanwhile. Returns {"option", "say", "mode"}: "routine" for "wait" on a turn (§4.1), else "player"."""
+        import player as playermod
+        message = None
+        while True:
+            view = self.player_view(p, t, opts, night, extra)
+            p.seen = p.levels()             # they have now seen how their body is
+            answer = self.player.decide(self.player.screen(self, p, view, kind, message))
+            if kind == "turn" and answer == playermod.WAIT:
+                self.player.waiting = True
+                return {"option": self.routine(p, opts), "say": None, "mode": "routine"}
+            choice, message = ((None, playermod.UNKNOWN) if answer == playermod.WAIT else
+                               playermod.check(answer, opts, night=night is not None))
+            if choice:
+                self.player.waiting = False
+                return {**choice, "mode": "player"}
+
+    def player_view(self, p, t, opts, night=None, extra=None):
+        """p's own lines for the player's screen (§1.2, §1.3), built as a prompt is, with World out of reach
+        (truth.prompting). Never another person's state but what "Now" shows of them, and never the lines that are
+        the model's alone: the can as a stance, the grudges, the conscience, the pattern block."""
+        import player as playermod
+        import truth
+        with truth.prompting():
+            minute = None if night is not None else t * data.MINUTES_PER_TURN
+            today = self.quiet is not None and (night is not None or minute >= data.CLOCK_FROM)
+            inside = self.inside_lines(p, today)
+            now = list(night) if night is not None else self.now_lines(p, t, minute, screen=True) + \
+                ([extra] if extra else [])
+            return {"day": day_index(self.day), "minute": minute, "room": p.room,
+                    "body": [x for x in inside if x.startswith(("Your body:", "Since you last decided"))],
+                    "know": [x for x in inside if x.startswith("About ") and not x.startswith(playermod.CAN_STANCE)],
+                    "now": now, "memory": list(p.memory), "sure": list(p.sure),
+                    "beliefs": [b for b in p.beliefs if b["day"] == self.day],
+                    "carry": list(self.carry.get(p.id, [])), "backstory": list(p.backstory),
+                    "options": [(o.id, o.label, o.speech) for o in opts]}
+
     def lull_due(self, p, minute):
         """Their room has been still for LULL_QUIET minutes, and they have not been asked for
         LULL_EVERY minutes."""
@@ -1621,6 +1733,8 @@ class Morning:
         q.triggers = []
         d = {"person": q.id, "triggers": list(dict.fromkeys(triggers)), "offered": len(opts),
              "held_back": None}
+        if self.is_player(q):
+            return self.played(q, t, opts, d, "aside", f"{p.name} asks you to come aside to the {data.ROOMS[to]}.")
         choice, why = self.ask_model(q, t, opts, d)
         if not choice:
             d.update(mode="fallback", invalid=why, option="refuse_aside", say=None)
@@ -1766,6 +1880,8 @@ class Morning:
             spoken_kind = kind if kind in SPEECH else "say"
             aimed = aimed_at(opt.id)
             new, why = self.newness.line(p.id, opt.id, [q.id for q in seen])
+            if self.is_player(p):           # reports/play_design.md §5.1, change 1: someone spoken to answers
+                new, why = True, "the player's words"
             d["new"], d["new_why"] = new, why
             if new:
                 self.started_by(room, minute, f"{p.name}: {why}", d)
@@ -1919,7 +2035,7 @@ class Morning:
             else:
                 p.activity = {"kind": "idle", "label": "staying put"}
                 so_far.append(f"{p.name} stays put and says nothing.")
-            if d["mode"] == "model":
+            if d["mode"] in ("model", "player"):
                 p.memory.append((minute, f"you stayed where you were and said nothing.{feel}"))
             return "stayed where they were" + (" (its line was dropped: silent means no words)"
                                                if d.get("dropped_line") else "") + "."

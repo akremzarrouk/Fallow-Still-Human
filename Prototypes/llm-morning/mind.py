@@ -433,8 +433,9 @@ class NightMind:
         return prompt, shown
 
     def run(self):
+        player = getattr(self.n.m, "player", None)
         for pid in data.ORDER:
-            if pid in self.n.away:
+            if pid in self.n.away or (player is not None and pid == player.pid):   # the player's mind is theirs
                 continue
             p = self.n.people[pid]
             prompt, shown = self.prompt_for(p)

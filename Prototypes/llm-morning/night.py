@@ -427,14 +427,20 @@ class Night:
     def ask(self, pid, kind, now, opts, fallback):
         """One night decision. Returns (option id, words)."""
         p = self.people[pid]
-        prompt = self.m.prompt_for(p, None, opts, night=now)
         d = {"person": pid, "ask": kind, "where": self.where.get(pid, OWN_ROOM[pid]), "now": list(now),
              "options": [o.id for o in opts]}
+        byid = {o.id: o for o in opts}
+        if self.m.is_player(p):         # the player decides (player.py; reports/play_design.md §4.3)
+            d.update(self.m.player_choice(p, None, opts, kind, night=now))
+            d["label"] = byid[d["option"]].label
+            self.decisions.append(d)
+            self.story.append(("decision", d))
+            return d["option"], d.get("say")
+        prompt = self.m.prompt_for(p, None, opts, night=now)
         seen = p.levels()
         text = self.oracle.ask(NIGHT_SYSTEM, prompt)
         p.seen = seen
         choice, why = self.m.parse(text, opts)
-        byid = {o.id: o for o in opts}
         if choice is None:
             d.update(mode="fallback", invalid=why, option=fallback, say=None)
         else:
@@ -1170,7 +1176,7 @@ def next_day(day1, n, oracle, chronicle=None):
     import memory
     day = day1.day + 1
     k = day_index(day1.day)
-    m = world.Morning(oracle, day1.seed, day1.scenario, day=day)
+    m = world.Morning(oracle, day1.seed, day1.scenario, day=day, player=getattr(day1, "player", None))
     m.people = n.people
     m.portions = m.start_portions = n.portions
     m.away = set(n.away)

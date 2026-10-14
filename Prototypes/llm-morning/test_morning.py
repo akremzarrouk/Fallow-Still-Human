@@ -8616,5 +8616,243 @@ class TellFixTest(unittest.TestCase):
             self.assertNotIn("came in at", x)
 
 
+class ScriptedClient(FakeClient):
+    """The others, scripted (reports/play_design.md §9): rule(person, minute, options) -> (option, words, feeling) for
+    a decision, read from the prompt's first line, its "Now, minute NN" line (None at night) and its options; a night
+    mind as FakeClient's. An option that is not offered falls back as any unusable answer does. Every prompt is kept."""
+
+    def __init__(self, rule=None):
+        super().__init__(invalid_every=0)
+        self.rule = rule or (lambda who, minute, options: ("silent", None, "calm"))
+        self.prompts = []
+
+    def generate(self, system, prompt, schema=None):
+        self.prompts.append(prompt)
+        self.requests += 1
+        if schema is not None:
+            return self.mind(prompt)
+        who = re.match(r"You are (\w+),", prompt).group(1).lower()
+        now = re.search(r"^Now, minute (\d+),", prompt, flags=re.M)
+        options = re.findall(r"^- (\w+):", prompt.split("Your options:")[-1], flags=re.M)
+        option, words, feeling = self.rule(who, int(now.group(1)) if now else None, options)
+        return json.dumps({"option": option, "say": words, "feeling": feeling, "reason": "Scripted.",
+                           "suspects": "nobody", "angry_at": "nobody"})
+
+
+class RecordingFake(FakeClient):
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        self.prompts = []
+
+    def generate(self, system, prompt, schema=None):
+        self.prompts.append(prompt)
+        return super().generate(system, prompt, schema)
+
+
+class PlayerS1Test(unittest.TestCase):
+    """reports/play_design.md §9, C1, C3, C4, C5, C7, C8, and C9 (reports/play_s1.md): Leo played by a scripted player
+    on days 1 and 2 and their nights."""
+
+    def setUp(self):
+        self.dirs = Dirs()
+
+    def tearDown(self):
+        self.dirs.cleanup()
+
+    def oracle(self, client, name):
+        return Oracle(Cache(os.path.join(self.dirs.root, f"{name}.json")), "fake", 1, client=client, max_calls=150)
+
+    def day_one(self, rule, others=None, name="d1"):
+        """Day 1 alone, with the Morning at hand while it is played."""
+        import player
+        client = ScriptedClient(others)
+        p = player.ScriptedPlayer(rule)
+        m = Morning(self.oracle(client, name), 1)
+        m.player = p
+        self.m = m
+        m.run()
+        return p, m, client
+
+    def days(self, rule, others=None, scenario="daniel_ate_it", days=1, client=None, name=""):
+        import player
+        client = client or ScriptedClient(others)
+        p = player.ScriptedPlayer(rule)
+        out = player.play_days(self.oracle(client, f"{scenario}-{days}{name}"), 1, p, scenario, days=days)
+        return p, out, client
+
+    @staticmethod
+    def decisions(m):
+        return [d for rec in m.log for d in rec["decisions"]]
+
+    def test_c1_leo_accuses_daniel_at_minute_03_and_who_hears_it(self):
+        import player
+        from chronicle import Chronicle
+        words = "You were up last night, Daniel."
+
+        def others(who, minute, options):
+            return ("go_back_room" if who == "mara" and minute == 0 else "silent"), None, "calm"
+        p, m, client = self.day_one(player.by_minute({0: ("silent", None), 3: ("accuse_daniel", words)}), others)
+        P = m.people
+        self.assertIn((3, f'Leo accuses you of taking it: "{words}"'), P["daniel"].memory)
+        self.assertIn((3, f'Leo accuses Daniel of taking it: "{words}"'), P["elena"].memory)
+        self.assertIn((3, "Voices from the kitchen."), P["mara"].memory)
+        self.assertFalse([x for _, x in P["mara"].memory if words in x])
+        self.assertIn((3, "you accused Daniel."), P["leo"].memory)
+        self.assertEqual(P["daniel"].accused_by, {"leo": 3})
+        ds = self.decisions(m)
+        i = next(n for n, d in enumerate(ds) if d["person"] == "leo" and d["option"] == "accuse_daniel")
+        dd = next(d for d in ds[i + 1:] if d["person"] == "daniel")
+        self.assertEqual(dd["order_reason"], "just accused by Leo")
+        self.assertEqual(dd["mode"], "model")
+        self.assertIn(f'Leo accuses you of taking it: "{words}"', dd["triggers"])
+        self.assertEqual([e for e in P["daniel"].grudge("leo").events if e[2] == "event"], [])
+        self.assertEqual(P["leo"].suspicion.strength, 0)
+        self.assertEqual([g.strength for g in P["leo"].grudges.values() if g.strength], [])
+        chron = Chronicle(1, "daniel")
+        chron.add_day(m)
+        e = next(e for e in chron.events if e["kind"] == "accuse" and e["minute"] == 3 and e["actor"] == "leo")
+        self.assertEqual(e["target"], "daniel")
+        self.assertEqual(e["witnesses"], {"leo": "did", "daniel": "saw", "elena": "saw", "mara": "voices"})
+        self.assertEqual([x for x in client.prompts if x.startswith("You are Leo,")], [])
+
+    def test_c3_nothing_shown_to_leo_depends_on_who_took_the_can(self):
+        import player
+        rule = player.by_minute({0: ("ask_who", "Who took it?"), 3: ("accuse_daniel", "Was it you?"),
+                                 6: ("accuse_mara", "Or you?"), 9: ("search", None), 12: ("keep_searching", None),
+                                 15: ("reassure_all", "We'll manage.")})
+        texts = {}
+        for scenario in ("daniel_ate_it", "mara_ate_it", "miscount"):
+            buf = io.StringIO()
+            with contextlib.redirect_stdout(buf):
+                p, out, client = self.days(rule, scenario=scenario, days=2)
+            self.assertEqual(buf.getvalue(), "", f"printed in {scenario}")
+            texts[scenario] = [s.text for s in p.screens]
+        self.assertTrue(texts["daniel_ate_it"], "the player was never asked")
+        self.assertIn("bedtime", " ".join(texts["daniel_ate_it"]), "the premise: a night screen")
+        self.assertTrue(any(s.startswith("── Day 2") for s in texts["daniel_ate_it"]), "the premise: a day-2 screen")
+        self.assertEqual(texts["daniel_ate_it"], texts["mara_ate_it"])
+        self.assertEqual(texts["daniel_ate_it"], texts["miscount"])
+        for scenario, ts in texts.items():
+            for bad in ("you ate it yourself", "On your conscience", "eats a can", "Nobody sees", "culprit"):
+                self.assertFalse([t for t in ts if bad in t], f"{bad!r} shown in {scenario}")
+
+    def test_c4_the_act_decides_and_the_words_are_heard(self):
+        import player
+        seen = []
+        client = ScriptedClient()
+
+        def rule(s):
+            seen.append((s.minute, s.message, client.requests, self.m.people["leo"].activity["kind"]))
+            if s.minute == 0:
+                return "reassure_mara", "Nobody thinks it was you, Mara."
+            if s.minute == 3:
+                return "search", "Let me look."
+            if s.minute == 6:
+                return ("say_other", "Fine.") if s.message else ("say_other", None)
+            if s.minute == 9:
+                return ("silent", None) if s.message else ("silent", "Not a word")
+            if s.minute == 12:
+                return "say_other", 'He said "no"'
+            return player.WAIT
+        p = player.ScriptedPlayer(rule)
+        m = Morning(self.oracle(client, "c4"), 1)
+        m.player = p
+        self.m = m
+        m.run()
+        P = m.people
+        self.assertIn((0, 'Leo reassures you: "Nobody thinks it was you, Mara."'), P["mara"].memory)
+        ds = self.decisions(m)
+        i = next(n for n, d in enumerate(ds) if d["person"] == "leo" and d["option"] == "reassure_mara")
+        self.assertEqual(next(d for d in ds[i + 1:] if d["person"] == "mara")["order_reason"], "just spoken to by Leo")
+        self.assertEqual([q for q in data.ORDER if P[q].accused_by], [])
+        self.assertEqual(P["daniel"].guilt, 1)
+        self.assertIn((3, 'Leo says to everyone, while searching: "Let me look."'), P["elena"].memory)
+        six = [x for x in seen if x[0] == 6]
+        self.assertEqual([x[1] for x in six], [None, player.SPEECH_NEEDS])
+        self.assertEqual(six[0][2], six[1][2], "an ask was sent between the two screens of minute 06")
+        self.assertEqual(six[0][3], "searching")
+        nine = [x for x in seen if x[0] == 9]
+        self.assertEqual([x[1] for x in nine], [None, player.SILENT_WORDS])
+        self.assertEqual(nine[0][2], nine[1][2])
+        self.assertIn((12, "Leo says to everyone: \"He said 'no'\""), P["elena"].memory)
+
+    def test_c5_nobody_decides_for_leo_but_the_player(self):
+        def rule(s):
+            if s.kind == "bedtime":
+                return "sleep", None
+            if s.minute is None:
+                return s.options[0], None
+            oid, _, speech = s.view["options"][(len(s.view["memory"]) * 7 + s.minute) % len(s.view["options"])]
+            return oid, ("Words, then." if speech else None)
+        client = RecordingFake()
+        p, out, client = self.days(rule, days=2, client=client)
+        self.assertTrue([s for s in p.screens if s.kind == "bedtime"], "the premise: a night screen")
+        self.assertEqual([x[:40] for x in client.prompts if x.startswith("You are Leo,")], [])
+        modes = {d["mode"] for k in ("day1", "day2") for d in self.decisions(out[k]) if d["person"] == "leo"}
+        modes |= {d["mode"] for k in ("night1", "night2") for d in out[k].decisions if d["person"] == "leo"}
+        self.assertLessEqual(modes, {"player", "routine"})
+        self.assertIn("player", modes)
+        leo = out["night2"].people["leo"]
+        self.assertEqual(leo.suspicion.strength, 0)
+        self.assertEqual([t for t, g in leo.grudges.items() if g.strength], [])
+        self.assertIsNone(out["day2"].people["leo"].feeling)
+        self.assertEqual([x[:40] for x in client.prompts if "Leo looks" in x], [])
+
+    def test_c7_waiting_in_played_turns_shows_nothing_until_something_reaches_leo(self):
+        import player
+        rule = player.by_minute({0: ("go_brothers_room", None), 3: player.WAIT})
+        p, out, client = self.days(rule, days=1)
+        self.assertEqual([(s.kind, s.minute) for s in p.screens], [("turn", 0), ("turn", 3), ("bedtime", None)])
+        leo = [d for d in self.decisions(out["day1"]) if d["person"] == "leo"][1:]
+        self.assertEqual(len(leo), 29)
+        self.assertEqual({(d["mode"], d["option"]) for d in leo}, {("routine", "silent")})
+        self.assertEqual(p.screens[-1].options, ["sleep", "lie_awake", "watch_door", "go_next_door"])
+        # Variant: Daniel speaks in the kitchen at his first ask from minute 20 on.
+        spoke = []
+
+        def others(who, minute, options):
+            if who == "daniel" and minute is not None and minute >= 20 and not spoke:
+                spoke.append(minute)
+                return "say_other", "We need to think about tonight.", "calm"
+            return "silent", None, "calm"
+        p, out, client = self.days(rule, others, days=1, name="-variant")
+        self.assertTrue(spoke, "the premise: Daniel was asked from minute 20 on")
+        mm = spoke[0]
+        self.assertEqual([(s.kind, s.minute) for s in p.screens][:3], [("turn", 0), ("turn", 3), ("turn", mm + 3)])
+        self.assertIn(f"{data.clock(mm)}  Voices from the kitchen.", p.screens[2].text)
+
+    def test_c8_a_face_on_the_screen_names_only_what_a_face_shows(self):
+        import player
+
+        def others(who, minute, options):
+            return "silent", None, ("guilty and terrified" if who == "daniel" and minute == 0 else "calm")
+        p, m, client = self.day_one(player.by_minute({}, default=("silent", None)), others)
+        three = next(s for s in p.screens if s.minute == 3)
+        self.assertIn("- Daniel is here, staying put. Daniel looks terrified.", three.text)
+        self.assertEqual([s.minute for s in p.screens if "guilty" in s.text], [])
+        elena = [x for x in client.prompts if x.startswith("You are Elena,") and "\nNow, minute 03," in x]
+        self.assertTrue(elena, "the premise: Elena is asked at minute 03")
+        self.assertIn("Daniel looks guilty and terrified.", elena[0])
+        self.assertEqual([s.minute for s in p.screens if s.minute >= 12 and "Daniel looks" in s.text], [])
+
+    def test_c9_the_repetition_guard_is_off_for_the_player_only(self):
+        import player
+        words = "It was you, Daniel."
+        p, m, client = self.day_one(player.by_minute({0: ("accuse_daniel", words), 3: ("accuse_daniel", words),
+                                                      6: ("accuse_daniel", words)}))
+        self.assertEqual([d["option"] for d in self.decisions(m) if d["person"] == "leo"][:3], ["accuse_daniel"] * 3)
+        nine = next(s for s in p.screens if s.minute == 9)
+        self.assertIn("accuse_daniel", nine.options)
+        # For anyone the model plays, the guard is unchanged, with a player in the house or not.
+        for who_plays in (player.ScriptedPlayer(player.by_minute({})), None):
+            g = Morning(self.oracle(ScriptedClient(), f"c9-{who_plays is None}"), 1)
+            g.player = who_plays
+            for q in ("mara", "leo"):
+                g.people[q].history = [{"t": t, "kind": "accuse", "seq": t + 1} for t in range(3)]
+            self.assertNotIn("accuse_daniel", [o.id for o in g.options_for(g.people["mara"])])
+            leo_offered = "accuse_daniel" in [o.id for o in g.options_for(g.people["leo"])]
+            self.assertEqual(leo_offered, who_plays is not None)
+
+
 if __name__ == "__main__":
     unittest.main()
