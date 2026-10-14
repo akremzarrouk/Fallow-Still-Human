@@ -70,6 +70,7 @@ class Player:
         self._shown = {}            # house day -> their line counts at their last screen
         self._know = None           # the "What you know" lines last shown
         self._card = False          # the card has been shown
+        self._said = None           # (house day, minute, words) of their last act with words, to echo (S3)
 
     # ---------- what reached them ----------
     @staticmethod
@@ -84,6 +85,11 @@ class Player:
         """A line has been added to their memory or sure lines, or a belief given, since their last act."""
         mark = self._marks.get(m.day)
         return mark is None or self.counts(p) != mark
+
+    def chose(self, m, view, choice):
+        """Their answer was taken (world.Morning.player_choice): its words are echoed with their act on the next
+        screen (reports/play_s3.md)."""
+        self._said = (m.day, view["minute"], choice["say"]) if choice.get("say") and view["minute"] is not None             else None
 
     # ---------- the screen ----------
     def screen(self, m, p, view, kind, message=None):
@@ -107,9 +113,19 @@ class Player:
         lines += view["body"]
         first = m.day not in self._shown
         i, j, b = self._shown.get(m.day, (0, 0, 0))
-        new = [(mm, x) for mm, x in view["memory"][i:]]
-        new += [data.unstamp(x) for x in view["sure"][j:]]
+        # What they are sure of first, at the same minute: the count, the morning's opening, a search's end.
+        new = [data.unstamp(x) for x in view["sure"][j:]]
         new += [(x["minute"], x["claim"]) for x in view["beliefs"][b:]]
+        mine = [(mm, x) for mm, x in view["memory"][i:]]
+        if self._said and self._said[0] == m.day:       # their own act's line, with the words they typed
+            n = next((n for n, (mm, x) in enumerate(mine) if mm == self._said[1] and x.startswith("you ")), None)
+            if n is not None:
+                mm, x = mine[n]
+                said = x.rstrip(".")
+                mine[n] = (mm, f'{said}: "{self._said[2]}"' if said == "you said" else
+                           f'{said}, saying: "{self._said[2]}"')
+            self._said = None
+        new += mine
         new.sort(key=lambda x: -1 if x[0] is None else x[0])
         out = ([f"  {x}" for x in view["carry"]] if first else []) + \
               [f"  {data.clock(mm) if mm is not None else '':6}  {x}".rstrip() for mm, x in new]
@@ -155,15 +171,18 @@ def by_minute(table, default=WAIT, night="sleep"):
     return rule
 
 
-def play_days(oracle, seed, player, scenario=data.DEFAULT_SCENARIO, days=2, log=None):
+def play_days(oracle, seed, player, scenario=data.DEFAULT_SCENARIO, days=2, log=None, on_scene=None):
     """Days 1 to `days` (1 or 2), each with its night and night mind, in morning.run's order, with `player` playing
-    their person. Nothing is printed: what morning.run would say goes to `log` (a list), if given. Returns the scenes
-    and the chronicle."""
+    their person. Nothing is printed: what morning.run would say goes to `log` (a list, or a function of one line), if
+    given. on_scene(name, scene), if given, is called as each day, night and night mind ends ("day1", "night1",
+    "mind1", ...). Returns the scenes and the chronicle."""
     from chronicle import Chronicle
     from mind import NightMind
     from night import Night
     from world import Morning
-    say = (lambda *a: None) if log is None else (lambda *a: log.append(" ".join(str(x) for x in a)))
+    put = (lambda x: None) if log is None else log if callable(log) else log.append
+    say = (lambda *a: put(" ".join(str(x) for x in a)))
+    seen = on_scene or (lambda name, scene: None)
     chron = Chronicle(seed, data.culprit(scenario))
     out = {"chronicle": chron}
     m = Morning(oracle, seed, scenario)
@@ -176,11 +195,14 @@ def play_days(oracle, seed, player, scenario=data.DEFAULT_SCENARIO, days=2, log=
         m.run()
         chron.add_day(m)
         say(f"day {k}: so far {oracle.live} live, {oracle.from_cache} cached")
+        seen(f"day{k}", m)
         oracle.new_scene()
         n = Night(m, oracle, number=k, house=chron.house_state()).run()
         chron.add_night(n)
+        seen(f"night{k}", n)
         oracle.new_scene()
         mind = NightMind(n, chron, oracle).run()
         say(f"night {k}: {len(n.decisions)} decisions; mind {len(mind.results)}")
+        seen(f"mind{k}", mind)
         out.update({f"day{k}": m, f"night{k}": n, f"mind{k}": mind})
     return out

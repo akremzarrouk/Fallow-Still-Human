@@ -8854,5 +8854,71 @@ class PlayerS1Test(unittest.TestCase):
             self.assertEqual(leo_offered, who_plays is not None)
 
 
+class PlayS3Test(unittest.TestCase):
+    """reports/play_design.md §9 C6 and reports/play_s3.md: play.py, its play log, the session cap and resume, on days 1
+    and 2, against the fake model."""
+
+    def setUp(self):
+        self.dirs = Dirs()
+
+    def tearDown(self):
+        self.dirs.cleanup()
+
+    @staticmethod
+    def speaker(screen):
+        """A live player that speaks on every screen that has a (speech) option, else takes the first option."""
+        for oid, _, speech in screen.view["options"]:
+            if speech:
+                return (oid, "Words, then."), [f"{oid} Words, then."], 0.0
+        return (screen.options[0], None), ["1"], 0.0
+
+    def test_c6_the_session_cap_stops_cleanly_and_resumes_with_no_live_ask(self):
+        import play
+        out = []
+        ref = RecordingFake()
+        code, _, _ = play.session(seed=1, days=1, fake=True, root=os.path.join(self.dirs.root, "ref"), client=ref,
+                                  live=self.speaker, write=out.append, max_requests=10 ** 6)
+        self.assertEqual(code, 0, "\n".join(out[-5:]))
+        self.assertGreater(len(ref.prompts), 21, "the premise: day 1 sends more than 21 requests")
+        root = os.path.join(self.dirs.root, "s")
+        first = RecordingFake()
+        code, folder, _ = play.session(seed=1, days=1, fake=True, root=root, client=first, live=self.speaker,
+                                       write=out.append, max_requests=20)
+        self.assertEqual(code, 3)
+        self.assertEqual(first.requests, 20)
+        self.assertEqual(first.prompts, ref.prompts[:20])
+        with open(os.path.join(folder, "play.jsonl"), encoding="utf-8") as f:
+            recs = [json.loads(x) for x in f]
+        self.assertEqual(recs[-1]["t"], "session")
+        self.assertEqual(recs[-1]["stopped"], "stopped: this session's 20 requests are spent.")
+        self.assertIn("stopped: this session's 20 requests are spent.", "\n".join(out))
+        screens = {r["n"]: r["text"] for r in recs if r["t"] == "screen"}
+        choices = [r["n"] for r in recs if r["t"] == "choice"]
+        self.assertEqual(sorted(screens), list(range(1, len(screens) + 1)))
+        self.assertEqual(choices, sorted(screens), "every logged screen has its choice")
+        last = max(screens)
+        resumed = RecordingFake()
+        code, again, info = play.session(resume=folder, client=resumed, live=self.speaker, write=out.append)
+        self.assertEqual(code, 0, "\n".join(out[-5:]))
+        self.assertEqual(again, folder)
+        self.assertEqual(info["player"].replay_end, {"n": last, "live": 0})
+        self.assertEqual(info["player"].screens[last - 1].text, screens[last])
+        self.assertEqual(resumed.prompts[0], ref.prompts[20])
+        for name in ("play.jsonl", "shown.md", "session.log"):
+            self.assertTrue(os.path.exists(os.path.join(folder, name)), name)
+
+    def test_play_py_on_scripted_stdin_reaches_night_1_bedtime(self):
+        env = {k: v for k, v in os.environ.items() if k != "GEMINI_API_KEY"}
+        env.update(PYTHONIOENCODING="utf-8", PYTHONDONTWRITEBYTECODE="1")
+        stdin = "2 Who took the can?\n" + "1\n" * 200
+        r = subprocess.run([sys.executable, os.path.join(HERE, "play.py"), "--seed", "2", "--fake",
+                            "--root", self.dirs.root], input=stdin, capture_output=True, text=True,
+                           encoding="utf-8", env=env, timeout=900)
+        self.assertNotIn("Traceback", r.stderr, r.stderr[-3000:])
+        self.assertIn("── Night 1 · bedtime ──", r.stdout, r.stdout[-3000:] + r.stderr[-3000:])
+        self.assertIn(', saying: "Who took the can?"', r.stdout)
+        self.assertEqual(r.returncode, 0, r.stdout[-2000:] + r.stderr[-2000:])
+
+
 if __name__ == "__main__":
     unittest.main()

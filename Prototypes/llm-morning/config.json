@@ -3,6 +3,7 @@
   "temperature": 1.0,
   "min_seconds_between_calls": 4.5,
   "max_calls_per_morning": 150,
+  "play_max_requests": 250,
   "max_retries": 6,
   "backoff_base_seconds": 5,
   "backoff_max_seconds": 120,

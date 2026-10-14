@@ -1693,6 +1693,7 @@ class Morning:
                                playermod.check(answer, opts, night=night is not None))
             if choice:
                 self.player.waiting = False
+                self.player.chose(self, view, choice)
                 return {**choice, "mode": "player"}
 
     def player_view(self, p, t, opts, night=None, extra=None):

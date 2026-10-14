@@ -31,6 +31,10 @@ class CacheMiss(StopMorning):
     pass
 
 
+class SessionCapReached(StopMorning):
+    """A played session (play.py) has sent as many requests as it may (reports/play_design.md, §5.3)."""
+
+
 def require_api_key():
     key = os.environ.get("GEMINI_API_KEY", "").strip()
     if not key:
@@ -79,6 +83,7 @@ class GeminiClient:
         self.max_output_tokens = config["max_output_tokens"]
         self.requests = 0
         self.scene_base = 0         # requests sent before the current scene
+        self.stop_at = None         # a played session's cap on requests, retries included (play.py); None: no cap
         self.last_prompt_tokens = None
         self._sleep = sleep
         self._clock = clock
@@ -108,6 +113,8 @@ class GeminiClient:
         while True:
             if self.requests - self.scene_base >= self.max_calls:
                 raise CallCapReached(f"stopped: this morning reached {self.max_calls} API requests.")
+            if self.stop_at is not None and self.requests >= self.stop_at:
+                raise SessionCapReached(f"stopped: this session's {self.stop_at} requests are spent.")
             self._space()
             self.requests += 1
             try:
