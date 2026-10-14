@@ -1,0 +1,21 @@
+checked_utc: 2026-10-14T12:09:23Z
+0924e6030841de35f86a5306726119958891e4211ec086fe0819f0be60521c9d *reports/v23_plan.md
+(recorded: 0924e6030841de35f86a5306726119958891e4211ec086fe0819f0be60521c9d)
+     25 OK
+$ git rev-parse HEAD
+cda05a22473a7d9f3042c2606afb710bb94c357c
+$ git status --short
+?? cache/n9_cause/
+?? cache/v23/
+?? reports/v23_plan.md
+?? runs/n9_cause/
+?? runs/v23/
+?? runs/v6/daniel_ate_it-seed1.replay.md
+?? runs/v6/daniel_ate_it-seed2.replay.md
+?? runs/v6/daniel_ate_it-seed3.replay.md
+?? ../../investigations/
+$ git diff --stat
+$ sha256sum cache/v16 seed2
+d79a49396e91a3beb0789e7c03b371e00ae3435e72ee1ac6f27864087406a959 *cache/v16/gemini-3.5-flash-lite-daniel_ate_it-seed2.json
+$ key search (grep -rlF over the repository, but .venv, __pycache__, .git, Library, node_modules)
+files containing the key: 0

@@ -1,0 +1,381 @@
+
+======== DAY 3 (away: []) ========
+  [need] 11:54 leo debt stage 1
+  [need] 17:00 leo debt stage 1
+  [need] 19:00 leo fast stage 2
+  [need] 19:24 daniel debt stage 1
+  [stretch] 07:00-07:27 kitchen the morning asks 24
+  [stretch] 07:27-07:33 back_room Q2 asks 8
+  [stretch] 09:30-09:39 brothers_room Q2 asks 8
+  [stretch] 19:00-19:09 kitchen Q5 asks 6
+  [event] D3-015 07:18 ration_water daniel -> None: Daniel says the water must be shared out by the cup from now on: "[fake line 146]"; witnesses {'daniel': 'did', 'mara': 'saw', 'leo': 'voices'}
+  min 00 leo    [f] silent                 kitchen      
+  min 00 daniel [m] reassure_all           kitchen      [fake line 131]
+  min 00 mara   [m] go_back_room           kitchen      
+  min 00 elena  [m] search                 kitchen      
+  min 03 leo    [m] propose_far            kitchen      [fake line 134]
+  min 03 daniel [f] silent                 kitchen      
+  min 06 leo    [m] go_brothers_room       kitchen      
+  min 06 elena  [m] go_back_room           kitchen      
+  min 06 mara   [m] go_kitchen             back_room    
+  min 09 daniel [m] accuse_mara            kitchen      [fake line 139]
+  min 12 mara   [f] silent                 kitchen      
+  min 12 daniel [m] volunteer_far          kitchen      [fake line 141]
+  min 12 leo    [m] go_back_room           brothers_room 
+  min 12 elena  [m] go_bathroom            back_room    
+  min 15 mara   [m] confront_daniel        kitchen      [fake line 144]
+  min 15 leo    [f] silent                 back_room    
+  min 18 daniel [m] ration_water           kitchen      [fake line 146]
+  min 18 mara   [m] deny                   kitchen      [fake line 147]
+  min 18 leo    [m] search                 back_room    
+  min 21 daniel [m] propose_far            kitchen      [fake line 149]
+  min 21 mara   [f] silent                 kitchen      
+  min 21 leo    [m] go_brothers_room       back_room    
+  min 24 daniel [m] nobody_goes            kitchen      [fake line 152]
+  min 24 mara   [m] propose_far            kitchen      [fake line 153]
+  07:27 leo    [m] volunteer              brothers_room [fake line 154]
+  07:27 daniel [f] silent                 brothers_room 
+  07:27 mara   [m] silent                 back_room    
+  07:27 elena  [m] volunteer_far          back_room    [fake line 157]
+  07:30 leo    [m] deny                   brothers_room [fake line 158]
+  07:30 daniel [m] keep_leo_home          brothers_room [fake line 159]
+  07:30 mara   [f] silent                 back_room    
+  07:30 elena  [m] confront_mara          back_room    [fake line 161]
+  09:30 leo    [m] search                 brothers_room 
+  09:30 daniel [m] accuse_leo             brothers_room [fake line 163]
+  09:30 mara   [m] volunteer_far          back_room    [fake line 164]
+  09:30 elena  [f] silent                 back_room    
+  09:33 leo    [m] aside_daniel           brothers_room 
+  09:33 daniel [m] accept_aside           brothers_room 
+  09:33 elena  [m] send_mara              back_room    [fake line 168]
+  09:33 mara   [m] propose_far            back_room    [fake line 169]
+  19:00 daniel [f] silent                 kitchen      
+  19:00 leo    [m] nobody_goes            kitchen      [fake line 171]
+  19:00 elena  [m] sit_mara               kitchen      
+  19:00 mara   [m] silent                 kitchen      
+  19:03 elena  [m] go_bathroom            kitchen      
+  19:03 daniel [f] silent                 kitchen      
+
+  ---- NIGHT 3: leavers ['leo', 'mara'], away [] ----
+  [bedtime] daniel watch_door     say None reason 'Fake reason 176.'
+  [bedtime] elena  go_next_door   say None reason 'Fake reason 177.'
+  [bedtime] leo    go_further     say None reason 'Fake reason 178.'
+  [bedtime] mara   go_further     say None reason 'Fake reason 179.'
+  [reaction] daniel let_leo_go     say None reason None
+  [reaction] elena  stay_home      say None reason 'Fake reason 181.'
+  [reaction] mara   go_later       say None reason 'Fake reason 182.'
+  [reaction] leo    stay_in_bed    say None reason 'Fake reason 183.'
+  [group] {"leader": "leo", "members": ["leo"], "street": "clean", "outcome": "back with food and water", "far": true}
+  [group] {"leader": "mara", "members": ["mara"], "street": "scare_there", "outcome": "back shaken, with nothing", "far": true}
+  [n-event] at_door leo: Leo: at_door
+  [n-event] reaction daniel: Daniel: reaction
+  [n-event] door leo: Leo: door
+  [n-event] reaction elena: Elena: reaction
+  [n-event] reaction mara: Mara: reaction
+  [n-event] went_out leo: Leo: went_out
+  [n-event] street leo: Leo: street (back with food and water)
+  [n-event] return leo: Leo: return
+  [n-event] got_up mara: Mara: got_up
+  [n-event] at_door mara: Mara: at_door
+  [n-event] door mara: Mara: door
+  [n-event] reaction leo: Leo: reaction
+  [n-event] went_out mara: Mara: went_out
+  [n-event] street mara: Mara: street (back shaken, with nothing)
+  [n-event] return mara: Mara: return
+
+======== DAY 4 (away: []) ========
+  [need] 07:15 elena debt stage 2
+  [need] 11:33 leo debt stage 1
+  [need] 14:36 daniel debt stage 1
+  [need] 20:09 leo debt stage 1
+  [need] 21:00 mara debt stage 2
+  [stretch] 07:00-07:24 kitchen the morning asks 24
+  [stretch] 10:42-10:54 kitchen Q2 asks 8
+  [stretch] 11:03-11:12 kitchen Q2 asks 8
+  [stretch] 19:00-19:09 kitchen Q5 asks 8
+  min 00 mara   [m] send_elena             kitchen      [fake line 188]
+  min 00 elena  [m] accuse_daniel          kitchen      [fake line 189]
+  min 00 daniel [f] silent                 kitchen      
+  min 00 leo    [m] share                  kitchen      
+  min 03 leo    [m] sit_daniel             kitchen      
+  min 03 elena  [m] send_mara              kitchen      [fake line 193]
+  min 03 mara   [m] go_bathroom            kitchen      
+  min 03 daniel [f] silent                 kitchen      
+  min 06 leo    [m] reassure_elena         kitchen      [fake line 196]
+  min 06 daniel [m] volunteer_far          kitchen      [fake line 197]
+  min 09 elena  [m] sit_daniel             kitchen      
+  min 09 leo    [m] say_other              kitchen      [fake line 199]
+  min 09 daniel [f] silent                 kitchen      
+  min 12 elena  [m] sit_daniel             kitchen      
+  min 12 leo    [m] sit_daniel             kitchen      
+  min 12 daniel [m] deny                   kitchen      [fake line 203]
+  min 15 elena  [m] silent                 kitchen      
+  min 15 leo    [f] sit_daniel             kitchen      
+  min 15 daniel [m] confess                kitchen      [fake line 206]
+  min 18 leo    [m] say_other              kitchen      [fake line 207]
+  min 18 elena  [m] volunteer              kitchen      [fake line 208]
+  min 18 daniel [m] go_back_room           kitchen      
+  min 21 leo    [f] silent                 kitchen      
+  min 21 elena  [m] go_brothers_room       kitchen      
+  10:42 mara   [m] keep_elena_home        kitchen      [fake line 212]
+  10:42 elena  [m] silent                 kitchen      
+  10:42 leo    [m] confront_mara          kitchen      [fake line 214]
+  10:45 mara   [f] silent                 kitchen      
+  10:45 elena  [m] send_leo               kitchen      [fake line 216]
+  10:45 leo    [m] confront_mara          kitchen      [fake line 217]
+  10:45 daniel [m] silent                 brothers_room 
+  10:48 mara   [m] go_brothers_room       kitchen      
+  11:03 leo    [f] silent                 kitchen      
+  11:03 daniel [m] aside_mara             kitchen      
+  11:03 mara   [m] accept_aside           kitchen      
+  11:03 elena  [m] say_other              kitchen      [fake line 223]
+  11:06 leo    [m] go_back_room           kitchen      
+  11:06 daniel [f] silent                 brothers_room 
+  11:06 mara   [m] go_kitchen             brothers_room 
+  11:09 mara   [m] nobody_goes            kitchen      [fake line 227]
+  19:00 daniel [m] reassure_leo           kitchen      [fake line 228]
+  19:00 leo    [m] accuse_daniel          kitchen      [fake line 229]
+  19:00 mara   [f] silent                 kitchen      
+  19:03 daniel [m] say_other              kitchen      [fake line 231]
+  19:03 leo    [m] nobody_goes            kitchen      [fake line 232]
+  19:03 elena  [m] send_daniel            kitchen      [fake line 233]
+  19:03 mara   [m] go_brothers_room       kitchen      
+  19:06 daniel [f] silent                 kitchen      
+
+  ---- NIGHT 4: leavers ['daniel', 'leo'], away [] ----
+  [bedtime] daniel go_next_door   say None reason 'Fake reason 236.'
+  [bedtime] elena  watch_door     say None reason 'Fake reason 237.'
+  [bedtime] leo    go_further     say None reason 'Fake reason 238.'
+  [bedtime] mara   lie_awake      say None reason 'Fake reason 239.'
+  [reaction] leo    let_daniel_go  say None reason None
+  [reaction] elena  let_daniel_go  say None reason 'Fake reason 241.'
+  [reaction] mara   get_up_and_look say None reason 'Fake reason 242.'
+  [reaction] daniel let_leo_go     say None reason 'Fake reason 243.'
+  [group] {"leader": "daniel", "members": ["daniel"], "street": "clean", "outcome": "back with water", "far": null}
+  [group] {"leader": "leo", "members": ["leo"], "street": "clean", "outcome": "back with food and water", "far": true}
+  [n-event] got_up daniel: Daniel: got_up
+  [n-event] reaction leo: Leo: reaction
+  [n-event] at_door daniel: Daniel: at_door
+  [n-event] reaction elena: Elena: reaction
+  [n-event] door daniel: Daniel: door
+  [n-event] reaction mara: Mara: reaction
+  [n-event] went_out daniel: Daniel: went_out
+  [n-event] street daniel: Daniel: street (back with water)
+  [n-event] return daniel: Daniel: return
+  [n-event] got_up leo: Leo: got_up
+  [n-event] reaction daniel: Daniel: reaction
+  [n-event] at_door leo: Leo: at_door
+  [n-event] went_out leo: Leo: went_out
+  [n-event] street leo: Leo: street (back with food and water)
+  [n-event] return leo: Leo: return
+
+======== DAY 5 (away: []) ========
+  [need] 07:24 daniel debt stage 1
+  [need] 08:18 mara fast stage 1
+  [need] 11:15 elena fast stage 1
+  [need] 13:54 leo debt stage 1
+  [need] 14:09 daniel debt stage 1
+  [need] 14:18 mara debt stage 1
+  [need] 16:15 leo debt stage 1
+  [need] 19:57 daniel debt stage 1
+  [need] 21:00 elena debt stage 2
+  [stretch] 07:00-07:12 kitchen the morning asks 14
+  [stretch] 10:06-10:21 kitchen Q2 asks 8
+  [stretch] 10:21-10:30 kitchen Q2 asks 8
+  [stretch] 14:09-14:18 brothers_room Q2 asks 8
+  [stretch] 19:00-19:09 kitchen Q5 asks 8
+  min 00 elena  [m] send_daniel            kitchen      [fake line 248]
+  min 00 daniel [m] sit_mara               kitchen      
+  min 00 mara   [f] silent                 kitchen      
+  min 00 leo    [m] send_mara              kitchen      [fake line 251]
+  min 03 mara   [m] reassure_daniel        kitchen      [fake line 252]
+  min 03 daniel [m] confront_leo           kitchen      [fake line 253]
+  min 03 leo    [m] confront_elena         kitchen      [fake line 254]
+  min 03 elena  [f] silent                 kitchen      
+  min 06 leo    [m] silent                 kitchen      
+  min 06 daniel [m] go_brothers_room       kitchen      
+  min 06 elena  [m] go_bathroom            kitchen      
+  min 06 mara   [m] refuse_to_go           kitchen      [fake line 259]
+  min 09 leo    [f] silent                 brothers_room 
+  min 09 daniel [m] say_other              brothers_room [fake line 261]
+  10:06 daniel [m] share                  kitchen      
+  10:06 mara   [m] reassure_daniel        kitchen      [fake line 263]
+  10:09 daniel [m] go_back_room           kitchen      
+  10:12 daniel [f] silent                 back_room    
+  10:12 elena  [m] sit_daniel             back_room    
+  10:15 daniel [m] go_brothers_room       back_room    
+  10:18 leo    [m] reassure_daniel        brothers_room [fake line 268]
+  10:18 daniel [m] send_leo               brothers_room [fake line 269]
+  10:21 leo    [f] silent                 kitchen      
+  10:21 daniel [m] go_bathroom            kitchen      
+  10:21 elena  [m] keep_mara_home         kitchen      [fake line 272]
+  10:21 mara   [m] reassure_all           kitchen      [fake line 273]
+  10:24 leo    [m] aside_mara             kitchen      
+  10:24 mara   [f] refuse_aside           kitchen      
+  10:24 elena  [m] propose_trip           kitchen      [fake line 276]
+  10:27 leo    [m] propose_trip           kitchen      [fake line 277]
+  14:09 daniel [m] propose_far            brothers_room [fake line 278]
+  14:12 daniel [m] go_back_room           brothers_room 
+  14:12 leo    [f] silent                 brothers_room 
+  14:12 elena  [m] propose_far            back_room    [fake line 281]
+  14:12 mara   [m] sit_elena              back_room    
+  14:15 leo    [m] go_bathroom            brothers_room 
+  14:15 elena  [m] confront_mara          back_room    [fake line 284]
+  14:15 mara   [f] silent                 back_room    
+  19:00 elena  [m] send_daniel            kitchen      [fake line 286]
+  19:00 daniel [m] propose_trip           kitchen      [fake line 287]
+  19:00 mara   [m] say_other              kitchen      [fake line 288]
+  19:03 mara   [m] go_back_room           kitchen      
+  19:03 elena  [f] silent                 kitchen      
+  19:03 daniel [m] go_back_room           kitchen      
+  19:03 leo    [m] silent                 brothers_room 
+  19:06 mara   [m] propose_far            back_room    [fake line 293]
+
+  ---- NIGHT 5: leavers ['daniel'], away ['daniel'] ----
+  [bedtime] daniel go_further     say None reason 'Fake reason 294.'
+  [bedtime] elena  sleep          say None reason None
+  [bedtime] leo    sleep          say None reason 'Fake reason 296.'
+  [bedtime] mara   lie_awake      say None reason 'Fake reason 297.'
+  [reaction] leo    let_daniel_go  say None reason 'Fake reason 298.'
+  [reaction] mara   get_up_and_look say None reason 'Fake reason 299.'
+  [group] {"leader": "daniel", "members": ["daniel"], "street": "not_back", "outcome": "not back by morning", "far": true}
+  [n-event] got_up daniel: Daniel: got_up
+  [n-event] reaction leo: Leo: reaction
+  [n-event] door daniel: Daniel: door
+  [n-event] reaction mara: Mara: reaction
+  [n-event] went_out daniel: Daniel: went_out
+  [n-event] street daniel: Daniel: street (not back by morning)
+
+======== DAY 6 (away: ['daniel']) ========
+  [need] 10:15 elena debt stage 1
+  [need] 11:24 mara fast stage 1
+  [need] 16:09 elena debt stage 1
+  [need] 16:09 leo debt stage 1
+  [need] 17:24 mara debt stage 1
+  [door] 09:27-09:30 ask_water a woman of about forty -> refused; rooms {'daniel': None, 'elena': 'back_room', 'leo': 'kitchen', 'mara': 'back_room'}; by_knock [[147, {'leo': 'heard'}]]; said [[147, "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."], [150, "Right. I'm sorry. I'll try somewhere else."]]; heard_said {'leo': [[150, "Right. I'm sorry. I'll try somewhere else.", False]]}; acts [[147, 'leo', 'door_refuse', '[fake line 326]']]; give None
+  [stretch] 07:00-07:24 kitchen the morning asks 23
+  [stretch] 09:27-09:33 kitchen Q7 asks 4
+  [stretch] 09:33-09:42 kitchen Q2 asks 8
+  [stretch] 19:00-19:09 kitchen Q5 asks 8
+  [event] D6-024 09:27 knock None -> None: a knock at the front door (h6, ask_water); witnesses {'leo': 'heard'}
+  [event] D6-025 09:27 door_line None -> None: the person at the door (voice_ask_water): "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."; witnesses {}
+  [event] D6-027 09:30 door_line None -> None: the person at the door (refused_polite): "Right. I'm sorry. I'll try somewhere else."; witnesses {'leo': 'heard'}
+  [event] D6-028 09:30 door_end None -> None: the visit ended: refused; witnesses {'leo': 'saw'}
+  [event] D6-037 09:39 collect_rain leo -> None: Leo went out into the rain and set the bin under the drainpipe.; witnesses {'leo': 'did', 'elena': 'saw', 'mara': 'saw'}
+  min 00 mara   [m] say_other              kitchen      [fake line 303]
+  min 00 elena  [m] aside_leo              kitchen      
+  min 00 leo    [f] refuse_aside           kitchen      
+  min 03 elena  [m] volunteer              kitchen      [fake line 306]
+  min 03 mara   [m] reassure_leo           kitchen      [fake line 307]
+  min 03 leo    [m] say_other              kitchen      [fake line 308]
+  min 06 leo    [m] volunteer              kitchen      [fake line 309]
+  min 06 elena  [f] silent                 kitchen      
+  min 06 mara   [m] ask_who                kitchen      [fake line 311]
+  min 09 mara   [m] keep_leo_home          kitchen      [fake line 312]
+  min 09 leo    [m] nobody_goes            kitchen      [fake line 313]
+  min 09 elena  [m] send_leo               kitchen      [fake line 314]
+  min 12 leo    [f] silent                 kitchen      
+  min 12 mara   [m] reassure_all           kitchen      [fake line 316]
+  min 12 elena  [m] confront_leo           kitchen      [fake line 317]
+  min 15 leo    [m] say_other              kitchen      [fake line 318]
+  min 15 mara   [m] confront_leo           kitchen      [fake line 319]
+  min 15 elena  [f] silent                 kitchen      
+  min 18 leo    [m] reassure_elena         kitchen      [fake line 321]
+  min 18 elena  [m] go_brothers_room       kitchen      
+  min 18 mara   [m] confront_leo           kitchen      [fake line 323]
+  min 21 leo    [m] deny                   kitchen      [fake line 324]
+  min 21 mara   [f] silent                 kitchen      
+  09:27 leo    [m] door_refuse            kitchen      [fake line 326]
+  09:30 leo    [m] go_brothers_room       kitchen      
+  09:30 elena  [m] reassure_mara          back_room    [fake line 328]
+  09:30 mara   [m] ask_who                back_room    [fake line 329]
+  09:33 elena  [f] silent                 kitchen      
+  09:33 leo    [m] reassure_elena         kitchen      [fake line 331]
+  09:33 mara   [m] nobody_goes            kitchen      [fake line 332]
+  09:36 elena  [m] reassure_leo           kitchen      [fake line 333]
+  09:36 leo    [m] reassure_all           kitchen      [fake line 334]
+  09:36 mara   [f] silent                 kitchen      
+  09:39 elena  [m] sit_leo                kitchen      
+  09:39 leo    [m] collect_rain           kitchen      
+  19:00 leo    [m] deny                   kitchen      [fake line 338]
+  19:00 elena  [m] keep_leo_home          kitchen      [fake line 339]
+  19:00 mara   [f] silent                 kitchen      
+  19:03 leo    [m] say_other              kitchen      [fake line 341]
+  19:03 mara   [m] accuse_elena           kitchen      [fake line 342]
+  19:03 elena  [m] reassure_leo           kitchen      [fake line 343]
+  19:06 leo    [m] send_elena             kitchen      [fake line 344]
+  19:06 elena  [f] silent                 kitchen      
+
+  ---- NIGHT 6: leavers ['elena'], away ['daniel', 'elena'] ----
+  [bedtime] elena  go_next_door   say None reason 'Fake reason 346.'
+  [bedtime] leo    watch_door     say None reason 'Fake reason 347.'
+  [bedtime] mara   sleep          say None reason 'Fake reason 348.'
+  [reaction] mara   let_elena_go   say None reason 'Fake reason 349.'
+  [reaction] leo    let_elena_go   say None reason None
+  [group] {"leader": "elena", "members": ["elena"], "street": "not_back", "outcome": "not back by morning", "far": null}
+  [n-event] got_up elena: Elena: got_up
+  [n-event] reaction mara: Mara: reaction
+  [n-event] at_door elena: Elena: at_door
+  [n-event] reaction leo: Leo: reaction
+  [n-event] went_out elena: Elena: went_out
+  [n-event] street elena: Elena: street (not back by morning)
+
+======== DAY 7 (away: ['daniel', 'elena']) ========
+  [rain] {"minute": 618, "heard": ["leo"]}
+  [need] 09:24 mara debt stage 1
+  [need] 16:09 leo debt stage 1
+  [need] 16:09 mara debt stage 1
+  [stretch] 07:00-07:09 kitchen the morning asks 5
+  [event] D7-003 07:00 tell leo -> ['mara']: Leo tells Mara about the woman at the front door yesterday at 09:27: "[fake line 354]"; witnesses {'leo': 'did', 'mara': 'saw'}
+  min 00 mara   [m] deny                   kitchen      [fake line 353]
+  min 00 leo    [m] tell_mara_visit        kitchen      [fake line 354]
+  min 03 mara   [f] silent                 kitchen      
+  min 03 leo    [m] silent                 kitchen      
+  min 06 leo    [m] go_back_room           kitchen      
+
+  ---- NIGHT 7: leavers [], away ['daniel', 'elena'] ----
+  [bedtime] leo    sleep          say None reason 'Fake reason 358.'
+  [bedtime] mara   sleep          say None reason 'Fake reason 359.'
+
+======== DAY 8 (away: ['daniel', 'elena']) ========
+  [need] 13:54 mara fast stage 2
+  [need] 16:39 leo debt stage 1
+  [stretch] 07:00-07:09 kitchen the morning asks 5
+  min 00 leo    [m] silent                 kitchen      
+  min 00 mara   [m] ask_who                kitchen      [fake line 363]
+  min 03 mara   [m] reassure_leo           kitchen      [fake line 364]
+  min 03 leo    [f] silent                 kitchen      
+  min 06 leo    [m] go_brothers_room       kitchen      
+
+  ---- NIGHT 8: leavers [], away ['daniel', 'elena'] ----
+  [bedtime] leo    watch_door     say None reason 'Fake reason 367.'
+  [bedtime] mara   watch_door     say None reason 'Fake reason 368.'
+
+======== DAY 9 (away: ['daniel', 'elena']) ========
+  [rain] {"minute": 270, "heard": ["leo"]}
+  [need] 15:39 mara debt stage 1
+  [need] 16:09 leo debt stage 1
+  [stretch] 07:00-07:06 kitchen the morning asks 4
+  [stretch] 19:00-19:09 kitchen Q5 asks 2
+  min 00 leo    [m] aside_mara             kitchen      
+  min 00 mara   [m] refuse_aside           kitchen      
+  min 03 leo    [m] volunteer              kitchen      [fake line 373]
+  min 03 mara   [m] go_back_room           kitchen      
+  19:00 leo    [f] silent                 kitchen      
+  19:00 mara   [m] silent                 kitchen      
+
+  ---- NIGHT 9: leavers ['mara'], away ['daniel', 'elena', 'mara'] ----
+  [bedtime] leo    lie_awake      say None reason 'Fake reason 377.'
+  [bedtime] mara   go_further     say None reason 'Fake reason 378.'
+  [reaction] leo    get_up_and_look say None reason 'Fake reason 379.'
+  [group] {"leader": "mara", "members": ["mara"], "street": "not_back", "outcome": "not back by morning", "far": true}
+  [n-event] door mara: Mara: door
+  [n-event] reaction leo: Leo: reaction
+  [n-event] went_out mara: Mara: went_out
+  [n-event] street mara: Mara: street (not back by morning)
+
+======== DAY 10 (away: ['daniel', 'elena', 'mara']) ========
+  [need] 10:09 leo debt stage 1
+  [need] 15:09 leo debt stage 1
+  [stretch] 07:00-07:03 kitchen the morning asks 1
+  min 00 leo    [m] go_bathroom            kitchen      

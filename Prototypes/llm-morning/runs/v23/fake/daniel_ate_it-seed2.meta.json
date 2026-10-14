@@ -1,0 +1,748 @@
+{
+ "model": "fake",
+ "scenario": "daniel_ate_it",
+ "seed": 2,
+ "replay": false,
+ "api_requests": 381,
+ "answers_live": 381,
+ "answers_from_cache": 0,
+ "day1": {
+  "api_requests": 80,
+  "answers_live": 80,
+  "answers_from_cache": 0,
+  "model_decisions": 64,
+  "fallbacks": 16,
+  "routine_decisions": 40,
+  "lines_spoken": 27,
+  "inner_moments": 16,
+  "lull_moments": 0,
+  "private_talks": 4,
+  "trip_minute": 30,
+  "trip_acts": 16,
+  "max_prompt_tokens_estimated": 1699,
+  "max_prompt_tokens_counted_by_api": null
+ },
+ "night_asks": 6,
+ "night_api_requests": 6,
+ "leavers": [
+  "mara"
+ ],
+ "outcome": [
+  "back with nothing"
+ ],
+ "night": {
+  "api_requests": 6,
+  "answers_live": 6,
+  "answers_from_cache": 0,
+  "max_prompt_tokens_counted_by_api": null,
+  "house": 0,
+  "away": [],
+  "max_prompt_tokens_estimated": 1601
+ },
+ "day2_asks": 31,
+ "day2_api_requests": 31,
+ "day2": {
+  "api_requests": 31,
+  "answers_live": 31,
+  "answers_from_cache": 0,
+  "model_decisions": 25,
+  "fallbacks": 6,
+  "routine_decisions": 89,
+  "lines_spoken": 8,
+  "inner_moments": 4,
+  "lull_moments": 0,
+  "private_talks": 3,
+  "trip_minute": 0,
+  "trip_acts": 4,
+  "max_prompt_tokens_estimated": 2083,
+  "max_prompt_tokens_counted_by_api": null,
+  "food_moments": 0,
+  "give_answers": 0
+ },
+ "night1_asks": 6,
+ "mind1_asks": 4,
+ "mind1_api_requests": 4,
+ "mind1": {
+  "api_requests": 4,
+  "answers_live": 4,
+  "answers_from_cache": 0,
+  "max_prompt_tokens_counted_by_api": null,
+  "memories_proposed": 4,
+  "memories_kept": 3,
+  "memories_rejected": 1,
+  "max_prompt_tokens_estimated": 1574
+ },
+ "night2_asks": 4,
+ "night2_api_requests": 4,
+ "leavers2": [],
+ "outcome2": [],
+ "night2": {
+  "api_requests": 4,
+  "answers_live": 4,
+  "answers_from_cache": 0,
+  "max_prompt_tokens_counted_by_api": null,
+  "house_left": 0,
+  "away": [],
+  "max_prompt_tokens_estimated": 1902
+ },
+ "mind2_asks": 4,
+ "mind2_api_requests": 4,
+ "mind2": {
+  "api_requests": 4,
+  "answers_live": 4,
+  "answers_from_cache": 0,
+  "max_prompt_tokens_counted_by_api": null,
+  "memories_proposed": 4,
+  "memories_kept": 4,
+  "memories_rejected": 0,
+  "max_prompt_tokens_estimated": 1128
+ },
+ "day3_asks": 46,
+ "day3_api_requests": 46,
+ "day3": {
+  "api_requests": 46,
+  "answers_live": 46,
+  "answers_from_cache": 0,
+  "model_decisions": 36,
+  "fallbacks": 10,
+  "routine_decisions": 22,
+  "lines_spoken": 20,
+  "inner_moments": 7,
+  "lull_moments": 0,
+  "private_talks": 1,
+  "trip_minute": 0,
+  "trip_acts": 12,
+  "max_prompt_tokens_estimated": 2269,
+  "max_prompt_tokens_counted_by_api": null,
+  "food_moments": 0,
+  "give_answers": 0
+ },
+ "day3_quiet": {
+  "day_asks": 46,
+  "quiet_asks": 3,
+  "quiet_asks_by_person": {
+   "daniel": 1,
+   "elena": 1,
+   "leo": 0,
+   "mara": 1
+  },
+  "q1_fired": 0,
+  "q2_fired": 2,
+  "q5_fired": 1,
+  "q6_fired": 0,
+  "q7_fired": 0,
+  "q7_deferred": 0,
+  "door": [],
+  "rain_heard": 0,
+  "water": [
+   [
+    0,
+    105.5,
+    0.0,
+    "as_before",
+    false
+   ],
+   [
+    18,
+    105.2,
+    0.0,
+    "rationed",
+    false
+   ],
+   [
+    840,
+    102.346,
+    0.0,
+    "rationed",
+    false
+   ]
+  ],
+  "spans": 20,
+  "rests": 9,
+  "withdrawals": 0,
+  "stretches": 4,
+  "morning_end": 27
+ },
+ "max_prompt_tokens_estimated": 2269,
+ "max_prompt_tokens_counted_by_api": null,
+ "days": 10,
+ "night3": {
+  "api_requests": 8,
+  "answers_live": 8,
+  "answers_from_cache": 0,
+  "max_prompt_tokens_counted_by_api": null,
+  "asks": 8,
+  "house_left": 0,
+  "leavers": [
+   "leo",
+   "mara"
+  ],
+  "away": []
+ },
+ "mind3": {
+  "api_requests": 4,
+  "answers_live": 4,
+  "answers_from_cache": 0,
+  "max_prompt_tokens_counted_by_api": null,
+  "asks": 4,
+  "memories_proposed": 3,
+  "memories_kept": 3,
+  "memories_rejected": 0,
+  "max_prompt_tokens_estimated": 2010
+ },
+ "day4": {
+  "api_requests": 48,
+  "answers_live": 48,
+  "answers_from_cache": 0,
+  "model_decisions": 38,
+  "fallbacks": 10,
+  "routine_decisions": 24,
+  "lines_spoken": 21,
+  "inner_moments": 2,
+  "lull_moments": 0,
+  "private_talks": 1,
+  "trip_minute": 0,
+  "trip_acts": 9,
+  "max_prompt_tokens_estimated": 2561,
+  "max_prompt_tokens_counted_by_api": null
+ },
+ "day4_quiet": {
+  "day_asks": 48,
+  "quiet_asks": 5,
+  "quiet_asks_by_person": {
+   "daniel": 0,
+   "elena": 2,
+   "leo": 1,
+   "mara": 2
+  },
+  "q1_fired": 0,
+  "q2_fired": 4,
+  "q5_fired": 1,
+  "q6_fired": 0,
+  "q7_fired": 0,
+  "q7_deferred": 0,
+  "door": [],
+  "rain_heard": 0,
+  "water": [
+   [
+    0,
+    110.262,
+    0.0,
+    "rationed",
+    false
+   ],
+   [
+    840,
+    107.346,
+    0.0,
+    "rationed",
+    false
+   ]
+  ],
+  "spans": 25,
+  "rests": 8,
+  "withdrawals": 0,
+  "stretches": 4,
+  "morning_end": 24
+ },
+ "night4": {
+  "api_requests": 8,
+  "answers_live": 8,
+  "answers_from_cache": 0,
+  "max_prompt_tokens_counted_by_api": null,
+  "asks": 8,
+  "house_left": 0,
+  "leavers": [
+   "daniel",
+   "leo"
+  ],
+  "away": []
+ },
+ "mind4": {
+  "api_requests": 4,
+  "answers_live": 4,
+  "answers_from_cache": 0,
+  "max_prompt_tokens_counted_by_api": null,
+  "asks": 4,
+  "memories_proposed": 3,
+  "memories_kept": 3,
+  "memories_rejected": 0,
+  "max_prompt_tokens_estimated": 2250
+ },
+ "day5": {
+  "api_requests": 46,
+  "answers_live": 46,
+  "answers_from_cache": 0,
+  "model_decisions": 37,
+  "fallbacks": 9,
+  "routine_decisions": 26,
+  "lines_spoken": 21,
+  "inner_moments": 2,
+  "lull_moments": 0,
+  "private_talks": 1,
+  "trip_minute": 0,
+  "trip_acts": 12,
+  "max_prompt_tokens_estimated": 2741,
+  "max_prompt_tokens_counted_by_api": null
+ },
+ "day5_quiet": {
+  "day_asks": 46,
+  "quiet_asks": 4,
+  "quiet_asks_by_person": {
+   "daniel": 2,
+   "elena": 1,
+   "leo": 1,
+   "mara": 0
+  },
+  "q1_fired": 0,
+  "q2_fired": 4,
+  "q5_fired": 1,
+  "q6_fired": 0,
+  "q7_fired": 0,
+  "q7_deferred": 0,
+  "door": [],
+  "rain_heard": 0,
+  "water": [
+   [
+    0,
+    124.262,
+    0.0,
+    "rationed",
+    false
+   ],
+   [
+    840,
+    121.346,
+    0.0,
+    "rationed",
+    false
+   ]
+  ],
+  "spans": 24,
+  "rests": 9,
+  "withdrawals": 1,
+  "stretches": 5,
+  "morning_end": 12
+ },
+ "night5": {
+  "api_requests": 6,
+  "answers_live": 6,
+  "answers_from_cache": 0,
+  "max_prompt_tokens_counted_by_api": null,
+  "asks": 6,
+  "house_left": 0,
+  "leavers": [
+   "daniel"
+  ],
+  "away": [
+   "daniel"
+  ]
+ },
+ "mind5": {
+  "api_requests": 3,
+  "answers_live": 3,
+  "answers_from_cache": 0,
+  "max_prompt_tokens_counted_by_api": null,
+  "asks": 3,
+  "memories_proposed": 3,
+  "memories_kept": 2,
+  "memories_rejected": 1,
+  "max_prompt_tokens_estimated": 2166
+ },
+ "day6": {
+  "api_requests": 43,
+  "answers_live": 43,
+  "answers_from_cache": 0,
+  "model_decisions": 34,
+  "fallbacks": 9,
+  "routine_decisions": 5,
+  "lines_spoken": 29,
+  "inner_moments": 1,
+  "lull_moments": 0,
+  "private_talks": 1,
+  "trip_minute": 0,
+  "trip_acts": 8,
+  "max_prompt_tokens_estimated": 2680,
+  "max_prompt_tokens_counted_by_api": null
+ },
+ "day6_quiet": {
+  "day_asks": 43,
+  "quiet_asks": 3,
+  "quiet_asks_by_person": {
+   "daniel": 0,
+   "elena": 1,
+   "leo": 1,
+   "mara": 1
+  },
+  "q1_fired": 0,
+  "q2_fired": 1,
+  "q5_fired": 1,
+  "q6_fired": 0,
+  "q7_fired": 1,
+  "q7_deferred": 0,
+  "door": [
+   {
+    "start": 147,
+    "end": 150,
+    "outcome": "refused",
+    "asks": 4,
+    "acts": [
+     "door_refuse"
+    ]
+   }
+  ],
+  "rain_heard": 0,
+  "water": [
+   [
+    0,
+    119.783,
+    0.0,
+    "rationed",
+    false
+   ],
+   [
+    159,
+    119.369,
+    0.0,
+    "rationed",
+    true
+   ],
+   [
+    840,
+    117.596,
+    24.234,
+    "rationed",
+    true
+   ]
+  ],
+  "spans": 15,
+  "rests": 5,
+  "withdrawals": 0,
+  "stretches": 4,
+  "morning_end": 24
+ },
+ "night6": {
+  "api_requests": 5,
+  "answers_live": 5,
+  "answers_from_cache": 0,
+  "max_prompt_tokens_counted_by_api": null,
+  "asks": 5,
+  "house_left": 0,
+  "leavers": [
+   "elena"
+  ],
+  "away": [
+   "daniel",
+   "elena"
+  ]
+ },
+ "mind6": {
+  "api_requests": 2,
+  "answers_live": 2,
+  "answers_from_cache": 0,
+  "max_prompt_tokens_counted_by_api": null,
+  "asks": 2,
+  "memories_proposed": 2,
+  "memories_kept": 2,
+  "memories_rejected": 0,
+  "max_prompt_tokens_estimated": 2262
+ },
+ "day7": {
+  "api_requests": 5,
+  "answers_live": 5,
+  "answers_from_cache": 0,
+  "model_decisions": 4,
+  "fallbacks": 1,
+  "routine_decisions": 1,
+  "lines_spoken": 2,
+  "inner_moments": 0,
+  "lull_moments": 0,
+  "private_talks": 0,
+  "trip_minute": 0,
+  "trip_acts": 0,
+  "max_prompt_tokens_estimated": 2522,
+  "max_prompt_tokens_counted_by_api": null
+ },
+ "day7_quiet": {
+  "day_asks": 5,
+  "quiet_asks": 0,
+  "quiet_asks_by_person": {
+   "daniel": 0,
+   "elena": 0,
+   "leo": 0,
+   "mara": 0
+  },
+  "q1_fired": 0,
+  "q2_fired": 0,
+  "q5_fired": 0,
+  "q6_fired": 0,
+  "q7_fired": 0,
+  "q7_deferred": 0,
+  "door": [],
+  "rain_heard": 1,
+  "water": [
+   [
+    0,
+    116.554,
+    29.733,
+    "rationed",
+    true
+   ],
+   [
+    840,
+    115.096,
+    49.666,
+    "rationed",
+    true
+   ]
+  ],
+  "spans": 9,
+  "rests": 4,
+  "withdrawals": 0,
+  "stretches": 1,
+  "morning_end": 9
+ },
+ "night7": {
+  "api_requests": 2,
+  "answers_live": 2,
+  "answers_from_cache": 0,
+  "max_prompt_tokens_counted_by_api": null,
+  "asks": 2,
+  "house_left": 0,
+  "leavers": [],
+  "away": [
+   "daniel",
+   "elena"
+  ]
+ },
+ "mind7": {
+  "api_requests": 2,
+  "answers_live": 2,
+  "answers_from_cache": 0,
+  "max_prompt_tokens_counted_by_api": null,
+  "asks": 2,
+  "memories_proposed": 2,
+  "memories_kept": 1,
+  "memories_rejected": 1,
+  "max_prompt_tokens_estimated": 1682
+ },
+ "day8": {
+  "api_requests": 5,
+  "answers_live": 5,
+  "answers_from_cache": 0,
+  "model_decisions": 4,
+  "fallbacks": 1,
+  "routine_decisions": 1,
+  "lines_spoken": 2,
+  "inner_moments": 1,
+  "lull_moments": 0,
+  "private_talks": 0,
+  "trip_minute": 0,
+  "trip_acts": 0,
+  "max_prompt_tokens_estimated": 2396,
+  "max_prompt_tokens_counted_by_api": null
+ },
+ "day8_quiet": {
+  "day_asks": 5,
+  "quiet_asks": 0,
+  "quiet_asks_by_person": {
+   "daniel": 0,
+   "elena": 0,
+   "leo": 0,
+   "mara": 0
+  },
+  "q1_fired": 0,
+  "q2_fired": 0,
+  "q5_fired": 0,
+  "q6_fired": 0,
+  "q7_fired": 0,
+  "q7_deferred": 0,
+  "door": [],
+  "rain_heard": 0,
+  "water": [
+   [
+    0,
+    114.054,
+    49.666,
+    "rationed",
+    true
+   ],
+   [
+    840,
+    112.596,
+    49.666,
+    "rationed",
+    true
+   ]
+  ],
+  "spans": 9,
+  "rests": 4,
+  "withdrawals": 0,
+  "stretches": 1,
+  "morning_end": 9
+ },
+ "night8": {
+  "api_requests": 2,
+  "answers_live": 2,
+  "answers_from_cache": 0,
+  "max_prompt_tokens_counted_by_api": null,
+  "asks": 2,
+  "house_left": 0,
+  "leavers": [],
+  "away": [
+   "daniel",
+   "elena"
+  ]
+ },
+ "mind8": {
+  "api_requests": 2,
+  "answers_live": 2,
+  "answers_from_cache": 0,
+  "max_prompt_tokens_counted_by_api": null,
+  "asks": 2,
+  "memories_proposed": 2,
+  "memories_kept": 1,
+  "memories_rejected": 1,
+  "max_prompt_tokens_estimated": 1611
+ },
+ "day9": {
+  "api_requests": 6,
+  "answers_live": 6,
+  "answers_from_cache": 0,
+  "model_decisions": 5,
+  "fallbacks": 1,
+  "routine_decisions": 4,
+  "lines_spoken": 1,
+  "inner_moments": 1,
+  "lull_moments": 0,
+  "private_talks": 1,
+  "trip_minute": 0,
+  "trip_acts": 1,
+  "max_prompt_tokens_estimated": 2415,
+  "max_prompt_tokens_counted_by_api": null
+ },
+ "day9_quiet": {
+  "day_asks": 6,
+  "quiet_asks": 1,
+  "quiet_asks_by_person": {
+   "daniel": 0,
+   "elena": 0,
+   "leo": 1,
+   "mara": 0
+  },
+  "q1_fired": 0,
+  "q2_fired": 0,
+  "q5_fired": 1,
+  "q6_fired": 0,
+  "q7_fired": 0,
+  "q7_deferred": 0,
+  "door": [],
+  "rain_heard": 1,
+  "water": [
+   [
+    0,
+    111.554,
+    49.666,
+    "rationed",
+    true
+   ],
+   [
+    840,
+    110.096,
+    240.0,
+    "rationed",
+    true
+   ]
+  ],
+  "spans": 8,
+  "rests": 4,
+  "withdrawals": 0,
+  "stretches": 2,
+  "morning_end": 6
+ },
+ "night9": {
+  "api_requests": 3,
+  "answers_live": 3,
+  "answers_from_cache": 0,
+  "max_prompt_tokens_counted_by_api": null,
+  "asks": 3,
+  "house_left": 0,
+  "leavers": [
+   "mara"
+  ],
+  "away": [
+   "daniel",
+   "elena",
+   "mara"
+  ]
+ },
+ "mind9": {
+  "api_requests": 1,
+  "answers_live": 1,
+  "answers_from_cache": 0,
+  "max_prompt_tokens_counted_by_api": null,
+  "asks": 1,
+  "memories_proposed": 1,
+  "memories_kept": 0,
+  "memories_rejected": 1,
+  "max_prompt_tokens_estimated": 1575
+ },
+ "day10": {
+  "api_requests": 1,
+  "answers_live": 1,
+  "answers_from_cache": 0,
+  "model_decisions": 1,
+  "fallbacks": 0,
+  "routine_decisions": 0,
+  "lines_spoken": 0,
+  "inner_moments": 0,
+  "lull_moments": 0,
+  "private_talks": 0,
+  "trip_minute": 0,
+  "trip_acts": 0,
+  "max_prompt_tokens_estimated": 2198,
+  "max_prompt_tokens_counted_by_api": null
+ },
+ "day10_quiet": {
+  "day_asks": 1,
+  "quiet_asks": 0,
+  "quiet_asks_by_person": {
+   "daniel": 0,
+   "elena": 0,
+   "leo": 0,
+   "mara": 0
+  },
+  "q1_fired": 0,
+  "q2_fired": 0,
+  "q5_fired": 0,
+  "q6_fired": 0,
+  "q7_fired": 0,
+  "q7_deferred": 0,
+  "door": [],
+  "rain_heard": 0,
+  "water": [
+   [
+    0,
+    109.575,
+    240.0,
+    "rationed",
+    true
+   ],
+   [
+    840,
+    108.846,
+    240.0,
+    "rationed",
+    true
+   ]
+  ],
+  "spans": 4,
+  "rests": 2,
+  "withdrawals": 0,
+  "stretches": 1,
+  "morning_end": 3
+ },
+ "run_seconds": 7.5,
+ "story": "runs/v23/fake/daniel_ate_it-seed2.md",
+ "story_sha256": "42b673772f07ec123164d1450d9ba8dac724a7c361a9876c90ab02282465718a"
+}

@@ -1,0 +1,507 @@
+
+======== DAY 3 (away: []) ========
+  [need] 10:00 elena debt stage 1
+  [need] 11:15 elena fast stage 1
+  [need] 14:54 mara debt stage 1
+  [need] 17:15 elena debt stage 1
+  [need] 17:39 daniel fast stage 2
+  [need] 19:00 leo fast stage 2
+  [need] 20:09 leo debt stage 2
+  [stretch] 07:00-07:18 kitchen the morning asks 24
+  [stretch] 10:27-10:33 kitchen Q2 asks 8
+  [stretch] 17:39-17:45 kitchen Q1 asks 8
+  min 00 leo    [m] silent                 kitchen      
+  min 00 daniel [m] reassure_all           kitchen      Listen to me, nobody is going out again right now and we are going to get through this day together.
+  min 00 mara   [m] confront_daniel        kitchen      You went out into the night and came back with nothing, Daniel. Why did you even go?
+  min 00 elena  [m] reassure_all           kitchen      We are all exhausted and frightened, but we need to stay calm and stay right here together.
+  min 03 daniel [m] reassure_mara          kitchen      Mara, I know it seems pointless, but I had to see if there was anything left over there for us.
+  min 03 mara   [m] accuse_daniel          kitchen      You went out last night and came back with nothing, just like you always ruin everything!
+  min 03 elena  [m] reassure_mara          kitchen      Mara, please, shouting won't help us find a way through this. We are all exhausted, let's just try to stay calm.
+  min 03 leo    [m] silent                 kitchen      
+  min 06 mara   [m] accuse_daniel          kitchen      You went out there last night and still won't admit what you did to us.
+  min 06 daniel [m] confront_mara          kitchen      Mara, watch your tone with me, I went out there to try and help us all.
+  min 06 leo    [m] accuse_daniel          kitchen      Daniel, shouting and deflecting doesn't change the fact that you sneaked out last night and came back with nothing.
+  min 06 elena  [m] reassure_all           kitchen      Let us not turn on each other, we will get through this morning together.
+  min 09 daniel [m] reassure_all           kitchen      We are not going to turn on each other, I am keeping us safe.
+  min 09 mara   [m] accuse_daniel          kitchen      You think you can just act like a hero after lying to us and sneaking out? You took it, Daniel.
+  min 09 elena  [m] silent                 kitchen      
+  min 09 leo    [m] accuse_daniel          kitchen      You snuck out last night like a thief, Daniel, and now you stand there pretending you are keeping us safe.
+  min 12 daniel [m] confront_leo           kitchen      Leo, I went out there to find something for us, not to sneak around behind your backs.
+  min 12 leo    [m] confront_daniel        kitchen      Sneaking out in the dark doesn't make you a hero, Daniel, it just makes things worse for all of us.
+  min 12 mara   [m] confront_daniel        kitchen      You went out there and came back with nothing, Daniel, while we are starving here.
+  min 12 elena  [m] reassure_all           kitchen      Stop this, please. We will not survive if we tear each other apart like this.
+  min 15 daniel [m] reassure_all           kitchen      Stop yelling, we are all starving and we cannot survive like this.
+  min 15 mara   [m] accuse_daniel          kitchen      You went out into the dark like a fool and you still brought back nothing!
+  min 15 elena  [m] reassure_all           kitchen      We cannot turn on each other now, we have to stay together if we are going to get through this.
+  min 15 leo    [m] accuse_daniel          kitchen      You went out last night because of your own mess, Daniel, and it changed nothing.
+  10:27 daniel [m] reassure_all           kitchen      We are going to figure this out together, just stay calm.
+  10:27 mara   [m] accuse_daniel          kitchen      You went out last night and came back with nothing, and you still expect us to listen to you?
+  10:27 leo    [m] accuse_daniel          kitchen      You went out last night and came back with nothing, Daniel, after all that talk.
+  10:27 elena  [m] reassure_all           kitchen      We are not going to turn on each other, we will get through this.
+  10:30 daniel [m] reassure_all           kitchen      We are going to figure this out together, just trust me.
+  10:30 mara   [m] accuse_daniel          kitchen      You think you can just act like everything is fine after what you did? You brought nothing back and we have nothing left.
+  10:30 elena  [m] reassure_all           kitchen      We are going to stay right here and look after each other, let's not fight.
+  10:30 leo    [m] accuse_daniel          kitchen      You snuck out last night like you always do and you still brought back nothing.
+  17:39 daniel [m] reassure_all           kitchen      We are going to get through this together, just stay calm.
+  17:39 mara   [m] accuse_daniel          kitchen      You always act like everything is fine, Daniel, but you took the food and you went out last night behind our backs.
+  17:39 elena  [m] reassure_all           kitchen      We are staying together and we are going to be alright.
+  17:39 leo    [m] accuse_daniel          kitchen      You went out behind our backs last night anyway, Daniel, just like you always do whatever you want.
+  17:42 daniel [m] reassure_all           kitchen      We are going to make it through this together, I promise you.
+  17:42 mara   [m] accuse_daniel          kitchen      You always do whatever you want and you took it, Daniel.
+  17:42 elena  [m] reassure_all           kitchen      Please, we must not fight amongst ourselves. We will keep each other safe.
+  17:42 leo    [m] accuse_daniel          kitchen      You can't just pretend nothing happened after sneaking out and lying to us, Daniel.
+
+  ---- NIGHT 3: leavers [], away [] ----
+  [bedtime] daniel lie_awake      say None reason 'I am too tired to patrol and my body cannot take another night out there, so I will lie here and listen.'
+  [bedtime] elena  lie_awake      say None reason 'I need to stay alert and listen through the dark to keep the family safe from any more reckless actions.'
+  [bedtime] leo    lie_awake      say None reason 'I am too weak to go out and too tired to sleep, so I will lie here and listen.'
+  [bedtime] mara   lie_awake      say None reason 'I cannot sleep with my stomach burning from hunger and the memory of Daniel sneaking out into the dark still haunting me.'
+
+======== DAY 4 (away: []) ========
+  [need] 11:24 daniel debt stage 1
+  [need] 11:42 mara fast stage 2
+  [need] 12:09 elena debt stage 1
+  [need] 16:54 mara debt stage 1
+  [need] 18:15 leo debt stage 1
+  [need] 18:54 elena debt stage 1
+  [need] 20:45 daniel debt stage 1
+  [stretch] 07:00-07:18 kitchen the morning asks 24
+  [stretch] 10:57-11:03 kitchen Q2 asks 8
+  min 00 elena  [m] silent                 kitchen      
+  min 00 mara   [m] accuse_daniel          kitchen      You took everything from us and you still act like nothing happened!
+  min 00 daniel [m] reassure_mara          kitchen      Mara, stop, I am going to make sure we get through this safely.
+  min 00 leo    [m] accuse_daniel          kitchen      Daniel, stop pretending you care about safety when you are the one who stole the food.
+  min 03 daniel [m] confront_leo           kitchen      Leo, stop undermining me when I am trying to keep us all alive.
+  min 03 leo    [m] accuse_daniel          kitchen      You are the one who took the food, Daniel, so do not lecture me about survival.
+  min 03 mara   [m] accuse_daniel          kitchen      You took the food, Daniel, and nothing you say now changes what you did.
+  min 03 elena  [m] silent                 kitchen      
+  min 06 daniel [m] confront_leo           kitchen      Shut your mouth, Leo, I didn't take anything today and you know it.
+  min 06 leo    [m] confront_daniel        kitchen      You can deny it all you want, Daniel, but we all know where the food went.
+  min 06 elena  [m] reassure_all           kitchen      Stop shouting at each other, we have to stay together if we are going to survive this.
+  min 06 mara   [m] accuse_daniel          kitchen      You took it, Daniel! You're the one who lied to us and took the food from the start!
+  min 09 daniel [m] confront_mara          kitchen      Mara, stop shouting at me, I am trying to keep us all alive here.
+  min 09 mara   [m] confront_daniel        kitchen      You always act like you're the only one who cares, Daniel, but you're the one who ruined everything.
+  min 09 leo    [m] accuse_daniel          kitchen      Daniel, your constant excuses don't change the fact that you took the food and lied to our faces.
+  min 09 elena  [m] reassure_all           kitchen      Please stop fighting, we have to stay together if we are going to get through this.
+  min 12 daniel [m] reassure_all           kitchen      Stop shouting at each other, I am the oldest and I will sort this out for us.
+  min 12 elena  [m] silent                 kitchen      
+  min 12 mara   [m] accuse_daniel          kitchen      Daniel, you always say you will sort it out, but you just make everything worse!
+  min 12 leo    [m] accuse_daniel          kitchen      You caused this mess by sneaking around, Daniel, so stop pretending you are in charge.
+  min 15 daniel [m] reassure_all           kitchen      We are going to get through this if we just stick together and keep our heads.
+  min 15 mara   [m] accuse_daniel          kitchen      You always pretend you know best, Daniel, but you are the reason our food is gone.
+  min 15 elena  [m] reassure_all           kitchen      Please stop fighting, we will find a way through this together.
+  min 15 leo    [m] silent                 kitchen      
+  10:57 daniel [m] reassure_all           kitchen      We are going to be fine, I am looking after us.
+  10:57 mara   [m] accuse_daniel          kitchen      You always say that, Daniel, but you're the one who lies and takes everything for yourself!
+  10:57 leo    [m] accuse_daniel          kitchen      You took the can yourself, Daniel, so stop pretending you are protecting anyone.
+  10:57 elena  [m] reassure_all           kitchen      We must not turn on each other, children. We will get through this if we stay together.
+  11:00 daniel [m] reassure_all           kitchen      We are going to be fine, just keep your heads and trust me.
+  11:00 elena  [m] reassure_all           kitchen      We must stay calm and not turn on each other, we will get through this.
+  11:00 mara   [m] accuse_daniel          kitchen      You took the can yourself, Daniel, so stop lying to us like we are children!
+  11:00 leo    [m] accuse_daniel          kitchen      You already admitted taking the can behind our backs, Daniel, so stop acting like our savior now.
+
+  ---- NIGHT 4: leavers [], away [] ----
+  [bedtime] daniel lie_awake      say None reason 'I cannot sleep while everyone distrusts me and the house remains empty of food.'
+  [bedtime] elena  lie_awake      say None reason 'I will lie here and listen to the house through the dark to make sure they do not tear each other apart.'
+  [bedtime] leo    lie_awake      say None reason 'I need to stay alert and listen in the dark just in case Daniel tries another reckless stunt.'
+  [bedtime] mara   lie_awake      say None reason 'I cannot sleep with my empty stomach burning and my mind racing about what Daniel did.'
+
+======== DAY 5 (away: []) ========
+  [need] 07:15 leo debt stage 1
+  [need] 07:54 elena debt stage 1
+  [need] 13:24 elena debt stage 1
+  [need] 15:45 daniel debt stage 1
+  [need] 17:24 leo debt stage 1
+  [need] 18:24 mara debt stage 1
+  [need] 19:45 elena fast stage 2
+  [need] 20:09 elena debt stage 1
+  [stretch] 07:00-07:18 kitchen the morning asks 24
+  [stretch] 10:03-10:12 kitchen Q2 asks 8
+  [stretch] 19:00-19:09 kitchen Q5 asks 8
+  [stretch] 19:45-19:51 kitchen Q1 asks 8
+  min 00 elena  [m] reassure_all           kitchen      Let us not start the morning with shouting, we are all exhausted and we need to stay calm.
+  min 00 mara   [m] accuse_daniel          kitchen      Daniel took it, Mom. He has no right to tell us to stay calm when he's the reason there's nothing left.
+  min 00 daniel [m] confront_mara          kitchen      Stop saying that, Mara, you know I'm doing everything I can to keep us safe.
+  min 00 leo    [m] accuse_daniel          kitchen      Daniel, stop pretending you are protecting us when you are the one who stole the food.
+  min 03 daniel [m] confront_leo           kitchen      Leo, shut your mouth, I am the oldest and I decide what happens here.
+  min 03 leo    [m] accuse_daniel          kitchen      You act like the oldest when it suits you, Daniel, but we all know who actually stole the food.
+  min 03 mara   [m] accuse_daniel          kitchen      You always use being the oldest as an excuse, Daniel, but you're just a liar.
+  min 03 elena  [m] reassure_all           kitchen      Please stop fighting, we have to stay together if we are going to survive this.
+  min 06 daniel [m] confront_leo           kitchen      Shut up, Leo. You think you know everything, but you're doing nothing to help us survive.
+  min 06 leo    [m] accuse_daniel          kitchen      You caused this, Daniel, and now you want to lecture us about surviving.
+  min 06 elena  [m] silent                 kitchen      
+  min 06 mara   [m] accuse_daniel          kitchen      You took the can, Daniel, so stop acting like you didn't do it.
+  min 09 daniel [m] propose_trip           kitchen      I went across before, and I will check the neighbour's house again tonight to make sure we didn't miss anything.
+  min 09 mara   [m] send_daniel            kitchen      You should be the one to go out there tonight, Daniel, since you're the one who messed everything up.
+  min 09 elena  [m] silent                 kitchen      
+  min 09 leo    [m] confront_daniel        kitchen      You went out there before and came back with nothing, Daniel. Putting yourself at risk again solves nothing.
+  min 12 daniel [m] confront_leo           kitchen      Watch your tone with me, Leo, I am still the eldest here.
+  min 12 leo    [m] accuse_daniel          kitchen      Being the eldest doesn't give you the right to lecture us when you're the one who stole the food.
+  min 12 mara   [m] accuse_daniel          kitchen      You always act like you're in charge, Daniel, but you're the one who lied and took the food from us.
+  min 12 elena  [m] reassure_all           kitchen      Please, stop fighting. We have to stay together if we are going to make it through this.
+  min 15 daniel [m] confront_leo           kitchen      Leo, you are sitting there like you have done something right, but you are just waiting for someone else to risk their neck.
+  min 15 leo    [m] confront_daniel        kitchen      You want to talk about risking necks, Daniel, when you were the one who emptied the pantry in secret?
+  min 15 mara   [m] accuse_daniel          kitchen      You stole the food and you're the one who should go out, Daniel.
+  min 15 elena  [m] reassure_all           kitchen      Please, children, stop this fighting. We will find a way through this together without tearing each other apart.
+  10:03 daniel [m] volunteer              kitchen      Fine, I will go out there myself tonight so you can all stop blaming me.
+  10:03 mara   [m] accuse_daniel          kitchen      You only offered to go because you want everyone to feel sorry for you after what you did.
+  10:03 leo    [m] confront_daniel        kitchen      Playing the martyr doesn't change the fact that you stole the food from us.
+  10:06 daniel [m] still_going            kitchen      I said I would go tonight, and I am still going.
+  10:06 mara   [m] accuse_daniel          kitchen      You only offered to go because you want everyone to feel sorry for you after what you did.
+  10:06 leo    [m] accuse_daniel          kitchen      You do not need to play the martyr, Daniel. You took the can and you are just trying to clear your conscience.
+  10:06 elena  [m] go_kitchen             back_room    Let us not start this again, we need to stay calm.
+  10:09 daniel [m] still_going            kitchen      I told you I'm going tonight, and I mean it. I'll find something for all of us.
+  19:00 daniel [m] still_going            kitchen      I told you, I am the one who is going out tonight.
+  19:03 mara   [m] accuse_daniel          kitchen      You are only going out now because you got caught. You are the one who took the can, Daniel.
+  19:03 daniel [m] still_going            kitchen      I told you, I am going tonight and that is final.
+  19:03 leo    [m] send_daniel            kitchen      You caused this mess by stealing the food in the first place, so you're the one who has to go.
+  19:03 elena  [m] reassure_all           kitchen      Please stop fighting, we cannot survive if we turn on each other like this. We will get through this together.
+  19:06 daniel [m] still_going            kitchen      I told you, I am the one who is going out tonight.
+  19:06 mara   [m] accuse_daniel          kitchen      You only care about looking brave now because you stole the food and got us into this mess.
+  19:06 elena  [m] reassure_all           kitchen      We will get through this evening together without anyone stepping out into the dark.
+  19:45 daniel [m] still_going            kitchen      I told you, I am the one who is going out there tonight.
+  19:45 mara   [m] accuse_daniel          kitchen      You took the can yourself, Daniel, so stop pretending you are doing this for any of us.
+  19:45 leo    [m] keep_daniel_home       kitchen      You do not need to prove anything by walking out there, Daniel. Just stay here.
+  19:45 elena  [m] keep_daniel_home       kitchen      Daniel, please, just stay home with us. We cannot risk losing you out there tonight.
+  19:48 daniel [m] still_going            kitchen      I told you, I am going out there tonight and that is final.
+  19:48 leo    [m] nobody_goes            kitchen      Nobody is going out tonight. We stay put.
+  19:48 elena  [m] nobody_goes            kitchen      Nobody is stepping outside tonight, we stay together in this house.
+  19:48 mara   [m] accuse_daniel          kitchen      You always do whatever you want and lie right to our faces like we are stupid.
+
+  ---- NIGHT 5: leavers ['daniel'], away [] ----
+  [bedtime] daniel go_next_door   say None reason 'I said I would go, and I have to prove I can handle this.'
+  [bedtime] elena  lie_awake      say None reason 'I will lie awake in the dark and listen to protect them from breaking apart.'
+  [bedtime] leo    lie_awake      say None reason 'I cannot rest easy while Daniel is still fixated on going outside into the street.'
+  [bedtime] mara   lie_awake      say None reason 'I cannot sleep knowing Daniel might still try to sneak out into the street while everyone is resting.'
+  [reaction] leo    stop_daniel    say 'Daniel, stay where you are. Going out there tonight solves nothing.' reason 'I cannot let him walk out into the dark when we have already agreed it is too dangerous.'
+  [answer] daniel go_anyway      say 'I have to see what is out there, Leo. I am going.' reason 'I cannot stay here and do nothing while everyone starves.'
+  [reaction] elena  get_up_and_look say None reason 'I must get up and see who has slipped out into the dark so I can wait by the door for them.'
+  [reaction] mara   get_up_and_look say None reason 'I have to know if Daniel actually walked out into the dark like he said he would.'
+  [group] {"leader": "daniel", "members": ["daniel"], "street": "scare_back", "outcome": "back shaken, with water", "far": null}
+  [n-event] got_up daniel: Daniel: got_up
+  [n-event] door daniel: Daniel: door
+  [n-event] reaction elena: Elena: reaction
+  [n-event] reaction mara: Mara: reaction
+  [n-event] went_out daniel: Daniel: went_out
+  [n-event] street daniel: Daniel: street (back shaken, with water)
+  [n-event] return daniel: Daniel: return
+
+======== DAY 6 (away: []) ========
+  [need] 14:54 daniel debt stage 1
+  [need] 16:15 elena debt stage 1
+  [need] 17:24 mara debt stage 1
+  [need] 18:09 leo debt stage 1
+  [door] 09:27-09:36 ask_water a woman of about forty -> refused; rooms {'daniel': 'brothers_room', 'elena': 'kitchen', 'leo': 'brothers_room', 'mara': 'back_room'}; by_knock [[147, {'elena': 'heard'}]]; said [[147, "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."], [156, "Right. I'm sorry. I'll try somewhere else."]]; heard_said {'elena': [[156, "Right. I'm sorry. I'll try somewhere else.", False]]}; acts [[147, 'elena', 'door_look', None], [150, 'elena', 'door_look', None], [153, 'elena', 'door_refuse', 'Please go away, we have nothing for you and it is not safe here.']]; give None
+  [stretch] 07:00-07:21 kitchen the morning asks 24
+  [stretch] 09:27-09:39 kitchen Q7 asks 7
+  [stretch] 09:39-09:48 kitchen Q2 asks 8
+  [stretch] 10:36-10:42 kitchen Q2 asks 8
+  [event] D6-002 07:00 collect_rain daniel -> None: Daniel says to everyone, while going out into the rain with the bin: "I'm putting the bin out under the drainpipe, we need to catch every drop we can."; witnesses {'daniel': 'did', 'elena': 'saw', 'leo': 'saw', 'mara': 'saw'}
+  [event] D6-028 09:27 knock None -> None: a knock at the front door (h6, ask_water); witnesses {'elena': 'heard'}
+  [event] D6-029 09:27 door_line None -> None: the person at the door (voice_ask_water): "Sorry to bother you. Is there any water in the house you could spare? I've nothing left."; witnesses {}
+  [event] D6-033 09:36 door_line None -> None: the person at the door (refused_polite): "Right. I'm sorry. I'll try somewhere else."; witnesses {'elena': 'heard'}
+  [event] D6-034 09:36 door_end None -> None: the visit ended: refused; witnesses {'elena': 'saw'}
+  [event] D6-039 09:39 tell elena -> ['daniel', 'mara']: Elena tells Daniel and Mara about the woman of about forty at the front door at 09:27: "Someone came to the front door a few minutes ago. I told her to go away."; witnesses {'elena': 'did', 'daniel': 'saw', 'mara': 'saw', 'leo': 'voices'}
+  [event] D6-054 10:39 tell elena -> ['leo']: Elena tells Leo about the woman of about forty at the front door at 09:27: "Leo, a woman of about forty came to the front door at nine-twenty-seven, and I told her to go away."; witnesses {'elena': 'did', 'daniel': 'saw', 'leo': 'saw', 'mara': 'saw'}
+  min 00 daniel [m] collect_rain           kitchen      I'm putting the bin out under the drainpipe, we need to catch every drop we can.
+  min 00 mara   [m] confront_daniel        kitchen      You went out into the dark again last night just like you wanted. Why do you always have to disobey everyone?
+  min 00 elena  [m] reassure_mara          kitchen      Hush, Mara, he went for the water we needed so badly. Let's just be glad he's back safe.
+  min 00 leo    [m] silent                 kitchen      
+  min 03 mara   [m] accuse_daniel          kitchen      You went out into the dark again behind our backs, Daniel. You always do whatever you want.
+  min 03 daniel [m] confront_mara          kitchen      I brought back the water that keeps us alive, Mara, so stop acting like I did this to hurt us.
+  min 03 leo    [m] silent                 kitchen      
+  min 03 elena  [m] reassure_daniel        kitchen      You brought the water back safely, Daniel, and we are grateful you made it through the dark.
+  min 06 daniel [m] confront_mara          kitchen      Mara, stop talking about things you don't understand. I went out there and I got the water.
+  min 06 mara   [m] confront_daniel        kitchen      You think you can just do whatever you want and lie to us, Daniel. I understand more than you think.
+  min 06 leo    [m] confront_daniel        kitchen      Bringing back water doesn't give you the right to act like you run everything, Daniel.
+  min 06 elena  [m] reassure_all           kitchen      Let's not fight among ourselves when we need to stay together.
+  min 09 daniel [m] confront_leo           kitchen      You sat there telling me not to go last night, Leo, but I'm the one who brought back the water we're drinking.
+  min 09 leo    [m] confront_daniel        kitchen      Bringing water doesn't undo the risk you took, Daniel, or the fact that you lied about the can.
+  min 09 mara   [m] confront_daniel        kitchen      You think bringing water makes you a hero, Daniel, but you still took the food from us.
+  min 09 elena  [m] silent                 kitchen      
+  min 12 daniel [m] reassure_all           kitchen      We are going to make it, I brought the water back and I will keep us safe.
+  min 12 mara   [m] silent                 kitchen      
+  min 12 leo    [m] confront_daniel        kitchen      Bringing back water doesn't undo the risks you took, Daniel. You went out against what we all agreed.
+  min 12 elena  [m] reassure_all           kitchen      We have water and we are all together here, so let's just try to be calm today.
+  min 15 daniel [m] reassure_all           kitchen      We have enough water to get through this, just listen to me and stay calm.
+  min 15 leo    [m] accuse_daniel          kitchen      You brought back water in the middle of the night, Daniel, just like you always sneak around doing whatever you want.
+  min 15 elena  [m] reassure_daniel        kitchen      You got the water safely back inside, Daniel, and we are grateful for it.
+  min 18 daniel [m] confront_leo           kitchen      Leo, stop undermining me when I am the one taking the risks for all of us.
+  09:27 elena  [m] door_look              kitchen      
+  09:30 elena  [m] door_look              kitchen      
+  09:33 elena  [m] door_refuse            kitchen      Please go away, we have nothing for you and it is not safe here.
+  09:36 elena  [m] go_back_room           kitchen      I need to lie down for a moment.
+  09:36 leo    [m] silent                 brothers_room 
+  09:36 daniel [m] confront_leo           brothers_room You think it is easy to go out there in the dark, Leo, but I am the one who does it.
+  09:36 mara   [m] go_kitchen             back_room    I need to see what is happening out there.
+  09:39 mara   [m] accuse_daniel          kitchen      You went out in the dark again, Daniel, didn't you?
+  09:39 elena  [m] tell_daniel_mara_visit kitchen      Someone came to the front door a few minutes ago. I told her to go away.
+  09:42 daniel [m] reassure_all           kitchen      We are going to be fine. I am taking care of this.
+  09:42 mara   [m] accuse_daniel          kitchen      You went out into the dark again and you think that makes up for everything, but it doesn't.
+  09:42 elena  [m] reassure_all           kitchen      We are still here together, and we are going to get through today.
+  09:42 leo    [m] silent                 brothers_room 
+  09:45 daniel [m] reassure_all           kitchen      We are going to be fine, I promise you all that we will get through this.
+  09:45 mara   [m] accuse_daniel          kitchen      You went out into the dark last night behind our backs, Daniel. You had no right to do that.
+  10:36 daniel [m] talk_visit             kitchen      Mom told me someone knocked at the front door earlier, at twenty-seven past nine. A woman about forty, she said, and she turned her away.
+  10:36 mara   [m] accuse_daniel          kitchen      You went out into the dark again and you brought back water without telling anyone. You always do whatever you want.
+  10:36 leo    [m] confront_daniel        kitchen      You went out in the middle of the night without a word and you expect us to just accept it.
+  10:36 elena  [m] reassure_all           kitchen      We are safe inside now, and we will get through this day together without fighting.
+  10:39 daniel [m] reassure_all           kitchen      We are safe in here and I will keep watching over everyone.
+  10:39 mara   [m] accuse_daniel          kitchen      You went out into the dark again and you brought back trouble, Daniel. You always think you get to decide everything.
+  10:39 elena  [m] tell_leo_visit         kitchen      Leo, a woman of about forty came to the front door at nine-twenty-seven, and I told her to go away.
+  10:39 leo    [m] confront_daniel        kitchen      You went out behind our backs last night, Daniel. You don't get to decide what risks we take.
+
+  ---- NIGHT 6: leavers [], away [] ----
+  [bedtime] daniel lie_awake      say None reason 'I need to stay awake and keep watch to make sure no one sneaks out into the dark.'
+  [bedtime] elena  lie_awake      say None reason 'I cannot rest while Daniel risks his life in the dark and the family fractures around us, so I must stay awake and listen.'
+  [bedtime] leo    lie_awake      say None reason 'I need to stay awake and listen so Daniel cannot slip out into the dark again.'
+  [bedtime] mara   lie_awake      say None reason 'I cannot sleep while wondering if Daniel will sneak out into the dark again.'
+
+======== DAY 7 (away: []) ========
+  [rain] {"minute": 618, "heard": ["daniel", "elena", "leo", "mara"]}
+  [need] 07:09 leo debt stage 1
+  [need] 17:24 leo debt stage 1
+  [need] 17:54 mara debt stage 1
+  [need] 18:00 daniel debt stage 1
+  [need] 18:39 elena debt stage 1
+  [need] 19:00 leo fast stage 3
+  [stretch] 07:00-07:15 kitchen the morning asks 19
+  [stretch] 10:03-10:12 kitchen Q2 asks 8
+  [stretch] 10:33-10:39 kitchen Q2 asks 8
+  [stretch] 19:00-19:06 kitchen Q1 asks 5
+  min 00 mara   [m] accuse_daniel          kitchen      You think you can just act like nothing happened, but we are starving because of you.
+  min 00 daniel [m] confront_mara          kitchen      Stop saying that, Mara. I am doing everything I can to keep us all alive.
+  min 00 elena  [m] reassure_all           kitchen      Please stop fighting, we need to stay calm and look after one another.
+  min 00 leo    [m] silent                 kitchen      
+  min 03 mara   [m] accuse_daniel          kitchen      You think you can just ignore what you did, Daniel, but you took the food and you never care about anyone else.
+  min 03 daniel [m] confront_mara          kitchen      Stop lying, Mara, I'm doing everything I can to keep us all alive.
+  min 03 leo    [m] accuse_daniel          kitchen      Daniel, you took the food days ago and you're still lying about it now.
+  min 03 elena  [m] reassure_all           kitchen      Please stop fighting, we need to stay calm and look after each other.
+  min 06 daniel [m] confront_mara          kitchen      Stop talking like that, Mara, I am doing everything I can to keep us alive.
+  min 06 mara   [m] confront_daniel        kitchen      You think bringing water makes you a hero, but you still stole the food from us.
+  min 06 elena  [m] reassure_all           kitchen      We need to stay calm and not fight each other while things are this hard.
+  min 06 leo    [m] accuse_daniel          kitchen      You took the can yourself, Daniel, so stop pretending you are the only one trying to keep us alive.
+  min 09 daniel [m] reassure_leo           kitchen      Leo, I am not trying to act like a tyrant, I just want us all to survive this.
+  min 09 leo    [m] silent                 kitchen      
+  min 09 elena  [m] silent                 kitchen      
+  min 09 mara   [m] accuse_daniel          kitchen      You always act like you care, Daniel, but you took the food from us.
+  min 12 daniel [m] confront_mara          kitchen      Stop blaming me for everything, Mara, when I am the one trying to keep us safe.
+  min 12 mara   [m] confront_daniel        kitchen      Bringing water does not give you the right to treat us like children, Daniel.
+  min 12 elena  [m] reassure_all           kitchen      Please stop fighting, we need to stay calm and protect each other.
+  10:03 daniel [m] confront_leo           kitchen      You think you can just wander in here after everything like nothing's wrong, Leo?
+  10:03 leo    [m] confront_daniel        kitchen      I was just in the other room, Daniel, not wandering anywhere.
+  10:06 daniel [m] confront_leo           kitchen      Stop acting like you own this place, Leo, I'm trying to keep us alive.
+  10:06 leo    [m] confront_daniel        kitchen      Keeping us alive doesn't give you the right to lie and steal from us, Daniel.
+  10:06 elena  [m] reassure_mara          back_room    Try to rest, Mara, we are going to get through this together.
+  10:06 mara   [m] silent                 back_room    
+  10:09 daniel [m] confront_leo           kitchen      Don't you dare talk to me about lying, Leo.
+  10:09 leo    [m] confront_daniel        kitchen      You're the one who lied about the can for hours, Daniel, so don't lecture me about honesty.
+  10:33 daniel [m] confront_leo           kitchen      Leo, stop staring at me like I'm the one who emptied that shelf.
+  10:33 leo    [m] confront_daniel        kitchen      You took the can before, Daniel, so stop pretending you have clean hands.
+  10:33 elena  [m] reassure_all           kitchen      Stop shouting at each other, we will get through this if we stay calm.
+  10:33 mara   [m] confront_daniel        kitchen      You always act like you own everything just because you brought back some water.
+  10:36 daniel [m] confront_leo           kitchen      Leo, stop twisting things and accusing me when I'm the only one keeping us alive.
+  10:36 leo    [m] confront_daniel        kitchen      You aren't keeping anyone alive by blaming everyone else for what you took.
+  10:36 mara   [m] accuse_daniel          kitchen      You think bringing water makes you a hero, but you're the one who stole from us.
+  10:36 elena  [m] reassure_all           kitchen      Please stop fighting, we need to stay calm and look after each other.
+  19:00 daniel [m] volunteer              kitchen      I'll go to the neighbour's house tonight and see if there's anything left. I'm the oldest, so I'm doing it.
+  19:00 elena  [m] keep_daniel_home       kitchen      You are not going out into the dark, Daniel. It is too dangerous.
+  19:00 mara   [m] confront_daniel        kitchen      You always decide everything for yourself just because you think you're in charge.
+  19:00 leo    [m] keep_daniel_home       kitchen      Mom is right, Daniel. Going out there tonight is just asking to get killed over nothing.
+  19:03 daniel [m] still_going            kitchen      I am the oldest, and I am the one who has to go out there to protect this family.
+
+  ---- NIGHT 7: leavers ['daniel'], away [] ----
+  [bedtime] daniel go_next_door   say None reason 'I have to find food for them before it is too late, no matter what they say.'
+  [bedtime] elena  lie_awake      say None reason 'I will lie awake in the dark and listen to make sure Daniel does not try to sneak out into the street again.'
+  [bedtime] leo    lie_awake      say None reason 'I am too weak and tired to stop him if he insists on leaving, so I will lie here and listen.'
+  [bedtime] mara   lie_awake      say None reason 'I have to lie here and listen just in case Daniel tries to sneak out into the dark again.'
+  [reaction] leo    stop_daniel    say 'Daniel, stay where you are. You are not going out there.' reason 'Daniel is putting himself and everyone else in unnecessary danger by sneaking out.'
+  [answer] daniel go_anyway      say 'I have to do this, Leo, stay back.' reason 'I am the oldest and I have to protect them even if they try to stop me.'
+  [reaction] elena  stay_in_bed    say None reason 'I am too weak to stop whatever comes now, so I can only lie here and wait for the morning.'
+  [reaction] mara   get_up_and_look say None reason 'I need to know if Daniel actually snuck out into the dark like he threatened to do.'
+  [group] {"leader": "daniel", "members": ["daniel"], "street": "clean", "outcome": "back with nothing", "far": null}
+  [n-event] got_up daniel: Daniel: got_up
+  [n-event] door daniel: Daniel: door
+  [n-event] reaction elena: Elena: reaction
+  [n-event] reaction mara: Mara: reaction
+  [n-event] went_out daniel: Daniel: went_out
+  [n-event] street daniel: Daniel: street (back with nothing)
+  [n-event] return daniel: Daniel: return
+
+======== DAY 8 (away: []) ========
+  [need] 10:24 daniel debt stage 1
+  [need] 16:45 mara fast stage 3
+  [need] 17:00 daniel debt stage 1
+  [need] 17:09 elena debt stage 1
+  [need] 17:39 mara debt stage 1
+  [need] 18:00 leo debt stage 1
+  [stretch] 07:00-07:18 kitchen the morning asks 24
+  [stretch] 09:51-10:00 kitchen Q2 asks 8
+  [stretch] 10:09-10:18 kitchen Q2 asks 8
+  [stretch] 19:00-19:06 kitchen Q5 asks 8
+  min 00 elena  [m] silent                 kitchen      
+  min 00 daniel [m] volunteer              kitchen      I went out last night and I will go again tonight to find something for us.
+  min 00 leo    [m] keep_daniel_home       kitchen      You went last night and brought back nothing, Daniel. You are staying home tonight.
+  min 00 mara   [m] accuse_daniel          kitchen      You think you can just sneak out and act like you own us after stealing the food.
+  min 03 daniel [m] still_going            kitchen      I went out last night to keep us alive, and I will go again if I have to.
+  min 03 elena  [m] keep_daniel_home       kitchen      Daniel, you must stay home tonight. We cannot risk losing you out there in the dark again.
+  min 03 leo    [m] confront_daniel        kitchen      Daniel, last night proved going out solves nothing and only puts us in needless danger.
+  min 03 mara   [m] accuse_daniel          kitchen      You always sneak around and act like you own the house, Daniel.
+  min 06 daniel [m] still_going            kitchen      I told you, I am going out there again tonight whether you like it or not.
+  min 06 mara   [m] accuse_daniel          kitchen      You always think you can just sneak around and do whatever you want without caring about any of us.
+  min 06 leo    [m] confront_daniel        kitchen      You went last night and came back with nothing, Daniel, so going again is just throwing your life away for nothing.
+  min 06 elena  [m] nobody_goes            kitchen      Nobody is going out tonight, we cannot afford to lose anyone else.
+  min 09 daniel [m] propose_trip           kitchen      I went out there last night and I will go again tonight to find something for us.
+  min 09 elena  [m] confront_daniel        kitchen      Daniel, you went out last night and risked everything for nothing, and you cannot keep doing this.
+  min 09 mara   [m] confront_daniel        kitchen      Daniel, you always think you know best and you sneak out without listening to anyone.
+  min 09 leo    [m] nobody_goes            kitchen      Nobody is going anywhere tonight, Daniel, because last night proved it is entirely pointless and far too dangerous.
+  min 12 daniel [m] volunteer              kitchen      I went last night and I will go again tonight because it is my job to protect this family.
+  min 12 elena  [m] keep_daniel_home       kitchen      Daniel, you must stay home tonight, we cannot risk losing you out there in the dark again.
+  min 12 leo    [m] keep_daniel_home       kitchen      Mom is right, Daniel, you are staying right here tonight.
+  min 12 mara   [m] accuse_daniel          kitchen      You always act like you own the night, Daniel, but you just come back empty-handed.
+  min 15 daniel [m] still_going            kitchen      I went last night and I am going again tonight, because keeping you all safe is my job.
+  min 15 elena  [m] nobody_goes            kitchen      Nobody is going out tonight, we stay together.
+  min 15 mara   [m] accuse_daniel          kitchen      You just sneak out because you think you get to make every single choice for us.
+  min 15 leo    [m] confront_daniel        kitchen      Daniel, you aren't protecting anyone by sneaking out and ignoring what the rest of us agree on.
+  09:51 daniel [m] still_going            kitchen      I am the oldest and I am the one who has to go out there tonight.
+  09:51 mara   [m] keep_daniel_home       kitchen      You can't just go out there again, Daniel. You have to stay home tonight.
+  09:51 elena  [m] keep_daniel_home       kitchen      Daniel, please, you cannot go out there again tonight. We need you to stay home.
+  09:54 daniel [m] still_going            kitchen      I have to do this, I'm the oldest and I am going.
+  09:54 elena  [m] nobody_goes            kitchen      Nobody is going out tonight, we stay together.
+  09:54 mara   [m] accuse_daniel          kitchen      You always think you get to decide everything just because you sneaked out.
+  09:54 leo    [m] silent                 brothers_room 
+  09:57 daniel [m] still_going            kitchen      I am the oldest and I have to go out there to protect you all.
+  10:09 daniel [m] still_going            kitchen      I am the oldest and I am still going out there tonight.
+  10:09 mara   [m] accuse_daniel          kitchen      You just want to sneak out again because you think you're in charge of everything!
+  10:12 daniel [m] still_going            kitchen      I don't care what any of you say, I am the oldest and I am going out there tonight.
+  10:12 mara   [m] accuse_daniel          kitchen      You just want to sneak out again like you did last night, Daniel.
+  10:12 elena  [m] keep_daniel_home       kitchen      Daniel, you must stay home tonight, it is far too dangerous.
+  10:12 leo    [m] confront_daniel        kitchen      Daniel, sneaking out into the night and acting like a tyrant doesn't make you a leader.
+  10:15 daniel [m] still_going            kitchen      I am the oldest and I am the one who will go out there tonight.
+  10:15 mara   [m] accuse_daniel          kitchen      You always think you get to decide everything just because you sneak out.
+  19:00 daniel [m] still_going            kitchen      I am the oldest and I am the one who has to go out there for us.
+  19:00 elena  [m] nobody_goes            kitchen      Nobody is going out into the dark tonight, we cannot risk losing any more of us.
+  19:00 mara   [m] accuse_daniel          kitchen      You think you can just sneak out and decide everything for us again.
+  19:00 leo    [m] confront_daniel        kitchen      You went last night and came back with nothing, Daniel. Going out again accomplishes nothing.
+  19:03 daniel [m] still_going            kitchen      I am the oldest, and I will go out there again tonight to keep us alive.
+  19:03 mara   [m] confront_daniel        kitchen      You always think you get to decide everything just because you are the oldest, Daniel!
+  19:03 leo    [m] confront_daniel        kitchen      Going out into the dark again accomplishes nothing, Daniel, except risking your life for a wasted effort.
+  19:03 elena  [m] keep_daniel_home       kitchen      Daniel, you must stay home tonight. We cannot risk losing you out there in the dark again.
+
+  ---- NIGHT 8: leavers [], away [] ----
+  [bedtime] daniel sleep          say None reason 'I have no strength left to go out tonight and my body simply cannot take another fruitless trip.'
+  [bedtime] elena  lie_awake      say None reason 'I must lie awake and listen to make sure nobody slips out into the dark again.'
+  [bedtime] leo    lie_awake      say None reason 'I need to stay awake and listen so Daniel does not sneak out into the street again.'
+  [bedtime] mara   watch_door     say None reason 'I have to stay by the front door all night so Daniel cannot sneak out again into the dark.'
+
+======== DAY 9 (away: []) ========
+  [rain] {"minute": 270, "heard": ["elena", "leo", "mara"]}
+  [need] 12:45 mara debt stage 1
+  [need] 16:15 daniel debt stage 1
+  [need] 17:39 leo debt stage 1
+  [need] 18:09 elena debt stage 1
+  [need] 19:54 mara debt stage 1
+  [stretch] 07:00-07:18 kitchen the morning asks 24
+  [stretch] 09:51-10:00 kitchen Q2 asks 8
+  [stretch] 12:12-12:21 kitchen Q2 asks 6
+  [stretch] 19:00-19:06 kitchen Q5 asks 8
+  min 00 elena  [m] silent                 kitchen      
+  min 00 leo    [m] silent                 kitchen      
+  min 00 mara   [m] accuse_daniel          kitchen      You think you can just take everything and act like nothing happened, Daniel.
+  min 00 daniel [m] confront_mara          kitchen      Stop talking to me like that, Mara. I am the oldest and I am doing everything I can for this family.
+  min 03 mara   [m] accuse_daniel          kitchen      You think you can just order everyone around after what you did, Daniel.
+  min 03 daniel [m] confront_mara          kitchen      Stop blaming me for everything, Mara, I am trying to keep us alive.
+  min 03 elena  [m] reassure_all           kitchen      Please, stop fighting. We are all starving and we need to stay together.
+  min 03 leo    [m] confront_daniel        kitchen      Daniel, arguing won't help us find food or fix the mess you made.
+  min 06 daniel [m] confront_mara          kitchen      Mara, stop accusing me when you know you ate your own share in front of everyone.
+  min 06 mara   [m] accuse_daniel          kitchen      You took it and you lied about it, Daniel, don't try to turn it around on me.
+  min 06 leo    [m] confront_daniel        kitchen      Daniel, stop deflecting and blaming Mara when we all know you took the food.
+  min 06 elena  [m] reassure_all           kitchen      Please stop fighting, children, shouting at each other will not bring us any food.
+  min 09 daniel [m] volunteer              kitchen      I am the oldest, and I will go out there tonight to find something for us.
+  min 09 mara   [m] keep_daniel_home       kitchen      You are not going anywhere tonight, Daniel. We remember what happened last time.
+  min 09 leo    [m] keep_daniel_home       kitchen      Mara is right, Daniel. Staying home is the only sensible choice.
+  min 09 elena  [m] keep_daniel_home       kitchen      Daniel, you must stay home tonight. We cannot risk losing you out there.
+  min 12 daniel [m] still_going            kitchen      I am the oldest, and I am the one who is going out there tonight.
+  min 12 mara   [m] accuse_daniel          kitchen      You just want to sneak out again because you think you're in charge of us all.
+  min 12 leo    [m] confront_daniel        kitchen      You went before and came back with nothing, Daniel. Going out again accomplishes nothing.
+  min 12 elena  [m] nobody_goes            kitchen      Nobody is going out tonight. We stay together and we stay safe.
+  min 15 daniel [m] still_going            kitchen      I told you, I am going out there whether you like it or not.
+  min 15 mara   [m] accuse_daniel          kitchen      You always just decide for everyone, Daniel, but you're the one who stole the food in the first place.
+  min 15 leo    [m] confront_daniel        kitchen      Daniel, you aren't listening to anyone, and your stubbornness is going to get us all killed.
+  min 15 elena  [m] keep_daniel_home       kitchen      Daniel, you are not going out into that street tonight, and that is final.
+  09:51 daniel [m] still_going            kitchen      I told you, I am still going out there tonight whether you like it or not.
+  09:51 leo    [m] confront_daniel        kitchen      You went out there before and came back with nothing, Daniel. Going again is just suicide.
+  09:51 elena  [m] nobody_goes            kitchen      Nobody is going out tonight, we cannot risk losing anyone else.
+  09:54 daniel [m] still_going            kitchen      I am the oldest and I have to go out there to protect this family, no matter what you say.
+  09:54 leo    [m] confront_daniel        kitchen      Daniel, going out there again is pure suicide and you know it.
+  09:54 elena  [m] keep_daniel_home       kitchen      Daniel, you are not going out there tonight. We are staying together right here.
+  09:57 daniel [m] still_going            kitchen      I am the oldest, and I am going out there tonight whether you like it or not.
+  09:57 elena  [m] nobody_goes            kitchen      Nobody is going out tonight, we stay together.
+  12:12 mara   [m] accuse_daniel          kitchen      You think you can just take everything and ruin it all.
+  12:12 daniel [m] confront_mara          kitchen      You have no right to talk to me like that after everything I do for us.
+  12:15 mara   [m] accuse_daniel          kitchen      You think you can just take everything and act like we owe you.
+  12:15 daniel [m] confront_mara          kitchen      You have no right to talk to me that way, Mara.
+  12:18 mara   [m] accuse_daniel          kitchen      You think you can just take everything and act like we owe you, Daniel. You took the can and you won't even admit it honestly.
+  12:18 daniel [m] confront_mara          kitchen      Stop talking to me like that, Mara, I am the oldest and I won't take this from you.
+  19:00 mara   [m] accuse_daniel          kitchen      You always think you can just sneak out and decide everything for us.
+  19:00 daniel [m] confront_mara          kitchen      Stop blaming me for everything just because I'm trying to protect this family.
+  19:00 leo    [m] confront_daniel        kitchen      Daniel, shouting about protecting us doesn't change the fact that going out there is suicide.
+  19:00 elena  [m] keep_daniel_home       kitchen      Daniel, you must stay home tonight, we cannot risk losing you out there.
+  19:03 daniel [m] still_going            kitchen      I am the oldest, and I am going out there tonight whether you like it or not.
+  19:03 mara   [m] accuse_daniel          kitchen      You just want to sneak out because you think you can do whatever you want.
+  19:03 leo    [m] confront_daniel        kitchen      You went the night before last and came back with nothing, Daniel, so going again tonight is just pure recklessness.
+  19:03 elena  [m] nobody_goes            kitchen      Nobody is going out into that street tonight, we stay together here.
+
+  ---- NIGHT 9: leavers [], away [] ----
+  [bedtime] daniel lie_awake      say None reason 'I cannot rest when they think they can command me, so I lie here watching the dark and keeping guard over my house.'
+  [bedtime] elena  lie_awake      say None reason 'I cannot sleep while Daniel is so reckless and the house is tearing itself apart.'
+  [bedtime] leo    lie_awake      say None reason 'I will lie awake and listen to make sure Daniel does not try to sneak out again in the middle of the night.'
+  [bedtime] mara   watch_door     say None reason "I have to stay here and watch the front door so Daniel doesn't sneak out into the street while we are sleeping."
+
+======== DAY 10 (away: []) ========
+  [need] 07:09 elena debt stage 1
+  [need] 10:15 daniel debt stage 1
+  [need] 12:39 elena fast stage 3
+  [need] 16:15 daniel debt stage 1
+  [need] 16:39 leo debt stage 1
+  [need] 17:30 elena debt stage 1
+  [need] 18:24 mara debt stage 1
+  [stretch] 07:00-07:18 kitchen the morning asks 22
+  [stretch] 09:18-09:27 kitchen Q2 asks 6
+  [stretch] 09:48-09:57 kitchen Q2 asks 8
+  min 00 mara   [m] accuse_daniel          kitchen      You took it before and you're going to try it again, Daniel. Don't think we forgot.
+  min 00 daniel [m] confront_mara          kitchen      Stop accusing me every single time, Mara. I am the oldest and I am trying to keep us all safe.
+  min 00 leo    [m] confront_daniel        kitchen      Daniel, stop deflecting. You're the one who stole from us before, so drop the act.
+  min 00 elena  [m] reassure_all           kitchen      Stop shouting at each other, please. We will not survive if we tear ourselves apart.
+  min 03 daniel [m] confront_leo           kitchen      Leo, stop undermining me when I am trying to keep us all alive.
+  min 03 leo    [m] confront_daniel        kitchen      You are not keeping anyone alive, Daniel. You are just making it harder.
+  min 03 mara   [m] accuse_daniel          kitchen      You always do this, Daniel. You took the can before and you would do it again.
+  min 03 elena  [m] reassure_all           kitchen      We must not fight among ourselves. We will find a way through this together.
+  min 06 daniel [m] confront_mara          kitchen      Stop blaming me for everything, Mara, I am doing my best to keep us alive.
+  min 06 mara   [m] accuse_daniel          kitchen      You always say that, Daniel, but you're the only one who actually stole from us.
+  min 06 leo    [m] silent                 kitchen      
+  min 06 elena  [m] reassure_all           kitchen      Please stop fighting, we will figure this out together.
+  min 09 daniel [m] reassure_all           kitchen      Mom is right, we cannot fight right now. I will keep us safe, I promise.
+  min 09 elena  [m] confront_daniel        kitchen      Daniel, please do not talk about going out again when it only causes more arguments.
+  min 09 mara   [m] confront_daniel        kitchen      You always promise to keep us safe, Daniel, but you're the one who lied and took the food from us.
+  min 12 daniel [m] confront_mara          kitchen      Mara, stop throwing my mistakes in my face when I am the only one trying to keep us alive.
+  min 12 mara   [m] confront_daniel        kitchen      You think being loud makes you right, Daniel, but you are the reason we have nothing left.
+  min 12 elena  [m] reassure_all           kitchen      Please, children, stop fighting among yourselves when we are all so weak and hungry.
+  min 12 leo    [m] silent                 brothers_room 
+  min 15 daniel [m] confront_mara          kitchen      Stop blaming me for everything, Mara, when I'm the only one trying to keep us alive.
+  min 15 mara   [m] silent                 kitchen      
+  min 15 elena  [m] reassure_all           kitchen      Please, children, stop fighting and let us try to stay calm together.
+  09:18 daniel [m] confront_leo           kitchen      You can stand there judging me, Leo, but I am the only one actually trying to keep us alive.
+  09:18 leo    [m] confront_daniel        kitchen      Trying to keep us alive doesn't give you the right to lie about what you took, Daniel.
+  09:21 daniel [m] confront_leo           kitchen      You think you can lecture me when you've done nothing to help us survive?
+  09:21 leo    [m] confront_daniel        kitchen      You didn't help anyone by taking that food behind our backs, Daniel.
+  09:24 daniel [m] confront_leo           kitchen      You keep judging me, Leo, but you haven't done a single thing to protect anyone here.
+  09:24 leo    [m] confront_daniel        kitchen      Your blame doesn't change the fact that you stole the food.
+  09:48 daniel [m] confront_leo           kitchen      Stop acting like you know better than me, Leo, I am doing what I have to do.
+  09:48 leo    [m] confront_daniel        kitchen      You always talk about doing what you have to do, Daniel, but the only thing you've actually done is take the food and lie about it.
+  09:48 mara   [m] accuse_daniel          kitchen      You took the food, Daniel, and you're the reason we have nothing left.
+  09:51 daniel [m] confront_leo           kitchen      You think you know everything, Leo, but you're not the one who has to make the hard choices for us.
+  09:51 leo    [m] confront_daniel        kitchen      Your hard choices just mean taking things that aren't yours and blaming everyone else.
+  09:51 mara   [m] accuse_daniel          kitchen      You took it and you still won't just own up to what you did.
+  09:54 daniel [m] confront_leo           kitchen      Stop turning everyone against me, Leo, I am trying to keep us safe.
+  09:54 leo    [m] silent                 kitchen      

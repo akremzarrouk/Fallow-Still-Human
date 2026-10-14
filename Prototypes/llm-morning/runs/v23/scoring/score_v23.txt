@@ -1,0 +1,67 @@
+check day 3: transcript model acts 40 + fallback 0, recorded asks 40, same order per person: True
+check day 4: transcript model acts 32 + fallback 0, recorded asks 32, same order per person: True
+check day 5: transcript model acts 48 + fallback 0, recorded asks 48, same order per person: True
+check day 6: transcript model acts 47 + fallback 0, recorded asks 47, same order per person: True
+check day 7: transcript model acts 40 + fallback 0, recorded asks 40, same order per person: True
+check day 8: transcript model acts 48 + fallback 0, recorded asks 48, same order per person: True
+check day 9: transcript model acts 46 + fallback 0, recorded asks 46, same order per person: True
+check day 10: transcript model acts 36 + fallback 0, recorded asks 36, same order per person: True
+check days that differ: 0
+P1 FAIL (25 of 32 person-days with top share >= 50%)
+P2 PASS (2 street events reached someone (1 visits))
+P3 PASS (6 word-for-word equal pairs)
+P4 NOT TESTED (no one missed a visit)
+
+street events:
+  D6-028 09:27 knock witnesses {'elena': 'heard'}: a knock at the front door (h6, ask_water)
+  D6-033 09:36 door_line witnesses {'elena': 'heard'}: the person at the door (refused_polite): "Right. I'm sorry. I'll try somewhere else."
+
+units (day, person): top n/asks share | run | equal | >=60% / pairs | still_going
+  day 3 leo    accuse_daniel          7/10 (70%) | run 5 | eq 0 | 1/28 | 0
+  day 3 daniel reassure_all           7/10 (70%) | run 5 | eq 0 | 3/45 | 0
+  day 3 mara   accuse_daniel          8/10 (80%) | run 5 | eq 0 | 2/45 | 0
+  day 3 elena  reassure_all           8/10 (80%) | run 6 | eq 0 | 2/36 | 0
+  day 4 elena  reassure_all           5/8 (62%) | run 3 | eq 0 | 2/10 | 0
+  day 4 mara   accuse_daniel          7/8 (88%) | run 4 | eq 0 | 0/28 | 0
+  day 4 daniel reassure_all           4/8 (50%) | run 4 | eq 0 | 1/28 | 0
+  day 4 leo    accuse_daniel          6/8 (75%) | run 2 | eq 0 | 0/21 | 0
+  day 5 elena  reassure_all           6/11 (55%) | run 2 | eq 0 | 1/36 | 0
+  day 5 mara   accuse_daniel          11/12 (92%) | run 8 | eq 1 | 1/66 | 0
+      equal 10:03 / 10:06: You only offered to go because you want everyone to feel sorry for you after what you did.
+  day 5 daniel still_going            7/14 (50%) | run 7 | eq 1 | 9/91 | 7
+      equal 19:00 / 19:06: I told you, I am the one who is going out tonight.
+  day 5 leo    accuse_daniel          5/11 (45%) | run 3 | eq 0 | 0/55 | 0
+  day 6 daniel reassure_all           5/12 (42%) | run 2 | eq 0 | 0/66 | 0
+  day 6 mara   accuse_daniel          6/11 (55%) | run 5 | eq 0 | 3/45 | 0
+  day 6 elena  reassure_all           4/14 (29%) | run 2 | eq 0 | 1/55 | 0
+  day 6 leo    confront_daniel        5/10 (50%) | run 3 | eq 0 | 0/15 | 0
+  day 7 mara   accuse_daniel          4/9 (44%) | run 2 | eq 0 | 1/28 | 0
+  day 7 daniel confront_leo           5/12 (42%) | run 5 | eq 0 | 3/66 | 1
+  day 7 elena  reassure_all           6/9 (67%) | run 3 | eq 1 | 6/28 | 0
+      equal minute 03 / 10:36: Please stop fighting, we need to stay calm and look after each other.
+  day 7 leo    confront_daniel        5/10 (50%) | run 5 | eq 0 | 0/28 | 0
+  day 8 elena  keep_daniel_home       5/11 (45%) | run 1 | eq 2 | 7/45 | 0
+      equal minute 03 / 19:03: Daniel, you must stay home tonight. We cannot risk losing you out there in the dark again.
+      equal minute 15 / 09:54: Nobody is going out tonight, we stay together.
+  day 8 daniel still_going            11/14 (79%) | run 9 | eq 0 | 19/91 | 11
+  day 8 leo    confront_daniel        6/10 (60%) | run 3 | eq 0 | 1/36 | 0
+  day 8 mara   accuse_daniel          10/13 (77%) | run 5 | eq 0 | 3/78 | 0
+  day 9 elena  keep_daniel_home       4/11 (36%) | run 2 | eq 0 | 4/45 | 0
+  day 9 leo    confront_daniel        8/10 (80%) | run 6 | eq 0 | 2/36 | 0
+  day 9 mara   accuse_daniel          10/11 (91%) | run 7 | eq 0 | 2/55 | 0
+  day 9 daniel confront_mara          7/14 (50%) | run 5 | eq 1 | 9/91 | 6
+      equal 09:57 / 19:03: I am the oldest, and I am going out there tonight whether you like it or not.
+  day 10 mara   accuse_daniel          5/8 (62%) | run 3 | eq 0 | 0/21 | 0
+  day 10 daniel confront_leo           7/12 (58%) | run 6 | eq 0 | 3/66 | 0
+  day 10 leo    confront_daniel        7/10 (70%) | run 5 | eq 0 | 0/21 | 0
+  day 10 elena  reassure_all           5/6 (83%) | run 3 | eq 0 | 0/15 | 0
+
+per day:
+{"day": 3, "rain": [], "doors": [], "tells": [], "trips_night_after": [], "tops": {"elena": "reassure_all 8/10 (80%)", "leo": "accuse_daniel 7/10 (70%)", "mara": "accuse_daniel 8/10 (80%)", "daniel": "reassure_all 7/10 (70%)"}, "eq": {"elena": 0, "leo": 0, "mara": 0, "daniel": 0}, "still_going": 0, "asks": 40}
+{"day": 4, "rain": [], "doors": [], "tells": [], "trips_night_after": [], "tops": {"elena": "reassure_all 5/8 (62%)", "leo": "accuse_daniel 6/8 (75%)", "mara": "accuse_daniel 7/8 (88%)", "daniel": "reassure_all 4/8 (50%)"}, "eq": {"elena": 0, "leo": 0, "mara": 0, "daniel": 0}, "still_going": 0, "asks": 32}
+{"day": 5, "rain": [], "doors": [], "tells": [], "trips_night_after": ["daniel got_up", "daniel went_out", "daniel street (back shaken, with water)"], "tops": {"elena": "reassure_all 6/11 (55%)", "leo": "accuse_daniel 5/11 (45%)", "mara": "accuse_daniel 11/12 (92%)", "daniel": "still_going 7/14 (50%)"}, "eq": {"elena": 0, "leo": 0, "mara": 1, "daniel": 1}, "still_going": 7, "asks": 48}
+{"day": 6, "rain": [], "doors": ["09:27 ask_water -> refused; heard by ['elena']; words heard by ['elena']; acts ['elena door_look', 'elena door_look', 'elena door_refuse']"], "tells": ["09:39 elena -> daniel,mara (tell_daniel_mara_visit)", "10:39 elena -> leo (tell_leo_visit)"], "trips_night_after": [], "tops": {"elena": "reassure_all 4/14 (29%)", "leo": "confront_daniel 5/10 (50%)", "mara": "accuse_daniel 6/11 (55%)", "daniel": "reassure_all 5/12 (42%)"}, "eq": {"elena": 0, "leo": 0, "mara": 0, "daniel": 0}, "still_going": 0, "asks": 47}
+{"day": 7, "rain": ["17:18"], "doors": [], "tells": [], "trips_night_after": ["daniel got_up", "daniel went_out", "daniel street (back with nothing)"], "tops": {"elena": "reassure_all 6/9 (67%)", "leo": "confront_daniel 5/10 (50%)", "mara": "accuse_daniel 4/9 (44%)", "daniel": "confront_leo 5/12 (42%)"}, "eq": {"elena": 1, "leo": 0, "mara": 0, "daniel": 0}, "still_going": 1, "asks": 40}
+{"day": 8, "rain": [], "doors": [], "tells": [], "trips_night_after": [], "tops": {"elena": "keep_daniel_home 5/11 (45%)", "leo": "confront_daniel 6/10 (60%)", "mara": "accuse_daniel 10/13 (77%)", "daniel": "still_going 11/14 (79%)"}, "eq": {"elena": 2, "leo": 0, "mara": 0, "daniel": 0}, "still_going": 11, "asks": 48}
+{"day": 9, "rain": ["11:30"], "doors": [], "tells": [], "trips_night_after": [], "tops": {"elena": "keep_daniel_home 4/11 (36%)", "leo": "confront_daniel 8/10 (80%)", "mara": "accuse_daniel 10/11 (91%)", "daniel": "confront_mara 7/14 (50%)"}, "eq": {"elena": 0, "leo": 0, "mara": 0, "daniel": 1}, "still_going": 6, "asks": 46}
+{"day": 10, "rain": [], "doors": [], "tells": [], "trips_night_after": [], "tops": {"elena": "reassure_all 5/6 (83%)", "leo": "confront_daniel 7/10 (70%)", "mara": "accuse_daniel 5/8 (62%)", "daniel": "confront_leo 7/12 (58%)"}, "eq": {"elena": 0, "leo": 0, "mara": 0, "daniel": 0}, "still_going": 0, "asks": 36}

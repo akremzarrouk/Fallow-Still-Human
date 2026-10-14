@@ -1,0 +1,50 @@
+daniel_ate_it-seed2: model gemini-3.5-flash-lite, replay from cache only; cache cache\v23\gemini-3.5-flash-lite-daniel_ate_it-seed2.json holds 147 answers
+  weather day 1: wet, 2.5 mm (09:00 to 13:09); 7.7 to 14.2 °C outdoors, 15.0 °C indoors
+  weather day 2: dry; 11.2 to 15.2 °C outdoors, 17.2 °C indoors
+  weather day 3: dry; 12.6 to 16.1 °C outdoors, 18.4 °C indoors
+  weather day 4: dry; 7.1 to 19.4 °C outdoors, 17.2 °C indoors
+  weather day 5: wet, 12.3 mm (22:03 to 03:42 the next day); 7.1 to 14.3 °C outdoors, 14.7 °C indoors
+  weather day 6: wet, 4.5 mm (05:27 to 11:03, 06:30 to 10:45); 11.6 to 13.6 °C outdoors, 16.6 °C indoors
+  weather day 7: wet, 1.2 mm (04:36 to 10:09, 17:18 to 20:21); 11.8 to 13.3 °C outdoors, 16.6 °C indoors
+  weather day 8: dry; 8.0 to 19.1 °C outdoors, 17.5 °C indoors
+  weather day 9: wet, 17.8 mm (11:30 to 16:30); 7.8 to 14.0 °C outdoors, 14.9 °C indoors
+  weather day 10: dry; 8.6 to 18.6 °C outdoors, 17.6 °C indoors
+  street day 6 09:27: a visit to the front door from no. 6 (ask water)
+  min 00: model asked for 4; so far 0 live, 4 cached, 0 API requests
+  min 03: model asked for 4; so far 0 live, 8 cached, 0 API requests
+  min 06: model asked for 4; so far 0 live, 12 cached, 0 API requests
+  min 09: model asked for 3; so far 0 live, 15 cached, 0 API requests
+  min 12: model asked for 4; so far 0 live, 19 cached, 0 API requests
+  min 15: model asked for 1; so far 0 live, 20 cached, 0 API requests
+  min 30: model asked for 1; so far 0 live, 21 cached, 0 API requests
+  min 33: model asked for 1; so far 0 live, 22 cached, 0 API requests
+  min 36: model asked for 4; so far 0 live, 26 cached, 0 API requests
+  min 39: model asked for 4; so far 0 live, 30 cached, 0 API requests
+  min 42: model asked for 4; so far 0 live, 34 cached, 0 API requests
+  min 45: model asked for 4; so far 0 live, 38 cached, 0 API requests
+  min 48: model asked for 4; so far 0 live, 42 cached, 0 API requests
+  min 51: model asked for 4; so far 0 live, 46 cached, 0 API requests
+  min 54: model asked for 2; so far 0 live, 48 cached, 0 API requests
+  min 57: model asked for 2; so far 0 live, 50 cached, 0 API requests
+  min 63: model asked for 1; so far 0 live, 51 cached, 0 API requests
+  min 66: model asked for 1; so far 0 live, 52 cached, 0 API requests
+  min 75: model asked for 1; so far 0 live, 53 cached, 0 API requests
+  night 1: model asked for 4; so far 0 live, 57 cached, 0 API requests
+  night 1, the night mind: model asked for 4; so far 0 live, 61 cached, 0 API requests
+  day 2 min 00: model asked for 5; so far 0 live, 66 cached, 0 API requests
+  day 2 min 03: model asked for 2; so far 0 live, 68 cached, 0 API requests
+  day 2 min 06: model asked for 3; so far 0 live, 71 cached, 0 API requests
+  day 2 min 09: model asked for 4; so far 0 live, 75 cached, 0 API requests
+  day 2 min 12: model asked for 4; so far 0 live, 79 cached, 0 API requests
+  day 2 min 15: model asked for 4; so far 0 live, 83 cached, 0 API requests
+  day 2 min 30: model asked for 1; so far 0 live, 84 cached, 0 API requests
+  day 2 min 75: model asked for 1; so far 0 live, 85 cached, 0 API requests
+  night 2: model asked for 7; so far 0 live, 92 cached, 0 API requests
+  night 2, the night mind: model asked for 4; so far 0 live, 96 cached, 0 API requests
+  day 3 07:00 water: tap 105.5 L (bath 59.0, kitchen 46.5), bin 0.0 L, level as_before
+FIRST MISS: scene index 6, speaker Leo; Now line: ['Now, minute 00, you are in the kitchen.']; first 'min 00' line: ['- min 00: Everyone gets up and comes into the kitchen. Last night the shelf held 0 portions; this morning it holds 0 portions. (you saw it)']; answered from the cache before it: 96
+
+stopped: replay found a prompt with no cached answer, so this morning cannot be replayed from the cache.
+Answers received so far (147) are kept in cache\v23\gemini-3.5-flash-lite-daniel_ate_it-seed2.json.
+exit 3
+exit 3

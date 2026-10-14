@@ -1,0 +1,10 @@
+check day 3: transcript model acts 40, recorded asks 40, same order per person: True
+check day 4: transcript model acts 40, recorded asks 40, same order per person: True
+check day 5: transcript model acts 40, recorded asks 40, same order per person: True
+check day 6: transcript model acts 40, recorded asks 40, same order per person: True
+check day 7: transcript model acts 42, recorded asks 42, same order per person: True
+check day 8: transcript model acts 48, recorded asks 48, same order per person: True
+check day 9: transcript model acts 48, recorded asks 48, same order per person: True
+check day 10: transcript model acts 44, recorded asks 44, same order per person: True
+check days that differ: 0
+v22 control: P1 20 of 32 (stuck_facts: 20 of 32) | P3 23 (stuck_facts: 23) | MATCH

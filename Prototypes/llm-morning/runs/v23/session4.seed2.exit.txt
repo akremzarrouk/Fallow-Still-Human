@@ -1,0 +1,1 @@
+no exit: hung in the night-9 night mind after night 9's bedtimes (last output 2026-10-14T11:49:02Z); the task was stopped by the user at about 2026-10-14T12:04Z; its asks record was not written; 44 live answers in the cache (cache entries 466 -> 510)

@@ -1,0 +1,6 @@
+# the session 1 and 3 ask records (1.7 and 3.1 MB) are subsets of asks3.json, replayable from cache/v23; the fake run's record likewise
+asks.json
+asks2.json
+fake/asks.json
+__pycache__/
+scoring/__pycache__/

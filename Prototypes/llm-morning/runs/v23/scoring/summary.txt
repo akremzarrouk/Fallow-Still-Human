@@ -1,0 +1,22 @@
+== v22: 342 day asks, 32 person-days
+  elena  asks 77; days >=50% 2 of 8; >=80% 2; longest run 6; >=60% pairs 17/318; equal 1
+  leo    asks 81; days >=50% 4 of 8; >=80% 0; longest run 4; >=60% pairs 22/290; equal 6
+  mara   asks 88; days >=50% 8 of 8; >=80% 2; longest run 8; >=60% pairs 53/422; equal 14
+  daniel asks 96; days >=50% 6 of 8; >=80% 0; longest run 8; >=60% pairs 34/534; equal 2
+  all: >=50% 20; >=80% 4; longest 8; >=60% 126/1564; equal 23
+  trip-position acts by day {4: 12, 5: 21, 8: 24, 9: 31, 10: 27} total 115
+  still_going by day {4: 2, 5: 6, 8: 7, 9: 7, 10: 10} total 32
+  accuse_daniel or confront_daniel / asks: {'elena': '1/77', 'leo': '38/81', 'mara': '75/88', 'daniel': '0/96'}
+  asks by day {3: 40, 4: 40, 5: 40, 6: 40, 7: 42, 8: 48, 9: 48, 10: 44}
+  options seen 20 | silent 16
+== v23: 337 day asks, 32 person-days
+  elena  asks 80; days >=50% 5 of 8; >=80% 2; longest run 6; >=60% pairs 23/270; equal 3
+  leo    asks 79; days >=50% 7 of 8; >=80% 1; longest run 6; >=60% pairs 4/240; equal 0
+  mara   asks 82; days >=50% 7 of 8; >=80% 4; longest run 8; >=60% pairs 12/366; equal 1
+  daniel asks 96; days >=50% 6 of 8; >=80% 0; longest run 9; >=60% pairs 47/544; equal 2
+  all: >=50% 25; >=80% 7; longest 9; >=60% 86/1420; equal 6
+  trip-position acts by day {5: 15, 7: 4, 8: 27, 9: 17} total 63
+  still_going by day {5: 7, 7: 1, 8: 11, 9: 6} total 25
+  accuse_daniel or confront_daniel / asks: {'elena': '2/80', 'leo': '57/79', 'mara': '75/82', 'daniel': '0/96'}
+  asks by day {3: 40, 4: 32, 5: 48, 6: 47, 7: 40, 8: 48, 9: 46, 10: 36}
+  options seen 23 | silent 27

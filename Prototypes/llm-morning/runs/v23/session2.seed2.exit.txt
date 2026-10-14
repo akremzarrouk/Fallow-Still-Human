@@ -1,0 +1,2 @@
+no exit: hung after its last write at 2026-10-13T14:42:45Z (day 6 min 15, 19 live, 43 API requests); stopped by PID (34364, 11204) at about 2026-10-13T23:03:40Z (the wrapper's own stamp below; this note was written at 23:04:00Z); its asks record was not written (the process was killed); its 19 answers are in the cache
+its shell wrapper, after the stop: exit 127 at 2026-10-13T23:03:40Z

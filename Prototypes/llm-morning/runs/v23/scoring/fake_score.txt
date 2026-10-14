@@ -1,0 +1,51 @@
+check day 3: transcript model acts 36 + fallback 10, recorded asks 46, same order per person: True
+check day 4: transcript model acts 38 + fallback 10, recorded asks 48, same order per person: True
+check day 5: transcript model acts 37 + fallback 9, recorded asks 46, same order per person: True
+check day 6: transcript model acts 34 + fallback 9, recorded asks 43, same order per person: True
+check day 7: transcript model acts 4 + fallback 1, recorded asks 5, same order per person: True
+check day 8: transcript model acts 4 + fallback 1, recorded asks 5, same order per person: True
+check day 9: transcript model acts 5 + fallback 1, recorded asks 6, same order per person: True
+check day 10: transcript model acts 1 + fallback 0, recorded asks 1, same order per person: True
+check days that differ: 0
+P1 PASS (3 of 22 person-days with top share >= 50%)
+P2 PASS (2 street events reached someone (1 visits))
+P3 PASS (0 word-for-word equal pairs)
+P4 NOT TESTED (no one missed a visit; away through the next day, not counted: [(6, 'v1', 'daniel')])
+
+street events:
+  D6-024 09:27 knock witnesses {'leo': 'heard'}: a knock at the front door (h6, ask_water)
+  D6-027 09:30 door_line witnesses {'leo': 'heard'}: the person at the door (refused_polite): "Right. I'm sorry. I'll try somewhere else."
+
+units (day, person): top n/asks share | run | equal | >=60% / pairs | still_going
+  day 3 leo    go_brothers_room       2/12 (17%) | run 1 | eq 0 | 10/10 | 0
+  day 3 daniel go_back_room           2/13 (15%) | run 1 | eq 0 | 45/45 | 0
+  day 3 mara   ask_who                2/12 (17%) | run 1 | eq 0 | 10/10 | 0
+  day 3 elena  go_bathroom            2/9 (22%) | run 1 | eq 0 | 3/3 | 0
+  day 4 mara   go_brothers_room       2/10 (20%) | run 1 | eq 0 | 6/6 | 0
+  day 4 elena  sit_daniel             2/11 (18%) | run 2 | eq 0 | 15/15 | 0
+  day 4 daniel deny                   2/13 (15%) | run 2 | eq 0 | 28/28 | 0
+  day 4 leo    sit_daniel             2/14 (14%) | run 2 | eq 0 | 21/21 | 0
+  day 5 elena  send_daniel            2/10 (20%) | run 1 | eq 0 | 28/28 | 0
+  day 5 daniel go_back_room           3/14 (21%) | run 1 | eq 0 | 10/10 | 0
+  day 5 mara   reassure_daniel        2/11 (18%) | run 1 | eq 0 | 15/15 | 0
+  day 5 leo    silent                 2/11 (18%) | run 1 | eq 0 | 10/10 | 0
+  day 6 mara   ask_who                3/13 (23%) | run 2 | eq 0 | 55/55 | 0
+  day 6 elena  fly_away               2/14 (14%) | run 1 | eq 0 | 36/36 | 0
+  day 6 leo    say_other              3/16 (19%) | run 1 | eq 0 | 66/66 | 0
+  day 7 mara   deny                   1/2 (50%) | run 1 | eq 0 | 1/1 | 0
+  day 7 leo    tell_mara_visit        1/3 (33%) | run 1 | eq 0 | 0/0 | 0
+  day 8 leo    silent                 1/3 (33%) | run 1 | eq 0 | 0/0 | 0
+  day 8 mara   ask_who                1/2 (50%) | run 1 | eq 0 | 1/1 | 0
+  day 9 leo    aside_mara             1/3 (33%) | run 1 | eq 0 | 1/1 | 0
+  day 9 mara   refuse_aside           1/3 (33%) | run 1 | eq 0 | 0/0 | 0
+  day 10 leo    go_bathroom            1/1 (100%) | run 1 | eq 0 | 0/0 | 0
+
+per day:
+{"day": 3, "rain": [], "doors": [], "tells": [], "trips_night_after": ["leo at_door", "leo went_out", "leo street (back with food and water)", "mara got_up", "mara at_door", "mara went_out", "mara street (back shaken, with nothing)"], "tops": {"elena": "go_bathroom 2/9 (22%)", "leo": "go_brothers_room 2/12 (17%)", "mara": "ask_who 2/12 (17%)", "daniel": "go_back_room 2/13 (15%)"}, "eq": {"elena": 0, "leo": 0, "mara": 0, "daniel": 0}, "still_going": 0, "asks": 46}
+{"day": 4, "rain": [], "doors": [], "tells": [], "trips_night_after": ["daniel got_up", "daniel at_door", "daniel went_out", "daniel street (back with water)", "leo got_up", "leo at_door", "leo went_out", "leo street (back with food and water)"], "tops": {"elena": "sit_daniel 2/11 (18%)", "leo": "sit_daniel 2/14 (14%)", "mara": "go_brothers_room 2/10 (20%)", "daniel": "deny 2/13 (15%)"}, "eq": {"elena": 0, "leo": 0, "mara": 0, "daniel": 0}, "still_going": 0, "asks": 48}
+{"day": 5, "rain": [], "doors": [], "tells": [], "trips_night_after": ["daniel got_up", "daniel went_out", "daniel street (not back by morning)"], "tops": {"elena": "send_daniel 2/10 (20%)", "leo": "silent 2/11 (18%)", "mara": "reassure_daniel 2/11 (18%)", "daniel": "go_back_room 3/14 (21%)"}, "eq": {"elena": 0, "leo": 0, "mara": 0, "daniel": 0}, "still_going": 0, "asks": 46}
+{"day": 6, "rain": [], "doors": ["09:27 ask_water -> refused; heard by ['leo']; words heard by ['leo']; acts ['leo door_refuse']"], "tells": [], "trips_night_after": ["elena got_up", "elena at_door", "elena went_out", "elena street (not back by morning)"], "tops": {"elena": "fly_away 2/14 (14%)", "leo": "say_other 3/16 (19%)", "mara": "ask_who 3/13 (23%)", "daniel": "-"}, "eq": {"elena": 0, "leo": 0, "mara": 0, "daniel": 0}, "still_going": 0, "asks": 43}
+{"day": 7, "rain": ["17:18"], "doors": [], "tells": ["07:00 leo -> mara (tell_mara_visit)"], "trips_night_after": [], "tops": {"elena": "-", "leo": "tell_mara_visit 1/3 (33%)", "mara": "deny 1/2 (50%)", "daniel": "-"}, "eq": {"elena": 0, "leo": 0, "mara": 0, "daniel": 0}, "still_going": 0, "asks": 5}
+{"day": 8, "rain": [], "doors": [], "tells": [], "trips_night_after": [], "tops": {"elena": "-", "leo": "silent 1/3 (33%)", "mara": "ask_who 1/2 (50%)", "daniel": "-"}, "eq": {"elena": 0, "leo": 0, "mara": 0, "daniel": 0}, "still_going": 0, "asks": 5}
+{"day": 9, "rain": ["11:30"], "doors": [], "tells": [], "trips_night_after": ["mara went_out", "mara street (not back by morning)"], "tops": {"elena": "-", "leo": "aside_mara 1/3 (33%)", "mara": "refuse_aside 1/3 (33%)", "daniel": "-"}, "eq": {"elena": 0, "leo": 0, "mara": 0, "daniel": 0}, "still_going": 0, "asks": 6}
+{"day": 10, "rain": [], "doors": [], "tells": [], "trips_night_after": [], "tops": {"elena": "-", "leo": "go_bathroom 1/1 (100%)", "mara": "-", "daniel": "-"}, "eq": {"elena": 0, "leo": 0, "mara": 0, "daniel": 0}, "still_going": 0, "asks": 1}
