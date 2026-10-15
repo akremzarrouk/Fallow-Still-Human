@@ -1,0 +1,9 @@
+test_t9_the_carry_in_exactly (test_morning.NightTest.test_t9_the_carry_in_exactly) ... ok
+test_t10_what_day2_carries_and_resets (test_morning.NightTest.test_t10_what_day2_carries_and_resets) ... ok
+test_n_t3_the_night_minds_prompt_exactly (test_morning.DaysTest.test_n_t3_the_night_minds_prompt_exactly) ... ok
+test_n_t8_day_words (test_morning.DaysTest.test_n_t8_day_words) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 6.271s
+
+OK

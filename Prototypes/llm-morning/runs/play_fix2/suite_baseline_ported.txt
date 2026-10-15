@@ -1,0 +1,18 @@
+s..s.ssssss.sss..................s..............ssssssssssssss...............ss...    [429 RESOURCE_EXHAUSTED] waiting 8s, retry 1/6
+    [429 RESOURCE_EXHAUSTED] waiting 10s, retry 2/6
+.    [429 RESOURCE_EXHAUSTED] waiting 8s, retry 1/2
+    [429 RESOURCE_EXHAUSTED] waiting 10s, retry 2/2
+..s.s..sssssss...........................s.ss......................sss..ssss.s.s.ssssssssssss..sss..................................ssssssssC:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py:5790: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\Akrem\\AppData\\Local\\Temp\\llm-morning-test-q0dgjt5j\\runs\\daniel_ate_it-seed2.transcript.json' mode='r' encoding='utf-8'>
+  tr = json.load(open(os.path.join(runs_dir, f"{name}.transcript.json"), encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py:5801: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\Akrem\\AppData\\Local\\Temp\\llm-morning-test-q0dgjt5j\\runs\\daniel_ate_it-seed2.md' mode='r' encoding='utf-8'>
+  story = open(os.path.join(runs_dir, f"{name}.md"), encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py:5815: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\Akrem\\AppData\\Local\\Temp\\llm-morning-test-6gych6wj\\runs\\daniel_ate_it-seed2.transcript.json' mode='r' encoding='utf-8'>
+  tr = json.load(open(os.path.join(runs_dir, f"{name}.transcript.json"), encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.sssssssssssssssssssssssssssssssssss..ssssssssssssssss.sss................ssssssssssss.............s...........s..s......
+----------------------------------------------------------------------
+Ran 345 tests in 196.556s
+
+OK (skipped=141)

@@ -278,6 +278,11 @@ class FakeMorningTest(unittest.TestCase):
             # The night's and day 2's prompts have their own bounds (reports/night_design.md, §9 T12).
             if "\nNow it is night" in p or CARRY_HEAD in p:
                 continue
+            # A night mind's prompt is bounded by its records (reports/days_design.md, R8), not by a day's 1,450.
+            if p.endswith(MIND_END):
+                records = [x for x in p.split("\n") if re.match(r"^\[[DN]\d+-\d+\] ", x)]
+                self.assertLessEqual(estimate_tokens("\n".join(records)), importlib.import_module("mind").RECORDS_MAX)
+                continue
             # The estimate tracked the API's own count closely in the first runs (1,250 against
             # 1,252); the real counts of the real runs are reported with them. The trip block
             # sits outside the budget (reports/trip_design.md, §2.5).
@@ -458,7 +463,8 @@ class SequentialTalkTest(unittest.TestCase):
                 client.first = who
                 return "accuse_" + next(o[7:] for o in options if o.startswith("accuse_")), "LINE-ONE"
             if minute == 0 and client.requests == 2:
-                return "ask_who" if "ask_who" in options else "say_other", "LINE-TWO"
+                # The second to act is the one just accused, who owes the first an answer (reports/play_fix2.md, fix 1).
+                return "say_to_" + client.first, "LINE-TWO"
             return "silent", None
         m, client = scripted(policy, self.dirs, turns=1)
         first, second, third = [p for minute, who, p in client.prompts[:3]]
@@ -469,16 +475,18 @@ class SequentialTalkTest(unittest.TestCase):
         self.assertRegex(second, rf"1\. {line_one}")
         self.assertRegex(third, line_one)
         self.assertIn('"LINE-TWO"', third)
-        self.assertRegex(third, r"2\. \w+, to everyone: \"LINE-TWO\"")
+        self.assertRegex(third, r"2\. \w+, to \w+: \"LINE-TWO\"")
 
     # ---- three in a row ----
     def test_a_speech_act_used_three_turns_in_a_row_is_not_offered_again(self):
         def policy(who, minute, options, client):
             if who == "daniel":
                 return reassure_or_silent(who, minute, options, client)
-            # The others keep the talk going with accusations they have not made before.
+            # The others keep the talk going with accusations they have not made before, of anyone but Daniel: one
+            # aimed at him would be an owed answer, and he would not be offered reassure_all (reports/play_fix2.md).
             used = client.__dict__.setdefault("used", set())
-            fresh = [o for o in options if o.startswith("accuse_") and (who, o) not in used]
+            fresh = [o for o in options if (o.startswith("accuse_") and o != "accuse_daniel" or o == "ask_who")
+                     and (who, o) not in used]
             if fresh:
                 used.add((who, fresh[0]))
                 return fresh[0], "You did it."
@@ -2273,6 +2281,45 @@ QUIET = {"wake:daniel:leo": 0.9, "door:daniel:leo": 0.9, "door:daniel:elena": 0.
          "return:daniel:elena": 0.9, "return:daniel:mara": 0.9, "house": 0.1, "trip:daniel": 0.1}
 
 
+class AskAllMorning(Morning):
+    """A day 1 for the scripted stories below: every person is asked every turn (a trigger that always counts), so that a
+    story keyed by (minute, person) happens as written (reports/play_fix2.md, §1)."""
+
+    def social_triggers(self, p, t):
+        return super().social_triggers(p, t) + ["a scripted moment"]
+
+
+# Three first mornings, scripted, in place of the v11 caches the retired tests replayed (reports/play_fix2.md, §1):
+# (minute, who) -> (option, words); anything else is `silent`. Seed 2's: Daniel accuses Leo three times, admits it at 33,
+# Mara accuses him at 36 and eats at 54. Seed 1's: Daniel admits it at 03; Leo and Mara eat at 21. Seed 3's: nobody
+# admits it; Mara searches the kitchen until 75, Daniel until 78.
+SCRIPTED_STORIES = {
+    2: {(0, "elena"): ("ask_who", "Did one of you take it?"), (0, "daniel"): ("deny", "Not me."),
+        (3, "elena"): ("reassure_all", "Nobody is accusing anyone."),
+        (3, "daniel"): ("accuse_leo", "You were up last night, Leo."),
+        (6, "leo"): ("deny", "It was not me."), (6, "daniel"): ("accuse_leo", "You were up last night, Leo."),
+        (9, "leo"): ("deny", "I keep telling you."), (9, "elena"): ("reassure_all", "Let us stay calm."),
+        (9, "daniel"): ("accuse_leo", "You were up last night, Leo."),
+        (12, "elena"): ("reassure_all", "Please, all of you."),
+        (33, "daniel"): ("confess", "I took it in the night, I'm sorry."),
+        (36, "mara"): ("accuse_daniel", "You lied to us, Daniel."), (54, "mara"): ("eat", None)},
+    1: {(0, "elena"): ("ask_who", "Did one of you take it?"), (3, "daniel"): ("confess", "It was me, I ate it."),
+        (21, "leo"): ("eat", None), (21, "mara"): ("eat", None)},
+    3: {(0, "elena"): ("ask_who", "Did one of you take it?"),
+        (72, "mara"): ("search", None), (75, "mara"): ("keep_searching", None),
+        (75, "daniel"): ("search", None), (78, "daniel"): ("keep_searching", None)},
+}
+
+
+def story_rule(seed):
+    table = SCRIPTED_STORIES[seed]
+
+    def rule(who, minute, options):
+        option, words = table.get((minute, who), ("silent", None))
+        return (option, words, "tense") if option in options else ("silent", None, "tense")
+    return rule
+
+
 class NightScripted:
     """A model for the night and day 2. prefs[who] lists option ids in order of preference: the
     first one offered is chosen, with words if it is speech. Otherwise the first option of the
@@ -2393,6 +2440,16 @@ class NightTest(unittest.TestCase):
         shutil.copy(os.path.join(V11_CACHE, f"{V6_MODEL}-daniel_ate_it-seed{seed}.json"), path)
         oracle = Oracle(Cache(path), V6_MODEL, seed, client=client, replay=client is None)
         return Morning(oracle, seed).run(), oracle
+
+    def scripted_day1(self, seed, client=None):
+        """Day 1 of a scripted story (SCRIPTED_STORIES[seed]) for the tests that replayed a v11 cache; the night and day 2
+        go to `client`, if given."""
+        oracle = Oracle(Cache(self.path(f"story-{seed}")), "fake", seed, client=StoryClient(story_rule(seed)),
+                        max_calls=150)
+        day1 = AskAllMorning(oracle, seed).run()
+        if client is not None:
+            oracle.client = client
+        return day1, oracle
 
     def short_day1(self, client, seed=1):
         """A day 1 of one silent turn (minute 00), everyone in the kitchen; then `client` answers."""
@@ -2804,23 +2861,20 @@ class NightTest(unittest.TestCase):
                 self.assertTrue("something was moving in the street" in x or "In the street, something was moving." in x,
                                 x)
 
-    # T9
-    @unittest.skip(PLAY_FIX1_RETIRED)
+    # T9 (ported from the v11 caches to the three scripted stories, reports/play_fix2.md, §1; the stories have no trip,
+    # so the trip's positions are not in these blocks)
     def test_t9_the_carry_in_exactly(self):
         blocks = {}
         for seed in (1, 2, 3):
-            day1, oracle = self.v11_day1(seed, NightScripted())
+            day1, oracle = self.scripted_day1(seed, NightScripted())
             n = self.night.Night(day1, oracle).run()
             day2 = Morning.next_day(day1, n, oracle)
             for p in data.ORDER:
                 blocks[seed, p] = day2.carry[p]
         count = "- Yesterday morning Elena counted the pantry and found one can fewer than she expected (you saw it)."
-        positions3 = ("- About going to the neighbour's house last night, where it was left: you said nobody should go "
-                      "(min 66); Daniel said Leo should not go (min 66); Elena said nobody should go (min 66); Leo said "
-                      "he will not go (min 69).")
         self.assertEqual(blocks[3, "mara"], [
             CARRY_HEAD, count, "- Nobody admitted taking the can, and it was not found.",
-            "- You searched the kitchen at minute 75 and found nothing.", positions3, "- " + GAP,
+            "- You searched the kitchen at minute 75 and found nothing.", "- " + GAP,
             "- Last night you slept in the back room with Elena. You went to sleep."])
         self.assertEqual(blocks[3, "daniel"][2:4], ["- Nobody found out that you ate the can, and nobody named you.",
                                                      "- You searched the kitchen at minute 78 and found nothing."])
@@ -2828,13 +2882,10 @@ class NightTest(unittest.TestCase):
             CARRY_HEAD, count,
             "- Daniel admitted taking the can at minute 33, after denying it to you: \"I took it in the night, I'm "
             "sorry.\" (you heard it).",
-            "- Accusations: Daniel accused you three times (min 03, 09, 12); Mara accused Daniel (min 36).",
+            "- Accusations: Daniel accused you three times (min 03, 06, 09); Mara accused Daniel (min 36).",
             "- Mara ate a portion at minute 54 (you saw it).",
-            "- About going to the neighbour's house last night, where it was left: Mara said Elena should not go "
-            "(min 48); you said Elena should not go (min 48); Elena said she will not go (min 51); Daniel said nobody "
-            "should go (min 51).",
             "- " + GAP, "- Last night you slept in the brothers room with Daniel. You went to sleep."])
-        self.assertEqual(blocks[2, "daniel"][3], "- Accusations: you accused Leo three times (min 03, 09, 12); "
+        self.assertEqual(blocks[2, "daniel"][3], "- Accusations: you accused Leo three times (min 03, 06, 09); "
                                                  "Mara accused you (min 36).")
         self.assertEqual(blocks[1, "daniel"][2], "- You admitted at minute 03 that you took the can, in front of "
                                                  "Elena, Leo and Mara.")
@@ -2868,11 +2919,10 @@ class NightTest(unittest.TestCase):
         self.assertIn("About the neighbour's house: you went in last night and found no food there. Outside is "
                       "dangerous.", day2.inside_lines(day2.people["daniel"]))
 
-    # T10
-    @unittest.skip(PLAY_FIX1_RETIRED)
+    # T10 (ported from the v11 cache to the scripted story of seed 2, reports/play_fix2.md, §1)
     def test_t10_what_day2_carries_and_resets(self):
         client = NightScripted(angry={"leo": "Daniel", "mara": "Daniel"})
-        day1, oracle = self.v11_day1(2, client)
+        day1, oracle = self.scripted_day1(2, client)
         n = self.night.Night(day1, oracle).run()
         day2 = Morning.next_day(day1, n, oracle)
         for pid, p in day2.people.items():
@@ -3727,6 +3777,7 @@ class DaysTest(unittest.TestCase):
     tearDown = NightTest.tearDown
     path = NightTest.path
     v11_day1 = NightTest.v11_day1
+    scripted_day1 = NightTest.scripted_day1
     short_day1 = NightTest.short_day1
     night_of = NightTest.night_of
     act = NightTest.act
@@ -3737,11 +3788,13 @@ class DaysTest(unittest.TestCase):
         self.mind = importlib.import_module("mind")
         self.memory = importlib.import_module("memory")
 
-    def three_days(self, seed=2, client=None, draws1=None, draws2=None, day2_turns=1, day2_food=never, prefs2=None):
-        """Day 1 of seed N from v11's answers, then night 1, mind 1, a short day 2, night 2, mind 2 and day 3 (not
-        played), all answered by `client`. prefs2 replaces the client's preferences before night 2."""
+    def three_days(self, seed=2, client=None, draws1=None, draws2=None, day2_turns=1, day2_food=never, prefs2=None,
+                   scripted=False):
+        """Day 1 of seed N from v11's answers (scripted=True: from the scripted story of that seed), then night 1, mind 1,
+        a short day 2, night 2, mind 2 and day 3 (not played), all answered by `client`. prefs2 replaces the client's
+        preferences before night 2."""
         client = client or NightScripted()
-        day1, oracle = self.v11_day1(seed, client)
+        day1, oracle = (self.scripted_day1 if scripted else self.v11_day1)(seed, client)
         chron = self.chron.Chronicle(seed, day1.culprit)
         chron.add_day(day1)
         n1 = self.night.Night(day1, oracle, draws=draws1 or {}).run()
@@ -3819,11 +3872,10 @@ class DaysTest(unittest.TestCase):
         self.assertEqual(d.day3.trip, {"minute": 0, "why": ["carried over from yesterday"], "asked": []})
         self.assertEqual(d.n2.number, 2)
 
-    # N-T3
-    @unittest.skip(PLAY_FIX1_RETIRED)
+    # N-T3 (ported from the v11 cache to the scripted story of seed 2, reports/play_fix2.md, §1)
     def test_n_t3_the_night_minds_prompt_exactly(self):
         self.assertEqual(self.mind.NIGHT_MIND_SYSTEM, NIGHT_MIND_TEXT)
-        d = self.three_days(seed=2)
+        d = self.three_days(seed=2, scripted=True)
         night1 = [x for x in d.client.mind_prompts if "[N1-" in x[2] and "[N2-" not in x[2]]
         self.assertEqual([w for w, *_ in night1], data.ORDER)
         who, system, prompt, schema = next(x for x in night1 if x[0] == "leo")
@@ -3847,7 +3899,7 @@ class DaysTest(unittest.TestCase):
                                      "can fewer than she expected and says so. 2 portions are left. (you saw it)")
         # R1 and R7: Daniel's three accusations of Leo, folded into the first.
         self.assertTrue([x for x in records if re.match(r'^\[D1-\d{3}\] min 03: Daniel, to you: ".+" '
-                                                        r'Then 2 more times, to min 12; last: ".+"$', x)], records)
+                                                        r'Then 2 more times, to min 09; last: ".+"$', x)], records)
         # R2: Leo's own words, with the feeling he gave.
         self.assertTrue([x for x in records if re.match(r'^\[D1-\d{3}\] min \d\d: you [^"]+, saying: ".+"', x)], records)
         # R3: an act seen, one record, from the pinned line; a confession heard, with its words.
@@ -4174,8 +4226,7 @@ class DaysTest(unittest.TestCase):
         leo.memory += [(0, f"filler line number {i} " + "about nothing much at all " * 12) for i in range(200)]
         self.assertLessEqual(estimate_tokens(SYSTEM + d.day3.prompt_for(leo, 0, d.day3.options_for(leo))), 2420)
 
-    # N-T8
-    @unittest.skip(PLAY_FIX1_RETIRED)
+    # N-T8 (ported from the v11 cache to the scripted story of seed 2, reports/play_fix2.md, §1)
     def test_n_t8_day_words(self):
         w = world.when_words
         self.assertEqual([w(s, 6) for s in (("D", 2), ("N", 2), ("D", 1), ("N", 1))],
@@ -4183,7 +4234,7 @@ class DaysTest(unittest.TestCase):
         self.assertEqual([w(s, 7) for s in (("D", 1), ("N", 1), ("D", 2), ("N", 2))],
                          ["three days ago", "three nights ago", "two days ago", "the night before last"])
         d = self.three_days(seed=2, client=NightScripted({"daniel": ["go_next_door"]}, angry={"leo": "Daniel"}),
-                            draws1={**QUIET, "house": 0.1}, prefs2={})
+                            draws1={**QUIET, "house": 0.1}, prefs2={}, scripted=True)
         leo, dan = d.day3.people["leo"], d.day3.people["daniel"]
         text = d.day3.prompt_for(leo, 0, d.day3.options_for(leo))
         self.assertIn("About the can: Daniel admitted taking it two days ago, at minute 33.", text)
@@ -8792,6 +8843,18 @@ class ScriptedClient(FakeClient):
                            "suspects": "nobody", "angry_at": "nobody"})
 
 
+class StoryClient(ScriptedClient):
+    """The others in a scripted story: as ScriptedClient, but Leo is angry with Daniel, as he was in the v11 story of seed 2."""
+
+    def generate(self, system, prompt, schema=None):
+        text = super().generate(system, prompt, schema)
+        if schema is None and prompt.startswith("You are Leo,"):
+            answer = json.loads(text)
+            answer["angry_at"] = "Daniel"
+            text = json.dumps(answer)
+        return text
+
+
 class RecordingFake(FakeClient):
     def __init__(self, **kw):
         super().__init__(**kw)
@@ -9063,7 +9126,7 @@ class PlayS3Test(unittest.TestCase):
     def test_play_py_on_scripted_stdin_reaches_night_1_bedtime(self):
         env = {k: v for k, v in os.environ.items() if k != "GEMINI_API_KEY"}
         env.update(PYTHONIOENCODING="utf-8", PYTHONDONTWRITEBYTECODE="1")
-        stdin = "2 Who took the can?\n" + "1\n" * 200
+        stdin = "Who took the can?\n" + "1\n" * 200      # words alone are said to everyone, whatever else is offered
         r = subprocess.run([sys.executable, os.path.join(HERE, "play.py"), "--seed", "2", "--fake",
                             "--root", self.dirs.root], input=stdin, capture_output=True, text=True,
                            encoding="utf-8", env=env, timeout=900)
@@ -9220,6 +9283,171 @@ class PlayFix1Test(unittest.TestCase):
         self.assertEqual(food, "About food: there is no food in the house but what is on the shelf; once it is "
                                "eaten, there is nothing.")
         self.assertNotIn("there is no food in the house for tomorrow", food)
+
+
+class WatchingMorning(Morning):
+    """A Morning that notes, at every act, what each person was doing just before it and just after it."""
+
+    def apply(self, p, opt, d, t, voices, record):
+        if not hasattr(self, "watched"):
+            self.watched = []
+        before = {q: dict(x.activity) for q, x in self.people.items()}
+        out = super().apply(p, opt, d, t, voices, record)
+        self.watched.append({"t": t, "who": p.id, "option": opt.id, "before": before,
+                             "after": {q: dict(x.activity) for q, x in self.people.items()}})
+        return out
+
+
+def option_ids(prompt):
+    return re.findall(r"^- (\w+):", prompt.split("Your options:")[-1], flags=re.M)
+
+
+class PlayFix2Test(unittest.TestCase):
+    """reports/play_fix2.md: what the play sessions showed. A moment demands a response: an owed answer (1), heads
+    turn at an accusation or a confession (2), the wronged remember (3), and Elena's card (4)."""
+
+    def setUp(self):
+        self.dirs = Dirs()
+
+    def tearDown(self):
+        self.dirs.cleanup()
+
+    def day_one(self, rule, others, name="f2", seed=1, cls=Morning):
+        import player
+
+        def once(screen):           # an answer the screen refused is a failure, not a loop
+            if screen.message:
+                raise AssertionError(f"refused at {screen.kind} {screen.minute}: {screen.message}")
+            return rule(screen)
+        client = ScriptedClient(others)
+        p = player.ScriptedPlayer(once)
+        m = cls(Oracle(Cache(os.path.join(self.dirs.root, f"{name}.json")), "fake", seed, client=client,
+                       max_calls=150), seed)
+        m.player = p
+        self.m = m
+        m.run()
+        return p, m, client
+
+    def test_fix1_someone_accused_owes_the_accuser_an_answer_but_the_player_does_not(self):
+        import player
+        from talk import aimed_at
+        words = "I think you did it, Mom."
+
+        def others(who, minute, options):
+            if who == "daniel" and minute == 0:
+                return "accuse_leo", "You were up last night, Leo.", "angry"
+            return ("deny" if "deny" in options else "silent"), ("It was not me." if "deny" in options else None), "calm"
+        p, m, client = self.day_one(player.by_minute({3: ("accuse_elena", words)}, default=("silent", None)), others)
+        elena = [x for x in client.prompts if x.startswith("You are Elena,") and f'Leo, to you: "{words}"' in x]
+        self.assertTrue(elena, "the premise: Elena is asked after Leo accuses her")
+        ids = option_ids(elena[0])
+        self.assertIn("deny", ids)
+        self.assertIn("silent", ids)
+        aimed = [i for i in ids if aimed_at(i) == "leo"]
+        self.assertTrue(aimed, "the premise: she may answer Leo")
+        for i in ids:
+            self.assertTrue(i in ("silent", "deny") or i.startswith("go_") or i in aimed, f"{i} is not an answer: {ids}")
+        for gone in ("reassure_all", "say_other", "search", "ask_who", "eat", "share", "accuse_daniel", "sit_leo"):
+            self.assertNotIn(gone, ids)
+        # The player is never held to it: Daniel accused Leo, and every one of Leo's screens offers all of his options.
+        self.assertEqual(m.people["leo"].accused_by, {"daniel": 0}, "the premise: Leo was accused")
+        for s in p.screens:
+            if s.kind == "turn":
+                self.assertIn("say_other", s.options)
+                self.assertIn("reassure_all", s.options)
+        # Two turns, and no more: a decision three turns on is free.
+        fresh = Morning(Oracle(Cache(os.path.join(self.dirs.root, "f2b.json")), "fake", 1, client=FakeClient()), 1)
+        in_turn(fresh)
+        fresh.now = 3
+        leo, elena_ = fresh.people["leo"], fresh.people["elena"]
+        opt = next(o for o in fresh.options_for(leo) if o.id == "accuse_elena")
+        fresh.apply(leo, opt, {"mode": "model", "say": words, "feeling": "tense"}, 1, [], new_record())
+        self.assertNotIn("reassure_all", [o.id for o in fresh.options_for(elena_)])
+        fresh.now = 9
+        self.assertNotIn("reassure_all", [o.id for o in fresh.options_for(elena_)], "turn 3 is within 2 turns of turn 1")
+        fresh.now = 12
+        self.assertIn("reassure_all", [o.id for o in fresh.options_for(elena_)])
+        # It is one decision: once she has answered, all her options are back.
+        fresh.now = 3
+        deny = next(o for o in fresh.options_for(elena_) if o.id == "deny")
+        fresh.apply(elena_, deny, {"mode": "model", "say": "It was not me.", "feeling": "hurt"}, 1, [], new_record())
+        self.assertIn("reassure_all", [o.id for o in fresh.options_for(elena_)])
+
+    def test_fix2_an_accusation_or_a_confession_stops_what_the_others_were_doing(self):
+        import player
+        words = "I think you did it, Mom."
+
+        def others(who, minute, options):
+            if who == "mara":
+                return ("sit_daniel", None, "calm") if "sit_daniel" in options else ("silent", None, "calm")
+            if who == "daniel" and minute >= 9 and "confess" in options:
+                return "confess", "It was me, I ate it in the night.", "ashamed"
+            return "silent", None, "calm"
+        p, m, client = self.day_one(player.by_minute({3: ("accuse_elena", words)}, default=("silent", None)), others,
+                                    cls=WatchingMorning)
+        accusation = next(w for w in m.watched if w["who"] == "leo" and w["option"] == "accuse_elena")
+        self.assertEqual(accusation["before"]["mara"]["kind"], "sitting", "the premise: Mara was sitting with Daniel")
+        self.assertEqual(accusation["after"]["mara"]["kind"], "idle", "the accusation ends her sitting")
+        confession = next(w for w in m.watched if w["who"] == "daniel" and w["option"] == "confess")
+        self.assertEqual(confession["before"]["mara"]["kind"], "sitting", "the premise: Mara sat again")
+        self.assertEqual(confession["after"]["mara"]["kind"], "idle", "the confession ends her sitting")
+        # Their next decision is a model ask with that line as its trigger.
+        ds = [d for rec in m.log for d in rec["decisions"]]
+        i = next(n for n, d in enumerate(ds) if d["person"] == "leo" and d["option"] == "accuse_elena")
+        nxt = next(d for d in ds[i + 1:] if d["person"] == "mara")
+        self.assertEqual(nxt["mode"], "model")
+        self.assertIn(f'Leo, to Elena: "{words}"', nxt["triggers"])
+
+    def test_fix3_after_a_confession_the_falsely_accused_remember_and_turn_to_their_accuser(self):
+        import player
+        from talk import aimed_at
+        words = "I think you did it, Mom."
+
+        def others(who, minute, options):
+            leo = self.m.people["leo"]
+            if who == "daniel" and minute >= 3 and "daniel" not in leo.accused_by and "accuse_leo" in options:
+                return "accuse_leo", "You were up last night, Leo.", "angry"
+            if who == "daniel" and "daniel" in leo.accused_by and minute >= leo.accused_by["daniel"] + 3                     and "confess" in options:
+                return "confess", "It was me, I ate it in the night.", "ashamed"
+            return "silent", None, "calm"
+        p, m, client = self.day_one(player.by_minute({3: ("accuse_elena", words)}, default=("silent", None)), others)
+        P = m.people
+        then = P["leo"].accused_by.get("daniel")
+        self.assertIsNotNone(then, "the premise: Daniel accused Leo")
+        self.assertTrue(P["daniel"].confessed, "the premise: Daniel confessed")
+        self.assertEqual(P["elena"].accused_by, {"leo": 3}, "the premise: Elena was accused by Leo")
+        self.assertIn("Leo accused you of taking it at minute 03. It was Daniel.",
+                      [data.unstamp(x)[1] for x in P["elena"].sure])
+        self.assertIn(f"Daniel accused you of taking it at minute {then:02d}. It was Daniel.",
+                      [data.unstamp(x)[1] for x in P["leo"].sure])
+        for pid in ("mara", "daniel"):
+            self.assertFalse([x for x in P[pid].sure if "accused you of taking it" in x], pid)
+        later = [x for x in client.prompts if x.startswith("You are Elena,") and "It was Daniel." in x]
+        self.assertTrue(later, "the premise: Elena is asked after the confession")
+        for x in later:
+            ids = option_ids(x)
+            leo = [i for i in ids if aimed_at(i) == "leo"]
+            self.assertTrue(leo)
+            self.assertEqual(ids[:len(leo)], leo, "her options aimed at Leo come first, in their order")
+            self.assertEqual(ids[len(leo)], "silent")
+        self.assertEqual([o.id for o in m.options_for(P["elena"])][0], "reassure_leo", "and for the rest of the day")
+        self.assertEqual([o.id for o in m.options_for(P["mara"])][0], "silent")
+        # Leo is played: his options are his own, in their order.
+        for s in p.screens:
+            if s.kind == "turn":
+                self.assertEqual(s.options[0], "silent")
+
+    def test_fix4_elenas_card_says_she_will_not_be_accused_or_talked_down_to(self):
+        m = Morning(Oracle(Cache(os.path.join(self.dirs.root, "f4.json")), "fake", 1, client=FakeClient()), 1)
+        card = ("Gentle by habit, but she will not be accused or talked down to by her own children; when wronged, she "
+                "says so plainly.")
+        text = m.prompt_for(m.people["elena"], 0, m.options_for(m.people["elena"]))
+        who = next(x for x in text.split("\n") if x.startswith("Who you are:"))
+        self.assertTrue(who.endswith(card), who)
+        self.assertIn("Fears the household breaking apart more than she fears the outside.", who)
+        for pid in ("daniel", "leo", "mara"):
+            other = m.prompt_for(m.people[pid], 0, m.options_for(m.people[pid]))
+            self.assertNotIn("Gentle by habit", other)
 
 
 if __name__ == "__main__":

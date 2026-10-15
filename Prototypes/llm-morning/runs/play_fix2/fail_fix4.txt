@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_fix4_elenas_card_says_she_will_not_be_accused_or_talked_down_to (test_morning.PlayFix2Test.test_fix4_elenas_card_says_she_will_not_be_accused_or_talked_down_to)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 9436, in test_fix4_elenas_card_says_she_will_not_be_accused_or_talked_down_to
+    self.assertTrue(who.endswith(card), who)
+AssertionError: False is not true : Who you are: Mother. Reads everyone, says little, holds it in. Will lie to keep the family whole. Fears the household breaking apart more than she fears the outside.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.009s
+
+FAILED (failures=1)

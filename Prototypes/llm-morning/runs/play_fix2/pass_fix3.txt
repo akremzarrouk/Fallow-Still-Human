@@ -1,0 +1,6 @@
+test_fix3_after_a_confession_the_falsely_accused_remember_and_turn_to_their_accuser (test_morning.PlayFix2Test.test_fix3_after_a_confession_the_falsely_accused_remember_and_turn_to_their_accuser) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.078s
+
+OK

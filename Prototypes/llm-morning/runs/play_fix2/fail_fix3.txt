@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_fix3_after_a_confession_the_falsely_accused_remember_and_turn_to_their_accuser (test_morning.PlayFix2Test.test_fix3_after_a_confession_the_falsely_accused_remember_and_turn_to_their_accuser)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 9411, in test_fix3_after_a_confession_the_falsely_accused_remember_and_turn_to_their_accuser
+    self.assertIn("Leo accused you of taking it at minute 03. It was Daniel.",
+AssertionError: 'Leo accused you of taking it at minute 03. It was Daniel.' not found in ['Elena counts the pantry with everyone standing there. She finds one can fewer than she expected and says so. 2 portions are left. (you did it)', 'Daniel admitted taking the can: "It was me, I ate it in the night." (you heard it)']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.078s
+
+FAILED (failures=1)

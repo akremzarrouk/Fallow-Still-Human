@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_fix1_someone_accused_owes_the_accuser_an_answer_but_the_player_does_not (test_morning.PlayFix2Test.test_fix1_someone_accused_owes_the_accuser_an_answer_but_the_player_does_not)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 9341, in test_fix1_someone_accused_owes_the_accuser_an_answer_but_the_player_does_not
+    self.assertTrue(i in ("silent", "deny") or i.startswith("go_") or i in aimed, f"{i} is not an answer: {ids}")
+AssertionError: False is not true : ask_who is not an answer: ['silent', 'ask_who', 'deny', 'accuse_daniel', 'accuse_leo', 'accuse_mara', 'reassure_daniel', 'reassure_leo', 'reassure_mara', 'reassure_all', 'say_other', 'say_to_daniel', 'say_to_leo', 'say_to_mara', 'sit_daniel', 'sit_leo', 'sit_mara', 'aside_daniel', 'aside_leo', 'aside_mara', 'search', 'go_brothers_room', 'go_back_room', 'go_bathroom', 'eat', 'share']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.087s
+
+FAILED (failures=1)

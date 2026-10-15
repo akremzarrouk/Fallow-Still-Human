@@ -1,0 +1,16 @@
+F
+======================================================================
+FAIL: test_fix2_an_accusation_or_a_confession_stops_what_the_others_were_doing (test_morning.PlayFix2Test.test_fix2_an_accusation_or_a_confession_stops_what_the_others_were_doing)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 9385, in test_fix2_an_accusation_or_a_confession_stops_what_the_others_were_doing
+    self.assertEqual(confession["after"]["mara"]["kind"], "idle", "the confession ends her sitting")
+AssertionError: 'sitting' != 'idle'
+- sitting
++ idle
+ : the confession ends her sitting
+
+----------------------------------------------------------------------
+Ran 1 test in 0.083s
+
+FAILED (failures=1)

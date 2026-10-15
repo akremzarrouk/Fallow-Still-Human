@@ -28,7 +28,9 @@ PEOPLE = {
     "elena": {
         "name": "Elena", "age": 42, "role": "the mother", "role_short": "mother",
         "note": "Mother. Reads everyone, says little, holds it in. Will lie to keep the family "
-                "whole. Fears the household breaking apart more than she fears the outside.",
+                "whole. Fears the household breaking apart more than she fears the outside. "
+                "Gentle by habit, but she will not be accused or talked down to by her own children; "
+                "when wronged, she says so plainly.",
         "traits": {"cautious": 0.7, "dominant": 0.5, "empathetic": 0.9, "impulsive": 0.25,
                    "proud": 0.35, "anxious": 0.75, "honest": 0.7},
         "values": ["keeping the family safe", "closeness", "fairness"],

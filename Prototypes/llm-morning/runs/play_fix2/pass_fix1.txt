@@ -1,0 +1,6 @@
+test_fix1_someone_accused_owes_the_accuser_an_answer_but_the_player_does_not (test_morning.PlayFix2Test.test_fix1_someone_accused_owes_the_accuser_an_answer_but_the_player_does_not) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.089s
+
+OK

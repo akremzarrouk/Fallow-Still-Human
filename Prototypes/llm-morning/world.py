@@ -81,6 +81,9 @@ INTENT_LINE = "- You meant to:"     # the first line of memory.block_b that is t
 PROMPT_TOKEN_BUDGET = 1400   # estimated; the API counted 1,370 at most in the second step
 QUIET_TURNS = 2              # full turns with nothing new that end a conversation
 INNER_EVERY = 9              # minutes: an inner moment at most this often per person
+OWED_TURNS = 2               # turns in which someone aimed at must answer (reports/play_fix2.md, fix 1)
+OWES_ANSWER = ("accuse", "confront", "reassure", "say")     # acts aimed at someone that ask for an answer
+HEADS_TURN = ("accuse", "confess")      # acts after which everyone else in the room stops what they were doing (fix 2)
 FALL_EVERY = 15              # minutes: a suspicion or grudge falls at most one step this often
 LULL_QUIET = None            # minutes a room must be still before a lull (None: no lulls);
                              # off since reports/lull_v9.md, 9 in reports/lull_design.md
@@ -373,6 +376,10 @@ class Person:
         self.history = []           # one {"t", "kind", "seq"} per turn: what they did
         self.heard = []             # lines they heard: {"seq", "who", "kind", "target"}
         self.addressed = None       # the last line aimed at them since they last acted
+        # reports/play_fix2.md, fix 1: who accused, confronted, reassured or spoke to them, in which turn and room, if they
+        # have not answered yet; fix 3: those who accused them falsely and whom they now know to have been wrong.
+        self.owed = None
+        self.wronged = []
         self.aside_lead = None      # whom they took aside last turn, if the other came
         self.searched = set()
         self.knows_culprit = culprit if pid == culprit else None
@@ -682,7 +689,31 @@ class Morning:
         kind, n = self.repeating(p)
         if kind in SPEECH and n >= 3 and not self.is_player(p):
             opts = [o for o in opts if act_of(o.id)[0] != kind]
+        if not self.is_player(p):               # the player's options are the player's (reports/play_fix2.md)
+            opts = self.answer_owed(p, opts)
+            opts = self.wronged_first(p, opts)
         return opts
+
+    def answer_owed(self, p, opts):
+        """Someone who has just been accused, confronted, reassured or spoken to answers the one who did it: for their
+        next decision in that room, within the next 2 turns, they may deny (where it is offered), confess (the one who
+        took it), say or do anything aimed at that person, stay silent or go (reports/play_fix2.md, fix 1). Only in a
+        turn: outside one nothing is decided."""
+        o = p.owed
+        if (o is None or self.present is None or self.now is None or p.room != o["room"]
+                or self.now // data.MINUTES_PER_TURN > o["turn"] + OWED_TURNS):
+            return opts
+        return [x for x in opts if x.id in ("silent", "deny", "confess") or act_of(x.id)[0] == "go"
+                or aimed_at(x.id) == o["who"]]
+
+    @staticmethod
+    def wronged_first(p, opts):
+        """After a confession, the options aimed at someone who accused them falsely come first, in their order
+        (reports/play_fix2.md, fix 3); for the rest of the day, which is as long as a Morning lasts."""
+        if not p.wronged:
+            return opts
+        first = [x for x in opts if aimed_at(x.id) in p.wronged]
+        return first + [x for x in opts if x not in first]
 
     @staticmethod
     def door_options(p):
@@ -1840,6 +1871,7 @@ class Morning:
             self.last_stir[room] = minute
         p.history.append({"t": t, "kind": kind, "seq": self.seq})
         p.addressed = None
+        p.owed = None
         p.aside_lead = None
         so_far = self.so_far[room]
         out = []
@@ -1896,11 +1928,17 @@ class Morning:
                 heard = self.line_text(p, spoken_kind, target if aimed else None, words, q,
                                        None if opt.speech else doing, opt.speech)
                 line[q.id] = heard
-                self.perceive(q, minute, heard, trigger=(heard, new))
+                # An accusation or a confession turns every head: it counts whether or not it is new, and whoever was
+                # searching or sitting stops (reports/play_fix2.md, fix 2).
+                self.perceive(q, minute, heard, trigger=(heard, new or kind in HEADS_TURN))
+                if kind in HEADS_TURN and q.activity["kind"] in ("searching", "sitting"):
+                    q.activity = {"kind": "idle", "label": "standing"}
                 q.heard.append({"seq": self.seq, "who": p.id, "kind": spoken_kind,
                                 "target": target_id if aimed else None})
                 if (aimed and q is target) or (kind == "tell" and q.id in opt.act["listeners"]):
                     q.addressed = {"seq": self.seq, "who": p.id, "accused": kind == "accuse"}
+                if aimed and q is target and kind in OWES_ANSWER:       # reports/play_fix2.md, fix 1
+                    q.owed = {"who": p.id, "turn": t, "room": room}
                 if kind in ("ask", "accuse"):
                     q.heard_question = True
                 if kind == "confess":
@@ -1910,6 +1948,13 @@ class Morning:
                     q.knows_culprit = p.id
                     q.sure.append(f"{data.clock(minute)}: {p.name} admitted taking the can: \"{words}\" "
                                   "(you heard it)")
+                    # Whoever was accused of it today, falsely, now knows who was wrong, and what to turn to (fix 3).
+                    for x, said_at in q.accused_by.items():
+                        if q is not p and q.accused_day.get(x) == self.day:
+                            q.sure.append(f"{data.clock(minute)}: {NAMES[x]} accused you of taking it at "
+                                          f"{data.minute_words(said_at)}. It was {p.name}.")
+                            if x not in q.wronged:
+                                q.wronged.append(x)
                     # Grudges: it was admitted after being denied to them, or after accusing them. A denial or
                     # accusation of an earlier day says when (reports/night_design.md, §5.1; days_design.md, §3.5).
                     def at(day):
