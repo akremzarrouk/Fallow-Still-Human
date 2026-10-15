@@ -1,0 +1,36 @@
+{
+ "model": "gemini-3.5-flash",
+ "kind": "ask",
+ "n": 2,
+ "utc": "2026-10-15T16:06:04Z",
+ "ok": true,
+ "text": "{\"option\":\"deny\",\"say\":\"I didn't take it, Mom. I swear.\",\"feeling\":\"anxious\",\"reason\":\"I need Mom to know that I didn't touch the food.\",\"suspects\":\"nobody\",\"angry_at\":\"nobody\"}",
+ "finish": "FinishReason.STOP",
+ "prompt_tokens": 1341,
+ "answer_tokens": 54,
+ "thought_tokens": 515,
+ "seconds": 5.08,
+ "refusals_before": [
+  {
+   "code": 503,
+   "status": "UNAVAILABLE",
+   "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "utc": "2026-10-15T16:02:52Z",
+   "seconds": 3.41
+  },
+  {
+   "code": 503,
+   "status": "UNAVAILABLE",
+   "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "utc": "2026-10-15T16:03:55Z",
+   "seconds": 4.89
+  },
+  {
+   "code": 503,
+   "status": "UNAVAILABLE",
+   "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "utc": "2026-10-15T16:05:00Z",
+   "seconds": 4.47
+  }
+ ]
+}

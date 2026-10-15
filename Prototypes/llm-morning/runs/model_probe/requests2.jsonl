@@ -1,0 +1,29 @@
+{"model": "gemma-4-31b-it", "n": 1, "utc": "2026-10-15T15:58:25Z", "ok": false, "seconds": 1.25, "code": 500, "status": "INTERNAL"}
+{"model": "gemma-4-31b-it", "n": 1, "utc": "2026-10-15T15:59:26Z", "ok": false, "seconds": 1.36, "code": 500, "status": "INTERNAL"}
+{"model": "gemma-4-31b-it", "n": 1, "utc": "2026-10-15T16:00:27Z", "ok": false, "seconds": 1.0, "code": 500, "status": "INTERNAL"}
+{"model": "gemma-4-31b-it", "n": 1, "utc": "2026-10-15T16:01:28Z", "ok": false, "seconds": 1.58, "code": 500, "status": "INTERNAL"}
+{"model": "gemini-3.5-flash", "n": 1, "utc": "2026-10-15T16:01:30Z", "ok": false, "seconds": 3.66, "code": 503, "status": "UNAVAILABLE"}
+{"model": "gemini-3.5-flash", "n": 1, "utc": "2026-10-15T16:02:34Z", "ok": true, "seconds": 10.86}
+{"model": "gemini-3.5-flash", "n": 2, "utc": "2026-10-15T16:02:52Z", "ok": false, "seconds": 3.41, "code": 503, "status": "UNAVAILABLE"}
+{"model": "gemini-3.5-flash", "n": 2, "utc": "2026-10-15T16:03:55Z", "ok": false, "seconds": 4.89, "code": 503, "status": "UNAVAILABLE"}
+{"model": "gemini-3.5-flash", "n": 2, "utc": "2026-10-15T16:05:00Z", "ok": false, "seconds": 4.47, "code": 503, "status": "UNAVAILABLE"}
+{"model": "gemini-3.5-flash", "n": 2, "utc": "2026-10-15T16:06:04Z", "ok": true, "seconds": 5.08}
+{"model": "gemini-3.5-flash", "n": 3, "utc": "2026-10-15T16:06:16Z", "ok": false, "seconds": 5.69, "code": 503, "status": "UNAVAILABLE"}
+{"model": "gemini-3.5-flash", "n": 3, "utc": "2026-10-15T16:07:22Z", "ok": true, "seconds": 9.14}
+{"model": "gemini-3.5-flash", "n": 4, "utc": "2026-10-15T16:07:38Z", "ok": true, "seconds": 9.88}
+{"model": "gemini-3.5-flash", "n": 5, "utc": "2026-10-15T16:07:55Z", "ok": true, "seconds": 8.36}
+{"model": "gemini-3.5-flash", "n": 6, "utc": "2026-10-15T16:08:11Z", "ok": false, "seconds": 2.72, "code": 503, "status": "UNAVAILABLE"}
+{"model": "gemini-3.5-flash", "n": 6, "utc": "2026-10-15T16:09:13Z", "ok": true, "seconds": 10.66}
+{"model": "gemini-3.5-flash", "n": 7, "utc": "2026-10-15T16:09:31Z", "ok": true, "seconds": 5.98}
+{"model": "gemini-3.5-flash", "n": 8, "utc": "2026-10-15T16:09:44Z", "ok": false, "seconds": 7.62, "code": 503, "status": "UNAVAILABLE"}
+{"model": "gemini-3.5-flash", "n": 8, "utc": "2026-10-15T16:10:52Z", "ok": true, "seconds": 10.42}
+{"model": "gemini-3.5-flash", "n": 9, "utc": "2026-10-15T16:11:09Z", "ok": false, "seconds": 5.81, "code": 503, "status": "UNAVAILABLE"}
+{"model": "gemini-3.5-flash", "n": 9, "utc": "2026-10-15T16:12:15Z", "ok": true, "seconds": 9.97}
+{"model": "gemini-3.5-flash", "n": 10, "utc": "2026-10-15T16:12:32Z", "ok": false, "seconds": 5.78, "code": 503, "status": "UNAVAILABLE"}
+{"model": "gemini-3.5-flash", "n": 10, "utc": "2026-10-15T16:13:38Z", "ok": false, "seconds": 3.22, "code": 503, "status": "UNAVAILABLE"}
+{"model": "gemini-3.5-flash", "n": 10, "utc": "2026-10-15T16:14:41Z", "ok": false, "seconds": 6.95, "code": 503, "status": "UNAVAILABLE"}
+{"model": "gemini-3.5-flash", "n": 10, "utc": "2026-10-15T16:15:48Z", "ok": false, "seconds": 0.45, "code": 429, "status": "RESOURCE_EXHAUSTED"}
+{"model": "gemini-3.7-flash", "n": 1, "utc": "2026-10-15T16:15:48Z", "ok": false, "seconds": 2.89, "code": 503, "status": "UNAVAILABLE"}
+{"model": "gemini-3.7-flash", "n": 1, "utc": "2026-10-15T16:16:49Z", "ok": false, "seconds": null, "code": null, "status": "no answer for 42 minutes; the process was stopped by PID (logged by hand)"}
+{"model": "gemini-3.7-flash", "n": 1, "utc": "2026-10-15T17:00:11Z", "ok": false, "seconds": 119.91, "code": 504, "status": "DEADLINE_EXCEEDED"}
+{"model": "gemini-3.7-flash", "n": 1, "utc": "2026-10-15T17:02:25Z", "ok": false, "seconds": 120.45, "code": null, "status": "ReadTimeout"}

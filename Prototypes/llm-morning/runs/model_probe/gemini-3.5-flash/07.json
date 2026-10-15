@@ -1,0 +1,14 @@
+{
+ "model": "gemini-3.5-flash",
+ "kind": "ask",
+ "n": 7,
+ "utc": "2026-10-15T16:09:31Z",
+ "ok": true,
+ "text": "{\"option\":\"silent\",\"say\":null,\"feeling\":\"anxious\",\"reason\":\"I want to hear what Mom has to say so we can figure this out together.\",\"suspects\":\"nobody\",\"angry_at\":\"nobody\"}",
+ "finish": "FinishReason.STOP",
+ "prompt_tokens": 1359,
+ "answer_tokens": 46,
+ "thought_tokens": 657,
+ "seconds": 5.98,
+ "refusals_before": []
+}

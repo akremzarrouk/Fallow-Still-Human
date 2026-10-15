@@ -1,0 +1,22 @@
+{
+ "model": "gemini-3.5-flash",
+ "kind": "ask",
+ "n": 6,
+ "utc": "2026-10-15T16:09:13Z",
+ "ok": true,
+ "text": "{\"option\": \"reassure_all\", \"say\": \"We just need to keep calm and focus on staying safe. I'll take care of us.\", \"feeling\": \"anxious\", \"reason\": \"I need to take charge and keep everyone calm so they stop digging into what happened to the can.\", \"suspects\": \"nobody\", \"angry_at\": \"nobody\"}",
+ "finish": "FinishReason.STOP",
+ "prompt_tokens": 1365,
+ "answer_tokens": 81,
+ "thought_tokens": 885,
+ "seconds": 10.66,
+ "refusals_before": [
+  {
+   "code": 503,
+   "status": "UNAVAILABLE",
+   "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "utc": "2026-10-15T16:08:11Z",
+   "seconds": 2.72
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "model": "gemini-3.5-flash",
+ "kind": "ask",
+ "n": 3,
+ "utc": "2026-10-15T16:07:22Z",
+ "ok": true,
+ "text": "{\"option\":\"deny\",\"say\":\"I didn't take anything, Mom. Let's keep our heads and figure this out together.\",\"feeling\":\"guilty\",\"reason\":\"I need to protect my authority and cannot let them find out I ate the can.\",\"suspects\":\"Daniel\",\"angry_at\":\"nobody\"}",
+ "finish": "FinishReason.STOP",
+ "prompt_tokens": 1365,
+ "answer_tokens": 66,
+ "thought_tokens": 928,
+ "seconds": 9.14,
+ "refusals_before": [
+  {
+   "code": 503,
+   "status": "UNAVAILABLE",
+   "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "utc": "2026-10-15T16:06:16Z",
+   "seconds": 5.69
+  }
+ ]
+}

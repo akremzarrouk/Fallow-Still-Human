@@ -1,0 +1,22 @@
+{
+ "model": "gemini-3.5-flash",
+ "kind": "ask",
+ "n": 8,
+ "utc": "2026-10-15T16:10:52Z",
+ "ok": true,
+ "text": "{\"option\":\"reassure_all\",\"say\":\"We need to stay calm and trust each other, Mara.\",\"feeling\":\"anxious\",\"reason\":\"I need to stop us from turning on each other before fear breaks the family apart.\",\"suspects\":\"nobody\",\"angry_at\":\"nobody\"}",
+ "finish": "FinishReason.STOP",
+ "prompt_tokens": 1368,
+ "answer_tokens": 61,
+ "thought_tokens": 883,
+ "seconds": 10.42,
+ "refusals_before": [
+  {
+   "code": 503,
+   "status": "UNAVAILABLE",
+   "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "utc": "2026-10-15T16:09:44Z",
+   "seconds": 7.62
+  }
+ ]
+}

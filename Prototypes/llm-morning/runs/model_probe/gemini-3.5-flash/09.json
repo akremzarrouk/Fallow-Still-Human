@@ -1,0 +1,22 @@
+{
+ "model": "gemini-3.5-flash",
+ "kind": "ask",
+ "n": 9,
+ "utc": "2026-10-15T16:12:15Z",
+ "ok": true,
+ "text": "{\"option\":\"silent\",\"say\":null,\"feeling\":\"Anxious\",\"reason\":\"Nobody is directly answering who took the food, so I do not know what else to say.\",\"suspects\":\"nobody\",\"angry_at\":\"nobody\"}",
+ "finish": "FinishReason.STOP",
+ "prompt_tokens": 1337,
+ "answer_tokens": 48,
+ "thought_tokens": 1204,
+ "seconds": 9.97,
+ "refusals_before": [
+  {
+   "code": 503,
+   "status": "UNAVAILABLE",
+   "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+   "utc": "2026-10-15T16:11:09Z",
+   "seconds": 5.81
+  }
+ ]
+}
