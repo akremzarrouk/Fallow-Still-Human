@@ -1,0 +1,12 @@
+{
+ "model": "gemini-3.8-flash",
+ "kind": "ask",
+ "n": 6,
+ "utc": "2026-10-15T00:08:56Z",
+ "ok": true,
+ "text": "{\"option\": \"reassure_all\", \"say\": \"Mom's right, let's keep calm. I'll make sure we get through this with what we have.\", \"feeling\": \"nervous\", \"reason\": \"I need to take charge and keep everyone calm so they stop digging into it.\", \"suspects\": \"Daniel\", \"angry_at\": \"nobody\"}",
+ "finish": "FinishReason.STOP",
+ "prompt_tokens": 1365,
+ "answer_tokens": 82,
+ "thought_tokens": 494
+}

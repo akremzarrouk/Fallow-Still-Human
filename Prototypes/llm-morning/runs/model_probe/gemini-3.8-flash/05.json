@@ -1,0 +1,12 @@
+{
+ "model": "gemini-3.8-flash",
+ "kind": "ask",
+ "n": 5,
+ "utc": "2026-10-15T00:08:16Z",
+ "ok": true,
+ "text": "{\"option\": \"search\", \"say\": \"Maybe it just fell behind something, let me look.\", \"feeling\": \"anxious\", \"reason\": \"If I can find it here, nobody will have to be blamed.\", \"suspects\": \"nobody\", \"angry_at\": \"nobody\"}",
+ "finish": "FinishReason.STOP",
+ "prompt_tokens": 1349,
+ "answer_tokens": 62,
+ "thought_tokens": 906
+}

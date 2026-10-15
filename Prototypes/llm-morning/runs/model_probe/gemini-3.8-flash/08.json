@@ -1,0 +1,12 @@
+{
+ "model": "gemini-3.8-flash",
+ "kind": "ask",
+ "n": 8,
+ "utc": "2026-10-15T00:09:24Z",
+ "ok": true,
+ "text": "{\n  \"option\": \"reassure_mara\",\n  \"say\": \"We are not ignoring it, Mara, but getting frantic will only tear us apart. We will manage this together.\",\n  \"feeling\": \"anxious\",\n  \"reason\": \"I need to calm Mara down before her fear drives a wedge between all of us.\",\n  \"suspects\": \"nobody\",\n  \"angry_at\": \"nobody\"\n}",
+ "finish": "FinishReason.STOP",
+ "prompt_tokens": 1368,
+ "answer_tokens": 97,
+ "thought_tokens": 636
+}

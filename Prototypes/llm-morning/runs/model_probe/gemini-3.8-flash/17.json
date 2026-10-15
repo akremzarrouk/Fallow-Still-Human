@@ -1,0 +1,12 @@
+{
+ "model": "gemini-3.8-flash",
+ "kind": "ask",
+ "n": 17,
+ "utc": "2026-10-15T00:14:05Z",
+ "ok": true,
+ "text": "{\"option\": \"say_to_daniel\", \"say\": \"You lied right to my face when I asked you earlier, Daniel. How are you going to fix this?\", \"feeling\": \"hurt\", \"reason\": \"He lied to me when I asked him, and now he talks like he has everything under control.\", \"suspects\": \"Daniel\", \"angry_at\": \"Daniel\"}",
+ "finish": "FinishReason.STOP",
+ "prompt_tokens": 1382,
+ "answer_tokens": 82,
+ "thought_tokens": 435
+}

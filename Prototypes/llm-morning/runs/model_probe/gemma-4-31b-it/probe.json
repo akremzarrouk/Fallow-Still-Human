@@ -1,0 +1,11 @@
+{
+ "model": "gemma-4-31b-it",
+ "kind": "probe",
+ "n": 0,
+ "utc": "2026-10-15T00:05:06Z",
+ "ok": false,
+ "code": 500,
+ "status": "INTERNAL",
+ "message": "Internal error encountered.",
+ "details": "{'error': {'code': 500, 'message': 'Internal error encountered.', 'status': 'INTERNAL'}}"
+}

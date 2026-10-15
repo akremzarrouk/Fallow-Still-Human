@@ -1,0 +1,12 @@
+{
+ "model": "gemini-3.8-flash",
+ "kind": "probe",
+ "n": 0,
+ "utc": "2026-10-15T00:04:43Z",
+ "ok": true,
+ "text": "{\"option\":\"stay\",\"say\":\"Hello.\",\"feeling\":\"calm\",\"reason\":\"I will stay here and say hello.\",\"suspects\":\"nobody\",\"angry_at\":\"nobody\"}",
+ "finish": "FinishReason.STOP",
+ "prompt_tokens": 265,
+ "answer_tokens": 38,
+ "thought_tokens": 154
+}

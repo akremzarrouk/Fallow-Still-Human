@@ -1,0 +1,12 @@
+{
+ "model": "gemini-3.8-flash",
+ "kind": "ask",
+ "n": 11,
+ "utc": "2026-10-15T00:11:51Z",
+ "ok": true,
+ "text": "{\"option\":\"say_to_leo\",\"say\":\"Shut up, Leo. Don't you dare speak to Mom like that.\",\"feeling\":\"defensive\",\"reason\":\"I cannot let Leo sit there and blame Mom to her face.\",\"suspects\":\"Daniel\",\"angry_at\":\"Leo\"}",
+ "finish": "FinishReason.STOP",
+ "prompt_tokens": 1351,
+ "answer_tokens": 61,
+ "thought_tokens": 737
+}
