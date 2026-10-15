@@ -9428,9 +9428,12 @@ class PlayFix2Test(unittest.TestCase):
             ids = option_ids(x)
             leo = [i for i in ids if aimed_at(i) == "leo"]
             self.assertTrue(leo)
-            self.assertEqual(ids[:len(leo)], leo, "her options aimed at Leo come first, in their order")
+            # What she says to Leo first (reports/play_fix2.md, fix 3 amended), then the others aimed at him in the order
+            # they are built in (options_for, trip_options): accuse, reassure, back, object, aside.
+            built = [x for x in ("accuse_leo", "reassure_leo", "back_leo", "object_leo", "aside_leo") if x in leo]
+            self.assertEqual(ids[:len(leo)], ["say_to_leo"] + built, "her options aimed at Leo come first, say_to first")
             self.assertEqual(ids[len(leo)], "silent")
-        self.assertEqual([o.id for o in m.options_for(P["elena"])][0], "reassure_leo", "and for the rest of the day")
+        self.assertEqual([o.id for o in m.options_for(P["elena"])][0], "say_to_leo", "and for the rest of the day")
         self.assertEqual([o.id for o in m.options_for(P["mara"])][0], "silent")
         # Leo is played: his options are his own, in their order.
         for s in p.screens:

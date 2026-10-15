@@ -1,0 +1,9 @@
+test_fix1_someone_accused_owes_the_accuser_an_answer_but_the_player_does_not (test_morning.PlayFix2Test.test_fix1_someone_accused_owes_the_accuser_an_answer_but_the_player_does_not) ... ok
+test_fix2_an_accusation_or_a_confession_stops_what_the_others_were_doing (test_morning.PlayFix2Test.test_fix2_an_accusation_or_a_confession_stops_what_the_others_were_doing) ... ok
+test_fix3_after_a_confession_the_falsely_accused_remember_and_turn_to_their_accuser (test_morning.PlayFix2Test.test_fix3_after_a_confession_the_falsely_accused_remember_and_turn_to_their_accuser) ... ok
+test_fix4_elenas_card_says_she_will_not_be_accused_or_talked_down_to (test_morning.PlayFix2Test.test_fix4_elenas_card_says_she_will_not_be_accused_or_talked_down_to) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.231s
+
+OK

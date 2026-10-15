@@ -271,3 +271,65 @@ Run again at the end (`--out play_fix2_check2`, after a line of `world.py` was o
 - **Heads turn costs asks.** Everyone else in the room is asked in the turn after an accusation or a confession, whether or
   not they would have been. No count is measured here (no live run).
 
+#### 9. Amendment: for a wronged person, `say_to_<accuser>` first
+
+Answers the open point in §8 ("The first option of the wronged is a reassurance"). The request: this model leans
+strongly to the first option (`reports/food_wording_probe.md`, variant C: 1 in 6 to 6 in 6), so what a wronged person
+would say to the accuser goes first. No live call; outputs in `runs/play_fix2b/`.
+
+**What changed** (`wronged_first`, `world.py:710`). The options aimed at someone who accused the person falsely still come
+first. Within them, `say_to_<accuser>` is first, then the others aimed at the accuser in their current order (accuse,
+reassure, back, object, aside, as `options_for` and `trip_options` build them). Everything else keeps its order. With two
+accusers, every `say_to` comes first (in the current order), then the other aimed options. Elena after the confession in
+test 3's run now starts:
+```
+say_to_leo, reassure_leo, silent, accuse_daniel, reassure_daniel, reassure_mara, reassure_all, say_other, …
+```
+Still not for the player, and still for the rest of the day.
+
+**Test 3, updated first.** Its expected order was "the options aimed at Leo, in their order, then `silent`"; it is now
+`say_to_leo`, then the rest aimed at Leo in build order, then `silent`; and `options_for(elena)[0]` is `say_to_leo`
+(`runs/play_fix2b/fail_fix3.txt`):
+```
+$ timeout 300 .venv/Scripts/python.exe -m unittest test_morning.PlayFix2Test.test_fix3_after_a_confession_the_falsely_accused_remember_and_turn_to_their_accuser > runs/play_fix2b/fail_fix3.txt 2>&1   # exit 1
+FAIL: test_fix3_after_a_confession_the_falsely_accused_remember_and_turn_to_their_accuser
+    self.assertEqual(ids[:len(leo)], ["say_to_leo"] + built, "her options aimed at Leo come first, say_to first")
+AssertionError: Lists differ: ['reassure_leo', 'say_to_leo'] != ['say_to_leo', 'reassure_leo']
+Ran 1 test in 0.125s
+FAILED (failures=1)
+```
+After the change the same test failed once more, on the test's own list: a later prompt of Elena's also holds `back_leo` (a
+trip option aimed at Leo, built after `reassure` and before `object` and `aside`), which the list I had written left out
+(`['say_to_leo', 'reassure_leo', 'back_leo', 'aside_leo']` against `['say_to_leo', 'reassure_leo', 'aside_leo']`). The list
+now names all five in build order. The first failure above is the one that shows the change was missing.
+
+Passing (`runs/play_fix2b/pass_fix3.txt`, `runs/play_fix2b/pass_PlayFix2Test.txt`):
+```
+$ timeout 300 .venv/Scripts/python.exe -m unittest -v test_morning.PlayFix2Test.test_fix3_after_a_confession_the_falsely_accused_remember_and_turn_to_their_accuser   # exit 0
+test_fix3_after_a_confession_the_falsely_accused_remember_and_turn_to_their_accuser (…) ... ok
+$ .venv/Scripts/python.exe -m unittest -v test_morning.PlayFix2Test   # exit 0
+Ran 4 tests in 0.231s
+
+OK
+```
+
+**The suite** (`runs/play_fix2b/suite.txt`):
+```
+$ .venv/Scripts/python.exe -m unittest test_morning > runs/play_fix2b/suite.txt 2>&1
+Ran 349 tests in 227.044s
+
+OK (skipped=141)
+```
+(A first full run, started before the test's list was corrected, had that one failure and nothing else: 349 tests,
+`FAILED (failures=1, skipped=141)`, kept as `runs/play_fix2b/suite_with_old_test.txt`.)
+
+**The fake 4-day run** (exit 0, `runs/play_fix2b/check.stdout.txt`):
+```
+$ env -u GEMINI_API_KEY .venv/Scripts/python.exe morning.py --seed 1 --fake --days 4 --out play_fix2b_check > runs/play_fix2b/check.stdout.txt 2>&1
+$ sha256sum runs/play_fix2b_check/fake/daniel_ate_it-seed1.md runs/play_fix2b_check/fake/daniel_ate_it-seed1.transcript.json
+3a3d2ff2924f513cdfbf2863659d6a924dafae1dca372f339f15514a504008a9 *runs/play_fix2b_check/fake/daniel_ate_it-seed1.md
+dfd50303bcd5156f4198adff78686693e19288ba275af7975c47c3646d63eaa8 *runs/play_fix2b_check/fake/daniel_ate_it-seed1.transcript.json
+```
+The same pair as §6. I did not check why (the likely reason is that no prompt of the fake run has a wronged person in it),
+so the order is covered by test 3 alone.
+

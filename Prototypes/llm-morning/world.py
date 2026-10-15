@@ -708,11 +708,13 @@ class Morning:
 
     @staticmethod
     def wronged_first(p, opts):
-        """After a confession, the options aimed at someone who accused them falsely come first, in their order
-        (reports/play_fix2.md, fix 3); for the rest of the day, which is as long as a Morning lasts."""
+        """After a confession, the options aimed at someone who accused them falsely come first (reports/play_fix2.md,
+        fix 3), what they would say to that person before the rest, which keep their order; for the rest of the day,
+        which is as long as a Morning lasts."""
         if not p.wronged:
             return opts
-        first = [x for x in opts if aimed_at(x.id) in p.wronged]
+        aimed = [x for x in opts if aimed_at(x.id) in p.wronged]
+        first = [x for x in aimed if act_of(x.id)[0] == "say"] + [x for x in aimed if act_of(x.id)[0] != "say"]
         return first + [x for x in opts if x not in first]
 
     @staticmethod

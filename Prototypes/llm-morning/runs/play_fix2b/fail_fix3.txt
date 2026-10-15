@@ -1,0 +1,20 @@
+F
+======================================================================
+FAIL: test_fix3_after_a_confession_the_falsely_accused_remember_and_turn_to_their_accuser (test_morning.PlayFix2Test.test_fix3_after_a_confession_the_falsely_accused_remember_and_turn_to_their_accuser)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 9434, in test_fix3_after_a_confession_the_falsely_accused_remember_and_turn_to_their_accuser
+    self.assertEqual(ids[:len(leo)], ["say_to_leo"] + built, "her options aimed at Leo come first, say_to first")
+AssertionError: Lists differ: ['reassure_leo', 'say_to_leo'] != ['say_to_leo', 'reassure_leo']
+
+First differing element 0:
+'reassure_leo'
+'say_to_leo'
+
+- ['reassure_leo', 'say_to_leo']
++ ['say_to_leo', 'reassure_leo'] : her options aimed at Leo come first, say_to first
+
+----------------------------------------------------------------------
+Ran 1 test in 0.125s
+
+FAILED (failures=1)

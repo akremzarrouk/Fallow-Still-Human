@@ -1,0 +1,39 @@
+s..s.ssssss.sss..................s..............ssssssssssssss...............ss...    [429 RESOURCE_EXHAUSTED] waiting 8s, retry 1/6
+    [429 RESOURCE_EXHAUSTED] waiting 10s, retry 2/6
+.    [429 RESOURCE_EXHAUSTED] waiting 8s, retry 1/2
+    [429 RESOURCE_EXHAUSTED] waiting 10s, retry 2/2
+..s.s..sssssss...........................s.ss......................sss..ssss.s.s.ssssssssssss..sss.......F..............................ssssssssC:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py:5798: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\Akrem\\AppData\\Local\\Temp\\llm-morning-test-ein3h995\\runs\\daniel_ate_it-seed2.transcript.json' mode='r' encoding='utf-8'>
+  tr = json.load(open(os.path.join(runs_dir, f"{name}.transcript.json"), encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py:5809: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\Akrem\\AppData\\Local\\Temp\\llm-morning-test-ein3h995\\runs\\daniel_ate_it-seed2.md' mode='r' encoding='utf-8'>
+  story = open(os.path.join(runs_dir, f"{name}.md"), encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py:5823: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\Akrem\\AppData\\Local\\Temp\\llm-morning-test-xwxx50wm\\runs\\daniel_ate_it-seed2.transcript.json' mode='r' encoding='utf-8'>
+  tr = json.load(open(os.path.join(runs_dir, f"{name}.transcript.json"), encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.sssssssssssssssssssssssssssssssssss..ssssssssssssssss.sss................ssssssssssss.............s...........s..s......
+======================================================================
+FAIL: test_fix3_after_a_confession_the_falsely_accused_remember_and_turn_to_their_accuser (test_morning.PlayFix2Test.test_fix3_after_a_confession_the_falsely_accused_remember_and_turn_to_their_accuser)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py", line 9434, in test_fix3_after_a_confession_the_falsely_accused_remember_and_turn_to_their_accuser
+    self.assertEqual(ids[:len(leo)], ["say_to_leo"] + built, "her options aimed at Leo come first, say_to first")
+AssertionError: Lists differ: ['say_to_leo', 'reassure_leo', 'back_leo', 'aside_leo'] != ['say_to_leo', 'reassure_leo', 'aside_leo']
+
+First differing element 2:
+'back_leo'
+'aside_leo'
+
+First list contains 1 additional elements.
+First extra element 3:
+'aside_leo'
+
+- ['say_to_leo', 'reassure_leo', 'back_leo', 'aside_leo']
+?                                ------------
+
++ ['say_to_leo', 'reassure_leo', 'aside_leo'] : her options aimed at Leo come first, say_to first
+
+----------------------------------------------------------------------
+Ran 349 tests in 226.816s
+
+FAILED (failures=1, skipped=141)
