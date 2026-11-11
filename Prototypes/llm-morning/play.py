@@ -3,6 +3,8 @@ the model's, as in every run; Leo is yours.
 
     python play.py --seed 2                    a new session; the others' answers come from Gemini (GEMINI_API_KEY)
     python play.py --seed 2 --fake             the same against the fake model: no API call
+    python play.py --seed 2 --code             no model at all: the code brain decides for the others, at once
+                                               (brain.py; Docs/fable-audit-2026-11.md, section 10)
     python play.py --resume runs/play/<name>   go on with a session that stopped: its choices are replayed from its
                                                log, the others' answers from the cache, then play goes on live
 
@@ -298,7 +300,7 @@ def terminal(read=input, write=print):
 
 # ---------- a session ----------
 def session(seed=None, days=2, scenario=data.DEFAULT_SCENARIO, fake=False, model_key=None, root=HERE, resume=None,
-            client=None, live=None, read=input, write=print, max_requests=None, config_path=None):
+            client=None, live=None, read=input, write=print, max_requests=None, config_path=None, code=False):
     """One session, new or resumed. Returns (exit code, its folder, {"player", "oracle", "stopped"}). client: for tests
     (otherwise the fake or Gemini, by `fake`); live: the live player (otherwise the terminal's, on read and write)."""
     config = load_config(config_path or os.path.join(HERE, "config.json"))
@@ -308,9 +310,10 @@ def session(seed=None, days=2, scenario=data.DEFAULT_SCENARIO, fake=False, model
         start, logged, replay, done = read_log(folder)
         seed, days, scenario, fake, model_key = (start["seed"], start["days"], start["scenario"], start["fake"],
                                                  start["model_key"])
+        code = start.get("code", False)
     if model_key:
         config = {**config, **config["models"][model_key]}
-    model_name = "fake" if fake else config["model"]
+    model_name = "code" if code else "fake" if fake else config["model"]
     if not resume:
         stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
         folder = os.path.join(root, "runs", "play", f"{scenario}-seed{seed}-{stamp}")
@@ -320,12 +323,17 @@ def session(seed=None, days=2, scenario=data.DEFAULT_SCENARIO, fake=False, model
             folder = os.path.join(root, "runs", "play", f"{scenario}-seed{seed}-{stamp}-{n}")
         start = {"cache": os.path.join(root, "cache", "play", f"{model_name}-{scenario}-seed{seed}.json")}
     cache_path = start["cache"]
-    os.makedirs(os.path.dirname(cache_path), exist_ok=True)
     limit = max_requests or config.get("play_max_requests", 250)
-    if client is None:
-        client = (FakeClient(max_calls=config["max_calls_per_morning"]) if fake else GeminiClient(config, seed))
-    oracle = Oracle(Cache(cache_path), model_name, seed, client=Capped(client, limit),
-                    max_calls=config["max_calls_per_morning"])
+    if code:            # no model, no cache: the brain decides for the others (brain.py); a resume replays the same
+        import brain as brainmod
+        cache_path, limit = None, 0
+        oracle = brainmod.CodeOracle(brainmod.CodeBrain(seed))
+    else:
+        os.makedirs(os.path.dirname(cache_path), exist_ok=True)
+        if client is None:
+            client = (FakeClient(max_calls=config["max_calls_per_morning"]) if fake else GeminiClient(config, seed))
+        oracle = Oracle(Cache(cache_path), model_name, seed, client=Capped(client, limit),
+                        max_calls=config["max_calls_per_morning"])
     log = PlayLog(folder)
     parts = 0
     if resume:
@@ -333,7 +341,7 @@ def session(seed=None, days=2, scenario=data.DEFAULT_SCENARIO, fake=False, model
             parts = sum(1 for line in f if json.loads(line)["t"] == "start")
     started = utc()
     log.write({"t": "start", "part": parts + 1, "utc": started, "seed": seed, "days": days, "scenario": scenario,
-               "fake": fake, "model_key": model_key, "model": model_name, "cache": cache_path,
+               "fake": fake, "code": code, "model_key": model_key, "model": model_name, "cache": cache_path,
                "max_requests": limit, "replay": len(replay)})
     log.shown(f"\n# Session part {parts + 1}, {started}: seed {seed}, {scenario}, days 1 to {days}, model {model_name}"
               + (f" (resumed: {len(replay)} choices replayed)" if resume else ""))
@@ -360,7 +368,7 @@ def session(seed=None, days=2, scenario=data.DEFAULT_SCENARIO, fake=False, model
         if code == 3:
             write(f"The session is saved in {folder}.")
             write(f"To go on: python play.py --resume {folder}")
-            if not fake:
+            if not fake and not code:
                 write("(The free daily quota resets at midnight Pacific time.)")
     else:
         write(f"\nThe session is over: days 1 to {days} played. Its log is in {folder}.")
@@ -372,6 +380,7 @@ def main():
     ap.add_argument("--seed", type=int)
     ap.add_argument("--days", type=int, default=2, choices=(1, 2))
     ap.add_argument("--fake", action="store_true", help="the fake model; no API call")
+    ap.add_argument("--code", action="store_true", help="no model: the code brain decides for the others")
     ap.add_argument("--resume", default=None, help="a session folder to go on with")
     ap.add_argument("--scenario", default=data.DEFAULT_SCENARIO, choices=sorted(data.SCENARIOS))
     ap.add_argument("--model", default=None, help="a key of config.json `models`")
@@ -384,7 +393,7 @@ def main():
         sys.stdout.reconfigure(line_buffering=True)
     code, _, _ = session(args.seed, args.days, args.scenario, args.fake, args.model, args.root,
                          args.resume and os.path.abspath(args.resume), max_requests=args.max_requests,
-                         write=lambda *a: print(*a, flush=True))
+                         write=lambda *a: print(*a, flush=True), code=args.code)
     sys.exit(code)
 
 

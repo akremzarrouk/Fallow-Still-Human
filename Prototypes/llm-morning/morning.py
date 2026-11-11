@@ -6,6 +6,8 @@ language model, and writes them as one story (reports/night_design.md; reports/d
                                             writes runs/<out>/<name>.replay.md and compares it with
                                             runs/<out>/<name>.md
     python morning.py --seed 1 --fake       the same, against the fake model (for building and testing)
+    python morning.py --seed 1 --code       the same with no model at all: the code brain decides for everyone
+                                            (brain.py; Docs/fable-audit-2026-11.md, section 10); writes runs/code
 
     --scenario NAME   daniel_ate_it (default), mara_ate_it or miscount (data.SCENARIOS)
     --model KEY       another model from config.json `models` (default: config.json `model`)
@@ -109,32 +111,39 @@ def quiet_meta(m):
 
 
 def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_dir=None,
-        client=None, quiet=False, scenario=data.DEFAULT_SCENARIO, model_key=None, out="v15", days=3):
+        client=None, quiet=False, scenario=data.DEFAULT_SCENARIO, model_key=None, out="v15", days=3, brain=None):
     """days: the last day played. From day 3 on each day is a quiet day; each one before the last is followed by its
-    night and night mind (reports/multiday.md). 3, the default, ends at day 3 as before."""
+    night and night mind (reports/multiday.md). 3, the default, ends at day 3 as before.
+    brain: a brain.CodeBrain: code mode. It decides wherever the model was asked; no client is built, no cache is
+    read or written, and the night mind is not asked."""
     config = load_config(config_path or os.path.join(HERE, "config.json"))
     if model_key:
         config = {**config, **config["models"][model_key]}
-    model_name = "fake" if fake else config["model"]
+    model_name = "code" if brain is not None else "fake" if fake else config["model"]
     # Each version's runs and answers live apart (runs/ and cache/ for the first, runs/vN and
     # cache/vN after), which v1/ to v14/ can still replay.
     runs_dir = runs_dir or os.path.join(HERE, "runs", out, "fake" if fake else "")
     cache_dir = cache_dir or os.path.join(HERE, "cache", out)
     os.makedirs(runs_dir, exist_ok=True)
-    os.makedirs(cache_dir, exist_ok=True)
+    if brain is None:
+        os.makedirs(cache_dir, exist_ok=True)
     name = f"{scenario}-{model_key}-seed{seed}" if model_key else f"{scenario}-seed{seed}"
     cache_path = os.path.join(cache_dir, f"{model_name}-{name}.json")
     cache = Cache(cache_path)
-    if client is None and not replay:
-        client = (FakeClient(max_calls=config["max_calls_per_morning"]) if fake
-                  else GeminiClient(config, seed))
-    oracle = Oracle(cache, model_name, seed, client=None if replay else client, replay=replay,
-                    max_calls=config["max_calls_per_morning"])
+    if brain is not None:
+        import brain as brainmod
+        oracle = brainmod.CodeOracle(brain)
+    else:
+        if client is None and not replay:
+            client = (FakeClient(max_calls=config["max_calls_per_morning"]) if fake
+                      else GeminiClient(config, seed))
+        oracle = Oracle(cache, model_name, seed, client=None if replay else client, replay=replay,
+                        max_calls=config["max_calls_per_morning"])
 
     command = ("python morning.py"
                + (f" --scenario {scenario}" if scenario != data.DEFAULT_SCENARIO else "")
                + (f" --model {model_key}" if model_key else "")
-               + f" --seed {seed}" + (" --fake" if fake else ""))
+               + f" --seed {seed}" + (" --fake" if fake else "") + (" --code" if brain is not None else ""))
     say = (lambda *a: None) if quiet else (lambda *a: print(*a, flush=True))
     say(f"{name}: model {model_name}, {'replay from cache only' if replay else 'fresh'}; "
         f"cache {os.path.relpath(cache_path, HERE)} holds {len(cache.entries)} answers")
@@ -353,6 +362,7 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
                                            day3.max_prompt_tokens),
         "max_prompt_tokens_counted_by_api": max(oracle.prompt_tokens, default=None),
         **later_meta(scenes, more_days),
+        **({"model_calls": oracle.asked} if brain is not None else {}),
         "run_seconds": round(seconds, 1),
         "story": os.path.relpath(out_path, HERE).replace("\\", "/"),
         "story_sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(),
@@ -404,6 +414,8 @@ def run(seed, replay=False, fake=False, config_path=None, runs_dir=None, cache_d
         transcript.update({f"night{k - 1}": n_k.transcript(), f"mind{k - 1}": mind_k.transcript(),
                            f"day{k}": day_k.transcript})
     transcript["chronicle"] = chron.to_json()
+    if brain is not None:           # code mode: each person's mood on each day, and what it came from
+        transcript["moods"] = brain.moods_json()
     with open(os.path.join(runs_dir, f"{name}.transcript.json"), "w", encoding="utf-8", newline="\n") as f:
         json.dump(transcript, f, ensure_ascii=False, indent=1)
         f.write("\n")
@@ -436,6 +448,7 @@ def main():
     ap.add_argument("--seed", type=int, required=True)
     ap.add_argument("--replay", action="store_true", help="cache only, no API calls")
     ap.add_argument("--fake", action="store_true", help="use the fake model, never the API")
+    ap.add_argument("--code", action="store_true", help="no model: the code brain decides for everyone (brain.py)")
     ap.add_argument("--config", default=None)
     ap.add_argument("--scenario", default=data.DEFAULT_SCENARIO, choices=sorted(data.SCENARIOS))
     ap.add_argument("--model", default=None, help="a key of config.json `models`")
@@ -444,8 +457,16 @@ def main():
     args = ap.parse_args()
     if args.days < 3:
         ap.error("--days must be 3 or more")
+    brain = None
+    if args.code:
+        if args.replay or args.fake or args.model:
+            ap.error("--code takes no model: not with --replay, --fake or --model")
+        import brain as brainmod
+        brain = brainmod.CodeBrain(args.seed)
+        if args.out == "v15":
+            args.out = "code"
     _, code = run(args.seed, replay=args.replay, fake=args.fake, config_path=args.config,
-                  scenario=args.scenario, model_key=args.model, out=args.out, days=args.days)
+                  scenario=args.scenario, model_key=args.model, out=args.out, days=args.days, brain=brain)
     sys.exit(code)
 
 

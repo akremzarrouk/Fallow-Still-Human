@@ -548,6 +548,16 @@ class Morning:
         """p is played by the player (reports/play_design.md), not the model."""
         return getattr(self, "player", None) is not None and p.id == self.player.pid
 
+    def brain(self):
+        """The code brain (brain.py; Docs/fable-audit-2026-11.md, section 10.1) when the run was given one, in place of
+        the oracle; None otherwise: the model decides, as it always has."""
+        return getattr(self.oracle, "brain", None)
+
+    def unasked(self):
+        """The mode of an act the rules chose because nobody could be asked. With a model: "fallback", its answer could
+        not be used. In code mode nothing was asked and the day's asks were spent, so it is the rules' own: "routine"."""
+        return "routine" if self.brain() is not None else "fallback"
+
     # ---------- who is where ----------
     def others_here(self, p):
         if self.present is not None:
@@ -1023,7 +1033,7 @@ class Morning:
         choice, why = self.ask_model(p, t, opts, d, self.food_moment_line(p))
         if not choice:
             opts = opts + [Option("silent", "stay put and say nothing", kind="silent")]
-            d.update(mode="fallback", invalid=why, option="silent", say=None)
+            d.update(mode=self.unasked(), invalid=why, option="silent", say=None)
         opt = next(o for o in opts if o.id == d["option"])
         d["label"] = opt.label
         d["_opt"] = opt
@@ -1047,7 +1057,7 @@ class Morning:
         choice, why = self.ask_model(q, t, opts, d, f"{p.name} has just handed you one of the portions.")
         self.holding = None
         if not choice:
-            d.update(mode="fallback", invalid=why, option="refuse_given", say=None)
+            d.update(mode=self.unasked(), invalid=why, option="refuse_given", say=None)
         opt = next(o for o in opts if o.id == d["option"])
         d["label"] = opt.label
         d["_opt"] = opt
@@ -1518,6 +1528,9 @@ class Morning:
                      "moved_to": opt.act["to"] if opt.act["kind"] in ("go", "accept_aside") else None}
             if d.get("food_moment"):
                 entry["food_moment"] = d["food_moment"]
+            for k in ("why", "mood"):       # code mode (brain.py): the reasons of the choice, and the day's mood
+                if k in d:
+                    entry[k] = d[k]
             tturn["acts"].append(entry)
             return opt, entry
 
@@ -1619,6 +1632,14 @@ class Morning:
             self.quiet.counted()
             self.quiet.door_asked(p)
         seen = p.levels()
+        brain = self.brain()
+        if brain is not None:       # code mode (brain.py): no prompt is built and no model is asked
+            p.last_asked = minute
+            choice = brain.decide(self, p, t, opts, d, extra)
+            p.seen = seen
+            d.update(mode="code", **choice)
+            self.take_answer(p, choice, minute, d)
+            return choice, None
         prompt = self.prompt_for(p, t, opts, d.get("lull"), extra=extra)
         p.last_asked = minute
         text = self.oracle.ask(SYSTEM, prompt)
@@ -1703,7 +1724,7 @@ class Morning:
             if pending:
                 quiet.asked(p.id)
             if not choice:
-                d.update(mode="fallback", invalid=why, option=self.routine(p, opts), say=None)
+                d.update(mode=self.unasked(), invalid=why, option=self.routine(p, opts), say=None)
         else:
             d.update(mode="routine", option=self.routine(p, opts), say=None)
         opt = next(o for o in opts if o.id == d["option"])
@@ -1808,7 +1829,7 @@ class Morning:
             return self.played(q, t, opts, d, "aside", f"{p.name} asks you to come aside to the {data.ROOMS[to]}.")
         choice, why = self.ask_model(q, t, opts, d)
         if not choice:
-            d.update(mode="fallback", invalid=why, option="refuse_aside", say=None)
+            d.update(mode=self.unasked(), invalid=why, option="refuse_aside", say=None)
         opt = next(o for o in opts if o.id == d["option"])
         d["label"] = opt.label
         d["_opt"] = opt
@@ -1860,7 +1881,7 @@ class Morning:
         seen = self.others_here(p)
         culprit = self.people[self.culprit] if self.culprit else None
         feel = f" You felt {d['feeling']}." if d.get("feeling") else ""
-        if d["mode"] == "model":
+        if d["mode"] in ("model", "code"):
             p.feeling = d["feeling"]
             p.feeling_until = t + FEELING_SHOWS_FOR_TURNS if outward(d["feeling"]) else -1
         target_id = aimed_at(opt.id) or (opt.act.get("target") if kind == "sit" else None)
@@ -2084,7 +2105,7 @@ class Morning:
             else:
                 p.activity = {"kind": "idle", "label": "staying put"}
                 so_far.append(f"{p.name} stays put and says nothing.")
-            if d["mode"] in ("model", "player"):
+            if d["mode"] in ("model", "player", "code"):
                 p.memory.append((minute, f"you stayed where you were and said nothing.{feel}"))
             return "stayed where they were" + (" (its line was dropped: silent means no words)"
                                                if d.get("dropped_line") else "") + "."

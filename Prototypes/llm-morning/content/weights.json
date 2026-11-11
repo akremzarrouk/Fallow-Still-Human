@@ -1,0 +1,92 @@
+{
+ "_about": "The code brain's first weights (Docs/fable-audit-2026-11.md, section 10.2, re-frozen 2026-11-11). A move's score is its base plus the sum of its terms; a term is a number times the product of the named facts about the person deciding (brain.py, CodeBrain.facts). The first rule of a move whose `when` facts all hold is the one used. `rule` is the rule of the first version it came from. Read by brain.py; nothing here is a constant in code.",
+ "stay": 0.30,
+ "default": 0.10,
+ "band": 0.05,
+ "tilt": 0.04,
+ "cap_per_day": 2,
+ "moves": {
+  "eat_given":    [{"rule": 1, "base": 0.15, "terms": [[0.9, "h"]]}],
+  "refuse_given": [{"rule": 1, "base": 0.35}],
+  "accept_aside": [{"rule": 2, "base": 0.60, "terms": [[-0.9, "k_partner"]]}],
+  "refuse_aside": [{"rule": 2, "base": 0.25}],
+
+  "sleep":        [{"rule": 3, "base": 0.40, "terms": [[0.15, "debt_stage"]]}],
+  "lie_awake":    [{"rule": 3, "base": 0.20, "terms": [[1.2, "anxious_over_half"]]}],
+  "go_next_door": [{"rule": 3, "terms": [[0.80, "offered_today"], [0.1, "proud"], [-0.9, "weak"]]}],
+  "watch_door":   [{"rule": 3, "terms": [[0.45, "anxious", "knock_today"]]}],
+  "stop":         [{"rule": 3, "base": 0.10, "terms": [[0.75, "empathetic"]]}],
+  "let_go":       [{"rule": 3, "base": 0.55}],
+  "stay_in_bed":  [{"rule": 3, "base": 0.55}],
+  "go_later":     [{"rule": 3, "base": 0.30}],
+  "go_anyway":    [{"rule": 3, "base": 0.20, "terms": [[0.7, "proud"]]}],
+  "answer_stay":  [{"rule": 3, "base": 0.60}],
+
+  "deny": [
+   {"rule": 4, "when": ["took_it", "question_open"], "base": 0.55, "terms": [[0.4, "proud"], [-0.9, "g"]], "once": "day", "limit": 2},
+   {"rule": 4, "when": ["owes_accusation"], "base": 0.90, "once": "accuser"},
+   {"rule": 8, "when": ["question_open"], "base": -0.05, "terms": [[0.9, "proud"]], "once": "day"}
+  ],
+  "confess": [{"rule": 4, "terms": [[1.5, "g"], [0.5, "honest"], [-0.6, "proud"], [0.2, "alone_with_one"],
+                                    [-0.5, "listening"], [-0.15, "accused_publicly"]]}],
+  "say_to": [{"rule": 4, "when": ["owes_target_line"], "base": 0.70, "once": "day"}],
+
+  "door_look":   [{"rule": 5, "base": 0.80, "once": "day"}],
+  "door_refuse": [{"rule": 5, "base": -0.04, "terms": [[0.9, "cautious"]], "once": "day"}],
+  "door_call":   [{"rule": 5, "base": 0.45, "once": "day"}],
+
+  "share": [{"rule": 6, "terms": [[1.2, "empathetic", "H_past_hungry"]]}],
+  "eat":   [{"rule": 6, "terms": [[0.9, "h", "impulsive"], [0.6, "starving"], [-0.35, "others_here"]]}],
+
+  "collect_rain": [{"rule": 7, "base": -0.25, "terms": [[0.6, "cautious"], [0.5, "dominant"]], "once": "day"}],
+  "rain_out":     [{"rule": 7, "base": -0.25, "terms": [[0.6, "cautious"], [0.5, "dominant"]]}],
+
+  "ask":    [{"rule": 8, "terms": [[0.80, "counted"], [0.15, "dominant"], [-0.5, "heard_question"]], "once": "day"}],
+  "accuse": [{"rule": 8, "terms": [[0.9, "s_target", "boldness"]], "once": "day"}],
+
+  "go": [{"rule": 9, "when": ["took_it", "to_own_room", "owes_nobody", "others_here"], "base": -0.25,
+          "terms": [[0.9, "g"]], "once": "convo"}],
+
+  "sit":          [{"rule": 10, "base": 0.10, "terms": [[2.0, "empathetic_over_half", "u_target"], [-0.6, "k_target"]],
+                    "once": "day"}],
+  "reassure":     [{"rule": 10, "base": 0.05, "terms": [[2.0, "empathetic_over_half", "u_target"], [-0.6, "k_target"]],
+                    "once": "day"}],
+  "reassure_all": [{"rule": 10, "terms": [[2.0, "empathetic_over_half", "upset_share"]], "once": "day"}],
+
+  "volunteer":  [{"rule": 11, "base": -0.60, "terms": [[0.6, "dominant"], [0.6, "proud"]], "once": "day"}],
+  "object":     [{"rule": 11, "when": ["target_offered"], "base": -0.25, "terms": [[1.0, "cautious"]],
+                  "once": "day", "once_key": "object"}],
+  "object_all": [{"rule": 11, "when": ["someone_offered"], "base": -0.30, "terms": [[1.0, "cautious"]],
+                  "once": "day", "once_key": "object"}],
+  "decline":    [{"rule": 11, "base": -0.55, "terms": [[1.2, "anxious"]], "once": "day"}],
+
+  "ration_water": [{"rule": 12, "base": -0.25, "terms": [[0.9, "cautious"]], "once": "week"}],
+
+  "search": [
+   {"rule": 13, "when": ["took_it"], "base": -1.0},
+   {"rule": 13, "base": 0.20, "terms": [[0.15, "cautious"]]}
+  ]
+ },
+ "quirks": [
+  {"who": "elena", "move": "accuse", "when": ["!target_accused_by_other"], "add": -0.30,
+   "says": "does not accuse her own children first"}
+ ],
+ "moods": {
+  "on edge":  {"more": ["accuse", "confront", "deny", "object", "object_all"],
+               "less": ["reassure", "reassure_all", "sit"]},
+  "low":      {"more": ["stay", "lie_awake", "decline", "go:to_own_room"], "less": ["speech"]},
+  "warm":     {"more": ["reassure", "reassure_all", "sit", "share", "give", "accept_aside"],
+               "less": ["accuse", "confront"]},
+  "restless": {"more": ["go", "search", "collect_rain", "volunteer", "door_look"], "less": ["stay"]}
+ },
+ "words": {
+  "h": "hunger", "H_past_hungry": "someone here is very hungry", "g": "what is on them", "k_partner": "what they hold against them",
+  "k_target": "what they hold against them", "s_target": "suspecting them", "u_target": "they look upset",
+  "upset_share": "people here look upset", "debt_stage": "tiredness", "anxious_over_half": "anxious",
+  "empathetic_over_half": "feels for others", "offered_today": "said they would go", "weak": "too weak",
+  "knock_today": "the knock today", "alone_with_one": "alone with one person", "listening": "people listening",
+  "accused_publicly": "accused in front of others", "counted": "counted the shelf", "heard_question": "the question was asked",
+  "starving": "starving", "others_here": "others are here", "boldness": "bold enough to say it",
+  "base": "as a rule"
+ }
+}

@@ -436,6 +436,17 @@ class Night:
             self.decisions.append(d)
             self.story.append(("decision", d))
             return d["option"], d.get("say")
+        brain = self.m.brain()
+        if brain is not None:           # code mode (brain.py): the brain decides, and no model is asked
+            seen = p.levels()
+            choice = brain.decide_night(self, p, kind, opts)
+            p.seen = seen
+            d.update(mode="code", **choice)
+            self.m.take_answer(p, choice, self.m.night_minute(), d)
+            d["label"] = byid[d["option"]].label
+            self.decisions.append(d)
+            self.story.append(("decision", d))
+            return d["option"], d.get("say")
         prompt = self.m.prompt_for(p, None, opts, night=now)
         seen = p.levels()
         text = self.oracle.ask(NIGHT_SYSTEM, prompt)

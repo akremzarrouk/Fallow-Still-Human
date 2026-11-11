@@ -666,6 +666,11 @@ def render_mind(mind):
     w = out.append
     w("## What the night left in them")
     w("")
+    if getattr(mind, "skipped", None) == "code":
+        w("In code mode the night mind is not asked: each person carries what the record holds, and nothing a model "
+          "made of it.")
+        w("")
+        return "\n".join(out) + "\n"
     w("Once the night was over, each person in the house was asked once what the day leaves in them. Each memory "
       "cites the records it is about; one that fails a check (reports/days_design.md, §2.6) never reaches a prompt.")
     w("")

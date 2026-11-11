@@ -7,6 +7,38 @@ output. Anything I could not check is marked **NOT VERIFIED** and listed in sect
 
 ---
 
+## Changelog
+
+**2026-11-11, second version.** After your review: four decisions and ten answers. Sections 7 to 10 were rewritten
+and the Day 1 cases and predictions re-frozen. No code was written. The first version is in git at `a3960e3`.
+Sections 0 to 6, 11 to 14 and the appendix are as first written; item 20 lists where they are now out of date.
+
+| # | Change | Where |
+|---|---|---|
+| 1 | **No director.** The seeded deck of troubles, one dealt a day and harder from day 5, is removed. New things come only from the world's own chances: weather, water, neighbours, night trips, sickness, injury. No chance reads the number of the day. | 7.1, 7.4 |
+| 2 | **Empty days defined and allowed.** A day is empty when it holds nothing beyond meals, routine work and sleep. Something from the world counts only if someone perceived it and an act names it as its reason. Something between people counts only if it is new: a repeat of an old subject with no new cause does not count. The diary keeps an empty day to 8 lines. Only a run of them is a problem. | 7.4, 7.5 |
+| 3 | **The nudge, only if measured to be needed.** 50 seeded weeks are counted on 14 Nov. It is built only if more than 1 day in 7 is empty on average or a week has 3 in a row. Limits: after 15:00 on a day empty so far; only things already possible that day; at most double a chance; at most 2 days a week; never reads the day number; marked in the record, unseen by the player. | 7.4, L12 |
+| 4 | **Sickness and injury, new, from causes only:** unboiled rain or bin water; being wet and cold; long hunger; catching it from a room-mate or from someone being looked after; the day's work (boards, carrying water, a cut hand); a night trip. Three levels, mending or worsening day by day. Leo too. No draw without a cause. | 7.1, 7.4, L13 |
+| 5 | **Loss only through a chosen act** (a trip, a door opened), never by chance at home. Leo is not lost in the first hour of play; that exception is marked in the record. The week carries on after a loss: grief, tasks shared out again, meals split among those there, the empty bed. | 7.4, L11, L13 |
+| 6 | **Scoring brain from the first day.** The rule list of the old 10.2 (first match wins) is gone. Its 13 rules are now the first weights, kept in `content/weights.json`. | 7.3, 10.1, 10.2 |
+| 7 | **The `confess` weights changed** from the example in the first version, so that Daniel confesses at guilt 2 to one person alone, does not confess at guilt 2 in front of everyone, and still confesses at guilt 3 in front of everyone, as B10 requires. | 7.3, 10.2 |
+| 8 | **Daily mood tilt, new.** Five moods; at most 0.04 on a move; from causes (last night's sleep, hunger, yesterday) plus a small seeded part; same seed, same week; one diary line that names the cause. It settles close calls only: a move that leads by 0.15 or more is never overturned. | 7.2, 10.2, B15, B16, F9 |
+| 9 | **The night step, new,** on 13 Nov, in place of the night mind: trust fades, grudges settle, intentions are renewed or dropped, tomorrow's mood is set, the carry-over lines are built from the record. | 7.2, section 9 |
+| 10 | **"Once is enough" now holds for the whole week,** not the day: a repeat needs a new cause that the record names. (In the Day 1 step it is still once a day; the week-long rule arrives on 13 Nov.) | 7.3, L6, 10.2 |
+| 11 | **No AI inside the game,** stated as a rule of the design: menu choices and written lines; typing later; a model only as later polish where code clearly cannot. | 7.1, 7.5 |
+| 12 | **Voice sheets first.** `content/voices.md`, one sheet per person with five sample lines, for your approval on 13 Nov, before the bulk of the lines on 15 Nov. Lines are written by the coding assistant; English, short and plain. | 7.5, section 9 |
+| 13 | **Food:** the change to about four days of a plain, countable stock is now accepted, with no model of calories. | 7.4 |
+| 14 | **Content folder renamed** from `data/` to `content/`, because a folder named `data` would sit beside the existing module `data.py`. `data/troubles.json` is dropped; `content/chances.json`, `content/weights.json`, `content/voices.md`, `chances.py` and `health.py` are added. | 7.1 |
+| 15 | **LLM-off test.** L2 now covers the mood tilt. L5: the lower limit on spoken lines applies only to days that are not empty, and only people able to get up are counted. L6: adds the week-long rule of item 10. L8 "new each day" is replaced by "no run of empty days". L11 (carries on after a loss), L12 (nothing staged) and L13 (causes and choices) are new. | section 8 |
+| 16 | **Plan.** Now 12 to 17 Nov. 12 Nov builds the scoring brain and the tilt. 13 Nov adds the night step and the voice sheets; meals are the first thing to move to 14 Nov. 14 Nov builds the chances, health and loss in place of the director, with its own cut order. 17 Nov is handoff, with no new features. | section 9 |
+| 17 | **Cases.** B1 to B14 are kept with their expected results unchanged. Two situations are spelt out: B10 (both halves are in front of all three, the harder setting) and B11 (Mara *looks* "very hungry", by the new rule that hunger at that level shows). B15 (the tilt is repeatable, small and has causes), B16 (the unit cases hold under every mood, with a lead of 0.15) and B17 (every decision keeps its reasons; every offered option has a weight) are new. | 10.3 |
+| 18 | **Predictions.** F1 now covers B1 to B17. **F2 is lowered** from 150 acts and 60 lines to 50 acts and 20 lines per ten-day run. The first figure was a guess; working the first weights through days 1 and 2 by hand gives about 12 acts on day 1 and few on later days, which is also what F5 predicts. F9 (the tilt changes at least 3 decisions a run and none of B1 to B14) is new. F3 to F8 are unchanged. | 10.4 |
+| 19 | **Three behaviours differ from the old rule list** and are stated in 10.2: cautious people may search a room; Leo accuses at his highest suspicion; a private confession comes at guilt 2. The close calls between the old hard lines and the new weights are listed there too. | 10.2 |
+| 20 | **Not edited, now out of date** (to be brought into line on 17 Nov). Section 0: "14 Nov: a full seven-day week with something new each day". Section 3.4: the sentence saying the kept principle allows a hidden director, and the proposed line "Something new happens every day". Section 4 (a), point 2: "every day one thing happens that has not happened before". Section 6.1 B: the sentence about a small director that "deals one new trouble a day". Section 6.2: "if every day has work and one new trouble". Section 6.3, reason 4: "a director that deals events". Section 11: the specs, which are revised after your hour of play. Section 13: the row "The director's troubles are too mild". Where any of these disagrees with sections 7 to 10, sections 7 to 10 hold. | sections 0, 3.4, 4, 6, 11, 13 |
+| 21 | **Evidence appendix:** E18 added, with the commands run for this version. The first weights were checked against the kept cases by hand arithmetic, not by a run. | appendix |
+
+---
+
 ## 0. Plain-language summary
 
 **Where the project is.** There are two separate attempts at the same game in this repository.
@@ -323,26 +355,31 @@ to play again; and there is a concrete need Python cannot meet (pictures, sound,
 
 ---
 
-## 7. The chosen design
+## 7. The chosen design (amended 2026-11-11)
 
-Module names below are proposals. "Keep" means the existing file is used as it is.
+Module names below are proposals. "Keep" means the existing file is used as it is. New content files go in a new
+folder, `Prototypes/llm-morning/content/` (not `data/`, which would sit beside the existing module `data.py`).
 
 ### 7.1 Layers
 
 | Layer | What it holds | Files |
 |---|---|---|
-| 1. Truth | Rooms, shelf, water, weather, the street, what happened and who perceived it | Keep: `truth.py`, `weather.py`, `water.py`, `street.py`, `chronicle.py`, `night.py`'s trip tables, `data.py` |
+| 1. Truth | Rooms, shelf, water, weather, the street, what happened and who perceived it; **new:** sickness and injury; the world's chances | Keep: `truth.py`, `weather.py`, `water.py`, `street.py`, `chronicle.py`, `night.py`'s trip tables, `data.py`. New: `health.py`, `chances.py`, `content/chances.json` |
 | 2. Perception | Each person's memory, facts, what they were told, what they heard and from whom | Keep: the `Person` fields at `world.py:370-378`, `:441-443`; the guard in `truth.py` |
-| 3. Heart (new) | Per person, by code only: body needs; a stance toward each other person; suspicion from evidence; guilt; a mood that shows on the face; one current intention | `heart.py` |
-| 4. Practices (new) | The situations and the moves each offers | `practices.py` plus `data/practices.json` |
-| 5. Brain (new) | Scores the offered moves for one person and picks one, with the reason | `brain.py` |
-| 6. Week (new) | The day's beats; the director's deck of troubles | `week.py`, `data/troubles.json` |
-| 7. Words (new) | Lines by speaker, move and tone | `data/lines.json`, `words.py` |
+| 3. Heart (new) | Per person, by code only: body needs; a stance toward each other person; suspicion from evidence; guilt; a mood that shows on the face; one current intention; the day's mood tilt; the night step | `heart.py` |
+| 4. Practices (new) | The situations and the moves each offers | `practices.py`, `content/practices.json` |
+| 5. Brain (new) | Scores the offered moves for one person and picks one, with the reason. A scoring brain from the first day | `brain.py`, `content/weights.json` |
+| 6. Week (new) | The day's beats. No director | `week.py` |
+| 7. Words (new) | A voice sheet per person; lines by speaker, move and tone | `content/voices.md`, `content/lines.json`, `words.py` |
 | 8. Telling | The diary of the week; Leo's screen | Adapt `story.py`, `player.py`, `play.py` |
 
 The model client (`gemini.py`), the prompts in `world.py`, the request budgets in `quiet.py`, the night mind
 (`mind.py`) and the frozen folders are not used in code mode. They stay in place until the hour of play is judged,
 then move to a `legacy/` folder (section 11, S9).
+
+**No AI inside the game.** The player chooses from a menu; every spoken line is read from a file. Typing comes
+later. A model may come back only as polish, to make something feel more natural where code clearly cannot, and
+only after code alone has been taken as far as it goes.
 
 ### 7.2 The heart
 
@@ -353,14 +390,54 @@ then move to a `legacy/` folder (section 11, S9).
   (`world.py:1650-1653`) and extends the event-driven grudges that already exist (`world.py:245-262`).
 - **Suspicion:** points from things perceived, never from a guess: left the room when the question was asked;
   denied before being asked; accused someone right after being accused; was heard up in the night. Temperament
-  bends it: Mara's suspicion follows whom she resents; Elena's is slow for her own children.
-- **Guilt, fear, grievance, wanting company, hunger, thirst, tiredness:** each a number that rises with time or
-  events and falls when acted on. A drive that is not acted on gains weight, so sooner or later something happens.
-  This is the answer to both standing still (N11) and the silent house (N1).
+  bends it: Mara's suspicion follows whom she resents; Elena's is slow for her own children. Without new evidence it
+  loses one point every two days.
+- **Guilt, fear, grievance, grief, wanting company, hunger, thirst, tiredness:** each a number that rises with time
+  or events and falls when acted on. A drive that is not acted on gains weight, so sooner or later something
+  happens. This is the answer to both standing still (N11) and the silent house (N1).
 - **Mood on the face:** set by code from the strongest drive, so that others can react to it. Today it is a word the
   model returns (`world.py:70-78`).
 - **Intention:** one thing a person has decided to do and has not yet done ("tell Mom tonight", "go next door after
-  dark"), with an end date. It keeps people from changing their mind every three minutes.
+  dark"), with an end date at most three days off. It keeps people from changing their mind every three minutes.
+
+**The daily mood tilt.** Each person wakes each day in one of five moods: steady, on edge, low, warm or restless.
+
+- **Where it comes from.** Mostly from causes: last night's sleep (lay awake, kept watch, was out), hunger (very
+  hungry or worse on waking), and yesterday (was accused, quarrelled and did not mend it, was comforted or given
+  food, lost someone). Each cause gives one or two points to a mood, by the person's temperament: a bad night puts
+  an anxious person on edge and a calm one low. A small seeded part adds, on about half the days, one point to a
+  mood drawn by the seed. The mood with the most points wins; a mood with a cause beats one without; no points
+  means steady.
+- **How strong.** Small. A mood adds or takes at most 0.04 from a move's score, so the most it can shift one move
+  against another is 0.08. With the 0.05 band in which the seed chooses (7.3), a move that leads by 0.15 or more is
+  never overturned. The tilt settles close calls only.
+
+  | Mood | A little more of | A little less of |
+  |---|---|---|
+  | on edge | accusing, confronting, denying, objecting | reassuring, sitting with someone |
+  | low | staying silent, keeping to one's room, lying awake, declining | speaking |
+  | warm | reassuring, sitting with someone, sharing, giving, going aside when asked | accusing, confronting |
+  | restless | going, searching, fetching, volunteering, taking a task | staying silent, resting |
+  | steady | nothing | nothing |
+
+- **The same seed gives the same week.** The seeded part is drawn from the seed, the day and the person.
+- **It shows.** The diary gives one plain line per person on a day that is not steady, and names the cause where
+  there is one: "Mara woke on edge after a bad night." With only the seeded part: "Daniel woke restless." The
+  others see it only through what that person does. The player has no tilt; when Leo is played by code he has one.
+
+**The night step.** Code only, run once for each person at the end of each night. It takes the place of the night
+mind (`mind.py:435-447`), which is not asked in code mode.
+
+1. **Trust fades.** Every remembered act loses weight (half in two nights). Marks keep theirs.
+2. **Grudges settle.** A grievance nobody renewed today drops one step. One that was aired and answered with an
+   apology or an amend drops two. A mark stays.
+3. **Intentions are renewed or dropped.** Done: dropped. Still possible and its cause still stands: renewed, up to
+   its end date. Its cause is gone, it has become impossible, or its date has passed: dropped, with one diary line
+   ("Daniel no longer meant to go"). If none is held, the strongest drive that found no outlet today may form one,
+   scored like any move.
+4. **Tomorrow's mood tilt is set,** with its cause.
+5. **The morning's carry-over lines are built from the record,** as blocks A and C are today (`memory.py:71`). The
+   night mind's block B (`memory.py:49`) is not produced.
 
 ### 7.3 Practices and moves
 
@@ -373,66 +450,144 @@ A practice has roles, a few moves, and an end. The first set:
 | The day's work | take a task (water, watch, boards, count stores, look after someone); assign one; refuse; do it together | tasks taken or left |
 | Planning a trip | propose; volunteer; object; back someone; settle who goes | a decision, or bedtime |
 | A knock at the door | look; call out; open; give; refuse | the visitor leaves (exists: `quiet.py:750-890`) |
-| A quarrel | confront; justify; apologise; walk out; step between | repair, or one leaves; it cannot restart the same day without a new cause |
-| Someone is upset | sit with; reassure; leave them be | they settle or leave |
+| A quarrel | confront; justify; apologise; walk out; step between | repair, or one leaves |
+| Someone is upset, sick or hurt | sit with; reassure; look after; leave them be | they settle, mend or are left |
 | The night | sleep; lie awake; watch; go out; talk in the dark with whoever shares the room | morning (exists: `night.py:467-552`) |
 
 Each move states, in data: who may do it and when (from what that person perceives); what it does (using the
 effects the engine already applies, `world.py:1854` onward); and its **considerations**. A consideration is a
-weight on one fact about the actor's own state. Example, for `confess`:
+weight on one fact about the actor's own state. The brain is this scoring brain from the first day (12 Nov); there
+is no earlier rule list. The first weights are in section 10.2. Example, `confess`, as first weighted:
 
 ```
 confess:
-  + 1.2 × guilt (0 to 1)
-  + 0.5 × honest
-  − 0.6 × proud
-  + 0.6 if alone with one person they trust
-  − 0.2 × people listening
-  − 0.4 if just accused in front of others      (shame hardens)
-  offered only to whoever took it; chosen only above 0.6
+  + 1.5  × guilt (0 to 1)
+  + 0.5  × honest
+  − 0.6  × proud
+  + 0.2  if alone with one person
+  − 0.5  × share of the family listening
+  − 0.15 if just accused in front of others
+  offered only to whoever took it
 ```
 
-The brain adds up each offered move, takes the best, and where two are within 0.05 lets the seed choose. It keeps
-the three largest terms as the reason, which the diary prints in plain words ("because it had been on him since
-the night, and they were alone").
+For Daniel this gives: at guilt 1 he denies anywhere; at guilt 2 he confesses to one person alone (0.77) and not
+in front of everyone (0.24 asked, 0.09 accused); at guilt 3 he confesses even in front of everyone (0.59).
+
+The brain adds up each offered move, applies the day's mood tilt, takes the best, and where two are within 0.05
+lets the seed choose. It keeps the three largest terms as the reason, which the diary prints in plain words
+("because it had been on him since the night, and they were alone").
 
 Three rules keep it from looping or freezing:
 
-1. **Once is enough.** After a move, the same person cannot make the same move at the same target on the same
-   subject again that day unless something new has happened.
+1. **Once is enough, for the whole week.** After a move, the same person cannot make the same move at the same
+   person on the same subject again unless there is a **new cause**: something that person has perceived since
+   they last did it. The record names the cause. Without one, the can cannot come back on day 5.
 2. **Pressure finds a way out.** A drive nobody acts on grows until some move for it wins.
 3. **A scene must change something** (a fact learned, a decision, a stance, a body) or end.
 
 People may have **written quirks** in their data ("Elena does not accuse her children first"; "Daniel volunteers
 before he thinks"). The engine still names nobody; the data may.
 
-### 7.4 The week
+### 7.4 The week: the world's own chances, and no director
 
 - **A day is a few beats**, the same seven days through: morning (water, the first meal), the day's work, the
-  afternoon (the day's trouble), the evening (the second meal, tomorrow's plan), the night. A beat starts the
-  practices that apply in each room; a practice plays in the existing short turns until it ends. Between beats time
-  passes with no decisions. This replaces the trigger and budget rules (3.1, point 4) in code mode.
-- **The director** holds a seeded deck of troubles, each with conditions, and deals one a day, never the same twice:
-  rain and the bin; a knock (exists); the tap running low; someone weak; a noise in the street at night; something
-  found next door; Mara wanting to go out; a cut hand. It deals harder ones from day 5.
-- **The scenario change:** start with food for about four days on short portions, so that meals happen, the night
-  trips matter by day 4, and the can is the first trouble and not the only subject. Daniel's confession becomes a
-  move scored like any other, so *how Leo handles him* decides whether he confesses, hardens, or goes out at night to
-  make it right.
+  afternoon, the evening (the second meal, tomorrow's plan), the night. A beat starts the practices that apply in
+  each room; a practice plays in the existing short turns until it ends. Between beats time passes with no
+  decisions. This replaces the trigger and budget rules (3.1, point 4) in code mode.
+- **Nothing is staged.** There is no director and no deck. A new thing happens only when the world's own chance for
+  it comes up. No chance reads the number of the day. Days get harder only because the state does: the shelf
+  empties, the tap falls, bodies weaken.
+
+**The chances.** Each is a seeded draw made only while its conditions hold. Each first value is kept in
+`content/chances.json` with one line saying why it is that size, and a source where there is one; a value with no
+source is marked as an estimate. Values are changed only toward realism, never to make a week livelier.
+
+| What | Comes from | State today |
+|---|---|---|
+| Rain, cold | The seeded weather of each day | Exists: `weather.py:46`, `:66` |
+| Water running low | Use against what the tap and the bin hold | Exists: `truth.py:83-143` |
+| A neighbour at the door | Each household's own needs and plans | Exists: `street.py:345`, `:529` |
+| What a night trip finds, and how it ends | The street and the houses' tables | Exists: `night.py:100-146`, `:772` |
+| Sickness | Only from a cause, below | New (14 Nov) |
+| Injury | Only from a cause, below | New (14 Nov) |
+
+**Sickness and injury.** No draw is made without a cause, so nobody falls sick for no reason. Leo can fall sick or
+be hurt like anyone.
+
+| Cause | What it can bring |
+|---|---|
+| Drinking rain or bin water that was not boiled | a stomach sickness |
+| Being wet and cold for hours (`quiet.py:68`) | a chill or fever |
+| Long hunger ("thin and weak" or worse) | faintness; every other chance here is higher for that person |
+| Sharing a room at night with someone sick, or looking after them | catching it |
+| The day's work: the boards, carrying water, a knife | a cut hand, a strain, a fall |
+| A night trip that goes wrong | being hurt (exists as "shaken": `night.py:787-818`) |
+
+A condition has three levels: unwell or sore (works slower), laid up (rests most of the day and needs care),
+bedridden (cannot get up). Each day it gets better or worse by a draw shaped by rest, water, food and care. Every
+condition's record names its cause.
+
+**Losing someone.** A person can be lost only through something someone chose to do: going out at night, going
+further along the street, opening the door and stepping out. Never by chance at home: inside the week, the worst
+that sickness or injury at home can do is leave someone bedridden. The record names the choice. In the first hour
+of play Leo himself is not lost: a draw that would lose him brings him back hurt, with nothing. That exception is
+marked in the record.
+
+**After a loss the week carries on.** The engine already holds people who did not come back (`night.py:364`,
+`world.py:375`, `:468`). On top of that:
+
+- grief becomes a drive in each of the others, by how close they were;
+- the lost person's tasks are shared out again in the next day's work;
+- meals are split among those who are there;
+- the bed is empty, and whoever shared the room sleeps worse, which feeds their mood tilt;
+- no move is ever offered at someone who is not there, and lines speak of them in the past.
+
+**Empty days.** A day is **empty** when its record holds nothing beyond meals, routine work and sleep. What makes
+a day not empty:
+
+- something from the world that someone perceived **and** that at least one act that day names as its reason (rain
+  that nobody does anything about does not count); or
+- something between people that is **new**: it has a new cause, as in 7.3. A repeat of an old subject with no new
+  cause does not count.
+
+An empty day is allowed. The diary keeps it short and plain. Only a run of them is a problem.
+
+**The nudge, only if measured to be needed.** On 14 Nov, 50 seeded weeks are played at pure odds and empty days are
+counted. The nudge is built only if more than 1 day in 7 is empty on average, or any week has 3 empty days in a
+row. If it is built:
+
+- it acts only after 15:00 on a day that is empty so far;
+- it only raises the chance of things whose conditions already hold that day and whose chance is above zero (rain
+  under a wet sky, a neighbour whose own need is high, sickness in someone already exposed);
+- it at most doubles a chance;
+- it acts on at most 2 days of a week;
+- it does not read the number of the day;
+- each use is marked in the record for you; the player never sees it.
+
+**The scenario change:** start with a plain, countable stock (cans, rice, a few other things) for about four days
+on short portions, set once in data, with no model of calories. Meals then happen, the night trips matter by
+day 4, and the can is the first trouble and not the only subject. Daniel's confession is a move scored like any
+other, so *how Leo handles him* decides whether he confesses, hardens, or goes out at night to make it right.
 
 ### 7.5 Words, the diary, and Leo
 
-- **Lines:** `data/lines.json`, keyed by speaker, move and tone, with three to eight variants each and slots for
-  names and things. The code picks by seed and never the same variant twice running. Every move has a plain default
-  line, so nothing is ever unsaid for want of text.
-- **The diary:** per day, at most 60 lines: the beat, who did and said what, and the reason. This is what you read.
+- **Voice sheets first.** `content/voices.md`, one sheet per person, written on 13 Nov from their note and traits
+  (`data.py:17-56`) for you to approve: how they talk (length of sentence, what they never say, how anger and fear
+  show in their words, how they address each of the others) and five sample lines each. The bulk of the lines
+  follows the approved sheets.
+- **Lines:** `content/lines.json`, keyed by speaker, move and tone, with three to eight variants each and slots for
+  names and things. English, short and plain. Written into the file by the coding assistant at build time; you mark
+  the ones that sound wrong when you read the week. The code picks by seed and never the same variant twice
+  running. Every move has a plain default line, so nothing is ever unsaid for want of text.
+- **The diary:** per day, at most 60 lines: the beat, who did and said what, and the reason. An empty day takes at
+  most 8 lines. A mood line with its cause opens the day for anyone not steady. This is what you read.
 - **Leo's screen:** the situation in a few lines, then at most seven choices, each shown as the line Leo would say
-  or the thing he would do, with "something else…" opening the rest. No typing is needed. The other three answer at
-  once.
+  or the thing he would do, with "something else…" opening the rest. No typing. The other three answer at once.
+  When Leo is sick or hurt his body limits what he is offered, and the screen says why.
 
 ---
 
-## 8. The LLM-off test (pass/fail)
+## 8. The LLM-off test (pass/fail) (amended 2026-11-11)
 
 One test, `test_llm_off.py`. It plays seven days, seeds 1, 2 and 3, twice each: with Leo played by code, and with a
 scripted player as Leo. **It passes only if every clause holds for every run.** A clause is in force from the date
@@ -442,23 +597,26 @@ existing day loop (section 10); from 14 Nov it is the seven-day week.
 | # | Clause | In force from |
 |---|---|---|
 | L1 | **No model.** `GEMINI_API_KEY` is unset; importing `google.genai` is blocked; opening a network socket raises; no model client is constructed; a counter of calls to any model interface reads 0. | 12 Nov |
-| L2 | **Same seed, same week.** Two runs of one seed give byte-identical transcripts. At least two of the three seeds differ from each other. | 12 Nov |
+| L2 | **Same seed, same week.** Two runs of one seed give byte-identical transcripts, each person's mood tilt on each day included. At least two of the three seeds differ from each other. | 12 Nov |
 | L3 | **Code decided everything.** Every act is marked `code`, `routine` or `player`. None is `model` or `fallback`. | 12 Nov |
 | L4 | **Valid.** Every chosen move was offered. Every spoken move has words, and the words come from the line file. | 12 Nov |
-| L5 | **Alive.** On every day, each person at home and awake makes at least 3 acts that are not silent, sleep, rest or sitting idle; the house speaks at least 12 lines and at most 80. | 14 Nov |
-| L6 | **Not stuck.** No person makes the same move at the same target more than twice in a day. No person says the same sentence twice in a day. At most 4 of the 28 person-days have one move taking half or more of that person's acts (v23's own measure, where it was 25 of 32: `Prototypes/llm-morning/reports/v23.md:12`). | 14 Nov |
+| L5 | **Alive.** On every day, each person who is at home and able to get up makes at least 3 acts that are not silent, sleep, rest or sitting idle. The house speaks at most 80 lines a day, and at least 8 on a day that is not empty. An empty day has no lower limit. | 14 Nov |
+| L6 | **Not stuck.** No person makes the same move at the same person more than twice in a day. No person says the same sentence twice in a day. No person repeats a move at the same person on the same subject anywhere in the week without a new cause named in the record. At most 4 of the 28 person-days have one move taking half or more of that person's acts (v23's own measure, where it was 25 of 32: `Prototypes/llm-morning/reports/v23.md:12`). | 14 Nov |
 | L7 | **Bodies make sense.** On any day that begins with food on the shelf, someone eats. Nobody reaches "thin and weak" with food on the shelf. Nobody is "badly thirsty" with more than 5 L stored. | 14 Nov |
-| L8 | **New each day.** Each day's record holds one trouble not seen earlier that week, perceived by someone, and at least one later act names it as its reason. | 14 Nov |
+| L8 | **No run of empty days.** In each of the three seeds, no 3 empty days in a row ("empty" as defined in 7.4). Over the 50 measured weeks (a separate, slower check, run on 14 Nov and at handoff): at most 1 day in 7 empty on average, and no week with 3 in a row. | 14 Nov |
 | L9 | **Leo matters.** The same seed played by two scripts, a kind Leo and a cold Leo, gives by day 3 at least one different act toward Leo from each of two other people, and each difference names a recorded act of Leo's as its reason. | 16 Nov |
-| L10 | **Fast.** The whole test finishes in under 60 s. | 12 Nov |
+| L10 | **Fast.** The whole test finishes in under 60 s (the 50-week check of L8 aside, which may take up to 5 minutes). | 12 Nov |
+| L11 | **Carries on after a loss.** With any one of Elena, Daniel or Mara removed at the start of day 3, the week runs to its end; no move is offered at the one who is gone; their tasks are shared out again; and L1 to L7 still hold. | 14 Nov |
+| L12 | **Nothing staged.** Every event from the world carries, in the record, the chance it was drawn at and the conditions that held. No chance reads the number of the day. If the nudge exists: at most 2 nudged days in a week, each no earlier than 15:00, each chance at most twice its own value. | 14 Nov |
+| L13 | **Causes and choices.** Every sickness and every injury in the record names its cause. Every loss names the act someone chose that led to it. No loss happens at home. Leo is never lost. | 14 Nov |
 
 What this test does not tell you: whether the week is good. It only shows that code decided everything, that the
-house is alive, and that nothing loops. Whether it reads as lived is judged by you reading `week.md` on 15 Nov and
-playing on 16 Nov (`CLAUDE.md:20`: "A metric is a clue, never the goal").
+house is alive, that nothing loops and that nothing is staged. Whether it reads as lived is judged by you reading
+`week.md` on 15 Nov and playing on 16 Nov (`CLAUDE.md:20`: "A metric is a clue, never the goal").
 
 ---
 
-## 9. Plan, 12 to 16 November
+## 9. Plan, 12 to 17 November (amended 2026-11-11)
 
 Each day ends with the suite green, the LLM-off test passing for the clauses then in force, and something for you
 to read or play for fifteen to thirty minutes. One journal entry of at most a page per day in
@@ -467,18 +625,22 @@ to read or play for fifteen to thirty minutes. One journal entry of at most a pa
 
 | Day | Build | Test gate | You |
 |---|---|---|---|
-| **12 Nov. The code brain.** | `brain.py` with the first rules (section 10). The three places that ask the model (`world.py:1608`, `night.py:427`, `mind.py:435`) take a brain instead when one is given. `--code` on `morning.py` and `play.py`. A small starter line table. | Section 10's cases B1 to B14. L1 to L4, L10. The old suite and the fake-run hashes unchanged. | Play day 1 as Leo with `--code` for 15 minutes. Write down three things that felt wrong. |
-| **13 Nov. The heart, and food.** | `heart.py`: stance from remembered acts, suspicion from evidence, guilt, mood on the face, one intention; in code mode the model-shaped fields no longer set state. Food for about four days. The meal practice. | Scripted cases: a remembered kindness changes a later choice and is named as the reason; a false accusation is remembered and fades by half in two days; Daniel confesses alone with Elena at high guilt and not in front of everyone; a meal is eaten on each of days 1 to 3. | Play days 1 and 2. Does anyone treat you differently on day 2 because of day 1? |
-| **14 Nov. The week.** | `week.py`: seven full days in beats, with no request budgets. The work practice. The director with at least five troubles. Nights reuse `night.py`. | L1 to L8, L10. | Read the raw record of seed 2, one line per act. Is there a day where nothing happened? |
-| **15 Nov. Words and the diary.** | `data/lines.json` with at least 400 lines across the four speakers. The diary of at most 60 lines a day, with reasons. | No move without a line; no sentence twice in a day; diary length; L1 to L8 still pass. | Read two whole weeks (two seeds), about 20 minutes. Mark every line that sounds wrong. **This is the first real judgement of goal (a).** |
-| **16 Nov. Leo's hour.** | The player in the week loop: at most seven choices a screen; remembered acts shown when they come back; save and resume; the end-of-week page. | L9; a scripted hour (60 choices) completes; all earlier clauses. | **Play for an hour.** Then say, without notes, what each of the three wanted from you. That answer, in your words, goes in the journal. Fable revises section 11's specs from it. |
+| **12 Nov. The scoring brain.** | `brain.py`: the scoring brain with the first weights of section 10.2 in `content/weights.json`, the once-a-day rule, and the daily mood tilt with the causes the engine already records. The three places that ask the model (`world.py:1608`, `night.py:427`, `mind.py:435`) take the brain instead when one is given. `--code` on `morning.py` and `play.py`. A small starter line table. | Section 10's cases B1 to B17. L1 to L4, L10. The old suite and the fake-run hashes unchanged. | Play day 1 as Leo with `--code` for 15 minutes. Write down three things that felt wrong. |
+| **13 Nov. The heart, the night step, the voices.** | `heart.py`: stance from remembered acts, suspicion from evidence, guilt, mood on the face, one intention; in code mode the model-shaped fields no longer set state. The night step of 7.2 in place of the night mind. The full causes of the mood tilt. "Once is enough" for the whole week, with a new cause. `content/voices.md`: four voice sheets. Food for about four days. The meal practice (the first thing to move to 14 Nov if the day runs short). | Scripted cases: a remembered kindness changes a later choice and is named as the reason; trust from one act halves in two nights and a mark does not; a grudge nobody renewed drops a step each night; an intention is renewed while its cause stands and dropped, with a diary line, when it is done, impossible or out of date; the night mind is never asked; tomorrow's tilt has its cause; Daniel confesses alone with Elena at guilt 2 and does not confess when accused in front of everyone at guilt 2; a meal is eaten on each of days 1 to 3. | Read the four voice sheets and approve or mark them. Play days 1 and 2. Does anyone treat you differently on day 2 because of day 1? |
+| **14 Nov. The week, at the world's own odds.** | `week.py`: seven full days in beats, with no request budgets. The work practice. `chances.py` and `health.py`: sickness and injury from causes only; conditions that mend or worsen; catching it from a room-mate or a patient. Loss only through a chosen act, and the week after a loss. The count of empty days over 50 seeded weeks; the nudge only if the count calls for it. Nights reuse `night.py`. If short, cut in this order: the nudge, catching sickness from others, injuries from work. | L1 to L8, L10 to L13. | Read the raw record of seed 2, one line per act. Read the empty-day count. |
+| **15 Nov. Words and the diary.** | `content/lines.json`, following the approved voice sheets, with at least 400 lines across the four speakers. The diary: at most 60 lines a day with reasons, at most 8 for an empty day, mood lines with their causes. | No move without a line; no sentence twice in a day; diary lengths; all clauses in force still pass. | Read two whole weeks (two seeds), about 20 minutes. Mark every line that sounds wrong. **This is the first real judgement of goal (a).** |
+| **16 Nov. Leo's hour.** | The player in the week loop: at most seven choices a screen; Leo's own sickness or injury limiting his choices; remembered acts shown when they come back; save and resume; the end-of-week page. | L9; a scripted hour (60 choices) completes; all earlier clauses. | **Play for an hour.** Then say, without notes, what each of the three wanted from you. That answer, in your words, goes in the journal. |
+| **17 Nov. Handoff.** | No new features. Section 11's specs revised from your hour of play. Sections 0 to 6 and 11 to 13 of this document brought into line with your decisions (the changelog lists the lines). The proposed `CLAUDE.md` text, applied only on your yes. The journal's last entry: what passes, what does not, what was cut. | The suite and the LLM-off test, run once more and their output kept. | Read the revised specs and say yes or no to the `CLAUDE.md` text. |
 
 ---
 
-## 10. The first build step (12 Nov): frozen test cases and predictions
+## 10. The first build step (12 Nov): test cases and predictions, re-frozen 2026-11-11
 
-**Frozen.** The cases and the predictions below are fixed before any code is written. The implementer does not edit
-them. If one turns out to be wrong, it is recorded as wrong, with the reason, and left in place.
+**Re-frozen on 2026-11-11, after your four decisions and ten answers.** The first version is in git at `a3960e3`.
+Cases B1 to B14 are kept as acceptance tests with their expected results unchanged; two have their situation spelt
+out more exactly (B10, B11), which the changelog records. B15 to B17 are new. The implementer does not edit the
+cases or the predictions. If one turns out to be wrong, it is recorded as wrong, with the reason, and left in
+place.
 
 ### 10.1 Scope of the step
 
@@ -487,48 +649,103 @@ them. If one turns out to be wrong, it is recorded as wrong, with the reason, an
   downstream changes. It may read only the `Person` it decides for and a `context` of what that person can see:
   who is in the room, what they are visibly doing, their shown mood, and the structured record of what was said
   this turn (`world.py:377`).
+- It is a **scoring brain**: for each offered option it looks up the move's considerations in
+  `content/weights.json`, adds them up from the person's own state, applies the day's mood tilt, drops moves the
+  once-a-day rule rules out, takes the best, and lets the seed choose among moves within 0.05 of the best. The
+  record of each decision keeps the three largest terms and the day's mood with its cause. The small decisions
+  (handed a portion, asked aside, the night's) are scored the same way from their own option lists.
 - `Morning.ask_model` (`world.py:1608-1631`) and `Night.ask` (`night.py:427-454`) ask the brain when one is set and
   never touch the oracle. The night mind (`mind.py:435-447`) is skipped when a brain is set.
 - `morning.run(..., brain=...)`, `python morning.py --seed N --code --days 10`, `python play.py --code`.
 - The existing day loop, option lists and budgets are **not** changed in this step.
 - New tests in a new file, `Prototypes/llm-morning/test_brain.py`. `test_morning.py` is not edited.
 
-### 10.2 The first rules (the first that applies wins; ties by seed)
+### 10.2 The first weights
 
-Traits are those of `Prototypes/llm-morning/data.py:17-56`. "Once" means once per person, target and day.
+These are the 13 rules of the first version turned into weights. Every number here is a first value in
+`content/weights.json`, not a constant in code.
 
-1. **Handed a portion:** eat it if at least "hungry"; else put it back.
-2. **Asked aside:** go, unless holding a grudge of 2 or more against the asker.
-3. **Night.** Bedtime: go next door if they offered to today and are not yet "thin and weak"; lie awake if anxious
-   ≥ 0.75; else sleep. Seeing someone leave: try to stop them if empathetic ≥ 0.7; else stay in bed. Stopped at the
-   door: go anyway if proud ≥ 0.6.
-4. **Owes an answer** (`world.py:697-707`). To an accusation, if innocent: deny, then nothing more is owed. If they
-   took it: confess when guilt is 3; else deny, at most twice a day, then go to their own room. To a confrontation,
-   a reassurance or being spoken to: one line back to that person.
-5. **At the door:** look first, once; then refuse if cautious ≥ 0.6, else call out.
-6. **Food on the shelf, in the kitchen:** with others present, share it out if empathetic ≥ 0.7 and someone here is
-   "very hungry" or worse. Alone: eat if "starving", or if "very hungry" and impulsive ≥ 0.6.
-7. **Rain, and the bin is not out:** set it out if cautious ≥ 0.6 or dominant ≥ 0.8, once.
-8. **The can, not yet known.** Whoever counted the shelf asks who took it, once. Someone with suspicion of 2 or more
-   who is impulsive ≥ 0.6 or dominant ≥ 0.8 accuses that person, once. Someone proud ≥ 0.5 who heard the question
-   and has not answered denies, once.
-9. **Whoever took it,** with guilt of 2 or more, in a room with others and owing no answer: goes to their own room,
-   once per conversation.
-10. **Someone here looks upset:** sit with them, or reassure them if sitting is not offered, if empathetic ≥ 0.7 and
-    no grudge of 2 or more against them, once.
-11. **The trip, once it is raised:** volunteer if dominant ≥ 0.8 and proud ≥ 0.8; object to a volunteer if cautious
-    ≥ 0.7; decline if anxious ≥ 0.75; each once.
-12. **Water:** say it must be rationed if cautious ≥ 0.7, once in the week.
-13. **Otherwise** the existing routine (`world.py:956-963`).
+**Signs.** Traits are those of `data.py:17-56`, each from 0 to 1. `h` is the person's own hunger level divided by
+3 (`world.py:189-190`: 0 a little hungry, 1 hungry, 2 very hungry, 3 starving). `H` is the same for the hungriest
+person they can see in the room, themselves included. `g` is guilt divided by 3. `s(q)` is their suspicion of `q`
+divided by 3. `k(q)` is their grudge against `q` divided by 3. `u(q)` is how upset `q` looks, divided by 3. A word
+in *italics* is 1 when true and 0 when not. "Once" means once per person, target and day; the week-long rule of 7.3
+arrives on 13 Nov.
 
-`suspects` is the person the code's evidence points to (left the room within two turns of the question or an
-accusation; accused someone straight after being accused; a night note such as `data.py:218-222` gives), else
-nobody. `angry_at` is whoever accused them falsely this day, else nobody. This feeds the existing levels for one
-day only; 13 Nov replaces it.
+**One rule of perception is added:** a person who is "very hungry" or worse looks it to those in the room, as
+someone upset does.
+
+**Staying as they are** (silent, or carrying on a search or a sitting, `world.py:956-963`) scores **0.30**. A move
+is made only when it scores more.
+
+| From rule | Move | Score |
+|---|---|---|
+| 1 | eat a portion handed to them | 0.15 + 0.9 `h` |
+| 1 | put it back | 0.35 |
+| 2 | go aside when asked | 0.60 − 0.9 `k(asker)` |
+| 2 | refuse to go aside | 0.25 |
+| 3 | sleep | 0.40, plus 0.15 × sleep-debt stage from day 3 |
+| 3 | lie awake | 0.20 + 1.2 × (anxious − 0.5) |
+| 3 | go next door | 0.80 *offered to go today* + 0.1 proud − 0.9 *thin and weak or worse* |
+| 3 | watch the door | 0.45 anxious × *a knock was heard today* |
+| 3 | try to stop someone seen leaving | 0.10 + 0.75 empathetic, against 0.55 for staying in bed |
+| 3 | go anyway when stopped | 0.20 + 0.7 proud, against 0.60 for staying |
+| 4 | deny, innocent and just accused | 0.90, once per accuser |
+| 4 | deny, took it | 0.55 + 0.4 proud − 0.9 `g`, at most twice a day |
+| 4 | confess | 1.5 `g` + 0.5 honest − 0.6 proud + 0.2 *alone with one person* − 0.5 × share of the family listening − 0.15 *just accused in front of others* |
+| 4 | one line back to someone who confronted, reassured or spoke to them | 0.70, once |
+| 5 | look through the boards at a knock | 0.80, once |
+| 5 | tell the visitor to go | 0.9 cautious − 0.04 |
+| 5 | call out through the door | 0.45 |
+| 6 | share out the food | empathetic × `H` |
+| 6 | eat | 0.9 `h` × impulsive + 0.6 *starving* − 0.35 *others are here* |
+| 7 | set the bin out in the rain | 0.6 cautious + 0.5 dominant − 0.25, once |
+| 8 | ask who took it | 0.80 *counted the shelf today* + 0.15 dominant − 0.5 *already asked in their hearing*, once |
+| 8 | accuse `q` | 0.9 `s(q)` × `b`, where `b` is the larger of impulsive ÷ 0.6 and dominant ÷ 0.8, at most 1; once per `q`. Elena's quirk: −0.30 for her own children unless someone else accused them first |
+| 8 | deny, innocent, having heard the question and not yet answered | 0.9 proud − 0.05, once |
+| 9 | go to their own room, having taken it and owing nobody an answer | 0.9 `g` − 0.25, once per conversation |
+| 10 | sit with `q` | 0.10 + 2.0 × (empathetic − 0.5) × `u(q)` − 0.6 `k(q)`, once |
+| 10 | reassure `q` | the same, less 0.05 |
+| 10 | reassure everyone | 2.0 × (empathetic − 0.5) × the share of the room that looks upset, once |
+| 11 | offer to go tonight | 0.6 dominant + 0.6 proud − 0.6, once |
+| 11 | object to someone going | cautious − 0.25, once someone has offered; once |
+| 11 | say they will not go | 1.2 anxious − 0.55, once |
+| 12 | say the water must be rationed | 0.9 cautious − 0.25, once in the week |
+| 13 | search this room for the can | 0.20 + 0.15 cautious; −1 for whoever knows where it went |
+| 13 | every other option (confront, back someone, propose a trip, take someone aside, open the door, give at the door, say something else, change room for no reason) | 0.10: offered, not chosen in this step; weighted on 13 and 14 Nov |
+
+**Checked by hand against the four people's traits.** Where a rule of the first version had a hard line, the
+weights give the same answer for all four people. The exceptions are close calls, which is what the mood tilt and
+the seed are for:
+
+- Daniel at bedtime, sleep 0.40 against lying awake 0.38;
+- Elena saying "it wasn't me" unasked, 0.265 against 0.30;
+- Mara at the door, telling the visitor to go 0.41 against calling out 0.45;
+- Mara stopped at the door at night, going anyway 0.585 against staying 0.60;
+- whoever took it at guilt 2, leaving the room 0.35 against 0.30;
+- going aside for someone they hold a small grudge against, 0.30 against 0.25;
+- Leo and Elena searching, 0.305 against 0.30.
+
+Three things the weights do that the rule list did not: cautious people may search a room; Leo accuses when his
+suspicion is at its highest (0.39); and whoever took it confesses at guilt 2 to one person alone, where the rule
+list waited for guilt 3.
+
+`feeling` is set by code from the move and the state: "hurt" for someone innocent who has just been accused,
+"scared" for someone anxious (0.8 or more) who has just heard an accusation, "tense" for whoever took it when
+asked, else the day's mood word or "calm". `suspects` is the person the code's evidence points to (left the room
+within two turns of the question or an accusation; accused someone straight after being accused; a night note such
+as `data.py:218-222` gives), else nobody. `angry_at` is whoever accused them falsely this day, else nobody. This
+feeds the existing levels for one day only; 13 Nov replaces it.
+
+**The mood tilt in this step** is as in 7.2, from the causes the engine already records: last night's choice at
+bedtime (lay awake, kept watch, went out); being very hungry or worse on waking; having been accused the day
+before; having been reassured or sat with the day before; and the seeded part. On day 1 there is no night before,
+so only hunger and the seeded part apply. The full causes arrive with the night step on 13 Nov.
 
 ### 10.3 Frozen test cases
 
-Unit cases build a `Person` by hand and call `choose`. Run cases play through `morning.run` in code mode.
+Unit cases build a `Person` by hand and call `choose`, with the mood steady unless the case says otherwise. Run
+cases play through `morning.run` in code mode, with the mood tilt on.
 
 | # | Kind | Situation | Expected |
 |---|---|---|---|
@@ -541,11 +758,14 @@ Unit cases build a `Person` by hand and call `choose`. Run cases play through `m
 | B7 | run | `daniel_ate_it`, seeds 1 to 3, day 1 | Elena's first act at minute 00 is `ask_who` |
 | B8 | run | Scripted Leo accuses Elena at minute 09 (the case of `Prototypes/llm-morning/reports/play_fix2.md:3-5`) | Elena's next act is `deny`; it is not `reassure_all` and is not aimed at Daniel |
 | B9 | run | `daniel_ate_it`, seeds 1 to 3, all days | Daniel never chooses `ask_who`, `search` or `keep_searching` (`Docs/understanding/target-morning.md:18-19`) |
-| B10 | unit | Daniel, asked, guilt 1 / Daniel, accused, guilt 3 | `deny` / `confess` |
-| B11 | unit | Elena in the kitchen, food on the shelf, Mara "very hungry" / Mara alone, "starving" / Leo alone, "very hungry" | `share` / `eat` / not `eat` |
+| B10 | unit | Daniel, the question asked in front of all three, guilt 1 / Daniel, accused in front of all three, guilt 3 | `deny` / `confess` |
+| B11 | unit | Elena in the kitchen with the others, food on the shelf, Mara looking "very hungry" / Mara alone, "starving" / Leo alone, "very hungry" | `share` / `eat` / not `eat` |
 | B12 | run | Seeds 1 to 3, all days | No person chooses the same option more than twice in one day, `silent` and the night's `sleep` aside |
-| B13 | unit | Bedtime: Daniel volunteered today, fasting stage 1 / Mara / Leo | `go_next_door` / `lie_awake` / `sleep` |
-| B14 | run | `python -m unittest test_morning`; `morning.run(1, fake=True, days=4)` with no brain | 349 tests, OK (skipped=141) `[E7]`; story sha256 `3a3d2ff2924f513cdfbf2863659d6a924dafae1dca372f339f15514a504008a9`, transcript `dfd50303bcd5156f4198adff78686693e19288ba275af7975c47c3646d63eaa8` (the baseline of `Prototypes/llm-morning/reports/play_fix2.md:20-21`, reproduced today `[E17]`) |
+| B13 | unit | Bedtime: Daniel offered to go today, fasting stage 1 / Mara / Leo | `go_next_door` / `lie_awake` / `sleep` |
+| B14 | run | `python -m unittest test_morning`; `morning.run(1, fake=True, days=4)` with no brain | 349 tests, OK (skipped=141) `[E7]`; story sha256 `3a3d2ff2924f513cdfbf2863659d6a924dafae1dca372f339f15514a504008a9`, transcript `dfd50303bcd5156f4198adff78686693e19288ba275af7975c47c3646d63eaa8` (the baseline of `Prototypes/llm-morning/reports/play_fix2.md:20-21`, reproduced on 2026-11-11 `[E17]`) |
+| B15 | run | Seeds 1 to 3, 10 days, twice each | Each person's mood and its cause on each day is the same in both runs; no mood term is larger than 0.04; in each seed each person has at least 2 different moods over the 10 days; every mood but a seeded-only one has a cause in the record |
+| B16 | unit | Each unit case above (B10, B11, B13), under each of the five moods | The same result under every mood; in the steady mood the expected act leads every other move by at least 0.15 (for "not `eat`": `eat` is at least 0.15 behind the best) |
+| B17 | run | Seeds 1 to 3 | Every `code` decision's record holds its three largest terms and the day's mood; every option the engine offered in these runs has an entry in `content/weights.json` (the 0.10 default counts) |
 
 ### 10.4 Frozen predictions
 
@@ -553,14 +773,15 @@ Written before the step, to be scored after it. F5 predicts a shortfall on purpo
 
 | # | Prediction | Compare with |
 |---|---|---|
-| F1 | B1 to B14 all pass on the first full run after the code is complete. | |
-| F2 | Each ten-day run has at least 150 acts that are neither silent nor sleep, and at least 60 spoken lines. | Model off today: 0 and 0 `[E10]`. v23 with the model: 420 model acts other than "silent" `[E9]`. |
+| F1 | B1 to B17 all pass on the first full run after the code is complete. | |
+| F2 | Each ten-day run has at least 50 acts that are neither silent nor sleep, and at least 20 spoken lines. | Model off today: 0 and 0 `[E10]`. v23 with the model: 420 model acts other than "silent" `[E9]`. |
 | F3 | Day 1, `daniel_ate_it`, seeds 1 to 3: Daniel denies at least once in all three; he confesses before minute 30 in none; he confesses on day 1 in at most one. | Play with the model: confession at minute 15 and at minute 12 (N7). |
 | F4 | Both portions are eaten or shared by the end of day 2 in at least two of three seeds. | Model off today: nobody eats in ten days `[E10]`. |
-| F5 | **Days 3 to 10 will be thin:** fewer than 10 spoken lines on at least five of the eight days, because once the can is settled these first rules give people little to do. This is the gap that 13 and 14 Nov fill. If this prediction fails because the days are busy, look for a loop before being pleased. | |
+| F5 | **Days 3 to 10 will be thin:** fewer than 10 spoken lines on at least five of the eight days, because once the can is settled these first weights give people little to do. This is the gap that 13 and 14 Nov fill. If this prediction fails because the days are busy, look for a loop before being pleased. | |
 | F6 | At most 6 pairs of word-for-word equal lines by one person in one day, per run. | v23: 6; v22: 23 (`Prototypes/llm-morning/reports/v23.md:14`). |
 | F7 | A scripted player's whole day 1 (30 turns) in code mode takes under 5 s and 0 requests. | With the model: 17 requests and 8 min 39 s for five choices `[E15]`. |
 | F8 | Your own verdict after 15 minutes of play, recorded in your words. My guess: "plainer sentences, saner people, and it answers at once." Not pass/fail. | |
+| F9 | With the mood tilt switched off and nothing else changed, each ten-day run differs from the same seed with it on in at least 3 decisions, and in none of the results of B1 to B14. | |
 
 ---
 
@@ -826,3 +1047,29 @@ exit code 0 story_sha256 3a3d2ff2924f513cdfbf2863659d6a924dafae1dca372f339f15514
 $ sha256sum S/fake4/runs/daniel_ate_it-seed1.transcript.json
 dfd50303bcd5156f4198adff78686693e19288ba275af7975c47c3646d63eaa8
 ```
+
+**E18. Commands for the second version (2026-11-11, afternoon).** Nothing was run but reads, searches and the edit
+of this file.
+```
+$ stat -c '%y, %s bytes' Docs/fable-audit-2026-11.md ; wc -l Docs/fable-audit-2026-11.md
+2026-11-11 10:54:33 +0100, 65287 bytes ; 828 lines            (unchanged since the first version)
+$ git log -2 --format='%h %ad %s' --date=short
+a3960e3 2026-11-11 LLM morning: journal.md, first entry 2026-11-11
+2595b4a 2026-11-11 LLM morning: runs/play (first play session run)
+$ grep -n 'def hunger_level' -A1 Prototypes/llm-morning/world.py
+189:def hunger_level(h):
+190:    return 0 if h < 0.5 else 1 if h < 0.7 else 2 if h < 0.85 else 3
+$ grep -nE 'def (block_b|block_c)' Prototypes/llm-morning/memory.py          -> 49, 71
+$ grep -nE 'self\.away = set|self\.missing = ' night.py world.py             -> night.py:364, world.py:375, world.py:468
+$ grep -nE '^COLD_WORDS|^def (schedule|wet_chance|plan)|^class Weather|def (advance_to|house_water)' quiet.py street.py weather.py truth.py
+quiet.py:68, street.py:345, street.py:529, weather.py:46, weather.py:66, truth.py:83, truth.py:143
+$ ls Prototypes/llm-morning/content Prototypes/llm-morning/data              -> neither exists
+$ python S/splice.py Docs/fable-audit-2026-11.md S/sections_7_10.md S/changelog.md
+replaced 241 lines with 430 ; changelog 31 lines
+$ git diff --stat -- Docs/fable-audit-2026-11.md
+ 1 file changed, 322 insertions(+), 102 deletions(-)
+$ python S/check_cites.py Docs/fable-audit-2026-11.md
+citations checked: 163 ok: 140        (the other 23 are files this design proposes, bare file names, or scratch scripts; none cites a line past the end of a file)
+```
+The first weights of section 10.2 were checked against cases B7, B8, B10, B11 and B13 by hand arithmetic from the
+traits in `Prototypes/llm-morning/data.py:17-56`, not by running code: there is no brain to run yet.

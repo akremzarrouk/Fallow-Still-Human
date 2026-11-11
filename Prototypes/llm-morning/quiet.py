@@ -1409,7 +1409,7 @@ class Quiet:
     def withdraw_why(self, p, a, minute):
         """§2.1: they chose `silent`; they spoke earlier in this conversation; they hold a grudge of 3 against someone
         still in the room; they are neither dominant nor empathetic enough to stay. The conditions, or None."""
-        if a["option"] != "silent" or a["mode"] != "model" or p.room is None or p.room == OWN_ROOM[p.id]:
+        if a["option"] != "silent" or a["mode"] not in ("model", "code") or p.room is None or p.room == OWN_ROOM[p.id]:
             return None
         if any(p.sheet["traits"][t] >= v for t, v in STAYS.items()):
             return None

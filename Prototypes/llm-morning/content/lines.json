@@ -1,0 +1,55 @@
+{
+ "_about": "Starter lines for the code brain (Docs/fable-audit-2026-11.md, section 9, 12 Nov). Plain on purpose: the voice sheets come on 13 Nov and the real lines on 15 Nov. {to} is how the speaker addresses the person spoken to; {leaver} is the person leaving at night. A speaker's own lines, where there are any, are used before the default ones.",
+ "default": {
+  "ask": ["Who took it?", "One of us took a can. Who was it?"],
+  "deny": ["I didn't take it.", "It wasn't me."],
+  "accuse": ["{to}, I think it was you.", "It was you, {to}. Wasn't it?"],
+  "confess": ["It was me. I took the can in the night and ate it.", "I took it. I ate it in the night. I'm sorry."],
+  "reassure": ["It's all right, {to}.", "{to}, we will get through this."],
+  "reassure_all": ["Nobody needs to be afraid. We will sort this out.", "Let's all stay calm."],
+  "say_to": ["I hear you, {to}.", "All right, {to}."],
+  "say_other": ["Let's leave it for now.", "I don't know what to say."],
+  "propose": ["Someone should go next door tonight and look for food.", "We need what is in that house. Someone has to go."],
+  "volunteer": ["I'll go next door tonight.", "I said I would go tonight, and I will."],
+  "object": ["{to}, you are not going out there tonight.", "No, {to}. You stay home tonight."],
+  "object_all": ["Nobody goes out tonight.", "No one is going out there in the dark."],
+  "back": ["{to} should be the one to go.", "If anyone goes, it should be {to}."],
+  "decline": ["I'm not going out there.", "I won't be the one to go."],
+  "confront": ["{to}, we need to talk about what you did.", "I haven't forgotten what you did, {to}."],
+  "save_water": ["No more water for washing. We keep it for drinking.", "The stored water is for drinking only now."],
+  "ration_water": ["From now on the water goes out by the cup.", "We measure the water from today. One cup at a time."],
+  "door_call": ["Who is there?", "What do you want?"],
+  "door_refuse": ["We have nothing for you. Please go.", "Go away. There is nothing here."],
+  "talk": ["I keep thinking about what happened.", "About what happened before."],
+  "tell": ["You should know what happened while you were not there.", "There is something you missed."],
+  "propose_far": ["Someone should try the houses further along the street.", "Next door is empty. It has to be further along."],
+  "volunteer_far": ["I'll go further along the street tonight.", "I'll try the houses further along."],
+  "stop": ["{leaver}, don't go.", "Stay here, {leaver}. Please."],
+  "go_anyway": ["I have to go. Go back to bed.", "I'm going. Someone has to."],
+  "answer_stay": ["All right. I'll stay.", "Fine. Not tonight."],
+  "any": ["I don't know.", "Not now."]
+ },
+ "by_person": {
+  "elena": {
+   "ask": ["One can is missing from the shelf. Did one of you take it?", "There is a can missing. Which of you took it?"],
+   "deny": ["I did not take it.", "I counted that shelf myself. I did not take it."],
+   "object": ["{to}, you are not going out there. Not tonight.", "No, {to}. I won't have it."],
+   "stop": ["{leaver}. Come back to bed.", "{leaver}, no. Not in the dark."]
+  },
+  "daniel": {
+   "deny": ["I didn't take any can.", "I told you, it wasn't me."],
+   "volunteer": ["I'm the oldest. I'll go next door tonight.", "I still mean to go tonight."],
+   "go_anyway": ["I said I would go. I'm going.", "Go back to bed. I'll be back before light."]
+  },
+  "leo": {
+   "deny": ["It wasn't me.", "No. I didn't touch it."],
+   "object": ["{to}, crossing at night gets someone killed.", "Not tonight, {to}. Think it through."],
+   "stop": ["{leaver}. Don't.", "{leaver}, wait. Not like this."]
+  },
+  "mara": {
+   "deny": ["I didn't take it, I swear.", "It wasn't me! Why would I?"],
+   "decline": ["I'm not going out there. I can't.", "Don't make me go."],
+   "stop": ["{leaver}, please don't go.", "{leaver}? Don't leave."]
+  }
+ }
+}

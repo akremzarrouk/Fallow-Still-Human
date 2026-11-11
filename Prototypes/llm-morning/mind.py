@@ -434,6 +434,12 @@ class NightMind:
 
     def run(self):
         player = getattr(self.n.m, "player", None)
+        if getattr(self.oracle, "brain", None) is not None:
+            # Code mode (brain.py; Docs/fable-audit-2026-11.md, section 10.1): the night mind is not asked. Nobody
+            # carries a block B; blocks A and C are built from the record, as they are for the player.
+            self.skipped = "code"
+            self.chron.minds[self.k] = self.results
+            return self
         for pid in data.ORDER:
             if pid in self.n.away or (player is not None and pid == player.pid):   # the player's mind is theirs
                 continue
