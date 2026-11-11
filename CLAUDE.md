@@ -6,6 +6,9 @@ Never stop processes by name or broad filters; only by the exact process ID you 
   The free quota is 500 requests a day.
 - v1/ to v4/ (and later frozen versions) are frozen copies. Never edit them.
 - Prototype reports go in Prototypes/llm-morning/reports/.
+- Retired tests (PLAY_FIX1_RETIRED in test_morning.py): before changing code in an
+  area they cover, port the ones for that area to the fake client and make them
+  pass, then make the change.
 
 ## Investigations
 - Read-only. Cite path:line. Write NOT FOUND when something does not exist.
