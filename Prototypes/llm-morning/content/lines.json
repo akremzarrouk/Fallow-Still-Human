@@ -10,7 +10,8 @@
   "say_to": ["I hear you, {to}.", "All right, {to}."],
   "say_other": ["Let's leave it for now.", "I don't know what to say."],
   "propose": ["Someone should go next door tonight and look for food.", "We need what is in that house. Someone has to go."],
-  "volunteer": ["I'll go next door tonight.", "I said I would go tonight, and I will."],
+  "volunteer": ["I'll go next door tonight.", "Someone has to go next door. I will."],
+  "still_going": ["I said I would go tonight, and I will.", "I still mean to go tonight."],
   "object": ["{to}, you are not going out there tonight.", "No, {to}. You stay home tonight."],
   "object_all": ["Nobody goes out tonight.", "No one is going out there in the dark."],
   "back": ["{to} should be the one to go.", "If anyone goes, it should be {to}."],
@@ -38,7 +39,8 @@
   },
   "daniel": {
    "deny": ["I didn't take any can.", "I told you, it wasn't me."],
-   "volunteer": ["I'm the oldest. I'll go next door tonight.", "I still mean to go tonight."],
+   "volunteer": ["I'm the oldest. I'll go next door tonight.", "I'll go next door tonight. It should be me."],
+   "still_going": ["I still mean to go tonight.", "Nothing has changed. I'm going tonight."],
    "go_anyway": ["I said I would go. I'm going.", "Go back to bed. I'll be back before light."]
   },
   "leo": {

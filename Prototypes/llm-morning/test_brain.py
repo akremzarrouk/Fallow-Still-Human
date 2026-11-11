@@ -234,8 +234,9 @@ class RunCases(NoModel):
                     if m["mood"] != "steady":
                         self.assertTrue(m["cause"] or m["seeded"], f"seed {seed} day {day} {pid}: {m}")
             self.assertEqual(set(by_person), set(data.ORDER))
-            for pid, moods in by_person.items():
-                self.assertGreaterEqual(len(moods), 2, f"seed {seed}: {pid} had only {moods} in {DAYS} days")
+            # Re-worded 2026-11-11 (section 10.3): the case no longer asks for two moods per person, which rewards
+            # moods that vary for their own sake. That a mood changes when its cause changes is checked on one
+            # person, one morning, with one cause changed: test_heart.Mood.test_h13.
             for a in acts(tr):
                 if a["mode"] == "code":
                     self.assertLessEqual(abs(a["why"]["tilt"]), 0.04 + 1e-9)

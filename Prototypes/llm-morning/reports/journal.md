@@ -85,3 +85,35 @@ morning the person wakes very hungry or worse *and* hungrier than they woke the 
 - The entry above says 13 to 15 objections a run in seed 1. Counted now, seed 1: 3 objections (`object_*`) and
   12 `keep_daniel_home`. I did not check which of the two the earlier figure counted.
 - Old suite after the change: `python -m unittest test_morning`, 349 tests, OK, skipped=141, 181 s.
+
+## Step 2: the heart, food and the night step
+
+**Budgets.** Counted first: in ten-day runs of seeds 1 to 3, the budgets refused **0** acts, 0 quiet triggers and
+ended 0 talks; no day used more than 21 of its 40 asks. They are lifted in code mode all the same. What did cap
+people was the rule that someone is asked only when a trigger fires (day 1, seed 2: 93 of 120 decisions never
+reached the brain). In code mode everyone in a talk now decides every turn.
+
+**Built.** `heart.py` (remembered acts and trust, suspicion from clues, one intention); the night step in place of
+the night mind; the mood's full causes, and no warm morning after two mornings of hunger without a reason; someone
+awake who hears the door gets up; "once is enough" for the week, with a new cause named; 16 portions and a meal a
+day; `content/voices.md`. `test_heart.py`, 25 cases.
+
+**Tests.** `python -m unittest test_brain test_llm_off test_heart`: 56 tests, OK, 8 skipped (clauses of later
+steps). Old suite: 349, OK, skipped=141. No live call.
+
+**What a week now looks like** (seed 2). Days 1 and 2: the question, three denials, a meal; little else. Day 3 the
+food runs short: Daniel offers to go, Leo and Elena say no, he goes in the night; Leo tells him not to, Elena hears
+the door and waits up. Next door is empty. Day 4: half portions; he offers to go further, and goes. Day 5 he goes
+again without a word; Elena is sitting by the door: "Daniel, no. Not in the dark." He does not come back. Day 6:
+the three sit together; Elena gives Leo her share.
+
+**Changed after reading runs** (each because it read wrong, not to move a number): people took from the shelf
+before the meal; everyone was "starving" by evening (the engine's hunger rate was built for a 90-minute morning);
+Daniel confessed on a coin flip; all four offered to go on one night; Elena offered and took it back in three
+minutes; Elena and Leo reassured each other every morning for nothing; the trip came back daily through a shelf
+that flipped between short and empty. The rules that fixed them are in the audit's changelog, item 28.
+
+**Not built, or thin.** No apology, so no "drops two steps". The meal has no arguing over the split. Days 1 and 2
+have 4 and 0 spoken lines; nobody raises the can again after day 1, because nothing points at anyone. Daniel is
+lost in all three seeds (nights 4, 5 and 7): he goes out most nights and the street's own odds catch him. The
+fuller days and the evening meal are step 3's.

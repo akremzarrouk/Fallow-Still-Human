@@ -175,7 +175,12 @@ class ScriptedPlayer(Player):
 
     def decide(self, screen):
         self.screens.append(screen)
-        return self.rule(screen)
+        answer = self.rule(screen)
+        # A share of the meal set in front of them (code mode) is eaten unless the script says what else to do with
+        # it: a script written for turns answers nothing that a share can take.
+        if screen.kind == "plate" and (answer == WAIT or answer[0] not in screen.options):
+            return (screen.options[0], None)
+        return answer
 
 
 def by_minute(table, default=WAIT, night="sleep"):

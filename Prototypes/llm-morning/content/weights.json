@@ -5,6 +5,10 @@
  "band": 0.05,
  "tilt": 0.04,
  "cap_per_day": 2,
+ "scenario": {
+  "_about": "Code mode's start (section 7.4, the scenario change): a plain countable stock for about four days on short portions, one meal a day, a portion each. `relief` is how far one portion pushes hunger back (0 to 1). `hunger_a_day` is how far hunger rises in 24 hours (times the person's own rate), spread evenly over the clock: the engine's own rate was set for a 90-minute morning in a house where nobody eats, and at it everyone is starving by evening on a day played to bedtime. With these two, on a portion a day people wake hungry and are well after the meal; on half portions they are very hungry by night; with nothing they are starving in a day or two.",
+  "portions": 16, "relief": 0.6, "hunger_a_day": 0.5
+ },
  "moves": {
   "eat_given":    [{"rule": 1, "base": 0.15, "terms": [[0.9, "h"]]}],
   "refuse_given": [{"rule": 1, "base": 0.35}],
@@ -13,9 +17,12 @@
 
   "sleep":        [{"rule": 3, "base": 0.40, "terms": [[0.15, "debt_stage"]]}],
   "lie_awake":    [{"rule": 3, "base": 0.20, "terms": [[1.2, "anxious_over_half"]]}],
-  "go_next_door": [{"rule": 3, "terms": [[0.80, "offered_today"], [0.1, "proud"], [-0.9, "weak"]]}],
-  "watch_door":   [{"rule": 3, "terms": [[0.45, "anxious", "knock_today"]]}],
-  "stop":         [{"rule": 3, "base": 0.10, "terms": [[0.75, "empathetic"]]}],
+  "go_next_door": [{"rule": 3, "terms": [[0.80, "means_to_go"], [0.1, "proud"], [-0.9, "weak"], [-1.0, "knows_empty"]]}],
+  "go_further":   [{"rule": 3, "terms": [[0.80, "means_far"], [0.1, "proud"], [-0.9, "weak"]]}],
+  "watch_door":   [{"rule": 3, "terms": [[0.45, "anxious", "knock_today"], [0.65, "intends_watch"]]}],
+  "stop":         [{"rule": 3, "base": 0.10, "terms": [[0.75, "empathetic"], [0.3, "kind_target"], [-0.4, "hurt_target"]],
+                    "once": "cause", "subject": "leaving"}],
+  "get_up_and_look": [{"rule": 3, "base": 0.25, "terms": [[0.7, "empathetic"], [-0.35, "someone_up"], [-0.5, "weak"]]}],
   "let_go":       [{"rule": 3, "base": 0.55}],
   "stay_in_bed":  [{"rule": 3, "base": 0.55}],
   "go_later":     [{"rule": 3, "base": 0.30}],
@@ -35,42 +42,106 @@
   "door_refuse": [{"rule": 5, "base": -0.04, "terms": [[0.9, "cautious"]], "once": "day"}],
   "door_call":   [{"rule": 5, "base": 0.45, "once": "day"}],
 
-  "share": [{"rule": 6, "terms": [[1.2, "empathetic", "H_past_hungry"]]}],
-  "eat":   [{"rule": 6, "terms": [[0.9, "h", "impulsive"], [0.6, "starving"], [-0.35, "others_here"]]}],
+  "share": [{"rule": 6, "terms": [[1.2, "empathetic", "H_past_hungry"], [-0.9, "ate_today"]]}],
+  "eat":   [{"rule": 6, "terms": [[0.9, "h", "impulsive"], [0.6, "starving"], [-0.35, "others_here"],
+                                  [-0.6, "meal_due"], [-0.4, "ate_today"]]}],
 
   "collect_rain": [{"rule": 7, "base": -0.25, "terms": [[0.6, "cautious"], [0.5, "dominant"]], "once": "day"}],
   "rain_out":     [{"rule": 7, "base": -0.25, "terms": [[0.6, "cautious"], [0.5, "dominant"]]}],
 
-  "ask":    [{"rule": 8, "terms": [[0.80, "counted"], [0.15, "dominant"], [-0.5, "heard_question"]], "once": "day"}],
-  "accuse": [{"rule": 8, "terms": [[0.9, "s_target", "boldness"]], "once": "day"}],
+  "ask":    [{"rule": 8, "terms": [[0.80, "counted"], [0.15, "dominant"], [-0.5, "heard_question"]], "once": "week"}],
+  "accuse": [{"rule": 8, "terms": [[0.9, "s_target", "boldness"], [0.3, "hurt_target"], [-0.3, "kind_target"]],
+              "once": "cause", "subject": "can"}],
 
   "go": [{"rule": 9, "when": ["took_it", "to_own_room", "owes_nobody", "others_here"], "base": -0.25,
           "terms": [[0.9, "g"]], "once": "convo"}],
 
-  "sit":          [{"rule": 10, "base": 0.10, "terms": [[2.0, "empathetic_over_half", "u_target"], [-0.6, "k_target"]],
-                    "once": "day"}],
-  "reassure":     [{"rule": 10, "base": 0.05, "terms": [[2.0, "empathetic_over_half", "u_target"], [-0.6, "k_target"]],
-                    "once": "day"}],
+  "sit":          [{"rule": 10, "base": 0.10, "terms": [[2.0, "empathetic_over_half", "u_target"], [-0.6, "k_target"],
+                                                         [1.8, "kind_target", "u_target"], [0.5, "grief", "empathetic"]],
+                    "once": "day", "once_key": "comfort"}],
+  "reassure":     [{"rule": 10, "base": 0.05, "terms": [[2.0, "empathetic_over_half", "u_target"], [-0.6, "k_target"],
+                                                         [1.8, "kind_target", "u_target"], [0.5, "grief", "empathetic"]],
+                    "once": "day", "once_key": "comfort"}],
   "reassure_all": [{"rule": 10, "terms": [[2.0, "empathetic_over_half", "upset_share"]], "once": "day"}],
 
-  "volunteer":  [{"rule": 11, "base": -0.60, "terms": [[0.6, "dominant"], [0.6, "proud"]], "once": "day"}],
-  "object":     [{"rule": 11, "when": ["target_offered"], "base": -0.25, "terms": [[1.0, "cautious"]],
+  "volunteer":  [{"rule": 11, "when": ["food_short", "!knows_empty", "!means_to_go"], "base": -0.60,
+                  "terms": [[0.6, "dominant"], [0.6, "proud"], [0.35, "starving"], [-0.4, "anxious_over_half"],
+                            [-0.5, "someone_means_to_go"]],
+                  "once": "cause", "subject": "trip"},
+                 {"rule": 11, "base": -1.0}],
+  "volunteer_far": [{"rule": 11, "when": ["food_short", "!means_far"], "base": -0.45,
+                     "terms": [[0.6, "dominant"], [0.6, "proud"], [0.35, "starving"], [-0.4, "anxious_over_half"],
+                               [-0.5, "someone_means_to_go"]],
+                     "once": "cause", "subject": "trip"},
+                    {"rule": 11, "base": -1.0}],
+  "object":     [{"rule": 11, "when": ["target_offered"], "base": -0.25, "terms": [[1.0, "cautious"], [0.4, "kind_target"]],
                   "once": "day", "once_key": "object"}],
   "object_all": [{"rule": 11, "when": ["someone_offered"], "base": -0.30, "terms": [[1.0, "cautious"]],
                   "once": "day", "once_key": "object"}],
-  "decline":    [{"rule": 11, "base": -0.55, "terms": [[1.2, "anxious"]], "once": "day"}],
+  "decline":    [{"rule": 11, "when": ["named_to_go"], "base": -0.55, "terms": [[1.2, "anxious"]], "once": "day"},
+                 {"rule": 11, "base": -1.0}],
+
+  "aside": [{"rule": 14, "when": ["intends_tell_target"], "base": 0.75, "once": "day"}],
+
+  "meal":       [{"rule": 15, "base": 0.30, "terms": [[0.3, "empathetic"], [0.2, "counted"], [-0.4, "question_open"],
+                                                      [-0.5, "not_asked"], [-0.6, "awaiting_answers"]]}],
+  "meal_small": [{"rule": 15, "base": 0.10, "terms": [[0.3, "empathetic"], [0.2, "counted"], [-0.4, "question_open"],
+                                                      [-0.5, "not_asked"], [-0.6, "awaiting_answers"],
+                                                      [0.5, "cautious", "food_short"]]}],
+  "plate_eat":  [{"rule": 15, "base": 0.90}],
+  "plate_to":   [{"rule": 15, "terms": [[2.4, "empathetic", "hungrier_target"], [0.5, "kind_target"]]}],
+  "plate_back": [{"rule": 15, "when": ["took_it"], "base": -0.10, "terms": [[1.35, "g"]]}],
 
   "ration_water": [{"rule": 12, "base": -0.25, "terms": [[0.9, "cautious"]], "once": "week"}],
 
   "search": [
    {"rule": 13, "when": ["took_it"], "base": -1.0},
-   {"rule": 13, "base": 0.20, "terms": [[0.15, "cautious"]]}
+   {"rule": 13, "when": ["can_alive"], "base": 0.20, "terms": [[0.15, "cautious"]]},
+   {"rule": 13, "base": -1.0}
   ]
  },
  "quirks": [
   {"who": "elena", "move": "accuse", "when": ["!target_accused_by_other"], "add": -0.30,
    "says": "does not accuse her own children first"}
  ],
+ "heart": {
+  "_about": "The heart's rules (heart.py; section 7.2). acts: what a person remembers of another, with its weight on trust (-3 to +3); an act fades by half every two nights unless it is a mark. clues: what counts as evidence, in points. confidant: whom each would tell first, as a written quirk. temper: what temperament adds. watch_from: how much feeling for others it takes to sit up for someone who went out.",
+  "acts": {
+   "accused_falsely": {"w": -2, "says": "{other} accused {him} of taking the can"},
+   "confronted":      {"w": -1, "says": "{other} confronted {him}"},
+   "reassured":       {"w": 1, "says": "{other} spoke kindly to {him}"},
+   "sat_with":        {"w": 1, "says": "{other} sat with {him}"},
+   "shared_food":     {"w": 1, "says": "{other} shared out the food"},
+   "gave_share":      {"w": 2, "says": "{other} gave up a share for {him}"},
+   "ate_in_front":    {"w": -1, "says": "{other} ate in front of {him}"},
+   "lied":            {"w": -2, "mark": true, "says": "{other} took the can and denied it to {his} face"},
+   "owned_up":        {"w": 1, "says": "{other} owned up to it"},
+   "defied":          {"w": -1, "says": "{other} went out after {he} said no"},
+   "brought_food":    {"w": 2, "mark": true, "says": "{other} went out in the night and brought food back"}
+  },
+  "clues": {
+   "left_at_question": {"points": 1, "says": "{other} left the room when it was asked"},
+   "accused_back":     {"points": 1, "says": "{other} accused someone straight after being accused"},
+   "refused_share":    {"points": 1, "says": "{other} would not eat"}
+  },
+  "intentions": {
+   "go_out": {"says": "go next door"},
+   "go_far": {"says": "go further along the street"},
+   "tell":   {"says": "tell {target}"},
+   "watch":  {"says": "sit up for {target}"}
+  },
+  "confidant": {"daniel": ["elena", "leo", "mara"], "mara": ["elena", "leo", "daniel"],
+                "leo": ["elena", "mara", "daniel"], "elena": ["leo", "daniel", "mara"]},
+  "temper": {"mara": {"suspects_resented": 1}},
+  "watch_from": 0.7
+ },
+ "causes": {
+  "shelf:short": "the food is running short",
+  "shelf:enough": "there is food again", "hunger": "someone is starving", "next_door:empty": "next door is empty",
+  "next_door:unknown": "next door has not been tried", "resolve": "the days went by and nothing changed",
+  "away": "someone did not come back",
+  "clues": "something new points at them", "known": "it is known who took it"
+ },
  "moods": {
   "on edge":  {"more": ["accuse", "confront", "deny", "object", "object_all"],
                "less": ["reassure", "reassure_all", "sit"]},
@@ -87,6 +158,13 @@
   "knock_today": "the knock today", "alone_with_one": "alone with one person", "listening": "people listening",
   "accused_publicly": "accused in front of others", "counted": "counted the shelf", "heard_question": "the question was asked",
   "starving": "starving", "others_here": "others are here", "boldness": "bold enough to say it",
+  "means_to_go": "meant to go", "means_far": "meant to go further", "intends_watch": "meant to sit up",
+  "kind_target": "what they did for them", "hurt_target": "what they did to them", "food_short": "the food is short",
+  "someone_up": "someone is already up", "hungrier_target": "they look hungrier", "question_open": "the question is open", "not_asked": "the can has not been spoken of", "awaiting_answers": "still waiting for their answers",
+  "meal_due": "the meal is not set out yet", "grief": "someone has not come back", "can_alive": "the can was asked about today", "ate_today": "already ate today", "knows_empty": "next door is empty", "someone_means_to_go": "someone else has said they will go",
+  "starving": "starving", "named_to_go": "they were named to go",
+  "intends_tell_target": "meant to tell them", "cautious": "careful", "empathetic": "feels for others",
+  "proud": "pride", "dominant": "takes charge", "anxious": "anxious",
   "base": "as a rule"
  }
 }

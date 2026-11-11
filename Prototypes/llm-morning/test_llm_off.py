@@ -2,10 +2,10 @@
 
     python -m unittest -v test_llm_off
 
-It passes only if every clause in force holds for every run. In force from 12 Nov: L1 to L4 and L10. L5 to L13 come
-into force on 14 and 16 Nov; until then they are listed here as skipped, with their date.
+It passes only if every clause in force holds for every run. In force from step 1: L1 to L4 and L10. L5 to L13 come
+into force in steps 3 and 6 (section 9); until then they are listed here as skipped, with their step.
 
-Until the seven-day week exists (14 Nov) the runs go through the existing day loop: ten days with Leo played by code,
+Until the seven-day week exists (step 3) the runs go through the existing day loop: ten days with Leo played by code,
 and days 1 and 2 with a scripted player as Leo, which is as far as the existing loop plays a player (play.py: --days
 1|2).
 """
@@ -97,6 +97,8 @@ class LlmOff(NoModel):
         root = tempfile.mkdtemp(prefix="llm-off-")
         try:
             def live(screen):
+                if screen.kind == "plate":
+                    return (screen.options[0], None), ["1"], 0.0
                 if screen.minute is None:
                     return ("sleep" if screen.kind == "bedtime" else screen.options[0], None), [], 0.0
                 return ("silent", None), ["1"], 0.0
@@ -113,35 +115,35 @@ class LlmOff(NoModel):
             shutil.rmtree(root, ignore_errors=True)
 
     # ---------- L5 to L9, L11 to L13: not yet in force ----------
-    @unittest.skip("L5 alive: in force from 14 Nov")
+    @unittest.skip("L5 alive: in force from step 3")
     def test_l05_alive(self):
         pass
 
-    @unittest.skip("L6 not stuck: in force from 14 Nov")
+    @unittest.skip("L6 not stuck: in force from step 3")
     def test_l06_not_stuck(self):
         pass
 
-    @unittest.skip("L7 bodies make sense: in force from 14 Nov")
+    @unittest.skip("L7 bodies make sense: in force from step 3")
     def test_l07_bodies_make_sense(self):
         pass
 
-    @unittest.skip("L8 no run of empty days: in force from 14 Nov")
+    @unittest.skip("L8 no run of empty days: in force from step 3")
     def test_l08_no_run_of_empty_days(self):
         pass
 
-    @unittest.skip("L9 Leo matters: in force from 16 Nov")
+    @unittest.skip("L9 Leo matters: in force from step 6")
     def test_l09_leo_matters(self):
         pass
 
-    @unittest.skip("L11 carries on after a loss: in force from 14 Nov")
+    @unittest.skip("L11 carries on after a loss: in force from step 3")
     def test_l11_carries_on_after_a_loss(self):
         pass
 
-    @unittest.skip("L12 nothing staged: in force from 14 Nov")
+    @unittest.skip("L12 nothing staged: in force from step 3")
     def test_l12_nothing_staged(self):
         pass
 
-    @unittest.skip("L13 causes and choices: in force from 14 Nov")
+    @unittest.skip("L13 causes and choices: in force from step 3")
     def test_l13_causes_and_choices(self):
         pass
 

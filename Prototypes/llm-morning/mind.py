@@ -437,7 +437,10 @@ class NightMind:
         if getattr(self.oracle, "brain", None) is not None:
             # Code mode (brain.py; Docs/fable-audit-2026-11.md, section 10.1): the night mind is not asked. Nobody
             # carries a block B; blocks A and C are built from the record, as they are for the player.
+            # From step 2 the night step runs here (brain.CodeBrain.night_step; section 7.2): trust fades, grudges
+            # settle, intentions are renewed or dropped.
             self.skipped = "code"
+            self.step = self.oracle.brain.night_step(self.n)
             self.chron.minds[self.k] = self.results
             return self
         for pid in data.ORDER:
@@ -455,7 +458,10 @@ class NightMind:
     def transcript(self):
         keep = ("mode", "invalid", "prompt_tokens", "memories", "feeling", "feeling_verdict", "intent",
                 "intent_verdict", "answer")
-        return {pid: {k: r[k] for k in keep} for pid, r in self.results.items()}
+        out = {pid: {k: r[k] for k in keep} for pid, r in self.results.items()}
+        if getattr(self, "step", None) is not None:        # code mode: the night step's record
+            out["night_step"] = self.step
+        return out
 
     def counts(self):
         mems = [m for r in self.results.values() for m in r["memories"]]

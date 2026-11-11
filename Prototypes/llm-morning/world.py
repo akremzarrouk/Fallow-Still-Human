@@ -81,6 +81,7 @@ INTENT_LINE = "- You meant to:"     # the first line of memory.block_b that is t
 PROMPT_TOKEN_BUDGET = 1400   # estimated; the API counted 1,370 at most in the second step
 QUIET_TURNS = 2              # full turns with nothing new that end a conversation
 INNER_EVERY = 9              # minutes: an inner moment at most this often per person
+MEAL_KINDS = ("meal", "meal_small", "plate_eat", "plate_to", "plate_back")   # code mode (section 7.3)
 OWED_TURNS = 2               # turns in which someone aimed at must answer (reports/play_fix2.md, fix 1)
 OWES_ANSWER = ("accuse", "confront", "reassure", "say")     # acts aimed at someone that ask for an answer
 HEADS_TURN = ("accuse", "confess")      # acts after which everyone else in the room stops what they were doing (fix 2)
@@ -477,6 +478,15 @@ class Morning:
         self.culprit = data.culprit(scenario)       # who took the can, or None
         self.people = {p: Person(p, scenario) for p in data.ORDER}
         self.portions = data.PORTIONS
+        # Code mode (brain.py; Docs/fable-audit-2026-11.md, 7.4, the scenario change): a countable stock for about
+        # four days, and how far a portion pushes hunger back. With a model the shelf and the body are as they were.
+        self.relief, self.hunger_a_day = 0.4, None
+        scenario_start = getattr(getattr(oracle, "brain", None), "scenario", None)
+        if scenario_start:
+            self.portions, self.relief = scenario_start["portions"], scenario_start["relief"]
+            self.hunger_a_day = scenario_start["hunger_a_day"]
+        self.plates = {}            # code mode: person -> the share set out for them that they have not yet eaten
+        self.meal_at = None         # code mode: the minute today's meal was set out
         self.start_portions = self.portions     # day 2 starts from the night's shelf
         self.turns = data.MINUTES // data.MINUTES_PER_TURN
         self.log = []               # one record per turn
@@ -516,7 +526,9 @@ class Morning:
             return                  # day 2's opening is set up by next_day
         for p in self.people.values():
             how = "did it" if p.id == "elena" else "saw it"
-            p.sure.append(f"min 00: {data.OPENING} (you {how})")
+            opening = data.OPENING.replace(f"{data.PORTIONS} portions are left.",
+                                           f"{portions_text(self.portions)} are left.")
+            p.sure.append(f"min 00: {opening} (you {how})")
             if p.id == self.culprit:
                 p.sure.append("You know where the can went: you ate it yourself in the night, and nobody saw.")
             p.triggers.append(("the count came up short in front of everyone", True))
@@ -528,7 +540,10 @@ class Morning:
         """The next morning, from the day before and the night that followed it (reports/night_design.md, §5;
         reports/days_design.md, §3, with the chronicle)."""
         import night as night_mod
-        return night_mod.next_day(day1, night, oracle, chronicle)
+        m = night_mod.next_day(day1, night, oracle, chronicle)
+        if m.brain() is not None:
+            m.brain().new_day(m)
+        return m
 
     def order_string(self, t, room):
         """The seed string of a room's turn order (reports/days_design.md, §4.4): days 1 and 2 share one."""
@@ -689,10 +704,15 @@ class Morning:
                                                "drainpipe in the yard", kind="collect_rain"))
         if p.door is not None and p.door["options"] and p.room == "kitchen":
             opts += self.door_options(p)
+        code = self.brain() is not None
         if p.room == "kitchen" and self.portions > 0:
             opts.append(Option("eat", "eat one of the portions", kind="eat"))
-            if others:
+            # In code mode the shelf holds days of food: sharing out "what is left" is for the last of it only.
+            if others and (not code or self.portions <= len(others) + 1):
                 opts.append(Option("share", "share out what is left among everyone here", kind="share"))
+            if code and others and self.meal_at is None:        # the meal (section 7.3), once a morning
+                opts.append(Option("meal", "set out the meal: a portion each for everyone in the house", kind="meal"))
+                opts.append(Option("meal_small", "set out a small meal: half a portion each", kind="meal_small"))
         opts = lead + opts
         # A speech act used three turns in a row is not offered a fourth time: a guard against the model's loops, so
         # not for the player, who may say a thing a fourth time as anyone can (reports/play_s1.md, C9).
@@ -1063,6 +1083,40 @@ class Morning:
         d["_opt"] = opt
         return d
 
+    def decide_plate(self, q, server, t, given=False):
+        """q's share of the meal is in front of them: eat it, give it to someone here, or put it back. A share that
+        was given to them can only be eaten or put back."""
+        his = data.PRONOUNS[q.id]["his"]
+        opts = [Option("plate_eat", "eat your share", kind="plate_eat")]
+        if not given:
+            opts += [Option(f"plate_to_{x.id}", f"give your share to {x.name}", kind="plate_to", target=x.id)
+                     for x in self.others_here(q)]
+        opts.append(Option("plate_back", "put your share back on the shelf", kind="plate_back"))
+        line = (f"{server.name} has set out the meal: your share is in front of you." if server is not None
+                else "Your share of the meal is set out for you.")
+        triggers = [line] + [text for text, new in q.triggers if text != line]
+        q.triggers = []
+        d = {"person": q.id, "triggers": list(dict.fromkeys(triggers)), "offered": len(opts), "held_back": None,
+             "plate": self.plates.get(q.id)}
+        if self.is_player(q):
+            return self.played(q, t, opts, d, "plate", line)
+        choice, why = self.ask_model(q, t, opts, d, line)
+        if not choice:
+            d.update(mode=self.unasked(), invalid=why, option="plate_eat", say=None)
+        opt = next(o for o in opts if o.id == d["option"])
+        d["label"] = opt.label
+        d["_opt"] = opt
+        return d
+
+    def hunger_rise(self, minutes, as_it_was):
+        """How far hunger rises over these minutes, before the person's own rate. With a model: as it always was.
+        In code mode: by the clock, `hunger_a_day` over 24 hours (content/weights.json, scenario)."""
+        return as_it_was if self.hunger_a_day is None else self.hunger_a_day * minutes / 1440
+
+    def tidy_portions(self):
+        """The shelf's count, whole where it is whole."""
+        self.portions = int(self.portions) if self.portions == int(self.portions) else round(self.portions, 2)
+
     # ---------- what is inside them ----------
     def risen(self, p):
         """What has risen a level since they last decided with the model: "hunger", "guilt",
@@ -1423,6 +1477,11 @@ class Morning:
 
     def finish(self):
         """What the transcript needs once the morning is over."""
+        for pid, size in sorted(self.plates.items()):      # code mode: a share nobody came for goes back on the shelf
+            self.portions += size
+            self.transcript.setdefault("plates_left", []).append([pid, size])
+        self.plates = {}
+        self.tidy_portions()
         self.transcript["final_rooms"] = {r: [q for q in data.ORDER if self.people[q].room == r]
                                           for r in data.ROOMS}
         if self.quiet is not None:
@@ -1570,6 +1629,24 @@ class Morning:
                     qopt, _ = act(q, dq, room, place, f"handed a portion by {p.name}")
                     d["came_of_it"] += f" {q.name} {'ate it' if qopt.id == 'eat_given' else 'put it back on the shelf'}."
                     entry["came_of_it"] = d["came_of_it"]
+                elif opt.act["kind"] in ("meal", "meal_small"):
+                    # Everyone in the room answers now for their share, the one who set it out last: their decision
+                    # for this turn if they had not acted yet. A share given on is answered at once too.
+                    served = [x for x in self.present[room] if x != p.id] + [p.id]
+                    for x in served:
+                        q = self.people[x]
+                        if x not in self.plates:
+                            continue
+                        if x in remaining:
+                            remaining.remove(x)
+                        place += 1
+                        dq = self.decide_plate(q, p, t)
+                        qopt, _ = act(q, dq, room, place, f"served by {p.name}")
+                        if qopt.act["kind"] == "plate_to":
+                            r = self.people[qopt.act["target"]]
+                            place += 1
+                            dr = self.decide_plate(r, q, t, given=True)
+                            act(r, dr, room, place, f"given {q.name}'s share")
         record["rooms"] = {r: [(q.name, q.activity["label"]) for q in self.people.values()
                                if start_room[q.id] == r] for r in data.ROOMS}
 
@@ -1613,7 +1690,8 @@ class Morning:
         for p in self.people.values():
             if p.room is None:      # day 2: not back from the night, so not in the house
                 continue
-            p.hunger = min(1.0, p.hunger + 0.004 * data.MINUTES_PER_TURN * p.sheet["hunger_rate"])
+            p.hunger = min(1.0, p.hunger + self.hunger_rise(data.MINUTES_PER_TURN, 0.004 * data.MINUTES_PER_TURN)
+                           * p.sheet["hunger_rate"])
         record["portions"] = self.portions
         self.log.append(record)
         self.transcript["turns"].append(tturn)
@@ -1638,7 +1716,7 @@ class Morning:
             choice = brain.decide(self, p, t, opts, d, extra)
             p.seen = seen
             d.update(mode="code", **choice)
-            self.take_answer(p, choice, minute, d)
+            brain.settle(p, day_index(self.day), d)     # the heart sets their suspicion; no answer moves a level
             return choice, None
         prompt = self.prompt_for(p, t, opts, d.get("lull"), extra=extra)
         p.last_asked = minute
@@ -1691,6 +1769,8 @@ class Morning:
         pending = quiet.pending.pop(p.id, None) if quiet is not None else None
         spent = quiet is not None and quiet.spent(p)
         inner_ok = quiet is None or pending is not None or (self.talking(p.room) and not quiet.resting(p.id))
+        if p.id in self.plates and p.room == "kitchen":     # code mode: their share is set out and waiting
+            return self.decide_plate(p, None, t)
         # The body's food moment comes before anything else (reports/body_design.md, §2.1).
         if not spent and self.food_due(p, t):
             return self.decide_food(p, t)
@@ -1719,12 +1799,21 @@ class Morning:
             d["trip_why"] = "; ".join(self.trip["why"])
         if not triggers and not d.get("inner_kinds") and "trip_moment" not in d and self.lull_due(p, minute):
             d["lull"] = self.last_stir[p.room]
-        if (triggers or d.get("inner_kinds") or "trip_moment" in d or "lull" in d or pending) and not spent:
+        # In code mode asking costs nothing, so nobody waits for a trigger: whoever is in a talk, or was asked for by
+        # a quiet trigger, decides every played turn (Docs/fable-audit-2026-11.md, section 9, step 2a).
+        free = self.brain() is not None and inner_ok
+        if (triggers or d.get("inner_kinds") or "trip_moment" in d or "lull" in d or pending or free) and not spent:
             choice, why = self.ask_model(p, t, opts, d)
             if pending:
                 quiet.asked(p.id)
             if not choice:
                 d.update(mode=self.unasked(), invalid=why, option=self.routine(p, opts), say=None)
+            elif free and d["option"] == self.routine(p, opts) and (d["option"] != "silent" or not (
+                    triggers or d.get("inner_kinds") or "trip_moment" in d or "lull" in d or pending)):
+                # They carried on as they were (still searching, still sitting with someone), or nothing called on
+                # them and they stayed put: the rules' own, as it was before the brain was asked every turn. The
+                # brain's reasons stay in the record. A silence kept when something did call on them is a choice.
+                d["mode"] = "routine"
         else:
             d.update(mode="routine", option=self.routine(p, opts), say=None)
         opt = next(o for o in opts if o.id == d["option"])
@@ -1888,6 +1977,12 @@ class Morning:
         target = self.people[target_id] if target_id else None
         partner = self.people[opt.act["partner"]] if "partner" in opt.act else None
         given_to = self.people[opt.act["target"]] if kind == "give" else None
+        mkind = opt.act.get("kind") if opt.act.get("kind") in MEAL_KINDS else None
+        brain = self.brain()
+        if brain is not None and not (kind in ("eat", "share") and self.portions <= 0):
+            # Code mode: what each person in the room now remembers of this act (brain.CodeBrain.saw; heart.py).
+            brain.saw(self, p, mkind or kind, target_id or (opt.act.get("target") if mkind else None),
+                      [q.id for q in seen], partner.id if partner else None)
         # Anything but staying put in silence, or staying seated with the same person, stirs the room.
         if not (kind == "silent" or (kind == "sit" and p.activity["kind"] == "sitting"
                                      and p.activity["with"] == target_id)):
@@ -2109,6 +2204,72 @@ class Morning:
                 p.memory.append((minute, f"you stayed where you were and said nothing.{feel}"))
             return "stayed where they were" + (" (its line was dropped: silent means no words)"
                                                if d.get("dropped_line") else "") + "."
+        if mkind in ("meal", "meal_small"):         # code mode: the meal is set out, a share for everyone at home
+            his = data.PRONOUNS[p.id]["his"]
+            home = [q for q in data.ORDER if q not in self.away]
+            size = min(1.0 if mkind == "meal" else 0.5, self.portions / len(home))
+            self.portions -= size * len(home)
+            self.tidy_portions()
+            for x in home:
+                self.plates[x] = self.plates.get(x, 0) + size
+            self.meal_at = minute
+            what = "a portion" if size == 1 else "half a portion" if size == 0.5 else "what there is, shared"
+            trig = f"{p.name} sets out the meal: {what} each"
+            p.activity = {"kind": "idle", "label": "setting out the meal"}
+            so_far.append(trig + ".")
+            for q in seen:
+                q.sure.append(f"{data.clock(minute)}: {trig}. {portions_text(self.portions)} left on the shelf "
+                              f"(you saw it).")
+            fact(f"{p.name} set out the meal", trig)
+            p.sure.append(f"{data.clock(minute)}: you set out the meal: {what} each. {portions_text(self.portions)} "
+                          f"left on the shelf.")
+            record["events"].append(f"{p.name} set out the meal: {what} each")
+            return f"set out the meal: {what} each; {self.portions} left."
+        if mkind == "plate_eat":
+            his = data.PRONOUNS[p.id]["his"]
+            size = self.plates.pop(p.id, 0)
+            p.activity = {"kind": "idle", "label": "eating"}
+            p.hunger = max(0.0, p.hunger - self.relief * size)
+            p.eaten += size
+            p.last_meal = minute
+            if self.quiet is not None:
+                self.quiet.ate(p, minute)
+            so_far.append(f"{p.name} eats {his} share.")
+            for q in seen:
+                self.perceive(q, minute, f"{p.name} eats {his} share.")
+            p.memory.append((minute, f"you ate your share.{feel}"))
+            record["events"].append(f"{p.name} ate {his} share")
+            return f"ate {his} share."
+        if mkind == "plate_to":
+            his = data.PRONOUNS[p.id]["his"]
+            to = self.people[opt.act["target"]]
+            size = self.plates.pop(p.id, 0)
+            self.plates[to.id] = self.plates.get(to.id, 0) + size
+            p.activity = {"kind": "idle", "label": f"giving {his} share to {to.name}"}
+            line = f"{p.name} gives {his} share to {to.name}"
+            so_far.append(line + ".")
+            for q in seen:
+                q.sure.append(f"{data.clock(minute)}: {p.name} gave {his} share of the meal to "
+                              f"{'you' if q is to else to.name} (you saw it).")
+            fact(f"{p.name} gave {his} share to {to.name}", line)
+            p.sure.append(f"{data.clock(minute)}: you gave your share of the meal to {to.name}.")
+            record["events"].append(f"{p.name} gave {his} share to {to.name}")
+            return f"gave {his} share to {to.name}."
+        if mkind == "plate_back":
+            his = data.PRONOUNS[p.id]["his"]
+            size = self.plates.pop(p.id, 0)
+            self.portions += size
+            self.tidy_portions()
+            p.activity = {"kind": "idle", "label": "standing"}
+            line = f"{p.name} puts {his} share back on the shelf and does not eat"
+            so_far.append(line + ".")
+            for q in seen:
+                q.sure.append(f"{data.clock(minute)}: {p.name} put {his} share of the meal back on the shelf and did "
+                              f"not eat (you saw it).")
+            fact(f"{p.name} put {his} share back", line)
+            p.sure.append(f"{data.clock(minute)}: you put your share of the meal back on the shelf and did not eat.")
+            record["events"].append(f"{p.name} put {his} share back on the shelf")
+            return f"put {his} share back on the shelf; {self.portions} left."
         if kind == "collect_rain":                  # W1: out the back door and back, within the turn
             seen_text = (f"{p.name} goes out the back door into the rain and sets the bin under the drainpipe in the "
                          f"yard.")
@@ -2215,7 +2376,8 @@ class Morning:
                 so_far.append(f"{p.name} reaches for the shelf; it is empty.")
                 return "reached for the shelf and found it empty."
             self.portions -= 1
-            p.hunger = max(0.0, p.hunger - 0.4)
+            self.tidy_portions()
+            p.hunger = max(0.0, p.hunger - self.relief)
             p.eaten += 1
             p.last_meal = minute
             if self.quiet is not None:          # fasting counts from this meal (reports/w1_fixes.md, fix 1)
@@ -2242,7 +2404,7 @@ class Morning:
             each = self.portions / len(eaters)
             names = ", ".join(q.name for q in eaters)
             for q in eaters:
-                q.hunger = max(0.0, q.hunger - 0.4 * each)
+                q.hunger = max(0.0, q.hunger - self.relief * each)
                 q.eaten += each
                 q.last_meal = minute
                 if self.quiet is not None:
@@ -2266,7 +2428,7 @@ class Morning:
         if kind == "eat_given":
             giver, him = partner, data.PRONOUNS[p.id]["him"]
             p.activity = {"kind": "idle", "label": "eating"}
-            p.hunger = max(0.0, p.hunger - 0.4)
+            p.hunger = max(0.0, p.hunger - self.relief)
             p.eaten += 1
             p.last_meal = minute
             if self.quiet is not None:

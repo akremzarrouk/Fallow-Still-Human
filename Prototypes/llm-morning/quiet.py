@@ -430,6 +430,8 @@ class Quiet:
         day's 40 (reports/facts_and_evening.md, fix 5). No day asks more than 56, reserved or not (W2a). A door ask of
         p (p perceives the door, the visit's 18 not yet spent) is not limited by the stretch's own cap
         (reports/door_heard_impl.md). The 40 hold only the ordinary asks (reports/budget_fix_impl.md)."""
+        if self.m.brain() is not None:      # code mode: nothing is asked of a model, so nothing is rationed
+            return False
         door = p is not None and self.door is not None and p.door is not None and not self.door_full(p)
         return (self.asks >= DAY_MAX or (self.ordinary() >= DAY_ASKS and not self.reserved)
                 or (not door and self.cap is not None and self.asks >= self.cap))
@@ -463,7 +465,9 @@ class Quiet:
 
     def budget(self, pid):
         """Why a quiet ask of pid cannot be made now, or None. The ordinary 40; then the day's 56, less what the
-        evening (Q5) is still owed (reports/budget_fix_impl.md, reports/two_fixes_impl.md)."""
+        evening (Q5) is still owed (reports/budget_fix_impl.md, reports/two_fixes_impl.md). Never in code mode."""
+        if self.m.brain() is not None:
+            return None
         if self.ordinary() >= DAY_ASKS:
             return f"the day's {DAY_ASKS} asks are spent"
         owed = self.evening_owed()
@@ -578,7 +582,7 @@ class Quiet:
         """Why the day cannot give a knock KNOCK_NEEDS asks now without touching what the evening is still owed, or
         None (reports/door_memory_impl.md)."""
         owed = self.evening_owed()
-        if DAY_MAX - self.asks - owed >= KNOCK_NEEDS:
+        if self.m.brain() is not None or DAY_MAX - self.asks - owed >= KNOCK_NEEDS:
             return None
         return (f"the day cannot give a knock {KNOCK_NEEDS} asks beyond the evening's {owed}" if owed else
                 f"the day cannot give a knock {KNOCK_NEEDS} asks")
@@ -956,8 +960,10 @@ class Quiet:
 
     def door_full(self, p=None):
         """Why p, who perceives the door, cannot be asked for it any more (the visit's DOOR_ASKS are spent), or None.
-        Without p: whether they are spent."""
+        Without p: whether they are spent. Never in code mode."""
         sc = self.door
+        if self.m.brain() is not None:
+            return None
         if sc is None or (p is not None and p.door is None) or sc["door_asks"] < DOOR_ASKS:
             return None
         return f"the visit's {DOOR_ASKS} door asks are spent"
@@ -1358,7 +1364,8 @@ class Quiet:
     def advance(self, minute, to):
         """The jump: hunger as played turns would have added it; debt and fasting are counted from the clock."""
         for p in self.people():
-            p.hunger = min(1.0, p.hunger + HUNGER_A_MINUTE * (to - minute) * p.sheet["hunger_rate"])
+            p.hunger = min(1.0, p.hunger + self.m.hunger_rise(to - minute, HUNGER_A_MINUTE * (to - minute))
+                           * p.sheet["hunger_rate"])
 
     # ---------- played turns ----------
     def turn(self, t):

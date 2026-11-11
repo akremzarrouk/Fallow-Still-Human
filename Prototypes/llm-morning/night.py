@@ -442,7 +442,7 @@ class Night:
             choice = brain.decide_night(self, p, kind, opts)
             p.seen = seen
             d.update(mode="code", **choice)
-            self.m.take_answer(p, choice, self.m.night_minute(), d)
+            brain.settle(p, day_index(self.day1.day), d)
             d["label"] = byid[d["option"]].label
             self.decisions.append(d)
             self.story.append(("decision", d))
@@ -482,7 +482,7 @@ class Night:
                 p.room = None
                 continue
             if not played:
-                p.hunger = min(1.0, p.hunger + GAP_HUNGER * p.sheet["hunger_rate"])
+                p.hunger = min(1.0, p.hunger + self.m.hunger_rise(750, GAP_HUNGER) * p.sheet["hunger_rate"])
             p.room = OWN_ROOM[p.id]
             p.activity = {"kind": "idle", "label": "in bed"}
         self.bedtime_hunger = {q: (None if q in self.away else self.people[q].hunger) for q in data.ORDER}
@@ -550,7 +550,7 @@ class Night:
             if p.id in self.away:
                 p.room = None
                 continue
-            p.hunger = min(1.0, p.hunger + NIGHT_HUNGER * p.sheet["hunger_rate"])
+            p.hunger = min(1.0, p.hunger + self.m.hunger_rise(600, NIGHT_HUNGER) * p.sheet["hunger_rate"])
             p.room = OWN_ROOM[p.id]
         self.morning_hunger = {q: (None if q in self.away else self.people[q].hunger) for q in data.ORDER}
         for e in self.events:               # who knew that someone went out (§4.2)

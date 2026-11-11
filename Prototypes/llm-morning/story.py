@@ -63,7 +63,9 @@ def decision_line(d, fold=None):
     if d["mode"] == "routine":
         return (f"- **{name}.** Rules: nothing social happened to them. **{cap(d['label'])}**. "
                 f"Came of it: {d['came_of_it']}{fact}")
-    order = f" ({ORDINAL[d['place']]} to act in the {data.ROOMS[d['room']]}: {d['order_reason']})"
+    # A meal's answers (code mode) can make more acts in a turn than there are people.
+    order = (f" ({ORDINAL.get(d['place'], str(d['place']) + 'th')} to act in the {data.ROOMS[d['room']]}: "
+             f"{d['order_reason']})")
     if d.get("food_moment"):
         f = d["food_moment"]
         last = "not since before yesterday" if f["band"] == "before yesterday" else f["band"]
