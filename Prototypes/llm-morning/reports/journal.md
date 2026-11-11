@@ -117,3 +117,39 @@ that flipped between short and empty. The rules that fixed them are in the audit
 have 4 and 0 spoken lines; nobody raises the can again after day 1, because nothing points at anyone. Daniel is
 lost in all three seeds (nights 4, 5 and 7): he goes out most nights and the street's own odds catch him. The
 fuller days and the evening meal are step 3's.
+
+## Step 3: the week, at the world's own odds
+
+**Built.** `week.py`: seven days, each played from 07:00 to bedtime, day 1 and day 2 included (`python week.py
+--seed 2`). Beats at 10:00, 15:00 and 19:00 bring everyone who is up into the kitchen: the morning and evening meal
+(half a portion each, or the water round when the shelf is empty), the day's four tasks (boards, water, watch,
+stores) and looking after whoever is sick or hurt, the afternoon's reports ("I counted. 10 portions on the shelf."),
+the plan for the night. `health.py` and `content/chances.json`: sickness and injury from causes only, three levels,
+mending or worsening each night by rest, food, water and care; catching it from a room-mate or a patient. Leo is
+never lost: the draw that would lose him brings him back hurt. Unspoken guilt grows a step every second night.
+
+**Gate.** `python -m unittest test_llm_off`: 15 tests, OK, 1 skipped (L9, step 6): L1 to L8 and L10 to L13 on the
+week, seeds 1 to 3, with Leo by code and with a scripted Leo, in 34 s. `test_brain test_heart`: 42, OK. Old suite:
+349, OK, skipped=141. No live call.
+
+**Empty days** (`python week.py --count 50`): 44 of 350 days, **0.88 a week**; no week with three in a row; weeks
+with 0, 1, 2 empty days: 16, 24, 10. The limit is 1 a week, so **the nudge is not built**. It is close to the
+limit: day 2 is the usual empty day.
+
+**What a week reads like now** (seed 2). Day 2: Mara strains her back carrying the water and Elena looks after
+her. Day 3: Daniel takes Elena aside and says it: "It was me. I took the can in the night and ate it." She: "Daniel,
+you looked at me and said it was not you." Day 4: half shares; he offers to go next door and goes, against her
+word. Day 5: "I told you not to go, Daniel. You went." That evening she gives him her share. He goes further along
+the street and does not come back. Day 6: water only; the three of them; a knock at the door.
+
+**Speech.** The house said 3 to 5 lines a day; now 7 to 17, because the ordinary acts are spoken: taking a task,
+setting out the meal, thanks, asking after someone hurt, a word about how one woke, having it out the morning
+after. The lines are plain starter lines, and two people sometimes say the same sentence; the voices are step 5.
+
+**Cut or not built.** In the work practice: assigning a task, refusing one, doing one together. The nudge (not
+needed). Rain water never made anyone sick in these weeks: the stored water outlasts seven days.
+
+**The crash.** The machine ran out of memory once during this step. A week takes 25 MB and the full tests about
+100 MB, so the likely cause was an earlier hung test in which a scripted player was asked the same question for
+ever and every screen was kept. That loop now stops itself after 200 tries, and every run since goes one at a
+time under a time and memory cap.

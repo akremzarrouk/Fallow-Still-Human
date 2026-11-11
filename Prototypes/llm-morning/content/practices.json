@@ -1,0 +1,13 @@
+{
+ "_about": "The day's work (Docs/fable-audit-2026-11.md, 7.3, the work practice): the tasks offered at the work beat (quiet.BEATS), each taken by one person a day. `label` is the choice as it is offered; `did` and `doing` are how the record and the room tell it. `hazard` names a chance in content/chances.json: work that can hurt.",
+ "tasks": {
+  "boards": {"label": "go round the boards on the windows and the door", "did": "went round the boards on the windows and the door",
+             "doing": "seeing to the boards", "hazard": "boards"},
+  "water":  {"label": "carry the water in and measure what is left", "did": "carried the water in and measured what was left",
+             "doing": "seeing to the water", "hazard": "carrying"},
+  "watch":  {"label": "keep watch for a while at the gap in the boards", "did": "kept watch at the gap in the boards",
+             "doing": "keeping watch at the gap in the boards"},
+  "stores": {"label": "count the stores", "did": "counted the stores", "doing": "counting the stores"}
+ },
+ "tend": {"did": "looked after {name}", "doing": "looking after {name}"}
+}

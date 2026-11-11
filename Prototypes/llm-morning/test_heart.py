@@ -157,16 +157,23 @@ class NightStep(NoModel):
                     self.assertIn("no longer meant to", line)
 
     def test_h10_whoever_knows_someone_went_out_may_mean_to_sit_up_for_them(self):
-        """Seed 2: Daniel goes out; Elena knows; the next night she means to sit up, and does."""
-        tr = code_run(2)[2]
-        formed = [(k, i) for k in tr if k.startswith("mind") for i in tr[k]["night_step"]["intentions"]
-                  if i["kind"] == "watch" and i["what"] == "formed"]
-        self.assertTrue(formed)
-        k, i = formed[0]
-        after = tr[f"night{int(k[4:]) + 1}"]["decisions"]
-        bed = next(d for d in after if d["person"] == i["who"] and d["ask"] == "bedtime")
-        self.assertEqual(bed["option"], "watch_door")
-        self.assertTrue(any("meant to sit up" in name for name, _ in bed["why"]["terms"]))
+        """Someone goes out; someone who knows of it means to sit up for them; the next night they do, and the
+        record says why."""
+        watched = 0
+        for seed in SEEDS:
+            tr = code_run(seed)[2]
+            for k in (k for k in tr if k.startswith("mind")):
+                for i in tr[k]["night_step"]["intentions"]:
+                    nxt = tr.get(f"night{int(k[4:]) + 1}")
+                    if i["kind"] != "watch" or i["what"] != "formed" or nxt is None:
+                        continue
+                    bed = next((d for d in nxt["decisions"] if d["person"] == i["who"] and d["ask"] == "bedtime"), None)
+                    if bed is None:
+                        continue
+                    self.assertEqual(bed["option"], "watch_door", f"seed {seed} {k}: {i}")
+                    self.assertTrue(any("meant to sit up" in name for name, _ in bed["why"]["terms"]))
+                    watched += 1
+        self.assertGreater(watched, 0)
 
 
 class Mood(NoModel):

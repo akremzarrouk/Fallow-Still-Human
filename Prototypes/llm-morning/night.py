@@ -827,7 +827,12 @@ class Night:
                 g["lost_u"] = self.u(f"lost:{L}")
                 g["lost"] = sorted(group)[int(g["lost_u"] * len(group))]
                 g["shaken"] = [x for x in group if x != g["lost"]]
-            self.away.add(g["lost"])
+            if g["lost"] == "leo" and self.m.brain() is not None:
+                # Code mode (Docs/fable-audit-2026-11.md, 7.4): Leo is not lost. The exception is marked in the record.
+                g["spared"], g["lost"], g["shaken"] = "leo", None, list(group)
+                st = g["street"] = "scare_there"
+            else:
+                self.away.add(g["lost"])
         g["outcome"] = outcome_class(st, found, g.get("water", 0))
         self.groups.append(g)
         if st in ("clean", "scare_back") and not far:
@@ -1195,7 +1200,8 @@ def next_day(day1, n, oracle, chronicle=None):
     present = [q for q in data.ORDER if q not in m.away]
     before, after = n.day1.portions, n.portions
     history = chronicle.nights if chronicle is not None and chronicle.nights else [n]
-    if day >= 6 and chronicle is not None:      # from day 3: the needs, before anyone has seen their levels
+    full = getattr(getattr(oracle, "brain", None), "full_days", False)     # week.py: every day is a full day
+    if (day >= 6 or full) and chronicle is not None:    # from day 3: the needs, before anyone has seen their levels
         quiet.setup(m, chronicle)
     for q in present:
         p = m.people[q]

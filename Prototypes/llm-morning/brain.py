@@ -32,13 +32,15 @@ MOODS = ("on edge", "low", "warm", "restless")      # and "steady": no tilt
 OWN_ROOM = {p: room for room, owners in data.OWNERS.items() for p in owners}
 ROOMMATE = {p: q for owners in data.OWNERS.values() for p in owners for q in owners if q != p}
 TRAITS = ("cautious", "dominant", "empathetic", "impulsive", "proud", "anxious", "honest")
-NEVER_CAPPED = ("stay", "sleep", "plate_eat")
+NEVER_CAPPED = ("stay", "sleep", "plate_eat", "cup_drink")
 # The night's options, which carry no kind (night.py): reaction and answer ids, by what they are.
 NIGHT_KEYS = {"stay_home": {"answer": "answer_stay", "reaction": "give_up_going"}}
 BAD_NIGHT = {"lie_awake": (1, "a bad night"), "watch_door": (2, "a night on watch"),
              "go_next_door": (2, "a night out"), "go_further": (2, "a night out"),
              "get_up_and_look": (2, "a night waiting up")}
-MEAL_KINDS = ("meal", "meal_small", "plate_eat", "plate_to", "plate_back")
+MEAL_KINDS = ("meal", "meal_small", "plate_eat", "plate_to", "plate_back", "water_round", "cup_drink")
+FRESH_HURTS = ("defied", "ate_in_front", "accused_falsely", "lied")        # what can be had out the day after
+THANKS_FOR = ("gave_share", "looked_after", "brought_food")
 TRIP_MOVES = ("propose", "volunteer", "object", "object_all", "back", "decline", "propose_far", "volunteer_far")
 
 
@@ -75,6 +77,7 @@ class CodeBrain:
         self.weights = weights or load("weights.json")
         self.lines = lines or load("lines.json")
         self.scenario = self.weights["scenario"]
+        self.practices = load("practices.json")
         self.heart = Heart(self.weights["heart"])
         self.done = {}          # once keys -> how many times
         self.caused = {}        # (person, move, target) -> what stood when they last made that move (its cause)
@@ -92,6 +95,15 @@ class CodeBrain:
         self.outings = {}       # person -> how many goings-out at night they know of
         self.lapsed = {}        # person -> how many times they let go of meaning to go out
         self.told_empty = set()  # who has heard someone speak of going further: so next door is no use
+        self.full_days = False  # week.py sets it: every day, day 1 and 2 too, is played from 07:00 to bedtime
+        self.had_out = set()    # (person, other, kind of act, its day): hurts already put to the one who did them
+        self.thanked = set()    # (person, other, kind of act, its day): kindnesses already thanked
+        self.put_to = {}        # (person, day) -> what was last put to them and by whom: (who, topic)
+        self.asked_after = set()  # (person asked after, day)
+        self.answered = {}      # (speaker, listener) -> whether the speaker's last words to them were an answer
+        self.said_today = {}    # (person, day) -> the sentences they have said that day
+        self.unsaid = {}        # whoever took it -> the nights it has gone unsaid
+        self.health = None      # week.py's sickness and injury (health.py), or None
         self.nights = {}        # night number -> the night step's record
         self.last_line = {}     # (person, line key) -> the variant last used
         self.spoken = set()     # every line said
@@ -107,7 +119,8 @@ class CodeBrain:
     def _context(self, m, p, t, opts, d):
         ids = {o.id for o in opts}
         ask = ("aside" if "accept_aside" in ids else "given" if "eat_given" in ids
-               else "plate" if "plate_eat" in ids else "food" if d.get("food_moment") else "turn")
+               else "plate" if ("plate_eat" in ids or "cup_drink" in ids)
+               else "food" if d.get("food_moment") else "turn")
         others = []
         for q in m.others_here(p):
             level = hunger_level(q.hunger)
@@ -123,7 +136,9 @@ class CodeBrain:
                 "partner": next((o.act["partner"] for o in opts if "partner" in o.act), None),
                 "convo": sum(1 for _, r, what, _ in m.convos.log if r == p.room and what == "started"),
                 "shelf": self.shelf[p.id], "home": len(data.ORDER) - len(m.away), "missing": sorted(m.away),
-                "plate": getattr(m, "plates", {}).get(p.id), "meal_done": getattr(m, "meal_at", None) is not None}
+                "plate": getattr(m, "plates", {}).get(p.id), "meal_done": not m.meal_open(),
+                "beat": getattr(m, "beat", None),
+                "my_tasks": [name for name, who in getattr(m, "tasks", {}).items() if who == p.id]}
 
     def night_context(self, seed, day, ask, p, where=None, leaver=None, shelf=None, missing=(), someone_up=False):
         """A night decision's context. shelf: what the bedtime line said the shelf holds (the last they saw, if not
@@ -151,12 +166,37 @@ class CodeBrain:
             self.last_night[p.id] = (ctx["day"], "get_up_and_look")
         return choice
 
+    def did_task(self, m, p, name, target, minute):
+        """p has done one of the day's tasks. Looking after someone is remembered by them, and counts as care for
+        their mending; work with a hazard may hurt (health.py). Returns what came of it, in words, or None."""
+        day = day_index(m.day)
+        if target is not None:
+            self.heart.remember(target, p.id, "looked_after", day)
+            self.notes.setdefault((target, day), set()).add("comforted")
+            self.notes.setdefault((p.id, day), set()).add(("tended", target))
+            if self.health is not None:
+                self.health.cared(target, day)
+            return None
+        hazard = self.practices["tasks"][name].get("hazard")
+        if hazard and self.health is not None:
+            return self.health.hazard(p, hazard, day, minute)
+        return None
+
+    def removed(self, n, who):
+        """week.py's test of a loss: `who` is gone from the house when the next day begins."""
+        day = day_index(n.day1.day)
+        for P in data.ORDER:
+            if P != who and P not in n.away:
+                self.notes.setdefault((P, day), set()).add(("lost", who))
+
     def new_day(self, m):
         """A new morning has been set up (world.Morning.next_day): what the brain's people carry into it that the
         engine works out afresh each day."""
         for q in self.told_empty:
             if q not in m.away:
                 m.people[q].knows_empty = True
+        if self.health is not None:     # how each of them is as the day begins, for the record
+            self.health.levels[day_index(m.day)] = {q: self.health.level(q) for q in data.ORDER if q not in m.away}
 
     # ---------- what a person perceives of an act (world.Morning.apply, in code mode) ----------
     def saw(self, m, p, kind, target, seen, partner=None):
@@ -201,6 +241,8 @@ class CodeBrain:
                 h.remember(q, p.id, "lied" if p.id in people[q].denials_heard else "owned_up", day)
         elif kind == "object" and target in seen:
             note(target, "refused")
+        elif kind == "collect_rain":
+            note(p.id, "wet")
         elif kind in ("volunteer_far", "propose_far"):
             # Whoever hears someone speak of the houses further along concludes that next door is no use.
             for q in seen:
@@ -245,6 +287,7 @@ class CodeBrain:
             "H": hungriest / 3, "H_past_hungry": max(0, hungriest - 1) / 2,
             "question_open": float(put_to_them > denied),
             "took_it": float(p.guilt is not None), "g": (p.guilt or 0) / 3,
+            "confessed": float(p.confessed), "culprit_known": float(bool(p.knows_culprit) and p.knows_culprit != p.id),
             "others_here": float(bool(others)), "alone_with_one": float(len(others) == 1),
             "listening": len(others) / 3,
             "upset_share": (sum(1 for o in others if o["upset"]) / len(others)) if others else 0.0,
@@ -263,13 +306,21 @@ class CodeBrain:
             "can_alive": float(any(h["kind"] in ("ask", "accuse") for h in p.heard)
                                or any(x["kind"] in ("ask", "accuse") for x in p.history)),
             "ate_today": float(p.eaten > 0),
+            # They kept watch or counted the stores today, and it is the afternoon: they have something to report.
+            "report_due": float(ctx.get("beat") == "afternoon"
+                                and any(t in ("watch", "stores") for t in ctx.get("my_tasks", ()))),
+            # They woke in a mood that has a cause, and it is still the morning: something they might say.
+            "woke_with_cause": float(bool(self.moods.get((p.id, ctx["day"]), {}).get("cause"))
+                                     and ctx.get("beat") == "morning"),
             "means_far": float((bool(own) and own[1] == "volunteer_far") or self.heart.intends(p.id, "go_far")),
             "intends_watch": float(self.heart.intends(p.id, "watch")),
             "someone_offered": float(any(v[1] == "volunteer" for w, v in p.trip_heard.items() if w != p.id)),
             "someone_means_to_go": float(any(v[1] in ("volunteer", "volunteer_far")
                                              for w, v in p.trip_heard.items() if w != p.id)),
             "named_to_go": float(any(v[1:3] == ("back", p.id) for w, v in p.trip_heard.items() if w != p.id)),
-            "weak": float(needs.get("fast_stage", 0) >= 3), "debt_stage": float(needs.get("debt_stage", 0)),
+            "weak": float(needs.get("fast_stage", 0) >= 3
+                          or (self.health is not None and self.health.level(p.id) >= 1)),
+            "debt_stage": float(needs.get("debt_stage", 0)),
             "knock_today": float("knock" in notes),
             "shelf_empty": float(ctx["shelf"] <= 0), "food_short": float(ctx["shelf"] < 2 * ctx["home"]),
             "someone_up": float(bool(ctx.get("someone_up"))),
@@ -298,13 +349,18 @@ class CodeBrain:
             "k_partner": (p.grudges[ctx["partner"]].strength / 3) if ctx.get("partner") in p.grudges else 0.0,
             "u_target": (other["upset"] / 3) if other else 0.0,
             "target_offered": float(bool(pos) and pos[1] in ("volunteer", "volunteer_far")),
+            # They owe a line to whoever spoke to them, unless what was said to them was itself an answer.
             "owes_target_line": float(owed is not None and owed["who"] == target
-                                      and kind in ("confront", "reassure", "say")),
+                                      and kind in ("confront", "reassure", "say")
+                                      and not self.answered.get((target, p.id))),
             "to_own_room": float(o.act.get("kind") == "go" and o.act.get("to") == OWN_ROOM.get(p.id)),
+            **{f"task_{name}": float(o.act.get("task") == name) for name in self.practices["tasks"]},
+            "task_tend": float(str(o.act.get("task", "")).startswith("tend_")),
             "target_accused_by_other": float(any(h["kind"] == "accuse" and h["target"] == target
                                                  and h["who"] != p.id for h in p.heard)),
             "s_target": 0.0, "kind_target": 0.0, "hurt_target": 0.0, "intends_tell_target": 0.0,
-            "hungrier_target": 0.0, "_says": {},
+            "hungrier_target": 0.0, "_says": {}, "fresh_hurt_target": 0.0, "thanks_due_target": 0.0,
+            "sick_target": 0.0, "target_asked_after": 0.0, "target_confronted_today": 0.0, "_topic": {},
         }
         if person:
             also = self.temper(p.id, day)
@@ -319,6 +375,23 @@ class CodeBrain:
                 said = self.heart.behind(p.id, target, day, sign)
                 if said:
                     out["_says"][name] = said
+            # A hurt of today or yesterday not yet had out with them; a kindness of today or yesterday not yet
+            # thanked; whether they are sick or hurt, and whether someone has asked after them or had it out today.
+            mine = [a for a in self.heart.acts.get((p.id, target), ()) if a["day"] >= day - 1]
+            hurt = next((a for a in reversed(mine) if a["kind"] in FRESH_HURTS
+                         and (p.id, target, a["kind"], a["day"]) not in self.had_out), None)
+            kind = next((a for a in reversed(mine) if a["kind"] in THANKS_FOR
+                         and (p.id, target, a["kind"], a["day"]) not in self.thanked), None)
+            if hurt:
+                out["fresh_hurt_target"], out["_topic"]["confront"] = 1.0, hurt
+                out["_says"]["fresh_hurt_target"] = f"{hurt['says']}, {'today' if hurt['day'] == day else 'yesterday'}"
+            if kind:
+                out["thanks_due_target"], out["_topic"]["thanks"] = 1.0, kind
+                out["_says"]["thanks_due_target"] = f"{kind['says']}, {'today' if kind['day'] == day else 'yesterday'}"
+            out["sick_target"] = float(self.health is not None and self.health.level(target) >= 1)
+            out["target_asked_after"] = float((target, day) in self.asked_after)
+            out["target_confronted_today"] = float(any(h["kind"] == "confront" and h["target"] == target
+                                                       for h in p.heard))
         return out
 
     # ---------- what reached them since they last decided ----------
@@ -408,6 +481,12 @@ class CodeBrain:
             if lost:
                 add("low", n, f"{data._and([NAMES[x] for x in lost])} not coming back")
                 break
+        if self.health is not None:
+            if self.health.level(p.id):
+                add("low", 2, self.health.what(p.id))
+            ill = [q for q in data.ORDER if q != p.id and self.health.level(q) >= 2]
+            if ill:
+                add("low", 1, f"{data._and([NAMES[q] for q in ill])} being laid up")
         long_hunger = level >= 2 and before >= 2
         rng = random.Random(f"{self.seed}:mood:{day}:{p.id}")
         seeded = rng.choice(MOODS) if rng.random() < 0.5 else None
@@ -471,6 +550,8 @@ class CodeBrain:
             return NIGHT_KEYS.get(o.id, {}).get(ctx["ask"], o.id), None
         if o.act.get("kind") in MEAL_KINDS:
             return o.act["kind"], o.act.get("target")
+        if o.act.get("kind") == "task":
+            return "task", o.act.get("target")
         kind, target = act_of(o.id)
         if kind == "reassure" and target is None:
             return "reassure_all", None
@@ -584,16 +665,19 @@ class CodeBrain:
                     terms.append((q["says"], q["add"]))
             tilt = self.tilt(mood["mood"], key, o, flags)
             once = self.once_key(rule, i, key, pid, target, flags, ctx) if rule else None
+            limit = rule.get("limit", 1) if rule else 1
+            if rule and rule.get("limit_short_handed") and ctx["home"] < len(data.ORDER):
+                limit = rule["limit_short_handed"]         # fewer hands: the work is shared out among those left
             is_open = (key in NEVER_CAPPED
                        or (counts.get(o.id, 0) < self.weights["cap_per_day"]
-                           and (once is None or self.done.get(once, 0) < rule.get("limit", 1))))
+                           and (once is None or self.done.get(once, 0) < limit)))
             if rule is not None and rule.get("once") == "cause":
                 fresh, cause, new = self.new_cause(rule, key, p, ctx, target, flags)
                 is_open = is_open and fresh
             self.last_keys[o.id] = key if rule is not None or key == "stay" else f"{key} (default)"
             rows.append({"o": o, "key": key, "target": target, "score": score + tilt, "terms": terms, "tilt": tilt,
                          "once": once, "open": is_open, "rule": rule, "cause": cause, "new": new,
-                         "says": flags["_says"]})
+                         "says": flags["_says"], "topics": flags["_topic"]})
         open_rows = [r for r in rows if r["open"]] or rows     # a list with nothing open (it has no "stay") is free
         self.last_scores = {r["o"].id: r["score"] for r in open_rows}
         best = max(r["score"] for r in open_rows)
@@ -614,6 +698,7 @@ class CodeBrain:
             self.done[row["once"]] = self.done.get(row["once"], 0) + 1
         if row["cause"] is not None:
             self.caused[self.cause_key(row["rule"], row["key"], pid, row["target"])] = row["cause"]
+        topic = self.topic_of(p, row, ctx)
         if ctx["ask"] == "bedtime":
             self.last_night[pid] = (day, o.id)
         self.intend(p, row, base, ctx)
@@ -630,10 +715,55 @@ class CodeBrain:
             why["new_cause"] = row["new"]
         reason = "; ".join(f"{name} {v:+.2f}" for name, v in why["terms"]) or "nothing weighed more"
         suspect = self.heart.suspect(pid, day, self.temper(pid, day))
-        return {"option": o.id, "say": self.line(p, row["key"], row["target"], ctx, o) if o.speech else None,
+        spoken = o.speech or o.act.get("says")
+        return {"option": o.id, "say": self.line(p, row["key"], row["target"], ctx, o, topic) if spoken else None,
                 "feeling": self.feeling(p, row["key"], base, mood, ctx), "reason": reason, "dropped_line": False,
                 "suspects": NAMES[suspect[0]] if suspect[1] >= 1 else "nobody", "angry_at": "nobody", "why": why,
                 "mood": {"mood": mood["mood"], "cause": mood["cause"]}}
+
+    def topic_of(self, p, row, ctx):
+        """What a line is about, where its move can be about more than one thing: the line key's ending. Marks what
+        has now been said (a hurt had out, a kindness thanked, someone asked after), so it is not said twice."""
+        key, target, day = row["key"], row["target"], ctx["day"]
+        rule = row["rule"] or {}
+        if target in data.PEOPLE and (row["o"].speech or row["o"].act.get("says")):
+            self.answered[(p.id, target)] = key == "say_to" and rule.get("topic") == "answer"
+        if key == "reassure" and target in data.PEOPLE:
+            self.put_to[(target, day)] = (p.id, "reassure")
+        if key == "confront" and row["topics"].get("confront"):
+            a = row["topics"]["confront"]
+            self.had_out.add((p.id, target, a["kind"], a["day"]))
+            self.put_to[(target, day)] = (p.id, a["kind"])
+            return a["kind"]
+        if key == "say_to":
+            what = rule.get("topic")
+            if what == "thanks" and row["topics"].get("thanks"):
+                a = row["topics"]["thanks"]
+                self.thanked.add((p.id, target, a["kind"], a["day"]))
+                self.put_to[(target, day)] = (p.id, "thanks")
+                return "thanks"
+            if what == "ask_after":
+                self.asked_after.add((target, day))
+                self.put_to[(target, day)] = (p.id, "ask_after")
+                return "ask_after"
+            if what == "answer":
+                put = self.put_to.pop((p.id, day), None)
+                return f"answer_{put[1]}" if put and put[0] == target else "answer"
+        if key == "task":
+            return row["o"].act["task"].split("_")[0]
+        if key == "say_other" and rule.get("topic") == "report":
+            what = next(t for t in ctx["my_tasks"] if t in ("watch", "stores"))
+            if what == "stores":
+                return "report_stores" if ctx["shelf"] > 0 else "report_stores_none"
+            return "report_watch_knock" if "knock" in self.notes.get((p.id, day), set()) else "report_watch"
+        if key == "say_other" and rule.get("topic") == "woke":
+            cause = self.moods[(p.id, day)]["cause"]
+            first = cause.split(" and ")[0]
+            if self.health is not None and first == self.health.what(p.id):
+                return "woke_hurt" if self.health.now[p.id]["kind"] == "injury" else "woke_ill"
+            return "woke_lost" if first.endswith("not coming back") else "woke_laid_up" if first.endswith(
+                "being laid up") else "woke_" + first.replace("'s", "").replace(" ", "_")
+        return None
 
     # ---------- intentions (section 7.2) ----------
     def intend(self, p, row, f, ctx):
@@ -758,8 +888,19 @@ class CodeBrain:
                 if gone_out and cares and h.trust(P, gone_out[0], day) > -1:
                     if h.intend(P, "watch", gone_out[0], f"{NAMES[gone_out[0]]} went out in the night", day, days=2):
                         rec["intentions"].append({"who": P, "kind": "watch", "target": gone_out[0], "what": "formed"})
+        # Pressure finds a way out (7.3): what is on whoever took it grows a step every second night it goes unsaid.
+        for P in present:
+            p = n.people[P]
+            if p.guilt is not None and not p.confessed:
+                self.unsaid[P] = self.unsaid.get(P, 0) + 1
+                if self.unsaid[P] % 2 == 0 and p.guilt < 3:
+                    p.guilt += 1
+                    p.guilt_events.append((n.m.night_minute(), "another night went by with it unsaid"))
+                    rec["guilt"] = {"who": P, "now": p.guilt, "why": "another night went by with it unsaid"}
         for P in present:
             self.settle(n.people[P], day + 1)
+        if self.health is not None:     # each condition takes its course; each cause that held is drawn for
+            rec["health"] = self.health.night(n, day, lambda q: self.notes.get((q, day), set()))
         rec["remembered"] = h.log[mark:]
         rec["heart"] = h.state(day + 1)
         self.nights[n.number] = rec
@@ -782,16 +923,20 @@ class CodeBrain:
             return "scared"
         return "calm" if mood["mood"] == "steady" else mood["mood"]
 
-    def line(self, p, key, target, ctx, o=None):
+    def line(self, p, key, target, ctx, o=None, topic=None):
         """Words for a spoken move, from content/lines.json: the speaker's own where there are any, never the variant
-        they used last. An option's own id is looked up before its kind (`still_going` before `volunteer`)."""
+        they used last. A move's topic is looked up first (`confront:defied`), then the option's own id
+        (`still_going` before `volunteer`), then the move."""
         mine, default = self.lines.get("by_person", {}).get(p.id, {}), self.lines["default"]
         oid = o.id if o is not None else None
-        table = mine.get(oid) or default.get(oid) or mine.get(key) or default.get(key)
-        slots = {}
+        about = f"{key}:{topic}" if topic else None
+        table = (mine.get(about) or default.get(about) or mine.get(oid) or default.get(oid) or mine.get(key)
+                 or default.get(key))
+        n_left = ctx.get("shelf", 0)
+        slots = {"n": f"{n_left:g}", "portions": "portion" if n_left == 1 else "portions"}
         if target in data.PEOPLE:
             call = data.ADDRESS[p.id].get(target, NAMES[target])
-            slots = {"to": call, "leaver": call}
+            slots.update({"to": call, "leaver": call})
         usable = [v for v in (table or ()) if all(("{" + s + "}") not in v or s in slots for s in ("to", "leaver"))]
         if not usable:
             usable = self.lines["default"]["any"]
@@ -799,7 +944,15 @@ class CodeBrain:
         i = random.Random(f"{self.seed}:line:{ctx['day']}:{p.id}:{key}:{n}").randrange(len(usable))
         if len(usable) > 1 and self.last_line.get((p.id, key)) == i:
             i = (i + 1) % len(usable)
+        # Nobody says the same sentence twice in a day while another way of saying it is free.
+        said = self.said_today.setdefault((p.id, ctx["day"]), set())
+        for step in range(len(usable)):
+            j = (i + step) % len(usable)
+            if usable[j].format(**slots) not in said:
+                i = j
+                break
         self.last_line[(p.id, key)] = i
-        text = usable[i].format(**slots) if slots else usable[i]
+        text = usable[i].format(**slots)
+        said.add(text)
         self.spoken.add(text)
         return text

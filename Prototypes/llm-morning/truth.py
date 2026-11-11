@@ -57,6 +57,7 @@ class World(Guarded):
         self.bin_out = False
         self.level, self.level_since, self.holder = "as_before", water.DRY_AT, None
         self.deficit = {q: 0.0 for q in people}
+        self.rain_drunk = {q: 0.0 for q in people}      # litres of rain water each has drunk (health.py's cause)
         self.wet_until = {}
         self.places = {"neighbour": None, "far": {}}
         self.fixed = {}                 # facts fixed once, as the chronicle's: name -> {"value", "string", "at"}
@@ -96,10 +97,13 @@ class World(Guarded):
             other = (use["wash"] * len(present) + use["toilet"]) / 1440 if present else 0.0
             self._draw(other, ("rain", "tap"))
             for q in present:
+                rain = self.rain
                 got = self._draw(use["drink"] / 1440, ("tap", "rain"))
                 self.deficit[q] = max(0.0, self.deficit[q] + water.NET_LOSS / 1440 - got)
                 if self.deficit[q] > 0:
                     self.deficit[q] -= self._draw(self.deficit[q], ("tap", "rain"))
+                if self.rain < rain:
+                    self.rain_drunk[q] = self.rain_drunk.get(q, 0.0) + rain - self.rain
             self.clock = t + 1
 
     def _draw(self, litres, order):

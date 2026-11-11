@@ -51,6 +51,13 @@ EVENING, EVENING_ASKS = 720, 8
 EVENING_LINE = "It is evening; in two hours everyone goes to bed."
 EVENING_TEXT = "it is evening, and in two hours everyone goes to bed"
 HUNGER_A_MINUTE = 0.004     # × hunger rate, as a played turn adds it (world.py)
+# The week's beats (week.py; Docs/fable-audit-2026-11.md, 7.4): in code mode, on a full day, the hours at which
+# everyone who is up comes into the kitchen. The morning's is the day's opening (minute 0). What each is for is
+# offered there (world.Morning.options_for): the meal in the morning and the evening, the day's work, the plan.
+BEATS = {"work": 180, "afternoon": 480, "evening": 720}        # 10:00, 15:00, 19:00
+BEAT_TEXT = {"work": "it is mid-morning: the day's work is to be shared out",
+             "afternoon": "it is the middle of the afternoon",
+             "evening": "it is evening: the meal, and in two hours everyone goes to bed"}
 OWN_ROOM = {p: room for room, owners in data.OWNERS.items() for p in owners}
 
 # The body line states what the body feels and what effort costs; it never says an act cannot be done
@@ -263,6 +270,40 @@ class Quiet:
         self.woken_now = []
         self.q7_open = None         # the Q7 stretch under way, if one is (reports/w2a_fixes.md, fix 3)
         self.knock_in = None        # a knock inside a played stretch: its visit, and the cap and reserved before it
+        self.beats_done = set()     # the week's beats begun today (code mode, full days)
+
+    def full(self):
+        """A full day of the week (week.py): code mode, with beats."""
+        return getattr(self.m.brain(), "full_days", False)
+
+    def beat(self, minute):
+        """A beat falls due: everyone at home who can get up comes into the kitchen, and the room is played until its
+        talk ends. Someone resting is woken for it; someone laid up stays in bed."""
+        if not self.full():
+            return
+        for name, at in BEATS.items():
+            if name in self.beats_done or minute < at:
+                continue
+            self.beats_done.add(name)
+            self.m.beat = name
+            if name == "evening":
+                self.evening_done = True
+            here = []
+            for p in sorted(self.people(), key=lambda x: data.ORDER.index(x.id)):
+                if self.m.laid_up(p.id):
+                    continue
+                if p.id in self.open:
+                    self.end(p, minute, "the hour")
+                self.withdrawn.pop(p.id, None)
+                if p.room != "kitchen":
+                    self.arrive(p, "kitchen", minute)
+                p.memory.append((minute, BEAT_TEXT[name][0].upper() + BEAT_TEXT[name][1:] + "."))
+                here.append(p.id)
+            self.log.append({"kind": "beat", "name": name, "minute": minute, "room": "kitchen", "fired": bool(here),
+                             "asked": here, "why": None if here else "nobody is up"})
+            for pid in here:
+                self.ask(self.m.people[pid], "beat", minute, BEAT_TEXT[name],
+                         f"the {name}: everyone who is up is in the kitchen")
 
     # ---------- the needs ----------
     def people(self):
@@ -461,6 +502,7 @@ class Quiet:
         self.cap = self.cap_why = None
         self.reserved = False
         self.knock_in = None
+        self.m.beat = None              # the hour's business is over with its talk
         self.stretches.append(stretch)
 
     def budget(self, pid):
@@ -1217,7 +1259,7 @@ class Quiet:
         """Q5 (reports/facts_and_evening.md, fix 5), once a day, at the first quiet minute from 19:00: if anyone took
         a trip position today and is awake in a room with someone else awake, the one whose trip act is the most
         recent is asked. Nobody took one: nothing happens."""
-        if self.evening_done or minute < EVENING:
+        if self.evening_done or minute < EVENING or self.full():     # on a full day the evening is a beat
             return []
         self.evening_done = True
         last = self.trip_positions()
@@ -1246,6 +1288,8 @@ class Quiet:
     def routine_for(self, p, minute):
         if self.rest_due(p, minute):
             return "rest", OWN_ROOM[p.id]
+        if self.m.laid_up(p.id):                # code mode: sick or hurt, they keep to their bed all day
+            self.withdrawn[p.id] = DAY_END
         until = self.withdrawn.get(p.id)
         if until is not None:
             if minute < until:
@@ -1307,6 +1351,7 @@ class Quiet:
         self.run_out(minute)
         self.assign(minute)
         self.ask_q1(crossings, minute)
+        self.beat(minute)
         self.evening(minute)
         self.hear_rain(minute, played=False)
         self.hear_knock(minute, played=False)
@@ -1324,6 +1369,8 @@ class Quiet:
         if self.door is not None:          # a door scene going on in quiet time is stepped turn by turn
             return minute + data.MINUTES_PER_TURN
         out = [DAY_END] + ([EVENING] if not self.evening_done else [])
+        if self.full():
+            out += [at for name, at in BEATS.items() if name not in self.beats_done]
         for p in self.people():
             span = self.open.get(p.id)
             if span and span["until"] is not None:
@@ -1582,6 +1629,8 @@ def play(m, told=None):
     t = 0
     stretch = {"start": 0, "end": None, "room": "kitchen", "trigger": "the morning"}
     q.begin(stretch, MORNING_ASKS, f"the morning's {MORNING_ASKS} asks are spent")
+    if q.full():
+        m.beat = "morning"
     while t * data.MINUTES_PER_TURN < DAY_END:
         minute = t * data.MINUTES_PER_TURN
         if stretch is not None:
