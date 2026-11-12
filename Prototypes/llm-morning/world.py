@@ -2497,10 +2497,11 @@ class Morning:
                 p.memory.append((minute, "you reached for the shelf; it was empty."))
                 so_far.append(f"{p.name} reaches for the shelf; it is empty.")
                 return "reached for the shelf and found it empty."
-            self.portions -= 1
+            took = min(1, self.portions)        # in code mode the shelf can hold less than a portion: never below 0
+            self.portions -= took
             self.tidy_portions()
-            p.hunger = max(0.0, p.hunger - self.relief)
-            p.eaten += 1
+            p.hunger = max(0.0, p.hunger - self.relief * took)
+            p.eaten += took
             p.last_meal = minute
             if self.quiet is not None:          # fasting counts from this meal (reports/w1_fixes.md, fix 1)
                 self.quiet.ate(p, minute)

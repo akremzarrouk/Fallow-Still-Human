@@ -75,7 +75,8 @@ class Health:
                          "cared": []}
         line = f"{NAMES[pid]} " + spec["onset"].format(what=what, name=NAMES.get(tag, ""), his=he["his"]) + "."
         self.events.append({"day": day, "who": pid, "what": what, "cause": cause, "level": self.now[pid]["level"],
-                            "change": "onset", "chance": rec["chance"], "conditions": rec["conditions"], "line": line})
+                            "change": "onset", "chance": rec["chance"], "conditions": rec["conditions"], "line": line,
+                            "kind_of_cause": "work" if name in ("boards", "carrying") else "other"})
         return line
 
     def hazard(self, p, name, day, minute):
@@ -123,7 +124,7 @@ class Health:
                     "worse": f"{NAMES[q]} was worse: {LEVEL_WORDS.get(c['level'])} now."}[change]
             self.events.append({"day": day, "who": q, "what": c["what"], "cause": c["cause"], "level": c["level"],
                                 "change": change, "chance": rec["chance"], "conditions": rec["conditions"],
-                                "line": line})
+                                "line": line, "kind_of_cause": "course"})
             lines.append(line)
             if c["level"] == 0:
                 del self.now[q]

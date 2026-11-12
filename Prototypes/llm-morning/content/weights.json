@@ -65,7 +65,7 @@
               "once": "cause", "subject": "can"}],
 
   "go": [{"rule": 9, "when": ["took_it", "!confessed", "to_own_room", "owes_nobody", "others_here"], "base": -0.25,
-          "terms": [[0.9, "g"]], "once": "convo"}],
+          "terms": [[0.9, "g"]], "once": "day", "once_key": "keeps_away"}],
 
   "sit":          [{"rule": 10, "base": 0.10, "terms": [[2.0, "empathetic_over_half", "u_target"], [-0.6, "k_target"],
                                                          [1.8, "kind_target", "u_target"], [0.4, "grief", "empathetic"]],
@@ -92,7 +92,7 @@
   "decline":    [{"rule": 11, "when": ["named_to_go"], "base": -0.55, "terms": [[1.2, "anxious"]], "once": "day"},
                  {"rule": 11, "base": -1.0}],
 
-  "aside": [{"rule": 14, "when": ["intends_tell_target"], "base": 0.75, "once": "day"}],
+  "aside": [{"rule": 14, "when": ["intends_tell_target"], "terms": [[0.75, "intends_tell_target"]], "once": "day"}],
 
   "meal":       [{"rule": 15, "base": 0.30, "terms": [[0.3, "empathetic"], [0.2, "counted"], [-0.4, "question_open"],
                                                       [-0.5, "not_asked"], [-0.6, "awaiting_answers"]]}],
@@ -104,8 +104,9 @@
                                                [0.6, "empathetic", "task_tend"], [0.4, "kind_target", "task_tend"]],
             "once": "day", "once_key": "task", "limit_short_handed": 2}],
   "plate_eat":  [{"rule": 15, "base": 0.90}],
-  "plate_to":   [{"rule": 15, "terms": [[2.4, "empathetic", "hungrier_target"], [0.5, "kind_target"]]}],
-  "plate_back": [{"rule": 15, "when": ["took_it"], "base": -0.10, "terms": [[1.35, "g"]]}],
+  "plate_to":   [{"rule": 15, "terms": [[2.4, "empathetic", "hungrier_target"], [0.5, "kind_target"],
+                                      [-1.5, "target_given_today"]]}],
+  "plate_back": [{"rule": 15, "when": ["took_it", "!confessed"], "base": -0.10, "terms": [[1.35, "g"]]}],
 
   "ration_water": [{"rule": 12, "base": -0.25, "terms": [[0.9, "cautious"]], "once": "week"}],
 
@@ -182,7 +183,7 @@
   "task_boards": "the boards", "task_watch": "the watch", "task_stores": "the stores", "task_water": "the water",
   "task_tend": "someone needs looking after",
   "fresh_hurt_target": "what they did", "thanks_due_target": "what they did for them", "sick_target": "they are not well",
-  "target_asked_after": "someone has already asked", "target_confronted_today": "it has been said today", "impulsive": "quick to speak", "woke_with_cause": "how they woke", "report_due": "what they found",
+  "target_asked_after": "someone has already asked", "target_confronted_today": "it has been said today", "impulsive": "quick to speak", "woke_with_cause": "how they woke", "report_due": "what they found", "target_given_today": "someone has already given them one",
   "intends_tell_target": "meant to tell them", "cautious": "careful", "empathetic": "feels for others",
   "proud": "pride", "dominant": "takes charge", "anxious": "anxious",
   "base": "as a rule"

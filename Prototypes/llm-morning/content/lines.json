@@ -52,7 +52,7 @@
   "confront:ate_in_front": ["{to}, you ate in front of us all.", "You took more than your share, {to}."],
   "confront:accused_falsely": ["{to}, you said it was me. It was not.", "You accused me, {to}. In front of everyone."],
   "confront:lied": ["{to}, you looked at me and said it was not you.", "You lied to my face, {to}."],
-  "say_other:report_stores": ["I counted. {n} {portions} on the shelf.", "{n} {portions} left. I counted twice."],
+  "say_other:report_stores": ["I counted: {left} on the shelf.", "I counted twice: {left} left."],
   "say_other:report_stores_none": ["The shelf is empty. There was nothing to count.", "Nothing on the shelf. I looked twice."],
   "say_other:report_watch": ["Nothing moved in the street.", "I saw nobody out there."],
   "say_other:report_watch_knock": ["Whoever was at the door has gone.", "The street is empty again."],

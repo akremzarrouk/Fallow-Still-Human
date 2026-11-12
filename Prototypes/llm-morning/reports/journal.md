@@ -153,3 +153,33 @@ needed). Rain water never made anyone sick in these weeks: the stored water outl
 100 MB, so the likely cause was an earlier hung test in which a scripted player was asked the same question for
 ever and every screen was kept. That loop now stops itself after 200 tries, and every run since goes one at a
 time under a time and memory cap.
+
+## Step 4: the diary. First stop
+
+**Built.** `diary.py`: a played week as a page a day (`python diary.py --seed 2` writes
+`runs/week/week-seed2.md`). A day opens with the shelf and who woke how, with the cause. Then the morning, the
+day's work, the afternoon, the evening, the night. What was said is quoted as it was said; where the brain weighed
+something the line ends with why, in its own words. A meal and its eating are one line, the day's tasks one line, a
+run of small talk one line. Nothing is invented: every sentence is built from the record.
+
+**Gate.** `python -m unittest test_diary`: 5 tests, OK. Seeds 1 to 3: days take 7 to 21 lines (limit 60); a quiet
+day takes 7 (limit 8); no spoken move took the filler line; the diary had a sentence for every act; every quoted
+sentence was said. All clauses in force still pass: `test_llm_off` 15 OK (1 skipped), `test_brain test_heart` 42
+OK, old suite 349 OK (skipped=141). No live call.
+
+**Changed after reading the diary.** Three people gave Daniel their share one after another: now one does. He
+refused his share and then took from the shelf: after owning up he eats like anyone. The shelf could go below
+zero. He left for his room after every talk: now once a day. "0.25 portions" is now "a quarter of a portion".
+
+**Yours, at this stop.**
+1. Read `runs/week/week-seed2.md`, then `week-seed3.md` or `week-seed1.md`. About 20 minutes. Mark what sounds
+   wrong: a line, a reason, a thing nobody would do.
+2. Read `content/voices.md` and approve or mark the four sheets. The bulk of the lines (step 5) waits for that.
+
+**What I would look at, reading it as you will.**
+- The lines are plain and shared: Mara and Daniel say "I lay awake half the night" in the same minute. Step 5.
+- Daniel goes out most nights once the food is short, and in seeds 1 and 2 he does not come back (nights 4 and
+  5). In seed 3 he lives. It follows from the street's own odds, but two weeks in three end the same way.
+- Days 1 and 2 are thin: after the denials nothing points at anyone, so the can goes quiet until what is on Daniel
+  grows and he tells Elena (day 3) or everyone (day 5).
+- Leo, played by code, is the calm one who says little. Whether you care about the family is the hour of play.

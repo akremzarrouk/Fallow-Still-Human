@@ -44,6 +44,18 @@ THANKS_FOR = ("gave_share", "looked_after", "brought_food")
 TRIP_MOVES = ("propose", "volunteer", "object", "object_all", "back", "decline", "propose_far", "volunteer_far")
 
 
+def left_words(n):
+    """What the shelf holds, as someone would say it: "3 portions", "1 portion", "half a portion"."""
+    parts = {0.25: "a quarter of a portion", 0.5: "half a portion", 0.75: "three quarters of a portion"}
+    if n in parts:
+        return parts[n]
+    if n < 1:
+        return "less than a portion"
+    whole = int(n)
+    extra = {0.25: " and a quarter", 0.5: " and a half", 0.75: " and three quarters"}.get(round(n - whole, 2), "")
+    return f"{whole}{extra} portion{'' if whole == 1 and not extra else 's'}"
+
+
 class LLMCalled(RuntimeError):
     """Something asked a model in code mode."""
 
@@ -107,6 +119,7 @@ class CodeBrain:
         self.nights = {}        # night number -> the night step's record
         self.last_line = {}     # (person, line key) -> the variant last used
         self.spoken = set()     # every line said
+        self.fell_back = []     # (person, move): a spoken move that had no line of its own and took the filler
         self.last_scores = {}   # of the latest choice: option id -> score, for the moves that were open
         self.last_keys = {}     # of the latest choice: option id -> the weight entry it was scored by
 
@@ -360,6 +373,7 @@ class CodeBrain:
                                                  and h["who"] != p.id for h in p.heard)),
             "s_target": 0.0, "kind_target": 0.0, "hurt_target": 0.0, "intends_tell_target": 0.0,
             "hungrier_target": 0.0, "_says": {}, "fresh_hurt_target": 0.0, "thanks_due_target": 0.0,
+            "target_given_today": 0.0,
             "sick_target": 0.0, "target_asked_after": 0.0, "target_confronted_today": 0.0, "_topic": {},
         }
         if person:
@@ -389,6 +403,7 @@ class CodeBrain:
                 out["thanks_due_target"], out["_topic"]["thanks"] = 1.0, kind
                 out["_says"]["thanks_due_target"] = f"{kind['says']}, {'today' if kind['day'] == day else 'yesterday'}"
             out["sick_target"] = float(self.health is not None and self.health.level(target) >= 1)
+            out["target_given_today"] = float("fed" in self.notes.get((target, day), set()))
             out["target_asked_after"] = float((target, day) in self.asked_after)
             out["target_confronted_today"] = float(any(h["kind"] == "confront" and h["target"] == target
                                                        for h in p.heard))
@@ -932,14 +947,14 @@ class CodeBrain:
         about = f"{key}:{topic}" if topic else None
         table = (mine.get(about) or default.get(about) or mine.get(oid) or default.get(oid) or mine.get(key)
                  or default.get(key))
-        n_left = ctx.get("shelf", 0)
-        slots = {"n": f"{n_left:g}", "portions": "portion" if n_left == 1 else "portions"}
+        slots = {"left": left_words(ctx.get("shelf", 0))}
         if target in data.PEOPLE:
             call = data.ADDRESS[p.id].get(target, NAMES[target])
             slots.update({"to": call, "leaver": call})
         usable = [v for v in (table or ()) if all(("{" + s + "}") not in v or s in slots for s in ("to", "leaver"))]
         if not usable:
             usable = self.lines["default"]["any"]
+            self.fell_back.append((p.id, about or oid or key))      # a move with no line of its own (the diary's gate)
         n = self.calls.get((p.id, ctx["day"]), 0)
         i = random.Random(f"{self.seed}:line:{ctx['day']}:{p.id}:{key}:{n}").randrange(len(usable))
         if len(usable) > 1 and self.last_line.get((p.id, key)) == i:
