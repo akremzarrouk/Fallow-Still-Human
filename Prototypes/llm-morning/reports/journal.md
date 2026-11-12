@@ -183,3 +183,31 @@ zero. He left for his room after every talk: now once a day. "0.25 portions" is 
 - Days 1 and 2 are thin: after the denials nothing points at anyone, so the can goes quiet until what is on Daniel
   grows and he tells Elena (day 3) or everyone (day 5).
 - Leo, played by code, is the calm one who says little. Whether you care about the family is the hour of play.
+
+
+## Step 4b: the week lands (added after the first stop)
+
+**Why.** The user read part of seed 2 and gave four notes: after Daniel owns up the others carry on as if nothing
+happened; Daniel setting the meal out of guilt is good; the guilty one would not say "I have not forgotten
+yesterday"; a night out should cost sleep. I read the three weeks against the goal (audit 4a): two of its five
+tests were met. The faults were in what people do, so this step comes before the lines (audit changelog 31).
+
+**Built.** Whoever is told in private tells the others (`reveal`), and each has it out in their own words. Small
+talk waits in an hour in which a blow fell; nobody thanks, tends or feeds someone they are angry with that day. The
+food is Elena's to set out; another does it to make amends or when she is worn out, and the diary says which. She
+cuts the shares at less than three days of full meals, and says so. A night with no sleep is said in the morning
+line, slept off, and whoever was up sleeps through the day's work (Elena only after two such nights). Daniel's
+offer to go is tied to the can. Nobody forbids the same person twice; a loss is named against the next to go.
+Elena, told someone will go, is at the door before they are. Nobody searches or looks where they just watched
+someone look. The one who took the can does not take from the shelf again. The diary: no trait as a reason, who
+heard a confession, the knock, the rest.
+
+**Checked.** Each run alone, under a time and memory cap. `test_brain test_heart`: 42 OK. `test_llm_off`: 15 OK
+(skipped=1). `test_diary`: 5 OK. Old suite: 349 OK (skipped=141). `week.py --count 50`: 42 empty days of 350, 0.84
+a week, none with three in a row. Three test lines changed, each for a deliberate change of output: the grief
+wording (H11, L11), a watcher who has since said he will go himself (H10), and D4, which counted reasons (more
+than 15) and now asks for at least 8, none of them a trait.
+
+**Not done, and what still reads wrong.** Days 1, 2 and the day after the confession are thin. The same answer
+lines ("Thank you", "You would do the same") are everywhere: step 5. Elena, starving, offers to go out herself on
+day 7 with food on the shelf. No apology move, no going out together, no arguing over the split.

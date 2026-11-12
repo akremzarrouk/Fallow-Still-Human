@@ -168,8 +168,8 @@ class NightStep(NoModel):
                     if i["kind"] != "watch" or i["what"] != "formed" or nxt is None:
                         continue
                     bed = next((d for d in nxt["decisions"] if d["person"] == i["who"] and d["ask"] == "bedtime"), None)
-                    if bed is None:
-                        continue
+                    if bed is None or bed["option"] in ("go_next_door", "go_further"):
+                        continue        # they have since said they will go out themselves: one intention at a time
                     self.assertEqual(bed["option"], "watch_door", f"seed {seed} {k}: {i}")
                     self.assertTrue(any("meant to sit up" in name for name, _ in bed["why"]["terms"]))
                     watched += 1
@@ -195,7 +195,7 @@ class Mood(NoModel):
         got = self.mood(1, "elena", 2, night="get_up_and_look")
         self.assertEqual((got["mood"], got["cause"]), ("on edge", "a night waiting up"))
         got = self.mood(1, "leo", 2, notes=[("lost", "daniel")])
-        self.assertEqual((got["mood"], got["cause"]), ("low", "Daniel not coming back"))
+        self.assertEqual((got["mood"], got["cause"]), ("low", "Daniel not back"))   # the first morning nobody knows more
         got = self.mood(1, "mara", 2, notes=["fed"])
         self.assertEqual(got["cause"] if got["mood"] == "warm" else "being given food", "being given food")
 

@@ -6,27 +6,25 @@ Elena, 42, the mother. Daniel, 25. Leo, 21. Mara, 17. The house is shut; the tap
 
 16 portions on the shelf. Daniel and Leo woke on edge. Elena woke low.
 
-**Morning.** Leo said the water would go out by the cup from now on: “We measure the water from today. One cup at a time.” *(careful)*
+**Morning.** Leo said the water would go out by the cup from now on: “We measure the water from today. One cup at a time.”
 
-Elena asked who took the can: “One can is missing from the shelf. Did one of you take it?” *(counted the shelf; takes charge)*
+Elena asked who took the can: “One can is missing from the shelf. Did one of you take it?”
 
-Mara said it was not her: “I didn't take it, I swear.” *(pride)*
+Mara said it was not her: “I didn't take it, I swear.”
 
-Leo said it was not him: “No. I didn't touch it.” *(pride)*
+Elena set out the meal: “Come and sit. We eat.” Everyone ate.
 
-Mara set out the meal: “Sit down, everyone. It is time to eat.” Everyone ate.
+Leo said it was not him: “No. I didn't touch it.”
 
-Daniel said it was not him: “I didn't take any can.” *(pride)*
+Daniel said it was not him: “I didn't take any can.”
 
-**The day's work.** Mara saw to the water; Daniel went round the boards; Leo kept watch. Daniel cut his hand on the boards.
+**The day's work.** Mara saw to the water; Daniel went round the boards; Elena looked after Daniel; Leo kept watch. Daniel cut his hand on the boards.
 
-Elena looked after Daniel. *(feels for others, someone needs looking after)*
-
-Daniel to Elena: “Mom. Thank you for that.” Elena to Daniel: “You would do the same, Daniel.” Leo to Daniel: “How are you feeling, Daniel?” Daniel to Leo: “Not good, Leo. But I am up.”
+Daniel to Elena: “Mom. Thank you for that.” Elena to Daniel: “You would do the same, Daniel.” Leo to Daniel: “Daniel, is it any better?” Daniel to Leo: “Not good, Leo. But I am up.”
 
 **Afternoon.** Leo: “I saw nobody out there.”
 
-Leo searched the kitchen for the can. *(careful)*
+Leo searched the kitchen for the can.
 
 **Evening.** Elena set out the meal: “Sit down, everyone. It is time to eat.” Everyone ate.
 
@@ -36,53 +34,75 @@ Leo searched the kitchen for the can. *(careful)*
 
 12 portions on the shelf. Daniel woke low: a cut hand. Elena woke on edge: a bad night. Mara woke on edge: a bad night. Leo woke warm.
 
-**Morning.** Daniel set out the meal: “Come and sit. We eat.” Everyone ate.
+**Morning.** Leo to Daniel: “How are you feeling, Daniel?”
 
-Elena to Daniel: “How are you feeling, Daniel?” Daniel to Elena: “It still hurts, Mom. I will manage.” Mara: “I hardly slept.”
+Elena set out the meal: “Come and sit. We eat.” Everyone ate.
 
-**The day's work.** Elena saw to the water; Leo kept watch.
+Mara: “I hardly slept.”
 
-Mara looked after Daniel. *(feels for others, someone needs looking after)*
+**The day's work.** Mara looked after Daniel; Elena saw to the water; Leo kept watch.
 
 Daniel to Mara: “Mara. Thank you for that.” Mara to Daniel: “You would do the same, Daniel.”
 
 **Afternoon.** Leo: “Nothing moved in the street.”
 
-**Evening.** Elena set out the meal: “Come and sit. We eat.” Everyone ate.
+**Evening.** Elena set out a small meal: “I am cutting the shares. 10 portions, and nothing coming.” Everyone ate.
 
-**Night.** Daniel, Elena, Leo and Mara slept. Daniel was well again. It weighed more on Daniel: another night went by with it unsaid.
+Mara: “That's all? For the whole day?”
+
+**Night.** Daniel, Leo and Mara slept; Elena lay awake. Daniel was well again. It weighed more on Daniel: another night went by with it unsaid.
 
 ## Day 3
 
-8 portions on the shelf. Daniel woke warm: yesterday's kindness. Elena woke low. Leo woke warm. Mara woke on edge.
+9 portions on the shelf. Daniel woke warm: yesterday's kindness. Elena woke on edge: a bad night. Leo woke warm. Mara woke on edge.
 
-**Morning.** Daniel set out the meal: “Sit down, everyone. It is time to eat.” Everyone ate.
+**Morning.** Daniel: “Yesterday helped.”
 
-Daniel went to the brothers room. *(what is on them)*
+Elena set out a small meal: “Half of what we had before. That is what there is.” Everyone ate.
+
+Daniel went to the brothers room. *(what is on him)*
 
 **The day's work.** Elena saw to the water; Mara counted the stores; Leo kept watch; Daniel went round the boards.
 
-Daniel said he would go next door tonight: “I'm the oldest. I'll go next door tonight.” *(takes charge; pride)*
+**Afternoon.** Leo: “I saw nobody out there.” Mara: “I counted: 8 portions on the shelf.”
 
-Leo said nobody should go out: “No one is going out there in the dark.” *(careful)*
+Daniel took Elena aside. *(meant to tell her)*
 
-Elena told Daniel to stay home: “Daniel, you are not going out there. Not tonight.” *(careful)*
+Daniel owned up, to Elena alone: “I took it. I ate it in the night. I'm sorry.” *(what is on him)*
 
-Leo went out the back into the rain and set the bin under the drainpipe. *(careful; takes charge)*
+Elena had it out with Daniel: “Daniel, you looked at me and said it was not you.”
 
-**Afternoon.** Leo: “I saw nobody out there.” Mara: “I counted twice: 6 portions left.”
+Leo went out the back into the rain and set the bin under the drainpipe.
 
-**Evening.** Elena set out a small meal: “Half of what we had before. That is what there is.” Everyone ate.
+Daniel to Elena: “I have no excuse, Mom.”
 
-**Night.** Elena and Mara lay awake; Leo slept.
+**Evening.** Elena set out a small meal: “Small shares today. We make it last.” Everyone ate.
 
-Daniel waited until the house was quiet and went out to the neighbour's house. *(meant to go; pride)*
+Elena told the others who took the can: “It was Daniel. He has told me so.”
 
-Leo told Daniel not to go: “Daniel, wait. Not like this.” *(feels for others)*
+Mara had it out with Daniel: “I swore it wasn't me, Daniel. And you just stood there!”
 
-Daniel went all the same: “Go back to bed. I'll be back before light.” *(pride)*
+Daniel to Mara: “I was ashamed, Mara.”
 
-Elena heard the front door, got up, and waited by it until morning. *(feels for others)*
+Leo had it out with Daniel: “You said it was not you, Daniel. I heard you.”
+
+Daniel to Leo: “I have no excuse, Leo.”
+
+Daniel said he would go next door tonight: “The can was me. Next door tonight is mine to do.”
+
+Leo said nobody should go out: “Nobody goes out tonight.”
+
+Elena said nobody should go out: “No one is going out there in the dark.”
+
+**Night.** Elena sat up by the front door; Leo slept; Mara lay awake.
+
+Daniel waited until the house was quiet and went out to the neighbour's house. *(meant to go)*
+
+Leo saw Daniel go and said nothing.
+
+Elena told Daniel not to go: “Daniel, no. Not in the dark.”
+
+Daniel went all the same: “I said I would go. I'm going.”
 
 Mara heard the front door and stayed in bed.
 
@@ -92,39 +112,35 @@ Daniel no longer meant to go next door: next door is empty.
 
 ## Day 4
 
-5 portions on the shelf. Daniel woke low: a night out. Elena woke on edge: a night waiting up. Mara woke on edge: a bad night. Leo woke low.
+7 portions on the shelf. Daniel woke on edge: hunger and being told off yesterday and no sleep. Elena woke on edge: a night on watch and yesterday's quarrel. Leo woke on edge: yesterday's quarrel. Mara woke on edge: a bad night and yesterday's quarrel.
 
-**Morning.** Mara set out the meal: “Come and sit. We eat.” Everyone ate.
+**Morning.** Mara set out a small meal: “Small shares today. We make it last.” *(taking it off Elena's hands)* Everyone ate.
 
-Daniel took Elena aside. *(meant to tell them)*
+Daniel: “I went through next door. The shelves are bare.”
 
-Mara: “I hardly slept.”
+Elena had it out with Daniel: “I told you not to go, Daniel. You went.”
 
-Daniel owned up: “I took it. I ate it in the night. I'm sorry.” *(what is on them; honest)*
+Daniel to Elena: “I know what you said, Mom. I went anyway.”
 
-Elena had it out with Daniel: “You lied to my face, Daniel.” *(takes charge; quick to speak)*
+Daniel said he would go further along the street tonight: “I'll go further along the street tonight.”
 
-Daniel to Elena: “I was ashamed, Mom.”
+Elena did not forbid Daniel this time: “I will not say it twice, Daniel. Come back.”
 
-Daniel said he would go further along the street tonight: “I'll go further along the street tonight.” *(takes charge; pride)*
+Leo did not forbid Daniel this time: “Then go early and be back before light, Daniel.”
 
-Elena told Daniel to stay home: “No, Daniel. I won't have it.” *(careful)*
+Elena lay down and slept.
 
-**The day's work.** Elena saw to the water; Daniel went round the boards; Leo counted the stores; Mara kept watch.
+**The day's work.** Elena saw to the water; Leo kept watch; Mara counted the stores; Elena went round the boards. Daniel slept through it.
 
-Leo had it out with Daniel: “Daniel, you went out after I said no.” *(takes charge; quick to speak)*
+**Afternoon.** Mara: “I counted twice: 6 portions left.” Leo: “Nothing moved in the street.”
 
-Daniel to Leo: “I know what you said, Leo. I went anyway.”
+**Evening.** Daniel set out a small meal: “Half of what we had before. That is what there is.” *(making up for the can)* Everyone ate.
 
-**Afternoon.** Mara: “I saw nobody out there.” Leo: “I counted: 3 portions on the shelf.”
+**Night.** Elena sat up by the front door; Leo slept; Mara lay awake.
 
-**Evening.** Daniel set out the meal: “Come and sit. We eat.” Everyone ate.
+Daniel waited until the house was quiet and went out along the street. *(meant to go further)*
 
-**Night.** Elena and Mara lay awake; Leo slept.
-
-Daniel waited until the house was quiet and went out along the street. *(meant to go further; pride)*
-
-Elena heard the front door, got up, and waited by it until morning. *(feels for others)*
+Elena saw Daniel go and said nothing.
 
 Mara heard the front door and stayed in bed.
 
@@ -132,92 +148,98 @@ Daniel was not back by morning.
 
 ## Day 5
 
-1 portion on the shelf. Daniel is gone. Elena woke low: Daniel not coming back. Leo woke low: Daniel not coming back. Mara woke low: Daniel not coming back.
+5 portions on the shelf. Daniel is gone. Elena woke low: Daniel not back and no sleep. Leo woke low: hunger and Daniel not back. Mara woke low: Daniel not back.
 
-**Morning.** Mara set out the meal: “Sit down, everyone. It is time to eat.” Everyone ate.
+**Morning.** Mara set out a small meal: “Half of what we had before. That is what there is.” Everyone ate.
 
-Leo sat with Mara. *(someone has not come back, feels for others)*
+Leo sat with Mara. *(someone has not come back)*
 
-Elena comforted Mara: “Mara, we will get through this.” *(someone has not come back, feels for others)*
+Elena comforted Mara: “We keep the door ready, Mara. That is all we can do.” *(someone has not come back)*
 
-Mara to Elena: “I know, Mom.”
+Mara to Elena: “I keep listening for the door, Mom.”
 
-Mara comforted Leo: “Leo, we will get through this.” *(someone has not come back, feels for others)*
+Mara comforted Leo: “Leo? Maybe tonight. Maybe Daniel comes tonight.” *(someone has not come back)*
 
-Leo to Mara: “I hope so, Mara.”
+Leo to Mara: “I know, Mara.”
 
-**The day's work.** Mara saw to the water; Leo kept watch; Elena counted the stores; Leo went round the boards.
+**The day's work.** Mara saw to the water; Leo kept watch; Leo counted the stores; Mara went round the boards. Elena slept through it.
 
-**Afternoon.** Leo: “I saw nobody out there.” Elena: “The shelf is empty. There was nothing to count.”
+**Afternoon.** Leo: “I saw nobody out there.”
 
-**Evening.** Mara handed out the water, a cup each: “Water, then. One cup each.” Everyone drank.
+**Evening.** Mara set out a small meal: “Small shares today. We make it last.” Everyone ate.
 
 **Night.** Elena lay awake; Leo and Mara slept.
 
 ## Day 6
 
-Nothing on the shelf. Daniel is gone. Elena woke low: Daniel not coming back. Leo woke low: Daniel not coming back. Mara woke low: Daniel not coming back.
+3 and a half portions on the shelf. Daniel is gone. Elena woke low: hunger and Daniel still gone. Leo woke low: hunger and Daniel still gone. Mara woke low: Daniel still gone.
 
-**Morning.** Mara handed out the water, a cup each: “There is no food. A cup of water each.” Everyone drank.
+**Morning.** Mara set out a small meal: “Half of what we had before. That is what there is.” Everyone ate.
 
-Elena comforted Mara: “It's all right, Mara.” *(someone has not come back, feels for others)*
+Elena comforted Mara: “Daniel knows the way home, Mara.” *(someone has not come back)*
 
-Mara to Elena: “I hope so, Mom.”
+Mara to Elena: “I know, Mom.”
 
-Leo sat with Elena. *(someone has not come back, feels for others)*
+Leo said he would go further along the street tonight: “I'll go further along the street tonight.” *(starving)*
 
-Mara comforted Leo: “It's all right, Leo.” *(someone has not come back, feels for others)*
+Mara told Leo to stay home: “Leo, no. Daniel said the same thing. Please.” *(Daniel did not come back)*
 
-Leo to Mara: “Thank you, Mara.”
+Leo comforted Elena: “Daniel may be waiting for dark, Mom.” *(someone has not come back)*
 
-**The day's work.** Mara saw to the water; Leo kept watch; Elena counted the stores; Elena went round the boards. Elena cut her hand on the boards.
+Elena told Leo to stay home: “Daniel went. Daniel is not here. No, Leo.” *(Daniel did not come back)*
 
-Mara looked after Elena. *(feels for others, someone needs looking after; Elena spoke kindly to her, today, someone needs looking after)*
+Mara: “The bed is still empty.”
 
-Leo to Elena: “How are you feeling, Mom?” Elena to Leo: “A little better, Leo.”
+Mara sat with Leo. *(someone has not come back)*
 
-**Afternoon.** Leo: “Nothing moved in the street.” Elena to Mara: “Thank you, Mara.” Elena: “Nothing on the shelf. I looked twice.”
+**The day's work.** Leo kept watch; Elena saw to the water; Mara counted the stores; Elena went round the boards.
 
-Leo looked through the gap in the boards.
+**Afternoon.** Mara took a portion from the shelf and ate it. *(starving)*
 
-Mara looked through the gap in the boards.
+Leo: “Nothing moved in the street.”
 
-Elena looked through the gap in the boards.
+Leo had it out with Mara: “You took more than your share, Mara.”
 
-Elena sent whoever it was away: “We have nothing for you. Please go.” *(careful)*
+Mara to Leo: “I was hungry, Leo. I am sorry.”
 
-Leo sent whoever it was away: “Go away. There is nothing here.” *(careful)*
+Someone knocked at the front door.
 
-Mara sent whoever it was away: “We have nothing for you. Please go.” *(careful)*
+Leo looked through the gap in the boards and saw a woman of about fifty on the step.
 
-**Evening.** Elena handed out the water, a cup each: “Water, then. One cup each.” Everyone drank.
+Mara called out through the door: “Who is there?”
 
-**Night.** Elena and Leo slept; Mara lay awake.
+Elena sent them away: “Go away. There is nothing here.”
+
+**Evening.** Elena set out a small meal: “Small shares today. We make it last.” Elena and Leo ate.
+
+Mara gave her share to Leo: “Here. Have mine.” *(he looked hungrier)*
+
+**Night.** Elena sat up by the front door; Mara lay awake.
+
+Leo waited until the house was quiet and got up to go out. *(meant to go further)*
+
+Elena told Leo not to go: “Leo. Come back to bed.”
+
+Leo went back to bed: “Fine. Not tonight.”
 
 ## Day 7
 
-Nothing on the shelf. Daniel is gone. Elena woke low: hunger and a cut hand. Leo woke warm: yesterday's kindness. Mara woke on edge: a bad night and hunger.
+1 portion on the shelf. Daniel is gone. Elena woke on edge: a night on watch. Leo woke warm: yesterday's kindness and being given food. Mara woke on edge: a bad night.
 
-**Morning.** Mara handed out the water, a cup each: “Water, then. One cup each.” Everyone drank.
+**Morning.** Mara set out a small meal: “Small shares today. We make it last.” Everyone ate.
 
-Mara to Elena: “How are you feeling, Mom?”
+Mara: “I lay awake half the night.” Leo to Mara: “Thank you, Mara.” Mara to Leo: “You would do the same, Leo.”
 
-Leo said he would go next door tonight: “I'll go next door tonight.” *(starving; pride)*
+Elena lay down and slept.
 
-Elena to Mara: “Not good, Mara. But I am up.”
+**The day's work.** Leo saw to the water; Mara counted the stores; Elena kept watch; Mara went round the boards.
 
-Elena told Leo to stay home: “Leo, you are not going out there. Not tonight.” *(careful; Leo sat with her, day 6)*
+**Afternoon.** Elena: “I saw nobody out there.” Mara: “I counted: a quarter of a portion on the shelf.”
 
-Mara told Leo to stay home: “Leo, you are not going out there tonight.” *(careful; Leo sat with her, day 5)*
+**Evening.** Leo set out a small meal: “Half of what we had before. That is what there is.” *(taking it off Elena's hands)* Everyone ate.
 
-Mara: “I hardly slept.”
+Elena said she would go further along the street tonight: “I'll try the houses further along.” *(starving)*
 
-**The day's work.** Mara saw to the water; Mara kept watch; Leo counted the stores.
+Leo told Elena to stay home: “One of us is already out there, Mom. Not two.” *(Daniel did not come back)*
 
-Leo looked after Elena. *(feels for others, someone needs looking after)*
-
-Elena to Leo: “Thank you, Leo.” Leo to Elena: “Of course, Mom.”
-
-**Afternoon.** Mara: “I saw nobody out there.” Leo: “Nothing on the shelf. I looked twice.”
-
-**Evening.** Leo handed out the water, a cup each: “Water, then. One cup each.” Everyone drank.
+Mara told Elena to stay home: “Daniel is not back, Mom! You can't!” *(Daniel did not come back)*

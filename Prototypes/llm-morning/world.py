@@ -658,6 +658,11 @@ class Morning:
                                    kind="accuse", target=q.id))
             if p.id == self.culprit and not p.confessed:
                 opts.append(Option("confess", "admit taking it", True, kind="confess"))
+            # Code mode: someone who was told who took it can tell those here who have not heard.
+            if (self.brain() is not None and p.knows_culprit and p.knows_culprit != p.id
+                    and any(q.knows_culprit is None and q.id != p.knows_culprit for q in others)):
+                opts.append(Option("reveal", f"tell the others here that {NAMES[p.knows_culprit]} took the can", True,
+                                   kind="reveal"))
             # From the night on, something someone did other than taking the can can be put to them
             # (reports/food_confront_impl.md); day 1 keeps its options, so it replays.
             if self.day != 4:
@@ -747,8 +752,9 @@ class Morning:
         if (o is None or self.present is None or self.now is None or p.room != o["room"]
                 or self.now // data.MINUTES_PER_TURN > o["turn"] + OWED_TURNS):
             return opts
+        # Code mode: owing someone an answer does not stop anyone setting out the meal or the water.
         return [x for x in opts if x.id in ("silent", "deny", "confess") or act_of(x.id)[0] == "go"
-                or aimed_at(x.id) == o["who"]]
+                or aimed_at(x.id) == o["who"] or x.act.get("kind") in ("meal", "meal_small", "water_round")]
 
     @staticmethod
     def wronged_first(p, opts):
@@ -2157,6 +2163,17 @@ class Morning:
                         self.add_grudge(q, p, minute,
                                         f"{p.name} had accused you of it {when} {data.minute_words(q.accused_by[p.id])}",
                                         f"{p.name} had accused {q.name} of it", record)
+                if kind == "reveal" and q.knows_culprit is None and q.id != p.knows_culprit:
+                    # Told by someone who heard it owned up to: they know now, and hold the denial against the one
+                    # who made it to them.
+                    who = self.people[p.knows_culprit]
+                    q.knows_culprit = who.id
+                    q.confession_heard_at = minute      # when they learned it (not heard from the one who took it)
+                    q.sure.append(f"{data.clock(minute)}: {p.name} said that {who.name} took the can and has owned "
+                                  f"up to it (you heard it)")
+                    if who.id in q.denials_heard:
+                        self.add_grudge(q, who, minute, f"{who.name} took the can, after denying it to you",
+                                        f"{who.name} had denied it to {q.name}", record)
                 if kind == "deny":
                     q.denials_heard[p.id] = minute
                     q.denial_day[p.id] = self.day

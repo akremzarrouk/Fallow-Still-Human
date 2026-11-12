@@ -44,12 +44,42 @@ def quoted(words):
     return f" “{words}”" if words else ""
 
 
+# What a person is like is not a reason they would give: the diary says what in the situation moved them, or nothing.
+NOT_A_REASON = {"pride", "takes charge", "careful", "feels for others", "quick to speak", "anxious", "honest",
+                "as a rule", "bold enough to say it", "worn out", "what was just said", "will not let one of hers go "
+                "without a word", "less than three days of food left", "the food is short", "counted the shelf"}
+MEAL_REASONS = ("making up for the can", "taking it off Elena's hands")
+
+
 def why_of(a):
-    """The brain's reasons for an act, in its own plain words: the two that weighed most for it, and a new cause."""
+    """The reasons for an act, as the person might give them: what in the situation weighed most for it (never a
+    trait), and a new cause where the act had been made before."""
     why = a.get("why") or {}
-    terms = [n for n, v in why.get("terms", []) if v > 0 and n != "as a rule"][:2]
-    parts = ([f"new: {why['new_cause']}"] if why.get("new_cause") else []) + terms
+    new = why.get("new_cause")
+    terms = []
+    for n, v in why.get("terms", []):
+        said = ", ".join(x for x in n.split(", ") if x not in NOT_A_REASON)
+        said = said.replace("what is on them", f"what is on {he(a.get('who') or a.get('person'), 'him')}")
+        t = target_of(a.get("option", ""), ("aside_", "plate_to_", "task_tend_", "stop_"))
+        if t:
+            said = said.replace("meant to tell them", f"meant to tell {he(t, 'him')}").replace(
+                "they look hungrier", f"{he(t)} looked hungrier")
+        if v > 0 and said and said not in terms and not (new and (said in new or said == "starving")):
+            terms.append(said)
+    if "starving" in terms and "hunger" in terms:
+        terms.remove("hunger")
+    parts = ([f"new: {new}"] if new else []) + terms[:2]
     return f" *({'; '.join(parts)})*" if parts else ""
+
+
+def heard_by(a, home):
+    """Who an act was said in front of, in words: "to Elena alone", "in front of everyone", "to Leo and Mara"."""
+    there = [x for x in a.get("audience") or [] if x != a["who"]]
+    if len(there) == 1:
+        return f"to {NAMES[there[0]]} alone"
+    if set(there) >= set(home) - {a["who"]}:
+        return "in front of everyone"
+    return f"to {names(there)}" if there else "to nobody"
 
 
 def target_of(option, prefixes):
@@ -62,16 +92,20 @@ def target_of(option, prefixes):
     return None
 
 
-def sentence(a):
-    """One act as one sentence, without its reason; None for an act the diary folds or leaves out."""
+def sentence(a, home=data.ORDER, door=None):
+    """One act as one sentence, without its reason; None for an act the diary folds or leaves out. home: who is in
+    the house that day. door: the knock's own record, if the act is at the door."""
     o, A, w = a["option"], NAMES[a["who"]], quoted(a["words"])
+    topic = (a.get("why") or {}).get("topic")
     t = target_of(o, ("accuse_", "confront_", "reassure_", "say_to_", "keep_", "object_", "send_", "back_", "aside_",
                       "sit_", "plate_to_", "task_tend_", "give_"))
     T = NAMES[t] if t else None
     his = he(a["who"], "his")
     simple = {
         "ask_who": f"{A} asked who took the can:{w}", "deny": f"{A} said it was not {he(a['who'], 'him')}:{w}",
-        "confess": f"{A} owned up:{w}", "reassure_all": f"{A} tried to calm everyone:{w}",
+        "confess": f"{A} owned up, {heard_by(a, home)}:{w}",
+        "reveal": f"{A} told the others who took the can:{w}",
+        "reassure_all": f"{A} tried to calm everyone:{w}",
         "volunteer": f"{A} said {he(a['who'])} would go next door tonight:{w}",
         "still_going": f"{A} said {he(a['who'])} still meant to go tonight:{w}",
         "volunteer_far": f"{A} said {he(a['who'])} would go further along the street tonight:{w}",
@@ -82,9 +116,10 @@ def sentence(a):
         "ration_water": f"{A} said the water would go out by the cup from now on:{w}",
         "save_water": f"{A} said the stored water was for drinking only:{w}",
         "collect_rain": f"{A} went out the back into the rain and set the bin under the drainpipe.",
-        "door_look": f"{A} looked through the gap in the boards.", "door_call": f"{A} called out through the door:{w}",
+        "door_look": f"{A} looked through the gap in the boards"
+                     + (f" and saw {door['who']} on the step." if door and a["who"] in door.get("saw", ()) else "."), "door_call": f"{A} called out through the door:{w}",
         "door_open": f"{A} unbarred the front door and opened it.", "door_give": f"{A} handed water out at the door.",
-        "door_refuse": f"{A} sent whoever it was away:{w}",
+        "door_refuse": f"{A} sent them away:{w}",
         "plate_back": f"{A} put {his} share back and did not eat:{w}",
         "eat": f"{A} took a portion from the shelf and ate it.", "share": f"{A} shared out the last of the food.",
         "search": f"{A} searched the {data.ROOMS.get(a['room'], 'room')} for the can.",
@@ -108,6 +143,8 @@ def sentence(a):
         return f"{A} to {T}:{w}"
     if o == "say_other":
         return f"{A}:{w}"
+    if (o.startswith("keep_") or o.startswith("object_")) and topic == "resigned":
+        return f"{A} did not forbid {T} this time:{w}"
     if o.startswith("keep_") or o.startswith("object_"):
         return f"{A} told {T} to stay home:{w}"
     if o.startswith(("send_", "back_")):
@@ -129,20 +166,26 @@ def sentence(a):
 
 
 def moods_line(moods):
-    """One line: who woke how, and from what. Steady is not said."""
+    """One line: who woke how, and from what. Steady is not said. A night without sleep is always said."""
     parts, plain = [], {}
     for pid, m in moods.items():
+        tired = m.get("no_sleep") and "night" not in (m["cause"] or "")
         if m["mood"] == "steady":
+            if tired:
+                parts.append(f"{NAMES[pid]} had not slept.")
             continue
-        if m["cause"]:
-            parts.append(f"{NAMES[pid]} woke {m['mood']}: {m['cause']}.")
+        if m["cause"] or tired:
+            cause = " and ".join(x for x in (m["cause"], "no sleep" if tired else None) if x)
+            parts.append(f"{NAMES[pid]} woke {m['mood']}: {cause}.")
         else:
             plain.setdefault(m["mood"], []).append(pid)
     parts += [f"{names(ids)} woke {mood}." for mood, ids in plain.items()]
     return " ".join(parts)
 
 
-def day_section(tr, k, start_shelf, away, empty):
+def day_section(tr, k, start_shelf, away, empty, told=None):
+    """told: the (person, reason) pairs for setting out a meal already given this week."""
+    told = set() if told is None else told
     acts = tr[f"day{k}"]["turns"]
     lines = []
     head = f"## Day {k}" + (" (a quiet day)" if empty else "")
@@ -152,9 +195,32 @@ def day_section(tr, k, start_shelf, away, empty):
         opening += f" {names(away)} {'is' if len(away) == 1 else 'are'} gone."
     moods = moods_line(tr["moods"].get(str(k), {}))
     lines.append(opening + (" " + moods if moods else ""))
+    quiet = tr[f"day{k}"].get("quiet") or {}
+    home = [x for x in data.ORDER if x not in away]
+    slept = [x for e in quiet.get("log", []) if e.get("kind") == "beat" and e.get("name") == "work"
+             for x in e.get("slept", [])]
+    # What the day's own record adds between the acts: a knock at the door, and someone who was up all night lying
+    # down to sleep (once each, and not if they slept through the work: the work's line says that).
+    extras, rested = [], set(slept)
+    for sc in quiet.get("door", []):
+        extras.append((sc["start"], "Someone knocked at the front door."))
+    for sp in quiet.get("spans", []):
+        who = sp["who"]
+        if sp["routine"] == "rest" and who not in rested and (tr["moods"].get(str(k), {}).get(who) or {}).get("no_sleep"):
+            rested.add(who)
+            extras.append((sp["start"], f"{NAMES[who]} lay down and slept."))
+    extras.sort()
+
+    def door_at(minute):
+        return next((sc for sc in quiet.get("door", []) if sc["start"] <= minute <= (sc.get("end") or 10 ** 6)), None)
     for label, lo, hi in BEATS:
         items, talk, tasks, eaters = [], [], [], []
         served, some_did_not, verb = None, False, "ate"
+
+        def due(upto):
+            while extras and extras[0][0] <= upto and extras[0][0] < hi:
+                flush_talk()
+                items.append(extras.pop(0)[1])
 
         def flush_talk():
             if talk:
@@ -169,20 +235,31 @@ def day_section(tr, k, start_shelf, away, empty):
                                   else f" {names(sorted(set(eaters), key=data.ORDER.index))} {verb}." if eaters else "")
                 served, some_did_not = None, False
                 eaters.clear()
+        aside = {}          # who took someone aside -> the line of it, held until what they then say or do
         for turn in acts:
             if not lo <= turn["minute"] < hi:
                 continue
+            due(turn["minute"])
             for a in turn["acts"]:
                 o = a["option"]
+                if o.startswith("aside_") and (a.get("aside") or {}).get("accepted"):
+                    aside[a["who"]] = sentence(a, home) + why_of(a)
+                    continue
+                if a["who"] in aside and o != "silent" and a["mode"] != "routine":
+                    flush_talk()
+                    items.append(aside.pop(a["who"]))
                 if o == "silent" or (a["mode"] == "routine" and o != "silent"):
                     continue
                 if o in ("plate_eat", "cup_drink"):
                     eaters.append(a["who"])
                     continue
-                if o.startswith("task_") and not o.startswith("task_tend_"):
+                if o.startswith("task_tend_"):
+                    tasks.append(f"{NAMES[a['who']]} looked after {NAMES[target_of(o, ('task_tend_',))]}")
+                    continue
+                if o.startswith("task_"):
                     tasks.append(f"{NAMES[a['who']]} {TASK_DID.get(o[len('task_'):], o)}")
                     continue
-                s = sentence(a)
+                s = sentence(a, home, door_at(turn["minute"]) if o.startswith("door_") else None)
                 if s is None:
                     continue
                 if o.startswith("say_to_") or o == "say_other":     # a run of small talk is one line
@@ -193,16 +270,25 @@ def day_section(tr, k, start_shelf, away, empty):
                     some_did_not = True
                 if o in ("meal", "meal_small", "water_round"):
                     flush_meal()
-                    items.append(s)
+                    # Why this person and not the one whose hands the food is in, where there is a reason.
+                    mine = [x for n, v in (a.get("why") or {}).get("terms", []) if v > 0
+                            for x in n.split(", ") if x in MEAL_REASONS and (a["who"], x) not in told]
+                    told.update((a["who"], x) for x in mine[:1])
+                    items.append(s + (f" *({mine[0]})*" if mine else ""))
                     served, verb = len(items) - 1, "drank" if o == "water_round" else "ate"
                     continue
                 items.append(s + why_of(a))
+        due(hi - 1)
         flush_talk()
+        items.extend(aside.values())
         flush_meal()
         if tasks:
             hurt = [e["line"] for e in (tr.get("health") or {}).get("events", [])
                     if e["day"] == k and e["change"] == "onset" and e["kind_of_cause"] == "work"]
-            items.insert(0, "; ".join(tasks) + "." + ("".join(" " + x for x in hurt)))
+            asleep = f" {names(slept)} slept through it." if slept else ""
+            items.insert(0, "; ".join(tasks) + "." + asleep + ("".join(" " + x for x in hurt)))
+        elif slept and label == "The day's work":
+            items.insert(0, f"{names(slept)} slept through it.")
         if items:
             lines.append(f"**{label}.** {items[0]}")
             lines += items[1:]
@@ -222,9 +308,11 @@ def night_section(tr, k):
                                                                                    "rain_out"))
     goers = [(o, ids) for o, ids in beds.items() if o in ("go_next_door", "go_further")]
     lines.append(f"**Night.** {quiet[0].upper() + quiet[1:]}." if quiet else "**Night.**")
+    stayed = {d["person"] for d in n["decisions"] if d["ask"] == "answer" and d["option"] != "go_anyway"}
     for o, ids in goers:
         d = next(x for x in n["decisions"] if x["person"] == ids[0] and x["ask"] == "bedtime")
-        lines.append(f"{names(ids)} {BED[o]}." + why_of(d))
+        did = "waited until the house was quiet and got up to go out" if set(ids) & stayed else BED[o]
+        lines.append(f"{names(ids)} {did}." + why_of(d))
     for d in n["decisions"]:
         o, A, w = d["option"], NAMES[d["person"]], quoted(d.get("say"))
         t = target_of(o, ("stop_", "let_", "go_with_"))
@@ -269,8 +357,9 @@ def render(w):
     out = [f"# The week, seed {w.seed}", "",
            "Elena, 42, the mother. Daniel, 25. Leo, 21. Mara, 17. The house is shut; the taps are dry; a can is "
            "missing from the shelf.", ""]
+    told = set()
     for k, m in enumerate(w.days, 1):
-        head, lines = day_section(tr, k, m.start_portions, sorted(m.away, key=data.ORDER.index), not empties[k])
+        head, lines = day_section(tr, k, m.start_portions, sorted(m.away, key=data.ORDER.index), not empties[k], told)
         out += [head, ""] + [x for line in lines + night_section(tr, k) for x in (line, "")]
     return "\n".join(out).rstrip() + "\n"
 

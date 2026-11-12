@@ -58,7 +58,13 @@ class Diary(NoModel):
         for seed in SEEDS:
             text = written(seed)[0]
             self.assertRegex(text, r"woke (on edge|low|warm|restless): ")
-            self.assertGreater(len(re.findall(r"\*\(.+?\)\*", text)), 15, f"seed {seed}")
+            # A reason is something in the situation, as the person might give it: never what they are like (step
+            # 4b: the trait labels were taken out, so there are fewer reasons than before, and each one is one).
+            reasons = re.findall(r"\*\((.+?)\)\*", text)
+            self.assertGreaterEqual(len(reasons), 8, f"seed {seed}")
+            for r in reasons:
+                for part in r.split("; "):
+                    self.assertNotIn(part, diary.NOT_A_REASON, f"seed {seed}: {r}")
 
     def test_d5_the_same_seed_gives_the_same_diary(self):
         first = written(1)[0]

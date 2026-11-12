@@ -69,30 +69,70 @@
   "say_other:woke_laid_up": ["I keep going in to look.", "I do not like how it looks."],
   "say_other:woke_hurt": ["It hurts more today.", "I can hardly use it."],
   "say_other:woke_ill": ["I feel wretched.", "I am not well."],
-  "any": ["I don't know.", "Not now."]
+  "any": ["I don't know.", "Not now."],
+  "reveal": ["It was {culprit}. {He} told me.", "{culprit} took the can. {He} has owned up to it."],
+  "meal_small:first": ["Half shares from now on. We have to make it last.", "Small shares from today. There are {left} left."],
+  "volunteer:amends": ["I took from that shelf. I'll go next door tonight and put something back.", "The can was me. Next door tonight is mine to do."],
+  "volunteer_far:amends": ["I took from that shelf. I'll go along the street tonight and put something back.", "The can was me. The street tonight is mine to do."],
+  "object:lost": ["{gone} went out there and did not come back. You stay, {to}.", "Not after {gone}, {to}. No."],
+  "object:resigned": ["I said no before, {to}. Come back, that is all.", "You will go whatever I say, {to}. Be back before light."],
+  "reassure:missing": ["{gone} may still come, {to}.", "{to}. Come and sit with me."],
+  "say_to:answer_reassure_missing": ["I keep listening for the door, {to}.", "I know, {to}.", "Don't, {to}. Not yet."],
+  "say_to:thanks_but": ["I told you not to go, {to}. I am glad you came back.", "You went after I said no, {to}. Thank you all the same."],
+  "say_to:answer_thanks_but": ["I know, {to}.", "I am back, {to}. That is what counts."],
+  "say_other:night_food": ["I got into a house further along. This is what I could carry.", "There was food out there. I brought what I could."],
+  "say_other:night_empty": ["Next door is empty. There is nothing there to bring.", "I went through next door. The shelves are bare."],
+  "say_other:night_shaken": ["It nearly went wrong out there. I came back with nothing.", "I had to turn back. It was close."],
+  "say_other:night_water": ["No food. I brought back water.", "Water. That is all I found."],
+  "say_other:night_nothing": ["I found nothing out there.", "Nothing. I came back empty-handed."],
+  "say_other:small_share": ["It is not much.", "That is all?"],
+  "say_other:woke_being_told_off_yesterday": ["I know what I did.", "I heard what was said yesterday."]
  },
  "by_person": {
   "elena": {
    "ask": ["One can is missing from the shelf. Did one of you take it?", "There is a can missing. Which of you took it?"],
    "deny": ["I did not take it.", "I counted that shelf myself. I did not take it."],
    "object": ["{to}, you are not going out there. Not tonight.", "No, {to}. I won't have it."],
-   "stop": ["{leaver}. Come back to bed.", "{leaver}, no. Not in the dark."]
+   "stop": ["{leaver}. Come back to bed.", "{leaver}, no. Not in the dark."],
+   "reveal": ["{culprit} took the can. {He} came and told me.", "It was {culprit}. {He} has told me so."],
+   "meal_small:first": ["Half shares from now on. There are {left} left and nothing coming.", "I am cutting the shares. {left}, and nothing coming."],
+   "confront:lied": ["{to}, you looked at me and said it was not you.", "You let me ask all of them, {to}. You stood there."],
+   "object:lost": ["I will not lose another one to that street, {to}.", "{gone} went. {gone} is not here. No, {to}."],
+   "object:resigned": ["I will not say it twice, {to}. Come back.", "You know what I think, {to}. Be back before light."],
+   "reassure:missing": ["{gone} knows the way home, {to}.", "We keep the door ready, {to}. That is all we can do."],
+   "say_to:thanks_but": ["You went against me, {to}. And you fed this house. Thank you.", "I said no, {to}. I am glad you are back."]
   },
   "daniel": {
    "deny": ["I didn't take any can.", "I told you, it wasn't me."],
    "volunteer": ["I'm the oldest. I'll go next door tonight.", "I'll go next door tonight. It should be me."],
    "still_going": ["I still mean to go tonight.", "Nothing has changed. I'm going tonight."],
-   "go_anyway": ["I said I would go. I'm going.", "Go back to bed. I'll be back before light."]
+   "go_anyway": ["I said I would go. I'm going.", "Go back to bed. I'll be back before light."],
+   "say_to:answer_lied": ["I did not know how to say it, {to}.", "I was ashamed, {to}.", "I have no excuse, {to}."],
+   "say_other:small_share": ["That is not a meal.", "Nobody can work on that."],
+   "confront:lied": ["You said it was not you, {to}. To all of us.", "You lied to my face, {to}."]
   },
   "leo": {
    "deny": ["It wasn't me.", "No. I didn't touch it."],
    "object": ["{to}, crossing at night gets someone killed.", "Not tonight, {to}. Think it through."],
-   "stop": ["{leaver}. Don't.", "{leaver}, wait. Not like this."]
+   "stop": ["{leaver}. Don't.", "{leaver}, wait. Not like this."],
+   "reveal": ["It was {culprit}. {He} has said so.", "{culprit} took it. {He} owned up."],
+   "confront:lied": ["You said it was not you, {to}. I heard you.", "You let her ask all three of us, {to}."],
+   "object:lost": ["{gone} did not come back, {to}. Think about that.", "One of us is already out there, {to}. Not two."],
+   "object:resigned": ["Then go early and be back before light, {to}.", "I will not argue it again, {to}. Come back."],
+   "reassure:missing": ["{to}. We do not know anything yet.", "{gone} may be waiting for dark, {to}."],
+   "say_to:thanks_but": ["You went after I said no, {to}. It was the right call. Thank you.", "I was wrong to say stay, {to}. Thank you."]
   },
   "mara": {
    "deny": ["I didn't take it, I swear.", "It wasn't me! Why would I?"],
    "decline": ["I'm not going out there. I can't.", "Don't make me go."],
-   "stop": ["{leaver}, please don't go.", "{leaver}? Don't leave."]
+   "stop": ["{leaver}, please don't go.", "{leaver}? Don't leave."],
+   "reveal": ["It was {culprit}! {He} told me!", "{culprit} took it. {He} said so!"],
+   "confront:lied": ["You let Mom look at me like that, {to}!", "I swore it wasn't me, {to}. And you just stood there!"],
+   "object:lost": ["{to}, no. {gone} said the same thing. Please.", "{gone} is not back, {to}! You can't!"],
+   "object:resigned": ["{to}, just come back. Please.", "I won't say don't. Just come back, {to}."],
+   "reassure:missing": ["{gone} will come back, {to}. {gone} has to.", "{to}? Maybe tonight. Maybe {gone} comes tonight."],
+   "say_other:small_share": ["I'm so hungry. Is that all there is?", "That's all? For the whole day?"],
+   "say_to:thanks_but": ["I said no, {to}! ...I'm glad you're back. Thank you.", "You scared me, {to}. Thank you. Don't do it again."]
   }
  }
 }

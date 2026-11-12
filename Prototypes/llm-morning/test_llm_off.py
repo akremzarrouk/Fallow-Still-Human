@@ -238,7 +238,8 @@ class LlmOff(NoModel):
             self.not_stuck(1, f"without {gone}", acts)
             self.bodies(1, f"without {gone}", r)
             moods = [m for k in ("3", "4") for m in tr["moods"][k].values()]
-            self.assertTrue(any("not coming back" in (m["cause"] or "") for m in moods), f"{gone} removed: nobody grieved")
+            self.assertTrue(any("not back" in (m["cause"] or "") or "still gone" in (m["cause"] or "") for m in moods),
+                            f"{gone} removed: nobody grieved")
 
     # ---------- L12 ----------
     def test_l12_nothing_staged(self):

@@ -288,9 +288,20 @@ class Quiet:
             self.m.beat = name
             if name == "evening":
                 self.evening_done = True
-            here = []
+            here, slept = [], []
+            brain = self.m.brain()
             for p in sorted(self.people(), key=lambda x: data.ORDER.index(x.id)):
                 if self.m.laid_up(p.id):
+                    continue
+                if name == "work" and brain.sleeps_through(p.id, day_index(self.m.day)):
+                    # Up all night: they sleep through the day's work, and the others share it out without them.
+                    slept.append(p.id)
+                    if not self.resting(p.id):
+                        if p.id in self.open:
+                            self.end(p, minute, "went to sleep")
+                        self.withdrawn[p.id] = BEATS["afternoon"]
+                        if p.room != OWN_ROOM[p.id]:
+                            self.arrive(p, OWN_ROOM[p.id], minute)
                     continue
                 if p.id in self.open:
                     self.end(p, minute, "the hour")
@@ -300,7 +311,9 @@ class Quiet:
                 p.memory.append((minute, BEAT_TEXT[name][0].upper() + BEAT_TEXT[name][1:] + "."))
                 here.append(p.id)
             self.log.append({"kind": "beat", "name": name, "minute": minute, "room": "kitchen", "fired": bool(here),
-                             "asked": here, "why": None if here else "nobody is up"})
+                             "asked": here, "why": None if here else "nobody is up", "slept": slept})
+            if slept:
+                brain.slept_through(self.m, slept)
             for pid in here:
                 self.ask(self.m.people[pid], "beat", minute, BEAT_TEXT[name],
                          f"the {name}: everyone who is up is in the kitchen")
