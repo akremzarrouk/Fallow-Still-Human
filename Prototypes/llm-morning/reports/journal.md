@@ -271,3 +271,19 @@ step" came at 14:27, and `brain.py` was first written at 14:39.
     12cb172 LLM morning: the code brain (step 1)
 
 (Each subject line cut at its first clause; step 4c's commit follows this entry.)
+
+
+## Step 5: the lines
+
+**Built.** The voice sheets were approved on 13 Nov as they stand. `content/lines.json`: 647 lines of the
+speakers' own (Elena 167, Daniel 161, Leo 155, Mara 164) and 182 default ones, two to four ways of saying each
+move the week makes. Elena: short, level, an instruction where the fear is. Daniel: "I" first, a reason about
+himself. Leo: the whole sentence, with its reason. Mara: in bursts, with the name. A line says what the move is
+and states nothing the record might not hold (one that did, "I know which way", was taken out on reading).
+
+**Gate.** No move without a line and every quoted sentence said (`test_diary`, 5 OK); no sentence twice in a day
+and every clause in force (`test_llm_off`, 15 OK, skipped=1); `test_brain test_heart` 42 OK; old suite 349 OK
+(skipped=141). Each run alone under a cap. The three diaries are regenerated.
+
+**Not done.** Lines do not yet differ by who is spoken to (Elena to Daniel as to a grown man, then as to a boy)
+or by the day's mood. Some answers to "how are you" do not fit every hurt.
