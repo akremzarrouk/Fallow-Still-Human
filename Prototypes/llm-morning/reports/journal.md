@@ -287,3 +287,34 @@ and every clause in force (`test_llm_off`, 15 OK, skipped=1); `test_brain test_h
 
 **Not done.** Lines do not yet differ by who is spoken to (Elena to Daniel as to a grown man, then as to a boy)
 or by the day's mood. Some answers to "how are you" do not fit every hurt.
+
+
+## Step 6: Leo's hour. Second stop
+
+**Built.** `hour.py`: `python hour.py --seed 2` plays the week as Leo, no model; `--resume runs/hour/seed2.json`
+goes on with a stopped week; `--script kind|cold` lets a script play. A screen: the situation in a few lines, then
+at most seven choices, a spoken one shown as the line Leo would say, in the order the brain would weigh them for
+him; number 7 is "something else". Leo is asked when the moment calls on him, not every three minutes. Hurt or
+sick, he is offered less and told why. "Because of what you did:" names his act when someone answers it. Every
+choice is saved; the same seed and choices give the same week. The end page: where each stands with him, and the
+three acts of his behind it. The week's diary is written beside the save.
+
+**Gate.** `test_hour` (7 OK): a scripted week completes in 58 to 60 choices (kind Leo, seeds 1 to 3); no screen
+has more than seven; the same choices replay to the same transcript, and a half-saved week goes on; the body's
+limits; the "because" lines; the end page; L9 on seeds 1 to 3. `test_llm_off` 15 OK, none skipped now (L9 on one
+seed, to stay under its 60 s). `test_brain test_heart test_diary` 47 OK; old suite 349 OK (skipped=141); 50 weeks:
+0.82 empty days a week. Each run alone under a cap.
+
+**Changed on the way.** The reason behind thanks and quarrels is now a weighed term, so the record names the act
+("Leo gave up a share for her"). I first let a fourth reason into the record for this; B17 (frozen: three) failed,
+so that was taken out and the weights carry it. The bedtime line said "Nobody ate" after two meals: fixed. A cold
+script makes up to 179 choices in a week, because quarrels call for answers.
+
+**Yours, at this stop.** Play for an hour: `python hour.py --seed 2` in `Prototypes/llm-morning` (use the
+project's Python: `.venv/Scripts/python.exe hour.py --seed 2`). Then say, without notes, what each of the three
+wanted from you. That answer, in your words, goes here.
+
+**What I expect you to find.** The choices are the right ones more often than not, but the first page is the
+brain's taste, not yours: use "something else". Nothing yet makes Mara's wish to be treated as grown, or Daniel's
+not to lose face, a thing you can meet or refuse on purpose; Elena's load you can already carry (the meal, the
+tending). Days 1 and 2 are still thin.

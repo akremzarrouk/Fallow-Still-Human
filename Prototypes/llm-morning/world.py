@@ -1945,6 +1945,7 @@ class Morning:
                                    f"the choices were {[o.id for o in opts]}")
             view = self.player_view(p, t, opts, night, extra)
             p.seen = p.levels()             # they have now seen how their body is
+            self.player.offered = (opts, t, kind)       # for a screen that ranks the choices (hour.py)
             answer = self.player.decide(self.player.screen(self, p, view, kind, message))
             if kind == "turn" and answer == playermod.WAIT:
                 self.player.waiting = True
@@ -2173,9 +2174,10 @@ class Morning:
                     # who made it to them.
                     who = self.people[p.knows_culprit]
                     q.knows_culprit = who.id
-                    q.confession_heard_at = minute      # when they learned it (not heard from the one who took it)
-                    q.sure.append(f"{data.clock(minute)}: {p.name} said that {who.name} took the can and has owned "
-                                  f"up to it (you heard it)")
+                    # When they learned it, in the wording the day's carry-in reads (night.carry_in).
+                    q.confession_heard_at, q.confession_heard_day = minute, self.day
+                    q.sure.append(f"{data.clock(minute)}: {who.name} admitted taking the can: {p.name} told you so "
+                                  f"(you heard it)")
                     if who.id in q.denials_heard:
                         self.add_grudge(q, who, minute, f"{who.name} took the can, after denying it to you",
                                         f"{who.name} had denied it to {q.name}", record)

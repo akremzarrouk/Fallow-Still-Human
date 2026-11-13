@@ -214,10 +214,15 @@ class LlmOff(NoModel):
         for seed, who, r in runs():
             self.assertLess(week.longest_empty_run(week.empty_days(r["tr"])), 3, f"seed {seed} {who}")
 
-    # ---------- L9: not yet in force ----------
-    @unittest.skip("L9 Leo matters: in force from step 6")
+    # ---------- L9: in force from step 6 ----------
     def test_l09_leo_matters(self):
-        pass
+        """One seed here, to keep the whole test under its 60 s (L10); seeds 1 to 3 are in test_hour.py."""
+        import hour
+        found = hour.leo_matters(1)
+        self.assertGreaterEqual(len(found), 2, found)
+        for q, acts in found.items():
+            for option, which, named in acts:
+                self.assertTrue(named.startswith("Leo "), f"{q} {option}: {named}")
 
     # ---------- L11 ----------
     def test_l11_carries_on_after_a_loss(self):

@@ -818,12 +818,9 @@ class CodeBrain:
                 return True, now, said.format(value=v)
         return False, now, None
 
-    def choose(self, p, opts, ctx):
-        """The decision: every offered move scored, the best open one taken."""
+    def score_rows(self, p, opts, ctx, base, mood):
+        """Every offered move with its score, its terms and whether it is open to p now. Nothing is recorded."""
         pid, day = p.id, ctx["day"]
-        self.notice(p, opts, ctx)
-        mood = self.mood_of(p, ctx)
-        base = self.facts(p, ctx)
         ids = {o.id for o in opts}
         stay = self.stay_option(p, ids)
         counts = self.count.setdefault((pid, day), {})
@@ -862,6 +859,58 @@ class CodeBrain:
             rows.append({"o": o, "key": key, "target": target, "score": score + tilt, "terms": terms, "tilt": tilt,
                          "once": once, "open": is_open, "rule": rule, "cause": cause, "new": new,
                          "says": flags["_says"], "topics": flags["_topic"]})
+        return rows
+
+    def rank(self, m, p, t, opts):
+        """For the player's screen (hour.py): the offered moves, best first as the brain would weigh them for p, each
+        with the words p would say for it. Nothing is chosen, and nothing recorded but p's mood for the day."""
+        ctx = self.context_of(m, p, t, opts)
+        mood = self.mood_of(p, ctx)
+        base = self.facts(p, ctx)
+        keys = dict(self.last_keys)
+        rows = self.score_rows(p, opts, ctx, base, mood)
+        self.last_keys = keys
+        said = self.said_today.get((p.id, ctx["day"]), set())
+        out = []
+        for r in sorted(rows, key=lambda r: -r["score"]):
+            o, words = r["o"], None
+            if o.speech or o.act.get("says"):
+                topic = self.topic_of(p, r, ctx, base, mark=False)
+                texts, _, _ = self.variants(p, r["key"], r["target"], ctx, o, topic)
+                words = next((x for x in texts if x not in said), texts[0])
+            out.append({"id": o.id, "label": o.label, "speech": o.speech, "words": words, "score": r["score"],
+                        "open": r["open"], "key": r["key"]})
+        return out
+
+    def night_words(self, p, option_id, kind, day, missing=()):
+        """The words p would say for a spoken choice at night (hour.py)."""
+        from world import Option
+        ctx = self.night_context(self.seed, day, kind, p, missing=missing)
+        o = Option(option_id, option_id, True)
+        key, target = self.key_of(o, ctx)
+        if target is None and option_id.startswith(("stop_", "let_", "go_with_")):
+            target = next((q for q in data.ORDER if f"_{q}" in option_id), None)
+            ctx["leaver"] = target
+        texts, _, _ = self.variants(p, key, target, ctx, o, None)
+        said = self.said_today.get((p.id, day), set())
+        return next((x for x in texts if x not in said), texts[0])
+
+    def said_by_player(self, pid, day, words):
+        """The player's person has said these words: they count as said, like anyone's."""
+        if words:
+            self.said_today.setdefault((pid, day), set()).add(words)
+            self.spoken.add(words)
+
+    def choose(self, p, opts, ctx):
+        """The decision: every offered move scored, the best open one taken."""
+        pid, day = p.id, ctx["day"]
+        self.notice(p, opts, ctx)
+        mood = self.mood_of(p, ctx)
+        base = self.facts(p, ctx)
+        ids = {o.id for o in opts}
+        stay = self.stay_option(p, ids)
+        counts = self.count.setdefault((pid, day), {})
+        rows = self.score_rows(p, opts, ctx, base, mood)
         open_rows = [r for r in rows if r["open"]] or rows     # a list with nothing open (it has no "stay") is free
         self.last_scores = {r["o"].id: r["score"] for r in open_rows}
         n = self.calls[(pid, day)] = self.calls.get((pid, day), 0) + 1

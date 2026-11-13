@@ -64,7 +64,7 @@ Daniel took Elena aside.
 
 Daniel owned up, to Elena alone: “It was me. I took it. I ate it in the night.” *(what is on him)*
 
-Elena had it out with Daniel: “You let me ask all of them, Daniel. You stood there.”
+Elena had it out with Daniel: “You let me ask all of them, Daniel. You stood there.” *(Daniel took the can and denied it to her face, today)*
 
 Daniel to Elena: “I have no excuse, Mom.”
 
@@ -74,7 +74,7 @@ Mara to Daniel: “Thanks, Daniel. I mean it.”
 
 Elena told the others who took the can: “Daniel took the can. He came and told me.”
 
-Leo had it out with Daniel: “You said it was not you, Daniel. I heard you.”
+Leo had it out with Daniel: “You said it was not you, Daniel. I heard you.” *(Daniel took the can and denied it to his face, today)*
 
 Daniel to Leo: “I did not know how to say it, Leo.”
 
@@ -96,7 +96,7 @@ Elena told Daniel to stay home: “Daniel, you are not going out there. Not toni
 
 **Morning.** Elena set out a small meal: “Small shares again. It has to last.” Everyone ate.
 
-Mara had it out with Daniel: “I swore it wasn't me, Daniel. And you just stood there!”
+Mara had it out with Daniel: “I swore it wasn't me, Daniel. And you just stood there!” *(Daniel took the can and denied it to her face, yesterday)*
 
 Daniel to Mara: “I did not know how to say it, Mara.”
 
@@ -128,7 +128,7 @@ Elena gave her share to Daniel: “Eat mine, Daniel. I am not hungry.” *(he lo
 
 Daniel: “I went through next door. The shelves are bare.”
 
-Elena had it out with Daniel: “Daniel, I said no. You went.”
+Elena had it out with Daniel: “Daniel, I said no. You went.” *(Daniel went out after she said no, yesterday)*
 
 Daniel to Elena: “I'm back, aren't I, Mom?”
 
@@ -192,7 +192,7 @@ Elena sat with Leo. *(someone has not come back)*
 
 Leo: “I counted: 1 and a quarter portions on the shelf.” Mara: “Whoever it was, they're gone.”
 
-Elena had it out with Mara: “We eat at the table, Mara. All of us or none.”
+Elena had it out with Mara: “We eat at the table, Mara. All of us or none.” *(Mara ate in front of her, today)*
 
 Mara to Elena: “I couldn't help it, Mom. I couldn't.”
 

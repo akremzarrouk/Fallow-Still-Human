@@ -1727,7 +1727,8 @@ def gap_line(m, pid):
                        if others else "")
             parts.append(f"you sat in the kitchen{company} {when}")
     after = q.morning_end or 0
-    ate = any(a["option"] in ("eat", "eat_given", "share") and "empty" not in (a["came_of_it"] or "")
+    # Code mode's meals count: a share eaten at the table is eating (the line said "Nobody ate" after two meals).
+    ate = any(a["option"] in ("eat", "eat_given", "share", "plate_eat") and "empty" not in (a["came_of_it"] or "")
               for turn in m.transcript["turns"] if turn["minute"] >= after for a in turn["acts"])
     line = ("After the morning: " + "; ".join(parts) + ".") if parts else "After the morning: nothing changed."
     return line + ("" if ate else " Nobody ate.")

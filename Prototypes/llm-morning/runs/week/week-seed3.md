@@ -58,7 +58,7 @@ Daniel took Elena aside.
 
 Daniel owned up, to Elena alone: “It was me. I took the can in the night and ate it.” *(what is on him)*
 
-Elena had it out with Daniel: “You let me ask all of them, Daniel. You stood there.”
+Elena had it out with Daniel: “You let me ask all of them, Daniel. You stood there.” *(Daniel took the can and denied it to her face, today)*
 
 Daniel to Elena: “I did not know how to say it, Mom.”
 
@@ -66,11 +66,11 @@ Daniel to Elena: “I did not know how to say it, Mom.”
 
 Elena told the others who took the can: “Daniel took the can. He came and told me.”
 
-Leo had it out with Daniel: “You let her ask all three of us, Daniel.”
+Leo had it out with Daniel: “You let her ask all three of us, Daniel.” *(Daniel took the can and denied it to his face, today)*
 
 Daniel to Leo: “I have no excuse, Leo.”
 
-Mara had it out with Daniel: “I swore it wasn't me, Daniel. And you just stood there!”
+Mara had it out with Daniel: “I swore it wasn't me, Daniel. And you just stood there!” *(Daniel took the can and denied it to her face, today)*
 
 Daniel to Mara: “I did not know how to say it, Mara.”
 
@@ -104,7 +104,7 @@ Daniel no longer meant to go next door: next door is empty. Daniel came back wit
 
 Mara: “I lay awake half the night.” Daniel: “Next door is empty. Nothing to bring.”
 
-Elena had it out with Daniel: “You heard me, Daniel. And you went.”
+Elena had it out with Daniel: “You heard me, Daniel. And you went.” *(Daniel went out after she said no, yesterday)*
 
 Daniel to Elena: “I know what you said, Mom. I went anyway.”
 
@@ -164,7 +164,7 @@ Daniel no longer meant to go further along the street: it nearly went wrong out 
 
 Mara set out a small meal: “Half each. That's all there is.” Everyone ate.
 
-Leo had it out with Daniel: “Daniel, you went out after I said no.”
+Leo had it out with Daniel: “Daniel, you went out after I said no.” *(Daniel went out after he said no, yesterday)*
 
 Daniel to Leo: “I know what you said, Leo. I went anyway.”
 
@@ -174,7 +174,7 @@ Daniel to Leo: “I know what you said, Leo. I went anyway.”
 
 Leo: “I counted: 1 portion on the shelf.”
 
-Leo had it out with Mara: “Mara, that portion was everyone's.”
+Leo had it out with Mara: “Mara, that portion was everyone's.” *(Mara ate in front of him, today)*
 
 Mara to Leo: “I was so hungry, Leo. I'm sorry.”
 
