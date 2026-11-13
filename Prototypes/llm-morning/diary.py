@@ -51,6 +51,11 @@ NOT_A_REASON = {"pride", "takes charge", "careful", "feels for others", "quick t
 MEAL_REASONS = ("making up for the can", "taking it off Elena's hands")
 
 
+# Reasons that are inside one person and unknown to the house until the can is owned up to.
+HIDDEN_UNTIL_KNOWN = ("what is on", "meant to tell")
+KNOWN = {"can": False}      # whether, at this point of the week being written, it has been owned up to
+
+
 def why_of(a):
     """The reasons for an act, as the person might give them: what in the situation weighed most for it (never a
     trait), and a new cause where the act had been made before."""
@@ -64,7 +69,11 @@ def why_of(a):
         if t:
             said = said.replace("meant to tell them", f"meant to tell {he(t, 'him')}").replace(
                 "they look hungrier", f"{he(t)} looked hungrier")
-        if v > 0 and said and said not in terms and not (new and (said in new or said == "starving")):
+        if not KNOWN["can"] and said.startswith(HIDDEN_UNTIL_KNOWN):
+            continue
+        if why.get("topic") == "search" and said.startswith("to look for"):
+            continue                        # the sentence itself says it
+        if v > 0 and said and said not in terms and not (new and (said in new or "starving" in said)):
             terms.append(said)
     if "starving" in terms and "hunger" in terms:
         terms.remove("hunger")
@@ -97,6 +106,7 @@ def sentence(a, home=data.ORDER, door=None):
     the house that day. door: the knock's own record, if the act is at the door."""
     o, A, w = a["option"], NAMES[a["who"]], quoted(a["words"])
     topic = (a.get("why") or {}).get("topic")
+    gone = [x for x in data.ORDER if x not in home]
     t = target_of(o, ("accuse_", "confront_", "reassure_", "say_to_", "keep_", "object_", "send_", "back_", "aside_",
                       "sit_", "plate_to_", "task_tend_", "give_"))
     T = NAMES[t] if t else None
@@ -108,7 +118,10 @@ def sentence(a, home=data.ORDER, door=None):
         "reassure_all": f"{A} tried to calm everyone:{w}",
         "volunteer": f"{A} said {he(a['who'])} would go next door tonight:{w}",
         "still_going": f"{A} said {he(a['who'])} still meant to go tonight:{w}",
-        "volunteer_far": f"{A} said {he(a['who'])} would go further along the street tonight:{w}",
+        "volunteer_far": (f"{A} said {he(a['who'])} would go out tonight to look for {names(gone)}:{w}"
+                          if topic == "search" and gone else
+                          f"{A} said {he(a['who'])} would go further along the street tonight:{w}"),
+        "look_out": f"{A} stood at the gap in the boards, watching the street for {names(gone) if gone else 'them'}.",
         "propose_trip": f"{A} said someone should go next door tonight:{w}",
         "propose_far": f"{A} said someone should try the houses further along:{w}",
         "nobody_goes": f"{A} said nobody should go out:{w}", "object_trip": f"{A} said nobody should go out:{w}",
@@ -257,8 +270,13 @@ def day_section(tr, k, start_shelf, away, empty, told=None):
                     tasks.append(f"{NAMES[a['who']]} looked after {NAMES[target_of(o, ('task_tend_',))]}")
                     continue
                 if o.startswith("task_"):
-                    tasks.append(f"{NAMES[a['who']]} {TASK_DID.get(o[len('task_'):], o)}")
+                    did = TASK_DID.get(o[len("task_"):], o)
+                    if o == "task_watch" and away:      # with someone missing, the watch is for them
+                        did = f"kept watch for {names(away)}"
+                    tasks.append(f"{NAMES[a['who']]} {did}")
                     continue
+                if o == "confess":
+                    KNOWN["can"] = True
                 s = sentence(a, home, door_at(turn["minute"]) if o.startswith("door_") else None)
                 if s is None:
                     continue
@@ -337,12 +355,10 @@ def night_section(tr, k):
         out = g["outcome"]
         if g["took"]:
             out += f" ({g['took']:g} portion{'' if g['took'] == 1 else 's'})"
-        lines.append(f"{who} {was} {out}." + (" Leo should not have come back from that one: the game spares him."
-                                               if g.get("spared") else ""))
+        lines.append(f"{who} {was} {out}.")        # what the game did behind this is in the debug record (week.lines)
     step = (tr.get(f"mind{k}") or {}).get("night_step") or {}
     tail = list(step.get("lines", [])) + list(step.get("health", []))
-    if step.get("guilt"):
-        tail.append(f"It weighed more on {NAMES[step['guilt']['who']]}: {step['guilt']['why']}.")
+    # What grew inside one person in the night is not the family's to know: it is in the debug record (week.lines).
     if tail and len(lines) == 1:           # a night with nothing but sleep: one line, with what the night settled
         lines[0] += " " + " ".join(tail)
     elif tail:
@@ -353,6 +369,7 @@ def night_section(tr, k):
 def render(w):
     """The whole week as markdown."""
     tr = w.transcript()
+    KNOWN["can"] = False
     empties = weekmod.empty_days(tr)
     out = [f"# The week, seed {w.seed}", "",
            "Elena, 42, the mother. Daniel, 25. Leo, 21. Mara, 17. The house is shut; the taps are dry; a can is "

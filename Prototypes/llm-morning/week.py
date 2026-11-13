@@ -247,11 +247,15 @@ def lines(week):
                 terms = "; ".join(f"{nm} {v:+.2f}" for nm, v in why.get("terms", []))
                 out.append(f"   night {d['person']:7} {d['ask']:9} {d['option']:17} {(d.get('say') or ''):40.40} | {terms}")
             out.append("   night: " + "; ".join(f"{g['members']} {g['outcome']}, food {g['took']}"
-                                                + (f", {g['lost']} lost" if g["lost"] else "") for g in n["groups"])
+                                                + (f", {g['lost']} lost" if g["lost"] else "")
+                                                + (" (DEBUG: Leo drew 'not back'; the game spares him, he came back "
+                                                   "hurt instead)" if g.get("spared") else "") for g in n["groups"])
                        + f" | shelf {n['portions_after'] if 'portions_after' in n else ''}")
             step = tr[f"mind{k}"].get("night_step") or {}
             for line in step.get("lines", []) + step.get("health", []):
                 out.append(f"   step: {line}")
+            if step.get("guilt"):
+                out.append(f"   step (DEBUG, inside {step['guilt']['who']}): it weighs more, {step['guilt']['why']}")
     return out
 
 

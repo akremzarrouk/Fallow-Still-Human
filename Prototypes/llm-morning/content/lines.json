@@ -86,7 +86,9 @@
   "say_other:night_water": ["No food. I brought back water.", "Water. That is all I found."],
   "say_other:night_nothing": ["I found nothing out there.", "Nothing. I came back empty-handed."],
   "say_other:small_share": ["It is not much.", "That is all?"],
-  "say_other:woke_being_told_off_yesterday": ["I know what I did.", "I heard what was said yesterday."]
+  "say_other:woke_being_told_off_yesterday": ["I know what I did.", "I heard what was said yesterday."],
+  "volunteer_far:search": ["I am going out tonight to look for {gone}.", "{gone} is out there somewhere. I'll go along the street tonight and look."],
+  "volunteer:search": ["I'll go next door tonight. {gone} may have got that far.", "I am going out tonight to look for {gone}."]
  },
  "by_person": {
   "elena": {
@@ -100,7 +102,8 @@
    "object:lost": ["I will not lose another one to that street, {to}.", "{gone} went. {gone} is not here. No, {to}."],
    "object:resigned": ["I will not say it twice, {to}. Come back.", "You know what I think, {to}. Be back before light."],
    "reassure:missing": ["{gone} knows the way home, {to}.", "We keep the door ready, {to}. That is all we can do."],
-   "say_to:thanks_but": ["You went against me, {to}. And you fed this house. Thank you.", "I said no, {to}. I am glad you are back."]
+   "say_to:thanks_but": ["You went against me, {to}. And you fed this house. Thank you.", "I said no, {to}. I am glad you are back."],
+   "volunteer_far:search": ["I am going to look for {gone}. Tonight.", "{gone} is out there. I am not sitting here another night."]
   },
   "daniel": {
    "deny": ["I didn't take any can.", "I told you, it wasn't me."],
@@ -120,7 +123,8 @@
    "object:lost": ["{gone} did not come back, {to}. Think about that.", "One of us is already out there, {to}. Not two."],
    "object:resigned": ["Then go early and be back before light, {to}.", "I will not argue it again, {to}. Come back."],
    "reassure:missing": ["{to}. We do not know anything yet.", "{gone} may be waiting for dark, {to}."],
-   "say_to:thanks_but": ["You went after I said no, {to}. It was the right call. Thank you.", "I was wrong to say stay, {to}. Thank you."]
+   "say_to:thanks_but": ["You went after I said no, {to}. It was the right call. Thank you.", "I was wrong to say stay, {to}. Thank you."],
+   "volunteer_far:search": ["I'll go along the street tonight and look for {gone}. I know which way.", "Someone has to look for {gone}. It should be me."]
   },
   "mara": {
    "deny": ["I didn't take it, I swear.", "It wasn't me! Why would I?"],
@@ -132,7 +136,8 @@
    "object:resigned": ["{to}, just come back. Please.", "I won't say don't. Just come back, {to}."],
    "reassure:missing": ["{gone} will come back, {to}. {gone} has to.", "{to}? Maybe tonight. Maybe {gone} comes tonight."],
    "say_other:small_share": ["I'm so hungry. Is that all there is?", "That's all? For the whole day?"],
-   "say_to:thanks_but": ["I said no, {to}! ...I'm glad you're back. Thank you.", "You scared me, {to}. Thank you. Don't do it again."]
+   "say_to:thanks_but": ["I said no, {to}! ...I'm glad you're back. Thank you.", "You scared me, {to}. Thank you. Don't do it again."],
+   "volunteer_far:search": ["I'll go and look for {gone}. I will. Tonight.", "Somebody has to look for {gone}! I'll go."]
   }
  }
 }

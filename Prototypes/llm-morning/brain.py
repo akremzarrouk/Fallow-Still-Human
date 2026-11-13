@@ -135,6 +135,13 @@ class CodeBrain:
         self.up_nights = {}     # person -> the days whose nights they did not sleep
         self.slept_in = {}      # day -> who slept through the day's work
         self.amends_said = set()  # who has said aloud that they go out to make up for the can
+        self.said_scene = {}    # (day, hour or beat, room) -> sentence -> who said it there
+        self.comforted = set()  # (day, hour or beat, room, blows so far): someone there has been comforted
+        self.blows = 0          # how many blows and losses the house has had: a new one is a new cause for comfort
+        self.street_watched = set()  # (person, day): they have seen someone watch the street for the missing today
+        self.made_before = set()  # (who, move, whom): moves made at least once this week
+        self.stopped = set()    # (who, whom, day): they told them at the door not to go
+        self.door_defied = set()  # (who, whom): they told them at the door, and they went all the same
         self.said_of = set()    # (whom, kind of act, its day): what has been put to them by someone already
         self.forbade = {}       # (who, whom or None for everyone) -> the day they last said not to go out
         self.said_house = {}    # day -> the sentences said in the house that day
@@ -195,6 +202,8 @@ class CodeBrain:
             ctx = self.night_context(n.day1.seed, day_index(n.day1.day), kind, p, n.where.get(p.id), leaver,
                                      shelf=n.portions, missing=n.away, someone_up=bool(up))
         choice = self.choose(p, opts, ctx)
+        if kind == "reaction" and choice["option"].startswith("stop_") and leaver:
+            self.stopped.add((p.id, leaver, ctx["day"]))
         if kind == "answer" and choice["option"] == "stay_home":
             self.last_night[p.id] = (ctx["day"], "lie_awake")
             self.up_nights.get(p.id, set()).discard(ctx["day"])
@@ -264,8 +273,13 @@ class CodeBrain:
             self.notes.setdefault((pid, day), set()).add(what)
         beat = getattr(m, "beat", None)
         if kind in ("accuse", "confront", "confess", "reveal"):     # a blow: small talk waits for the hour to pass
+            if kind in ("confess", "reveal"):       # news for the whole house: a new cause for comfort
+                self.blows += 1
             for q in list(seen) + [p.id]:
                 self.heavy[q] = (day, beat)
+        if kind == "look_out":
+            for q in list(seen) + [p.id]:
+                self.street_watched.add((q, day))
         if kind == "accuse" and target in seen and people[target].guilt is None:
             h.remember(target, p.id, "accused_falsely", day)
             note(target, "quarrel")
@@ -427,13 +441,30 @@ class CodeBrain:
             "scolded_eating": float(any(x[0] == p.id and x[2] == "ate_in_front" and x[3] == ctx["day"]
                                         for x in self.had_out)),
             "night_news": float(self.night_news.get(p.id, (None,))[0] == ctx["day"] and ctx.get("beat") == "morning"),
+            "street_watched": float((p.id, ctx["day"]) in self.street_watched),
+            "comfort_given_here": float(self.part(ctx) + (self.blows,) in self.comforted),
             "objected_today": float(bool(own) and own[1] == "object"),
             "someone_up": float(bool(ctx.get("someone_up"))),
         })
+        f["searching"] = f["grief"]       # someone is missing: finding them comes before anything else
         f["_owed"] = owed
         f["_owed_kind"] = owed_kind
         f["_level"] = level
         return f
+
+    @staticmethod
+    def scene(ctx):
+        """Where and when a thing is said: the day, the hour (a beat is one hour's business), the room."""
+        hour = ctx.get("beat") or ("night" if ctx["night"] else (ctx["minute"] or 0) // 60)
+        return (ctx["day"], hour, ctx["room"])
+
+    @staticmethod
+    def part(ctx):
+        """The part of the day, as the diary divides it (morning, the work, afternoon, evening, night), and the
+        room: comfort among the people there is given once in it, unless something new has happened."""
+        m = ctx["minute"]
+        return (ctx["day"], "night" if ctx["night"] or m is None else sum(m >= at for at in (180, 480, 720)),
+                ctx["room"])
 
     def keeper_facts(self, p, ctx):
         """Who sets out the food (weights.json, keeper): it is the keeper's to give out while they are here and
@@ -480,9 +511,17 @@ class CodeBrain:
             "target_given_today": 0.0,
             "sick_target": 0.0, "target_asked_after": 0.0, "target_confronted_today": 0.0, "_topic": {},
             "cold_target": 0.0, "warm_today_target": 0.0, "thanks_outweighs": 0.0, "piling_on": 0.0,
+            "said_no_target": 0.0, "door_defied_target": 0.0,
         }
         if ctx["missing"]:
-            out["_says"]["someone_lost"] = f"{data._and([NAMES[x] for x in ctx['missing']])} did not come back"
+            gone = data._and([NAMES[x] for x in ctx["missing"]])
+            out["_says"]["someone_lost"] = f"{gone} did not come back"
+            out["_says"]["searching"] = f"to look for {gone}"
+        if person:
+            # They said not to go, and it still stands (not taken back, not given up): seeing them go, they act.
+            out["said_no_target"] = float(((p.id, target) in self.forbade or (p.id, None) in self.forbade)
+                                          and (p.id, target, day) not in self.resigned)
+            out["door_defied_target"] = float((p.id, target) in self.door_defied)
         if person:
             also = self.temper(p.id, day)
             points = self.heart.suspicion(p.id, target, day)
@@ -825,18 +864,28 @@ class CodeBrain:
                          "says": flags["_says"], "topics": flags["_topic"]})
         open_rows = [r for r in rows if r["open"]] or rows     # a list with nothing open (it has no "stay") is free
         self.last_scores = {r["o"].id: r["score"] for r in open_rows}
-        best = max(r["score"] for r in open_rows)
-        band = sorted((r for r in open_rows if r["score"] >= best - self.weights["band"] - 1e-9),
-                      key=lambda r: r["o"].id)
         n = self.calls[(pid, day)] = self.calls.get((pid, day), 0) + 1
-        top_row = max(open_rows, key=lambda r: r["score"])
-        if top_row["key"] == "stay":
-            band = [top_row]            # staying as they are wins unless something outweighs it: no draw against it
-        if len(band) > 1:
-            rng = random.Random(f"{self.seed}:tie:{day}:{ctx['minute']}:{pid}:{ctx['ask']}:{n}")
-            row = rng.choice(band)
-        else:
-            row = band[0]
+        pool = list(open_rows)
+        while True:
+            best = max(r["score"] for r in pool)
+            band = sorted((r for r in pool if r["score"] >= best - self.weights["band"] - 1e-9),
+                          key=lambda r: r["o"].id)
+            top_row = max(pool, key=lambda r: r["score"])
+            if top_row["key"] == "stay":
+                band = [top_row]        # staying as they are wins unless something outweighs it: no draw against it
+            if len(band) > 1:
+                rng = random.Random(f"{self.seed}:tie:{day}:{ctx['minute']}:{pid}:{ctx['ask']}:{n}")
+                row = rng.choice(band)
+            else:
+                row = band[0]
+            # Words, not an act with words: if every way of saying it has been said in this scene by someone else,
+            # or by them today, they do not say it: the next best thing is done instead.
+            if row["o"].speech and len(pool) > 1 and not self.line_free(p, row, ctx, base):
+                pool.remove(row)
+                continue
+            break
+        if row["key"] in ("sit", "reassure", "reassure_all"):
+            self.comforted.add(self.part(ctx) + (self.blows,))
         o = row["o"]
         counts[o.id] = counts.get(o.id, 0) + 1
         if row["once"] is not None:
@@ -862,6 +911,17 @@ class CodeBrain:
             why["new_cause"] = row["new"]
         if topic:
             why["topic"] = topic
+        # A move that may be made again because its rule's own condition is the new cause (told no again today, and
+        # going all the same): the record names it, from the second time on.
+        again = (pid, row["key"], row["target"])
+        if row["rule"] and row["rule"].get("cause_named") and again in self.made_before:
+            why.setdefault("new_cause", row["rule"]["cause_named"])
+        self.made_before.add(again)
+        # A move made under one rule counts for the move's once-is-enough rule too (a stop at the door after saying
+        # no that day is still a stop: it is not said again on a night when nobody had said no).
+        if row["rule"] and row["rule"].get("subject_of"):
+            self.caused[(pid, row["key"], row["target"])] = self.cause_of(row["rule"]["subject_of"], p, ctx,
+                                                                         row["target"], base)
         reason = "; ".join(f"{name} {v:+.2f}" for name, v in why["terms"]) or "nothing weighed more"
         suspect = self.heart.suspect(pid, day, self.temper(pid, day))
         spoken = o.speech or o.act.get("says")
@@ -870,60 +930,72 @@ class CodeBrain:
                 "suspects": NAMES[suspect[0]] if suspect[1] >= 1 else "nobody", "angry_at": "nobody", "why": why,
                 "mood": {"mood": mood["mood"], "cause": mood["cause"]}}
 
-    def topic_of(self, p, row, ctx, f=None):
+    def topic_of(self, p, row, ctx, f=None, mark=True):
         """What a line is about, where its move can be about more than one thing: the line key's ending. Marks what
-        has now been said (a hurt had out, a kindness thanked, someone asked after), so it is not said twice."""
+        has now been said (a hurt had out, a kindness thanked, someone asked after), so it is not said twice.
+        mark=False: only what the topic would be; nothing is recorded."""
         key, target, day = row["key"], row["target"], ctx["day"]
         rule = row["rule"] or {}
         f = f or {}
-        if target in data.PEOPLE and (row["o"].speech or row["o"].act.get("says")):
+        person = target in data.PEOPLE
+        if mark and person and (row["o"].speech or row["o"].act.get("says")):
             self.answered[(p.id, target)] = key == "say_to" and rule.get("topic") == "answer"
-        if key in ("reassure", "sit") and target in data.PEOPLE:
+        if mark and key in ("reassure", "sit") and person:
             self.warmed.add((p.id, target, day))
-        if key == "reassure" and target in data.PEOPLE:
+        if key == "reassure" and person:
             # While someone is missing, comfort is about them, and is answered as that.
-            self.put_to[(target, day)] = (p.id, "reassure_missing" if f.get("grief") else "reassure")
+            if mark:
+                self.put_to[(target, day)] = (p.id, "reassure_missing" if f.get("grief") else "reassure")
             if f.get("grief"):
                 return "missing"
         if key == "meal_small" and not self.cut:
             return "first"                  # the shares are cut: said once, with the count
-        if key in ("volunteer", "volunteer_far") and f.get("owes_house") and p.id not in self.amends_said:
-            self.amends_said.add(p.id)
-            return "amends"                 # they took from the shelf: they go to put something back
-        if key == "object_all":
+        if key in ("volunteer", "volunteer_far"):
+            if f.get("searching"):
+                return "search"             # someone is missing: they go to look for them, and say so
+            if f.get("owes_house") and p.id not in self.amends_said:
+                if mark:
+                    self.amends_said.add(p.id)
+                return "amends"             # they took from the shelf: they go to put something back
+        if key == "object_all" and mark:
             self.forbade[(p.id, None)] = day
-        if key == "object" and target in data.PEOPLE:
+        if key == "object" and person:
             if not ctx["missing"] and any(a["kind"] == "defied" for a in self.heart.acts.get((p.id, target), ())):
-                self.resigned.add((p.id, target, day))
-                self.forbade.pop((p.id, target), None)
+                if mark:
+                    self.resigned.add((p.id, target, day))
+                    self.forbade.pop((p.id, target), None)
                 return "resigned"           # they went before, whatever was said: nobody forbids it twice
-            self.forbade[(p.id, target)] = day
+            if mark:
+                self.forbade[(p.id, target)] = day
             if ctx["missing"]:
                 return "lost"
         if key == "confront" and row["topics"].get("confront"):
             a = row["topics"]["confront"]
-            self.had_out.add((p.id, target, a["kind"], a["day"]))
-            self.said_of.add((target, a["kind"], a["day"]))
-            self.put_to[(target, day)] = (p.id, a["kind"])
+            if mark:
+                self.had_out.add((p.id, target, a["kind"], a["day"]))
+                self.said_of.add((target, a["kind"], a["day"]))
+                self.put_to[(target, day)] = (p.id, a["kind"])
             return a["kind"]
         if key == "say_to":
             what = rule.get("topic")
             if what == "thanks" and row["topics"].get("thanks"):
                 a = row["topics"]["thanks"]
-                self.thanked.add((p.id, target, a["kind"], a["day"]))
-                self.warmed.add((p.id, target, day))
-                self.put_to[(target, day)] = (p.id, "thanks")
                 hurt = row["topics"].get("confront")
-                if hurt and hurt["kind"] == "defied" and a["kind"] == "brought_food":
-                    self.had_out.add((p.id, target, hurt["kind"], hurt["day"]))     # said in the same breath
-                    return "thanks_but"
-                return "thanks"
+                both = bool(hurt) and hurt["kind"] == "defied" and a["kind"] == "brought_food"
+                if mark:
+                    self.thanked.add((p.id, target, a["kind"], a["day"]))
+                    self.warmed.add((p.id, target, day))
+                    self.put_to[(target, day)] = (p.id, "thanks_but" if both else "thanks")
+                    if both:
+                        self.had_out.add((p.id, target, hurt["kind"], hurt["day"]))     # said in the same breath
+                return "thanks_but" if both else "thanks"
             if what == "ask_after":
-                self.asked_after.add((target, day))
-                self.put_to[(target, day)] = (p.id, "ask_after")
+                if mark:
+                    self.asked_after.add((target, day))
+                    self.put_to[(target, day)] = (p.id, "ask_after")
                 return "ask_after"
             if what == "answer":
-                put = self.put_to.pop((p.id, day), None)
+                put = self.put_to.pop((p.id, day), None) if mark else self.put_to.get((p.id, day))
                 return f"answer_{put[1]}" if put and put[0] == target else "answer"
         if key == "task":
             return row["o"].act["task"].split("_")[0]
@@ -934,7 +1006,8 @@ class CodeBrain:
             return "report_watch_knock" if "knock" in self.notes.get((p.id, day), set()) else "report_watch"
         if key == "say_other" and rule.get("topic") == "night":
             what = self.night_news[p.id][1]
-            self.tell_empty = what == "empty"
+            if mark:
+                self.tell_empty = what == "empty"
             return f"night_{what}"
         if key == "say_other" and rule.get("topic") == "small_share":
             return "small_share"
@@ -1028,6 +1101,11 @@ class CodeBrain:
                 self.night_news[L] = (day + 1, what)
                 if g["took"]:
                     self.brought[L] = day
+        for (P, L, d) in list(self.stopped):
+            if d == day and L in n.leavers:
+                self.door_defied.add((P, L))
+        if any(g["lost"] for g in n.groups):
+            self.blows += 1
         # Grudges settle.
         for P in present:
             p = n.people[P]
@@ -1118,10 +1196,10 @@ class CodeBrain:
             return "scared"
         return "calm" if mood["mood"] == "steady" else mood["mood"]
 
-    def line(self, p, key, target, ctx, o=None, topic=None):
-        """Words for a spoken move, from content/lines.json: the speaker's own where there are any, never the variant
-        they used last. A move's topic is looked up first (`confront:defied`), then the option's own id
-        (`still_going` before `volunteer`), then the move."""
+    def variants(self, p, key, target, ctx, o=None, topic=None):
+        """(the ways p could say this move, each with its names and numbers filled in; what it was looked up by;
+        whether it had no line of its own). A move's topic is looked up first (`confront:defied`), then the option's
+        own id (`still_going` before `volunteer`), then the move. The speaker's own lines come before the default."""
         mine, default = self.lines.get("by_person", {}).get(p.id, {}), self.lines["default"]
         oid = o.id if o is not None else None
         about = f"{key}:{topic}" if topic else None
@@ -1138,22 +1216,44 @@ class CodeBrain:
             slots.update({"to": call, "leaver": call})
         usable = [v for v in (table or ()) if all(("{" + s + "}") not in v or s in slots
                                                   for s in ("to", "leaver", "gone", "culprit", "He"))]
-        if not usable:
+        filler = not usable
+        if filler:
             usable = self.lines["default"]["any"]
-            self.fell_back.append((p.id, about or oid or key))      # a move with no line of its own (the diary's gate)
+        return [v.format(**slots) for v in usable], about or oid or key, filler
+
+    def line_free(self, p, row, ctx, f):
+        """Whether p has a way of saying this move that nobody else has used in this scene and they have not used
+        today. Nothing is recorded."""
+        topic = self.topic_of(p, row, ctx, f, mark=False)
+        texts, _, filler = self.variants(p, row["key"], row["target"], ctx, row["o"], topic)
+        if filler:
+            return True
+        said = self.said_today.get((p.id, ctx["day"]), set())
+        here = self.said_scene.get(self.scene(ctx), {})
+        return any(t not in said and here.get(t, p.id) == p.id for t in texts)
+
+    def line(self, p, key, target, ctx, o=None, topic=None):
+        """Words for a spoken move, from content/lines.json: never the variant they used last; not a sentence they
+        have said today, nor one someone else has said in this scene, while another way of saying it is free."""
+        texts, about, filler = self.variants(p, key, target, ctx, o, topic)
+        if filler:
+            self.fell_back.append((p.id, about))        # a move with no line of its own (the diary's gate)
         n = self.calls.get((p.id, ctx["day"]), 0)
-        i = random.Random(f"{self.seed}:line:{ctx['day']}:{p.id}:{key}:{n}").randrange(len(usable))
-        if len(usable) > 1 and self.last_line.get((p.id, key)) == i:
-            i = (i + 1) % len(usable)
-        # Nobody says the same sentence twice in a day while another way of saying it is free.
+        i = random.Random(f"{self.seed}:line:{ctx['day']}:{p.id}:{key}:{n}").randrange(len(texts))
+        if len(texts) > 1 and self.last_line.get((p.id, key)) == i:
+            i = (i + 1) % len(texts)
         said = self.said_today.setdefault((p.id, ctx["day"]), set())
         house = self.said_house.setdefault(ctx["day"], set())
-        order = [(i + step) % len(usable) for step in range(len(usable))]
-        i = next((j for j in order if usable[j].format(**slots) not in said | house),
-                 next((j for j in order if usable[j].format(**slots) not in said), i))
+        here = self.said_scene.setdefault(self.scene(ctx), {})
+        order = [(i + step) % len(texts) for step in range(len(texts))]
+        others = {t for t, who in here.items() if who != p.id}
+        i = next((j for j in order if texts[j] not in said | house),
+                 next((j for j in order if texts[j] not in said | others),
+                      next((j for j in order if texts[j] not in said), i)))
         self.last_line[(p.id, key)] = i
-        text = usable[i].format(**slots)
+        text = texts[i]
         said.add(text)
         house.add(text)
+        here.setdefault(text, p.id)
         self.spoken.add(text)
         return text

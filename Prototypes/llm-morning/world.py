@@ -730,6 +730,11 @@ class Morning:
                 opts.append(Option("meal_small", f"set out a small meal: {small} each", kind="meal_small", says=True))
         if code and p.room == "kitchen" and others and self.water_open():
             opts.append(Option("water_round", "hand out the water: a cup each", kind="water_round", says=True))
+        if code and p.room == "kitchen" and self.away and self.full_days() and self.beat == "morning":
+            # Someone did not come back: the first thing in the morning is the street.
+            gone = data._and([NAMES[x] for x in data.ORDER if x in self.away])
+            opts.append(Option("look_out", f"stand at the gap in the boards and watch the street for {gone}",
+                               kind="look_out"))
         if code:
             opts += self.task_options(p)
         opts = lead + opts
@@ -2346,6 +2351,13 @@ class Morning:
             so_far.append(f"{p.name} drinks.")
             p.memory.append((minute, f"you drank your cup of water.{feel}"))
             return "drank."
+        if opt.act.get("kind") == "look_out":      # code mode: watching the street for whoever did not come back
+            p.activity = {"kind": "idle", "label": "watching the street through the gap in the boards"}
+            so_far.append(f"{p.name} stands at the gap in the boards, watching the street.")
+            for q in seen:
+                self.perceive(q, minute, f"{p.name} stands at the gap in the boards, watching the street.")
+            p.memory.append((minute, f"you stood at the gap in the boards and watched the street.{feel}"))
+            return "watched the street."
         if opt.act.get("kind") == "task":          # code mode: one of the day's tasks (section 7.3)
             name = opt.act["task"]
             self.tasks[name] = p.id
