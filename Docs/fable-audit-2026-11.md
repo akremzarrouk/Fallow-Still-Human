@@ -54,6 +54,7 @@ Sections 0 to 6, 11 to 14 and the appendix are as first written; item 20 lists w
 | 32 | **Step 4c (13 Nov), from your six notes on the three weeks.** Someone missing comes first: one person watches the street in the morning, the watch is kept for them, and whoever offers to go out says it is to look for them; hunger sends someone out only when the shelf is empty. Someone who said no that day and sees them go tells them at the door; someone walked past at the door once goes with them the next time. The diary no longer says what the family could not know (that the game spares Leo; what grows inside whoever took the can): both are in the debug print of `week.py`. No sentence is said by two people in one scene: a spoken move with no free way of saying it is not made. Comfort among the people in a room is given once in a part of the day, unless there is news for the whole house. Not built: waking Elena. The loss count over 50 weeks is in the journal; no odds were changed. | section 9 (step 4c), 7.3, 7.4, 7.5 |
 | 33 | **Step 5 as built (13 Nov).** The voice sheets were approved as they stand on 13 Nov. `content/lines.json` now holds 647 lines of the four speakers' own (Elena 167, Daniel 161, Leo 155, Mara 164) beside 182 default ones, for every move the week makes: two to four ways of saying each. A line says what the move is, in that person's way, and states nothing the record might not hold. Not done: lines that differ by who is spoken to, and by mood. | 7.5, section 9 (step 5) |
 | 34 | **Step 6 as built (14 Nov).** `hour.py` plays the week as Leo with no model. A screen is a few lines of situation and at most seven choices, each shown as the line Leo would say or the thing he would do, in the order the code brain would weigh them for him; "something else" opens the rest. Leo is asked only when the moment calls on him (his share, the night, the start of an hour's business, being spoken to, the door, news for the house, someone saying they will go out, the can): a week is about sixty choices. A sick or hurt Leo is offered less and told why. What the others do to him because of what he did is said on his screen. Every choice is saved; resuming is replaying. The end page says where each of the three stands with him and the three acts of his that put them there. L9 is in force. Read as: for each of two people, at least one act toward Leo that only one of the two weeks has, whose record names an act of Leo's. Not built: the three needs of section 4(b) as things Leo can meet or refuse beyond what the week already has. | 7.5, sections 8 and 9 (step 6) |
+| 35 | **Step 7, the handoff (14 Nov).** No new feature. The lines changelog item 20 listed as out of date are amended in place, each marked: section 0, 3.4, 4(a) point 2, 6.1 B, 6.2, 6.3 reason 4, and section 13's second row. Section 11 is rewritten from what was built (N1 to N7 are new; S3 is inside N3; your hour of play had not happened, and the section says so). Section 12's proposed `CLAUDE.md` text is rewritten and is still only proposed. The code as built is described in `Prototypes/llm-morning/reports/architecture.md`. Sections 1, 2, 5 and 14 are left as first written: they describe the repository as it was on 11 Nov. | sections 0, 3.4, 4, 6, 11, 12, 13 |
 
 ---
 
@@ -102,6 +103,11 @@ wrong thing: a model you do not control, instead of a game you do.
 13 Nov: feelings, trust and suspicion kept by code; food and meals. 14 Nov: a full seven-day week with something
 new each day. 15 Nov: the spoken lines and a short diary of the week that you read. 16 Nov: you play Leo for an
 hour. Each day has a pass/fail test, defined in sections 8 to 10.
+
+*(Out of date since 11 Nov, left as first written. The plan has no dates: seven steps, then 4b and 4c, in section 9.
+Nothing is staged, so there is no rule of "something new each day": section 7.4. What was built, step by step, is
+changelog items 28 to 35 and `Prototypes/llm-morning/reports/journal.md`. The code as built is described in
+`Prototypes/llm-morning/reports/architecture.md`.)*
 
 **What I am not sure of.** Whether code-chosen behaviour with written lines will make you *care* cannot be proved
 on paper. The plan puts a readable week in front of you on 15 Nov and a playable hour on 16 Nov so that you find
@@ -248,7 +254,7 @@ copy on GitHub `[E13]`, so five weeks of work exist only on this computer.
 | "The code owns the truth … The AI owns judgment and words. The AI never owns state." | **Replace** | "Judgment" is what a person does next. That is the game. Giving it to the model is why the game cannot run without one. The last sentence is also not true of the code (3.3, point 2). |
 | "The code draws conclusions from what people perceive; the AI decides what they do about it." | **Replace** | Same reason. Keep the first half: people act only on what they perceived. |
 | "A line that describes an act makes the small model do that act. State situations; leave the choice open." | **Drop** | It is a note about one small model's habits, not a principle of the game. That it reached the North Star shows where the project's attention had moved. It was also broken on request in the last fix (`Prototypes/llm-morning/reports/play_fix2.md:86-87`). |
-| "Mechanisms may be unhuman; the output must read as human." | **Keep, and use it** | This is the right principle and it was not used. It allows a hidden "director" that makes sure something new happens each day. Instead, a choice made by code was once logged as a breach of the North Star (`Prototypes/llm-morning/reports/stage_b_fixes.md:169-171`). |
+| "Mechanisms may be unhuman; the output must read as human." | **Keep, and use it** | This is the right principle and it was not used. *(Amended 14 Nov: the first version said here that it allows a hidden "director" that makes sure something new happens each day. You decided against any staging: section 7.4.)* Instead, a choice made by code was once logged as a breach of the North Star (`Prototypes/llm-morning/reports/stage_b_fixes.md:169-171`). |
 | "Judge every change by what a real family would do" (`CLAUDE.md:19-20`) | **Keep, but it is half a standard** | A real family in a boarded house is mostly silent and dull. A game selects. The missing half: does the player have something to decide, and does it come back to them later? |
 | (missing) | **Add** | Nothing in the North Star mentions the player. |
 
@@ -256,8 +262,9 @@ Proposed replacement, for you to accept or change (not applied; this is a design
 
 - The game runs with no model. Code owns the truth, what each person does, and every outcome.
 - People act only on what they have perceived or been told.
-- Every act has a reason the diary can state in one plain sentence.
-- Something new happens every day. Nobody repeats an act the same day without a new cause.
+- Every act has a reason a person would give. The diary says only what the family could know.
+- Nothing is staged: what happens comes from the world's own chances and from what people do. Nobody repeats an
+  act without a new cause. *(These two lines amended 14 Nov, from your decisions of 11 and 13 Nov.)*
 - What Leo does comes back: later, someone treats him differently, and the game can say why.
 - Mechanisms may be unhuman; the output must read as human.
 - Judge by reading the week and by playing it. Numbers only check that the machinery ran.
@@ -269,7 +276,8 @@ Proposed replacement, for you to accept or change (not applied; this is a design
 **(a) A simulated week that reads as lived.** A seven-day diary of at most two pages a day in which:
 
 1. every day something gets done (water fetched, a meal shared, the door watched, a trip made or refused);
-2. every day one thing happens that has not happened before;
+2. on most days one thing happens that has not happened before; a quiet day is allowed, at most one in seven
+   on average and never three in a row (L8) *(amended 14 Nov: nothing is staged)*;
 3. people refer back: at least three acts in the week happen because of something on an earlier day, and the diary
    says so;
 4. each of the four does at least one thing only they would do;
@@ -315,7 +323,8 @@ it does not.
 fear, guilt, grievance, wanting company), a temperament, knowledge and a stance toward each other person. A
 "practice" is a named situation (the missing can, a meal, a chore, planning a trip, a knock at the door, a
 quarrel, the night) that offers a few moves. The brain scores the moves from the person's own state and picks.
-Lines come from a file. A small "director" deals one new trouble a day. This is the family of design used by
+Lines come from a file. *(The first version added a small "director" that deals one new trouble a day; dropped
+on your decision, section 7.4.)* This is the family of design used by
 shipped social games without language models, such as *Prom Week* and *Versu*.
 
 **C. An authored story deck.** The week is a set of written scenes with conditions ("day 3 or later, water below
@@ -329,7 +338,7 @@ shipped social games without language models, such as *Prom Week* and *Versu*.
 |---|---|---|---|---|
 | Runs with the model off | Yes, but as a different game | **Yes, fully** | Yes, fully | Yes |
 | Least AI inside the game | No: the model stays the main brain | **Yes** | Yes | Yes |
-| A week that reads as lived | Shown not to (N4) | Likely, if every day has work and one new trouble | Very likely, at a high writing cost | Shown not to (N11) |
+| A week that reads as lived | Shown not to (N4) | Likely, if every day has work and the world's own troubles come often enough *(amended 14 Nov)* | Very likely, at a high writing cost | Shown not to (N11) |
 | The player cares within an hour | Not shown (N7) | Plausible: reciprocity and cost are built in | Most reliable | No player exists |
 | Different weeks from different seeds and people | Some | **Yes** | Only what is written | Yes |
 | Reuses what works (W1 to W8) | All | **Truth, perception, nights, street, player loop** | Little | None of the Python |
@@ -345,7 +354,7 @@ Reasons, in order of weight:
 2. It turns testing into something exact: "in this situation Elena does this" is a test that passes or fails in
    milliseconds, with no quota and no sampling.
 3. It keeps the game a simulation, which is what `README.md:3-4` says Fallow is.
-4. It borrows the two cheap strengths of C: written lines, and a director that deals events. "Mechanisms may be
+4. It borrows the two cheap strengths of C: written lines *(the first version added "a director that deals events"; dropped, section 7.4)*. "Mechanisms may be
    unhuman."
 
 Argued against first, as `CLAUDE.md:21-22` asks: would code-chosen people read as people? The C# attempt was also
@@ -670,7 +679,7 @@ Until then the diary uses the starter lines, with a plain default line for every
 | **4c. The missing, the door, the diary's knowledge.** Added 13 Nov. Done. | Changelog item 32. | Reading: the three weeks re-read for the six notes; all clauses in force still pass; the loss count is reported, not tuned. |
 | **5. The lines.** After the voice sheets are approved. Done (changelog 33). | `content/lines.json`, following the approved voice sheets, with at least 400 lines across the four speakers. | No move without a line; no sentence twice in a day; all clauses in force still pass. |
 | **6. Leo's hour.** Built (changelog 34); waiting for your hour of play. | The player in the week loop: at most seven choices a screen; Leo's own sickness or injury limiting his choices; remembered acts shown when they come back; save and resume; the end-of-week page. | L9; a scripted hour (60 choices) completes; all earlier clauses. **Stop 2: you play for an hour. Then say, without notes, what each of the three wanted from you. That answer, in your words, goes in the journal.** |
-| **7. Handoff.** Before 17 Nov, whatever step is in progress. | No new features. An architecture document for the code as built. Section 11's specs for Opus and Sonnet, revised from what was built and from your play. Sections 0 to 6 and 11 to 13 of this document brought into line with your decisions (changelog item 20 lists the lines). The proposed `CLAUDE.md` text, applied only on your yes. The journal's last entry: what passes, what does not, what was cut. | The suite and the LLM-off test, run once more and their output kept. |
+| **7. Handoff.** Done 14 Nov (changelog 35), but for your yes on `CLAUDE.md` and your hour of play. Before 17 Nov, whatever step is in progress. | No new features. An architecture document for the code as built. Section 11's specs for Opus and Sonnet, revised from what was built and from your play. Sections 0 to 6 and 11 to 13 of this document brought into line with your decisions (changelog item 20 lists the lines). The proposed `CLAUDE.md` text, applied only on your yes. The journal's last entry: what passes, what does not, what was cut. | The suite and the LLM-off test, run once more and their output kept. |
 
 ---
 
@@ -828,25 +837,40 @@ Written before the step, to be scored after it. F5 predicts a shortfall on purpo
 
 ---
 
-## 11. After 17 November: small specs for Opus or Sonnet
+## 11. After 17 November: small specs for Opus or Sonnet (revised 14 Nov)
 
-Each is one session or less. Each ends with the LLM-off test and the suite passing. Order matters only where noted.
+Revised from what was built. **Your hour of play has not happened yet as this is written:** the order below is
+from reading the weeks, and N1 is first because it is what the reading says the hour will lack. After you play,
+the first lines of the journal's next entry should say what you would move up or strike.
+
+**For whoever does these.** Read `Prototypes/llm-morning/reports/architecture.md` first. Each spec is one session
+or less. Each ends with every suite passing, run one at a time (architecture, section 8), and with the three
+diaries regenerated and one day of one of them read. Judge a change by what a real family would do. Change
+weights and lines before code. A frozen case (`test_brain.py` B1 to B17; section 8's clauses L1 to L13) is never
+edited so that it passes: if one fails, the behaviour is wrong or the case is recorded as wrong and left. A line
+states nothing the record might not hold. No model call anywhere.
 
 | # | Spec | Tests that must pass | Done when |
 |---|---|---|---|
-| S1 | **Repair.** Moves for apology and making amends inside the quarrel practice; an apology accepted only if trust is above −2 or an amend was made. | Unit: accepted and refused cases; run: a quarrel on day 2 is repaired or still named on day 4 | The diary shows one repair and one refusal across seeds 1 to 3 |
-| S2 | **Night talk.** Two people who share a room may talk in the dark: a private place to confess, ask, or promise. | Unit: offered only to room-mates awake; run: Daniel's confession to Leo is possible at night | A scripted Leo can draw a confession at night that he cannot draw in the kitchen |
-| S3 | **Clues.** The empty can, hidden somewhere by seed; who was heard up; a search can find it. Leo can show it or keep it. | Unit: found only where it is; shown evidence raises suspicion in those who see it | Two scripts (shows it; keeps it) give different day 3s |
-| S4 | **The other scenarios** in code mode: `mara_ate_it`, `miscount`. | LLM-off test on both; B6 extended | Three seeds of each read as different weeks |
-| S5 | **Lines, second pass.** Bring each speaker to 150 lines; a check that flags a line used more than three times in a week. | No default line used where a written one exists; the usage check | You read a week and mark fewer than five lines |
-| S6 | **A local web page for Leo's screen**, served by Python's standard library. No new dependency. | The scripted hour passes through the page's handler | You play in a browser |
-| S7 | **Care for the weak.** A person "thin and weak" or hurt can be looked after; doing it builds trust and costs the carer rest. | Unit and run cases | A week with one person down still passes L5 |
-| S8 | **The end-of-week page**, in full: for each person, their stance and the three acts of Leo's behind it; what the house has left. | Golden-file test on two scripted weeks | You recognise your own week in it |
-| S9 | **Clear the ground.** Move `gemini.py`, the prompts, `mind.py`, the budgets, `v1` to `v14`, the retired tests and the probe scripts to `legacy/`. Split the tests by subject. Only after the hour of play is judged good. | The LLM-off test and the code-mode tests pass with `legacy/` deleted from the path | `import` of anything in `legacy/` from the game fails a test |
-| S10 | **A week table** (`python week_table.py --seed N`): per day, food, water, acts by kind, the day's trouble. A tool for you, not a report. | Runs in under 5 s | You use it instead of asking for an investigation |
-| S11 | **Typed input, optional.** A model maps a typed sentence to one offered choice; off by default; falls back to the menu on any doubt, error or 3 s timeout. | With the feature on and the network blocked, the game plays exactly as with it off | Only if, after S1 to S8, you still want to type |
-| S12 | **The street as week two.** Neighbours from `street.py` as people with needs who remember what the house did at the door. | LLM-off test over 14 days | After the port decision, not before |
-| S13 | **The port decision.** Check the three conditions of 6.4. If met, write the port plan; the "situation in, act out" tests are the port's acceptance tests. | | A yes or no in the journal, with the reason |
+| N1 | **What each of them wants from Leo** (section 4b, the first of the five). Mara wants to be treated as grown: a fact kept from Leo's acts toward her (deciding for her, speaking over her; or asking her, handing her a task that matters). Daniel wants not to lose face: contradicted in front of the others, or taken aside. Elena wants someone to carry part of the load: the meal, the count, the tending, the door at night. For each: one or two choices on Leo's screen that meet or refuse it, a remembered act in `heart` for each, and a later act of theirs toward Leo whose record names it. | Unit: each act is remembered with its weight. Two scripts per person (meets, refuses) give a different act from that person toward Leo by day 4, with Leo's act named. L9 still passes. | After an hour you can say, without notes, what each of the three wanted from you |
+| N2 | **The player's Leo through the brain's own bookkeeping** (architecture, trap 1): his acts counted by the once-is-enough rules, his objections kept as "said no", what he has thanked and had out marked. | Unit: a thing Leo has had out with someone is not offered on the first page again that day. The cold script makes fewer than 100 choices in a week. | A player who quarrels is not asked three times as often as one who does not |
+| S1 | **Repair.** An apology and making amends inside the quarrel: accepted only if trust is above -2 or an amend was made; an accepted apology drops a grudge two steps. | Unit: accepted and refused. Run: a quarrel on day 2 is repaired, or still named on day 4. | The diary shows one repair and one refusal across seeds 1 to 3 |
+| N3 | **Days 1 and 2: the can stays alive.** Clues from the truth the code already owns: who was less hungry at the first meal, who was heard up in the night, who keeps away from the kitchen. Someone who notices one acts on it in their own way (Elena watches; Mara says it; Leo keeps it or tells one person). Includes the old S3: the empty can, hidden by seed, found only where it is; Leo can show it or keep it. | Unit: a clue is perceived only by who could perceive it. Run: on day 1 or 2 of each of seeds 1 to 3 someone acts on a clue, and the record names it. The 50-week count of empty days does not rise. | Day 2 is no longer the usual empty day |
+| N4 | **Going out together, argued by day.** Someone offers to go with whoever means to go; Mara may insist that she is not a child. The night already allows two to go. | Unit and run cases; the loss count over 50 weeks is reported, not tuned. | A week in which two go together reads as decided, not as an accident at the door |
+| N5 | **Waking someone.** An objector who sees a leaver go may wake Elena instead of stopping them (cut from 4c). | Unit: offered only when Elena is asleep at home. | It happens in at least one of 50 weeks and reads right |
+| N6 | **The meal's split, argued.** When the shares are cut, who gets more (the one who works, the one who is hurt, the youngest) can be said, refused, or given way to. | Unit and run cases. L7 still passes. | A cut of the shares is followed by something said about fairness in two of three seeds |
+| S5 | **Lines, second pass.** By who is spoken to (Elena to Daniel as to a grown man, then as to a boy) and by the day's mood. Answers to "how are you" that fit the hurt. A check that flags a sentence used more than three times in a week. | No default line used where a written one exists; the usage check. | You read a week and mark fewer than five lines |
+| N7 | **The weak-body shift.** `night.body_shift` applied to 0 of 115 trips in 50 weeks. Find out why (an investigation: read-only, with the commands and their output), and report before changing anything. | | A page in `reports/` that says whether the data's intent is met |
+| S2 | **Night talk.** Two who share a room may talk in the dark: a private place to confess, ask or promise. | Unit: offered only to room-mates awake. | A scripted Leo can draw a confession at night that he cannot draw in the kitchen |
+| S7 | **Care, with its cost.** Looking after someone exists and builds trust; add its cost to the carer's rest. | Unit and run. | A week with one person down still passes L5 |
+| S8 | **The end page, in full.** It exists (stance, and three acts behind it); add what the house has left, and who was lost and how. | A golden-file test on two scripted weeks. | You recognise your own week in it |
+| S4 | **The other scenarios** in code mode: `mara_ate_it`, `miscount`. | The LLM-off test on both. | Three seeds of each read as different weeks |
+| S6 | **A local web page for Leo's screen**, served by Python's standard library. No new dependency. | The scripted hour passes through the page's handler. | You play in a browser |
+| S10 | **A week table** (`python week_table.py --seed N`): per day, food, water, acts by kind. A tool for you. | Runs in under 5 s. | You use it instead of asking for an investigation |
+| S9 | **Clear the ground.** Move `gemini.py`, the prompts, the night mind, the budgets, the frozen copies, the retired tests and the probe scripts to `legacy/`; stop building the model's carry-in text in code mode. Only after the hour of play is judged good. | Every code-mode suite passes with `legacy/` off the path. | Importing anything in `legacy/` from the game fails a test |
+| S11 | **Typed input, optional.** A model maps a typed sentence to one offered choice; off by default; the menu on any doubt, error or 3 s timeout. | With it on and the network blocked, the game plays exactly as with it off. | Only if, after N1 to S8, you still want to type |
+| S12 | **The street as week two.** Neighbours as people with needs who remember what the house did at the door. | The LLM-off test over 14 days. | After the port decision, not before |
+| S13 | **The port decision.** Check the three conditions of 6.4. If met, write the port plan. | | A yes or no in the journal, with the reason |
 
 ---
 
@@ -862,9 +886,42 @@ Each is one session or less. Each ends with the LLM-off test and the suite passi
 6. **Ask the assistant for a judgement when you want direction.** "No opinions" stays for investigations only.
 7. **Push the branch** today, before any new work `[E13]`.
 
-Proposed changes to `CLAUDE.md` (not made): replace lines 24 to 31 with the seven lines at the end of section 3.4;
-replace the Gemini rule at lines 5 to 6 with "The game makes no model call. Model calls are allowed only in
-`legacy/` and in line-drafting scripts, and only when the prompt's MODE is run."
+Proposed changes to `CLAUDE.md` (**not applied; applied only on your yes**). The line about stopping processes,
+"Investigations" and "Judging changes" stay as they are.
+
+Replace the section "Prototype (Prototypes/llm-morning)" with:
+
+    ## Prototype (Prototypes/llm-morning)
+    - The game makes no model call: week.py, diary.py and hour.py run by code alone.
+      Never call the Gemini API unless the prompt's MODE is run.
+    - Read reports/architecture.md before changing the prototype.
+    - Run the tests one at a time, each under a time and a memory limit.
+    - test_brain.py's cases B1 to B17 and the clauses L1 to L13 of the audit
+      (Docs/fable-audit-2026-11.md, section 8) are frozen: never edit one so that
+      it passes.
+    - Change content/weights.json and content/lines.json before changing code.
+      A line states nothing the record might not hold.
+    - v1/ to v4/ (and later frozen versions) are frozen copies. Never edit them.
+    - Prototype reports go in Prototypes/llm-morning/reports/.
+    - Retired tests (PLAY_FIX1_RETIRED in test_morning.py): before changing code in an
+      area they cover, port the ones for that area to the fake client and make them
+      pass, then make the change.
+
+Replace the section "North Star principles" with:
+
+    ## North Star principles
+    - The game runs with no model. Code owns the truth, what each person
+      does, and every outcome.
+    - People act only on what they have perceived or been told.
+    - Every act has a reason a person would give. The diary says only what
+      the family could know.
+    - Nothing is staged: what happens comes from the world's own chances and
+      from what people do. Nobody repeats an act without a new cause.
+    - What Leo does comes back: later someone treats him differently, and the
+      game can say why.
+    - Mechanisms may be unhuman; the output must read as human.
+    - Judge by reading the week and by playing it. Numbers only check that
+      the machinery ran.
 
 ---
 
@@ -873,7 +930,7 @@ replace the Gemini rule at lines 5 to 6 with "The game makes no model call. Mode
 | Risk | Sign | Response |
 |---|---|---|
 | Code-chosen people feel mechanical | On 15 Nov you can predict what each will say next | More written quirks per person and more line variants first. If two more days do not fix it, move the *hour of play* to architecture C (written scenes over the same truth layer, heart and lines). Nothing built by then is lost. |
-| The week is busy but empty | L5 to L8 pass and you are bored | The director's troubles are too mild or do not force a choice between people. Rewrite the deck before touching the brain. |
+| The week is busy but empty | L5 to L8 pass and you are bored | What the world sends is too mild, or what people do does not force a choice between people. Look at `content/chances.json` and the weights before adding any mechanism; nothing is staged *(amended 14 Nov)*. |
 | Five days is too much | A day's gate is not green by evening | Cut from the bottom of that day's list; carry the rest into the Opus specs. The order of days does not change. |
 | The old engine resists | 14 Nov needs changes deep in `world.py` or `quiet.py` | Write `week.py` as a new small loop that calls the existing turn code for scenes, and leave the old loop alone. |
 | Writing 400 lines is slow | 15 Nov ends with fewer than 200 | Ship defaults plus written lines for the three practices you see most; the rest is S5. |

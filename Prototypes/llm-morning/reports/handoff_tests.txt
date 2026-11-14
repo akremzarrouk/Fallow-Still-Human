@@ -1,0 +1,58 @@
+Handoff: every suite run once more, one at a time, each under a time and a memory cap. 14 Nov 2026.
+Commit under test: 714fcd8 plus the handoff documents (no code changed since).
+
+$ python -m unittest test_llm_off
+...............
+----------------------------------------------------------------------
+Ran 15 tests in 41.468s
+
+OK
+capped: 42 s, peak 74 MB
+
+$ python -m unittest test_brain test_heart
+..........................................
+----------------------------------------------------------------------
+Ran 42 tests in 31.385s
+
+OK
+capped: 32 s, peak 85 MB
+
+$ python -m unittest test_diary
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 9.986s
+
+OK
+capped: 11 s, peak 40 MB
+
+$ python -m unittest test_hour
+.......
+----------------------------------------------------------------------
+Ran 7 tests in 39.660s
+
+OK
+capped: 40 s, peak 50 MB
+
+$ python -m unittest test_morning
+s..s.ssssss.sss..................s..............ssssssssssssss...............ss...    [429 RESOURCE_EXHAUSTED] waiting 8s, retry 1/6
+    [429 RESOURCE_EXHAUSTED] waiting 10s, retry 2/6
+.    [429 RESOURCE_EXHAUSTED] waiting 8s, retry 1/2
+    [429 RESOURCE_EXHAUSTED] waiting 10s, retry 2/2
+..s.s..sssssss...........................s.ss......................sss..ssss.s.s.ssssssssssss..sss......................................ssssssssC:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py:5798: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\Akrem\\AppData\\Local\\Temp\\llm-morning-test-rla_l7cf\\runs\\daniel_ate_it-seed2.transcript.json' mode='r' encoding='utf-8'>
+  tr = json.load(open(os.path.join(runs_dir, f"{name}.transcript.json"), encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py:5809: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\Akrem\\AppData\\Local\\Temp\\llm-morning-test-rla_l7cf\\runs\\daniel_ate_it-seed2.md' mode='r' encoding='utf-8'>
+  story = open(os.path.join(runs_dir, f"{name}.md"), encoding="utf-8").read()
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.C:\Users\Akrem\Desktop\Projects\Fallow\Prototypes\llm-morning\test_morning.py:5823: ResourceWarning: unclosed file <_io.TextIOWrapper name='C:\\Users\\Akrem\\AppData\\Local\\Temp\\llm-morning-test-uk_v2r_o\\runs\\daniel_ate_it-seed2.transcript.json' mode='r' encoding='utf-8'>
+  tr = json.load(open(os.path.join(runs_dir, f"{name}.transcript.json"), encoding="utf-8"))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+.sssssssssssssssssssssssssssssssssss..ssssssssssssssss.sss................ssssssssssss.............s...........s..s......
+----------------------------------------------------------------------
+Ran 349 tests in 177.417s
+
+OK (skipped=141)
+capped: 178 s, peak 103 MB
+
+$ python week.py --count 50
+50 weeks of 7 days: 41 empty days of 350, 0.82 a week; weeks with 3 empty days in a row: 0; weeks by number of empty days: {0: 17, 1: 25, 2: 8}. The nudge is not needed: it is built only at more than 1 empty day a week, or 3 in a row in any week.

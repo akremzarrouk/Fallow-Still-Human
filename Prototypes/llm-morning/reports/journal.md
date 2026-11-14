@@ -318,3 +318,29 @@ wanted from you. That answer, in your words, goes here.
 brain's taste, not yours: use "something else". Nothing yet makes Mara's wish to be treated as grown, or Daniel's
 not to lose face, a thing you can meet or refuse on purpose; Elena's load you can already carry (the meal, the
 tending). Days 1 and 2 are still thin.
+
+
+## Step 7: the handoff
+
+**Done, with no new feature.** `reports/architecture.md`: the code as built, one decision step by step, the data
+files, the house's rules, the tests, what is old, nine traps. The audit: section 11 rewritten as specs for the next
+models (N1 to N7 new, in the order the reading suggests); the lines changelog 20 listed are amended in place and
+marked; section 12 holds the proposed `CLAUDE.md` text, **not applied**. `capped.py` is in the repo so that tests
+can be run one at a time under a limit.
+
+**What passes** (`reports/handoff_tests.txt`, each run alone): `test_llm_off` 15 OK, none skipped; `test_brain
+test_heart` 42 OK; `test_diary` 5 OK; `test_hour` 7 OK; old suite 349 OK (skipped=141); 50 weeks: 41 empty days of
+350, 0.82 a week, none with three in a row.
+
+**What does not, or is not known.** Whether the week reads as lived is yours to say: you read the three weeks at
+step 4b and gave six notes, built in 4c; you have not said since. Whether an hour of play holds is not known: you
+had not played when this was written. The weak-body shift on the street's odds applied to no trip in 50 weeks,
+and I do not know why (spec N7).
+
+**What was cut, and where it went.** An apology and making amends (S1). Going out together argued by day (N4).
+Waking Elena (N5). Arguing over the split (N6). The work practice's assigning and refusing (inside N1, as part of
+Elena's load). Lines by who is spoken to and by mood (S5). The three needs as things Leo can meet or refuse (N1):
+the largest gap between what is built and goal (b). The nudge: never needed, never built.
+
+**Left for you.** Play the hour and write here what each of the three wanted from you. Say yes or no to the
+`CLAUDE.md` text in section 12 of the audit.
